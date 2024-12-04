@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { roboto } from "@/components/ui/fonts";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
+import { Header } from "@/components/header";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,16 +18,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${roboto.className} antialiased`}>
-          <header className="p-2">
-            <SignedOut>
-              <Button asChild>
-                <SignInButton />
-              </Button>
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
+          <Header />
           {children}
         </body>
       </html>
