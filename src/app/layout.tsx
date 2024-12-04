@@ -17,7 +17,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${roboto.className} antialiased`}>
+        <body
+          className={`${roboto.className} antialiased space-y-8 overscroll-none`}
+        >
           <Header />
           {children}
         </body>
