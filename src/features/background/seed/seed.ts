@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { faker, simpleFaker } from "@faker-js/faker";
 import { createRepository } from "../repository";
 import { BackgroundInsert } from "../schema";
 import { skills } from "./data";
@@ -30,7 +30,12 @@ export async function backgroundsSeed(count: number = 50) {
           ],
           2
         ),
-        skills: faker.helpers.arrayElements(skills, 10),
+        skills: faker.helpers.arrayElements(skills, 10).map((skill) => {
+          return {
+            id: faker.string.uuid(), 
+            text: skill, 
+          };
+        }),
         links: faker.helpers
           .arrayElements([
             { url: "https://github.com/alimohseni99", name: "Github" },

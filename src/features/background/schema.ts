@@ -1,4 +1,5 @@
 import { integer, jsonb, pgTable, varchar } from "drizzle-orm/pg-core";
+import { Skill } from "./types";
 
 export const backgroundsTable = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -8,7 +9,7 @@ export const backgroundsTable = pgTable("backgrounds", {
   bio: varchar().notNull(),
   languages: varchar().array().notNull(),
   educations: varchar().array().notNull(),
-  skills: varchar().array().notNull(),
+  skills: jsonb().$type<Skill[]>().notNull(),
   links: jsonb().$type<SocialLink[]>().notNull(),
 });
 
@@ -18,3 +19,4 @@ export type SocialLink = {
   url: string;
   name: "Github" | "LinkedIn" | "Portfolio";
 };
+

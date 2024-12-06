@@ -7,3 +7,8 @@ export type Background = {
   skills?: string[];
   links?: string[];
 };
+
+export type Skill = {
+  id: string;
+  text: string;
+};
