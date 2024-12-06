@@ -5,7 +5,7 @@ import { skills } from "./data";
 
 const repository = createRepository();
 
-async function seed(count: number = 50) {
+async function backgroundsSeed(count: number = 50) {
   const avatars = await getAvatars(count);
 
   const backgrounds: BackgroundInsert[] = Array.from(
@@ -18,7 +18,7 @@ async function seed(count: number = 50) {
         avatarUrl: avatars[index],
         languages: faker.helpers.arrayElements(
           ["English", "Swedish", "Spanish", "French", "German"],
-          3,
+          3
         ),
         educations: faker.helpers.arrayElements(
           [
@@ -28,7 +28,7 @@ async function seed(count: number = 50) {
             "Diploma in Data Science",
             "Certificate in UX Design",
           ],
-          2,
+          2
         ),
         skills: faker.helpers.arrayElements(skills, 10),
         links: faker.helpers
@@ -42,7 +42,7 @@ async function seed(count: number = 50) {
           ])
           .sort((a, b) => a.name.localeCompare(b.name)),
       };
-    },
+    }
   );
   backgrounds.forEach((background) => {
     repository.add(background);
@@ -54,5 +54,3 @@ async function getAvatars(count: number) {
   const data = await result.json();
   return data.results.map((user) => user.picture.large);
 }
-
-seed();
