@@ -5,7 +5,7 @@ import { skills } from "./data";
 
 const repository = createRepository();
 
-async function backgroundsSeed(count: number = 50) {
+export async function backgroundsSeed(count: number = 50) {
   const avatars = await getAvatars(count);
 
   const backgrounds: BackgroundInsert[] = Array.from(
@@ -47,6 +47,7 @@ async function backgroundsSeed(count: number = 50) {
   backgrounds.forEach((background) => {
     repository.add(background);
   });
+  console.log("Done seeding Backgrounds...");
 }
 
 async function getAvatars(count: number) {
