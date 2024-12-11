@@ -1,3 +1,7 @@
+import {
+  Command,
+  CommandInput,
+} from "@/components/ui/command";
 import { H1 } from "@/components/ui/header/header-h1";
 
 import { dashboardService } from "../../identity-access-management/instance";
@@ -9,7 +13,10 @@ export async function Dashboard() {
   return (
     <div className="container mx-auto flex flex-col justify-center px-4 gap-4">
       <H1>Dashboard</H1>
-      <div defaultValue="developers" className="flex flex-col">
+      <Command className="rounded-lg border md:min-w-[450px]">
+        <CommandInput placeholder="Search..." />
+      </Command>
+      <div defaultValue="developers" className="flex flex-col pl-1">
         {Array.isArray(developers) ? (
           developers.map((developer) => (
             <DeveloperProfileList
