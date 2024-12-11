@@ -21,6 +21,7 @@ export async function updatePerformanceScoreAction(
 }
 export async function updateDescriptionAction(updatedProject: UpdatedProject) {
   await projectService.updateDescription(updatedProject);
+  revalidate();
 }
 export async function revalidate() {
   revalidatePath("/");

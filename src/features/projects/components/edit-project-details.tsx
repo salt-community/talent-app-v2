@@ -18,6 +18,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogClose,
 } from "@/components";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,7 +30,10 @@ import {
   revalidate,
 } from "../actions";
 import { useState } from "react";
-import { AlertDialogDemo } from "@/components/ui/alert-dialog/alertDialog";
+import { AlertDialogDemo } from "@/components/alert-dialog/alertDialog";
+import UpdateDescription from "./update-description";
+import UpdateScore from "./updateScore";
+import DeleteProject from "./delete-project";
 
 type Props = {
   project: Project;
@@ -49,21 +53,24 @@ export default function EditProjectDetails({ project }: Props) {
     },
   });
 
-  async function updateDescription() {
-    try {
-      await updateDescriptionAction({
-        id: project.id,
-        description: form.getValues("description"),
-      });
-    } catch (error) {
-      console.error("Error updating description");
-    }
-  }
-
   async function updatePerformance() {
     try {
       setLoading(true);
       await updatePerformanceScoreAction(project.projectWebsite!, project.id);
+    } catch (error) {
+      console.log("error updating performance:", error);
+    }
+    setLoading(false);
+    revalidate();
+  }
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const updateDescription = {
+      id: project.id,
+      description: values.description,
+    };
+    try {
+      setLoading(true);
+      await updateDescriptionAction(updateDescription);
     } catch (error) {
       console.log("error updating performance:", error);
     }
@@ -84,7 +91,7 @@ export default function EditProjectDetails({ project }: Props) {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Pencil type="submit" size={16} />
+          <Pencil size={16} />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -93,41 +100,9 @@ export default function EditProjectDetails({ project }: Props) {
               Make changes to your project here. Click save when you´re done.
             </DialogDescription>
           </DialogHeader>
-          <Button onClick={updatePerformance} disabled={loading ? true : false}>
-            {loading ? <Loader2 className="animate-spin" /> : undefined}
-            {loading ? "Updating, please wait..." : "Update score"}
-          </Button>
-          <Form {...form} control={form.control}>
-            <form className="flex flex-col gap-4">
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea
-                    className="resize-none"
-                    {...form.register("description")}
-                  />
-                </FormControl>
-                <FormDescription>
-                  A brief description of your project.
-                </FormDescription>
-                <FormMessage>
-                  {form.formState.errors.description?.message}
-                </FormMessage>
-              </FormItem>
-              <DialogFooter>
-                <div className="flex gap-6 justify-end">
-                  <AlertDialogDemo
-                    title={"Are you sure?"}
-                    description={"This will delete your whole page!"}
-                    onConfirm={deleteProject}
-                  >
-                    <Button>Delete</Button>
-                  </AlertDialogDemo>
-                  <Button onClick={updateDescription}>Save</Button>
-                </div>
-              </DialogFooter>
-            </form>
-          </Form>
+          <UpdateScore onClick={updatePerformance} loading={loading} />
+          <UpdateDescription onSubmit={onSubmit} placeholder={project.description} />
+          <DeleteProject onClick={deleteProject} />
         </DialogContent>
       </Dialog>
     </>
