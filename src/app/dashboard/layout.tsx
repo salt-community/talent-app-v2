@@ -1,14 +1,14 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { DashboardSidebar } from "../../features/admin/components/dashboard-sidebar";
+// import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+// import { DashboardSidebar } from "../../features/admin/components/dashboard-sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
-      <DashboardSidebar />
+    // <SidebarProvider>
+    //   <DashboardSidebar />
       <main className="w-full">
-        <SidebarTrigger />
+        {/* <SidebarTrigger /> */}
         {children}
       </main>
-    </SidebarProvider>
+    // </SidebarProvider>
   );
 }
