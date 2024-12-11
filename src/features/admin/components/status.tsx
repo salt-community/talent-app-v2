@@ -1,5 +1,9 @@
 import { Circle } from "lucide-react";
 
-export function Status() {
- return <Circle className="text-neutral fill-neutral w-4" />;
+type Props = {
+ status: string;
+}
+
+export function Status({status}:Props) {
+ return <Circle size={14} fill={status} color="none" />;
 }
