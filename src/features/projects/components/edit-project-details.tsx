@@ -1,6 +1,6 @@
 "use client";
 
-import { Pencil } from "lucide-react";
+import { Loader2, Pencil } from "lucide-react";
 import { z } from "zod";
 import {
   Form,
@@ -40,6 +40,7 @@ export default function EditProjectDetails({ project }: Props) {
     title: "",
     description: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,7 +63,13 @@ export default function EditProjectDetails({ project }: Props) {
   }
 
   async function updatePerformance() {
-    await updatePerformanceScore(project.projectWebsite, project.id);
+    try {
+      setLoading(true);
+      await updatePerformanceScore(project.projectWebsite, project.id);
+    } catch (error) {
+      console.log("error updating performance:", error);
+    }
+    setLoading(false);
   }
 
   async function deleteProject() {
@@ -104,7 +111,10 @@ export default function EditProjectDetails({ project }: Props) {
               Make changes to your project here. Click save when you´re done.
             </DialogDescription>
           </DialogHeader>
-          <Button onClick={updatePerformance}>Update performance score</Button>
+          <Button onClick={updatePerformance} disabled={loading ? true : false}>
+            {loading ? <Loader2 className="animate-spin" /> : undefined}
+            Update performance score
+          </Button>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
