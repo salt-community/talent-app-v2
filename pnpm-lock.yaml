@@ -56,6 +56,9 @@ importers:
       lucide-react:
         specifier: ^0.462.0
         version: 0.462.0(react@19.0.0-rc-66855b96-20241106)
+      meilisearch:
+        specifier: ^0.46.0
+        version: 0.46.0
       next:
         specifier: 15.0.3
         version: 15.0.3(@babel/core@7.26.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
@@ -3334,6 +3337,9 @@ packages:
 
   marky@1.2.5:
     resolution: {integrity: sha512-q9JtQJKjpsVxCRVgQ+WapguSbKC3SQ5HEzFGPAJMStgh3QjCawp00UKv3MTTAArTmGmmPUvllHZoNbZ3gs0I+Q==}
+
+  meilisearch@0.46.0:
+    resolution: {integrity: sha512-bx0tei1B+Ke0Y02pCoqmcwfpkwuDf+/ZkQDVDvb+ZfGDpWaxq9Z7sE5kc3o8zWvP6wJE7e3PoU3Oy6WINqq5bw==}
 
   merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
@@ -7693,6 +7699,8 @@ snapshots:
   map-obj@4.3.0: {}
 
   marky@1.2.5: {}
+
+  meilisearch@0.46.0: {}
 
   merge-stream@2.0.0: {}
 
