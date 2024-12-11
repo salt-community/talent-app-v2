@@ -5,7 +5,7 @@ export type Project = {
   repository: string;
   title: string;
   imageUrl: string | null;
-  projectWebsite: string;
+  projectWebsite: string | null;
   performance: string;
   description: string;
   commits: string;

@@ -43,7 +43,7 @@ export function createService(db: Db) {
 
       await reps.add(newProject);
     },
-    update: async (updatedProject: UpdatedProject) => {
+    updateDescription: async (updatedProject: UpdatedProject) => {
       await reps.update(updatedProject);
     },
     delete: async (id: string) => {

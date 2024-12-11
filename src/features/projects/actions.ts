@@ -9,19 +9,19 @@ export async function addProjectAction(project: ProjectData) {
   revalidatePath("/");
 }
 
-export async function updateAction(updatedProject: UpdatedProject) {
-  await projectService.update(updatedProject);
-  revalidatePath("/");
-}
-
-export async function deleteAction(id: string) {
+export async function deleteProjectAction(id: string) {
   await projectService.delete(id);
   revalidatePath("/");
 }
-export async function updatePerformanceScore(
+export async function updatePerformanceScoreAction(
   projectWebsite: string,
   id: string
 ) {
   await projectService.updatePerformance(projectWebsite, id);
+}
+export async function updateDescriptionAction(updatedProject: UpdatedProject) {
+  await projectService.updateDescription(updatedProject);
+}
+export async function revalidate() {
   revalidatePath("/");
 }
