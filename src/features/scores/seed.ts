@@ -61,8 +61,8 @@ export const seedAssignments = async (count = 11) => {
     for (let i = 0; i < count; i++) {
         const newAssignment = {
             userId: 1,
-            title: `assignment-${i + 1}`,
-            comment: assignmentTitles[Math.floor(Math.random() * 26)],
+            title: assignmentTitles[Math.floor(Math.random() * 26)],
+            comment: `comment - ${i++}`,
             score: Math.round(Math.random() * 100),
             tags: getRandomTags(allTags, maxTags),
         };

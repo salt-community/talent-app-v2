@@ -1,4 +1,4 @@
-import {
+/* import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -37,3 +37,4 @@ export function Communication({ scores: scores }: Props) {
     </Accordion>
   );
 }
+ */
