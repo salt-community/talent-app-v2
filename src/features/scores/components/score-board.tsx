@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { AverageScore } from "./average-score";
-/* import { SpiderGraph } from "./spider-graph"; */
+import { SpiderGraph } from "./spider-graph";
 import { H2 } from "@/components/ui/header/header-h2";
 import { scoresService } from "../instance";
 import { AddAssignment } from "./add-assignment";
@@ -10,7 +10,7 @@ export async function ScoreBoard() {
   const hardcodedUserId = 1;
 /*   const scores = */
 /*     await scoresService.getScoreById(hardcodedUserId); */
-    const assignments =  await scoresService.getAssignmentsById(hardcodedUserId)
+  const assignments = await scoresService.getAssignmentsById(hardcodedUserId)
 
 
   return (
@@ -18,7 +18,7 @@ export async function ScoreBoard() {
       <Separator className="my-4" />
       <H2>Salt Scoring</H2>
       <AverageScore assignments={assignments} /> 
-{/*       <SpiderGraph scores={scores} /> */}
+      <SpiderGraph assignments={assignments} />
       <AddAssignment/>
       <Assignments assignments={assignments}/>
     </section>
