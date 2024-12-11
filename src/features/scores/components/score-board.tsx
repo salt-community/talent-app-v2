@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { AverageScore } from "./average-score";
-import { SpiderGraph } from "./spider-graph";
+/* import { SpiderGraph } from "./spider-graph"; */
 import { H2 } from "@/components/ui/header/header-h2";
 import { scoresService } from "../instance";
 import { AddAssignment } from "./add-assignment";
