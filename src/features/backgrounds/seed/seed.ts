@@ -6,7 +6,7 @@ import { db } from "@/db";
 
 const repository = createRepository(db);
 
-export async function backgroundsSeed(count: number = 50) {
+export async function backgroundsSeed(count: number = 500) {
   const avatars = await getAvatars(count);
 
   const backgrounds: BackgroundInsert[] = Array.from(
