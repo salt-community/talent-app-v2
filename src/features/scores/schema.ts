@@ -11,7 +11,7 @@ export const scoresTable = pgTable("scores", {
   management: integer().notNull(),
 });
 
-export const assignmentTable = pgTable("score_assigments",{
+export const assignmentTable = pgTable("score_assignments",{
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   userId: integer().notNull(),
   title: varchar().notNull(),
