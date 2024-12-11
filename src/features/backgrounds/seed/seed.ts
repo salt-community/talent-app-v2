@@ -6,7 +6,7 @@ import { db } from "@/db";
 
 const repository = createRepository(db);
 
-export async function backgroundsSeed(count: number = 50) {
+export async function backgroundsSeed(count: number = 500) {
   const avatars = await getAvatars(count);
 
   const backgrounds: BackgroundInsert[] = Array.from(
@@ -19,7 +19,7 @@ export async function backgroundsSeed(count: number = 50) {
         avatarUrl: avatars[index],
         languages: faker.helpers.arrayElements(
           ["English", "Swedish", "Spanish", "French", "German"],
-          3
+          3,
         ),
         educations: faker.helpers.arrayElements(
           [
@@ -29,7 +29,7 @@ export async function backgroundsSeed(count: number = 50) {
             "Diploma in Data Science",
             "Certificate in UX Design",
           ],
-          2
+          2,
         ),
         skills: faker.helpers.arrayElements(skills, 10).map((skill) => {
           return {
@@ -48,7 +48,7 @@ export async function backgroundsSeed(count: number = 50) {
           ])
           .sort((a, b) => a.name.localeCompare(b.name)),
       };
-    }
+    },
   );
   backgrounds.forEach((background) => {
     repository.add(background);
@@ -60,6 +60,6 @@ async function getAvatars(count: number) {
   const result = await fetch(`https://randomuser.me/api/?results=${count}`);
   const data = await result.json();
   return data.results.map(
-    (user: { picture: { large: unknown } }) => user.picture.large
+    (user: { picture: { large: unknown } }) => user.picture.large,
   );
 }
