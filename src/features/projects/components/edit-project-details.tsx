@@ -22,7 +22,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Project } from "../types";
-import { updateAction, deleteAction } from "../actions";
+import { updateAction, deleteAction, updatePerformanceScore } from "../actions";
 import * as Toast from "@radix-ui/react-toast";
 import { useState } from "react";
 
@@ -61,12 +61,16 @@ export default function EditProjectDetails({ project }: Props) {
     }
   }
 
+  async function updatePerformance() {
+    await updatePerformanceScore(project.projectWebsite, project.id);
+  }
+
   async function deleteProject() {
     setToastMessage({
       title: "Confirm Deletion",
       description: "Do you really want to delete this project?",
     });
-    console.log(project.id)
+    console.log(project.id);
     setToastOpen(true);
   }
 
@@ -100,6 +104,7 @@ export default function EditProjectDetails({ project }: Props) {
               Make changes to your project here. Click save when you´re done.
             </DialogDescription>
           </DialogHeader>
+          <Button onClick={updatePerformance}>Update performance score</Button>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}

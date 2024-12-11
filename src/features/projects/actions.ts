@@ -18,3 +18,10 @@ export async function deleteAction(id: string) {
   await projectService.delete(id);
   revalidatePath("/");
 }
+export async function updatePerformanceScore(
+  projectWebsite: string,
+  id: string
+) {
+  await projectService.updatePerformance(projectWebsite, id);
+  revalidatePath("/");
+}

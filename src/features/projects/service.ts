@@ -49,5 +49,14 @@ export function createService(db: Db) {
     delete: async (id: string) => {
       await reps.delete(id);
     },
+    updatePerformance: async (projectWebsite: string, id: string) => {
+      const newPerformanceScore = await client.testPagePerformance(
+        projectWebsite
+      );
+      reps.updatePerformanceScore({
+        newPerformanceScore: newPerformanceScore,
+        id: id,
+      });
+    },
   };
 }

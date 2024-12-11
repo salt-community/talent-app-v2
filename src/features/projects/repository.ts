@@ -1,7 +1,7 @@
 import { Db } from "@/db";
 import { ProjectInsert, projects } from "./db";
 import { eq } from "drizzle-orm";
-import { UpdatedProject } from "./types";
+import { UpdatedPerformance, UpdatedProject } from "./types";
 
 export function createRepository(db: Db) {
   return {
@@ -21,6 +21,14 @@ export function createRepository(db: Db) {
     },
     delete: async (id: string) => {
       await db.delete(projects).where(eq(projects.id, id));
+    },
+    updatePerformanceScore: async (updatedPerformance: UpdatedPerformance) => {
+      await db
+        .update(projects)
+        .set({
+          performance: updatedPerformance.newPerformanceScore,
+        })
+        .where(eq(projects.id, updatedPerformance.id));
     },
   };
 }
