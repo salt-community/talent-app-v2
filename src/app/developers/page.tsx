@@ -1,11 +1,12 @@
 import { Card, CardContent } from "@/components";
 import { Background } from "@/features/backgrounds/components";
-import { backgroundsService } from "@/features/backgrounds/instance";
-import { BackgroundSelect } from "@/features/backgrounds/schema";
 import { MeiliSearch } from "meilisearch";
 import { Search } from "./search";
 
-export default async function Page() {
+type Props = { searchParams: Promise<{ search: string | undefined }> };
+export default async function Page({ searchParams }: Props) {
+  const search = (await searchParams).search;
+
   const client = new MeiliSearch({
     host: "http://localhost:7700",
     apiKey: process.env.MEILI_MASTER_KEY,
@@ -13,7 +14,7 @@ export default async function Page() {
 
   const index = client.index("backgrounds");
 
-  const ids = (await index.search("javascript")).hits.map((hit) => hit.id);
+  const ids = (await index.search(search)).hits.map((hit) => hit.id);
 
   return (
     <div className="p-4 sm:p-8 space-y-4">
