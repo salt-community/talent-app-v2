@@ -36,6 +36,7 @@
     "drizzle-orm": "^0.38.1",
     "emblor": "^1.4.7",
     "lucide-react": "^0.462.0",
+    "meilisearch": "^0.46.0",
     "next": "15.1.0",
     "pg": "^8.13.1",
     "react": "19.0.0",
