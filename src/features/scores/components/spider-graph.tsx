@@ -25,15 +25,15 @@ type Props = {
 
 export function SpiderGraph({ assignments }: Props) {
   const chartData = [
-    { category: "Frontend", score: calculateAverageCategoryScore(assignments, "frontend") },
-    { category: "Backend", score: calculateAverageCategoryScore(assignments, "backend") },
+    { category: "Frontend", score: calculateAverageCategoryScore(assignments, "Frontend") },
+    { category: "Backend", score: calculateAverageCategoryScore(assignments, "Backend") },
     {
       category: "Conversation",
-      score: calculateAverageCategoryScore(assignments, "conversation"),
+      score: calculateAverageCategoryScore(assignments, "Conversation"),
     },
-    { category: "Team collaboration", score: calculateAverageCategoryScore(assignments, "teamCollaboration") },
-    { category: "Design", score: calculateAverageCategoryScore(assignments, "design")},
-    { category: "Management", score: calculateAverageCategoryScore(assignments, "management") },
+    { category: "Team collaboration", score: calculateAverageCategoryScore(assignments, "Team collaboration") },
+    { category: "Design", score: calculateAverageCategoryScore(assignments, "Design")},
+    { category: "Management", score: calculateAverageCategoryScore(assignments, "Management") },
   ];
 
   return (
