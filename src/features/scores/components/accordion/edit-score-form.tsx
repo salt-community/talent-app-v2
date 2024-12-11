@@ -1,4 +1,4 @@
-"use client";
+/* "use client";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,3 +53,4 @@ export function EditScoreForm({ scores: scores }: Props) {
     </Dialog>
   );
 }
+ */

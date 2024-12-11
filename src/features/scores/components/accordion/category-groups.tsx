@@ -1,4 +1,4 @@
-import { CompleteScores } from "../../types";
+/* import { CompleteScores } from "../../types";
 import { Coding } from "./coding";
 import { Communication } from "./communication";
 import { Planning } from "./planning";
@@ -16,3 +16,4 @@ export function CategoryGroups({ scores: scores }: Props) {
     </>
   );
 }
+ */
