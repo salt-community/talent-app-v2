@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { Assignment as AssignmentType } from "../../types";
 import { Assignment } from "../assignment";
@@ -14,7 +14,7 @@ export function Assignments({ assignments }: Props) {
   };
 
   const handleLoadLess = () => {
-    setVisibleCount((prev) => Math.max(5, prev - 5)); 
+    setVisibleCount((prev) => Math.max(5, prev - 5));
   };
 
   return (
@@ -23,14 +23,20 @@ export function Assignments({ assignments }: Props) {
         <Assignment key={assignment.id} assignment={assignment} />
       ))}
 
-      <div style={{ marginTop: "1rem", textAlign: "center" }}>
+      <div className="mt-2 text-center">
         {visibleCount > 5 && (
-          <button onClick={handleLoadLess} className="border-2">
+          <button
+            onClick={handleLoadLess}
+            className="inline-block p-1 mx-1 text-xs font-normal text-gray-500 bg-gray-50 border border-gray-200 rounded-sm hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-200"
+          >
             Load Less
           </button>
         )}
         {visibleCount < assignments.length && (
-          <button onClick={handleLoadMore} className="border-2">
+          <button
+            onClick={handleLoadMore}
+            className="inline-block p-1 mx-1 text-xs font-normal text-gray-500 bg-gray-50 border border-gray-200 rounded-sm hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-200"
+          >
             Load More
           </button>
         )}
@@ -38,5 +44,3 @@ export function Assignments({ assignments }: Props) {
     </>
   );
 }
-
-
