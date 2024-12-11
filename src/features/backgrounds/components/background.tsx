@@ -3,8 +3,9 @@ import { BackgroundBasicInfo } from "./basic-info";
 import { backgroundsService } from "../instance";
 import { SkillsBadges } from ".";
 
-export async function Background() {
-  const background = (await backgroundsService.getById(1))[0];
+type Props = { id : number };
+export async function Background({ id = 1}: Props) {
+  const background = (await backgroundsService.getById(id))[0];
 
   if (!background) {
     return null;
