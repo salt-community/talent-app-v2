@@ -25,9 +25,9 @@ export const seedScores = async (count = 10) => {
     }
 };
 
-export const seedAssignments = async (count = 5) => {
+export const seedAssignments = async (count = 11) => {
     scoresService.deleteAllAssignments();
-    const allTags = ["frontend", "backend", "conversation", "teamCollaboration", "design", "management"];
+    const allTags = ["Frontend", "Backend", "Conversation", "Team collaboration", "Design", "Management"];
     const maxTags = allTags.length; 
     for (let i = 0; i < count; i++) {
         const newAssignment = {
