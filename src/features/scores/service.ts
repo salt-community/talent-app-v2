@@ -6,16 +6,17 @@ import { assignmentUpdates } from "./zod-validation";
 export const createService = (db: Db) => {
   const repository = createRepository(db);
   return {
-
      addAssignment: async (newAssigment: NewAssignment) => {
       await repository.addAssignment(newAssigment);
     },
     getAssignmentsById: async (userId: number) => { //getAllAssignmentsByUserId??
       return await repository.getAssignmentsById(userId)
     },
-
     deleteAllAssignments: async () => {
       await repository.deleteAllAssignments()
+    },
+    deleteAssignment: async (id: number) => {
+      await repository.deleteAssignment(id);
     },
     getAssignmentById: async (id: number) => { 
       const assignment = await repository.getAssignmentById(id);
