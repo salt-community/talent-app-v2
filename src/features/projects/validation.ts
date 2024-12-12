@@ -5,3 +5,7 @@ export const formSchema = z.object({
   projectWebsite: z.string().optional(),
   description: z.string().min(1, { message: "Description is required" }),
 });
+
+export const updateFormSchema = z.object({
+  description: z.string(),
+});
