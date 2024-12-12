@@ -42,7 +42,7 @@ export default function ProjectDetails({ project }: Props) {
           height={240}
           alt=""
           unoptimized
-          className="m-2 object-cover rounded-lg"
+          className="m-2 object-fill h-60 rounded-lg "
         />
         <div className="flex flex-col items-center justify-between gap-4 mt-2 mr-2">
           <article className="flex flex-col items-center my-2">
