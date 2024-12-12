@@ -62,15 +62,6 @@ export default function EditProjectDetails({ project }: Props) {
     revalidate();
   }
 
-  async function deleteProject() {
-    try {
-      await deleteProjectAction(project.id);
-      revalidate();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   return (
     <>
       <Dialog>
@@ -89,7 +80,11 @@ export default function EditProjectDetails({ project }: Props) {
             onSubmit={onSubmit}
             placeholder={project.description}
           />
-          <DeleteProject onClick={deleteProject} />
+          <DeleteProject
+            onClick={async () => {
+              await deleteProjectAction(project.id);
+            }}
+          />
         </DialogContent>
       </Dialog>
     </>

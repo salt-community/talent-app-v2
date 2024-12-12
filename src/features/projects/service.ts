@@ -49,7 +49,11 @@ export function createService(db: Db) {
       await reps.update(updatedProject);
     },
     delete: async (id: string) => {
-      await reps.delete(id);
+      try {
+        await reps.delete(id);
+      } catch (error) {
+        console.log("Error while deleting project:", error);
+      }
     },
     updatePerformance: async (projectWebsite: string, id: string) => {
       const newPerformanceScore = await client.testPagePerformance(
