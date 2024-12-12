@@ -17,7 +17,7 @@ export async function Projects() {
       <div>
         <H2>Projects</H2>
         <div className="flex flex-col justify-center mt-4">
-          <p>No projects found</p>
+          <p>Add your projects here</p>
         </div>
         <div className="flex justify-end">
           <ProjectForm userId={mockUser.userId} />

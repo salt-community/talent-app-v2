@@ -45,6 +45,7 @@ export default function EditProjectDetails({ project }: Props) {
     const updateDescription = {
       id: project.id,
       description: values.description,
+      imageUrl: values.imageUrl,
     };
     try {
       await updateDescriptionAction(updateDescription);
@@ -56,7 +57,10 @@ export default function EditProjectDetails({ project }: Props) {
   async function deleteProject() {
     await deleteProjectAction(project.id);
   }
-
+  const placeholder = {
+    description: project.description,
+    imageUrl: project.imageUrl,
+  };
   return (
     <>
       <Dialog>
@@ -71,10 +75,7 @@ export default function EditProjectDetails({ project }: Props) {
             </DialogDescription>
           </DialogHeader>
           <UpdateScore onClick={updatePerformance} loading={loading} />
-          <UpdateDescription
-            onSubmit={onSubmit}
-            placeholder={project.description}
-          />
+          <UpdateDescription onSubmit={onSubmit} placeholder={placeholder} />
           <DeleteProject onClick={deleteProject} />
         </DialogContent>
       </Dialog>
