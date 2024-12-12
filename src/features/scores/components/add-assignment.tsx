@@ -1,4 +1,3 @@
-"use client";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
