@@ -1,7 +1,7 @@
 import { Db } from "@/db";
 import { assignmentTable } from "./schema";
 import { eq } from "drizzle-orm";
-import { NewAssignment } from "./types";
+import { AssignmentUpdates, NewAssignment } from "./types";
 
 export function createRepository(db: Db) {
   return {
@@ -28,9 +28,12 @@ export function createRepository(db: Db) {
         .from(assignmentTable)
         .where(eq(assignmentTable.id, id));
     },
-   
-/*     async updateAssigment(id: number) { //not done
-      await db.update(id).set().where(eq(assignmentTable.id, id));
-    }, */
+    async updateAssigment(id: number, updates: AssignmentUpdates) {
+      return await db
+        .update(assignmentTable)
+        .set(updates)
+        .where(eq(assignmentTable.id, id))
+        .returning();
+    }
   };
 }
