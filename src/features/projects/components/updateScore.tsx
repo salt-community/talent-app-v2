@@ -2,7 +2,6 @@
 
 import { Button } from "@/components";
 import { Loader2 } from "lucide-react";
-import React, { useState } from "react";
 
 type Props = {
   onClick: () => void;
