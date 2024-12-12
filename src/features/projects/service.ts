@@ -1,49 +1,62 @@
 import { Db } from "@/db";
 import { createRepository } from "./repository";
-import { projectInsert } from "./db";
+import { ProjectInsert } from "./db";
 import { createClient } from "./api/api";
 import { ProjectData, UpdatedProject } from "./types";
+import { extractRepositoryDetails } from "./logic";
 
 export function createService(db: Db) {
   const reps = createRepository(db);
   const client = createClient();
   return {
-    getAll: async () => {
-      return await reps.getAll();
+    getAll: async (userId: string) => {
+      return await reps.getAll(userId);
     },
     add: async ({
-      username,
       repository,
-      title,
       description,
-      performance,
+      projectWebsite,
+      userId,
     }: ProjectData) => {
-      //const commits = await client.getTotalOfCommits(username, title);
-      //const issuesArr = await client.getAllIssues(username, title);
-      // const images = "image.png";
       const commits = "120";
       const issues = "52";
+      let performance: string;
+      if (projectWebsite.length !== 0) {
+        performance = await client.testPagePerformance(projectWebsite);
+      } else {
+        performance = "NA";
+      }
 
-      const newProject: projectInsert = {
+      const { username, title } = extractRepositoryDetails(repository);
+
+      const newProject: ProjectInsert = {
         username,
         repository,
+        projectWebsite,
         title,
         performance,
         description,
         issues,
         commits,
+        userId,
       };
 
       await reps.add(newProject);
     },
-    update: async (updatedProject: UpdatedProject) => {
+    updateDescription: async (updatedProject: UpdatedProject) => {
       await reps.update(updatedProject);
     },
     delete: async (id: string) => {
       await reps.delete(id);
     },
-    getImage: async (username: string, title: string, image: string) => {
-      return await client.getImage(username, title, image);
+    updatePerformance: async (projectWebsite: string, id: string) => {
+      const newPerformanceScore = await client.testPagePerformance(
+        projectWebsite
+      );
+      reps.updatePerformanceScore({
+        newPerformanceScore: newPerformanceScore,
+        id: id,
+      });
     },
   };
 }

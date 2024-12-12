@@ -1,27 +1,34 @@
 import { Db } from "@/db";
-import { projectInsert, projectTable } from "./db";
+import { ProjectInsert, projects } from "./db";
 import { eq } from "drizzle-orm";
-import { UpdatedProject } from "./types";
+import { UpdatedPerformance, UpdatedProject } from "./types";
 
 export function createRepository(db: Db) {
   return {
-    async getAll() {
-      return db.select().from(projectTable);
+    async getAll(userId: string) {
+      return db.select().from(projects).where(eq(projects.userId, userId));
     },
-    add: async (project: projectInsert) => {
-      await db.insert(projectTable).values(project);
+    add: async (project: ProjectInsert) => {
+      await db.insert(projects).values(project);
     },
     update: async (updatedProject: UpdatedProject) => {
       await db
-        .update(projectTable)
+        .update(projects)
         .set({
           description: updatedProject.description,
-          title: updatedProject.title,
         })
-        .where(eq(projectTable.id, updatedProject.id));
+        .where(eq(projects.id, updatedProject.id));
     },
     delete: async (id: string) => {
-      await db.delete(projectTable).where(eq(projectTable.id, id));
+      await db.delete(projects).where(eq(projects.id, id));
+    },
+    updatePerformanceScore: async (updatedPerformance: UpdatedPerformance) => {
+      await db
+        .update(projects)
+        .set({
+          performance: updatedPerformance.newPerformanceScore,
+        })
+        .where(eq(projects.id, updatedPerformance.id));
     },
   };
 }

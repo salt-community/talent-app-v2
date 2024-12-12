@@ -5,6 +5,7 @@ export type Project = {
   repository: string;
   title: string;
   imageUrl: string | null;
+  projectWebsite: string | null;
   performance: string;
   description: string;
   commits: string;
@@ -12,15 +13,17 @@ export type Project = {
 };
 
 export type ProjectData = {
-  username: string;
   repository: string;
-  title: string;
   description: string;
-  performance: string;
+  projectWebsite: string;
+  userId: string;
 };
 
 export type UpdatedProject = {
   id: string;
   description: string;
-  title: string;
+};
+export type UpdatedPerformance = {
+  id: string;
+  newPerformanceScore: string;
 };
