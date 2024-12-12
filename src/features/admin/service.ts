@@ -1,15 +1,15 @@
 import { Db } from "@/db";
 import { createAdminRepository } from "./repository";
-import { DeveloperProfileInsert } from "./schema";
+import { developerService } from "../developer/instance";
 
-export function createAdminService(db: Db) {
+export function createAdminService(
+  db: Db,
+  getAllDeveloperProfiles: typeof developerService.getAllDeveloperProfiles
+) {
   const repository = createAdminRepository(db);
   return {
     getAllDeveloperProfiles() {
-      return repository.getAllDeveloperProfiles();
-    },
-    addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
-      return repository.addDeveloperProfile(developerProfile);
+      return getAllDeveloperProfiles();
     },
   };
 }
