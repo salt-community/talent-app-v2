@@ -4,7 +4,7 @@ import { Tag } from "emblor";
 export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   devId: uuid("dev_id").notNull(),
-  avatarUrl: varchar().notNull().default("/avatar.png"),
+  avatarUrl: varchar("avatar_url").notNull().default("/avatar.png"),
   name: varchar().notNull(),
   title: varchar().notNull(),
   bio: varchar().notNull(),
@@ -16,7 +16,7 @@ export const backgrounds = pgTable("backgrounds", {
 
 export const skills = pgTable("background_skills", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  backroundId: integer()
+  backgroundId: integer("background_id")
     .notNull()
     .references(() => backgrounds.id),
   name: varchar().notNull(),
@@ -25,7 +25,7 @@ export const skills = pgTable("background_skills", {
 
 export const educations = pgTable("background_educations", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  backroundId: integer()
+  backgroundId: integer("background_id")
     .notNull()
     .references(() => backgrounds.id),
   name: varchar().notNull(),
@@ -33,7 +33,7 @@ export const educations = pgTable("background_educations", {
 
 export const languages = pgTable("background_languages", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  backroundId: integer()
+  backgroundId: integer("background_id")
     .notNull()
     .references(() => backgrounds.id),
   name: varchar().notNull(),
