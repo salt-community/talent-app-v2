@@ -57,7 +57,7 @@ export function DialogForm({ background }: Props) {
               className="col-span-3"
             />
             <Label htmlFor="bio" className="text-right">
-              Bio
+              Headline
             </Label>
             <Input
               placeholder={background.bio}
