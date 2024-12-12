@@ -1,7 +1,7 @@
 import { integer, jsonb, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 import { Tag } from "emblor";
 
-export const backgroundsTable = pgTable("backgrounds", {
+export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   devId: uuid("dev_id").notNull(),
   avatarUrl: varchar().notNull().default("/avatar.png"),
@@ -18,7 +18,7 @@ export const skills = pgTable("background_skills", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   backroundId: integer()
     .notNull()
-    .references(() => backgroundsTable.id),
+    .references(() => backgrounds.id),
   name: varchar().notNull(),
   level: integer().notNull().default(5),
 });
@@ -27,7 +27,7 @@ export const educations = pgTable("background_educations", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   backroundId: integer()
     .notNull()
-    .references(() => backgroundsTable.id),
+    .references(() => backgrounds.id),
   name: varchar().notNull(),
 });
 
@@ -35,7 +35,7 @@ export const languages = pgTable("background_languages", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   backroundId: integer()
     .notNull()
-    .references(() => backgroundsTable.id),
+    .references(() => backgrounds.id),
   name: varchar().notNull(),
   level: integer().notNull().default(5),
 });
