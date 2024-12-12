@@ -6,6 +6,7 @@ import {
 } from "@/components";
 import { ProgressRing } from "./progress-ring";
 import { Assignment as AssignmentType } from "../types";
+import { EditAssignment } from "./edit-assignment";
 
 type Props = {
   assignment: AssignmentType;
@@ -18,6 +19,7 @@ export function Assignment({ assignment }: Props) {
         <AccordionTrigger>
           <ProgressRing percentage={assignment.score} />
           {assignment.title}
+          <EditAssignment assignment={assignment}/>
         </AccordionTrigger>
         <AccordionContent>
           <div className="flex flex-col mr-2 pl-8">
