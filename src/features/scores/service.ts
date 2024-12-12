@@ -9,7 +9,7 @@ export const createService = (db: Db) => {
      addAssignment: async (newAssigment: NewAssignment) => {
       await repository.addAssignment(newAssigment);
     },
-    getAssignmentsById: async (userId: number) => { //getAllAssignmentsByUserId??
+    getAssignmentsByUserId: async (userId: number) => {
       return await repository.getAssignmentsById(userId)
     },
     deleteAllAssignments: async () => {
