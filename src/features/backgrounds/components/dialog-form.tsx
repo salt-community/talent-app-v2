@@ -1,9 +1,9 @@
 import { updateBackgroundAction } from "../actions";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {} from "@/components/ui/dialog";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -18,6 +18,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = { background: BackgroundSelect };
 export function DialogForm({ background }: Props) { 
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -91,7 +92,10 @@ export function DialogForm({ background }: Props) {
             </div>
 
             <DialogFooter>
+              <DialogClose>
+
               <Button type="submit">Save changes</Button>
+              </DialogClose>
             </DialogFooter>
           </form>
         </ScrollArea>
