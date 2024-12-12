@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ProjectDescription } from "./project-description";
 import { Project } from "../types";
 import EditProjectDetails from "./edit-project-details";
-import ProjectMetrics from "./project-metrics";
+import MetricSidebar from "./project-metric-sidebar";
 
 type Props = {
   project: Project;
@@ -44,27 +44,11 @@ export default function ProjectDetails({ project }: Props) {
           unoptimized
           className="m-2 object-fill h-60 rounded-lg "
         />
-        <ProjectMetrics
+        <MetricSidebar
           commits={project.commits}
           performance={project.performance}
           issues={project.issues}
         />
-        {/* <div className="flex flex-col items-center justify-between gap-4 mt-2 mr-2">
-          <article className="flex flex-col items-center my-2">
-            <p className="text-gray-400 text-sm">Commits</p>
-            <p className="font-semibold">{project.commits}</p>
-          </article>
-          <Separator orientation="horizontal" />
-          <article className="flex flex-col items-center my-2">
-            <p className="text-gray-400 text-sm">Issues</p>
-            <p className="font-semibold">{project.issues}</p>
-          </article>
-          <Separator orientation="horizontal" />
-          <article className="flex flex-col items-center my-2">
-            <p className="text-gray-400 text-sm">Performance</p>
-            <p className="font-semibold">{project.performance}</p>
-          </article>
-        </div> */}
       </section>
       <ProjectDescription description={project.description} />
     </>
