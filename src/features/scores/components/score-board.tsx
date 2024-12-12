@@ -9,9 +9,7 @@ import { Assignments } from "./accordion/assignments";
 export async function ScoreBoard() {
   const hardcodedUserId = 1;
 
-  const assignments = await scoresService.getAssignmentsById(hardcodedUserId)
-  //await scoresService.deleteAssignment(1);
-  
+  const assignments = await scoresService.getAssignmentsByUserId(hardcodedUserId)
 
   return (
     <section className="min-w-72">
