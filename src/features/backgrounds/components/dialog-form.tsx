@@ -17,8 +17,7 @@ import { Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = { background: BackgroundSelect };
-export function DialogForm({ background }: Props) { 
-
+export function DialogForm({ background }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -55,7 +54,7 @@ export function DialogForm({ background }: Props) {
                 Role
               </Label>
               <Input
-                placeholder="Role..." 
+                placeholder="Role..."
                 name="title"
                 id="title"
                 defaultValue={background.title}
@@ -92,9 +91,8 @@ export function DialogForm({ background }: Props) {
             </div>
 
             <DialogFooter>
-              <DialogClose>
-
-              <Button type="submit">Save changes</Button>
+              <DialogClose asChild>
+                <Button type="submit">Save changes</Button>
               </DialogClose>
             </DialogFooter>
           </form>
