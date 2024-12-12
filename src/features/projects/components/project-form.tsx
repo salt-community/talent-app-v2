@@ -20,6 +20,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogClose,
 } from "@/components";
 import { addProjectAction } from "../actions";
 import { useToast } from "@/hooks/use-toast";
@@ -141,7 +142,12 @@ export default function ProjectForm() {
               </FormMessage>
             </FormItem>
             <DialogFooter>
-              <Button onClick={form.handleSubmit(onSubmit)}>Submit</Button>
+              <DialogClose
+                type="submit"
+                className="bg-zinc-900 text-white text-sm rounded-md w-full h-10 hover:bg-zinc-800"
+              >
+                Submit{" "}
+              </DialogClose>
             </DialogFooter>
           </form>
         </Form>
