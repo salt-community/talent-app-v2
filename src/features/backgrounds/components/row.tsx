@@ -14,7 +14,7 @@ export function Row({ title, content }: Props) {
         {content.map((item, index) => (
           <div key={index} className="flex text-sm items-center">
             {index != 0 && <Dot size={12} />}
-            <span>{item.text}</span>
+            <span>{item.toString()}</span>
           </div>
         ))}
       </div>
