@@ -4,22 +4,27 @@ import { Label } from "@/components/ui/label";
 import { Tag, TagInput } from "emblor";
 import { useState } from "react";
 
-export function SkillsInput({ tags }: { tags: Tag[] }) {
+type Props = {
+  tags: Tag[];
+  inputName: string;
+  inputPlaceholder: string;
+};
+export function TagsInput({ tags, inputName, inputPlaceholder }: Props) {
   const [exampleTags, setExampleTags] = useState<Tag[]>(tags);
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
-  console.log(exampleTags);
 
   return (
     <div className="space-y-2">
-      <Label htmlFor="input-56">Skills</Label>
+      <Label htmlFor={inputName} className="capitalize">
+        {inputName}
+      </Label>
       <TagInput
-        name="skills"
-        id="input-56"
+        id={inputName}
         tags={exampleTags}
         setTags={(newTags) => {
           setExampleTags(newTags);
         }}
-        placeholder="Add a tag"
+        placeholder={inputPlaceholder}
         styleClasses={{
           tagList: {
             container: "gap-1",
@@ -39,7 +44,7 @@ export function SkillsInput({ tags }: { tags: Tag[] }) {
       />
       <input
         type="hidden"
-        name="skillsSerialized"
+        name={inputName}
         value={JSON.stringify(exampleTags)}
       />
     </div>

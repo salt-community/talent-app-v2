@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { BackgroundSelect } from "../schema";
-import { SkillsInput } from "./skills-input";
+import { TagsInput } from "./tags-input";
 import { Input, Label } from "@/components";
 
 type Props = { background: BackgroundSelect };
@@ -63,7 +63,11 @@ export function DialogForm({ background }: Props) {
               className="col-span-3"
             />
 
-            <SkillsInput tags={background.skills} />
+            <TagsInput
+              tags={background.skills}
+              inputName={"skills"}
+              inputPlaceholder={"Add a skill"}
+            />
           </div>
 
           <DialogFooter>
