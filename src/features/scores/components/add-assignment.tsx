@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { addAssigmentAction } from "../actions";
 import { useState } from 'react';
+import { CategoryCheckbox } from './category-checkbox';
 
 
 export function AddAssignment() {
@@ -94,36 +95,8 @@ export function AddAssignment() {
                 Tags
               </label>
               <div className="col-span-3 grid grid-cols-2 gap-2">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="frontend"
-                    value="frontend"
-                    id="frontend"
-                    className="focus:ring focus:ring-gray-200"
-                  />
-                  <label
-                    htmlFor="frontend"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Frontend
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="backend"
-                    value="backend"
-                    id="backend"
-                    className="focus:ring focus:ring-gray-200"
-                  />
-                  <label
-                    htmlFor="backend"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Backend
-                  </label>
-                </div>
+                <CategoryCheckbox label={"frontend"} />
+                <CategoryCheckbox label={"backend"} />
                 <div className="flex items-center space-x-2">
                   <input
                     type="checkbox"
