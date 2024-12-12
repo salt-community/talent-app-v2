@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { addAssigmentAction } from "../actions";
+import { editAssigmentAction } from "../actions";
 import { Assignment } from "../types";
 import { useState } from "react";
 
@@ -24,16 +24,17 @@ export function EditAssignment({ assignment }: Props) {
     const [title, setTitle] = useState(assignment.title);
     const [comment, setComment] = useState(assignment.comment);
     const [tags, setTags] = useState(assignment.tags);
-    console.log(tags);
+    const [isDialogOpen, setIsDialogOpen] = useState(false); 
     //import { useDebouncedCallback } from 'use-debounce';
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Pencil
           type="submit"
           size={16}
           className="cursor-pointer hover:text-gray-600"
+          onClick={() => setIsDialogOpen(true)}
         />
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-white border border-gray-300 rounded-md shadow-md">
@@ -45,7 +46,9 @@ export function EditAssignment({ assignment }: Props) {
             Alter the details below to edit the assignment.
           </DialogDescription>
         </DialogHeader>
-        <form action={addAssigmentAction} className="space-y-4">
+        <form action={editAssigmentAction} className="space-y-4">
+        <input type="hidden" name="assignmentId" value={assignment.id} />
+        <input type="hidden" name="userId" value={assignment.userId} />
           <div className="grid gap-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <label
@@ -73,7 +76,7 @@ export function EditAssignment({ assignment }: Props) {
                 type="number"
                 min="0"
                 max="100"
-                name="teamCollaboration"
+                name="score"
                 className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none"
                 value={score}
                 onChange={(e) => setScore(Number(e.target.value))}
@@ -249,6 +252,7 @@ export function EditAssignment({ assignment }: Props) {
             <Button
               type="submit"
               className="bg-gray-800 text-white hover:bg-gray-700 text-sm px-4 py-2 rounded-md"
+              onClick={() => setIsDialogOpen(false)}
             >
               Save Changes
             </Button>
