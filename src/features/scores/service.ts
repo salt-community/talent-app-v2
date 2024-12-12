@@ -1,8 +1,7 @@
 import { Db } from "@/db";
 import { createRepository } from "./repository";
 import { calculateCategoriesScores } from "./logic";
-import { NewScores, Scores } from "./types";
-
+import { NewAssignment, NewScores, Scores } from "./types";
 
 export const createService = (db: Db) => {
   const repository = createRepository(db);
@@ -48,11 +47,23 @@ export const createService = (db: Db) => {
         };
       }
     },
-    patchScores: async (userId: number, newScores: NewScores) => {
+    updateScores: async (userId: number, newScores: NewScores) => {
       await repository.updateScore(userId, newScores)
     },
     addScores: async (newScores: NewScores) => {
       await repository.addScore(newScores);
-    }
+    },
+     addAssignment: async (newAssigment: NewAssignment) => {
+      await repository.addAssignment(newAssigment);
+    },
+    getAssignmentsById: async (userId: number) => {
+      return await repository.getAssignmentsById(userId)
+    },
+    deleteAllAssignments: async () => {
+      await repository.deleteAllAssignments()
+    },
+/*     updateAssigment: async (id: number) => {
+      await repository.updateAssigment(id).update()
+    } */
   };
 };

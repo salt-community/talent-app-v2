@@ -4,13 +4,16 @@ import { Label } from "@/components/ui/label";
 import { Tag, TagInput } from "emblor";
 import { useState } from "react";
 
-export default function SkillsInput({ tags }: { tags: Tag[] }) {
+export function SkillsInput({ tags }: { tags: Tag[] }) {
   const [exampleTags, setExampleTags] = useState<Tag[]>(tags);
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
+  console.log(exampleTags);
+
   return (
     <div className="space-y-2">
       <Label htmlFor="input-56">Skills</Label>
       <TagInput
+        name="skills"
         id="input-56"
         tags={exampleTags}
         setTags={(newTags) => {
@@ -33,6 +36,11 @@ export default function SkillsInput({ tags }: { tags: Tag[] }) {
         setActiveTagIndex={setActiveTagIndex}
         inlineTags={false}
         inputFieldPosition="top"
+      />
+      <input
+        type="hidden"
+        name="skillsSerialized"
+        value={JSON.stringify(exampleTags)}
       />
     </div>
   );

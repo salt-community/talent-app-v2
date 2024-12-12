@@ -1,4 +1,4 @@
-import { CompleteScores } from "../../types";
+/* import { CompleteScores } from "../../types";
 import { Coding } from "./coding";
 import { Communication } from "./communication";
 import { Planning } from "./planning";
@@ -7,7 +7,7 @@ type Props = {
   scores: CompleteScores;
 };
 
-export function AccordionBoard({ scores: scores }: Props) {
+export function CategoryGroups({ scores: scores }: Props) {
   return (
     <>
       <Communication scores={scores} />
@@ -16,3 +16,4 @@ export function AccordionBoard({ scores: scores }: Props) {
     </>
   );
 }
+ */

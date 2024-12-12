@@ -1,4 +1,4 @@
-import {
+/* import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -11,25 +11,23 @@ type Props = {
   scores: CompleteScores;
 };
 
-export function Communication({ scores: scores }: Props) {
+export function Coding({ scores: scores }: Props) {
   return (
     <Accordion type="single" collapsible className="mx-auto max-w-96">
       <AccordionItem value="item-1">
         <AccordionTrigger>
-          <ProgressRing percentage={scores.communicationScore} />
-          Communication
+          <ProgressRing percentage={scores.programmingScore} />
+          Programming
         </AccordionTrigger>
         <AccordionContent>
           <div className="flex flex-col mr-2 pl-8">
             <span className="flex flex-row gap-4 pb-2 items-center">
-              <ProgressRing
-                percentage={scores.individualCommunication}
-              />
-              Conversation
+              <ProgressRing percentage={scores.backend} />
+              Backend
             </span>
             <span className="flex flex-row gap-4 pb-2 items-center">
-              <ProgressRing percentage={scores.teamCollaboration} />
-              Team Collaboration
+              <ProgressRing percentage={scores.frontend} />
+              Frontend
             </span>
           </div>
         </AccordionContent>
@@ -37,3 +35,4 @@ export function Communication({ scores: scores }: Props) {
     </Accordion>
   );
 }
+ */

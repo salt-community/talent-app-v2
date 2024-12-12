@@ -7,9 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        paragraph: 'hsl(var(--paragraph))',
-        paragraphLight: 'hsl(var(--paragraph-light))',
-        header: 'hsl(var(--header))',
+        neutral: "hsl(var(--color-neutral))", // Neutral/Empty State
+        low: "hsl(var(--color-low))", // Low to Moderate Level (Green)
+        moderate: "hsl(var(--color-moderate))", // Moderate to Good Level (Blue)
+        good: "hsl(var(--color-good))", // Good Performance (Purple)
+        excellent: "hsl(var(--color-excellent))", // High Level/Excellence (Dark Purple)
+        paragraph: "hsl(var(--paragraph))",
+        paragraphLight: "hsl(var(--paragraph-light))",
+        header: "hsl(var(--header))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

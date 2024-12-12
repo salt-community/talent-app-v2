@@ -9,7 +9,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { CompleteScores } from "../types";
+import type { Assignment } from "../types";
+import { calculateAverageCategoryScore } from "../logic";
 
 const chartConfig = {
   desktop: {
@@ -19,20 +20,20 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 type Props = {
-  scores: CompleteScores;
+  assignments: Assignment[];
 };
 
-export function SpiderGraph({ scores: scores }: Props) {
+export function SpiderGraph({ assignments }: Props) {
   const chartData = [
-    { category: "Frontend", score: scores.frontend },
-    { category: "Backend", score: scores.backend },
+    { category: "Frontend", score: calculateAverageCategoryScore(assignments, "Frontend") },
+    { category: "Backend", score: calculateAverageCategoryScore(assignments, "Backend") },
     {
       category: "Conversation",
-      score: scores.individualCommunication,
+      score: calculateAverageCategoryScore(assignments, "Conversation"),
     },
-    { category: "Team collaboration", score: scores.teamCollaboration },
-    { category: "Design", score: scores.design },
-    { category: "Management", score: scores.management },
+    { category: "Team collaboration", score: calculateAverageCategoryScore(assignments, "Team collaboration") },
+    { category: "Design", score: calculateAverageCategoryScore(assignments, "Design")},
+    { category: "Management", score: calculateAverageCategoryScore(assignments, "Management") },
   ];
 
   return (
