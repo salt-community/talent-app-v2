@@ -1,6 +1,8 @@
+import { Tag } from "emblor";
+
 type Props = {
   title: string;
-  content: string[];
+  content: Tag[];
 };
 
 export function Row({ title, content }: Props) {
@@ -10,7 +12,7 @@ export function Row({ title, content }: Props) {
       <div className="space-x-2 ">
         {content.map((item, index) => (
           <span className="text-end" key={index}>
-            {item}
+            {item.text}
           </span>
         ))}
       </div>

@@ -43,27 +43,42 @@ export function DialogForm({ background }: Props) {
             <Input
               name="name"
               id="name"
-              placeholder={background.name}
+              defaultValue={background.name}
+              placeholder="Fullname..."
               className="col-span-3"
             />
 
             <Label htmlFor="title" className="text-right">
-              Title
+              Role
             </Label>
             <Input
               placeholder={background.title}
               name="title"
               id="title"
+              defaultValue="Role..."
               className="col-span-3"
             />
             <Label htmlFor="bio" className="text-right">
               Headline
             </Label>
             <Input
-              placeholder={background.bio}
+              defaultValue={background.bio}
+              placeholder="Headline..."
               name="bio"
               id="bio"
               className="col-span-3"
+            />
+
+            <TagsInput
+              tags={background.languages}
+              inputName={"languages"}
+              inputPlaceholder={"Add a language"}
+            />
+
+            <TagsInput
+              tags={background.educations}
+              inputName={"educations"}
+              inputPlaceholder={"Add an education"}
             />
 
             <TagsInput

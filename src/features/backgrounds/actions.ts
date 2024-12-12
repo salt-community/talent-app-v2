@@ -24,6 +24,8 @@ export async function updateBackgroundAction(formData: FormData) {
   const title = formData.get("title") as string;
   const bio = formData.get("bio") as string;
   const skills = JSON.parse(formData.get("skills") as string);
+  const languages = JSON.parse(formData.get("languages") as string);
+  const educations = JSON.parse(formData.get("educations") as string);
 
   await backgroundsService.update({
     id,
@@ -31,6 +33,8 @@ export async function updateBackgroundAction(formData: FormData) {
     title,
     bio,
     skills,
+    languages,
+    educations,
   });
   revalidatePath("/");
 }
