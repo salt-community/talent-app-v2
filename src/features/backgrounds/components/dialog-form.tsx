@@ -21,7 +21,7 @@ export function DialogForm({ background }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Pencil type="submit" size={16} />
+        <Pencil type="submit" size={18} strokeWidth={2.5} />
       </DialogTrigger>
       <DialogContent className="w-screen">
         <ScrollArea className="h-[600px] ">
