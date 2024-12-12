@@ -54,11 +54,17 @@ export const createService = (db: Db) => {
      addAssignment: async (newAssigment: NewAssignment) => {
       await repository.addAssignment(newAssigment);
     },
-    getAssignmentsById: async (userId: number) => {
+    getAssignmentsById: async (userId: number) => { //getAllAssignmentsByUserId1??
       return await repository.getAssignmentsById(userId)
     },
+
     deleteAllAssignments: async () => {
       await repository.deleteAllAssignments()
+    },
+    getAssignmentById: async (id: number) => { 
+      const assignment = await repository.getAssignmentById(id);
+      if (assignment.length === 0) console.error("Error occured when getting assignment")
+      return assignment[0];
     },
 /*     updateAssigment: async (id: number) => {
       await repository.updateAssigment(id).update()
