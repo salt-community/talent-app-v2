@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { roboto } from "@/components/ui/fonts";
-import { Header } from "@/components/header";
+import { Header } from "@/components/navbar";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
