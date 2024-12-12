@@ -8,10 +8,8 @@ import { Assignments } from "./accordion/assignments";
 
 export async function ScoreBoard() {
   const hardcodedUserId = 1;
-/*   const scores = */
-/*     await scoresService.getScoreById(hardcodedUserId); */
-  const assignments = await scoresService.getAssignmentsById(hardcodedUserId)
 
+  const assignments = await scoresService.getAssignmentsById(hardcodedUserId)
 
   return (
     <section className="min-w-72">

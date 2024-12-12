@@ -5,27 +5,6 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
     return shuffled.slice(0, Math.floor(Math.random() * maxTags) + 1);
 };
 
-
-export const seedScores = async (count = 10) => {
-    for (let i = 0; i < count; i++) {
-        const newScore = {
-            frontend: Math.round(Math.random() * 100),
-            backend: Math.round(Math.random() * 100),
-            individualCommunication: Math.round(Math.random() * 100),
-            teamCollaboration: Math.round(Math.random() * 100),
-            design: Math.round(Math.random() * 100),
-            management: Math.round(Math.random() * 100),
-        };
-
-        try {
-            await scoresService.addScores(newScore);
-        } catch (error) {
-            console.error("Something went wrong when seeding scores: " + error);
-        }
-    }
-};
-
-
 export const seedAssignments = async (count = 11) => {
     const assignmentTitles = [
         "Build a Responsive Portfolio Website",
@@ -62,7 +41,7 @@ export const seedAssignments = async (count = 11) => {
         const newAssignment = {
             userId: 1,
             title: assignmentTitles[Math.floor(Math.random() * 26)],
-            comment: `comment - ${i++}`,
+            comment: `comment - ${i + 1}`,
             score: Math.round(Math.random() * 100),
             tags: getRandomTags(allTags, maxTags),
         };

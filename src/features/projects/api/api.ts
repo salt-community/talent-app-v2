@@ -54,13 +54,13 @@ export const createClient = () => {
 
     testPagePerformance: async (url: string) => {
       const apiKey = process.env.GOOGLE_API_KEY;
-      const isPerformanceFeatureEnabled =
-        process.env.PERFORMANCE_FEATURE_ENABLED === "true";
+      // const isPerformanceFeatureEnabled =
+      //   process.env.PERFORMANCE_FEATURE_ENABLED === "true";
 
-      if (!isPerformanceFeatureEnabled || !apiKey) {
-        console.log("Skipping performance test");
-        return null;
-      }
+      // if (!isPerformanceFeatureEnabled || !apiKey) {
+      //   console.log("Skipping performance test");
+      //   return "NA";
+      // }
       const pageUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${url}&key=${apiKey}`;
       let performanceScore = 0;
 
@@ -70,34 +70,10 @@ export const createClient = () => {
         performanceScore = data.lighthouseResult.categories.performance.score;
       } catch (error) {
         console.error("Error fetching performance score:", error);
-        return null;
+        return "NA";
       }
 
-      return performanceScore * 100;
-    },
-    getImage: async (user: string, repo: string, image: string) => {
-      const token = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
-      try {
-        const response = await fetch(
-          `https://raw.githubusercontent.com/${user}/${repo}/main/${image}`,
-          {
-            headers: {
-              Authorization: `token ${token}`,
-            },
-            next: {
-              revalidate: 3600,
-            },
-          }
-        );
-        if (!response.ok) {
-          return null;
-        }
-
-        return response;
-      } catch (error) {
-        console.error("Error fetching image:", error);
-        return;
-      }
+      return `${(performanceScore * 100).toString()}%`;
     },
   };
 };

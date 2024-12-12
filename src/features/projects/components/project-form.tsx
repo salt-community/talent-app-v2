@@ -13,12 +13,25 @@ import {
   Button,
   Input,
   Textarea,
+  DialogContent,
+  DialogFooter,
+  Dialog,
+  DialogTrigger,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
 } from "@/components";
 import { addProjectAction } from "../actions";
 import { useToast } from "@/hooks/use-toast";
 import { formSchema } from "../validation";
+import { useState } from "react";
 
-export default function ProjectForm() {
+type Props = {
+  userId: string;
+};
+
+export default function ProjectForm({ userId }: Props) {
+  const [open, setOpen] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -29,17 +42,18 @@ export default function ProjectForm() {
     console.log("Form submitted with values:", values);
     try {
       await addProjectAction({
-        username: values.username,
         repository: values.repository,
-        title: values.title,
+        projectWebsite: values.projectWebsite ? values.projectWebsite : "",
         description: values.description,
-        performance: values.performance,
+        userId: userId,
+        imageUrl: values.imageUrl,
       });
       toast({
         title: "Project added",
         description: "Project added successfully",
       });
       form.reset();
+      setOpen(false);
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -49,77 +63,98 @@ export default function ProjectForm() {
   };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 max-w-3xl mx-auto py-10"
-      >
-        <FormItem>
-          <FormLabel>Username</FormLabel>
-          <FormControl>
-            <Input placeholder="" type="text" {...form.register("username")} />
-          </FormControl>
-          <FormDescription>This is your Github username.</FormDescription>
-          <FormMessage>{form.formState.errors.username?.message}</FormMessage>
-        </FormItem>
-        <FormItem>
-          <FormLabel>Repository</FormLabel>
-          <FormControl>
-            <Input
-              placeholder=""
-              type="text"
-              {...form.register("repository")}
-            />
-          </FormControl>
-          <FormDescription>
-            This is the repository link that you want to display.
-          </FormDescription>
-          <FormMessage>{form.formState.errors.repository?.message}</FormMessage>
-        </FormItem>
-        <FormItem>
-          <FormLabel>Title</FormLabel>
-          <FormControl>
-            <Input placeholder="" type="text" {...form.register("title")} />
-          </FormControl>
-          <FormDescription>
-            This is your Github repository title.
-          </FormDescription>
-          <FormMessage>{form.formState.errors.title?.message}</FormMessage>
-        </FormItem>
-        <FormItem>
-          <FormLabel>Performance</FormLabel>
-          <FormControl>
-            <Input
-              placeholder=""
-              type="text"
-              {...form.register("performance")}
-            />
-          </FormControl>
-          <FormDescription>
-            The lighthouse performance of the project
-          </FormDescription>
-          <FormMessage>
-            {form.formState.errors.performance?.message}
-          </FormMessage>
-        </FormItem>
-        <FormItem>
-          <FormLabel>Description</FormLabel>
-          <FormControl>
-            <Textarea
-              placeholder="Placeholder"
-              className="resize-none"
-              {...form.register("description")}
-            />
-          </FormControl>
-          <FormDescription>
-            A brief description of your project.
-          </FormDescription>
-          <FormMessage>
-            {form.formState.errors.description?.message}
-          </FormMessage>
-        </FormItem>
-        <Button>Submit</Button>
-      </form>
-    </Form>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button type="submit">Add project</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add project</DialogTitle>
+          <DialogDescription>
+            Add a new project here. Click submit when you´re done.
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-3"
+          >
+            <FormItem>
+              <FormLabel>Repository</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="https://github.com/devUser42/project-tracker"
+                  type="text"
+                  {...form.register("repository")}
+                />
+              </FormControl>
+              <FormDescription>
+                This is the GitHub repository link that you want to display.
+              </FormDescription>
+              <FormMessage>
+                {form.formState.errors.repository?.message}
+              </FormMessage>
+            </FormItem>
+            <FormItem>
+              <FormLabel>Project Website (Optional)</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="https://example.com"
+                  type="text"
+                  {...form.register("projectWebsite")}
+                />
+              </FormControl>
+              <FormDescription>
+                The live website for your project, if available.
+              </FormDescription>
+              <FormMessage>
+                {form.formState.errors.projectWebsite?.message}
+              </FormMessage>
+            </FormItem>
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="image.png"
+                  type="text"
+                  {...form.register("imageUrl")}
+                />
+              </FormControl>
+              <FormDescription>
+                The name of a picture in your public-folder. Make sure it is
+                available on the main branch.
+              </FormDescription>
+              <FormMessage>
+                {form.formState.errors.projectWebsite?.message}
+              </FormMessage>
+            </FormItem>
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="A comprehensive tool for tracking project milestones and tasks."
+                  className="resize-none"
+                  {...form.register("description")}
+                />
+              </FormControl>
+              <FormDescription>
+                A brief description of your project.
+              </FormDescription>
+              <FormMessage>
+                {form.formState.errors.description?.message}
+              </FormMessage>
+            </FormItem>
+            <DialogFooter>
+              <Button
+                type="submit"
+                className="bg-zinc-900 text-white text-sm rounded-md w-full h-10 hover:bg-zinc-800"
+              >
+                Submit{" "}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 }
