@@ -1,27 +1,15 @@
 "use client";
 
-import { Loader2, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { z } from "zod";
 import {
-  Form,
-  FormControl,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Textarea,
-  FormDescription,
-  Button,
   Dialog,
   DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
-  DialogClose,
 } from "@/components";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Project } from "../types";
 import {
   updateDescriptionAction,
@@ -30,28 +18,24 @@ import {
   revalidate,
 } from "../actions";
 import { useState } from "react";
-import { AlertDialogDemo } from "@/components/alert-dialog/alertDialog";
 import UpdateDescription from "./update-description";
 import UpdateScore from "./updateScore";
 import DeleteProject from "./delete-project";
+import { updateFormSchema } from "../validation";
 
 type Props = {
   project: Project;
 };
 
-const formSchema = z.object({
-  description: z.string(),
-});
-
 export default function EditProjectDetails({ project }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      description: project.description,
-    },
-  });
+  // const form = useForm<z.infer<typeof updateFormSchema>>({
+  //   resolver: zodResolver(formSchema),
+  //   defaultValues: {
+  //     description: project.description,
+  //   },
+  // });
 
   async function updatePerformance() {
     try {
@@ -63,7 +47,7 @@ export default function EditProjectDetails({ project }: Props) {
     setLoading(false);
     revalidate();
   }
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof updateFormSchema>) {
     const updateDescription = {
       id: project.id,
       description: values.description,
@@ -101,7 +85,10 @@ export default function EditProjectDetails({ project }: Props) {
             </DialogDescription>
           </DialogHeader>
           <UpdateScore onClick={updatePerformance} loading={loading} />
-          <UpdateDescription onSubmit={onSubmit} placeholder={project.description} />
+          <UpdateDescription
+            onSubmit={onSubmit}
+            placeholder={project.description}
+          />
           <DeleteProject onClick={deleteProject} />
         </DialogContent>
       </Dialog>

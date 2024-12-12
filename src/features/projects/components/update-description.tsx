@@ -1,5 +1,4 @@
 import {
-  Button,
   DialogFooter,
   Form,
   FormControl,
@@ -14,19 +13,16 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-const formSchema = z.object({
-  description: z.string(),
-});
+import { updateFormSchema } from "../validation";
 
 type Props = {
-  onSubmit: (data: z.infer<typeof formSchema>) => void;
+  onSubmit: (data: z.infer<typeof updateFormSchema>) => void;
   placeholder: string;
 };
 
 export default function UpdateDescription({ onSubmit, placeholder }: Props) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof updateFormSchema>>({
+    resolver: zodResolver(updateFormSchema),
     defaultValues: {
       description: placeholder,
     },
