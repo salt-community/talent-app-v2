@@ -1,9 +1,9 @@
 import { updateBackgroundAction } from "../actions";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {} from "@/components/ui/dialog";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -12,68 +12,91 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { BackgroundSelect } from "../schema";
-import { SkillsInput } from "./skills-input";
+import { TagsInput } from "./tags-input";
+import { Input, Label } from "@/components";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = { background: BackgroundSelect };
 export function DialogForm({ background }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Pencil type="submit" size={16} />
+        <Pencil type="submit" size={18} strokeWidth={2.5} />
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you´re done.
-          </DialogDescription>
-        </DialogHeader>
-        <form action={updateBackgroundAction}>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
+      <DialogContent className="w-screen">
+        <ScrollArea className="h-[600px] ">
+          <DialogHeader>
+            <DialogTitle>Edit profile</DialogTitle>
+            <DialogDescription>
+              Make changes to your profile here. Click save when you´re done.
+            </DialogDescription>
+          </DialogHeader>
+          <form action={updateBackgroundAction} className="p-2">
+            <div className="space-y-2 py-4">
               <input
                 type="text"
                 name={"userId"}
                 defaultValue={background.id}
                 hidden
               />
-              <label htmlFor="name" className="text-right">
+              <Label htmlFor="name" className="text-right">
                 Name
-              </label>
-              <input
+              </Label>
+              <Input
                 name="name"
-                placeholder={background.name}
+                id="name"
+                defaultValue={background.name}
+                placeholder="Fullname..."
                 className="col-span-3"
               />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="username" className="text-right">
-                Title
-              </label>
-              <input
-                placeholder={background.title}
+
+              <Label htmlFor="title" className="text-right">
+                Role
+              </Label>
+              <Input
+                placeholder="Role..."
                 name="title"
+                id="title"
+                defaultValue={background.title}
                 className="col-span-3"
               />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="bio" className="text-right">
-                Bio
-              </label>
-              <input
-                placeholder={background.bio}
+              <Label htmlFor="bio" className="text-right">
+                Headline
+              </Label>
+              <Input
+                defaultValue={background.bio}
+                placeholder="Headline..."
                 name="bio"
+                id="bio"
                 className="col-span-3"
+              />
+
+              <TagsInput
+                tags={background.languages}
+                inputName={"languages"}
+                inputPlaceholder={"Add a language"}
+              />
+
+              <TagsInput
+                tags={background.educations}
+                inputName={"educations"}
+                inputPlaceholder={"Add an education"}
+              />
+
+              <TagsInput
+                tags={background.skills}
+                inputName={"skills"}
+                inputPlaceholder={"Add a skill"}
               />
             </div>
 
-            <SkillsInput tags={background.skills} />
-          </div>
-
-          <DialogFooter>
-            <Button type="submit">Save changes</Button>
-          </DialogFooter>
-        </form>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button type="submit">Save changes</Button>
+              </DialogClose>
+            </DialogFooter>
+          </form>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

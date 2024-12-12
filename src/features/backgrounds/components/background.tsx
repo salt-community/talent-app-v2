@@ -15,26 +15,28 @@ export async function Background() {
 
   return (
     <div className="space-y-2 max-w-96">
-      <BackgroundBasicInfo
-        name={background.name}
-        title={background.title}
-        bio={background.bio}
-        avatarURL={background.avatarUrl!}
-      />
+      <div className="flex justify-between items-start">
+        <BackgroundBasicInfo
+          name={background.name}
+          title={background.title}
+          bio={background.bio}
+          avatarURL={background.avatarUrl!}
+        />
+        <ul className="flex gap-1 justify-end items-top h-full">
+          {background.links &&
+            background.links.map((link) => (
+              <li key={link.url} className="h-full flex justify-start">
+                <SocialLink name={link.name} url={link.url} />
+              </li>
+            ))}
+          <DialogForm background={background} />
+        </ul>
+      </div>
 
-      <DialogForm background={background} />
       <div>
         <Row title="Languages" content={background.languages} />
         <Row title="Education" content={background.educations} />
         <SkillsBadges skills={background.skills} />
-        <ul className="flex gap-1 justify-end mt-2">
-          {background.links &&
-            background.links.map((link) => (
-              <li key={link.url}>
-                <SocialLink name={link.name} url={link.url} />
-              </li>
-            ))}
-        </ul>
       </div>
     </div>
   );
