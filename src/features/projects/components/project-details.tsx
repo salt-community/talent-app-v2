@@ -1,12 +1,12 @@
 "use client";
-
 import Image from "next/image";
 import { FaGithub } from "react-icons/fa6";
-import { H3, Separator } from "@/components";
+import { H3 } from "@/components";
 import Link from "next/link";
 import { ProjectDescription } from "./project-description";
 import { Project } from "../types";
 import EditProjectDetails from "./edit-project-details";
+import ProjectMetrics from "./project-metrics";
 
 type Props = {
   project: Project;
@@ -44,7 +44,12 @@ export default function ProjectDetails({ project }: Props) {
           unoptimized
           className="m-2 object-fill h-60 rounded-lg "
         />
-        <div className="flex flex-col items-center justify-between gap-4 mt-2 mr-2">
+        <ProjectMetrics
+          commits={project.commits}
+          performance={project.performance}
+          issues={project.issues}
+        />
+        {/* <div className="flex flex-col items-center justify-between gap-4 mt-2 mr-2">
           <article className="flex flex-col items-center my-2">
             <p className="text-gray-400 text-sm">Commits</p>
             <p className="font-semibold">{project.commits}</p>
@@ -59,7 +64,7 @@ export default function ProjectDetails({ project }: Props) {
             <p className="text-gray-400 text-sm">Performance</p>
             <p className="font-semibold">{project.performance}</p>
           </article>
-        </div>
+        </div> */}
       </section>
       <ProjectDescription description={project.description} />
     </>
