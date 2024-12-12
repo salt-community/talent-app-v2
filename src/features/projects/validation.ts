@@ -9,4 +9,5 @@ export const formSchema = z.object({
 
 export const updateFormSchema = z.object({
   description: z.string(),
+  imageUrl: z.string(),
 });
