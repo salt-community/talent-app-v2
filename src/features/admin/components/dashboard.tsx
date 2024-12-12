@@ -1,14 +1,12 @@
-import {
-  Command,
-  CommandInput,
-} from "@/components/ui/command";
+import { Command, CommandInput } from "@/components/ui/command";
 import { H1 } from "@/components/ui/header/header-h1";
 
 import { dashboardService } from "../../identity-access-management/instance";
 import { DeveloperProfileList } from "./developer-profile-list";
+import { adminService } from "../instance";
 
 export async function Dashboard() {
-  const developers = await dashboardService.getAllDeveloperProfiles();
+  const developers = await adminService.getAllDeveloperProfiles();
 
   return (
     <div className="container mx-auto flex flex-col justify-center px-4 gap-4">
