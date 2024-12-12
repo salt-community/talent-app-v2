@@ -26,11 +26,11 @@ import { addProjectAction } from "../actions";
 import { useToast } from "@/hooks/use-toast";
 import { formSchema } from "../validation";
 
-const mockUser = {
-  userId: "ecd3c615-35d6-4890-b867-4e51a411f34d",
+type Props = {
+  userId: string;
 };
 
-export default function ProjectForm() {
+export default function ProjectForm({ userId }: Props) {
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,7 +44,7 @@ export default function ProjectForm() {
         repository: values.repository,
         projectWebsite: values.projectWebsite ? values.projectWebsite : "",
         description: values.description,
-        userId: mockUser.userId,
+        userId: userId,
         imageUrl: values.imageUrl,
       });
       toast({
