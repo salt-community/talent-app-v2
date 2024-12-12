@@ -45,6 +45,7 @@ export default function ProjectForm() {
         projectWebsite: values.projectWebsite ? values.projectWebsite : "",
         description: values.description,
         userId: mockUser.userId,
+        imageUrl: values.imageUrl,
       });
       toast({
         title: "Project added",
@@ -114,7 +115,7 @@ export default function ProjectForm() {
                 <Input
                   placeholder="image.png"
                   type="text"
-                  {...form.register("projectWebsite")}
+                  {...form.register("imageUrl")}
                 />
               </FormControl>
               <FormDescription>

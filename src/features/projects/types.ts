@@ -17,6 +17,7 @@ export type ProjectData = {
   description: string;
   projectWebsite: string;
   userId: string;
+  imageUrl?: string;
 };
 
 export type UpdatedProject = {
