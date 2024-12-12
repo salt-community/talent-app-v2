@@ -1,6 +1,6 @@
 import { Db } from "@/db";
 import { createRepository } from "./repository";
-import { calculateCategoriesScores } from "./logic";
+//import { calculateCategoriesScores } from "./logic";
 import { NewAssignment } from "./types";
 
 export const createService = (db: Db) => {
