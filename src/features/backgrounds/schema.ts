@@ -1,3 +1,5 @@
+import { relations } from "drizzle-orm";
+import { integer, jsonb, pgTable, varchar } from "drizzle-orm/pg-core";
 import { integer, jsonb, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 import { Tag } from "emblor";
 
@@ -14,6 +16,12 @@ export const backgrounds = pgTable("backgrounds", {
   links: jsonb().$type<SocialLink[]>().notNull(),
 });
 
+const backgroundsRelations = relations(backgrounds, ({ many }) => ({
+  skills: many(skills),
+  educations: many(educations),
+  languages: many(languages),
+}));
+
 export const skills = pgTable("background_skills", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   backgroundId: integer("background_id")
@@ -23,6 +31,13 @@ export const skills = pgTable("background_skills", {
   level: integer().notNull().default(5),
 });
 
+export const skillsRelations = relations(skills, ({ one }) => ({
+  background: one(backgrounds, {
+    fields: [skills.backgroundId],
+    references: [backgrounds.id],
+  }),
+}));
+
 export const educations = pgTable("background_educations", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   backgroundId: integer("background_id")
@@ -30,6 +45,13 @@ export const educations = pgTable("background_educations", {
     .references(() => backgrounds.id),
   name: varchar().notNull(),
 });
+
+export const educationsRelations = relations(educations, ({ one }) => ({
+  background: one(backgrounds, {
+    fields: [educations.backgroundId],
+    references: [backgrounds.id],
+  }),
+}));
 
 export const languages = pgTable("background_languages", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -40,8 +62,15 @@ export const languages = pgTable("background_languages", {
   level: integer().notNull().default(5),
 });
 
-export type BackgroundInsert = typeof backgroundsTable.$inferInsert;
-export type BackgroundSelect = typeof backgroundsTable.$inferSelect;
+export const languagesRelations = relations(languages, ({ one }) => ({
+  background: one(backgrounds, {
+    fields: [languages.backgroundId],
+    references: [backgrounds.id],
+  }),
+}));
+
+export type BackgroundInsert = typeof backgrounds.$inferInsert;
+export type BackgroundSelect = typeof backgrounds.$inferSelect;
 export type BackgroundUpdate = Partial<BackgroundSelect> &
   Required<Pick<BackgroundSelect, "id">>;
 
