@@ -1,4 +1,5 @@
-import { H1 } from "@/components/ui/header/header-h1";
+
+import { H2 } from "@/components";
 import { BackgroundAvatar } from "./avatar";
 
 type Props = { name: string; title: string; bio: string; avatarURL: string };
@@ -8,11 +9,11 @@ export function BackgroundBasicInfo({ name, title, bio, avatarURL }: Props) {
   return (
     <>
       <section className="flex justify-between">
-        <div className="flex gap-6">
+        <div className="flex gap-6 items-center">
           <BackgroundAvatar url={avatarURL} />
           <div>
             <p className="uppercase text-sm font-semibold">{title}</p>
-            <H1>{name}</H1>
+            <H2>{name}</H2>
             {isFeatureBioEnabled && (
               <p className="font-light text-slate-600">{bio}</p>
             )}
