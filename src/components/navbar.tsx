@@ -1,4 +1,5 @@
 import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 // import { auth, clerkClient } from "@clerk/nextjs/server";
 // import Link from "next/link";
 export async function Header() {
@@ -17,7 +18,9 @@ export async function Header() {
           </span>
         )}
       </div> */}
+      <Link href="/">
       <span>&lt;salt/&gt;</span>
+      </Link>
       <div className="flex gap-6">
         <div className="hover:bg-secondary py-1 px-2 rounded-lg text-sm">
           <SignedOut>
