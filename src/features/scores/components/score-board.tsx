@@ -10,6 +10,8 @@ export async function ScoreBoard() {
   const hardcodedUserId = 1;
 
   const assignments = await scoresService.getAssignmentsById(hardcodedUserId)
+  //await scoresService.deleteAssignment(1);
+  
 
   return (
     <section className="min-w-72">
