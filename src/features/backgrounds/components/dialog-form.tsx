@@ -17,14 +17,14 @@ import { Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = { background: BackgroundSelect };
-export function DialogForm({ background }: Props) {
+export function DialogForm({ background }: Props) { 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Pencil type="submit" size={16} />
       </DialogTrigger>
       <DialogContent className="w-screen">
-        <ScrollArea className="h-[600px]">
+        <ScrollArea className="h-[600px] ">
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
@@ -54,10 +54,10 @@ export function DialogForm({ background }: Props) {
                 Role
               </Label>
               <Input
-                placeholder={background.title}
+                placeholder="Role..." 
                 name="title"
                 id="title"
-                defaultValue="Role..."
+                defaultValue={background.title}
                 className="col-span-3"
               />
               <Label htmlFor="bio" className="text-right">
