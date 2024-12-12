@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { BackgroundSelect } from "../schema";
 import { SkillsInput } from "./skills-input";
+import { Input, Label } from "@/components";
 
 type Props = { background: BackgroundSelect };
 export function DialogForm({ background }: Props) {
@@ -29,43 +30,38 @@ export function DialogForm({ background }: Props) {
           </DialogDescription>
         </DialogHeader>
         <form action={updateBackgroundAction}>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <input
-                type="text"
-                name={"userId"}
-                defaultValue={background.id}
-                hidden
-              />
-              <label htmlFor="name" className="text-right">
-                Name
-              </label>
-              <input
-                name="name"
-                placeholder={background.name}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="username" className="text-right">
-                Title
-              </label>
-              <input
-                placeholder={background.title}
-                name="title"
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="bio" className="text-right">
-                Bio
-              </label>
-              <input
-                placeholder={background.bio}
-                name="bio"
-                className="col-span-3"
-              />
-            </div>
+          <div className="space-y-2 py-4">
+            <input
+              type="text"
+              name={"userId"}
+              defaultValue={background.id}
+              hidden
+            />
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              name="name"
+              placeholder={background.name}
+              className="col-span-3"
+            />
+
+            <Label htmlFor="username" className="text-right">
+              Title
+            </Label>
+            <Input
+              placeholder={background.title}
+              name="title"
+              className="col-span-3"
+            />
+            <Label htmlFor="bio" className="text-right">
+              Bio
+            </Label>
+            <Input
+              placeholder={background.bio}
+              name="bio"
+              className="col-span-3"
+            />
 
             <SkillsInput tags={background.skills} />
           </div>
