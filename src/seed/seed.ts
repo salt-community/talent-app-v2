@@ -1,8 +1,8 @@
 import { backgroundsSeed } from "@/features/backgrounds/seed/seed";
 import { seedScores } from "@/features/scores/seed";
 import { seedProjects } from "@/features/projects/seed";
-import { seedIdentities } from "@/features/identity-access-management/seed";
-import { seedDeveloperProfiles } from "@/features/developer/seed";
+import { seedIdentities } from "@/features";
+import { seedDeveloperProfiles } from "@/features";
 
 (async () => {
   console.log("Start seeding...");
@@ -10,8 +10,8 @@ import { seedDeveloperProfiles } from "@/features/developer/seed";
     seedScores(),
     backgroundsSeed(),
     seedProjects(),
-    seedIdentities(),
     seedDeveloperProfiles(),
+    seedIdentities(),
   ]);
   console.log("Done seeding...");
 })();

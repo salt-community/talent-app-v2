@@ -8,7 +8,7 @@ export const developersStatus = pgEnum("developers_status", [
 
 export const developerProfiles = pgTable("developer_profiles", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  identityId: varchar("identity_id"),
+  identityId: varchar("identity_id").default("1"),
   name: varchar().notNull(),
   email: varchar().notNull(),
   status: developersStatus().notNull().default("unpublished"),

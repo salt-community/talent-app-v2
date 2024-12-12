@@ -4,6 +4,9 @@ import { eq } from "drizzle-orm";
 
 export function createRepository(db: Db) {
   return {
+    async getAllIdentities() {
+      return await db.select().from(identities);
+    },
     async getIdentityById(id: number) {
       return await db.select().from(identities).where(eq(identities.id, id));
     },

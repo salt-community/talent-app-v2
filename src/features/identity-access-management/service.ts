@@ -1,9 +1,13 @@
+import { get } from "http";
 import { hasAccess } from "./privileges";
 import { Repository } from "./repository";
 import { IdentityInsert } from "./schema";
 
 export function createService(repository: Repository) {
   return {
+    async getAllIdentities() {
+      return repository.getAllIdentities();
+    },
     async getIdentityById(id: number) {
       return hasAccess()
         ? await repository.getIdentityById(id)
@@ -11,9 +15,7 @@ export function createService(repository: Repository) {
     },
 
     async addIdentity(identity: IdentityInsert) {
-      return hasAccess()
-        ? await repository.addIdentity(identity)
-        : "Access denied";
+      await repository.addIdentity(identity);
     },
   };
 }
