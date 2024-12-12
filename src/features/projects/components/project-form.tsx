@@ -20,17 +20,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogClose,
 } from "@/components";
 import { addProjectAction } from "../actions";
 import { useToast } from "@/hooks/use-toast";
 import { formSchema } from "../validation";
+import { useState } from "react";
 
 type Props = {
   userId: string;
 };
 
 export default function ProjectForm({ userId }: Props) {
+  const [open, setOpen] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,6 +53,7 @@ export default function ProjectForm({ userId }: Props) {
         description: "Project added successfully",
       });
       form.reset();
+      setOpen(false);
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -61,7 +63,7 @@ export default function ProjectForm({ userId }: Props) {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button type="submit">Add project</Button>
       </DialogTrigger>
@@ -143,12 +145,12 @@ export default function ProjectForm({ userId }: Props) {
               </FormMessage>
             </FormItem>
             <DialogFooter>
-              <DialogClose
+              <Button
                 type="submit"
                 className="bg-zinc-900 text-white text-sm rounded-md w-full h-10 hover:bg-zinc-800"
               >
                 Submit{" "}
-              </DialogClose>
+              </Button>
             </DialogFooter>
           </form>
         </Form>

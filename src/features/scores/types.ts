@@ -1,20 +1,3 @@
-export type Scores = {
-  id: number;
-  frontend: number;
-  backend: number;
-  individualCommunication: number;
-  teamCollaboration: number;
-  design: number;
-  management: number;
-};
-
-export type CompleteScores = Scores & {
-  programmingScore: number;
-  planningScore: number;
-  communicationScore: number;
-  averageScore: number;
-};
-
 export type Assignment = {
   id: number;
   userId: number;
@@ -25,4 +8,3 @@ export type Assignment = {
 };
 
 export type NewAssignment = Omit<Assignment, "id">;
-export type NewScores = Omit<Scores, "id">;

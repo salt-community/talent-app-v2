@@ -26,7 +26,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
-    "drizzle-orm": "^0.36.4",
+    "drizzle-orm": "^0.38.1",
     "emblor": "^1.4.7",
     "lucide-react": "^0.462.0",
     "next": "15.0.1",

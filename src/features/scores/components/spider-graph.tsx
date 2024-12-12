@@ -1,7 +1,6 @@
 "use client";
 
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
-
+import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart } from "recharts";
 import { CardContent } from "@/components/ui/card";
 import {
   ChartConfig,
@@ -51,6 +50,12 @@ export function SpiderGraph({ assignments }: Props) {
             }}
             tickLine={false}
           />
+          <PolarRadiusAxis 
+            angle={30} 
+            domain={[0, 100]} 
+            axisLine={false} 
+            tick={false}
+          /> 
           <Radar
             dataKey="score"
             stroke="#6b7280"
