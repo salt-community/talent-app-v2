@@ -8,8 +8,9 @@ export type Assignment = {
 };
 
 export type AssignmentUpdates = {
+  userId: number;
   score?: number;
-  title?: string;
+  title: string;
   comment?: string | null;
   tags?: string[];
 };
