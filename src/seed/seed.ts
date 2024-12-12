@@ -1,12 +1,11 @@
 import { backgroundsSeed } from "@/features/backgrounds/seed/seed";
-import { seedAssignments, seedScores } from "@/features";
+import { seedAssignments } from "@/features";
 import { seedProjects } from "@/features/projects/seed";
 
 (async () => {
   console.log("Start seeding...");
 
   try {
-      await seedScores();
       await backgroundsSeed();
       await seedAssignments();
       await seedProjects();
