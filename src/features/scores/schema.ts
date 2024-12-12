@@ -1,4 +1,5 @@
-import { integer, pgTable, varchar} from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+
 
 
 export const scoresTable = pgTable("scores", {
