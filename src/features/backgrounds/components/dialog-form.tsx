@@ -42,16 +42,18 @@ export function DialogForm({ background }: Props) {
             </Label>
             <Input
               name="name"
+              id="name"
               placeholder={background.name}
               className="col-span-3"
             />
 
-            <Label htmlFor="username" className="text-right">
+            <Label htmlFor="title" className="text-right">
               Title
             </Label>
             <Input
               placeholder={background.title}
               name="title"
+              id="title"
               className="col-span-3"
             />
             <Label htmlFor="bio" className="text-right">
@@ -60,6 +62,7 @@ export function DialogForm({ background }: Props) {
             <Input
               placeholder={background.bio}
               name="bio"
+              id="bio"
               className="col-span-3"
             />
 
