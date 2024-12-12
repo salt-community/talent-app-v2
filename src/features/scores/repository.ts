@@ -22,6 +22,13 @@ export function createRepository(db: Db) {
     async deleteAllAssignments() {
       await db.delete(assignmentTable)
     },
+    async getAssignmentById(id: number) {
+      return await db
+        .select()
+        .from(assignmentTable)
+        .where(eq(assignmentTable.id, id));
+    },
+   
 /*     async updateAssigment(id: number) { //not done
       await db.update(id).set().where(eq(assignmentTable.id, id));
     }, */
