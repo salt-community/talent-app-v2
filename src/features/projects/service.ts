@@ -17,6 +17,7 @@ export function createService(db: Db) {
       description,
       projectWebsite,
       userId,
+      imageUrl,
     }: ProjectData) => {
       const commits = "120";
       const issues = "52";
@@ -39,6 +40,7 @@ export function createService(db: Db) {
         issues,
         commits,
         userId,
+        imageUrl,
       };
 
       await reps.add(newProject);
