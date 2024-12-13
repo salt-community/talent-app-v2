@@ -7,7 +7,6 @@ import Link from "next/link";
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 export default async function Page({ searchParams }: Props) {
   const search = (await searchParams).search;
-
   const client = new MeiliSearch({
     host: "http://localhost:7700",
     apiKey: process.env.MEILI_MASTER_KEY,
@@ -24,13 +23,11 @@ export default async function Page({ searchParams }: Props) {
         {ids.map((id) => (
           <li key={id}>
             <Link href={`/developers/${id}`}>
-              <div>
-                <Card className="h-full mx-auto flex items-center justify-center">
-                  <CardContent>
-                    <Background id={id} />
-                  </CardContent>
-                </Card>
-              </div>
+              <Card className="h-full mx-auto flex items-center justify-center">
+                <CardContent>
+                  <Background id={id} />
+                </CardContent>
+              </Card>
             </Link>
           </li>
         ))}
