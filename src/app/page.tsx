@@ -9,7 +9,7 @@ export default function Home() {
       <DeveloperCard>
         <Background id={1} />
         <ScoreBoard />
-        <Projects />
+        <Projects userId={"1"} />
       </DeveloperCard>
     </>
   );
