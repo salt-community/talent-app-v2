@@ -1,7 +1,6 @@
 import { backgroundsSeed } from "@/features/backgrounds/seed/seed";
 import { seedProjects } from "@/features/projects/seed";
-import { seedMeili } from "@/lib/meili-search";
-import { seedIdentities } from "@/features";
+import { seedAssignments, seedIdentities } from "@/features";
 import { seedDeveloperProfiles } from "@/features";
 
 (async () => {
@@ -9,7 +8,7 @@ import { seedDeveloperProfiles } from "@/features";
   await Promise.all([
     seedDeveloperProfiles(),
     seedIdentities(),
-    backgroundsSeed(),
+    seedAssignments(),
   ]);
   await seedProjects();
   await seedMeili();
