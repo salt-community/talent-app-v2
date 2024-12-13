@@ -1,9 +1,12 @@
+import { sql } from "drizzle-orm";
 import { pgEnum, pgTable, integer, uuid } from "drizzle-orm/pg-core";
 
 export const roles = pgEnum("roles", ["developer", "client", "core", "admin"]);
 
 export const identities = pgTable("identities", {
-  id: uuid().primaryKey().notNull().default("gen_random_uuid()"),
+  id: uuid()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   clerkId: integer("clerk_id"),
   roles: roles().notNull().default("developer"),
 });
