@@ -24,7 +24,7 @@ export default async function Page({ searchParams }: Props) {
           <li key={id}>
             <Card className="h-full mx-auto flex items-center justify-center">
               <CardContent>
-                <Background id={id} />
+                <Background />
               </CardContent>
             </Card>
           </li>

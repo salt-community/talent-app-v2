@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <DeveloperCard>
-        <Background id={1} />
+        <Background />
         <ScoreBoard />
         <Projects userId={"1"} />
       </DeveloperCard>

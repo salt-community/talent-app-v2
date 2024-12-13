@@ -5,13 +5,13 @@ import { backgroundsTable, BackgroundInsert, BackgroundUpdate } from "./schema";
 export function createRepository(db: Db) {
   return {
     async getAll() {
-      return await db.select().from(backgroundsTable);
+      return await db.select().from(backgroundsTable).orderBy(backgroundsTable.id);
     },
-    async getById(id: number) {
+    async getByUUID(uuid: string) {
       return await db
         .select()
         .from(backgroundsTable)
-        .where(eq(backgroundsTable.id, id));
+        .where(eq(backgroundsTable.uuid, uuid));
     },
     async add(background: BackgroundInsert) {
       return await db.insert(backgroundsTable).values(background);
