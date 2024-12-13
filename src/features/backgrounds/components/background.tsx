@@ -1,9 +1,6 @@
 import { Row } from "./row";
-import { SocialLink } from "./social-link";
 import { BackgroundBasicInfo } from "./basic-info";
 import { backgroundsService } from "../instance";
-
-import { DialogForm } from "./dialog-form";
 import { SkillsBadges } from ".";
 
 export async function Background() {
@@ -17,20 +14,9 @@ export async function Background() {
     <div className="space-y-2 max-w-96">
       <div className="flex justify-between items-start">
         <BackgroundBasicInfo
-          name={background.name}
-          title={background.title}
-          bio={background.bio}
-          avatarURL={background.avatarUrl!}
+          background={background}
         />
-        <ul className="flex gap-1 justify-end items-top h-full">
-          {background.links &&
-            background.links.map((link) => (
-              <li key={link.url} className="h-full flex justify-start">
-                <SocialLink name={link.name} url={link.url} />
-              </li>
-            ))}
-          <DialogForm background={background} />
-        </ul>
+ 
       </div>
 
       <div>
