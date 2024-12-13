@@ -18,6 +18,5 @@ export function FormTextArea({ label }: Props) {
         style={{ maxHeight: "150px", overflowY: "auto" }}
       />
     </div>
-  )
-
+  );
 }
