@@ -5,7 +5,7 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
     return shuffled.slice(0, Math.floor(Math.random() * maxTags) + 1);
 };
 
-export const seedAssignments = async (count = 11) => {
+export const seedAssignments = async (count = 4) => {
     const assignmentTitles = [
         "Build a Responsive Portfolio Website",
         "Create a RESTful API with Node.js",
@@ -35,7 +35,7 @@ export const seedAssignments = async (count = 11) => {
       ];
       
     scoresService.deleteAllAssignments();
-    const allTags = ["Frontend", "Backend", "Conversation", "Team collaboration", "Design", "Management"];
+    const allTags = ["frontend", "backend", "conversation", "team collaboration", "design", "management"];
     const maxTags = allTags.length; 
     for (let i = 0; i < count; i++) {
         const newAssignment = {
