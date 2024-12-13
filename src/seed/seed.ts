@@ -1,16 +1,17 @@
 import { backgroundsSeed } from "@/features/backgrounds/seed/seed";
-import { seedAssignments } from "@/features";
+import { seedScores } from "@/features/scores/seed";
 import { seedProjects } from "@/features/projects/seed";
+import { seedIdentities } from "@/features";
+import { seedDeveloperProfiles } from "@/features";
 
 (async () => {
   console.log("Start seeding...");
-
-  try {
-      await backgroundsSeed();
-      await seedAssignments();
-      await seedProjects();
-      console.log("Done seeding");
-  } catch (error) {
-      console.error("Error during seeding:", error);
-  }
+  await Promise.all([
+    seedScores(),
+    backgroundsSeed(),
+    seedProjects(),
+    seedDeveloperProfiles(),
+    seedIdentities(),
+  ]);
+  console.log("Done seeding...");
 })();

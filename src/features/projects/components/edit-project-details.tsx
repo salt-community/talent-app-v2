@@ -30,13 +30,6 @@ type Props = {
 export default function EditProjectDetails({ project }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
 
-  // const form = useForm<z.infer<typeof updateFormSchema>>({
-  //   resolver: zodResolver(formSchema),
-  //   defaultValues: {
-  //     description: project.description,
-  //   },
-  // });
-
   async function updatePerformance() {
     try {
       setLoading(true);
@@ -47,30 +40,27 @@ export default function EditProjectDetails({ project }: Props) {
     setLoading(false);
     revalidate();
   }
+
   async function onSubmit(values: z.infer<typeof updateFormSchema>) {
     const updateDescription = {
       id: project.id,
       description: values.description,
+      imageUrl: values.imageUrl,
     };
     try {
-      setLoading(true);
       await updateDescriptionAction(updateDescription);
     } catch (error) {
       console.log("error updating performance:", error);
     }
-    setLoading(false);
     revalidate();
   }
-
   async function deleteProject() {
-    try {
-      await deleteProjectAction(project.id);
-      revalidate();
-    } catch (error) {
-      console.log(error);
-    }
+    await deleteProjectAction(project.id);
   }
-
+  const placeholder = {
+    description: project.description,
+    imageUrl: project.imageUrl,
+  };
   return (
     <>
       <Dialog>
@@ -85,10 +75,7 @@ export default function EditProjectDetails({ project }: Props) {
             </DialogDescription>
           </DialogHeader>
           <UpdateScore onClick={updatePerformance} loading={loading} />
-          <UpdateDescription
-            onSubmit={onSubmit}
-            placeholder={project.description}
-          />
+          <UpdateDescription onSubmit={onSubmit} placeholder={placeholder} />
           <DeleteProject onClick={deleteProject} />
         </DialogContent>
       </Dialog>

@@ -6,6 +6,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  Input,
   Textarea,
 } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,17 +15,22 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { updateFormSchema } from "../validation";
+type Placeholder = {
+  description: string;
+  imageUrl: string | null;
+};
 
 type Props = {
   onSubmit: (data: z.infer<typeof updateFormSchema>) => void;
-  placeholder: string;
+  placeholder: Placeholder;
 };
 
 export default function UpdateDescription({ onSubmit, placeholder }: Props) {
   const form = useForm<z.infer<typeof updateFormSchema>>({
     resolver: zodResolver(updateFormSchema),
     defaultValues: {
-      description: placeholder,
+      description: placeholder.description,
+      imageUrl: placeholder.imageUrl!,
     },
   });
   return (
@@ -33,6 +39,13 @@ export default function UpdateDescription({ onSubmit, placeholder }: Props) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-4"
       >
+        <FormItem>
+          <FormLabel>Image</FormLabel>
+          <FormControl>
+            <Input type="text" {...form.register("imageUrl")} />
+          </FormControl>
+          <FormMessage>{form.formState.errors.imageUrl?.message}</FormMessage>
+        </FormItem>
         <FormItem>
           <FormLabel>Description</FormLabel>
           <FormControl>

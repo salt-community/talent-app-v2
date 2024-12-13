@@ -23,6 +23,7 @@ export type ProjectData = {
 export type UpdatedProject = {
   id: string;
   description: string;
+  imageUrl: string;
 };
 export type UpdatedPerformance = {
   id: string;

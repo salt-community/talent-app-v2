@@ -1,9 +1,14 @@
+import { Tag } from "emblor";
+import { SocialLink } from "./schema";
+
 export type Background = {
   name: string;
+  id: number;
+  avatarUrl: string;
   title: string;
-  shortBio: string;
-  languages?: string[];
-  educations?: string[];
-  skills?: string[];
-  links?: string[];
+  bio: string;
+  languages: Tag[];
+  educations: Tag[];
+  skills: Tag[];
+  links: SocialLink[];
 };

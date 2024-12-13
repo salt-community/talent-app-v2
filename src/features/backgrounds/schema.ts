@@ -13,6 +13,32 @@ export const backgroundsTable = pgTable("backgrounds", {
   links: jsonb().$type<SocialLink[]>().notNull(),
 });
 
+export const skills = pgTable("background_skills", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  backroundId: integer()
+    .notNull()
+    .references(() => backgroundsTable.id),
+  name: varchar().notNull(),
+  level: integer().notNull().default(5),
+});
+
+export const educations = pgTable("background_educations", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  backroundId: integer()
+    .notNull()
+    .references(() => backgroundsTable.id),
+  name: varchar().notNull(),
+});
+
+export const languages = pgTable("background_languages", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  backroundId: integer()
+    .notNull()
+    .references(() => backgroundsTable.id),
+  name: varchar().notNull(),
+  level: integer().notNull().default(5),
+});
+
 export type BackgroundInsert = typeof backgroundsTable.$inferInsert;
 export type BackgroundSelect = typeof backgroundsTable.$inferSelect;
 export type BackgroundUpdate = Partial<BackgroundSelect> &
