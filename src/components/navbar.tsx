@@ -1,5 +1,7 @@
 import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
+
 import Link from "next/link";
+import { HamburgerMenu } from "./ui/hamburger-menu";
 
 export async function Header() {
   return (
@@ -16,7 +18,10 @@ export async function Header() {
         <SignedIn>
           <UserButton />
         </SignedIn>
+        <HamburgerMenu />
       </div>
     </nav>
   );
 }
+
+
