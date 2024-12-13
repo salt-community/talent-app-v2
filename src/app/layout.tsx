@@ -17,11 +17,11 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body
-          className={`${roboto.className} antialiased space-y-8 overscroll-none`}
-        >
-          <Header />
-          {children}
+        <body className={`${roboto.className} antialiased overscroll-none p-0`}>
+          <div className="space-y-8">
+            <Header />
+            {children}
+          </div>
         </body>
       </html>
     </ClerkProvider>
