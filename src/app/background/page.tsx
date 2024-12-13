@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <>
       <DeveloperCard>
-        <Background />
+        <Background id={1} />
       </DeveloperCard>
     </>
   );
