@@ -1,6 +1,6 @@
 import { Db } from "@/db";
 // import { createAdminRepository } from "./repository";
-import { developerService } from "../developer/instance";
+import { developerService } from "../developer-profiles/instance";
 
 export function createAdminService(
   db: Db,
