@@ -17,6 +17,7 @@ import { CategoryCheckbox } from './category-checkbox';
 
 
 export function AddAssignment() {
+  const allTags = ["frontend", "backend", "conversation", "team collaboration", "design", "management"];
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [title, setTitle] = useState("");
 
@@ -95,68 +96,9 @@ export function AddAssignment() {
                 Tags
               </label>
               <div className="col-span-3 grid grid-cols-2 gap-2">
-                <CategoryCheckbox label={"frontend"} />
-                <CategoryCheckbox label={"backend"} />
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="conversation"
-                    value="conversation"
-                    id="conversation"
-                    className="focus:ring focus:ring-gray-200"
-                  />
-                  <label
-                    htmlFor="conversation"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Conversation
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="teamCollaboration"
-                    value="teamCollaboration"
-                    id="teamCollaboration"
-                    className="focus:ring focus:ring-gray-200"
-                  />
-                  <label
-                    htmlFor="teamCollaboration"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Team Collaboration
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="design"
-                    value="design"
-                    id="design"
-                    className="focus:ring focus:ring-gray-200"
-                  />
-                  <label
-                    htmlFor="design"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Design
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="management"
-                    value="management"
-                    id="management"
-                    className="focus:ring focus:ring-gray-200"
-                  />
-                  <label
-                    htmlFor="management"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Management
-                  </label>
-                </div>
+                {allTags.map((tag, index) => {
+                  return <CategoryCheckbox key={index} label={tag}/>
+                })}
               </div>
             </div>
           </div>
