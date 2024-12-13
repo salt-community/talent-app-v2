@@ -15,6 +15,7 @@ export function InputField({ label, inputType, value, handleChangeInput }: Props
         type={inputType}
         name={label.toLowerCase()}
         value={value}
+        {...(label === "Score" ? { min: 0, max: 100 } : {})}
         className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none"
         onChange={(e) => {
           if (handleChangeInput) handleChangeInput(e.target.value, label);
