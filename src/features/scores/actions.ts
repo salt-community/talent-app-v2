@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { scoresService } from "./instance";
 import { AssignmentUpdates } from "./types";
 
@@ -7,10 +8,9 @@ export async function addAssigmentAction(formData: FormData) {
   const comment = formData.get("comment") as string;
   const score = formData.get("score") as string;
   const tags: string[] = [];
-  const individualCommunication = formData.get(
-    "individualCommunication"
-  ) as string;
-  if (individualCommunication) tags.push("individualCommunication")
+
+  const conversation = formData.get("conversation") as string;
+  if (conversation) tags.push("conversation")
 
   const teamCollaboration = formData.get("teamCollaboration") as string;
   if (teamCollaboration) tags.push("teamCollaboration")
@@ -37,6 +37,7 @@ export async function addAssigmentAction(formData: FormData) {
   };
 
   scoresService.addAssignment(newAssignment);
+  revalidatePath('/')
 }
 
 export async function editAssigmentAction(formData: FormData) {
@@ -57,10 +58,9 @@ export async function editAssigmentAction(formData: FormData) {
   if (score) updatedAssignment["score"] = Number(score);
 
   const tags: string[] = [];
-  const individualCommunication = formData.get(
-    "individualCommunication"
-  ) as string;
-  if (individualCommunication) tags.push("individualCommunication")
+
+  const conversation = formData.get("conversation") as string;
+  if (conversation) tags.push("conversation")
 
   const teamCollaboration = formData.get("teamCollaboration") as string;
   if (teamCollaboration) tags.push("teamCollaboration")
@@ -79,6 +79,6 @@ export async function editAssigmentAction(formData: FormData) {
 
     updatedAssignment["tags"] = tags;
 
-
   scoresService.updateAssignment(Number(assignmentId), updatedAssignment);
+  revalidatePath('/')
 }
