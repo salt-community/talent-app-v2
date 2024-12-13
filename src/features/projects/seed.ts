@@ -2,6 +2,7 @@ import { projectService } from "./instance";
 
 export async function seedProjects() {
   const developersProfiles = await projectService.getAllDevelopers();
+  console.log(developersProfiles);
   const projects = [
     {
       repository: "https://github.com/DefyCab/contractor-companion",
@@ -9,7 +10,7 @@ export async function seedProjects() {
         "KYC360 is a full-stack application designed to streamline the KYC (Know Your Customer) process for bank employees. This system ensures compliance with GDPR by enabling secure and efficient document collection directly from customers.",
       imageUrl: "byggmax.jpg",
       projectWebsite: "",
-      userId: developersProfiles[0].id.toString(),
+      userId: developersProfiles[0].id,
     },
     {
       repository: "https://github.com/Infinite-Loopers2024/slow-chat-final",
@@ -17,7 +18,7 @@ export async function seedProjects() {
         "This project is a showcase of my skills, experience, and a little about myself.",
       imageUrl: "chat.png",
       projectWebsite: "",
-      userId: developersProfiles[1].id.toString(),
+      userId: developersProfiles[1].id,
     },
   ];
 

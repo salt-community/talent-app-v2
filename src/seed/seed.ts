@@ -6,10 +6,10 @@ import { seedDeveloperProfiles } from "@/features";
 (async () => {
   console.log("Start seeding...");
   await Promise.all([
-    backgroundsSeed(),
-    seedProjects(),
     seedDeveloperProfiles(),
     seedIdentities(),
+    backgroundsSeed(),
   ]);
+  await seedProjects();
   console.log("Done seeding...");
 })();

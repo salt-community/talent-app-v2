@@ -1,8 +1,8 @@
 import { db } from "@/db";
 import { createService } from "./service";
-import { developerService } from "../developer/instance";
+import { dashboardService } from "../identity-access-management/instance";
 
 export const projectService = createService(
   db,
-  developerService.getAllDeveloperProfiles
+  dashboardService.getAllIdentities
 );

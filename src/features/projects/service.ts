@@ -5,15 +5,12 @@ import { createClient } from "./api/api";
 import { DeveloperProfile, ProjectData, UpdatedProject } from "./types";
 import { extractRepositoryDetails } from "./logic";
 
-export function createService(
-  db: Db,
-  getAllDeveloperProfiles: DeveloperProfile
-) {
+export function createService(db: Db, getAllIdentities: DeveloperProfile) {
   const reps = createRepository(db);
   const client = createClient();
   return {
     getAllDevelopers: async () => {
-      return await getAllDeveloperProfiles();
+      return await getAllIdentities();
     },
     getAll: async (userId: string) => {
       return await reps.getAll(userId);

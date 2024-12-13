@@ -1,4 +1,4 @@
-import { developerService } from "../developer/instance";
+import { dashboardService } from "../identity-access-management/instance";
 
 export type Project = {
   id: string;
@@ -32,4 +32,4 @@ export type UpdatedPerformance = {
   newPerformanceScore: string;
 };
 
-export type DeveloperProfile = typeof developerService.getAllDeveloperProfiles;
+export type DeveloperProfile = typeof dashboardService.getAllIdentities;
