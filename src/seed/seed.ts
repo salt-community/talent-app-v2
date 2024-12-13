@@ -11,6 +11,7 @@ import { seedMeili } from "@/lib/meili-search";
     seedIdentities(),
     backgroundsSeed(),
     seedAssignments()
+
   ]);
   await seedProjects();
   await seedMeili();
