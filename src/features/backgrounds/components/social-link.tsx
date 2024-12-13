@@ -1,7 +1,7 @@
 "use client";
 
 import { FaGithub } from "react-icons/fa6";
-import type { SocialLink } from "../schema";
+import type { SocialLink } from "../db";
 import { useRouter } from "next/navigation";
 
 type Props = SocialLink & { size?: number };

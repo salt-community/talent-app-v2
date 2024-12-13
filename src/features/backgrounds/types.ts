@@ -1,5 +1,5 @@
 import { Tag } from "emblor";
-import { SocialLink } from "./schema";
+import { SocialLink } from "./db";
 
 export type Background = {
   id: number;

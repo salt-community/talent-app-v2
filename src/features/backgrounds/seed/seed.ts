@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { createRepository } from "../repository";
-import { BackgroundInsert } from "../schema";
+import { BackgroundInsert } from "../db";
 import { skills } from "./data";
 import { db } from "@/db";
 import { syncBackgroundSearchIndex } from "../../../../meili-search";

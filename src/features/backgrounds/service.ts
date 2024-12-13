@@ -1,5 +1,5 @@
 import { Repository } from "./repository";
-import { BackgroundInsert, BackgroundUpdate } from "./schema";
+import { BackgroundInsert, BackgroundUpdate } from "./db";
 import { ServiceMethods } from "./types";
 
 export function createBackgroundsService(
