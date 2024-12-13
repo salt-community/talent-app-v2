@@ -1,8 +1,8 @@
 import { backgroundsSeed } from "@/features/backgrounds/seed/seed";
 import { seedProjects } from "@/features/projects/seed";
-import { seedMeili } from "@/lib/meili-search";
-import { seedIdentities } from "@/features";
+import { seedAssignments, seedIdentities } from "@/features";
 import { seedDeveloperProfiles } from "@/features";
+import { seedMeili } from "@/lib/meili-search";
 
 (async () => {
   console.log("Start seeding...");
@@ -10,6 +10,7 @@ import { seedDeveloperProfiles } from "@/features";
     seedDeveloperProfiles(),
     seedIdentities(),
     backgroundsSeed(),
+    seedAssignments()
   ]);
   await seedProjects();
   await seedMeili();

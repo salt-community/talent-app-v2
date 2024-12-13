@@ -1,6 +1,12 @@
 "use client";
 
-import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart } from "recharts";
+import {
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
+  RadarChart,
+} from "recharts";
 import { CardContent } from "@/components/ui/card";
 import {
   ChartConfig,
@@ -24,15 +30,30 @@ type Props = {
 
 export function SpiderGraph({ assignments }: Props) {
   const chartData = [
-    { category: "Frontend", score: calculateAverageCategoryScore(assignments, "Frontend") },
-    { category: "Backend", score: calculateAverageCategoryScore(assignments, "Backend") },
+    {
+      category: "Frontend",
+      score: calculateAverageCategoryScore(assignments, "Frontend"),
+    },
+    {
+      category: "Backend",
+      score: calculateAverageCategoryScore(assignments, "Backend"),
+    },
     {
       category: "Conversation",
       score: calculateAverageCategoryScore(assignments, "Conversation"),
     },
-    { category: "Team collaboration", score: calculateAverageCategoryScore(assignments, "Team collaboration") },
-    { category: "Design", score: calculateAverageCategoryScore(assignments, "Design")},
-    { category: "Management", score: calculateAverageCategoryScore(assignments, "Management") },
+    {
+      category: "Team collaboration",
+      score: calculateAverageCategoryScore(assignments, "Team collaboration"),
+    },
+    {
+      category: "Design",
+      score: calculateAverageCategoryScore(assignments, "Design"),
+    },
+    {
+      category: "Management",
+      score: calculateAverageCategoryScore(assignments, "Management"),
+    },
   ];
 
   return (
@@ -50,12 +71,12 @@ export function SpiderGraph({ assignments }: Props) {
             }}
             tickLine={false}
           />
-          <PolarRadiusAxis 
-            angle={30} 
-            domain={[0, 100]} 
-            axisLine={false} 
+          <PolarRadiusAxis
+            angle={30}
+            domain={[0, 100]}
+            axisLine={false}
             tick={false}
-          /> 
+          />
           <Radar
             dataKey="score"
             stroke="#6b7280"
