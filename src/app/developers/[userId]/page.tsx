@@ -3,18 +3,17 @@ import { Background } from "@/features/backgrounds/components";
 import { Projects } from "@/features";
 import { ScoreBoard } from "@/features/scores";
 
-type Props = {
-  params: Promise<{ id: string }>;
-};
-
-export default async function DeveloperDetailPage({ params }: Props) {
-  const id = (await params).id;
+export default async function DeveloperDetailPage({
+  params,
+}: {
+  params: Promise<{ userId: string }>;
+}) {
   return (
     <>
       <DeveloperCard>
         <Background id={1} />
         <ScoreBoard />
-        <Projects id={id} />
+        <Projects userId={(await params).userId} />
       </DeveloperCard>
     </>
   );
