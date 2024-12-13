@@ -16,12 +16,12 @@ export function HamburgerMenu() {
   const isActive = (path: string) => pathname === path;
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="link">
+      <SheetTrigger asChild className="p-0">
+        <Button className="p-1 h-auto rounded-none hover:bg-accent" variant="link">
           <MenuIcon />
         </Button>
       </SheetTrigger>
-      <SheetContent className="pt-3">
+      <SheetContent className="pt-4">
         <SheetHeader className="p-0 m-0">
           <SheetTitle className="text-xl">{"<salt/>"}</SheetTitle>
         </SheetHeader>
