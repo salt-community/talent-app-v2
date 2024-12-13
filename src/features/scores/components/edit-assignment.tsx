@@ -114,12 +114,12 @@ export function EditAssignment({ assignment }: Props) {
                     value="frontend"
                     id="frontend"
                     className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("Frontend")}
+                    checked={tags.includes("frontend")}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        setTags([...tags, "Frontend"]);
+                        setTags([...tags, "frontend"]);
                       } else {
-                        setTags(tags.filter((tag) => tag !== "Frontend"));
+                        setTags(tags.filter((tag) => tag !== "frontend"));
                       }
                     }}
 
@@ -138,12 +138,12 @@ export function EditAssignment({ assignment }: Props) {
                     value="backend"
                     id="backend"
                     className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("Backend")}
+                    checked={tags.includes("backend")}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        setTags([...tags, "Backend"]);
+                        setTags([...tags, "backend"]);
                       } else {
-                        setTags(tags.filter((tag) => tag !== "Backend"));
+                        setTags(tags.filter((tag) => tag !== "backend"));
                       }
                     }}
                   />
@@ -161,12 +161,12 @@ export function EditAssignment({ assignment }: Props) {
                     value="conversation"
                     id="conversation"
                     className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("Conversation")}
+                    checked={tags.includes("conversation")}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        setTags([...tags, "Conversation"]);
+                        setTags([...tags, "conversation"]);
                       } else {
-                        setTags(tags.filter((tag) => tag !== "Conversation"));
+                        setTags(tags.filter((tag) => tag !== "conversation"));
                       }
                     }}
                   />
@@ -184,12 +184,12 @@ export function EditAssignment({ assignment }: Props) {
                     value="teamCollaboration"
                     id="teamCollaboration"
                     className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("Team collaboration")}
+                    checked={tags.includes("teamCollaboration")}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        setTags([...tags, "Team collaboration"]);
+                        setTags([...tags, "teamCollaboration"]);
                       } else {
-                        setTags(tags.filter((tag) => tag !== "Team collaboration"));
+                        setTags(tags.filter((tag) => tag !== "teamCollaboration"));
                       }
                     }}
                   />
@@ -207,12 +207,12 @@ export function EditAssignment({ assignment }: Props) {
                     value="design"
                     id="design"
                     className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("Design")}
+                    checked={tags.includes("design")}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        setTags([...tags, "Design"]);
+                        setTags([...tags, "design"]);
                       } else {
-                        setTags(tags.filter((tag) => tag !== "Design"));
+                        setTags(tags.filter((tag) => tag !== "design"));
                       }
                     }}
                   />
@@ -230,12 +230,12 @@ export function EditAssignment({ assignment }: Props) {
                     value="management"
                     id="management"
                     className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("Management")}
+                    checked={tags.includes("management")}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        setTags([...tags, "Management"]);
+                        setTags([...tags, "management"]);
                       } else {
-                        setTags(tags.filter((tag) => tag !== "Management"));
+                        setTags(tags.filter((tag) => tag !== "management"));
                       }
                     }}
                   />
