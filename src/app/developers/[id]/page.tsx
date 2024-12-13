@@ -3,11 +3,8 @@ import { Background } from "@/features/backgrounds/components";
 import { Projects } from "@/features";
 import { ScoreBoard } from "@/features/scores";
 
-type Params = {
-  id: string;
-};
 type Props = {
-  params: Params;
+  params: { id: string };
 };
 
 export default async function DeveloperDetailPage({ params }: Props) {
