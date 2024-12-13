@@ -1,6 +1,6 @@
 import { backgroundsSeed } from "@/features/backgrounds/seed/seed";
 import { seedProjects } from "@/features/projects/seed";
-import { seedIdentities } from "@/features";
+import { seedAssignments, seedIdentities } from "@/features";
 import { seedDeveloperProfiles } from "@/features";
 
 (async () => {
@@ -10,6 +10,7 @@ import { seedDeveloperProfiles } from "@/features";
     seedProjects(),
     seedDeveloperProfiles(),
     seedIdentities(),
+    seedAssignments(),
   ]);
   console.log("Done seeding...");
 })();
