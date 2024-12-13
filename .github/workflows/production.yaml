@@ -16,20 +16,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - uses: npm/action-setup@v4
-        name: Install npm
-        with:
-          version: 9
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: "npm"
-
       - name: Install Vercel CLI
-        run: npm add --global vercel@latest
+        run: npm install --global vercel@latest
 
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
