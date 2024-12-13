@@ -1,4 +1,3 @@
-import { get } from "http";
 import { hasAccess } from "./privileges";
 import { Repository } from "./repository";
 import { IdentityInsert } from "./schema";

@@ -1,4 +1,4 @@
-import { IdentityInsert, roles } from "./schema";
+import { IdentityInsert } from "./schema";
 import { createService } from "./service";
 import { createRepository } from "./repository";
 import { db } from "@/db";

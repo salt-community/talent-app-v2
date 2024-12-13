@@ -1,12 +1,12 @@
 import { Db } from "@/db";
-import { createAdminRepository } from "./repository";
+// import { createAdminRepository } from "./repository";
 import { developerService } from "../developer/instance";
 
 export function createAdminService(
   db: Db,
   getAllDeveloperProfiles: typeof developerService.getAllDeveloperProfiles
 ) {
-  const repository = createAdminRepository(db);
+  // const repository = createAdminRepository(db);
   return {
     getAllDeveloperProfiles() {
       return getAllDeveloperProfiles();
