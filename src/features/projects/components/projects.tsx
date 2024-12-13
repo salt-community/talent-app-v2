@@ -3,9 +3,12 @@ import { projectService } from "../instance";
 import ProjectDetails from "./project-details";
 import ProjectForm from "./project-form";
 
-export async function Projects() {
-  const userId = "ecd3c615-35d6-4890-b867-4e51a411f34d";
-  const data = await projectService.getAll(userId);
+type Props = {
+  id: string;
+};
+
+export async function Projects({ id }: Props) {
+  const data = await projectService.getAll(id);
   const projects = data.sort((a, b) => a.title.localeCompare(b.title));
 
   const mockUser = {
