@@ -7,7 +7,7 @@ export function createRepository(db: Db) {
     async getAllIdentities() {
       return await db.select().from(identities);
     },
-    async getIdentityById(id: number) {
+    async getIdentityById(id: string) {
       return await db.select().from(identities).where(eq(identities.id, id));
     },
     async addIdentity(identity: IdentityInsert) {
