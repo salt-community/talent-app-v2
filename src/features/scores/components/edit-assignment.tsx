@@ -32,9 +32,8 @@ export function EditAssignment({ assignment }: Props) {
 
   const handleChangeInput = (inputValue: string, label: string) => {
     if (label === "Title") setTitle(inputValue);
-    if (label === "Score") setTitle(inputValue);
-    if (label === "Comment") setTitle(inputValue);
-    if (label === "Tags") setTitle(inputValue);
+    if (label === "Score") setScore(Number(inputValue));
+    if (label === "Comment") setComment(inputValue);
   };
 
   return (
@@ -63,11 +62,20 @@ export function EditAssignment({ assignment }: Props) {
             <InputField
               label="Title"
               inputType="text"
+              value={title}
               handleChangeInput={handleChangeInput}
             />
-            <InputField label="Score" inputType="number" />
-
-            <FormTextArea label="Comment" />
+            <InputField 
+              label="Score" 
+              inputType="number" 
+              value={score} 
+              handleChangeInput={handleChangeInput}
+            />
+            <FormTextArea 
+              label="Comment" 
+              value={comment} 
+              handleChangeInput={handleChangeInput} 
+            />
             <div className="grid grid-cols-4 items-start gap-4">
               <FormLabel label="Tags" />
               <div className="col-span-3 grid grid-cols-2 gap-2">
