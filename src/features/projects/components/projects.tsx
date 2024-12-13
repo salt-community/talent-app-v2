@@ -4,11 +4,11 @@ import ProjectDetails from "./project-details";
 import ProjectForm from "./project-form";
 
 type Props = {
-  id: string;
+  userId: string;
 };
 
-export async function Projects({ id }: Props) {
-  const data = await projectService.getAll(id);
+export async function Projects({ userId }: Props) {
+  const data = await projectService.getAll(userId);
   const projects = data.sort((a, b) => a.title.localeCompare(b.title));
 
   if (projects.length === 0) {
@@ -19,7 +19,7 @@ export async function Projects({ id }: Props) {
           <p>Add your projects here</p>
         </div>
         <div className="flex justify-end">
-          <ProjectForm userId={id} />
+          <ProjectForm userId={userId} />
         </div>
       </div>
     );
@@ -30,14 +30,14 @@ export async function Projects({ id }: Props) {
       <H2>Projects</H2>
       <div className="flex flex-col justify-center mt-4">
         {projects.map((project) => (
-          <div key={project.id}>
+          <div key={project.userId}>
             <ProjectDetails project={project} />
             <Separator className="mt-4 mb-6" />
           </div>
         ))}
       </div>
       <div className="flex justify-end mb-4">
-        <ProjectForm userId={id} />
+        <ProjectForm userId={userId} />
       </div>
     </div>
   );
