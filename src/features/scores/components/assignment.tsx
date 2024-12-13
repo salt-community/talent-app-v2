@@ -18,12 +18,12 @@ export function Assignment({ assignment }: Props) {
       <AccordionItem value="item-1">
         <div>
           <div className="flex pr-2 mt-2 justify-end">
-        <EditAssignment assignment={assignment}/>
-        </div>
-        <AccordionTrigger>
-          <ProgressRing percentage={assignment.score} />
-          <span className="px-4">{assignment.title}</span>
-        </AccordionTrigger>
+            <EditAssignment assignment={assignment} />
+          </div>
+          <AccordionTrigger>
+            <ProgressRing percentage={assignment.score} />
+            <span className="px-4">{assignment.title}</span>
+          </AccordionTrigger>
         </div>
 
         <AccordionContent>

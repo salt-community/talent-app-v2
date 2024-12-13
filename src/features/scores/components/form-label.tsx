@@ -1,6 +1,6 @@
 type Props = {
   label: string;
-}
+};
 
 export function FormLabel({ label }: Props) {
   return (

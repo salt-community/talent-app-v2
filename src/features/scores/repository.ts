@@ -5,14 +5,17 @@ import { AssignmentUpdates, NewAssignment } from "./types";
 
 export function createRepository(db: Db) {
   return {
-    async addAssignment(newAssigment: NewAssignment){
-      await db.insert(assignmentTable).values(newAssigment)
+    async addAssignment(newAssigment: NewAssignment) {
+      await db.insert(assignmentTable).values(newAssigment);
     },
     async getAssignmentsById(userId: number) {
-      return await db.select().from(assignmentTable).where(eq(assignmentTable.userId, userId))
+      return await db
+        .select()
+        .from(assignmentTable)
+        .where(eq(assignmentTable.userId, userId));
     },
     async deleteAllAssignments() {
-      await db.delete(assignmentTable)
+      await db.delete(assignmentTable);
     },
     async deleteAssignment(id: number) {
       await db.delete(assignmentTable).where(eq(assignmentTable.id, id));
@@ -29,6 +32,6 @@ export function createRepository(db: Db) {
         .set(updates)
         .where(eq(assignmentTable.id, id))
         .returning();
-    }
+    },
   };
 }

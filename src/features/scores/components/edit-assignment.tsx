@@ -35,7 +35,6 @@ export function EditAssignment({ assignment }: Props) {
     if (label === "Score") setTitle(inputValue);
     if (label === "Comment") setTitle(inputValue);
     if (label === "Tags") setTitle(inputValue);
-
   };
 
   return (

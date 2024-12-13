@@ -6,24 +6,25 @@ import { assignmentUpdates } from "./zod-validation";
 export const createService = (db: Db) => {
   const repository = createRepository(db);
   return {
-     addAssignment: async (newAssigment: NewAssignment) => {
+    addAssignment: async (newAssigment: NewAssignment) => {
       await repository.addAssignment(newAssigment);
     },
     getAssignmentsByUserId: async (userId: number) => {
-      return await repository.getAssignmentsById(userId)
+      return await repository.getAssignmentsById(userId);
     },
     deleteAllAssignments: async () => {
-      await repository.deleteAllAssignments()
+      await repository.deleteAllAssignments();
     },
     deleteAssignment: async (id: number) => {
       await repository.deleteAssignment(id);
     },
-    getAssignmentById: async (id: number) => { 
+    getAssignmentById: async (id: number) => {
       const assignment = await repository.getAssignmentById(id);
-      if (assignment.length === 0) console.error("Error occured when getting assignment")
+      if (assignment.length === 0)
+        console.error("Error occured when getting assignment");
       return assignment[0];
     },
-    updateAssignment: async (id: number, rawData: AssignmentUpdates) => { 
+    updateAssignment: async (id: number, rawData: AssignmentUpdates) => {
       const updates = assignmentUpdates.parse(rawData); // Kan kasta fel som måste tas om hand.
       return await repository.updateAssigment(id, updates);
     },
