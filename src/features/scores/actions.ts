@@ -1,7 +1,6 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { scoresService } from "./instance";
-import { AssignmentUpdates } from "./types";
 import { getFormData } from "./utils";
 
 export async function addAssigmentAction(formData: FormData) {
