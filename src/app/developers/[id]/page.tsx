@@ -4,16 +4,17 @@ import { Projects } from "@/features";
 import { ScoreBoard } from "@/features/scores";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default async function DeveloperDetailPage({ params }: Props) {
+  const id = (await params).id;
   return (
     <>
       <DeveloperCard>
         <Background id={1} />
         <ScoreBoard />
-        <Projects id={params.id} />
+        <Projects id={id} />
       </DeveloperCard>
     </>
   );
