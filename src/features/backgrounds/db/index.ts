@@ -1,3 +1,3 @@
 export * from "./schema";
-export * from "./relations";
+export * from "./relations.schema";
 export * from "./db";
