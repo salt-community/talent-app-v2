@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components";
 import { Background } from "@/features/backgrounds/components";
 import { MeiliSearch } from "meilisearch";
 import { Search } from "./search";
+import Link from "next/link";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 export default async function Page({ searchParams }: Props) {
@@ -22,11 +23,15 @@ export default async function Page({ searchParams }: Props) {
       <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {ids.map((id) => (
           <li key={id}>
-            <Card className="h-full mx-auto flex items-center justify-center">
-              <CardContent>
-                <Background id={id} />
-              </CardContent>
-            </Card>
+            <Link href={`/developers/${id}`}>
+              <div>
+                <Card className="h-full mx-auto flex items-center justify-center">
+                  <CardContent>
+                    <Background id={id} />
+                  </CardContent>
+                </Card>
+              </div>
+            </Link>
           </li>
         ))}
       </ul>
