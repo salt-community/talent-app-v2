@@ -2,7 +2,6 @@ import { projectService } from "./instance";
 
 export async function seedProjects() {
   const developersProfiles = await projectService.getAllDevelopers();
-  console.log(developersProfiles);
   const projects = [
     {
       repository: "https://github.com/DefyCab/contractor-companion",
