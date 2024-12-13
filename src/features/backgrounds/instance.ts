@@ -1,4 +1,4 @@
-import { db } from "@/db";
+import { db } from "./db";
 import { createRepository } from "./repository";
 import { createBackgroundsService } from "./service";
 import { syncBackgroundSearchIndex } from "../../../meili-search";

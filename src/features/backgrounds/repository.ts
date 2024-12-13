@@ -1,14 +1,15 @@
-import { Db } from "@/db";
 import { eq } from "drizzle-orm";
-import { backgrounds, BackgroundInsert, BackgroundUpdate } from "./db";
+import { backgrounds, BackgroundInsert, BackgroundUpdate, DB } from "./db";
 
-export function createRepository(db: Db) {
+export function createRepository(db: DB) {
   return {
     async getAll() {
-      return await db.select().from(backgrounds).orderBy(backgrounds.id);;
+      return await db.query.backgrounds.findMany();
     },
     async getById(id: number) {
-      return await db.select().from(backgrounds).where(eq(backgrounds.id, id));
+      return await db.query.backgrounds.findFirst({
+        where: eq(backgrounds.id, id),
+      });
     },
     async add(background: BackgroundInsert) {
       return await db.insert(backgrounds).values(background);
