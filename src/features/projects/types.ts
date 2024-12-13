@@ -1,3 +1,5 @@
+import { developerService } from "../developer/instance";
+
 export type Project = {
   id: string;
   userId: string;
@@ -29,3 +31,5 @@ export type UpdatedPerformance = {
   id: string;
   newPerformanceScore: string;
 };
+
+export type DeveloperProfile = typeof developerService.getAllDeveloperProfiles;
