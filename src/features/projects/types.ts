@@ -1,4 +1,4 @@
-import { developerService } from "../developer/instance";
+import { developerService } from "../developer-profiles/instance";
 
 export type Project = {
   id: string;

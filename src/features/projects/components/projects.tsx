@@ -11,10 +11,6 @@ export async function Projects({ id }: Props) {
   const data = await projectService.getAll(id);
   const projects = data.sort((a, b) => a.title.localeCompare(b.title));
 
-  const mockUser = {
-    userId: "ecd3c615-35d6-4890-b867-4e51a411f34d",
-  };
-
   if (projects.length === 0) {
     return (
       <div>
@@ -23,7 +19,7 @@ export async function Projects({ id }: Props) {
           <p>Add your projects here</p>
         </div>
         <div className="flex justify-end">
-          <ProjectForm userId={mockUser.userId} />
+          <ProjectForm userId={id} />
         </div>
       </div>
     );
@@ -41,7 +37,7 @@ export async function Projects({ id }: Props) {
         ))}
       </div>
       <div className="flex justify-end mb-4">
-        <ProjectForm userId={mockUser.userId} />
+        <ProjectForm userId={id} />
       </div>
     </div>
   );
