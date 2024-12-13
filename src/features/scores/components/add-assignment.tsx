@@ -14,13 +14,14 @@ import {
 import { addAssigmentAction } from "../actions";
 import { useState } from 'react';
 import { CategoryCheckbox } from './category-checkbox';
-
+import { categoryTags } from '../categories';
+import { InputField } from './input-field';
+import { FormTextArea } from './form-text-area';
+import { FormLabel } from './form-label';
 
 export function AddAssignment() {
-  const allTags = ["frontend", "backend", "conversation", "team collaboration", "design", "management"];
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [title, setTitle] = useState("");
-
   
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -41,62 +42,15 @@ export function AddAssignment() {
             Fill out the details below to add a new assignment.
           </DialogDescription>
         </DialogHeader>
-        <form action={addAssigmentAction} className="space-y-4">
+        <form action={addAssigmentAction} className="space-y-4">          
           <div className="grid gap-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label
-                htmlFor="title"
-                className="text-right text-sm text-gray-700"
-              >
-                Title
-              </label>
-              <input
-                type="text"
-                name="title"
-                className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none"
-                onChange={(e) => (setTitle(e.target.value))}
-                required
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label
-                htmlFor="score"
-                className="text-right text-sm text-gray-700"
-              >
-                Score
-              </label>
-              <input
-                type="number"
-                min="0"
-                max="100"
-                name="score"
-                className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none"
-                required
-              />
-            </div>
+            <InputField label="Title" inputType="text" handleChangeTitle={setTitle} />
+            <InputField label="Score" inputType="number" />
+            <FormTextArea label="Comment" />
             <div className="grid grid-cols-4 items-start gap-4">
-              <label
-                htmlFor="comment"
-                className="text-right text-sm text-gray-700 mt-1"
-              >
-                Comments
-              </label>
-              <textarea
-                name="comment"
-                className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none resize-none"
-                rows={3}
-                style={{ maxHeight: "150px", overflowY: "auto" }}
-              />
-            </div>
-            <div className="grid grid-cols-4 items-start gap-4">
-              <label
-                htmlFor="Tags"
-                className="text-right text-sm text-gray-700 mt-1"
-              >
-                Tags
-              </label>
+              <FormLabel label="Tags" />
               <div className="col-span-3 grid grid-cols-2 gap-2">
-                {allTags.map((tag, index) => {
+                {categoryTags.map((tag, index) => {
                   return <CategoryCheckbox key={index} label={tag}/>
                 })}
               </div>
