@@ -3,7 +3,6 @@ import { BackgroundAvatar } from "./avatar";
 import { Background } from "../types";
 import { SocialLink } from "./social-link";
 import { DialogForm } from "./dialog-form";
-
 type Props = { background: Background };
 
 export function BackgroundBasicInfo({ background }: Props) {
