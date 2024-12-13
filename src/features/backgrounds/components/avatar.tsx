@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar"; 
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 type Props = {
   url: string;

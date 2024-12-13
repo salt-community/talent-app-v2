@@ -23,5 +23,3 @@ export async function Header() {
     </nav>
   );
 }
-
-

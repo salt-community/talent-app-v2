@@ -5,7 +5,10 @@ import { backgroundsTable, BackgroundInsert, BackgroundUpdate } from "./schema";
 export function createRepository(db: Db) {
   return {
     async getAll() {
-      return await db.select().from(backgroundsTable).orderBy(backgroundsTable.id);
+      return await db
+        .select()
+        .from(backgroundsTable)
+        .orderBy(backgroundsTable.id);
     },
     async getByUUID(uuid: string) {
       return await db

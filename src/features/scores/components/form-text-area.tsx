@@ -14,7 +14,7 @@ export function FormTextArea({ label, value, handleChangeInput }: Props) {
         name={label.toLowerCase()}
         {...(value ? { value } : {})}
         onChange={(e) => {
-          if (handleChangeInput) handleChangeInput(e.target.value, label)
+          if (handleChangeInput) handleChangeInput(e.target.value, label);
         }}
         className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none resize-none"
         rows={3}

@@ -4,7 +4,7 @@ import { developerService } from "../developer-profiles/instance";
 
 export function createAdminService(
   db: Db,
-  getAllDeveloperProfiles: typeof developerService.getAllDeveloperProfiles
+  getAllDeveloperProfiles: typeof developerService.getAllDeveloperProfiles,
 ) {
   // const repository = createAdminRepository(db);
   return {

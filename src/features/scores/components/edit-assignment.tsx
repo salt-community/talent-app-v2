@@ -65,16 +65,16 @@ export function EditAssignment({ assignment }: Props) {
               value={title}
               handleChangeInput={handleChangeInput}
             />
-            <InputField 
-              label="Score" 
-              inputType="number" 
-              value={score} 
+            <InputField
+              label="Score"
+              inputType="number"
+              value={score}
               handleChangeInput={handleChangeInput}
             />
-            <FormTextArea 
-              label="Comment" 
-              value={comment} 
-              handleChangeInput={handleChangeInput} 
+            <FormTextArea
+              label="Comment"
+              value={comment}
+              handleChangeInput={handleChangeInput}
             />
             <div className="grid grid-cols-4 items-start gap-4">
               <FormLabel label="Tags" />
@@ -161,7 +161,7 @@ export function EditAssignment({ assignment }: Props) {
                         setTags([...tags, "teamCollaboration"]);
                       } else {
                         setTags(
-                          tags.filter((tag) => tag !== "teamCollaboration")
+                          tags.filter((tag) => tag !== "teamCollaboration"),
                         );
                       }
                     }}

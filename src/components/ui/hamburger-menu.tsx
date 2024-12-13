@@ -17,7 +17,10 @@ export function HamburgerMenu() {
   return (
     <Sheet>
       <SheetTrigger asChild className="p-0">
-        <Button className="p-1 h-auto rounded-none hover:bg-accent" variant="link">
+        <Button
+          className="p-1 h-auto rounded-none hover:bg-accent"
+          variant="link"
+        >
           <MenuIcon />
         </Button>
       </SheetTrigger>
