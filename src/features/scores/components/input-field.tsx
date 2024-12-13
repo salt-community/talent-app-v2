@@ -2,8 +2,8 @@ import { FormLabel } from "./form-label";
 
 type Props = {
   label: string;
-  inputType: "text" | "number"
-  handleChangeInput?: (inputValue: string, label: string) => void
+  inputType: "text" | "number";
+  handleChangeInput?: (inputValue: string, label: string) => void;
 };
 
 export function InputField({ label, inputType, handleChangeInput }: Props) {
@@ -15,7 +15,7 @@ export function InputField({ label, inputType, handleChangeInput }: Props) {
         name={label.toLowerCase()}
         className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none"
         onChange={(e) => {
-          if (handleChangeInput) handleChangeInput(e.target.value, label)
+          if (handleChangeInput) handleChangeInput(e.target.value, label);
         }}
         required
       />
