@@ -14,18 +14,29 @@ import { editAssigmentAction } from "../actions";
 import { Assignment } from "../types";
 import { useState } from "react";
 
-type Props = {
-    assignment: Assignment
-}
+import { InputField } from "./input-field";
+import { FormTextArea } from "./form-text-area";
+import { FormLabel } from "./form-label";
+//import { useDebouncedCallback } from 'use-debounce';
 
+type Props = {
+  assignment: Assignment;
+};
 
 export function EditAssignment({ assignment }: Props) {
-    const [score, setScore] = useState(assignment.score);
-    const [title, setTitle] = useState(assignment.title);
-    const [comment, setComment] = useState(assignment.comment);
-    const [tags, setTags] = useState(assignment.tags);
-    const [isDialogOpen, setIsDialogOpen] = useState(false); 
-    //import { useDebouncedCallback } from 'use-debounce';
+  const [score, setScore] = useState(assignment.score);
+  const [title, setTitle] = useState(assignment.title);
+  const [comment, setComment] = useState(assignment.comment);
+  const [tags, setTags] = useState(assignment.tags);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleChangeInput = (inputValue: string, label: string) => {
+    if (label === "Title") setTitle(inputValue);
+    if (label === "Score") setTitle(inputValue);
+    if (label === "Comment") setTitle(inputValue);
+    if (label === "Tags") setTitle(inputValue);
+
+  };
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -47,65 +58,19 @@ export function EditAssignment({ assignment }: Props) {
           </DialogDescription>
         </DialogHeader>
         <form action={editAssigmentAction} className="space-y-4">
-        <input type="hidden" name="assignmentId" value={assignment.id} />
-        <input type="hidden" name="userId" value={assignment.userId} />
+          <input type="hidden" name="assignmentId" value={assignment.id} />
+          <input type="hidden" name="userId" value={assignment.userId} />
           <div className="grid gap-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label
-                htmlFor="title"
-                className="text-right text-sm text-gray-700"
-              >
-                Title
-              </label>
-              <input
-                type="text"
-                name="title"
-                className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label
-                htmlFor="score"
-                className="text-right text-sm text-gray-700"
-              >
-                Score
-              </label>
-              <input
-                type="number"
-                min="0"
-                max="100"
-                name="score"
-                className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none"
-                value={score}
-                onChange={(e) => setScore(Number(e.target.value))}
-              />
-            </div>
+            <InputField
+              label="Title"
+              inputType="text"
+              handleChangeInput={handleChangeInput}
+            />
+            <InputField label="Score" inputType="number" />
+
+            <FormTextArea label="Comment" />
             <div className="grid grid-cols-4 items-start gap-4">
-              <label
-                htmlFor="comment"
-                className="text-right text-sm text-gray-700 mt-1"
-              >
-                Comments
-              </label>
-              <textarea
-                name="comment"
-                className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none resize-none"
-                rows={3}
-                style={{ maxHeight: "150px", overflowY: "auto" }}
-                value={!comment ? "" : comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-            </div>
-            <div className="grid grid-cols-4 items-start gap-4">
-              <label
-                htmlFor="Tags"
-                className="text-right text-sm text-gray-700 mt-1"
-              >
-                Tags
-              </label>
+              <FormLabel label="Tags" />
               <div className="col-span-3 grid grid-cols-2 gap-2">
                 <div className="flex items-center space-x-2">
                   <input
@@ -122,7 +87,6 @@ export function EditAssignment({ assignment }: Props) {
                         setTags(tags.filter((tag) => tag !== "frontend"));
                       }
                     }}
-
                   />
                   <label
                     htmlFor="frontend"
@@ -189,7 +153,9 @@ export function EditAssignment({ assignment }: Props) {
                       if (e.target.checked) {
                         setTags([...tags, "teamCollaboration"]);
                       } else {
-                        setTags(tags.filter((tag) => tag !== "teamCollaboration"));
+                        setTags(
+                          tags.filter((tag) => tag !== "teamCollaboration")
+                        );
                       }
                     }}
                   />
