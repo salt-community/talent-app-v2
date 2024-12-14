@@ -14,18 +14,18 @@ export default async function Page({ searchParams }: Props) {
 
   const index = client.index("backgrounds");
 
-  const ids = (await index.search(search)).hits.map((hit) => hit.uuid);
+  const devIds = (await index.search(search)).hits.map((hit) => hit.devId);
 
   return (
     <div className="p-4 sm:p-8 space-y-4">
       <Search />
-      <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {ids.map((id) => (
-          <li key={id}>
-            <Link href={`/developers/${id}`}>
-              <Card className="h-full mx-auto flex items-center justify-center">
+      <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        {devIds.map((devId) => (
+          <li key={devId} className="w-fit">
+            <Link href={`/developers/${devId}`}>
+              <Card className="p-2 h-full mx-auto flex items-center justify-center">
                 <CardContent>
-                  <Background id={id} />
+                  <Background devId={devId} />
                 </CardContent>
               </Card>
             </Link>

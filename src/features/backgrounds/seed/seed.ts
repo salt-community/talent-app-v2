@@ -6,12 +6,12 @@ import { db } from "@/db";
 
 const repository = createRepository(db);
 
-export async function backgroundsSeed(ids: string[]) {
-  const avatars = await getAvatars(ids.length);
+export async function backgroundsSeed(devIds: string[]) {
+  const avatars = await getAvatars(devIds.length);
 
-  const backgrounds: BackgroundInsert[] = ids.map((id, index) => {
+  const backgrounds: BackgroundInsert[] = devIds.map((devId, index) => {
     return {
-      uuid: faker.string.uuid(),
+      devId: devId,
       name: faker.person.fullName(),
       title: faker.person.jobType(),
       bio: faker.person.bio(),
@@ -95,9 +95,11 @@ export async function backgroundsSeed(ids: string[]) {
         .sort((a, b) => a.name.localeCompare(b.name)),
     };
   });
-  backgrounds.forEach((background) => {
-    repository.add(background);
-  });
+  await Promise.all(
+    backgrounds.map(async (background) => {
+      await repository.add(background);
+    }),
+  );
   console.log("Done seeding Backgrounds...");
 }
 

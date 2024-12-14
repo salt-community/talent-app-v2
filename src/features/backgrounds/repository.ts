@@ -10,11 +10,11 @@ export function createRepository(db: Db) {
         .from(backgroundsTable)
         .orderBy(backgroundsTable.id);
     },
-    async getByUUID(uuid: string) {
+    async getByDevId(devId: string) {
       return await db
         .select()
         .from(backgroundsTable)
-        .where(eq(backgroundsTable.uuid, uuid));
+        .where(eq(backgroundsTable.devId, devId));
     },
     async add(background: BackgroundInsert) {
       return await db.insert(backgroundsTable).values(background);

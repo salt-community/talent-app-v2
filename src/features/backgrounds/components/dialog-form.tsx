@@ -35,7 +35,7 @@ export function DialogForm({ background }: Props) {
             <div className="space-y-2 py-4">
               <input
                 type="text"
-                name={"userId"}
+                name={"id"}
                 defaultValue={background.id}
                 hidden
               />

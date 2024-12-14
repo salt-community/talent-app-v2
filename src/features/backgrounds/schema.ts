@@ -3,7 +3,7 @@ import { Tag } from "emblor";
 
 export const backgroundsTable = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  uuid: uuid().defaultRandom().notNull(),
+  devId: uuid("dev_id").notNull(),
   avatarUrl: varchar().notNull().default("/avatar.png"),
   name: varchar().notNull(),
   title: varchar().notNull(),

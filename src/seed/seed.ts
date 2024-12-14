@@ -10,11 +10,11 @@ import { developerService } from "@/features/developer-profiles/instance";
 
   await seedIdentities();
   await seedDeveloperProfiles();
-  const ids = (await developerService.getAllDeveloperProfiles()).map(
-    (dev) => dev.id,
+  const devIds = (await developerService.getAllDeveloperProfiles()).map(
+    (developer) => developer.id,
   );
 
-  await backgroundsSeed(ids);
+  await backgroundsSeed(devIds);
   await seedProjects();
   await seedMeili();
   console.log("Done seeding...");

@@ -3,7 +3,7 @@ import { SocialLink } from "./schema";
 
 export type Background = {
   name: string;
-  uuid: string;
+  devId: string;
   id: number;
   avatarUrl: string;
   title: string;
