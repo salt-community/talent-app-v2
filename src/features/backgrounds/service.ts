@@ -6,8 +6,8 @@ export function createBackgroundsService(repository: Repository) {
     async getAll() {
       return repository.getAll();
     },
-    async getByUUID(id: string) {
-      return repository.getByUUID(id);
+    async getByDevId(devId: string) {
+      return repository.getByDevId(devId);
     },
 
     async add(background: BackgroundInsert) {
