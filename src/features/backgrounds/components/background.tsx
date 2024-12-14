@@ -15,7 +15,7 @@ export async function Background({ devId }: Props) {
 
   return (
     <div className="space-y-2 max-w-96">
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-start w-full">
         <BackgroundBasicInfo background={background} />
       </div>
 
