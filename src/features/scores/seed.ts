@@ -1,3 +1,4 @@
+import { categoryTags } from "./categories";
 import { scoresService } from "./instance";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
@@ -5,7 +6,7 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   return shuffled.slice(0, Math.floor(Math.random() * maxTags) + 1);
 };
 
-export const seedAssignments = async (count = 4) => {
+export const seedAssignments = async (devIds: string[]) => {
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",
     "Create a RESTful API with Node.js",
@@ -35,22 +36,15 @@ export const seedAssignments = async (count = 4) => {
   ];
 
   scoresService.deleteAllAssignments();
-  const allTags = [
-    "frontend",
-    "backend",
-    "conversation",
-    "team collaboration",
-    "design",
-    "management",
-  ];
-  const maxTags = allTags.length;
-  for (let i = 0; i < count; i++) {
+
+  const maxTags = categoryTags.length;
+  for (let i = 0; i < devIds.length; i++) {
     const newAssignment = {
-      userId: 1,
+      devId: devIds[i],
       title: assignmentTitles[Math.floor(Math.random() * 26)],
       comment: `comment - ${i + 1}`,
       score: Math.round(Math.random() * 100),
-      tags: getRandomTags(allTags, maxTags),
+      tags: getRandomTags(categoryTags, maxTags),
     };
 
     try {
