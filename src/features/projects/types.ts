@@ -1,4 +1,4 @@
-import { dashboardService } from "../identity-access-management/instance";
+import { iamService } from "../iam/instance";
 
 export type Project = {
   id: string;
@@ -32,4 +32,4 @@ export type UpdatedPerformance = {
   newPerformanceScore: string;
 };
 
-export type DeveloperProfile = typeof dashboardService.getAllIdentities;
+export type DeveloperProfile = typeof iamService.getAllIdentities;

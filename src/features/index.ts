@@ -1,4 +1,4 @@
 export * from "./projects";
 export * from "./scores";
-export * from "./identity-access-management";
+export * from "./iam";
 export * from "./developer-profiles";

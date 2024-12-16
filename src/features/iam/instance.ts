@@ -2,4 +2,4 @@ import { db } from "@/db";
 import { createRepository } from "./repository";
 import { createService } from "./service";
 
-export const dashboardService = createService(createRepository(db));
+export const iamService = createService(createRepository(db));
