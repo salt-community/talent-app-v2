@@ -66,7 +66,7 @@ export function EditAssignment({ assignment }: Props) {
         </DialogHeader>
         <form action={editAssignmentAction} className="space-y-4">
           <input type="hidden" name="assignmentId" value={assignment.id} />
-          <input type="hidden" name="userId" value={assignment.userId} />
+          <input type="hidden" name="devId" value={assignment.devId} />
           <div className="grid gap-4">
             <InputField
               label="Title"

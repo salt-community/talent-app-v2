@@ -8,11 +8,11 @@ export function createRepository(db: Db) {
     async addAssignment(newAssignment: NewAssignment) {
       await db.insert(assignmentTable).values(newAssignment);
     },
-    async getAssignmentsById(userId: number) {
+    async getAssignmentsById(devId: string) {
       return await db
         .select()
         .from(assignmentTable)
-        .where(eq(assignmentTable.userId, userId));
+        .where(eq(assignmentTable.devId, devId));
     },
     async deleteAllAssignments() {
       await db.delete(assignmentTable);

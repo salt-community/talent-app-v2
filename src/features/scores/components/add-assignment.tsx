@@ -18,7 +18,9 @@ import { FormTextArea } from "./form-text-area";
 import { CheckboxBoard } from "./checkbox-board";
 import { addAssignmentAction } from "../actions";
 
-export function AddAssignment() {
+type Props = { devId: string };
+
+export function AddAssignment({ devId } : Props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [title, setTitle] = useState("");
 
@@ -46,6 +48,7 @@ export function AddAssignment() {
           </DialogDescription>
         </DialogHeader>
         <form action={addAssignmentAction} className="space-y-4">
+        <input type="hidden" name="devId" value={devId} />
           <div className="grid gap-4">
             <InputField
               label="Title"
