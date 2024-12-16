@@ -11,5 +11,8 @@ export function createDeveloperService(db: Db) {
     async addDeveloper(developerProfile: DeveloperProfileInsert) {
       await repository.addDeveloperProfile(developerProfile);
     },
+    async deleteDeveloper(id: string) {
+      await repository.deleteDeveloperProfile(id);
+    },
   };
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { DashboardAvatar } from "./dashboar-avatar";
+import { DashboardAvatar } from "./dashboard-avatar";
 import { StatusMenu } from "./status-menu";
 type DeveloperProfileListProps = {
   name: string;
