@@ -11,11 +11,13 @@ import { developerService } from "@/features/developer-profiles/instance";
   await seedIdentities();
   await seedDeveloperProfiles();
   const devIds = (await developerService.getAllDeveloperProfiles()).map(
-    (developer) => developer.id,
+    (developer) => developer.id
   );
   await seedAssignments(devIds);
   await backgroundsSeed(devIds);
+
   await seedProjects();
   await seedMeili();
+
   console.log("Done seeding...");
 })();
