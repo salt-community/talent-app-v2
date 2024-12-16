@@ -1,5 +1,5 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../card";
 import Image from "next/image";
 
 export function ProjectHighlight(){
