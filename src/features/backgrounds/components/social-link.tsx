@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 type Props = SocialLink & { size?: number };
 
-export function SocialLink({ url, name, size = 20 }: Props) {
+export function SocialLink({ url, name, size = 16 }: Props) {
   const router = useRouter();
 
   const handleNavigation = () => {
@@ -16,7 +16,7 @@ export function SocialLink({ url, name, size = 20 }: Props) {
   return (
     <>
       {name === "Github" && (
-        <button onClick={handleNavigation}>
+        <button className="mt-4" onClick={handleNavigation}>
           <FaGithub size={size} />
         </button>
       )}
@@ -28,7 +28,7 @@ export function SocialLink({ url, name, size = 20 }: Props) {
       {name === "Resume" && (
         <button
           onClick={handleNavigation}
-          className="font-bold text-[20px] leading-none h-full"
+          className="font-bold text-[16px] leading-none h-full"
         >
           CV{" "}
         </button>

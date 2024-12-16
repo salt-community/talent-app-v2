@@ -27,14 +27,14 @@ export function BackgroundBasicInfo({ background }: Props) {
             </div>
           </div>
         </Link>
-        <ul className="flex gap-1 justify-end items-top h-full">
+        <ul className="flex flex-col gap-1 items-center justify-end items-top h-full">
+        <DialogForm background={background} />
           {background.links &&
             background.links.map((link) => (
               <li key={link.url} className="h-full flex justify-start">
                 <SocialLink name={link.name} url={link.url} />
               </li>
             ))}
-          <DialogForm background={background} />
         </ul>
       </section>
     </>
