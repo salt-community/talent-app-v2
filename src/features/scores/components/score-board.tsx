@@ -6,11 +6,12 @@ import { scoresService } from "../instance";
 import { AddAssignment } from "./add-assignment";
 import { Assignments } from "./accordion/assignments";
 
-export async function ScoreBoard() {
-  const hardcodedUserId = 1;
+type Props = { devId: string };
 
+
+export async function ScoreBoard({ devId } : Props) {
   const assignments =
-    await scoresService.getAssignmentsByUserId(hardcodedUserId);
+    await scoresService.getAssignmentsByDevId(devId);
 
   return (
     <section className="min-w-72">
@@ -18,7 +19,7 @@ export async function ScoreBoard() {
       <H2>Salt Scoring</H2>
       <AverageScore assignments={assignments} />
       <SpiderGraph assignments={assignments} />
-      <AddAssignment />
+      <AddAssignment devId={devId} />
       <Assignments assignments={assignments} />
     </section>
   );
