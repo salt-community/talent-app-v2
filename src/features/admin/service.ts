@@ -1,7 +1,7 @@
-import { developerService } from "../developer-profiles/instance";
-
-type GetAllDeveloperProfiles = typeof developerService.getAllDeveloperProfiles;
-type DeleteDeveloperProfile = typeof developerService.deleteDeveloper;
+import {
+  DeleteDeveloperProfile,
+  GetAllDeveloperProfiles,
+} from "../developer-profiles";
 
 export function createAdminService(
   getAllDeveloperProfiles: GetAllDeveloperProfiles,
