@@ -20,7 +20,7 @@ export function createService(db: Db) {
     async addIdentity(identity: IdentityInsert) {
       await repository.addIdentity(identity);
     },
-    async hasAccess(permission: Permission, id: string) {
+    async checkAccess(permission: Permission, id: string) {
       const roles = await repository.getIdentityRole(id);
 
       return checkAccess(roles, permission);

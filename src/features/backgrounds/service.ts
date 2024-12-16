@@ -5,7 +5,7 @@ import { iamService } from "../iam/instance";
 export function createBackgroundsService(repository: Repository) {
   return {
     async getAll() {
-      iamService.hasAccess("backgrounds.getAll", "1");
+      iamService.checkAccess("backgrounds.getAll", "1");
 
       return repository.getAll();
     },
