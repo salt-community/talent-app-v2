@@ -32,27 +32,27 @@ export function SpiderGraph({ assignments }: Props) {
   const chartData = [
     {
       category: "Frontend",
-      score: calculateAverageCategoryScore(assignments, "Frontend"),
+      score: calculateAverageCategoryScore(assignments, "frontend"),
     },
     {
       category: "Backend",
-      score: calculateAverageCategoryScore(assignments, "Backend"),
+      score: calculateAverageCategoryScore(assignments, "backend"),
     },
     {
       category: "Conversation",
-      score: calculateAverageCategoryScore(assignments, "Conversation"),
+      score: calculateAverageCategoryScore(assignments, "conversation"),
     },
     {
       category: "Team collaboration",
-      score: calculateAverageCategoryScore(assignments, "Team collaboration"),
+      score: calculateAverageCategoryScore(assignments, "teamCollaboration"),
     },
     {
       category: "Design",
-      score: calculateAverageCategoryScore(assignments, "Design"),
+      score: calculateAverageCategoryScore(assignments, "design"),
     },
     {
       category: "Management",
-      score: calculateAverageCategoryScore(assignments, "Management"),
+      score: calculateAverageCategoryScore(assignments, "management"),
     },
   ];
 
