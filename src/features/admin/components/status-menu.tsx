@@ -13,6 +13,7 @@ import { Status } from "./status";
 import { Button } from "@/components";
 import { adminService } from "../instance";
 import { deleteDeveloperProfileAction } from "../action";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   id: string;
@@ -20,10 +21,14 @@ type Props = {
 
 export function StatusMenu({ id }: Props) {
   const [status, setStatus] = React.useState("gray");
+  const { toast } = useToast();
 
   async function onDelete() {
     await deleteDeveloperProfileAction(id);
-    alert("Profile deleted");
+    toast({
+      title: "Profile deleted",
+      description: "The developer profile has been successfully deleted",
+    });
   }
 
   return (
