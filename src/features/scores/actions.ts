@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 import { scoresService } from "./instance";
 import { getFormData } from "./utils";
 
-export async function addAssingmentAction(formData: FormData) {
+export async function addAssignmentAction(formData: FormData) {
   const { title, comment, score, tags } = getFormData(formData);
  
   const newAssignment = {
