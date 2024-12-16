@@ -1,11 +1,9 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-type skill = {
-  id: string;
-  text: string;
-};
+import { SkillSelect } from "../db";
+
 type Props = {
-  skills: skill[];
+  skills: SkillSelect[];
 };
 
 export function SkillsBadges({ skills }: Props) {
@@ -13,7 +11,7 @@ export function SkillsBadges({ skills }: Props) {
     <article className="flex flex-wrap gap-1 mt-3">
       {skills.map((skill) => (
         <Badge className="cursor-default" key={skill.id}>
-          {skill.text}
+          {skill.name}
         </Badge>
       ))}
     </article>

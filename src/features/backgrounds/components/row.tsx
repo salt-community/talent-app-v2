@@ -1,9 +1,8 @@
-import { Tag } from "emblor";
 import { Dot } from "lucide-react";
 
 type Props = {
   title: string;
-  content: Tag[];
+  content: { id: number; name: string }[];
 };
 
 export function Row({ title, content }: Props) {
@@ -14,7 +13,7 @@ export function Row({ title, content }: Props) {
         {content.map((item, index) => (
           <div key={index} className="flex text-sm items-center">
             {index != 0 && <Dot size={12} />}
-            <span>{item.text}</span>
+            <span>{item.name}</span>
           </div>
         ))}
       </div>

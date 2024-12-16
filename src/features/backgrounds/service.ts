@@ -1,19 +1,18 @@
 import { Repository } from "./repository";
-import { BackgroundInsert, BackgroundUpdate } from "./db";
-import { ServiceMethods } from "./types";
+import { BackgroundInsert } from "./db";
+import { BackgroundUpdate, ServiceMethods } from "./types";
 
 export function createBackgroundsService(
   repository: Repository,
-  serviceMethods: ServiceMethods
+  serviceMethods: ServiceMethods,
 ) {
   return {
     async getAll() {
-      return repository.getAll();
+      return await repository.getAll();
     },
     async getByDevId(devId: string) {
-      return repository.getByDevId(devId);
+      return await repository.getByDevId(devId);
     },
-
     async add(background: BackgroundInsert) {
       await repository.add(background);
       await serviceMethods.syncBackgroundSearchIndex([background]);

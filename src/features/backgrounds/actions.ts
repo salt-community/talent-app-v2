@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { backgroundsService } from "./instance";
+import { BackgroundUpdate } from "./types";
 
 export async function updateBackgroundAction(formData: FormData) {
   const id = Number(formData.get("id"));
@@ -12,7 +13,7 @@ export async function updateBackgroundAction(formData: FormData) {
   const languages = JSON.parse(formData.get("languages") as string);
   const educations = JSON.parse(formData.get("educations") as string);
 
-  await backgroundsService.update({
+  const background: BackgroundUpdate = {
     id,
     name,
     title,
@@ -20,6 +21,8 @@ export async function updateBackgroundAction(formData: FormData) {
     skills,
     languages,
     educations,
-  });
+  };
+
+  await backgroundsService.update(background);
   revalidatePath("/");
 }

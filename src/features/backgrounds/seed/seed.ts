@@ -1,14 +1,13 @@
 import { faker } from "@faker-js/faker";
 import { createRepository } from "../repository";
-import { BackgroundInsert } from "../db";
+import { db } from "../db";
 import { skills } from "./data";
-import { db } from "@/db";
-import { syncBackgroundSearchIndex } from "../../../../meili-search";
 
 const repository = createRepository(db);
 export async function backgroundsSeed(devIds: string[]) {
   const avatars = await getAvatars(devIds.length);
-  const backgrounds: BackgroundInsert[] = devIds.map((devId, index) => {
+
+  const backgrounds = devIds.map((devId, index) => {
     return {
       devId: devId,
       name: faker.person.fullName(),
@@ -97,7 +96,6 @@ export async function backgroundsSeed(devIds: string[]) {
   await Promise.all(
     backgrounds.map(async (background) => {
       await repository.add(background);
-      await syncBackgroundSearchIndex([background]);
     })
   );
   console.log("Done seeding Backgrounds...");
