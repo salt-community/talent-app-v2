@@ -2,15 +2,15 @@ import { Db } from "@/db";
 import { DeveloperProfileInsert, developerProfiles } from "./schema";
 import { eq } from "drizzle-orm";
 
-export function createDeveloperRepository(db: Db) {
+export function createDevelopersRepository(db: Db) {
   return {
-    async getAllDeveloperProfiles() {
+    async getAll() {
       return await db.select().from(developerProfiles).execute();
     },
-    async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
+    async add(developerProfile: DeveloperProfileInsert) {
       await db.insert(developerProfiles).values(developerProfile).execute();
     },
-    async deleteDeveloperProfile(id: string) {
+    async delete(id: string) {
       await db
         .delete(developerProfiles)
         .where(eq(developerProfiles.id, id))

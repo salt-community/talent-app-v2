@@ -10,8 +10,8 @@ import { developerService } from "@/features/developer-profiles/instance";
 
   await seedIdentities();
   await seedDeveloperProfiles();
-  const devIds = (await developerService.getAllDeveloperProfiles()).map(
-    (developer) => developer.id,
+  const devIds = (await developerService.getAll()).map(
+    (developer) => developer.id
   );
 
   await backgroundsSeed(devIds);

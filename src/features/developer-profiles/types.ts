@@ -1,8 +1,7 @@
-import { createDeveloperService } from "./service";
+import { createDevelopersService } from "./service";
 
-type DevelopersService = ReturnType<typeof createDeveloperService>;
+type DevelopersService = ReturnType<typeof createDevelopersService>;
 
-export type GetAllDeveloperProfiles =
-  DevelopersService["getAllDeveloperProfiles"];
+export type GetAllDeveloperProfiles = DevelopersService["getAll"];
 
-export type DeleteDeveloperProfile = DevelopersService["deleteDeveloper"];
+export type DeleteDeveloperProfile = DevelopersService["delete"];
