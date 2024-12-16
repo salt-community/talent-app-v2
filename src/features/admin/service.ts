@@ -1,4 +1,3 @@
-import { Db } from "@/db";
 import { developerService } from "../developer-profiles/instance";
 
 type GetAllDeveloperProfiles = typeof developerService.getAllDeveloperProfiles;
