@@ -16,7 +16,7 @@ import { useState } from "react";
 import { InputField } from "./input-field";
 import { FormTextArea } from "./form-text-area";
 import { CheckboxBoard } from "./checkbox-board";
-import { addAssingmentAction } from "../actions";
+import { addAssignmentAction } from "../actions";
 
 export function AddAssignment() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -45,7 +45,7 @@ export function AddAssignment() {
             Fill out the details below to add a new assignment.
           </DialogDescription>
         </DialogHeader>
-        <form action={addAssingmentAction} className="space-y-4">
+        <form action={addAssignmentAction} className="space-y-4">
           <div className="grid gap-4">
             <InputField
               label="Title"
