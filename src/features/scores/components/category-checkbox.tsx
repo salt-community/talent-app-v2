@@ -9,7 +9,6 @@ type Props = {
 };
 
 export function CategoryCheckbox({ tag, checked, handleChangeTag }: Props) {
-  console.log(checked);
   return (
     <div className="flex items-center space-x-2">
       <input
