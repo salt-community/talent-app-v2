@@ -23,7 +23,7 @@ export const ROLES = {
     //Admin feature
     "admin.getAllDeveloperProfiles",
   ],
-  developer: ["view:developerProfile"],
+  developer: ["developerProfile.getAll"],
 
   //under construction
   core: [],

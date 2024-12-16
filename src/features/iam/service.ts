@@ -1,4 +1,4 @@
-import { hasAccess } from "./has-access";
+import { checkAccess } from "./check-access";
 import { Repository } from "./repository";
 import { IdentityInsert } from "./schema";
 
@@ -21,7 +21,7 @@ export function createService(repository: Repository) {
     async hasAccess(permission: Permission, id: string) {
       const roles = await repository.getIdentityRole(id);
 
-      return hasAccess(roles, permission);
+      return checkAccess(roles, permission);
     },
   };
 }

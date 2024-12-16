@@ -1,9 +1,8 @@
 import { ROLES } from "./roles";
-
 type Role = keyof typeof ROLES;
 type Permission = (typeof ROLES)[Role][number];
 
-export function hasAccess(
+export function checkAccess(
   user: { id: string; roles: Role },
   permission: Permission
 ): boolean {
