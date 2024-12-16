@@ -13,7 +13,7 @@ export default async function DeveloperDetailPage({ params }: Params) {
   return (
     <DeveloperCard>
       <Background devid={devid} />
-      <ScoreBoard />
+      <ScoreBoard devId={devid} />
       <Projects devId={devid} />
     </DeveloperCard>
   );
