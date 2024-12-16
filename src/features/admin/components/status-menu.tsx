@@ -11,9 +11,20 @@ import {
 import { EllipsisVertical } from "lucide-react";
 import { Status } from "./status";
 import { Button } from "@/components";
+import { adminService } from "../instance";
+import { deleteDeveloperProfileAction } from "../action";
 
-export function StatusMenu() {
+type Props = {
+  id: string;
+};
+
+export function StatusMenu({ id }: Props) {
   const [status, setStatus] = React.useState("gray");
+
+  async function onDelete() {
+    await deleteDeveloperProfileAction(id);
+    alert("Profile deleted");
+  }
 
   return (
     <div className="flex items-center gap-4">
@@ -33,7 +44,7 @@ export function StatusMenu() {
             <DropdownMenuRadioItem value="gray">
               Unpublished
             </DropdownMenuRadioItem>
-            <Button size={"sm"} className="w-full">
+            <Button onClick={onDelete} size={"sm"} className="w-full">
               Delete
             </Button>
           </DropdownMenuRadioGroup>

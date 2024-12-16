@@ -16,6 +16,7 @@ export async function Dashboard() {
         {Array.isArray(developers) ? (
           developers.map((developer) => (
             <DeveloperProfileList
+              id={developer.id}
               key={developer.id}
               name={developer.name}
               email={developer.email}

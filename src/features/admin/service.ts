@@ -1,11 +1,12 @@
 import { Db } from "@/db";
 import { developerService } from "../developer-profiles/instance";
-import { iamService } from "../iam/instance";
+
+type GetAllDeveloperProfiles = typeof developerService.getAllDeveloperProfiles;
+type DeleteDeveloperProfile = typeof developerService.deleteDeveloper;
 
 export function createAdminService(
-  db: Db,
-  getAllDeveloperProfiles: typeof developerService.getAllDeveloperProfiles,
-  deleteDeveloperProfile: typeof developerService.deleteDeveloper
+  getAllDeveloperProfiles: GetAllDeveloperProfiles,
+  deleteDeveloperProfile: DeleteDeveloperProfile
 ) {
   return {
     async getAllDeveloperProfiles() {
