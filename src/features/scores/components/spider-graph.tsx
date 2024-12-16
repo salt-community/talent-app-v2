@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/chart";
 import type { Assignment } from "../types";
 import { calculateAverageCategoryScore } from "../logic";
+import { categoryTags } from "../categories";
+import { capitalizeFirstLetter } from "@/lib/utils";
 
 const chartConfig = {
   desktop: {
@@ -29,32 +31,12 @@ type Props = {
 };
 
 export function SpiderGraph({ assignments }: Props) {
-  const chartData = [
-    {
-      category: "Frontend",
-      score: calculateAverageCategoryScore(assignments, "frontend"),
-    },
-    {
-      category: "Backend",
-      score: calculateAverageCategoryScore(assignments, "backend"),
-    },
-    {
-      category: "Conversation",
-      score: calculateAverageCategoryScore(assignments, "conversation"),
-    },
-    {
-      category: "Team collaboration",
-      score: calculateAverageCategoryScore(assignments, "teamCollaboration"),
-    },
-    {
-      category: "Design",
-      score: calculateAverageCategoryScore(assignments, "design"),
-    },
-    {
-      category: "Management",
-      score: calculateAverageCategoryScore(assignments, "management"),
-    },
-  ];
+  const chartData = categoryTags.map((tag) => {
+    return {
+      category: capitalizeFirstLetter(tag),
+      score: calculateAverageCategoryScore(assignments, tag)
+    };
+  })
 
   return (
     <CardContent className="">
