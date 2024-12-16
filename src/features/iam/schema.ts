@@ -1,7 +1,7 @@
 import { sql } from "drizzle-orm";
 import { pgEnum, pgTable, integer, uuid } from "drizzle-orm/pg-core";
 
-export const roles = pgEnum("roles", ["developer", "client", "core", "admin"]);
+export const roles = pgEnum("roles", ["developer", "core", "admin"]);
 
 export const identities = pgTable("identities", {
   id: uuid()

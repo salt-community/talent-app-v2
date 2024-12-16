@@ -1,0 +1,49 @@
+# fly.toml app configuration file generated for my-meilisearch on 2024-02-20T13:23:58+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'my-meilisearch'
+primary_region = 'ams'
+kill_signal = 'SIGINT'
+kill_timeout = '5s'
+
+[experimental]
+  auto_rollback = true
+
+[build]
+  image = 'getmeili/meilisearch'
+
+[[mounts]]
+  source = 'disc1'
+  destination = '/meili_data'
+  initial_size = '1GB'
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 7700
+  processes = ['app']
+
+[[services.ports]]
+    port = 80
+    handlers = ['http']
+    force_https = true
+
+[[services.ports]]
+    port = 443
+    handlers = ['tls', 'http']
+
+  [services.concurrency]
+    type = 'connections'
+    hard_limit = 25
+    soft_limit = 20
+
+[[services.tcp_checks]]
+    interval = '15s'
+    timeout = '2s'
+    grace_period = '1s'
+
+[[vm]]
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 1024

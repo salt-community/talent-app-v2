@@ -3,10 +3,10 @@ import { BackgroundBasicInfo } from "./basic-info";
 import { backgroundsService } from "../instance";
 import { SkillsBadges } from ".";
 
-type Props = { devId?: string };
-export async function Background({ devId }: Props) {
-  const background = devId
-    ? (await backgroundsService.getByDevId(devId))[0]
+type Props = { devid?: string };
+export async function Background({ devid }: Props) {
+  const background = devid
+    ? (await backgroundsService.getByDevId(devid))[0]
     : (await backgroundsService.getAll())[0];
 
   if (!background) {
