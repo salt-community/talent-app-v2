@@ -22,7 +22,6 @@ export function createService(db: Db) {
     },
     async checkAccess(permission: Permission, id: string) {
       const roles = await repository.getIdentityRole(id);
-
       return checkAccess(roles, permission);
     },
   };

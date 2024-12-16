@@ -1,14 +1,12 @@
-import { sql } from "drizzle-orm";
-import { pgEnum, pgTable, integer, uuid } from "drizzle-orm/pg-core";
+import { pgTable, pgEnum, uuid, integer } from "drizzle-orm/pg-core";
 
 export const roles = pgEnum("roles", ["developer", "core", "admin"]);
+export type Roles = typeof roles;
 
 export const identities = pgTable("identities", {
-  id: uuid()
-    .primaryKey()
-    .default(sql`gen_random_uuid()`),
+  id: uuid("id").primaryKey().defaultRandom(),
   clerkId: integer("clerk_id"),
-  roles: roles().notNull().default("developer"),
+  role: roles().notNull().default("developer"),
 });
 
 export type IdentitySelect = typeof identities.$inferSelect;
