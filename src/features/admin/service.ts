@@ -9,7 +9,7 @@ export function createAdminService(
 ) {
   return {
     getAllDeveloperProfiles() {
-      if (!hasAccess("admin", "view:developerProfile")) {
+      if (!hasAccess("admin.getAllDeveloperProfiles", "1")) {
         throw new Error("You do not have access to view developer profiles");
       }
       return getAllDeveloperProfiles();

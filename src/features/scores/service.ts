@@ -1,67 +1,36 @@
 import { Db } from "@/db";
-import { createRepository } from "./repository";
-//import { calculateCategoriesScores } from "./logic";
-import { NewAssignment } from "./types";
-
-export const createService = (db: Db) => {
-  const repository = createRepository(db);
+import { assignmentTable } from "./schema";
+import { eq } from "drizzle-orm";
+import { AssignmentUpdates, NewAssignment } from "./types";
+export function createRepository(db: Db) {
   return {
-    // getScoreById: async (userId: number) => {
-    //   try {
-    //     const score = (await repository.getById(userId))[0] as Scores;
-
-    //     const {
-    //       programmingScore,
-    //       planningScore,
-    //       communicationScore,
-    //       averageScore,
-    //     } = calculateCategoriesScores(score);
-
-    //     return {
-    //       id: userId,
-    //       frontend: score.frontend,
-    //       backend: score.backend,
-    //       individualCommunication: score.individualCommunication,
-    //       teamCollaboration: score.teamCollaboration,
-    //       design: score.design,
-    //       management: score.management,
-    //       programmingScore,
-    //       planningScore,
-    //       communicationScore,
-    //       averageScore,
-    //     };
-    //   } catch (error) {
-    //     console.log(error);
-    //     return {
-    //       id: 1,
-    //       frontend: 0,
-    //       backend: 0,
-    //       individualCommunication: 0,
-    //       teamCollaboration: 0,
-    //       design: 0,
-    //       management: 0,
-    //       programmingScore: 0,
-    //       planningScore: 0,
-    //       communicationScore: 0,
-    //       averageScore: 0,
-    //     };
-    //   }
-    // },
-    // updateScores: async (userId: number, newScores: NewScores) => {
-    //   await repository.updateScore(userId, newScores)
-    // },
-
-     addAssignment: async (newAssigment: NewAssignment) => {
-      await repository.addAssignment(newAssigment);
+    async addAssignment(newAssigment: NewAssignment) {
+      await db.insert(assignmentTable).values(newAssigment);
     },
-    getAssignmentsById: async (userId: number) => {
-      return await repository.getAssignmentsById(userId)
+    async getAssignmentsById(userId: number) {
+      return await db
+        .select()
+        .from(assignmentTable)
+        .where(eq(assignmentTable.userId, userId));
     },
-    deleteAllAssignments: async () => {
-      await repository.deleteAllAssignments()
+    async deleteAllAssignments() {
+      await db.delete(assignmentTable);
     },
-/*     updateAssigment: async (id: number) => {
-      await repository.updateAssigment(id).update()
-    } */
+    async deleteAssignment(id: number) {
+      await db.delete(assignmentTable).where(eq(assignmentTable.id, id));
+    },
+    async getAssignmentById(id: number) {
+      return await db
+        .select()
+        .from(assignmentTable)
+        .where(eq(assignmentTable.id, id));
+    },
+    async updateAssigment(id: number, updates: AssignmentUpdates) {
+      return await db
+        .update(assignmentTable)
+        .set(updates)
+        .where(eq(assignmentTable.id, id))
+        .returning();
+    },
   };
-};
+}

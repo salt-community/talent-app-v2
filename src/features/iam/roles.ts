@@ -1,10 +1,30 @@
 export const ROLES = {
   admin: [
-    "view:developerProfile",
-    "create:developerProfile",
-    "update:developerProfile",
-    "delete:developerProfile",
+    //Background feature
+    "backgrounds.getAll",
+    "backgrounds.getById",
+    "backgrounds.add",
+    "backgrounds.update",
+
+    //Score feature
+    "scores.addAssignment",
+    "scores.getAssignmentsById",
+    "scores.deleteAllAssignments",
+    "scores.deleteAssignment",
+    "scores.updateAssignment",
+
+    //Project feature
+    "project.getAll",
+    "project.add",
+    "project.updateDescription",
+    "project.delete",
+    "project.updatePerformance",
+
+    //Admin feature
+    "admin.getAllDeveloperProfiles",
   ],
   developer: ["view:developerProfile"],
-  core: ["view:developerProfile", "update:developerProfile"],
+
+  //under construction
+  core: [],
 } as const;

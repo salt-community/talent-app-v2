@@ -18,7 +18,7 @@ export function createService(repository: Repository) {
     async addIdentity(identity: IdentityInsert) {
       await repository.addIdentity(identity);
     },
-    async hasAccess(id: string, permission: Permission) {
+    async hasAccess(permission: Permission, id: string) {
       const roles = await repository.getIdentityRole(id);
 
       return hasAccess(roles, permission);
