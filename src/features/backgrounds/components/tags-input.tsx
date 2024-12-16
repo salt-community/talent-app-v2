@@ -5,12 +5,14 @@ import { Tag, TagInput } from "emblor";
 import { useState } from "react";
 
 type Props = {
-  tags: Tag[];
+  tags: { id: number; name: string }[];
   inputName: string;
   inputPlaceholder: string;
 };
 export function TagsInput({ tags, inputName, inputPlaceholder }: Props) {
-  const [exampleTags, setExampleTags] = useState<Tag[]>(tags);
+  const [exampleTags, setExampleTags] = useState<Tag[]>(
+    tags.map((tag) => ({ id: String(tag.id), text: tag.name })),
+  );
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
 
   return (
@@ -21,9 +23,7 @@ export function TagsInput({ tags, inputName, inputPlaceholder }: Props) {
       <TagInput
         id={inputName}
         tags={exampleTags}
-        setTags={(newTags) => {
-          setExampleTags(newTags);
-        }}
+        setTags={setExampleTags}
         placeholder={inputPlaceholder}
         styleClasses={{
           tagList: {

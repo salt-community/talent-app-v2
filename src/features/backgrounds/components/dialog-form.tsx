@@ -11,12 +11,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { BackgroundSelect } from "../db";
 import { TagsInput } from "./tags-input";
 import { Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Background } from "../types";
 
-type Props = { background: BackgroundSelect };
+type Props = { background: Background };
 export function DialogForm({ background }: Props) {
   return (
     <Dialog>

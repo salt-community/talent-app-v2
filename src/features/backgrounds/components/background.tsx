@@ -6,7 +6,7 @@ import { SkillsBadges } from ".";
 type Props = { devid?: string };
 export async function Background({ devid }: Props) {
   const background = devid
-    ? (await backgroundsService.getByDevId(devid))[0]
+    ? await backgroundsService.getByDevId(devid)
     : (await backgroundsService.getAll())[0];
 
   if (!background) {
@@ -16,10 +16,7 @@ export async function Background({ devid }: Props) {
   return (
     <div className="space-y-2 max-w-96">
       <div className="flex justify-between items-start">
-        <BackgroundBasicInfo
-          background={background}
-        />
-
+        <BackgroundBasicInfo background={background} />
       </div>
 
       <div>

@@ -1,6 +1,4 @@
-import { integer, jsonb, pgTable, varchar } from "drizzle-orm/pg-core";
 import { integer, jsonb, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
-import { Tag } from "emblor";
 
 export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -9,9 +7,6 @@ export const backgrounds = pgTable("backgrounds", {
   name: varchar().notNull(),
   title: varchar().notNull(),
   bio: varchar().notNull(),
-  languages: jsonb().$type<Tag[]>().notNull(),
-  educations: jsonb().$type<Tag[]>().notNull(),
-  skills: jsonb().$type<Tag[]>().notNull(),
   links: jsonb().$type<SocialLink[]>().notNull(),
 });
 
@@ -43,8 +38,13 @@ export const languages = pgTable("background_languages", {
 
 export type BackgroundInsert = typeof backgrounds.$inferInsert;
 export type BackgroundSelect = typeof backgrounds.$inferSelect;
-export type BackgroundUpdate = Partial<BackgroundSelect> &
-  Required<Pick<BackgroundSelect, "id">>;
+
+export type SkillInsert = typeof skills.$inferInsert;
+export type SkillSelect = typeof skills.$inferSelect;
+export type LanguageInsert = typeof languages.$inferInsert;
+export type LanguageSelect = typeof languages.$inferSelect;
+export type EducationInsert = typeof educations.$inferInsert;
+export type EducationSelect = typeof educations.$inferSelect;
 
 export type SocialLink = {
   url: string;
