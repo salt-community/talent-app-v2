@@ -10,13 +10,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { editAssigmentAction } from "../actions";
+
 import { Assignment } from "../types";
 import { useState } from "react";
 
 import { InputField } from "./input-field";
 import { FormTextArea } from "./form-text-area";
-import { FormLabel } from "./form-label";
+import { CheckboxBoard } from "./checkbox-board";
+import { editAssignmentAction } from "../actions";
+import type { CategoryTag } from "../categories";
 //import { useDebouncedCallback } from 'use-debounce';
 
 type Props = {
@@ -29,6 +31,11 @@ export function EditAssignment({ assignment }: Props) {
   const [comment, setComment] = useState(assignment.comment);
   const [tags, setTags] = useState(assignment.tags);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleChangeTag = (isChecked: boolean, tag: CategoryTag) => {
+    if (isChecked) return setTags([...tags, tag]); 
+    setTags(tags.filter((tag) => tag !== tag));
+  };
 
   const handleChangeInput = (inputValue: string, label: string) => {
     if (label === "Title") setTitle(inputValue);
@@ -55,7 +62,7 @@ export function EditAssignment({ assignment }: Props) {
             Alter the details below to edit the assignment.
           </DialogDescription>
         </DialogHeader>
-        <form action={editAssigmentAction} className="space-y-4">
+        <form action={editAssignmentAction} className="space-y-4">
           <input type="hidden" name="assignmentId" value={assignment.id} />
           <input type="hidden" name="userId" value={assignment.userId} />
           <div className="grid gap-4">
@@ -76,7 +83,8 @@ export function EditAssignment({ assignment }: Props) {
               value={comment} 
               handleChangeInput={handleChangeInput} 
             />
-            <div className="grid grid-cols-4 items-start gap-4">
+            <CheckboxBoard tags={tags} handleChangeTag={handleChangeTag}  />
+            {/* <div className="grid grid-cols-4 items-start gap-4">
               <FormLabel label="Tags" />
               <div className="col-span-3 grid grid-cols-2 gap-2">
                 <div className="flex items-center space-x-2">
@@ -220,7 +228,7 @@ export function EditAssignment({ assignment }: Props) {
                   </label>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <DialogFooter>
             <Button
