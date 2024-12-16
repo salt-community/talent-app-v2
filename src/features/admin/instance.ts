@@ -6,5 +6,5 @@ import { iamService } from "../iam/instance";
 export const adminService = createAdminService(
   db,
   developerService.getAllDeveloperProfiles,
-  iamService.hasAccess
+  iamService.checkAccess
 );
