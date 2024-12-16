@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import {
   Card,

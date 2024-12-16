@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import {
   Card,
@@ -22,8 +21,10 @@ export function VideoHighlight() {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
-       <div className="border-2 p-2 flex justify-center items-center h-56">Placeholder for video</div>
+      <CardContent className="pt-0 pb-4">
+        <div className="border-2 p-2 flex justify-center items-center h-56">
+          Placeholder for video
+        </div>
       </CardContent>
     </Card>
   );
