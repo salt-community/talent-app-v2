@@ -16,5 +16,15 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(developerProfiles.id, id))
         .execute();
     },
+    async updateStatus(
+      id: string,
+      statues: "unpublished" | "published" | "highlighted"
+    ) {
+      await db
+        .update(developerProfiles)
+        .set({ status: statues })
+        .where(eq(developerProfiles.id, id))
+        .execute();
+    },
   };
 }

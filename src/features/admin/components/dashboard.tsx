@@ -20,6 +20,7 @@ export async function Dashboard() {
               key={developer.id}
               name={developer.name}
               email={developer.email}
+              status={developer.status}
             />
           ))
         ) : (

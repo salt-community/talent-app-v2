@@ -1,11 +1,13 @@
 import {
   DeleteDeveloperProfile,
   GetAllDeveloperProfiles,
+  UpdateStatus,
 } from "../developer-profiles";
 
 export function createAdminService(
   getAllDeveloperProfiles: GetAllDeveloperProfiles,
-  deleteDeveloperProfile: DeleteDeveloperProfile
+  deleteDeveloperProfile: DeleteDeveloperProfile,
+  updateStatus: UpdateStatus
 ) {
   return {
     async getAllDeveloperProfiles() {
@@ -13,6 +15,12 @@ export function createAdminService(
     },
     async deleteDeveloperProfile(id: string) {
       await deleteDeveloperProfile(id);
+    },
+    async updateStatus(
+      id: string,
+      status: "unpublished" | "published" | "highlighted"
+    ) {
+      await updateStatus(id, status);
     },
   };
 }

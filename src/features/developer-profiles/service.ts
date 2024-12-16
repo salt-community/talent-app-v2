@@ -14,5 +14,11 @@ export function createDevelopersService(db: Db) {
     async delete(id: string) {
       await repository.delete(id);
     },
+    async updateStatus(
+      id: string,
+      status: "unpublished" | "published" | "highlighted"
+    ) {
+      await repository.updateStatus(id, status);
+    },
   };
 }

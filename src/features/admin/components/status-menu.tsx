@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,16 +10,20 @@ import {
 import { EllipsisVertical } from "lucide-react";
 import { Status } from "./status";
 import { Button } from "@/components";
-import { deleteDeveloperProfileAction } from "../action";
+import { deleteDeveloperProfileAction, updateStatusAction } from "../action";
 import { useToast } from "@/hooks/use-toast";
 import { AlertDialogDemo } from "@/components/alert-dialog/alertDialog";
+import { useState } from "react";
 
 type Props = {
   id: string;
+  developerStatus: "unpublished" | "published" | "highlighted";
 };
 
-export function StatusMenu({ id }: Props) {
-  const [status, setStatus] = React.useState("gray");
+export function StatusMenu({ id, developerStatus }: Props) {
+  const [status, setStatus] = useState<
+    "unpublished" | "published" | "highlighted"
+  >(developerStatus);
   const { toast } = useToast();
 
   async function onDelete() {
@@ -28,6 +31,16 @@ export function StatusMenu({ id }: Props) {
     toast({
       title: "Profile deleted",
       description: "The developer profile has been successfully deleted",
+    });
+  }
+  async function onStatusChange(
+    newStatus: "unpublished" | "published" | "highlighted"
+  ) {
+    await updateStatusAction(id, newStatus);
+    setStatus(newStatus);
+    toast({
+      title: "Status updated",
+      description: "The developer profile status has been successfully updated",
     });
   }
 
@@ -39,14 +52,21 @@ export function StatusMenu({ id }: Props) {
           <EllipsisVertical className="text-neutral fill-neutral" size={28} />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
-          <DropdownMenuRadioGroup value={status} onValueChange={setStatus}>
-            <DropdownMenuRadioItem value="purple">
+          <DropdownMenuRadioGroup
+            value={status}
+            onValueChange={(value) =>
+              onStatusChange(
+                value as "unpublished" | "published" | "highlighted"
+              )
+            }
+          >
+            <DropdownMenuRadioItem value="highlighted">
               Highlighted
             </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="blue">
+            <DropdownMenuRadioItem value="published">
               Published
             </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="gray">
+            <DropdownMenuRadioItem value="unpublished">
               Unpublished
             </DropdownMenuRadioItem>
 
