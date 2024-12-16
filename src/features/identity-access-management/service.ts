@@ -7,7 +7,7 @@ export function createService(repository: Repository) {
     async getAllIdentities() {
       return repository.getAllIdentities();
     },
-    async getIdentityById(id: number) {
+    async getIdentityById(id: string) {
       return hasAccess()
         ? await repository.getIdentityById(id)
         : "Access denied";
@@ -18,3 +18,4 @@ export function createService(repository: Repository) {
     },
   };
 }
+

@@ -1,17 +1,20 @@
-import { pgTable, integer, pgEnum, varchar } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { pgTable, pgEnum, varchar, uuid } from "drizzle-orm/pg-core";
 
-export const developersStatus = pgEnum("developers_status", [
+export const developerStatuses = pgEnum("developer_statuses", [
   "unpublished",
   "published",
   "highlighted",
 ]);
 
 export const developerProfiles = pgTable("developer_profiles", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: uuid()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   identityId: varchar("identity_id").default("1"),
   name: varchar().notNull(),
   email: varchar().notNull(),
-  status: developersStatus().notNull().default("unpublished"),
+  status: developerStatuses().notNull().default("unpublished"),
 });
 
 export type DeveloperProfileSelect = typeof developerProfiles.$inferSelect;

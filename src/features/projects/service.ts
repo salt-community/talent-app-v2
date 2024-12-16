@@ -2,13 +2,16 @@ import { Db } from "@/db";
 import { createRepository } from "./repository";
 import { ProjectInsert } from "./db";
 import { createClient } from "./api/api";
-import { ProjectData, UpdatedProject } from "./types";
+import { DeveloperProfile, ProjectData, UpdatedProject } from "./types";
 import { extractRepositoryDetails } from "./logic";
 
-export function createService(db: Db) {
+export function createService(db: Db, getAllIdentities: DeveloperProfile) {
   const reps = createRepository(db);
   const client = createClient();
   return {
+    getAllDevelopers: async () => {
+      return await getAllIdentities();
+    },
     getAll: async (userId: string) => {
       return await reps.getAll(userId);
     },
@@ -56,9 +59,8 @@ export function createService(db: Db) {
       }
     },
     updatePerformance: async (projectWebsite: string, id: string) => {
-      const newPerformanceScore = await client.testPagePerformance(
-        projectWebsite
-      );
+      const newPerformanceScore =
+        await client.testPagePerformance(projectWebsite);
       reps.updatePerformanceScore({
         newPerformanceScore: newPerformanceScore,
         id: id,

@@ -36,6 +36,7 @@
     "drizzle-orm": "^0.38.1",
     "emblor": "^1.4.7",
     "lucide-react": "^0.462.0",
+    "meilisearch": "^0.46.0",
     "next": "15.1.0",
     "pg": "^8.13.1",
     "react": "19.0.0",
@@ -48,6 +49,7 @@
     "sonner": "^1.7.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "use-debounce": "^10.0.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -65,5 +67,9 @@
     "tailwindcss": "^3.4.1",
     "tsx": "^4.19.2",
     "typescript": "^5"
+  },
+  "overrides": {
+    "react": "$react",
+    "react-dom": "$react-dom"
   }
 }
