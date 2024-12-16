@@ -1,12 +1,10 @@
 import { Repository } from "./repository";
 import { BackgroundInsert, BackgroundUpdate } from "./schema";
-import { iamService } from "../iam/instance";
+// import { iamService } from "../iam/instance";
 
 export function createBackgroundsService(repository: Repository) {
   return {
     async getAll() {
-      iamService.checkAccess("backgrounds.getAll", "1");
-
       return repository.getAll();
     },
     async getByDevId(devId: string) {
