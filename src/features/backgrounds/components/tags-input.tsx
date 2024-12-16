@@ -8,8 +8,14 @@ type Props = {
   tags: { id: number; name: string }[];
   inputName: string;
   inputPlaceholder: string;
+  suggestedTags: { id: number; name: string }[];
 };
-export function TagsInput({ tags, inputName, inputPlaceholder }: Props) {
+export function TagsInput({
+  tags,
+  inputName,
+  inputPlaceholder,
+  suggestedTags,
+}: Props) {
   const [exampleTags, setExampleTags] = useState<Tag[]>(
     tags.map((tag) => ({ id: String(tag.id), text: tag.name })),
   );
@@ -39,8 +45,14 @@ export function TagsInput({ tags, inputName, inputPlaceholder }: Props) {
         }}
         activeTagIndex={activeTagIndex}
         setActiveTagIndex={setActiveTagIndex}
-        inlineTags={false}
         inputFieldPosition="top"
+        enableAutocomplete
+        addTagsOnBlur
+        addOnPaste
+        autocompleteOptions={suggestedTags.map((tag) => ({
+          id: String(tag.id),
+          text: tag.name,
+        }))}
       />
       <input
         type="hidden"

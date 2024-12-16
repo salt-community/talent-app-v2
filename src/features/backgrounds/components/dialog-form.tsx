@@ -15,9 +15,14 @@ import { TagsInput } from "./tags-input";
 import { Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Background } from "../types";
+import { backgroundsService } from "../instance";
 
 type Props = { background: Background };
-export function DialogForm({ background }: Props) {
+export async function DialogForm({ background }: Props) {
+  const allSkills = await backgroundsService.getAllSkills();
+  const allLanguages = await backgroundsService.getAllLanguages();
+  const allEducations = await backgroundsService.getAllEducations();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -80,18 +85,21 @@ export function DialogForm({ background }: Props) {
                 tags={background.languages}
                 inputName={"languages"}
                 inputPlaceholder={"Add a language"}
+                suggestedTags={allLanguages}
               />
 
               <TagsInput
                 tags={background.educations}
                 inputName={"educations"}
                 inputPlaceholder={"Add an education"}
+                suggestedTags={allEducations}
               />
 
               <TagsInput
                 tags={background.skills}
                 inputName={"skills"}
                 inputPlaceholder={"Add a skill"}
+                suggestedTags={allSkills}
               />
             </div>
 

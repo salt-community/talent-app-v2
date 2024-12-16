@@ -6,9 +6,8 @@ import { SkillsBadges } from ".";
 type Props = { devid?: string };
 export async function Background({ devid }: Props) {
   const background = devid
-    ? await backgroundsService.getByDevId(devid)
-    : (await backgroundsService.getAll())[0];
-
+    ? await backgroundsService.getBackgroundByDevId(devid)
+    : (await backgroundsService.getAllBackgrounds())[0];
   if (!background) {
     return null;
   }
