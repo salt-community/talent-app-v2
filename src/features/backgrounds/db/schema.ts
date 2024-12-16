@@ -36,7 +36,12 @@ export const languages = pgTable("background_languages", {
   level: integer().notNull().default(5),
 });
 
-export type BackgroundInsert = typeof backgrounds.$inferInsert;
+export type BackgroundInsert = typeof backgrounds.$inferInsert & {
+  skills: string[];
+  languages: string[];
+  educations: string[];
+};
+
 export type BackgroundSelect = typeof backgrounds.$inferSelect;
 
 export type SkillInsert = typeof skills.$inferInsert;

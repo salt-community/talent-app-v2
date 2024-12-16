@@ -1,15 +1,25 @@
 import { eq } from "drizzle-orm";
-import { backgrounds, BackgroundInsert, DB, skills, SkillInsert } from "./db";
+import {
+  backgrounds,
+  BackgroundInsert,
+  DB,
+  skills,
+  SkillInsert,
+  LanguageInsert,
+  EducationInsert,
+  languages,
+  educations,
+} from "./db";
 import { BackgroundUpdate } from "./types";
 
 export function createRepository(db: DB) {
   return {
-    async getAll() {
+    async getAllBackgrounds() {
       return await db.query.backgrounds.findMany({
         with: { skills: true, languages: true, educations: true },
       });
     },
-    async getByDevId(devId: string) {
+    async getBackgrounByDevId(devId: string) {
       return await db.query.backgrounds.findFirst({
         with: { skills: true, languages: true, educations: true },
         where: eq(backgrounds.devId, devId),
@@ -30,9 +40,23 @@ export function createRepository(db: DB) {
         .set({ ...rest })
         .where(eq(backgrounds.id, id));
     },
-
+    async getAllSkills() {
+      return await db.query.skills.findMany();
+    },
     async addSkills(skillList: SkillInsert[]) {
       return await db.insert(skills).values(skillList);
+    },
+    async getAllLanguages() {
+      return await db.query.languages.findMany();
+    },
+    async addLanguages(languageList: LanguageInsert[]) {
+      return await db.insert(languages).values(languageList);
+    },
+    async getAllEducations() {
+      return await db.query.educations.findMany();
+    },
+    async addEducations(educationList: EducationInsert[]) {
+      return await db.insert(educations).values(educationList);
     },
   };
 }
