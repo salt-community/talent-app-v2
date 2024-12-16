@@ -25,14 +25,14 @@ export const calculateAverageAssignmentsScore = (assignments: Assignment[]) => {
   const averageAssignmentScore =
     scores.reduce(
       (accumulator, currentValue) => accumulator + currentValue,
-      0
+      0,
     ) / scores.length;
   return Math.round(averageAssignmentScore);
 };
 
 export const calculateAverageCategoryScore = (
   assignments: Assignment[],
-  category: string
+  category: string,
 ) => {
   const scores = assignments
     .filter((assignment) => assignment.tags.includes(category))
@@ -40,7 +40,7 @@ export const calculateAverageCategoryScore = (
   const averageAssignmentScore =
     scores.reduce(
       (accumulator, currentValue) => accumulator + currentValue,
-      0
+      0,
     ) / scores.length;
   return Math.round(averageAssignmentScore);
 };

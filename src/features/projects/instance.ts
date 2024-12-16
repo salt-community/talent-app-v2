@@ -4,5 +4,5 @@ import { developerService } from "../developer-profiles/instance";
 
 export const projectService = createService(
   db,
-  developerService.getAllDeveloperProfiles
+  developerService.getAllDeveloperProfiles,
 );

@@ -30,7 +30,7 @@ export async function Projects({ userId }: Props) {
       <H2>Projects</H2>
       <div className="flex flex-col justify-center mt-4">
         {projects.map((project) => (
-          <div key={project.id}>
+          <div key={project.userId}>
             <ProjectDetails project={project} />
             <Separator className="mt-4 mb-6" />
           </div>

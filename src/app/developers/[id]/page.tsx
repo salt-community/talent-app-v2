@@ -6,14 +6,15 @@ import { ScoreBoard } from "@/features/scores";
 export default async function DeveloperDetailPage({
   params,
 }: {
-  params: Promise<{ userId: string }>;
+  params: Promise<{ devId: string }>;
 }) {
+  const { devId } = await params;
   return (
     <>
       <DeveloperCard>
-        <Background id={1} />
+        <Background devId={devId} />
         <ScoreBoard />
-        <Projects userId={(await params).userId} />
+        <Projects userId={devId} />
       </DeveloperCard>
     </>
   );

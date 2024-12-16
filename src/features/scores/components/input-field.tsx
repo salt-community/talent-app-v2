@@ -7,7 +7,12 @@ type Props = {
   handleChangeInput?: (inputValue: string, label: string) => void;
 };
 
-export function InputField({ label, inputType, value, handleChangeInput }: Props) {
+export function InputField({
+  label,
+  inputType,
+  value,
+  handleChangeInput,
+}: Props) {
   return (
     <div className="grid grid-cols-4 items-center gap-4">
       <FormLabel label={label} />

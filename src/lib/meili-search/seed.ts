@@ -6,15 +6,19 @@ export async function seedMeili() {
 
   const index = meiliSearch.index("backgrounds");
 
-  const result = await index.addDocuments(backgrounds);
+  const result = await index.addDocuments(backgrounds, {
+    primaryKey: "devId",
+  });
 
   const task = await meiliSearch.waitForTask(result.taskUid);
 
   if (task.status === "succeeded") {
-    console.log("Successfully seeded MeiliSearch index with backgrounds");
+    console.log(
+      `Successfully seeded MeiliSearch index with ${task.details.indexedDocuments} backgrounds`,
+    );
   } else {
     console.error(
-      `Failed to seed MeiliSearch index with backgrounds because of errorz: ${task.status}`,
+      `${task.status}: failed to seed MeiliSearch index with backgrounds because of errorzzz: ${task.error?.message}`,
     );
   }
 }

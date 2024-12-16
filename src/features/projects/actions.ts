@@ -15,7 +15,7 @@ export async function deleteProjectAction(id: string) {
 }
 export async function updatePerformanceScoreAction(
   projectWebsite: string,
-  id: string
+  id: string,
 ) {
   await projectService.updatePerformance(projectWebsite, id);
 }

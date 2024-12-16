@@ -5,7 +5,7 @@ import { getFormData } from "./utils";
 
 export async function addAssignmentAction(formData: FormData) {
   const { title, comment, score, tags } = getFormData(formData);
- 
+
   const newAssignment = {
     userId: 1,
     comment,

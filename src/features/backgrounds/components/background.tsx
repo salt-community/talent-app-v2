@@ -3,9 +3,11 @@ import { BackgroundBasicInfo } from "./basic-info";
 import { backgroundsService } from "../instance";
 import { SkillsBadges } from ".";
 
-type Props = { id : number };
-export async function Background({ id = 1}: Props) {
-  const background = (await backgroundsService.getById(id))[0];
+type Props = { devId?: string };
+export async function Background({ devId }: Props) {
+  const background = devId
+    ? (await backgroundsService.getByDevId(devId))[0]
+    : (await backgroundsService.getAll())[0];
 
   if (!background) {
     return null;
@@ -13,11 +15,8 @@ export async function Background({ id = 1}: Props) {
 
   return (
     <div className="space-y-2 max-w-96">
-      <div className="flex justify-between items-start">
-        <BackgroundBasicInfo
-          background={background}
-        />
- 
+      <div className="flex justify-between items-start w-full">
+        <BackgroundBasicInfo background={background} />
       </div>
 
       <div>
