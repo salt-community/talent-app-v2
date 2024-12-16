@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/components";
+import { AlertDialogDemo } from "@/components/alert-dialog/alertDialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,13 +9,11 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { EllipsisVertical } from "lucide-react";
-import { Status } from "./status";
-import { Button } from "@/components";
-import { deleteDeveloperProfileAction, updateStatusAction } from "../action";
 import { useToast } from "@/hooks/use-toast";
-import { AlertDialogDemo } from "@/components/alert-dialog/alertDialog";
+import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
+import { deleteDeveloperProfileAction, updateStatusAction } from "../action";
+import { Status } from "./status";
 
 type Props = {
   id: string;

@@ -1,6 +1,7 @@
 import { Db } from "@/db";
 import { createDevelopersRepository } from "./repository";
 import { DeveloperProfileInsert } from "./schema";
+import { DevelopersStatus } from "./types";
 
 export function createDevelopersService(db: Db) {
   const repository = createDevelopersRepository(db);
@@ -14,10 +15,7 @@ export function createDevelopersService(db: Db) {
     async delete(id: string) {
       await repository.delete(id);
     },
-    async updateStatus(
-      id: string,
-      status: "unpublished" | "published" | "highlighted"
-    ) {
+    async updateStatus(id: string, status: DevelopersStatus) {
       await repository.updateStatus(id, status);
     },
   };

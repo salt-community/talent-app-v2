@@ -1,6 +1,7 @@
 import { Db } from "@/db";
-import { DeveloperProfileInsert, developerProfiles } from "./schema";
 import { eq } from "drizzle-orm";
+import { DeveloperProfileInsert, developerProfiles } from "./schema";
+import { DevelopersStatus } from "./types";
 
 export function createDevelopersRepository(db: Db) {
   return {
@@ -16,10 +17,7 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(developerProfiles.id, id))
         .execute();
     },
-    async updateStatus(
-      id: string,
-      statues: "unpublished" | "published" | "highlighted"
-    ) {
+    async updateStatus(id: string, statues: DevelopersStatus) {
       await db
         .update(developerProfiles)
         .set({ status: statues })
