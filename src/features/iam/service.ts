@@ -1,12 +1,14 @@
 import { checkAccess } from "./check-access";
-import { Repository } from "./repository";
+import { createRepository } from "./repository";
 import { IdentityInsert } from "./schema";
+import { Db, db } from "@/db";
 
 import { ROLES } from "./roles";
 type Role = keyof typeof ROLES;
 type Permission = (typeof ROLES)[Role][number];
 
-export function createService(repository: Repository) {
+export function createService(db: Db) {
+  const repository = createRepository(db);
   return {
     async getAllIdentities() {
       return repository.getAllIdentities();
