@@ -1,11 +1,11 @@
-import { Hero } from "@/components/ui/highlighted";
-import { AchievementBoards } from "@/components/ui/highlighted/achievement-boards";
+import { Hero, HighlightedDevelopers, AchievementBoards } from "@/components/ui/highlighted";
 
 export default function Page() {
   return (
     <div>
       <Hero />
       <AchievementBoards/>
+      <HighlightedDevelopers/>
     </div>
   );
 }
