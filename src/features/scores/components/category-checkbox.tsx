@@ -5,10 +5,11 @@ import type { CategoryTag } from "../categories";
 type Props = {
   tag: CategoryTag;
   checked?: boolean;
-  handleChangeTag?: (isChecked: boolean, tag: CategoryTag) => void
+  handleChangeTag?: (isChecked: boolean, tag: CategoryTag) => void;
 };
 
 export function CategoryCheckbox({ tag, checked, handleChangeTag }: Props) {
+  console.log(checked);
   return (
     <div className="flex items-center space-x-2">
       <input
@@ -16,11 +17,11 @@ export function CategoryCheckbox({ tag, checked, handleChangeTag }: Props) {
         name={toCamelCase(tag)}
         value={toCamelCase(tag)}
         id={toCamelCase(tag)}
-        checked={checked}
         className="focus:ring focus:ring-gray-200"
         onChange={(e) => {
           if (handleChangeTag) handleChangeTag(e.target.checked, tag);
         }}
+        {...(checked !== undefined ? { checked : checked } : {})}
       />
       <label
         htmlFor={toCamelCase(tag)}

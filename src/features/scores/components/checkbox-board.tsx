@@ -7,15 +7,22 @@ type Props = {
   handleChangeTag?: (isChecked: boolean, tag: CategoryTag) => void;
 };
 
-export function CheckboxBoard({ tags = [], handleChangeTag }: Props) {
+export function CheckboxBoard({ tags, handleChangeTag }: Props) {
   return (
     <div className="grid grid-cols-4 items-start gap-4">
       <FormLabel label="Tags" />
       <div className="col-span-3 grid grid-cols-2 gap-2">
         {categoryTags.map((tag, index) => {
-          return <CategoryCheckbox key={index} tag={tag} checked={tags.includes(tag)} handleChangeTag={handleChangeTag} />;
+          return (
+            <CategoryCheckbox
+              key={index}
+              tag={tag}
+              {...(tags !== undefined ? { checked: tags.includes(tag) } : {})}
+              handleChangeTag={handleChangeTag}
+            />
+          );
         })}
       </div>
     </div>
   );
-} 
+}
