@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <div>
       <Hero />
-      <AchievementBoards/>
+      {/* <AchievementBoards/> */}
       <HighlightedDevelopers/>
     </div>
   );
