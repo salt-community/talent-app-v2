@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function ProjectHighlight(){
  return (
-   <Card className="m-2">
+   <Card className="m-2 max-w-sm">
      <CardHeader className="px-2 py-6">
        <div className="flex items-center gap-6">
          <Avatar>
