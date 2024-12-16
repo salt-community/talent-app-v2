@@ -1,7 +1,6 @@
 import { Db } from "@/db";
 import { IdentityInsert, identities } from "./schema";
 import { eq } from "drizzle-orm";
-import { get } from "http";
 
 export function createRepository(db: Db) {
   return {

@@ -1,7 +1,7 @@
 import { checkAccess } from "./check-access";
 import { createRepository } from "./repository";
 import { IdentityInsert } from "./schema";
-import { Db, db } from "@/db";
+import { Db } from "@/db";
 
 import { ROLES } from "./roles";
 type Role = keyof typeof ROLES;
