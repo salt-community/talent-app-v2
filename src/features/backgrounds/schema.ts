@@ -1,8 +1,9 @@
-import { integer, jsonb, pgTable, varchar } from "drizzle-orm/pg-core";
+import { integer, jsonb, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 import { Tag } from "emblor";
 
 export const backgroundsTable = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  devId: uuid("dev_id").notNull(),
   avatarUrl: varchar().notNull().default("/avatar.png"),
   name: varchar().notNull(),
   title: varchar().notNull(),

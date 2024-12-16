@@ -3,14 +3,13 @@ import { projectService } from "../instance";
 import ProjectDetails from "./project-details";
 import ProjectForm from "./project-form";
 
-export async function Projects() {
-  const userId = "ecd3c615-35d6-4890-b867-4e51a411f34d";
-  const data = await projectService.getAll(userId);
-  const projects = data.sort((a, b) => a.title.localeCompare(b.title));
+type Props = {
+  devId: string;
+};
 
-  const mockUser = {
-    userId: "ecd3c615-35d6-4890-b867-4e51a411f34d",
-  };
+export async function Projects({ devId }: Props) {
+  const data = await projectService.getAll(devId);
+  const projects = data.sort((a, b) => a.title.localeCompare(b.title));
 
   if (projects.length === 0) {
     return (
@@ -20,7 +19,7 @@ export async function Projects() {
           <p>Add your projects here</p>
         </div>
         <div className="flex justify-end">
-          <ProjectForm userId={mockUser.userId} />
+          <ProjectForm userId={devId} />
         </div>
       </div>
     );
@@ -38,7 +37,7 @@ export async function Projects() {
         ))}
       </div>
       <div className="flex justify-end mb-4">
-        <ProjectForm userId={mockUser.userId} />
+        <ProjectForm userId={devId} />
       </div>
     </div>
   );

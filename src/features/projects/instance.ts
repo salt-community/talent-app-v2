@@ -1,5 +1,8 @@
 import { db } from "@/db";
 import { createService } from "./service";
-import { iamService } from "../iam/instance";
+import { developerService } from "../developer-profiles/instance";
 
-export const projectService = createService(db, iamService.getAllIdentities);
+export const projectService = createService(
+  db,
+  developerService.getAllDeveloperProfiles
+);

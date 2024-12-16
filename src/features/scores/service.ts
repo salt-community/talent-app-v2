@@ -1,36 +1,32 @@
 import { Db } from "@/db";
-import { assignmentTable } from "./schema";
-import { eq } from "drizzle-orm";
-import { AssignmentUpdates, NewAssignment } from "./types";
-export function createRepository(db: Db) {
+import { createRepository } from "./repository";
+import type { AssignmentUpdates, NewAssignment } from "./types";
+import { assignmentUpdates } from "./zod-validation";
+
+export const createService = (db: Db) => {
+  const repository = createRepository(db);
   return {
-    async addAssignment(newAssigment: NewAssignment) {
-      await db.insert(assignmentTable).values(newAssigment);
+    addAssignment: async (newAssigment: NewAssignment) => {
+      await repository.addAssignment(newAssigment);
     },
-    async getAssignmentsById(userId: number) {
-      return await db
-        .select()
-        .from(assignmentTable)
-        .where(eq(assignmentTable.userId, userId));
+    getAssignmentsByUserId: async (userId: number) => {
+      return await repository.getAssignmentsById(userId);
     },
-    async deleteAllAssignments() {
-      await db.delete(assignmentTable);
+    deleteAllAssignments: async () => {
+      await repository.deleteAllAssignments();
     },
-    async deleteAssignment(id: number) {
-      await db.delete(assignmentTable).where(eq(assignmentTable.id, id));
+    deleteAssignment: async (id: number) => {
+      await repository.deleteAssignment(id);
     },
-    async getAssignmentById(id: number) {
-      return await db
-        .select()
-        .from(assignmentTable)
-        .where(eq(assignmentTable.id, id));
+    getAssignmentById: async (id: number) => {
+      const assignment = await repository.getAssignmentById(id);
+      if (assignment.length === 0)
+        console.error("Error occured when getting assignment");
+      return assignment[0];
     },
-    async updateAssigment(id: number, updates: AssignmentUpdates) {
-      return await db
-        .update(assignmentTable)
-        .set(updates)
-        .where(eq(assignmentTable.id, id))
-        .returning();
+    updateAssignment: async (id: number, rawData: AssignmentUpdates) => {
+      const updates = assignmentUpdates.parse(rawData); // Kan kasta fel som måste tas om hand.
+      return await repository.updateAssigment(id, updates);
     },
   };
-}
+};

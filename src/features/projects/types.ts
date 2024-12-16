@@ -1,4 +1,4 @@
-import { iamService } from "../iam/instance";
+import { developerService } from "../developer-profiles/instance";
 
 export type Project = {
   id: string;
@@ -32,4 +32,4 @@ export type UpdatedPerformance = {
   newPerformanceScore: string;
 };
 
-export type DeveloperProfile = typeof iamService.getAllIdentities;
+export type DeveloperProfile = typeof developerService.getAllDeveloperProfiles;

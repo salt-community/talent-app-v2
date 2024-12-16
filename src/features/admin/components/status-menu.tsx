@@ -33,7 +33,9 @@ export function StatusMenu() {
             <DropdownMenuRadioItem value="gray">
               Unpublished
             </DropdownMenuRadioItem>
-            <Button size={"sm"} className="w-full">Delete</Button>
+            <Button size={"sm"} className="w-full">
+              Delete
+            </Button>
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>

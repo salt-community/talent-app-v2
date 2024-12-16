@@ -18,11 +18,8 @@ export function DeveloperProfileList({
           <p>{name}</p>
           <p className="text-paragraphLight text-sm">{email}</p>
         </div>
-          <StatusMenu/>
+        <StatusMenu />
       </div>
     </div>
   );
 }
-
-
-

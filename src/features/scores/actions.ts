@@ -1,39 +1,36 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { scoresService } from "./instance";
+import { getFormData } from "./utils";
 
 export async function addAssigmentAction(formData: FormData) {
-  const title = formData.get("title") as string;
-  const comment = formData.get("comment") as string;
-  const score = formData.get("score") as string;
-  const tags: string[] = [];
-  const individualCommunication = formData.get(
-    "individualCommunication"
-  ) as string;
-  if(individualCommunication) tags.push("individualCommunication")
-
-  const teamCollaboration = formData.get("teamCollaboration") as string;
-  if(teamCollaboration) tags.push("teamCollaboration")
-
-  const management = formData.get("management") as string;
-  if(management) tags.push("management")
-
-  const design = formData.get("design") as string;
-  if(design) tags.push("design")
-
-  const backend = formData.get("backend") as string;
-  if(backend) tags.push("backend")
-
-  const frontend = formData.get("frontend") as string;
-  if(frontend) tags.push("frontend")
-
+  const { title, comment, score, tags } = getFormData(formData);
 
   const newAssignment = {
     userId: 1,
     comment,
     score: Number(score),
-    title, 
+    title,
     tags,
   };
 
-  scoresService.addAssignment( newAssignment );
+  scoresService.addAssignment(newAssignment);
+  revalidatePath("/");
+}
+
+export async function editAssigmentAction(formData: FormData) {
+  const userId = formData.get("userId") as string;
+  const assignmentId = formData.get("assignmentId") as string;
+  const { title, comment, score, tags } = getFormData(formData);
+
+  const updatedAssignment = {
+    userId: Number(userId),
+    comment,
+    score: Number(score),
+    title,
+    tags,
+  };
+
+  scoresService.updateAssignment(Number(assignmentId), updatedAssignment);
+  revalidatePath("/");
 }
