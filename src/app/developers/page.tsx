@@ -25,7 +25,7 @@ export default async function Page({ searchParams }: Props) {
             <Link href={`/developers/${devId}`}>
               <Card className="p-2 h-full mx-auto flex items-center justify-center">
                 <CardContent>
-                  <Background devId={devId} />
+                  <Background devid={devId} />
                 </CardContent>
               </Card>
             </Link>
