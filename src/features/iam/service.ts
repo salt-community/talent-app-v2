@@ -16,6 +16,9 @@ export function createService(db: Db) {
     async getIdentityById(id: string) {
       return await repository.getIdentityById(id);
     },
+    async getUserId(id: string) {
+      return await repository.getUserId(id);
+    },
 
     async addIdentity(identity: IdentityInsert) {
       await repository.addIdentity(identity);

@@ -10,6 +10,13 @@ export function createRepository(db: Db) {
     async getIdentityById(id: string) {
       return await db.select().from(identities).where(eq(identities.id, id));
     },
+    async getUserId(id: string) {
+      const userId = await db
+        .select({ id: identities.id })
+        .from(identities)
+        .where(eq(identities.clerkId, id));
+      return userId[0];
+    },
     async addIdentity(identity: IdentityInsert) {
       return await db
         .insert(identities)
@@ -20,7 +27,7 @@ export function createRepository(db: Db) {
       const role = await db
         .select({ id: identities.id, roles: identities.role })
         .from(identities)
-        .where(eq(identities.id, id));
+        .where(eq(identities.clerkId, id));
       return role[0];
     },
   };
