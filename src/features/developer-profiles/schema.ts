@@ -2,7 +2,7 @@ import { sql } from "drizzle-orm";
 import { pgEnum, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 import { developersStatus } from "./types";
 
-const developerStatuses = pgEnum("developer_statuses", developersStatus);
+export const developerStatuses = pgEnum("developer_statuses", developersStatus);
 
 export const developerProfiles = pgTable("developer_profiles", {
   id: uuid()
