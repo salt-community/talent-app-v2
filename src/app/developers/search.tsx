@@ -22,7 +22,7 @@ export function Search() {
   );
 
   return (
-    <div className="fixed z-10 mr-10 w-screen bg-white -my-2 pt-4">
+    <div className="fixed left-0 w-full bg-white px-4 pt-4 z-10 -my-2">
       <Input
         placeholder="Type to search"
         defaultValue={search}
