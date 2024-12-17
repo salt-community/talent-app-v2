@@ -28,7 +28,7 @@ export function Assignment({ assignment }: Props) {
 
         <AccordionContent>
           <div className="flex flex-col mr-2 pl-8">
-            <span className="flex flex-row gap-4 pb-2 items-center text-xs">
+            <span className="flex flex-row gap-4 pb-2 items-center pl-1">
               {assignment.comment}
             </span>
             <span className="flex flex-wrap gap-2 pb-2 items-center">

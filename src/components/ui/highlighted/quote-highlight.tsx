@@ -1,32 +1,37 @@
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../card";
+import { Card, CardContent } from "../card";
+import { QuoteIcon } from "lucide-react";
+import Link from "next/link";
+import { backgroundsService } from "@/features";
+import { BackgroundAvatar } from "@/features/backgrounds/components/avatar";
 
-export function QuoteHighlight() {
+export async function QuoteHighlight() {
+  const background = await backgroundsService.getBackgroundByDevId(
+    "1520dee4-7232-4422-9165-a4cd4aa52fa6"
+  );
+  if (!background) return null;
   return (
-    <Card className="m-2 max-w-sm">
-      <CardHeader className="px-2 py-6">
-        <div className="flex items-center gap-6">
-          <Avatar>
-            <AvatarImage className="w-10" src={"./avatar.png"} />
-          </Avatar>
-          <div>
-            <CardTitle className="text-xl">Developer Name</CardTitle>
-            <CardDescription>Full-stack JavaScript Developer</CardDescription>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="pt-0">
-        <blockquote className="py-6 pr-2 italic text-2xl text-justify leading-9">
+    <Card className="m-2 max-w-sm text-right rounded-2xl bg-neutral/10 px-4">
+      <CardContent className="flex flex-col gap-6">
+        <QuoteIcon
+          size={60}
+          className="text-white fill-white"
+          strokeWidth={1}
+        />
+        <blockquote className="text-2xl font-light">
           {
-            "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, ea? Obcaecati perferendis voluptatum facilis, at quos animi, voluptates!"
+            "I am a full-stack JavaScript developer with a passion for building scalable web applications."
           }
         </blockquote>
+        <Link
+          className="gap-2 flex justify-end w-full items-center"
+          href={`/developers/${background.avatarUrl}`}
+        >
+          <div className="flex flex-col gap-0">
+            <p className="text-xl font-semibold ">{background.name}</p>
+            <p className="text-lg leading-none">{background.title}</p>
+          </div>
+          <BackgroundAvatar size="sm" url={background.avatarUrl} />
+        </Link>
       </CardContent>
     </Card>
   );

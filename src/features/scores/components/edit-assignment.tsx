@@ -50,7 +50,8 @@ export function EditAssignment({ assignment }: Props) {
       <DialogTrigger asChild>
         <Pencil
           type="submit"
-          size={16}
+          size={20}
+          strokeWidth={2.5}
           className="cursor-pointer hover:text-gray-600"
           onClick={() => setIsDialogOpen(true)}
         />

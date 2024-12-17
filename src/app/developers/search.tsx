@@ -16,16 +16,18 @@ export function Search() {
       if (event.target.value) searchParams.set("search", event.target.value);
       else searchParams.delete("search");
 
-      redirect(`/developers?${searchParams.toString()}`);
+      redirect(`/?${searchParams.toString()}`);
     },
-    300,
+    300
   );
 
   return (
-    <Input
-      placeholder="Type to search"
-      defaultValue={search}
-      onChange={handleSearch}
-    />
+    <div className="fixed left-0 w-full bg-white px-4 pt-4 z-10 -my-2">
+      <Input
+        placeholder="Type to search"
+        defaultValue={search}
+        onChange={handleSearch}
+      />
+    </div>
   );
 }
