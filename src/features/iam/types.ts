@@ -1,5 +1,5 @@
 import { createService } from "./service";
 
-type DevelopersService = ReturnType<typeof createService>;
+type iamService = ReturnType<typeof createService>;
 
-export type CheckAccess = DevelopersService["checkAccess"];
+export type CheckAccess = iamService["checkAccess"];
