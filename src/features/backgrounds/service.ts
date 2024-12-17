@@ -57,14 +57,20 @@ export function createBackgroundsService(
       const backgroundId = await repository.add(background);
       await serviceMethods.syncBackgroundSearchIndex([background]);
       await Promise.all([
-        addSkills(backgroundId, background.skills),
-        addLanguages(backgroundId, background.languages),
-        addEducations(backgroundId, background.educations),
+        await addSkills(backgroundId, background.skills),
+        await addLanguages(backgroundId, background.languages),
+        await addEducations(backgroundId, background.educations),
       ]);
     },
+
     async update(background: BackgroundUpdate) {
       await repository.update(background);
       await serviceMethods.syncBackgroundSearchIndex([background]);
+      await Promise.all([
+        await repository.updateSkills(background.id, background.skills),
+        await repository.updateLanguages(background.id, background.languages),
+        await repository.updateEducations(background.id, background.educations),
+      ]);
     },
   };
 }
