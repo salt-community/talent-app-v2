@@ -6,10 +6,10 @@ export type GetAllDeveloperProfiles = DevelopersService["getAll"];
 export type DeleteDeveloperProfile = DevelopersService["delete"];
 export type UpdateStatus = DevelopersService["updateStatus"];
 
-export const developersStatus = [
+export const developerProfileStatus = [
   "unpublished",
   "published",
   "highlighted",
 ] as const;
 
-export type DevelopersStatus = (typeof developersStatus)[number];
+export type DeveloperProfileStatus = (typeof developerProfileStatus)[number];
