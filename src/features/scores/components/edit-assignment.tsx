@@ -33,8 +33,8 @@ export function EditAssignment({ assignment }: Props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleChangeTag = (isChecked: boolean, tag: CategoryTag) => {
-    if(isChecked) {
-      setTags([...tags, tag])
+    if (isChecked) {
+      setTags([...tags, tag]);
     } else {
       setTags(tags.filter((currentTag) => currentTag !== tag));
     }

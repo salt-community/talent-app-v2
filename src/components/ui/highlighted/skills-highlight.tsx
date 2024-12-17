@@ -32,7 +32,9 @@ export function SkillsHighlight() {
         </div>
         <p className="font-bold ml-1 mt-2">Education</p>
         <p className="pl-1 text-sm">Diploma in Architecture</p>
-        <p className="pl-1 text-sm pb-2">Certificate in Front-End Development</p>
+        <p className="pl-1 text-sm pb-2">
+          Certificate in Front-End Development
+        </p>
       </CardContent>
     </Card>
   );

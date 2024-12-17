@@ -20,7 +20,7 @@ import { Plus } from "lucide-react";
 
 type Props = { devId: string };
 
-export function AddAssignment({ devId } : Props) {
+export function AddAssignment({ devId }: Props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [title, setTitle] = useState("");
 

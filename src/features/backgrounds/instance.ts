@@ -1,4 +1,4 @@
-import { db } from "@/db";
+import { db } from "./db";
 import { createRepository } from "./repository";
 import { createBackgroundsService } from "./service";
 import { syncBackgroundSearchIndex } from "../../../meili-search";
@@ -8,5 +8,5 @@ const serviceMethods = {
 
 export const backgroundsService = createBackgroundsService(
   createRepository(db),
-  serviceMethods
+  serviceMethods,
 );

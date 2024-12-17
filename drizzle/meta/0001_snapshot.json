@@ -129,12 +129,8 @@
           "name": "background_educations_backroundId_backgrounds_id_fk",
           "tableFrom": "background_educations",
           "tableTo": "backgrounds",
-          "columnsFrom": [
-            "backroundId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["backroundId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -192,12 +188,8 @@
           "name": "background_languages_backroundId_backgrounds_id_fk",
           "tableFrom": "background_languages",
           "tableTo": "backgrounds",
-          "columnsFrom": [
-            "backroundId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["backroundId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -255,12 +247,8 @@
           "name": "background_skills_backroundId_backgrounds_id_fk",
           "tableFrom": "background_skills",
           "tableTo": "backgrounds",
-          "columnsFrom": [
-            "backroundId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["backroundId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -498,11 +486,7 @@
     "public.roles": {
       "name": "roles",
       "schema": "public",
-      "values": [
-        "developer",
-        "core",
-        "admin"
-      ]
+      "values": ["developer", "core", "admin"]
     }
   },
   "schemas": {},

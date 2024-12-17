@@ -10,7 +10,7 @@ export async function deleteDeveloperProfileAction(id: string) {
 
 export async function updateStatusAction(
   id: string,
-  status: "unpublished" | "published" | "highlighted"
+  status: "unpublished" | "published" | "highlighted",
 ) {
   await adminService.updateStatus(id, status);
 }

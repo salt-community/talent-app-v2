@@ -30,7 +30,7 @@ export function BackgroundBasicInfo({ background }: Props) {
           </div>
         </Link>
         <ul className="flex flex-col gap-2 items-center justify-end items-top h-full">
-          <DialogForm background={background} />
+        <DialogForm background={background} />
           {background.links &&
             background.links.map((link) => (
               <li key={link.url} className="h-full flex justify-start">

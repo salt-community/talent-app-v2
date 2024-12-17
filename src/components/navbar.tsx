@@ -2,8 +2,11 @@ import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
 
 import Link from "next/link";
 import { HamburgerMenu } from "./ui/hamburger-menu";
+import { iamService } from "@/features/iam/instance";
 
 export async function Header() {
+  await iamService.controllUser();
+
   return (
     <nav className="w-full h-10 px-3 shadow-sm sticky top-0 z-20 flex bg-background justify-between items-center md:px-10">
       <Link href="/">
