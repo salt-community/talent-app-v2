@@ -14,11 +14,11 @@ export default async function Page({ searchParams }: Props) {
   return (
     <main className="px-4">
       <Search />
-      <ul className="pt-14 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      <ul className="pt-14 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {devIds.map((devId) => (
-          <li key={devId} className="w-fit">
-            <Card className="p-2 h-full mx-auto flex justify-center">
-              <CardContent>
+          <li key={devId} className="">
+            <Card className="p-2 h-full flex justify-center min-w-[20rem]">
+              <CardContent >
                 <Background devid={devId} />
               </CardContent>
             </Card>
