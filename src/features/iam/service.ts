@@ -38,9 +38,12 @@ export function createService(db: Db) {
     async addIdentity(identity: IdentityInsert) {
       await repository.addIdentity(identity);
     },
-    async checkAccess(permission: Permission, id: string) {
-      const roles = await repository.getIdentityRole(id);
-      return checkAccess(roles, permission);
+    async checkAccess(permission: Permission) {
+      const { userId } = await auth();
+      if (userId) {
+        const roles = await repository.getIdentityRole(userId);
+        return checkAccess(roles, permission);
+      }
     },
   };
 }

@@ -9,12 +9,8 @@ export function createAdminService(
 ) {
   return {
     getAllDeveloperProfiles() {
-      if (
-        !hasAccess(
-          "admin.getAllDeveloperProfiles",
-          "15086cf4-1111-4751-b379-5fdae699d68d"
-        )
-      ) {
+      console.log(hasAccess("admin.getAllDeveloperProfiles"));
+      if (!hasAccess("admin.getAllDeveloperProfiles")) {
         throw new Error("You do not have access to view developer profiles");
       }
       return getAllDeveloperProfiles();
