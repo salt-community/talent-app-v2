@@ -1,6 +1,8 @@
 import { meiliSearch } from "./meili-search";
 
-export async function addBackgroundSearchIndex(background) {
+export async function addBackgroundSearchIndex(
+  background: Record<string, unknown>[]
+) {
   const index = meiliSearch.index("backgrounds");
   try {
     const response = await index.addDocuments(background, {

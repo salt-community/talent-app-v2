@@ -97,7 +97,7 @@ export async function backgroundsSeed(devIds: string[]) {
   await Promise.all(
     backgrounds.map(async (background) => {
       await repository.add(background);
-      await addBackgroundSearchIndex(background);
+      await addBackgroundSearchIndex([background]);
     })
   );
   console.log("Done seeding Backgrounds...");
