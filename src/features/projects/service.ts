@@ -4,8 +4,13 @@ import { ProjectInsert } from "./db";
 import { createClient } from "./api/api";
 import { DeveloperProfile, ProjectData, UpdatedProject } from "./types";
 import { extractRepositoryDetails } from "./logic";
+import { CheckAccess } from "@/features";
 
-export function createService(db: Db, getAllIdentities: DeveloperProfile) {
+export function createService(
+  db: Db,
+  getAllIdentities: DeveloperProfile,
+  checkAccess: CheckAccess
+) {
   const reps = createRepository(db);
   const client = createClient();
   return {
@@ -13,6 +18,7 @@ export function createService(db: Db, getAllIdentities: DeveloperProfile) {
       return await getAllIdentities();
     },
     getAll: async (userId: string) => {
+      checkAccess("project.getAll");
       return await reps.getAll(userId);
     },
     add: async ({
@@ -22,6 +28,7 @@ export function createService(db: Db, getAllIdentities: DeveloperProfile) {
       userId,
       imageUrl,
     }: ProjectData) => {
+      checkAccess("project.add");
       const commits = "120";
       const issues = "52";
       let performance: string;
@@ -49,9 +56,12 @@ export function createService(db: Db, getAllIdentities: DeveloperProfile) {
       await reps.add(newProject);
     },
     updateDescription: async (updatedProject: UpdatedProject) => {
+      checkAccess("project.updateDescription");
+
       await reps.update(updatedProject);
     },
     delete: async (id: string) => {
+      checkAccess("project.delete");
       try {
         await reps.delete(id);
       } catch (error) {
@@ -59,6 +69,7 @@ export function createService(db: Db, getAllIdentities: DeveloperProfile) {
       }
     },
     updatePerformance: async (projectWebsite: string, id: string) => {
+      checkAccess("project.updatePerformance");
       const newPerformanceScore =
         await client.testPagePerformance(projectWebsite);
       reps.updatePerformanceScore({
