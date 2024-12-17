@@ -13,7 +13,7 @@ export function BackgroundBasicInfo({ background }: Props) {
     <>
       <section className="flex justify-between w-full">
         <Link href={`/developers/${devId}`}>
-          <div className="flex gap-6 items-center justify-between">
+          <div className="flex gap-6 justify-between">
             <BackgroundAvatar url={background.avatarUrl} />
             <div>
               <p className="uppercase text-sm font-semibold">
@@ -22,7 +22,7 @@ export function BackgroundBasicInfo({ background }: Props) {
 
               <H2>{background.name}</H2>
               {isFeatureBioEnabled && (
-                <p className="font-light text-slate-600">{background.bio}</p>
+                <p className="font-light text-sm text-slate-600">{background.bio}</p>
               )}
             </div>
           </div>
