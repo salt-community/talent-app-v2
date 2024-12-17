@@ -16,7 +16,7 @@ export function SocialLink({ url, name, size = 16 }: Props) {
   return (
     <>
       {name === "Github" && (
-        <button className="mt-4" onClick={handleNavigation}>
+        <button onClick={handleNavigation}>
           <FaGithub size={size} />
         </button>
       )}
