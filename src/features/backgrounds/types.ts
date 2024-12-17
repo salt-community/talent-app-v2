@@ -11,8 +11,12 @@ export type Background = BackgroundSelect & {
   educations: EducationSelect[];
 };
 
-export type BackgroundUpdate = Partial<Background> &
-  Required<Pick<BackgroundSelect, "id">>;
+export type BackgroundUpdate = Partial<BackgroundSelect> &
+  Required<Pick<BackgroundSelect, "id">> & {
+    skills: string[];
+    languages: string[];
+    educations: string[];
+  };
 
 export type ServiceMethods = {
   syncBackgroundSearchIndex: (
