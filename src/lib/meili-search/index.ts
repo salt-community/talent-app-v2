@@ -1,2 +1,2 @@
 export * from "./meili-search";
-export * from "./seed";
+export * from "./meili-methods";
