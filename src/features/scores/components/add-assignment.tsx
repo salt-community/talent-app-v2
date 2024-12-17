@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputField } from "./input-field";
 import { FormTextArea } from "./form-text-area";
 import { CheckboxBoard } from "./checkbox-board";
@@ -23,16 +23,23 @@ type Props = { devId: string };
 export function AddAssignment({ devId }: Props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [title, setTitle] = useState("");
-
   const handleChangeInput = (inputValue: string, label: string) => {
     if (label === "Title") setTitle(inputValue);
   };
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <Dialog
+      open={isDialogOpen}
+      onOpenChange={(open) => {
+        setIsDialogOpen(open);
+        if (!open) {
+          setTitle("");
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <Button
-        variant="outline"
+          variant="outline"
           className="cursor-pointer flex gap-1 justify-center items-center mt-2 mb-4"
           onClick={() => setIsDialogOpen(true)}
         >
