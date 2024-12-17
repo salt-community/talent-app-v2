@@ -1,8 +1,8 @@
-import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { integer, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const assignmentTable = pgTable("score_assignments", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  userId: integer().notNull(),
+  devId: uuid("dev_id").notNull(),
   title: varchar().notNull(),
   comment: varchar(),
   score: integer().notNull(),

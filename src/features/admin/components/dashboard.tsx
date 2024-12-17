@@ -1,7 +1,5 @@
 import { Command, CommandInput } from "@/components/ui/command";
 import { H1 } from "@/components/ui/header/header-h1";
-
-// import { dashboardService } from "../../identity-access-management/instance";
 import { DeveloperProfileList } from "./developer-profile-list";
 import { adminService } from "../instance";
 
@@ -18,9 +16,11 @@ export async function Dashboard() {
         {Array.isArray(developers) ? (
           developers.map((developer) => (
             <DeveloperProfileList
+              id={developer.id}
               key={developer.id}
               name={developer.name}
               email={developer.email}
+              status={developer.status}
             />
           ))
         ) : (

@@ -1,6 +1,6 @@
 export type Assignment = {
   id: number;
-  userId: number;
+  devId: string;
   score: number;
   title: string;
   comment: string | null;
@@ -8,7 +8,7 @@ export type Assignment = {
 };
 
 export type AssignmentUpdates = {
-  userId: number;
+  devId: string;
   score?: number;
   title: string;
   comment?: string | null;
