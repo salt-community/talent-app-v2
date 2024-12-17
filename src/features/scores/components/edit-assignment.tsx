@@ -10,13 +10,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { editAssigmentAction } from "../actions";
+
 import { Assignment } from "../types";
 import { useState } from "react";
 
 import { InputField } from "./input-field";
 import { FormTextArea } from "./form-text-area";
-import { FormLabel } from "./form-label";
+import { CheckboxBoard } from "./checkbox-board";
+import { editAssignmentAction } from "../actions";
+import type { CategoryTag } from "../categories";
 //import { useDebouncedCallback } from 'use-debounce';
 
 type Props = {
@@ -30,6 +32,13 @@ export function EditAssignment({ assignment }: Props) {
   const [tags, setTags] = useState(assignment.tags);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const handleChangeTag = (isChecked: boolean, tag: CategoryTag) => {
+    if(isChecked) {
+      setTags([...tags, tag])
+    } else {
+      setTags(tags.filter((currentTag) => currentTag !== tag));
+    }
+  };
   const handleChangeInput = (inputValue: string, label: string) => {
     if (label === "Title") setTitle(inputValue);
     if (label === "Score") setScore(Number(inputValue));
@@ -55,9 +64,9 @@ export function EditAssignment({ assignment }: Props) {
             Alter the details below to edit the assignment.
           </DialogDescription>
         </DialogHeader>
-        <form action={editAssigmentAction} className="space-y-4">
+        <form action={editAssignmentAction} className="space-y-4">
           <input type="hidden" name="assignmentId" value={assignment.id} />
-          <input type="hidden" name="userId" value={assignment.userId} />
+          <input type="hidden" name="devId" value={assignment.devId} />
           <div className="grid gap-4">
             <InputField
               label="Title"
@@ -76,151 +85,7 @@ export function EditAssignment({ assignment }: Props) {
               value={comment}
               handleChangeInput={handleChangeInput}
             />
-            <div className="grid grid-cols-4 items-start gap-4">
-              <FormLabel label="Tags" />
-              <div className="col-span-3 grid grid-cols-2 gap-2">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="frontend"
-                    value="frontend"
-                    id="frontend"
-                    className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("frontend")}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setTags([...tags, "frontend"]);
-                      } else {
-                        setTags(tags.filter((tag) => tag !== "frontend"));
-                      }
-                    }}
-                  />
-                  <label
-                    htmlFor="frontend"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Frontend
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="backend"
-                    value="backend"
-                    id="backend"
-                    className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("backend")}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setTags([...tags, "backend"]);
-                      } else {
-                        setTags(tags.filter((tag) => tag !== "backend"));
-                      }
-                    }}
-                  />
-                  <label
-                    htmlFor="backend"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Backend
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="conversation"
-                    value="conversation"
-                    id="conversation"
-                    className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("conversation")}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setTags([...tags, "conversation"]);
-                      } else {
-                        setTags(tags.filter((tag) => tag !== "conversation"));
-                      }
-                    }}
-                  />
-                  <label
-                    htmlFor="conversation"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Conversation
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="teamCollaboration"
-                    value="teamCollaboration"
-                    id="teamCollaboration"
-                    className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("teamCollaboration")}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setTags([...tags, "teamCollaboration"]);
-                      } else {
-                        setTags(
-                          tags.filter((tag) => tag !== "teamCollaboration"),
-                        );
-                      }
-                    }}
-                  />
-                  <label
-                    htmlFor="teamCollaboration"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Team Collaboration
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="design"
-                    value="design"
-                    id="design"
-                    className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("design")}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setTags([...tags, "design"]);
-                      } else {
-                        setTags(tags.filter((tag) => tag !== "design"));
-                      }
-                    }}
-                  />
-                  <label
-                    htmlFor="design"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Design
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="management"
-                    value="management"
-                    id="management"
-                    className="focus:ring focus:ring-gray-200"
-                    checked={tags.includes("management")}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setTags([...tags, "management"]);
-                      } else {
-                        setTags(tags.filter((tag) => tag !== "management"));
-                      }
-                    }}
-                  />
-                  <label
-                    htmlFor="management"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Management
-                  </label>
-                </div>
-              </div>
-            </div>
+            <CheckboxBoard tags={tags} handleChangeTag={handleChangeTag}  />
           </div>
           <DialogFooter>
             <Button

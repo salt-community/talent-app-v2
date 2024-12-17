@@ -1,4 +1,4 @@
-export const categoryTags = [
+export const categoryTags: CategoryTag[] = [
   "frontend",
   "backend",
   "conversation",
@@ -6,3 +6,5 @@ export const categoryTags = [
   "design",
   "management",
 ];
+
+export type CategoryTag = "frontend" | "backend" | "conversation" | "team collaboration" | "design" | "management";
