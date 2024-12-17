@@ -3,11 +3,11 @@ import { revalidatePath } from "next/cache";
 import { scoresService } from "./instance";
 import { getFormData } from "./utils";
 
-export async function addAssigmentAction(formData: FormData) {
-  const { title, comment, score, tags } = getFormData(formData);
+export async function addAssignmentAction(formData: FormData) {
+  const { title, comment, score, tags, devId } = getFormData(formData);
 
   const newAssignment = {
-    userId: 1,
+    devId,
     comment,
     score: Number(score),
     title,
@@ -18,13 +18,12 @@ export async function addAssigmentAction(formData: FormData) {
   revalidatePath("/");
 }
 
-export async function editAssigmentAction(formData: FormData) {
-  const userId = formData.get("userId") as string;
+export async function editAssignmentAction(formData: FormData) {
   const assignmentId = formData.get("assignmentId") as string;
-  const { title, comment, score, tags } = getFormData(formData);
+  const { title, comment, score, tags, devId } = getFormData(formData);
 
   const updatedAssignment = {
-    userId: Number(userId),
+    devId,
     comment,
     score: Number(score),
     title,

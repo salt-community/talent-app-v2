@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for my-meilisearch on 2024-02-20T13:23:58+01:00
+# fly.toml app configuration file generated for talentv2-meilisearch on 2024-02-20T13:23:58+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'my-meilisearch'
+app = 'talentv2-meilisearch'
 primary_region = 'ams'
 kill_signal = 'SIGINT'
 kill_timeout = '5s'
