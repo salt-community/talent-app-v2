@@ -2,9 +2,9 @@ import { checkAccess } from "./check-access";
 import { createRepository } from "./repository";
 import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
-
 import { ROLES } from "./roles";
 import { auth } from "@clerk/nextjs/server";
+
 type Role = keyof typeof ROLES;
 type Permission = (typeof ROLES)[Role][number];
 

@@ -1,5 +1,4 @@
-import { Button } from "@/components";
-import { AlertDialogDemo } from "@/components/alert-dialog/alertDialog";
+import { Button, AlertDialogDemo } from "@/components";
 
 type Props = {
   onConfirm: () => void;

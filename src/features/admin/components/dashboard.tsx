@@ -1,5 +1,4 @@
-import { Command, CommandInput } from "@/components/ui/command";
-import { H1 } from "@/components/ui/header/header-h1";
+import { Command, CommandInput, H1 } from "@/components";
 import { DeveloperProfileList } from "./developer-profile-list";
 import { adminService } from "../instance";
 
@@ -24,7 +23,7 @@ export async function Dashboard() {
             />
           ))
         ) : (
-          <p>{developers}</p>
+          <p>You don´t have access</p>
         )}
       </div>
     </div>

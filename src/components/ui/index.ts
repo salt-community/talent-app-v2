@@ -14,3 +14,5 @@ export * from "./textarea";
 export * from "./toast";
 export * from "./toaster";
 export * from "./header";
+export * from "./command";
+export * from "./dropdown-menu";

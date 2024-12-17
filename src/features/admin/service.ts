@@ -3,15 +3,18 @@ import {
   DeveloperProfileStatus,
   GetAllDeveloperProfiles,
   UpdateStatus,
-} from "../developer-profiles";
+  CheckAccess,
+} from "@/features";
 
 export function createAdminService(
   getAllDeveloperProfiles: GetAllDeveloperProfiles,
   deleteDeveloperProfile: DeleteDeveloperProfile,
-  updateStatus: UpdateStatus
+  updateStatus: UpdateStatus,
+  checkAccess: CheckAccess
 ) {
   return {
     async getAllDeveloperProfiles() {
+      await checkAccess("admin.getAllDeveloperProfiles");
       return await getAllDeveloperProfiles();
     },
     async deleteDeveloperProfile(id: string) {
