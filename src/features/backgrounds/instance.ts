@@ -3,7 +3,7 @@ import { createRepository } from "./repository";
 import { createBackgroundsService } from "./service";
 import { addBackgroundSearchIndex } from "@/lib/meili-search";
 const serviceMethods = {
-  addToSearchIndex: addBackgroundSearchIndex,
+  addBackgroundSearchIndex: addBackgroundSearchIndex,
 };
 
 export const backgroundsService = createBackgroundsService(
