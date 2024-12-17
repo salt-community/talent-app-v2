@@ -21,6 +21,13 @@ export function TagsInput({
   );
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
 
+  const autocompleteOptions = suggestedTags
+    .map((tag) => ({
+      id: String(tag.id),
+      text: tag.name,
+    }))
+    .filter((tag) => !tags.some((t) => t.text === tag.text));
+
   return (
     <div className="space-y-2">
       <Label htmlFor={inputName} className="capitalize">
@@ -42,6 +49,9 @@ export function TagsInput({
             closeButton:
               "absolute -inset-y-px -end-px p-0 rounded-s-none rounded-e-lg flex size-7 transition-colors outline-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 text-muted-foreground/80 hover:text-foreground",
           },
+          autoComplete: {
+            commandGroup: "flex flex-wrap gap-1 max-h-[500px] overflow-y-auto",
+          },
         }}
         activeTagIndex={activeTagIndex}
         setActiveTagIndex={setActiveTagIndex}
@@ -49,15 +59,8 @@ export function TagsInput({
         enableAutocomplete
         addTagsOnBlur
         addOnPaste
-        autocompleteOptions={suggestedTags.map((tag) => ({
-          id: String(tag.id),
-          text: tag.name,
-        }))}
-      />
-      <input
-        type="hidden"
-        name={inputName}
-        value={JSON.stringify(exampleTags)}
+        autoCapitalize="words"
+        autocompleteOptions={autocompleteOptions}
       />
       <input type="hidden" name={inputName} value={JSON.stringify(tags)} />
     </div>
