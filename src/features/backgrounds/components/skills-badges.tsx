@@ -12,7 +12,7 @@ export function SkillsBadges({ skills }: Props) {
   return (
     <article className="flex flex-wrap gap-1 mt-3">
       {skills.map((skill) => (
-        <Badge className="cursor-pointer" key={skill.id}>
+        <Badge className="cursor-default" key={skill.id}>
           {skill.text}
         </Badge>
       ))}
