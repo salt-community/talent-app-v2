@@ -8,7 +8,7 @@ export async function seedIdentities() {
 
   for (let i = 1; i < 5; i++) {
     identities.push({
-      clerkId: 1,
+      clerkId: "user_2qIgrR7X8WTqJVw1tI8SZtjXeUH",
     });
   }
   for (const identity of identities) {

@@ -4,6 +4,7 @@ import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
 
 import { ROLES } from "./roles";
+import { auth } from "@clerk/nextjs/server";
 type Role = keyof typeof ROLES;
 type Permission = (typeof ROLES)[Role][number];
 
@@ -13,17 +14,35 @@ export function createService(db: Db) {
     async getAllIdentities() {
       return repository.getAllIdentities();
     },
+
     async getIdentityById(id: string) {
       return await repository.getIdentityById(id);
+    },
+
+    async controllUser() {
+      const { userId, sessionClaims } = await auth();
+
+      if (!userId) return;
+
+      const id = await repository.getUserId(userId);
+      if (id) return;
+
+      const primaryEmail = sessionClaims?.primaryEmail as string;
+
+      if (primaryEmail.split("@")[1] === "appliedtechnology.se") {
+        await repository.addIdentity({ clerkId: userId });
+      }
     },
 
     async addIdentity(identity: IdentityInsert) {
       await repository.addIdentity(identity);
     },
-    async hasAccess(permission: Permission, id: string) {
-      const roles = await repository.getIdentityRole(id);
-
-      return checkAccess(roles, permission);
+    async checkAccess(permission: Permission) {
+      const { userId } = await auth();
+      if (userId) {
+        const roles = await repository.getIdentityRole(userId);
+        return checkAccess(roles, permission);
+      }
     },
   };
 }
