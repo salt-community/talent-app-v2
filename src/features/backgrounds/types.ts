@@ -15,7 +15,7 @@ export type Background = {
 };
 
 export type ServiceMethods = {
-  addBackgroundSearchIndex: (
+  syncBackgroundSearchIndex: (
     background: Record<string, unknown>[]
   ) => Promise<unknown>;
 };

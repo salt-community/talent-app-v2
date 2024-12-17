@@ -16,10 +16,11 @@ export function createBackgroundsService(
 
     async add(background: BackgroundInsert) {
       await repository.add(background);
-      await serviceMethods.addBackgroundSearchIndex([background]);
+      await serviceMethods.syncBackgroundSearchIndex([background]);
     },
     async update(background: BackgroundUpdate) {
       await repository.update(background);
+      await serviceMethods.syncBackgroundSearchIndex([background]);
     },
   };
 }
