@@ -58,7 +58,37 @@ export function createRepository(db: DB) {
     async addEducations(educationList: EducationInsert[]) {
       return await db.insert(educations).values(educationList);
     },
+
+    async updateSkills(backgroundId: number, skillList: string[]) {
+      await db.transaction(async (tx) => {
+        await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
+        await tx
+          .insert(skills)
+          .values(skillList.map((name) => ({ backgroundId, name })));
+      });
+    },
+
+    async updateLanguages(backgroundId: number, languageList: string[]) {
+      await db.transaction(async (tx) => {
+        await tx
+          .delete(languages)
+          .where(eq(languages.backgroundId, backgroundId));
+        await tx
+          .insert(languages)
+          .values(languageList.map((name) => ({ backgroundId, name })));
+      });
+    },
+
+    async updateEducations(backgroundId: number, educationList: string[]) {
+      await db.transaction(async (tx) => {
+        await tx
+          .delete(educations)
+          .where(eq(educations.backgroundId, backgroundId));
+        await tx
+          .insert(educations)
+          .values(educationList.map((name) => ({ backgroundId, name })));
+      });
+    },
   };
 }
-
 export type Repository = ReturnType<typeof createRepository>;
