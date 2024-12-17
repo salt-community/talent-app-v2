@@ -1,4 +1,4 @@
-import { Hero, HighlightedDevelopers, AchievementBoards } from "@/components/ui/highlighted";
+import { Hero, HighlightedDevelopers} from "@/components/ui/highlighted";
 
 export default function Page() {
   return (

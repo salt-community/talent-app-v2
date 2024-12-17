@@ -23,7 +23,7 @@ export function QuoteHighlight() {
       </CardHeader>
       <CardContent className="pt-0">
         <blockquote className="py-6 pr-2 italic text-2xl text-justify leading-9">
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, ea? Obcaecati perferendis voluptatum facilis, at quos animi, voluptates!"
+          {"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, ea? Obcaecati perferendis voluptatum facilis, at quos animi, voluptates!"}
         </blockquote>
       </CardContent>
     </Card>

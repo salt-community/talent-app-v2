@@ -1,5 +1,4 @@
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { H1, H3 } from "../header";
+import { H1 } from "../header";
 
 export function Hero() {
   return (
