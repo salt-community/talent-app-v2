@@ -24,7 +24,7 @@ export async function Dashboard() {
             />
           ))
         ) : (
-          <p>{developers}</p>
+          <p>You don't have access</p>
         )}
       </div>
     </div>
