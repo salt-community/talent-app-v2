@@ -8,5 +8,5 @@ const serviceMethods = {
 
 export const backgroundsService = createBackgroundsService(
   createRepository(db),
-  serviceMethods
+  serviceMethods,
 );

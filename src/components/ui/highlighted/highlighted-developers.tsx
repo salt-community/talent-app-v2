@@ -7,9 +7,9 @@ export function HighlightedDevelopers() {
   return (
     <section className="flex flex-col justify-center py-8 gap-4">
       <ProjectHighlight />
-      <QuoteHighlight/>
-      <VideoHighlight/>
-      <SkillsHighlight/>
+      <QuoteHighlight />
+      <VideoHighlight />
+      <SkillsHighlight />
     </section>
   );
 }

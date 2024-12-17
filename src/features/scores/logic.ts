@@ -42,5 +42,5 @@ export const calculateAverageCategoryScore = (
       (accumulator, currentValue) => accumulator + currentValue,
       0,
     ) / scores.length;
-    return isNaN(averageAssignmentScore) ? 0 : Math.round(averageAssignmentScore);
+  return isNaN(averageAssignmentScore) ? 0 : Math.round(averageAssignmentScore);
 };

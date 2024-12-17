@@ -32,7 +32,7 @@ export function StatusMenu({ id, developerStatus }: Props) {
     });
   }
   async function onStatusChange(
-    newStatus: "unpublished" | "published" | "highlighted"
+    newStatus: "unpublished" | "published" | "highlighted",
   ) {
     await updateStatusAction(id, newStatus);
     setStatus(newStatus);

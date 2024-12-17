@@ -33,8 +33,8 @@ export function EditAssignment({ assignment }: Props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleChangeTag = (isChecked: boolean, tag: CategoryTag) => {
-    if(isChecked) {
-      setTags([...tags, tag])
+    if (isChecked) {
+      setTags([...tags, tag]);
     } else {
       setTags(tags.filter((currentTag) => currentTag !== tag));
     }
@@ -85,7 +85,7 @@ export function EditAssignment({ assignment }: Props) {
               value={comment}
               handleChangeInput={handleChangeInput}
             />
-            <CheckboxBoard tags={tags} handleChangeTag={handleChangeTag}  />
+            <CheckboxBoard tags={tags} handleChangeTag={handleChangeTag} />
           </div>
           <DialogFooter>
             <Button
