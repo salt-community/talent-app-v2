@@ -1,7 +1,5 @@
 "use client";
 
-import { Button } from "@/components";
-import { AlertDialogDemo } from "@/components/alert-dialog/alertDialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,16 +13,15 @@ import { useState } from "react";
 import { deleteDeveloperProfileAction, updateStatusAction } from "../action";
 import { Status } from "./status";
 import { DeleteDialog } from "./delete-button";
+import { DevelopersStatus } from "../types";
 
 type Props = {
   id: string;
-  developerStatus: "unpublished" | "published" | "highlighted";
+  developerStatus: DevelopersStatus;
 };
 
 export function StatusMenu({ id, developerStatus }: Props) {
-  const [status, setStatus] = useState<
-    "unpublished" | "published" | "highlighted"
-  >(developerStatus);
+  const [status, setStatus] = useState<DevelopersStatus>(developerStatus);
   const { toast } = useToast();
 
   async function onDelete() {
@@ -50,16 +47,15 @@ export function StatusMenu({ id, developerStatus }: Props) {
       <Status status={status} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <EllipsisVertical className="text-neutral fill-neutral" size={28} />
+          <EllipsisVertical
+            className="text-neutral fill-neutral hover:text-primary transition-colors cursor-pointer"
+            size={28}
+          />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuRadioGroup
             value={status}
-            onValueChange={(value) =>
-              onStatusChange(
-                value as "unpublished" | "published" | "highlighted"
-              )
-            }
+            onValueChange={(value) => onStatusChange(value as DevelopersStatus)}
           >
             <DropdownMenuRadioItem value="highlighted">
               Highlighted
@@ -70,7 +66,6 @@ export function StatusMenu({ id, developerStatus }: Props) {
             <DropdownMenuRadioItem value="unpublished">
               Unpublished
             </DropdownMenuRadioItem>
-
             <DeleteDialog onConfirm={onDelete} />
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
