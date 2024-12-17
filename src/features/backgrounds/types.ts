@@ -1,21 +1,25 @@
-import { Tag } from "emblor";
-import { SocialLink } from "./schema";
+import {
+  BackgroundSelect,
+  EducationSelect,
+  LanguageSelect,
+  SkillSelect,
+} from "./db";
 
-export type Background = {
-  id: number;
-  name: string;
-  devId: string;
-  avatarUrl: string;
-  title: string;
-  bio: string;
-  languages: Tag[];
-  educations: Tag[];
-  skills: Tag[];
-  links: SocialLink[];
+export type Background = BackgroundSelect & {
+  skills: SkillSelect[];
+  languages: LanguageSelect[];
+  educations: EducationSelect[];
 };
+
+export type BackgroundUpdate = Partial<BackgroundSelect> &
+  Required<Pick<BackgroundSelect, "id">> & {
+    skills: string[];
+    languages: string[];
+    educations: string[];
+  };
 
 export type ServiceMethods = {
   syncBackgroundSearchIndex: (
-    background: Record<string, unknown>[]
+    background: Record<string, unknown>[],
   ) => Promise<unknown>;
 };

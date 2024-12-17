@@ -1,4 +1,3 @@
 export * from "./hero";
-export * from "./achievement-boards"
-export * from "./highlighted-developers"
-
+export * from "./achievement-boards";
+export * from "./highlighted-developers";

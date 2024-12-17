@@ -20,7 +20,7 @@ export function CategoryCheckbox({ tag, checked, handleChangeTag }: Props) {
         onChange={(e) => {
           if (handleChangeTag) handleChangeTag(e.target.checked, tag);
         }}
-        {...(checked !== undefined ? { checked : checked } : {})}
+        {...(checked !== undefined ? { checked: checked } : {})}
       />
       <label
         htmlFor={toCamelCase(tag)}

@@ -13,7 +13,7 @@ import { useState } from "react";
 import { deleteDeveloperProfileAction, updateStatusAction } from "../action";
 import { Status } from "./status";
 import { DeleteDialog } from "./delete-button";
-import { DevelopersStatus } from "../types";
+import { DevelopersStatus } from "../../developer-profiles";
 
 type Props = {
   id: string;
@@ -31,9 +31,7 @@ export function StatusMenu({ id, developerStatus }: Props) {
       description: "The developer profile has been successfully deleted",
     });
   }
-  async function onStatusChange(
-    newStatus: "unpublished" | "published" | "highlighted"
-  ) {
+  async function onStatusChange(newStatus: DevelopersStatus) {
     await updateStatusAction(id, newStatus);
     setStatus(newStatus);
     toast({

@@ -8,10 +8,8 @@ import { Assignments } from "./accordion/assignments";
 
 type Props = { devId: string };
 
-
-export async function ScoreBoard({ devId } : Props) {
-  const assignments =
-    await scoresService.getAssignmentsByDevId(devId);
+export async function ScoreBoard({ devId }: Props) {
+  const assignments = await scoresService.getAssignmentsByDevId(devId);
 
   return (
     <section className="min-w-72">
