@@ -1,7 +1,11 @@
 import { Repository } from "./repository";
 import { BackgroundInsert, BackgroundUpdate } from "./schema";
+import { ServiceMethods } from "./types";
 
-export function createBackgroundsService(repository: Repository) {
+export function createBackgroundsService(
+  repository: Repository,
+  serviceMethods: ServiceMethods
+) {
   return {
     async getAll() {
       return repository.getAll();
@@ -12,6 +16,7 @@ export function createBackgroundsService(repository: Repository) {
 
     async add(background: BackgroundInsert) {
       await repository.add(background);
+      await serviceMethods.addBackgroundSearchIndex(background);
     },
     async update(background: BackgroundUpdate) {
       await repository.update(background);
