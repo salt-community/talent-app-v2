@@ -34,9 +34,9 @@ export function SpiderGraph({ assignments }: Props) {
   const chartData = categoryTags.map((tag) => {
     return {
       category: capitalizeFirstLetter(tag),
-      score: calculateAverageCategoryScore(assignments, tag)
+      score: calculateAverageCategoryScore(assignments, tag),
     };
-  })
+  });
 
   return (
     <CardContent className="">

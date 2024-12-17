@@ -84,6 +84,6 @@ async function getAvatars(count: number) {
   const result = await fetch(`https://randomuser.me/api/?results=${count}`);
   const data = await result.json();
   return data.results.map(
-    (user: { picture: { large: unknown } }) => user.picture.large
+    (user: { picture: { large: unknown } }) => user.picture.large,
   );
 }

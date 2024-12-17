@@ -20,7 +20,7 @@ import { addAssignmentAction } from "../actions";
 
 type Props = { devId: string };
 
-export function AddAssignment({ devId } : Props) {
+export function AddAssignment({ devId }: Props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [title, setTitle] = useState("");
 
@@ -48,17 +48,14 @@ export function AddAssignment({ devId } : Props) {
           </DialogDescription>
         </DialogHeader>
         <form action={addAssignmentAction} className="space-y-4">
-        <input type="hidden" name="devId" value={devId} />
+          <input type="hidden" name="devId" value={devId} />
           <div className="grid gap-4">
             <InputField
               label="Title"
               inputType="text"
               handleChangeInput={handleChangeInput}
             />
-            <InputField 
-              label="Score" 
-              inputType="number" 
-            />
+            <InputField label="Score" inputType="number" />
             <FormTextArea label="Comment" />
             <CheckboxBoard />
           </div>

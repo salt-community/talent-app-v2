@@ -8,7 +8,7 @@ import {
 export function createAdminService(
   getAllDeveloperProfiles: GetAllDeveloperProfiles,
   deleteDeveloperProfile: DeleteDeveloperProfile,
-  updateStatus: UpdateStatus
+  updateStatus: UpdateStatus,
 ) {
   return {
     async getAllDeveloperProfiles() {

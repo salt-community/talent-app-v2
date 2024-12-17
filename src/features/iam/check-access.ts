@@ -4,7 +4,7 @@ type Permission = (typeof ROLES)[Role][number];
 
 export function checkAccess(
   user: { id: string; roles: Role },
-  permission: Permission
+  permission: Permission,
 ): boolean {
   return (ROLES[user.roles] as readonly Permission[]).includes(permission);
 }

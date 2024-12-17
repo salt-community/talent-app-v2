@@ -9,7 +9,7 @@ import { developerService } from "@/features/developer-profiles/instance";
   await seedIdentities();
   await seedDeveloperProfiles();
   const devIds = (await developerService.getAll()).map(
-    (developer) => developer.id
+    (developer) => developer.id,
   );
   await seedAssignments(devIds);
   await backgroundsSeed(devIds);
