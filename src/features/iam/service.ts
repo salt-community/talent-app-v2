@@ -14,25 +14,24 @@ export function createService(db: Db) {
     async getAllIdentities() {
       return repository.getAllIdentities();
     },
+
     async getIdentityById(id: string) {
       return await repository.getIdentityById(id);
     },
-    async getUserId() {
-      const { userId, getToken } = await auth();
-      if (userId) {
-        const token = await getToken();
-        const id = await repository.getUserId(userId);
-        if (!id) {
-          const id = repository.addIdentity({ clerkId: userId });
-          return { id, token };
-        }
-        return { id, token };
+
+    async controllUser() {
+      const { userId, sessionClaims } = await auth();
+
+      if (!userId) return;
+
+      const id = await repository.getUserId(userId);
+      if (id) return;
+
+      const primaryEmail = sessionClaims?.primaryEmail as string;
+
+      if (primaryEmail.split("@")[1] === "appliedtechnology.se") {
+        await repository.addIdentity({ clerkId: userId });
       }
-    },
-    async getToken() {
-      const { getToken } = await auth();
-      const token = await getToken();
-      console.log("Token", token);
     },
 
     async addIdentity(identity: IdentityInsert) {
