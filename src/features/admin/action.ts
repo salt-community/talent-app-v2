@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { adminService } from "./instance";
+import { DeveloperProfileStatus } from "@/features";
 
 export async function deleteDeveloperProfileAction(id: string) {
   await adminService.deleteDeveloperProfile(id);
@@ -10,7 +11,7 @@ export async function deleteDeveloperProfileAction(id: string) {
 
 export async function updateStatusAction(
   id: string,
-  status: "unpublished" | "published" | "highlighted",
+  status: DeveloperProfileStatus
 ) {
   await adminService.updateStatus(id, status);
 }

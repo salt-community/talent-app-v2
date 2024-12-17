@@ -1,6 +1,5 @@
 import { createAdminService } from "./service";
-import { developerService } from "../developer-profiles/instance";
-import { iamService } from "../iam/instance";
+import { developerService, iamService } from "@/features";
 
 export const adminService = createAdminService(
   developerService.getAll,

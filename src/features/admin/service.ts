@@ -3,20 +3,18 @@ import {
   DeveloperProfileStatus,
   GetAllDeveloperProfiles,
   UpdateStatus,
-} from "../developer-profiles";
-import { checkAccess } from "../iam";
+  CheckAccess,
+} from "@/features";
 
 export function createAdminService(
   getAllDeveloperProfiles: GetAllDeveloperProfiles,
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
-  checkAccess: checkAccess
+  checkAccess: CheckAccess
 ) {
   return {
     async getAllDeveloperProfiles() {
-      if (!(await checkAccess("admin.getAllDeveloperProfiles"))) {
-        throw new Error("You do not have permission");
-      }
+      await checkAccess("admin.getAllDeveloperProfiles");
       return await getAllDeveloperProfiles();
     },
     async deleteDeveloperProfile(id: string) {
