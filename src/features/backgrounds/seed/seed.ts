@@ -3,7 +3,7 @@ import { createRepository } from "../repository";
 import { BackgroundInsert } from "../schema";
 import { skills } from "./data";
 import { db } from "@/db";
-import { addBackgroundSearchIndex } from "../../../../meili-search";
+import { syncBackgroundSearchIndex } from "../../../../meili-search";
 
 const repository = createRepository(db);
 export async function backgroundsSeed(devIds: string[]) {
@@ -97,7 +97,7 @@ export async function backgroundsSeed(devIds: string[]) {
   await Promise.all(
     backgrounds.map(async (background) => {
       await repository.add(background);
-      await addBackgroundSearchIndex([background]);
+      await syncBackgroundSearchIndex([background]);
     })
   );
   console.log("Done seeding Backgrounds...");
