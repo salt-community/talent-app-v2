@@ -22,10 +22,12 @@ export function Search() {
   );
 
   return (
-    <Input
-      placeholder="Type to search"
-      defaultValue={search}
-      onChange={handleSearch}
-    />
+    <div className="fixed z-10 mr-10 w-screen bg-white -my-2 pt-4">
+      <Input
+        placeholder="Type to search"
+        defaultValue={search}
+        onChange={handleSearch}
+      />
+    </div>
   );
 }
