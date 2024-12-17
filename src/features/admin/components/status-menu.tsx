@@ -14,6 +14,7 @@ import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
 import { deleteDeveloperProfileAction, updateStatusAction } from "../action";
 import { Status } from "./status";
+import { DeleteDialog } from "./delete-button";
 
 type Props = {
   id: string;
@@ -70,15 +71,7 @@ export function StatusMenu({ id, developerStatus }: Props) {
               Unpublished
             </DropdownMenuRadioItem>
 
-            <AlertDialogDemo
-              title={"Are you sure?"}
-              description={"This action can't be undone, are you sure?"}
-              onConfirm={onDelete}
-            >
-              <Button size={"sm"} className="w-full">
-                Delete
-              </Button>
-            </AlertDialogDemo>
+            <DeleteDialog onConfirm={onDelete} />
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
