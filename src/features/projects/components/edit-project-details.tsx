@@ -65,7 +65,7 @@ export default function EditProjectDetails({ project }: Props) {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Pencil size={16} />
+          <Pencil size={20} strokeWidth={2.5} />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

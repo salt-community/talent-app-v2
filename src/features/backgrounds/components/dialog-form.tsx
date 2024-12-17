@@ -28,7 +28,7 @@ export async function DialogForm({ background }: Props) {
       <DialogTrigger asChild>
         <Pencil
           type="button"
-          size={18}
+          size={20}
           strokeWidth={2.5}
           className="cursor-pointer"
         />

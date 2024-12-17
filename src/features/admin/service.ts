@@ -1,6 +1,6 @@
 import {
   DeleteDeveloperProfile,
-  DevelopersStatus,
+  DeveloperProfileStatus,
   GetAllDeveloperProfiles,
   UpdateStatus,
 } from "../developer-profiles";
@@ -8,7 +8,7 @@ import {
 export function createAdminService(
   getAllDeveloperProfiles: GetAllDeveloperProfiles,
   deleteDeveloperProfile: DeleteDeveloperProfile,
-  updateStatus: UpdateStatus,
+  updateStatus: UpdateStatus
 ) {
   return {
     async getAllDeveloperProfiles() {
@@ -17,7 +17,7 @@ export function createAdminService(
     async deleteDeveloperProfile(id: string) {
       await deleteDeveloperProfile(id);
     },
-    async updateStatus(id: string, status: DevelopersStatus) {
+    async updateStatus(id: string, status: DeveloperProfileStatus) {
       await updateStatus(id, status);
     },
   };

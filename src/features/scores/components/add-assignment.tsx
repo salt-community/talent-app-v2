@@ -1,6 +1,5 @@
 "use client";
 
-import { ClipboardPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,6 +16,7 @@ import { InputField } from "./input-field";
 import { FormTextArea } from "./form-text-area";
 import { CheckboxBoard } from "./checkbox-board";
 import { addAssignmentAction } from "../actions";
+import { Plus } from "lucide-react";
 
 type Props = { devId: string };
 
@@ -31,12 +31,14 @@ export function AddAssignment({ devId }: Props) {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <ClipboardPlus
-          type="submit"
-          size={16}
-          className="cursor-pointer hover:text-gray-600"
+        <Button
+        variant="outline"
+          className="cursor-pointer flex gap-1 justify-center items-center mt-2 mb-4"
           onClick={() => setIsDialogOpen(true)}
-        />
+        >
+          <Plus className="text-primary font-semibold" size={18} />
+          <p className="font-semibold">Add assignment</p>
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-white border border-gray-300 rounded-md shadow-md">
         <DialogHeader>

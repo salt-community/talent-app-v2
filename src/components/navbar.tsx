@@ -5,10 +5,10 @@ import { HamburgerMenu } from "./ui/hamburger-menu";
 import { iamService } from "@/features/iam/instance";
 
 export async function Header() {
-  await iamService.controllUser();
+  await iamService.controlUser();
 
   return (
-    <nav className="w-full h-10 px-3 shadow-sm sticky top-0 z-10 flex bg-background justify-between items-center md:px-10">
+    <nav className="w-full h-12 px-3 shadow-sm sticky top-0 z-20 flex bg-background justify-between items-center md:px-10">
       <Link href="/">
         <span>&lt;salt/&gt;</span>
       </Link>

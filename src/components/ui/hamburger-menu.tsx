@@ -41,14 +41,21 @@ export function HamburgerMenu() {
               isActive("/dashboard") ? "border-primary" : "border-white"
             } hover:border-primary`}
           >
-            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/dashboard">Admin</Link>
           </li>
           <li
             className={`border-b ${
               isActive("/search") ? "border-primary" : "border-white"
             } hover:border-primary`}
           >
-            <Link href="/search">Search</Link>
+            <Link href="/developers">Developers</Link>
+          </li>
+          <li
+            className={`border-b ${
+              isActive("/search") ? "border-primary" : "border-white"
+            } hover:border-primary`}
+          >
+            <Link href="/highlighted">Highlighted</Link>
           </li>
         </ul>
       </SheetContent>

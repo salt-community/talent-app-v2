@@ -25,6 +25,7 @@ import { addProjectAction } from "../actions";
 import { useToast } from "@/hooks/use-toast";
 import { formSchema } from "../validation";
 import { useState } from "react";
+import { Plus } from "lucide-react";
 
 type Props = {
   userId: string;
@@ -65,7 +66,14 @@ export default function ProjectForm({ userId }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button type="submit">Add project</Button>
+        <Button
+          type="submit"
+          variant="outline"
+          className="cursor-pointer flex gap-1 justify-center items-center mt-2 mb-4"
+        >
+          <Plus className="text-primary font-semibold" size={18} />
+          <p className="font-semibold">Add project</p>
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

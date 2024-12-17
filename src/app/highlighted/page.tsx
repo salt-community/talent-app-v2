@@ -2,10 +2,11 @@ import { Hero, HighlightedDevelopers } from "@/components/ui/highlighted";
 
 export default function Page() {
   return (
-    <div>
+    <main>
       <Hero />
       {/* <AchievementBoards/> */}
-      <HighlightedDevelopers />
-    </div>
+      <HighlightedDevelopers/>
+
+    </main>
   );
 }
