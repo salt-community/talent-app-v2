@@ -33,11 +33,11 @@ export async function Projects({ devId }: Props) {
         {projects.map((project) => (
           <div key={project.id}>
             <ProjectDetails project={project} />
-            <Separator className="mt-4 mb-6" />
+            <Separator className="mt-4 mb-2" />
           </div>
         ))}
       </div>
-      <div className="flex justify-center mb-4">
+      <div className="flex justify-center">
         <ProjectForm userId={devId} />
       </div>
     </div>
