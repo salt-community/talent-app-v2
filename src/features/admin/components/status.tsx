@@ -5,5 +5,15 @@ type Props = {
 };
 
 export function Status({ status }: Props) {
-  return <Circle size={14} fill={status} color="none" />;
+  let fillColor;
+
+  if (status === "published") {
+    fillColor = "green";
+  } else if (status === "unpublished") {
+    fillColor = "red";
+  } else if (status === "highlighted") {
+    fillColor = "yellow";
+  }
+
+  return <Circle size={14} fill={fillColor} color="none" />;
 }

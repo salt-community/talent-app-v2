@@ -7,8 +7,8 @@ export async function Dashboard() {
   const developers = await adminService.getAllDeveloperProfiles();
 
   return (
-    <div className="container mx-auto flex flex-col justify-center px-4 gap-4">
-      <H1>Dashboard</H1>
+    <div className="container mx-auto flex flex-col justify-center px-4 pt-2 gap-4">
+      <H1>Admin</H1>
       <Command className="rounded-lg border md:min-w-[450px]">
         <CommandInput placeholder="Search..." />
       </Command>
