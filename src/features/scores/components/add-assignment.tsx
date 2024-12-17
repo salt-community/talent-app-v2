@@ -31,13 +31,14 @@ export function AddAssignment({ devId } : Props) {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <div
-          className="cursor-pointer flex gap-1 justify-center items-center py-2"
+        <Button
+        variant="outline"
+          className="cursor-pointer flex gap-1 justify-center items-center mt-2 mb-4"
           onClick={() => setIsDialogOpen(true)}
         >
-          <Plus className="text-primary/70" size={18}/>
-          <p className="hover:underline">Add assignment</p>
-        </div>
+          <Plus className="text-primary font-semibold" size={18} />
+          <p className="font-semibold">Add assignment</p>
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-white border border-gray-300 rounded-md shadow-md">
         <DialogHeader>
