@@ -1,6 +1,5 @@
 "use client";
 
-import { ClipboardPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,6 +16,7 @@ import { InputField } from "./input-field";
 import { FormTextArea } from "./form-text-area";
 import { CheckboxBoard } from "./checkbox-board";
 import { addAssignmentAction } from "../actions";
+import { Plus } from "lucide-react";
 
 type Props = { devId: string };
 
@@ -31,12 +31,13 @@ export function AddAssignment({ devId } : Props) {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <ClipboardPlus
-          type="submit"
-          size={16}
-          className="cursor-pointer hover:text-gray-600"
+        <div
+          className="cursor-pointer flex gap-1 justify-center items-center py-2"
           onClick={() => setIsDialogOpen(true)}
-        />
+        >
+          <Plus className="text-primary/70" size={18}/>
+          <p className="hover:underline">Add assignment</p>
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-white border border-gray-300 rounded-md shadow-md">
         <DialogHeader>
@@ -48,17 +49,14 @@ export function AddAssignment({ devId } : Props) {
           </DialogDescription>
         </DialogHeader>
         <form action={addAssignmentAction} className="space-y-4">
-        <input type="hidden" name="devId" value={devId} />
+          <input type="hidden" name="devId" value={devId} />
           <div className="grid gap-4">
             <InputField
               label="Title"
               inputType="text"
               handleChangeInput={handleChangeInput}
             />
-            <InputField 
-              label="Score" 
-              inputType="number" 
-            />
+            <InputField label="Score" inputType="number" />
             <FormTextArea label="Comment" />
             <CheckboxBoard />
           </div>

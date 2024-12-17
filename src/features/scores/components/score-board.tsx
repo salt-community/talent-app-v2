@@ -19,8 +19,11 @@ export async function ScoreBoard({ devId } : Props) {
       <H2>Salt Scoring</H2>
       <AverageScore assignments={assignments} />
       <SpiderGraph assignments={assignments} />
-      <AddAssignment devId={devId} />
       <Assignments assignments={assignments} />
+      <div className="flex justify-center">
+
+      <AddAssignment devId={devId} />
+      </div>
     </section>
   );
 }
