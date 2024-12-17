@@ -50,7 +50,8 @@ export function EditAssignment({ assignment }: Props) {
       <DialogTrigger asChild>
         <Pencil
           type="submit"
-          size={16}
+          size={20}
+          strokeWidth={2.5}
           className="cursor-pointer hover:text-gray-600"
           onClick={() => setIsDialogOpen(true)}
         />
@@ -85,7 +86,7 @@ export function EditAssignment({ assignment }: Props) {
               value={comment}
               handleChangeInput={handleChangeInput}
             />
-            <CheckboxBoard tags={tags} handleChangeTag={handleChangeTag}  />
+            <CheckboxBoard tags={tags} handleChangeTag={handleChangeTag} />
           </div>
           <DialogFooter>
             <Button
