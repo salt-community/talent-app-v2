@@ -1,5 +1,5 @@
 import { DeveloperCard } from "@/components/ui/developer-card";
-import { Background } from "@/features/backgrounds/components";
+import { BackgroundCard } from "@/features/backgrounds/components/background-card";
 import { Projects } from "@/features";
 import { ScoreBoard } from "@/features/scores";
 
@@ -12,7 +12,7 @@ export default async function DeveloperDetailPage({ params }: Params) {
 
   return (
     <DeveloperCard>
-      <Background devid={devid} />
+      <BackgroundCard devid={devid} />
       <ScoreBoard devId={devid} />
       <Projects devId={devid} />
     </DeveloperCard>

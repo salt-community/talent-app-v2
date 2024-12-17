@@ -1,14 +1,10 @@
 import { H2 } from "@/components";
 import { BackgroundAvatar } from "./avatar";
 import { Background } from "../types";
-import { SocialLink } from "./social-link";
-import { DialogForm } from "./dialog-form";
-import Link from "next/link";
 type Props = { background: Background };
 
 export function BackgroundBasicInfo({ background }: Props) {
   const isFeatureBioEnabled = process.env.NEXT_PUBLIC_FEATURE_BIO === "ON";
-  const devId = background.devId;
   return (
     <>
       <section className="flex gap-3 justify-between w-full">
