@@ -82,21 +82,21 @@ export async function DialogForm({ background }: Props) {
               />
 
               <TagsInput
-                tags={background.languages}
+                userTags={background.languages}
                 inputName={"languages"}
                 inputPlaceholder={"Add a language"}
                 suggestedTags={allLanguages}
               />
 
               <TagsInput
-                tags={background.educations}
+                userTags={background.educations}
                 inputName={"educations"}
                 inputPlaceholder={"Add an education"}
                 suggestedTags={allEducations}
               />
 
               <TagsInput
-                tags={background.skills}
+                userTags={background.skills}
                 inputName={"skills"}
                 inputPlaceholder={"Add a skill"}
                 suggestedTags={allSkills}
