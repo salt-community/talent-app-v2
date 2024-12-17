@@ -1,18 +1,24 @@
-import { Db } from "@/db";
-import { developerService } from "../developer-profiles/instance";
-import { iamService } from "../iam/instance";
+import {
+  DeleteDeveloperProfile,
+  DevelopersStatus,
+  GetAllDeveloperProfiles,
+  UpdateStatus,
+} from "../developer-profiles";
 
 export function createAdminService(
-  db: Db,
-  getAllDeveloperProfiles: typeof developerService.getAllDeveloperProfiles,
-  hasAccess: typeof iamService.hasAccess
+  getAllDeveloperProfiles: GetAllDeveloperProfiles,
+  deleteDeveloperProfile: DeleteDeveloperProfile,
+  updateStatus: UpdateStatus
 ) {
   return {
-    getAllDeveloperProfiles() {
-      if (!hasAccess("admin.getAllDeveloperProfiles", "1")) {
-        throw new Error("You do not have access to view developer profiles");
-      }
-      return getAllDeveloperProfiles();
+    async getAllDeveloperProfiles() {
+      return await getAllDeveloperProfiles();
+    },
+    async deleteDeveloperProfile(id: string) {
+      await deleteDeveloperProfile(id);
+    },
+    async updateStatus(id: string, status: DevelopersStatus) {
+      await updateStatus(id, status);
     },
   };
 }
