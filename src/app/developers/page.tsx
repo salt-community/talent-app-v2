@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components";
 import { Background } from "@/features/backgrounds/components";
 import { Search } from "./search";
-import { meiliSearch } from "@/lib/meili-search";
+import { meiliSearch } from "../../../meili-search";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 export default async function Page({ searchParams }: Props) {

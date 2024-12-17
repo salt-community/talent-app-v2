@@ -2,9 +2,9 @@ import { Tag } from "emblor";
 import { SocialLink } from "./schema";
 
 export type Background = {
+  id: number;
   name: string;
   devId: string;
-  id: number;
   avatarUrl: string;
   title: string;
   bio: string;
@@ -12,4 +12,10 @@ export type Background = {
   educations: Tag[];
   skills: Tag[];
   links: SocialLink[];
+};
+
+export type ServiceMethods = {
+  syncBackgroundSearchIndex: (
+    background: Record<string, unknown>[]
+  ) => Promise<unknown>;
 };

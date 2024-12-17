@@ -32,4 +32,4 @@ export type UpdatedPerformance = {
   newPerformanceScore: string;
 };
 
-export type DeveloperProfile = typeof developerService.getAllDeveloperProfiles;
+export type DeveloperProfile = typeof developerService.getAll;

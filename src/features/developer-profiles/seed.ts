@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 import { db } from "@/db";
-import { createDeveloperService } from "./service";
+import { createDevelopersService } from "./service";
 import { DeveloperProfileInsert } from "./schema";
 
-const service = createDeveloperService(db);
+const service = createDevelopersService(db);
 export async function seedDeveloperProfiles() {
   const developers: DeveloperProfileInsert[] = [];
   for (let i = 0; i < 10; i++) {
@@ -14,6 +14,6 @@ export async function seedDeveloperProfiles() {
   }
 
   for (const developer of developers) {
-    await service.addDeveloper(developer);
+    await service.add(developer);
   }
 }

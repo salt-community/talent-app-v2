@@ -3,6 +3,7 @@ import "./globals.css";
 import { roboto } from "@/components/ui/fonts";
 import { Header } from "@/components/navbar";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Talent app",
@@ -21,6 +22,7 @@ export default function RootLayout({
           <main className="space-y-1">
             <Header />
             {children}
+            <Toaster />
           </main>
         </body>
       </html>
