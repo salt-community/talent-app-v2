@@ -18,7 +18,8 @@ export async function Projects({ devId }: Props) {
         <div className="flex flex-col justify-center mt-4">
           <p>Add your projects here</p>
         </div>
-        <div className="flex justify-end">
+        <Separator className="mt-4 mb-2" />
+        <div className="flex justify-center">
           <ProjectForm userId={devId} />
         </div>
       </div>
@@ -36,7 +37,7 @@ export async function Projects({ devId }: Props) {
           </div>
         ))}
       </div>
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-center mb-4">
         <ProjectForm userId={devId} />
       </div>
     </div>
