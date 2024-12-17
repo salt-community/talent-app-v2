@@ -13,7 +13,6 @@ import { developerService } from "@/features/developer-profiles/instance";
   );
   await seedAssignments(devIds);
   await backgroundsSeed(devIds);
-
   await seedProjects();
   console.log("Done seeding...");
 })();

@@ -3,7 +3,7 @@ import { createRepository } from "../repository";
 import { BackgroundInsert } from "../schema";
 import { skills } from "./data";
 import { db } from "@/db";
-import { addBackgroundSearchIndex } from "@/lib/meili-search";
+import { addBackgroundSearchIndex } from "../../../../meili-search";
 
 const repository = createRepository(db);
 export async function backgroundsSeed(devIds: string[]) {
