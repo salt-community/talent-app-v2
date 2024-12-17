@@ -19,7 +19,7 @@ export function createService(db: Db) {
       return await repository.getIdentityById(id);
     },
 
-    async controllUser() {
+    async controlUser() {
       const { userId, sessionClaims } = await auth();
 
       if (!userId) return;

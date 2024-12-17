@@ -13,15 +13,15 @@ import { useState } from "react";
 import { deleteDeveloperProfileAction, updateStatusAction } from "../action";
 import { Status } from "./status";
 import { DeleteDialog } from "./delete-button";
-import { DevelopersStatus } from "../../developer-profiles";
+import type { DeveloperProfileStatus } from "@/features";
 
 type Props = {
   id: string;
-  developerStatus: DevelopersStatus;
+  developerStatus: DeveloperProfileStatus;
 };
 
 export function StatusMenu({ id, developerStatus }: Props) {
-  const [status, setStatus] = useState<DevelopersStatus>(developerStatus);
+  const [status, setStatus] = useState<DeveloperProfileStatus>(developerStatus);
   const { toast } = useToast();
 
   async function onDelete() {
@@ -31,7 +31,7 @@ export function StatusMenu({ id, developerStatus }: Props) {
       description: "The developer profile has been successfully deleted",
     });
   }
-  async function onStatusChange(newStatus: DevelopersStatus) {
+  async function onStatusChange(newStatus: DeveloperProfileStatus) {
     await updateStatusAction(id, newStatus);
     setStatus(newStatus);
     toast({
@@ -53,7 +53,9 @@ export function StatusMenu({ id, developerStatus }: Props) {
         <DropdownMenuContent className="w-56">
           <DropdownMenuRadioGroup
             value={status}
-            onValueChange={(value) => onStatusChange(value as DevelopersStatus)}
+            onValueChange={(value) =>
+              onStatusChange(value as DeveloperProfileStatus)
+            }
           >
             <DropdownMenuRadioItem value="highlighted">
               Highlighted
