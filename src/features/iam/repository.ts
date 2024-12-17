@@ -27,7 +27,7 @@ export function createRepository(db: Db) {
       const role = await db
         .select({ id: identities.id, roles: identities.role })
         .from(identities)
-        .where(eq(identities.clerkId, id));
+        .where(eq(identities.id, id));
       return role[0];
     },
   };
