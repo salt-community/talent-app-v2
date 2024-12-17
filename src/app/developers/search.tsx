@@ -16,7 +16,7 @@ export function Search() {
       if (event.target.value) searchParams.set("search", event.target.value);
       else searchParams.delete("search");
 
-      redirect(`/${searchParams.toString()}`);
+      redirect(`/?${searchParams.toString()}`);
     },
     300
   );
