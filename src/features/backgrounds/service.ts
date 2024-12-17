@@ -6,6 +6,28 @@ export function createBackgroundsService(
   repository: Repository,
   serviceMethods: ServiceMethods,
 ) {
+  async function addSkills(backgroundId: number, skills?: string[]) {
+    if (skills && skills.length) {
+      await repository.addSkills(
+        skills.map((name) => ({ backgroundId, name })),
+      );
+    }
+  }
+  async function addLanguages(backgroundId: number, languages?: string[]) {
+    if (languages && languages.length) {
+      await repository.addLanguages(
+        languages.map((name) => ({ backgroundId, name })),
+      );
+    }
+  }
+  async function addEducations(backgroundId: number, educations?: string[]) {
+    if (educations && educations.length) {
+      await repository.addEducations(
+        educations.map((name) => ({ backgroundId, name })),
+      );
+    }
+  }
+
   return {
     async getAllBackgrounds() {
       return await repository.getAllBackgrounds();
@@ -34,21 +56,11 @@ export function createBackgroundsService(
     async add(background: BackgroundInsert) {
       const backgroundId = await repository.add(background);
       await serviceMethods.syncBackgroundSearchIndex([background]);
-      if (background.skills.length) {
-        await repository.addSkills(
-          background.skills.map((name) => ({ backgroundId, name })),
-        );
-      }
-      if (background.languages.length) {
-        await repository.addLanguages(
-          background.languages.map((name) => ({ backgroundId, name })),
-        );
-      }
-      if (background.educations.length) {
-        await repository.addEducations(
-          background.educations.map((name) => ({ backgroundId, name })),
-        );
-      }
+      await Promise.all([
+        addSkills(backgroundId, background.skills),
+        addLanguages(backgroundId, background.languages),
+        addEducations(backgroundId, background.educations),
+      ]);
     },
     async update(background: BackgroundUpdate) {
       await repository.update(background);
