@@ -22,6 +22,8 @@ export const ROLES = {
 
     //Admin feature
     "admin.getAllDeveloperProfiles",
+    "admin.deleteDeveloperProfile",
+    "admin.updateStatus",
   ],
   developer: ["developerProfile.getAll"],
 

@@ -6,7 +6,7 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/";
 import { useToast } from "@/hooks/use-toast";
 import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
