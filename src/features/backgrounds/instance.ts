@@ -12,3 +12,14 @@ export const backgroundsService = createBackgroundsService(
   serviceMethods,
   iamService.checkAccess
 );
+
+export const mockBackgroundsService = createBackgroundsService(
+  createRepository(db),
+  serviceMethods,
+  async function checkAcces(permission: string): Promise<void> {
+    if (permission) {
+      return;
+    }
+    return;
+  }
+);
