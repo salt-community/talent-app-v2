@@ -35,6 +35,14 @@ export const languages = pgTable("background_languages", {
   name: varchar().notNull(),
   level: integer().notNull().default(5),
 });
+export const soso = pgTable("soso", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  backgroundId: integer("background_id")
+    .notNull()
+    .references(() => backgrounds.id),
+  name: varchar().notNull(),
+  level: integer().notNull().default(5),
+});
 
 export type BackgroundInsert = typeof backgrounds.$inferInsert & {
   skills: string[];
