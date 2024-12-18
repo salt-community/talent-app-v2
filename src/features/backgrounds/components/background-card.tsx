@@ -1,7 +1,7 @@
 import { Row } from "./row";
 import { backgroundsService } from "../instance";
-import { SkillsBadges } from ".";
 import { BackgroundBasicInfoCard } from "./basic-info-card";
+import { SkillsBadges } from "./skills-badges";
 
 type Props = { devid: string };
 export async function BackgroundCard({ devid }: Props) {

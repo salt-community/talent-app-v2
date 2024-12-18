@@ -1,8 +1,8 @@
 import { Row } from "./row";
 import { BackgroundBasicInfo } from "./basic-info";
 import { backgroundsService } from "../instance";
-import { SkillsBadges } from ".";
 import Link from "next/link";
+import { SkillsBadges } from "./skills-badges";
 
 type Props = { devid?: string };
 export async function Background({ devid }: Props) {

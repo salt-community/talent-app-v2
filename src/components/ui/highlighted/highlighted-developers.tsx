@@ -1,6 +1,6 @@
 import { developerService } from "@/features";
-import { Background } from "@/features/backgrounds/components";
 import { Card, CardContent } from "../card";
+import { Background } from "@/features/backgrounds/components/background";
 
 export async function HighlightedDevelopers() {
   const highlightedDevIds = await developerService.getHighlightedDevIds();
