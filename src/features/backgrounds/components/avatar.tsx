@@ -7,7 +7,7 @@ type Props = {
 
 export function BackgroundAvatar({ url, size }: Props) {
   return (
-    <Avatar className={size ? "w-14 h-auto" : ""}>
+    <Avatar className={size ? "w-12 h-auto" : ""}>
       <AvatarImage src={url}/>
     </Avatar>
   );
