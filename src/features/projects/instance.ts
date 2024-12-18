@@ -8,3 +8,14 @@ export const projectService = createService(
   developerService.getAll,
   iamService.checkAccess
 );
+
+export const seedProjectService = createService(
+  db,
+  developerService.getAll,
+  async function checkAccess(permission: string): Promise<void> {
+    if (permission) {
+      return;
+    }
+    return;
+  }
+);
