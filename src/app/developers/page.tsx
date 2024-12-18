@@ -1,12 +1,11 @@
 ;import { Search } from "./search";
-import { meiliSearch } from "@/features/backgrounds/meili";
+import { backgroundsService } from "@/features";
 import { Developers } from "@/features";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 export default async function Page({ searchParams }: Props) {
   const search = (await searchParams).search;
-  const index = meiliSearch.index("backgrounds");
-  const devIds = (await index.search(search)).hits.map((hit) => hit.devId);
+  const devIds = await backgroundsService.searchDevIds(search);
 
   return (
     <main className="px-4">

@@ -1,12 +1,12 @@
 import { Repository } from "./repository";
 import { BackgroundInsert } from "./db";
-import { BackgroundUpdate, ServiceMethods } from "./types";
+import { BackgroundUpdate } from "./types";
+import { MeiliClient } from "./meili";
 
 export function createBackgroundsService(
   repository: Repository,
-  serviceMethods: ServiceMethods,
-  getHighlightedDevIds: ()=>Promise<string[]>
-
+  meiliClient: MeiliClient,
+  getHighlightedDevIds: () => Promise<string[]>,
 ) {
   async function addSkills(backgroundId: number, skills?: string[]) {
     if (skills && skills.length) {
@@ -57,7 +57,7 @@ export function createBackgroundsService(
     },
     async add(background: BackgroundInsert) {
       const backgroundId = await repository.add(background);
-      await serviceMethods.syncBackgroundSearchIndex([background]);
+      await meiliClient.upsertBackground({ id: backgroundId, ...background });
       await Promise.all([
         await addSkills(backgroundId, background.skills),
         await addLanguages(backgroundId, background.languages),
@@ -67,7 +67,7 @@ export function createBackgroundsService(
 
     async update(background: BackgroundUpdate) {
       await repository.update(background);
-      await serviceMethods.syncBackgroundSearchIndex([background]);
+      await meiliClient.upsertBackground(background);
       await Promise.all([
         await repository.updateSkills(background.id, background.skills),
         await repository.updateLanguages(background.id, background.languages),
@@ -75,7 +75,15 @@ export function createBackgroundsService(
       ]);
     },
     async getAllHighlightedDevIds() {
-      return await getHighlightedDevIds()
-    }
+      return await getHighlightedDevIds();
+    },
+
+    async searchDevIds(search: string | undefined) {
+      return await meiliClient.searchBackgrounds(search);
+    },
+
+    async removeAllBackgrounsFromMeili() {
+      await meiliClient.deleteAllBackgrounds();
+    },
   };
 }
