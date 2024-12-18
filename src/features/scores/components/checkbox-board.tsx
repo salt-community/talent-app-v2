@@ -9,9 +9,9 @@ type Props = {
 
 export function CheckboxBoard({ tags, handleChangeTag }: Props) {
   return (
-    <div className="grid grid-cols-4 items-start gap-4">
+    <div>
       <FormLabel label="Tags" />
-      <div className="col-span-3 grid grid-cols-2 gap-2">
+      <div className="col-span-3 grid grid-cols-2 gap-2 pt-2">
         {categoryTags.map((tag, index) => {
           return (
             <CategoryCheckbox
