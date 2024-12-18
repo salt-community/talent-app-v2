@@ -39,7 +39,6 @@ export function createService(
       const user = await repository.getUserId(userId);
       if (user) {
         const devId = await getDeveloperId(user.id);
-        console.log("id", devId);
         return { id: devId, role: user.role };
       }
 
