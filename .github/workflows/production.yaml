@@ -6,6 +6,13 @@ on:
   push:
     branches:
       - db-migration
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Choose the action: create or rename table"
+        required: true
+        default: "create"
+
 jobs:
   apply_migrations:
     runs-on: ubuntu-latest
