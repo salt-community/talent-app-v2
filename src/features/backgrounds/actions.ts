@@ -3,9 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { backgroundsService } from "./instance";
 import { z } from "zod";
+import { redirect } from "next/navigation";
 
 const backgroundUpdate = z.object({
   id: z.coerce.number(),
+  devId: z.string().nonempty(),
   name: z.string().nonempty(),
   title: z.string().nonempty(),
   bio: z.string(),
@@ -30,10 +32,15 @@ const backgroundUpdate = z.object({
     .pipe(z.array(z.string())),
 });
 
-export async function updateBackgroundAction(formData: FormData) {
+export async function updateBackgroundAction(
+  _: void | null | string,
+  formData: FormData,
+) {
   const update = Object.fromEntries(formData.entries());
   const validatedUpdate = backgroundUpdate.parse(update);
 
   await backgroundsService.update(validatedUpdate);
+
   revalidatePath("/");
+  redirect(`/developers/${validatedUpdate.devId}`);
 }

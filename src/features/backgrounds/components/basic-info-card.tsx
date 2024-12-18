@@ -3,11 +3,16 @@ import { BackgroundAvatar } from "./avatar";
 import { Background } from "../types";
 import { SocialLink } from "./social-link";
 import { DialogForm } from "./dialog-form";
+import { backgroundsService } from "../instance";
 
 type Props = { background: Background };
 
-export function BackgroundBasicInfoCard({ background }: Props) {
+export async function BackgroundBasicInfoCard({ background }: Props) {
   const isFeatureBioEnabled = process.env.NEXT_PUBLIC_FEATURE_BIO === "ON";
+
+  const allSkills = await backgroundsService.getAllSkills();
+  const allLanguages = await backgroundsService.getAllLanguages();
+  const allEducations = await backgroundsService.getAllEducations();
 
   return (
     <>
@@ -26,7 +31,12 @@ export function BackgroundBasicInfoCard({ background }: Props) {
           </div>
         </div>
         <ul className="flex flex-col gap-1 items-center justify-end items-top h-full">
-          <DialogForm background={background} />
+          <DialogForm
+            background={background}
+            allSkills={allSkills}
+            allLanguages={allLanguages}
+            allEducations={allEducations}
+          />
           {background.links &&
             background.links.map((link) => (
               <li key={link.url} className="h-full flex justify-start">

@@ -1,9 +1,9 @@
+"use client";
 import { updateBackgroundAction } from "../actions";
-import { Pencil } from "lucide-react";
+import { Loader2, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -15,13 +15,30 @@ import { TagsInput } from "./tags-input";
 import { Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Background } from "../types";
-import { backgroundsService } from "../instance";
+import { useActionState } from "react";
+import { EducationSelect, LanguageSelect, SkillSelect } from "../db";
 
-type Props = { background: Background };
-export async function DialogForm({ background }: Props) {
-  const allSkills = await backgroundsService.getAllSkills();
-  const allLanguages = await backgroundsService.getAllLanguages();
-  const allEducations = await backgroundsService.getAllEducations();
+type Props = {
+  background: Background;
+  allSkills: SkillSelect[];
+  allLanguages: LanguageSelect[];
+  allEducations: EducationSelect[];
+};
+
+export function DialogForm({
+  background,
+  allSkills,
+  allLanguages,
+  allEducations,
+}: Props) {
+  const [message, formAction, isPending] = useActionState(
+    updateBackgroundAction,
+    null,
+  );
+
+  if (message) {
+    console.error(message);
+  }
 
   return (
     <Dialog>
@@ -41,12 +58,18 @@ export async function DialogForm({ background }: Props) {
               Make changes to your profile here. Click save when you´re done.
             </DialogDescription>
           </DialogHeader>
-          <form action={updateBackgroundAction} className="p-2">
+          <form action={formAction} className="p-2">
             <div className="space-y-2 py-4">
               <input
                 type="text"
                 name={"id"}
                 defaultValue={background.id}
+                hidden
+              />
+              <input
+                type="text"
+                name={"devId"}
+                defaultValue={background.devId}
                 hidden
               />
               <Label htmlFor="name" className="text-right">
@@ -103,10 +126,19 @@ export async function DialogForm({ background }: Props) {
               />
             </div>
 
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button type="submit">Save changes</Button>
-              </DialogClose>
+            <DialogFooter className="w-full flex items-start border-gray-800">
+              <div className="flex-grow" />
+              <Button type="submit" disabled={isPending}>
+                {isPending ? (
+                  <>
+                    <Loader2 className="animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  "Save changes"
+                )}
+              </Button>
+              <div className="flex-grow" />
             </DialogFooter>
           </form>
         </ScrollArea>
