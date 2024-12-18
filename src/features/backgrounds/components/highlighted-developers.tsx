@@ -4,14 +4,7 @@ import { Background } from "@/features/backgrounds/components";
 
 export async function HighlightedDevelopers() {
   const highlightedDevIds = await developerService.getHighlightedDevIds();
-
-  /* (
-    <section className="flex flex-col justify-center py-8 gap-4">
-      <QuoteHighlight background={highlightedBackgrounds[0]} />
-      <VideoHighlight />
-      <SkillsHighlight />
-    </section>
-  ); */
+  
   return (
     <main className="px-4">
       <ul className="pt-14 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
