@@ -1,10 +1,17 @@
 export const ROLES = {
   admin: [
     //Background feature
+    "backgrounds.add",
+    "backgrounds.addSkill",
+    "backgrounds.update",
+    "backgrounds.updateSkills",
+    "backgrounds.updateLanguages",
+    "backgrounds.updateEducation",
     "backgrounds.getAll",
     "backgrounds.getById",
-    "backgrounds.add",
-    "backgrounds.update",
+    "backgrounds.getSkillsById",
+    "backgrounds.getLanguagesById",
+    "backgrounds.getEducationById",
 
     //Score feature
     "scores.addAssignment",
