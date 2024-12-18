@@ -4,14 +4,21 @@ import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
 import { ROLES } from "./roles";
 import { auth } from "@clerk/nextjs/server";
-import { DeveloperProfileInsert } from "@/features";
+import { BackgroundInsert, DeveloperProfileInsert } from "@/features";
 
 type Role = keyof typeof ROLES;
 type Permission = (typeof ROLES)[Role][number];
 
+type Developer = {
+  id: string;
+};
+
 export function createService(
   db: Db,
-  addDeveloper: (developerProfile: DeveloperProfileInsert) => Promise<void>
+  addDeveloper: (
+    developerProfile: DeveloperProfileInsert
+  ) => Promise<Developer>,
+  addDeveloperBackground: (background: BackgroundInsert) => Promise<void>
 ) {
   const repository = createRepository(db);
   return {
@@ -32,14 +39,29 @@ export function createService(
       if (user) return user;
 
       const { first_name, last_name } = sessionClaims;
+      const name = `${first_name} ${last_name}`;
       const primaryEmail = sessionClaims?.email as string;
+
       if (primaryEmail.split("@")[1] === "appliedtechnology.se") {
         const user = await repository.addIdentity({ clerkId: userId });
-        await addDeveloper({
-          name: `${first_name} ${last_name}`,
+
+        const developer = await addDeveloper({
+          name: name,
           email: primaryEmail,
           identityId: user.id,
         });
+        console.log("devid:", developer.id);
+        await addDeveloperBackground({
+          name: name,
+          devId: developer.id,
+          title: "",
+          bio: "",
+          links: [],
+          skills: [],
+          languages: [],
+          educations: [],
+        });
+
         return user;
       }
     },
