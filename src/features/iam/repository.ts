@@ -12,7 +12,7 @@ export function createRepository(db: Db) {
     },
     async getUserId(id: string) {
       const userId = await db
-        .select({ id: identities.id })
+        .select({ id: identities.id, role: identities.role })
         .from(identities)
         .where(eq(identities.clerkId, id));
       return userId[0];
@@ -21,7 +21,7 @@ export function createRepository(db: Db) {
       const userId = await db
         .insert(identities)
         .values(identity)
-        .returning({ id: identities.id });
+        .returning({ id: identities.id, role: identities.role });
       return userId[0];
     },
     async getIdentityRole(id: string) {
