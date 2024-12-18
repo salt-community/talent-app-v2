@@ -6,32 +6,10 @@ on:
   push:
     branches:
       - db-migration
-  workflow_dispatch:
-    inputs:
-      action:
-        description: "Choose the action: create or rename table"
-        required: true
-        default: "create"
-
 jobs:
   apply_migrations:
     runs-on: ubuntu-latest
     steps:
-      - name: Set environment variable for action
-        run: echo "ACTION=${{ github.event.inputs.action }}" >> $GITHUB_ENV
-
-      - name: Generate migrations
-        run: |
-          if [ "$ACTION" == "create" ]; then
-            echo "Creating table..."
-            drizzle-kit generate --create
-          elif [ "$ACTION" == "rename" ]; then
-            echo "Renaming table..."
-            drizzle-kit generate --rename
-          else
-            echo "Invalid action"
-            exit 1
-          fi
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install dependencies & tooling
