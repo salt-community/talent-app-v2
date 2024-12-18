@@ -1,10 +1,10 @@
 import {
   HighlightPage,
 } from "@/features";
-import { meiliSearch } from "../../meili-search";
 import { Search } from "./developers/search";
 import "dotenv/config"
 import { Developers } from "@/features";
+import { meiliSearch } from "@/features/backgrounds/meili";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 export default async function Home({ searchParams }: Props) {

@@ -1,5 +1,5 @@
 ;import { Search } from "./search";
-import { meiliSearch } from "../../../meili-search";
+import { meiliSearch } from "@/features/backgrounds/meili";
 import { Developers } from "@/features";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
