@@ -18,5 +18,10 @@ export function createDevelopersService(db: Db) {
     async updateStatus(id: string, status: DeveloperProfileStatus) {
       await repository.updateStatus(id, status);
     },
+    async getHighlightedDevIds() {
+      const highlighted = await repository.getAll();
+      return highlighted.filter((dev) => dev.status === "highlighted").map((dev) => dev.id)
+    },
+
   };
 }

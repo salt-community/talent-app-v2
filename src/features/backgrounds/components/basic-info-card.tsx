@@ -13,6 +13,7 @@ export async function BackgroundBasicInfoCard({ background }: Props) {
   const allSkills = await backgroundsService.getAllSkills();
   const allLanguages = await backgroundsService.getAllLanguages();
   const allEducations = await backgroundsService.getAllEducations();
+  const filteredLinks = background.links.filter((e) => e.name !== "LinkedIn");
 
   return (
     <>
@@ -30,15 +31,15 @@ export async function BackgroundBasicInfoCard({ background }: Props) {
             )}
           </div>
         </div>
-        <ul className="flex flex-col gap-1 items-center justify-end items-top h-full">
+        <ul className="flex flex-col gap-2 justify-end items-top h-full">
           <DialogForm
             background={background}
             allSkills={allSkills}
             allLanguages={allLanguages}
             allEducations={allEducations}
           />
-          {background.links &&
-            background.links.map((link) => (
+          {filteredLinks &&
+            filteredLinks.map((link) => (
               <li key={link.url} className="h-full flex justify-start">
                 <SocialLink name={link.name} url={link.url} />
               </li>

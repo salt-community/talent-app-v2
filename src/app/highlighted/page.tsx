@@ -1,4 +1,6 @@
-import { Hero, HighlightedDevelopers } from "@/components/ui/highlighted";
+import { Hero } from "@/features";
+import { HighlightedDevelopers } from "@/features";
+
 
 export default function Page() {
   return (
