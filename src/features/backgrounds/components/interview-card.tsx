@@ -28,7 +28,7 @@ export function InterviewCard({
   return (
     <Card
       key={highlightedBackground.name}
-      className="max-w-sm"
+      className="max-w-sm flex flex-col"
     >
       <div className="relative h-80 w-full">
         <Image
@@ -38,11 +38,11 @@ export function InterviewCard({
           className="object-cover [object-position:top]"
         />
       </div>
-      <CardContent className="p-4">
+      <CardContent className="p-4 flex flex-col gap-3">
         <H2>{highlightedBackground.title}</H2>
         <p className="text-muted-foreground">{highlightedBackground.excerpt}</p>
 
-        <section className="flex gap-4 justify-between items-center mt-4">
+        <section className="flex gap-4 justify-between items-center mt-4 flex-1">
           <div className="flex gap-4 items-center ">
             <BackgroundAvatar url={highlightedBackground.avatarUrl} size="sm" />
             <div>
