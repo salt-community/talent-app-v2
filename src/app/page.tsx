@@ -11,6 +11,7 @@ export default async function Home({ searchParams }: Props) {
   return (
     <main className="px-4">
       <Search />
+      <div>hej</div>
       <ul className="pt-14 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {devIds.map((devId) => (
           <li key={devId} className="">
