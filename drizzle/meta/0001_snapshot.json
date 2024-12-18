@@ -1,6 +1,6 @@
 {
-  "id": "5cbfb1a8-8180-440f-b633-c4be2ef30965",
-  "prevId": "8ec5389a-fa9b-4399-8207-8c19ff19fb41",
+  "id": "478c95b5-208a-4b77-a30a-8584862d581d",
+  "prevId": "2f3dc4b8-61e0-400f-84b2-6dec5302c0a5",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -268,69 +268,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.background_languages": {
-      "name": "background_languages",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "background_languages_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
-        },
-        "background_id": {
-          "name": "background_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "level": {
-          "name": "level",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 5
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "background_languages_background_id_backgrounds_id_fk": {
-          "name": "background_languages_background_id_backgrounds_id_fk",
-          "tableFrom": "background_languages",
-          "tableTo": "backgrounds",
-          "columnsFrom": [
-            "background_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.background_skills": {
       "name": "background_skills",
       "schema": "",
@@ -377,6 +314,69 @@
         "background_skills_background_id_backgrounds_id_fk": {
           "name": "background_skills_background_id_backgrounds_id_fk",
           "tableFrom": "background_skills",
+          "tableTo": "backgrounds",
+          "columnsFrom": [
+            "background_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.test": {
+      "name": "test",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "test_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "background_id": {
+          "name": "background_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level": {
+          "name": "level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 5
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "test_background_id_backgrounds_id_fk": {
+          "name": "test_background_id_backgrounds_id_fk",
+          "tableFrom": "test",
           "tableTo": "backgrounds",
           "columnsFrom": [
             "background_id"

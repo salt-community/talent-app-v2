@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS "soso" (
 	"level" integer DEFAULT 5 NOT NULL
 );
 --> statement-breakpoint
+DROP TABLE "test" CASCADE;--> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "soso" ADD CONSTRAINT "soso_background_id_backgrounds_id_fk" FOREIGN KEY ("background_id") REFERENCES "public"."backgrounds"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION

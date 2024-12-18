@@ -1,6 +1,6 @@
 {
-  "id": "0ffafc64-14fa-4600-abe5-2bd0adb5abc4",
-  "prevId": "478c95b5-208a-4b77-a30a-8584862d581d",
+  "id": "eb4f35de-fd9a-4b5c-9495-299091de123d",
+  "prevId": "0ffafc64-14fa-4600-abe5-2bd0adb5abc4",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -394,8 +394,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.test": {
-      "name": "test",
+    "public.soso": {
+      "name": "soso",
       "schema": "",
       "columns": {
         "id": {
@@ -405,7 +405,7 @@
           "notNull": true,
           "identity": {
             "type": "always",
-            "name": "test_id_seq",
+            "name": "soso_id_seq",
             "schema": "public",
             "increment": "1",
             "startWith": "1",
@@ -437,9 +437,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "test_background_id_backgrounds_id_fk": {
-          "name": "test_background_id_backgrounds_id_fk",
-          "tableFrom": "test",
+        "soso_background_id_backgrounds_id_fk": {
+          "name": "soso_background_id_backgrounds_id_fk",
+          "tableFrom": "soso",
           "tableTo": "backgrounds",
           "columnsFrom": [
             "background_id"

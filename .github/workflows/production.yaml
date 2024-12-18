@@ -18,8 +18,8 @@ jobs:
           npm install -g drizzle-orm drizzle-kit pg
       - name: Apply migrations
         run: |
-          npx drizzle-kit generate
-          npx drizzle-kit migrate
+          drizzle-kit generate
+          drizzle-kit migrate
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
   # Deploy-Production:
