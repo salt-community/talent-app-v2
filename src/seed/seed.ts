@@ -3,7 +3,7 @@ import { seedProjects } from "@/features/projects/seed";
 import { seedAssignments, seedIdentities } from "@/features";
 import { seedDeveloperProfiles } from "@/features";
 import { developerService } from "@/features/developer-profiles/instance";
-import { meiliSearch } from "../../meili-search";
+import { meiliSearch } from "@/features/backgrounds/meili";
 
 (async () => {
   console.log("Start seeding...");
