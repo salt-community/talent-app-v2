@@ -8,6 +8,13 @@
       "when": 1734521806588,
       "tag": "0000_tense_spitfire",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1734522086243,
+      "tag": "0001_magical_arclight",
+      "breakpoints": true
     }
   ]
 }
