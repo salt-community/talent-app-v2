@@ -4,11 +4,15 @@ import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
 import { ROLES } from "./roles";
 import { auth } from "@clerk/nextjs/server";
+import { DeveloperProfileInsert } from "@/features";
 
 type Role = keyof typeof ROLES;
 type Permission = (typeof ROLES)[Role][number];
 
-export function createService(db: Db) {
+export function createService(
+  db: Db,
+  addDeveloper: (developerProfile: DeveloperProfileInsert) => Promise<void>
+) {
   const repository = createRepository(db);
   return {
     async getAllIdentities() {
@@ -24,13 +28,19 @@ export function createService(db: Db) {
 
       if (!userId) return;
 
-      const id = await repository.getUserId(userId);
-      if (id) return id;
+      const user = await repository.getUserId(userId);
+      if (user) return user;
 
-      const primaryEmail = sessionClaims?.primaryEmail as string;
-
+      const { first_name, last_name } = sessionClaims;
+      const primaryEmail = sessionClaims?.email as string;
       if (primaryEmail.split("@")[1] === "appliedtechnology.se") {
-        return await repository.addIdentity({ clerkId: userId });
+        const user = await repository.addIdentity({ clerkId: userId });
+        await addDeveloper({
+          name: `${first_name} ${last_name}`,
+          email: primaryEmail,
+          identityId: user.id,
+        });
+        return user;
       }
     },
 
