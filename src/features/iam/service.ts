@@ -18,6 +18,7 @@ export function createService(
   addDeveloper: (
     developerProfile: DeveloperProfileInsert
   ) => Promise<Developer>,
+  getDeveloperId: (identityId: string) => Promise<string>,
   addDeveloperBackground: (background: BackgroundInsert) => Promise<void>
 ) {
   const repository = createRepository(db);
@@ -36,7 +37,11 @@ export function createService(
       if (!userId) return;
 
       const user = await repository.getUserId(userId);
-      if (user) return user;
+      if (user) {
+        const devId = await getDeveloperId(user.id);
+        console.log("id", devId);
+        return { id: devId, role: user.role };
+      }
 
       const { first_name, last_name } = sessionClaims;
       const name = `${first_name} ${last_name}`;
@@ -62,7 +67,7 @@ export function createService(
           educations: [],
         });
 
-        return user;
+        return { id: developer.id, role: user.role };
       }
     },
 
