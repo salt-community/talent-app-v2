@@ -12,7 +12,7 @@ export async function HighlightedDevelopers() {
   return (
     <section className="flex flex-col justify-center py-8 gap-4">
       <ProjectHighlight />
-      <QuoteHighlight />
+      <QuoteHighlight background={highlightedBackgrounds[0]} />
       <VideoHighlight />
       <SkillsHighlight />
     </section>
