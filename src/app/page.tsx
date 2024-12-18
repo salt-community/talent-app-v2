@@ -16,7 +16,7 @@ export default async function Home({ searchParams }: Props) {
           <li key={devId} className="">
             <Card className="p-2 h-full flex justify-center min-w-[20rem]">
               <CardContent>
-                {/* //push force enbled rule */}
+                {/* //push force enbled rule  rule is not workign*/}
                 <Background devid={devId} />
               </CardContent>
             </Card>
