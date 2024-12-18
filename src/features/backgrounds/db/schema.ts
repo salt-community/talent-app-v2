@@ -42,6 +42,16 @@ export const soso = pgTable("toto", {
     .references(() => backgrounds.id),
   name: varchar().notNull(),
   level: integer().notNull().default(5),
+  fsfasdfaadf: integer().notNull().default(5),
+  asdfd: integer().notNull().default(5),
+});
+export const bobo = pgTable("bobo", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  backgroundId: integer("background_id")
+    .notNull()
+    .references(() => backgrounds.id),
+  name: varchar().notNull(),
+  level: integer().notNull().default(5),
 });
 
 export type BackgroundInsert = typeof backgrounds.$inferInsert & {

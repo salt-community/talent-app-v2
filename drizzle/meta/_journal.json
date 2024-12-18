@@ -29,6 +29,13 @@
       "when": 1734527244324,
       "tag": "0003_common_black_crow",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1734528534654,
+      "tag": "0004_chunky_bloodaxe",
+      "breakpoints": true
     }
   ]
 }

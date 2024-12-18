@@ -2,26 +2,58 @@ name: Vercel Production Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
 on:
   push:
     branches:
       - db-migration
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Choose the action: create or rename table"
+        required: true
+        default: "create" # Default to 'create' if not provided
+        type: choice
+        options:
+          - create
+          - rename
+
 jobs:
   apply_migrations:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Install dependencies & tooling
         run: |
           npm install
           npm install -g drizzle-orm drizzle-kit pg
+
+      - name: Set environment variable for action
+        run: echo "ACTION=${{ github.event.inputs.action }}" >> $GITHUB_ENV
+        # This sets the ACTION environment variable from the input 'action'
+
+      - name: Generate migrations
+        run: |
+          if [ "$ACTION" == "create" ]; then
+            echo "Creating table..."
+            drizzle-kit generate --create
+          elif [ "$ACTION" == "rename" ]; then
+            echo "Renaming table..."
+            drizzle-kit generate --rename
+          else
+            echo "Invalid action"
+            exit 1
+          fi
+
       - name: Apply migrations
         run: |
-          drizzle-kit generate
           drizzle-kit migrate
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
   # Deploy-Production:
   #   runs-on: ubuntu-latest
   #   steps:
