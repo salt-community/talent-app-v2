@@ -5,8 +5,7 @@ import { HamburgerMenu } from "./ui/hamburger-menu";
 import { iamService } from "@/features/iam/instance";
 
 export async function Header() {
-  await iamService.controlUser();
-
+  const user = await iamService.controlUser();
   return (
     <nav className="w-full h-12 px-3 shadow-sm sticky top-0 z-20 flex bg-background justify-between items-center md:px-10">
       <Link href="/">
@@ -21,7 +20,7 @@ export async function Header() {
         <SignedIn>
           <UserButton />
         </SignedIn>
-        <HamburgerMenu />
+        <HamburgerMenu user={user} />
       </div>
     </nav>
   );
