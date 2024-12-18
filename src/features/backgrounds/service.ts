@@ -72,5 +72,10 @@ export function createBackgroundsService(
         await repository.updateEducations(background.id, background.educations),
       ]);
     },
+    async getAllHighlightedBackgrounds(devIds: string[]) {
+      const backgrounds = await repository.getAllBackgrounds();
+      const highlightedBackgrounds = backgrounds.filter(background => devIds.includes(background.devId));
+      return highlightedBackgrounds;
+    }
   };
 }
