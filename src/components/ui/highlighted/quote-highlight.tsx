@@ -1,11 +1,9 @@
 import { Card, CardContent } from "../card";
 import { QuoteIcon } from "lucide-react";
 import Link from "next/link";
-/* import { backgroundsService } from "@/features"; */
 import { BackgroundAvatar } from "@/features/backgrounds/components/avatar";
-import { Background } from "@/features/backgrounds/types";
+import { backgroundsService } from "@/features";
 
-type Props = { background: Background };
 
 
 type Props = { devId?: string };
