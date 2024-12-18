@@ -1,14 +1,17 @@
 import { Card, CardContent } from "../card";
 import { QuoteIcon } from "lucide-react";
 import Link from "next/link";
-import { backgroundsService } from "@/features";
+/* import { backgroundsService } from "@/features"; */
 import { BackgroundAvatar } from "@/features/backgrounds/components/avatar";
+import { Background } from "@/features/backgrounds/types";
 
-export async function QuoteHighlight() {
-  const background = await backgroundsService.getBackgroundByDevId(
+type Props = { background: Background };
+
+export async function QuoteHighlight( {background} : Props) {
+/*   const background = await backgroundsService.getBackgroundByDevId(
     "1520dee4-7232-4422-9165-a4cd4aa52fa6"
-  );
-  if (!background) return null;
+  ); */
+/*   if (!background) return null; */
   return (
     <Card className="m-2 max-w-sm text-right rounded-2xl bg-neutral/10 px-4">
       <CardContent className="flex flex-col gap-6">
