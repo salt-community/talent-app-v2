@@ -8,6 +8,7 @@ type Props = { background: Background };
 
 export function BackgroundBasicInfoCard({ background }: Props) {
   const isFeatureBioEnabled = process.env.NEXT_PUBLIC_FEATURE_BIO === "ON";
+  const filteredLinks = background.links.filter((e) => e.name !== "LinkedIn");
 
   return (
     <>
@@ -25,10 +26,10 @@ export function BackgroundBasicInfoCard({ background }: Props) {
             )}
           </div>
         </div>
-        <ul className="flex flex-col gap-1 items-center justify-end items-top h-full">
+        <ul className="flex flex-col gap-2 justify-end items-top h-full">
           <DialogForm background={background} />
-          {background.links &&
-            background.links.map((link) => (
+          {filteredLinks &&
+            filteredLinks.map((link) => (
               <li key={link.url} className="h-full flex justify-start">
                 <SocialLink name={link.name} url={link.url} />
               </li>
