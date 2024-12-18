@@ -1,4 +1,5 @@
-import { FormLabel } from "./form-label";
+
+import { Input, Label } from "@/components";
 
 type Props = {
   label: string;
@@ -14,19 +15,18 @@ export function InputField({
   handleChangeInput,
 }: Props) {
   return (
-    <div className="grid grid-cols-4 items-center gap-4">
-      <FormLabel label={label} />
-      <input
+    <>
+      <Label htmlFor={label.toLowerCase()}>{label}</Label>
+      <Input
         type={inputType}
         name={label.toLowerCase()}
         value={value}
         {...(label === "Score" ? { min: 0, max: 100 } : {})}
-        className="col-span-3 border border-gray-300 rounded-md p-2 text-sm focus:ring focus:ring-gray-200 focus:outline-none"
         onChange={(e) => {
           if (handleChangeInput) handleChangeInput(e.target.value, label);
         }}
         required
       />
-    </div>
+    </>
   );
 }
