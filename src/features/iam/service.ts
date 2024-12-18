@@ -25,12 +25,12 @@ export function createService(db: Db) {
       if (!userId) return;
 
       const id = await repository.getUserId(userId);
-      if (id) return;
+      if (id) return id;
 
       const primaryEmail = sessionClaims?.primaryEmail as string;
 
       if (primaryEmail.split("@")[1] === "appliedtechnology.se") {
-        await repository.addIdentity({ clerkId: userId });
+        return await repository.addIdentity({ clerkId: userId });
       }
     },
 

@@ -18,10 +18,11 @@ export function createRepository(db: Db) {
       return userId[0];
     },
     async addIdentity(identity: IdentityInsert) {
-      return await db
+      const userId = await db
         .insert(identities)
         .values(identity)
         .returning({ id: identities.id });
+      return userId[0];
     },
     async getIdentityRole(id: string) {
       const role = await db
