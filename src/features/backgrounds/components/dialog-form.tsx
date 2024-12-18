@@ -49,6 +49,12 @@ export async function DialogForm({ background }: Props) {
                 defaultValue={background.id}
                 hidden
               />
+              <input
+                type="text"
+                name={"devId"}
+                defaultValue={background.devId}
+                hidden
+              />
               <Label htmlFor="name" className="text-right">
                 Name
               </Label>

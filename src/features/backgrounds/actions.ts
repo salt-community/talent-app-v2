@@ -6,6 +6,7 @@ import { z } from "zod";
 
 const backgroundUpdate = z.object({
   id: z.coerce.number(),
+  devId: z.string().nonempty(),
   name: z.string().nonempty(),
   title: z.string().nonempty(),
   bio: z.string(),
