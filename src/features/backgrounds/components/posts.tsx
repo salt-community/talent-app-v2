@@ -14,8 +14,17 @@ const sophia = {
   title: "Meet the Leader Behind Success",
   excerpt:
     "Empowering teams and driving innovation. Discover the journey of resilience and vision that redefines leadership.",
-  avatarUrl: "/woman-avatar.png",
+  avatarUrl: "/avatar.png",
   name: "Sophia Carter",
+  date: "Dec 18, 2024",
+};
+const ali = {
+  imageUrl: "/ali-avatar.png",
+  title: "Building the Future of Web Applications",
+  excerpt:
+    "Bridging frontend and backend with simplicity, performance, and maintainability. Explore how Ali crafts seamless digital experiences.",
+  avatarUrl: "/ali-avatar.png",
+  name: "Ali Mohseni",
   date: "Dec 18, 2024",
 };
 
@@ -25,6 +34,7 @@ export function Posts() {
     <article className="flex flex-wrap gap-5 justify-center">
       <InterviewCard highlightedBackground={meiliSearch}/>
       <InterviewCard highlightedBackground={sophia} />
+      <InterviewCard highlightedBackground={ali} />
     </article>
   );
 }
