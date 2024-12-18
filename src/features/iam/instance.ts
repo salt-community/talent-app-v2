@@ -1,5 +1,9 @@
 import { db } from "@/db";
 import { createService } from "./service";
-import { developerService } from "@/features";
+import { backgroundsService, developerService } from "@/features";
 
-export const iamService = createService(db, developerService.add);
+export const iamService = createService(
+  db,
+  developerService.add,
+  backgroundsService.add
+);

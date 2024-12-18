@@ -50,7 +50,7 @@ export function createService(
           email: primaryEmail,
           identityId: user.id,
         });
-        console.log("devid:", developer.id);
+
         await addDeveloperBackground({
           name: name,
           devId: developer.id,
