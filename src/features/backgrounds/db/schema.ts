@@ -35,7 +35,7 @@ export const languages = pgTable("background_languages", {
   name: varchar().notNull(),
   level: integer().notNull().default(5),
 });
-export const soso = pgTable("soso", {
+export const test = pgTable("test", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   backgroundId: integer("background_id")
     .notNull()

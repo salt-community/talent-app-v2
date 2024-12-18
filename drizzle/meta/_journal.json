@@ -15,6 +15,13 @@
       "when": 1734522086243,
       "tag": "0001_magical_arclight",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1734525779438,
+      "tag": "0002_vengeful_proudstar",
+      "breakpoints": true
     }
   ]
 }
