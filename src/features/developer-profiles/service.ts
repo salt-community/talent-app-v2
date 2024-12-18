@@ -10,7 +10,7 @@ export function createDevelopersService(db: Db) {
       return await repository.getAll();
     },
     async add(developerProfile: DeveloperProfileInsert) {
-      await repository.add(developerProfile);
+      return await repository.add(developerProfile);
     },
     async delete(id: string) {
       await repository.delete(id);
@@ -20,8 +20,9 @@ export function createDevelopersService(db: Db) {
     },
     async getHighlightedDevIds() {
       const highlighted = await repository.getAll();
-      return highlighted.filter((dev) => dev.status === "highlighted").map((dev) => dev.id)
+      return highlighted
+        .filter((dev) => dev.status === "highlighted")
+        .map((dev) => dev.id);
     },
-
   };
 }

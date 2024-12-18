@@ -9,7 +9,11 @@ export function createDevelopersRepository(db: Db) {
       return await db.select().from(developerProfiles).execute();
     },
     async add(developerProfile: DeveloperProfileInsert) {
-      await db.insert(developerProfiles).values(developerProfile).execute();
+      const devId = await db
+        .insert(developerProfiles)
+        .values(developerProfile)
+        .returning({ id: developerProfiles.id });
+      return devId[0];
     },
     async delete(id: string) {
       await db
