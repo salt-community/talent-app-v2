@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { skills } from "./data";
-import { backgroundsService } from "../instance";
+import { mockBackgroundsService } from "../instance";
 
 export async function backgroundsSeed(devIds: string[]) {
   const avatars = await getAvatars(devIds.length);
@@ -39,7 +39,7 @@ export async function backgroundsSeed(devIds: string[]) {
           "Odia",
           "Malayalam",
         ],
-        { min: 1, max: 6 },
+        { min: 1, max: 6 }
       ),
       educations: faker.helpers.arrayElements(
         [
@@ -57,7 +57,7 @@ export async function backgroundsSeed(devIds: string[]) {
           "Associate Degree",
           "Bachelor's Degree",
         ],
-        { min: 0, max: 4 },
+        { min: 0, max: 4 }
       ),
       skills: faker.helpers.arrayElements(skills, { min: 3, max: 10 }),
       links: faker.helpers
@@ -74,8 +74,8 @@ export async function backgroundsSeed(devIds: string[]) {
   });
   await Promise.all(
     backgrounds.map(async (background) => {
-      await backgroundsService.add(background);
-    }),
+      await mockBackgroundsService.add(background);
+    })
   );
   console.log("Done seeding Backgrounds...");
 }
@@ -84,6 +84,6 @@ async function getAvatars(count: number) {
   const result = await fetch(`https://randomuser.me/api/?results=${count}`);
   const data = await result.json();
   return data.results.map(
-    (user: { picture: { large: unknown } }) => user.picture.large,
+    (user: { picture: { large: unknown } }) => user.picture.large
   );
 }
