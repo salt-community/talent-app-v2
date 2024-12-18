@@ -7,11 +7,30 @@ import { Background } from "@/features/backgrounds/types";
 
 type Props = { background: Background };
 
-export async function QuoteHighlight( {background} : Props) {
-/*   const background = await backgroundsService.getBackgroundByDevId(
-    "1520dee4-7232-4422-9165-a4cd4aa52fa6"
-  ); */
-/*   if (!background) return null; */
+
+type Props = { devId?: string };
+export async function QuoteHighlight({ devId }: Props) {
+  const background = devId
+    ? await backgroundsService.getBackgroundByDevId(devId)
+    : {
+        name: "John Doe",
+        title: "Full-stack Developer",
+        avatarUrl: "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
+        bio: "I am a full-stack JavaScript developer with a passion for building scalable web applications.",
+        links: [
+          { name: "Github", url: "https://github.com" },
+          { name: "LinkedIn", url: "https://linkedin.com" },
+          { name: "Resume", url: "https://resume.com" },
+        ],
+        devId: "1",
+        educations: [],
+        languages: [],
+        skills: [],
+        id: 1,
+      };
+  if (!background) {
+    return null;
+  }
   return (
     <Card className="m-2 max-w-sm text-right rounded-2xl bg-neutral/10 px-4">
       <CardContent className="flex flex-col gap-6">
