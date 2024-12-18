@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -17,12 +16,7 @@ export function HamburgerMenu() {
   return (
     <Sheet>
       <SheetTrigger asChild className="p-0">
-        <Button
-          className="p-1 h-auto rounded-none hover:bg-accent"
-          variant="link"
-        >
-          <MenuIcon />
-        </Button>
+          <MenuIcon className="hover:bg-accent p-1" size={32} />
       </SheetTrigger>
       <SheetContent className="pt-4">
         <SheetHeader className="p-0 m-0">
