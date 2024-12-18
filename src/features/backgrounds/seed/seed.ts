@@ -3,6 +3,7 @@ import { skills } from "./data";
 import { backgroundsService } from "../instance";
 
 export async function backgroundsSeed(devIds: string[]) {
+  backgroundsService.removeAllBackgrounsFromMeili();
   const avatars = await getAvatars(devIds.length);
 
   const backgrounds = devIds.map((devId, index) => {
