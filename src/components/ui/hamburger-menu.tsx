@@ -11,7 +11,11 @@ import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export function HamburgerMenu() {
+type Props = {
+  user: { id: string; role: string } | undefined;
+};
+
+export function HamburgerMenu({ user }: Props) {
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
   return (
@@ -57,6 +61,15 @@ export function HamburgerMenu() {
           >
             <Link href="/highlighted">Highlighted</Link>
           </li>
+          {user?.role === "developer" && (
+            <li
+              className={`border-b ${
+                isActive("/search") ? "border-primary" : "border-white"
+              } hover:border-primary`}
+            >
+              <Link href={`/developers/${user.id}`}>My profile</Link>
+            </li>
+          )}
         </ul>
       </SheetContent>
     </Sheet>
