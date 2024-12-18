@@ -5,6 +5,8 @@ import { BackgroundUpdate, ServiceMethods } from "./types";
 export function createBackgroundsService(
   repository: Repository,
   serviceMethods: ServiceMethods,
+  getHighlightedDevIds: ()=>Promise<string[]>
+
 ) {
   async function addSkills(backgroundId: number, skills?: string[]) {
     if (skills && skills.length) {
@@ -72,10 +74,8 @@ export function createBackgroundsService(
         await repository.updateEducations(background.id, background.educations),
       ]);
     },
-    async getAllHighlightedBackgrounds(devIds: string[]) {
-      const backgrounds = await repository.getAllBackgrounds();
-      const highlightedBackgrounds = backgrounds.filter(background => devIds.includes(background.devId));
-      return highlightedBackgrounds;
+    async getAllHighlightedDevIds() {
+      return await getHighlightedDevIds()
     }
   };
 }
