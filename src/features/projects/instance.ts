@@ -12,10 +12,10 @@ export const projectService = createService(
 export const seedProjectService = createService(
   db,
   developerService.getAll,
-  async function checkAccess(permission: string): Promise<void> {
+  async function checkAccess(permission: string): Promise<boolean> {
     if (permission) {
-      return;
+      return true;
     }
-    return;
+    return false;
   }
 );
