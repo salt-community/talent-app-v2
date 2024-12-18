@@ -1,4 +1,4 @@
-# Setting Up the Project
+# Setting Up the Project - testing
 
 ```sh
 # Copy environment variables to .env
