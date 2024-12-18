@@ -1,278 +1,19 @@
 {
-  "id": "6c6d9f05-54f0-4c2f-bde5-9a5cc3241d21",
+  "id": "8ec5389a-fa9b-4399-8207-8c19ff19fb41",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.backgrounds": {
-      "name": "backgrounds",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "backgrounds_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
-        },
-        "avatarUrl": {
-          "name": "avatarUrl",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'/avatar.png'"
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "title": {
-          "name": "title",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "bio": {
-          "name": "bio",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "languages": {
-          "name": "languages",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "educations": {
-          "name": "educations",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "skills": {
-          "name": "skills",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "links": {
-          "name": "links",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.background_educations": {
-      "name": "background_educations",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "background_educations_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
-        },
-        "backroundId": {
-          "name": "backroundId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "background_educations_backroundId_backgrounds_id_fk": {
-          "name": "background_educations_backroundId_backgrounds_id_fk",
-          "tableFrom": "background_educations",
-          "tableTo": "backgrounds",
-          "columnsFrom": ["backroundId"],
-          "columnsTo": ["id"],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.background_languages": {
-      "name": "background_languages",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "background_languages_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
-        },
-        "backroundId": {
-          "name": "backroundId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "level": {
-          "name": "level",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 5
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "background_languages_backroundId_backgrounds_id_fk": {
-          "name": "background_languages_backroundId_backgrounds_id_fk",
-          "tableFrom": "background_languages",
-          "tableTo": "backgrounds",
-          "columnsFrom": ["backroundId"],
-          "columnsTo": ["id"],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.background_skills": {
-      "name": "background_skills",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "background_skills_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
-        },
-        "backroundId": {
-          "name": "backroundId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "level": {
-          "name": "level",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 5
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "background_skills_backroundId_backgrounds_id_fk": {
-          "name": "background_skills_backroundId_backgrounds_id_fk",
-          "tableFrom": "background_skills",
-          "tableTo": "backgrounds",
-          "columnsFrom": ["backroundId"],
-          "columnsTo": ["id"],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.developer_profiles": {
       "name": "developer_profiles",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "developer_profiles_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
+          "default": "gen_random_uuid()"
         },
         "identity_id": {
           "name": "identity_id",
@@ -295,7 +36,7 @@
         },
         "status": {
           "name": "status",
-          "type": "developers_status",
+          "type": "developer_statuses",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
@@ -323,12 +64,12 @@
         },
         "clerk_id": {
           "name": "clerk_id",
-          "type": "integer",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
-        "roles": {
-          "name": "roles",
+        "role": {
+          "name": "role",
           "type": "roles",
           "typeSchema": "public",
           "primaryKey": false,
@@ -365,9 +106,9 @@
             "cycle": false
           }
         },
-        "userId": {
-          "name": "userId",
-          "type": "integer",
+        "dev_id": {
+          "name": "dev_id",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -398,6 +139,136 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.backgrounds": {
+      "name": "backgrounds",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "backgrounds_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "dev_id": {
+          "name": "dev_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'/avatar.png'"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bio": {
+          "name": "bio",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "links": {
+          "name": "links",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.background_skills": {
+      "name": "background_skills",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "background_skills_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "background_id": {
+          "name": "background_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level": {
+          "name": "level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 5
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "background_skills_background_id_backgrounds_id_fk": {
+          "name": "background_skills_background_id_backgrounds_id_fk",
+          "tableFrom": "background_skills",
+          "tableTo": "backgrounds",
+          "columnsFrom": [
+            "background_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -487,15 +358,23 @@
     }
   },
   "enums": {
-    "public.developers_status": {
-      "name": "developers_status",
+    "public.developer_statuses": {
+      "name": "developer_statuses",
       "schema": "public",
-      "values": ["unpublished", "published", "highlighted"]
+      "values": [
+        "unpublished",
+        "published",
+        "highlighted"
+      ]
     },
     "public.roles": {
       "name": "roles",
       "schema": "public",
-      "values": ["developer", "client", "core", "admin"]
+      "values": [
+        "developer",
+        "core",
+        "admin"
+      ]
     }
   },
   "schemas": {},
