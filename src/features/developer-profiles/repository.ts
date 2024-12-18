@@ -8,6 +8,13 @@ export function createDevelopersRepository(db: Db) {
     async getAll() {
       return await db.select().from(developerProfiles).execute();
     },
+    async getById(id: string) {
+      const developerId = await db
+        .select({ id: developerProfiles.id })
+        .from(developerProfiles)
+        .where(eq(developerProfiles.identityId, id));
+      return developerId[0].id;
+    },
     async add(developerProfile: DeveloperProfileInsert) {
       const devId = await db
         .insert(developerProfiles)
