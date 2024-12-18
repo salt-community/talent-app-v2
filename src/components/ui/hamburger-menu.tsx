@@ -49,7 +49,7 @@ export function HamburgerMenu({ user }: Props) {
           </li>
           <li
             className={`border-b ${
-              isActive("/search") ? "border-primary" : "border-white"
+              isActive("/developers") ? "border-primary" : "border-white"
             } hover:border-primary`}
           >
             <Link href="/developers">Developers</Link>

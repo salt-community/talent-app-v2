@@ -1,7 +1,7 @@
-import { Card, CardContent } from "../card";
 import { QuoteIcon } from "lucide-react";
 import { BackgroundAvatar } from "@/features/backgrounds/components/avatar";
 import { Background } from "@/features/backgrounds/types";
+import { Card, CardContent } from "@/components";
 
 type Props = { background?: Background };
 export function QuoteHighlight({ background }: Props) {
