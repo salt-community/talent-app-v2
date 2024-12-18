@@ -3,13 +3,11 @@ import Link from "next/link";
 import {
   Card,
   CardContent,
-  CardFooter,
-  CardHeader,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import { BackgroundAvatar } from "./avatar";
-import { H2, H3 } from "@/components";
+import { H2 } from "@/components";
 
 type Props = {
   highlightedBackground: {
