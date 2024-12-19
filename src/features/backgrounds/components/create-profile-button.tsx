@@ -7,5 +7,9 @@ interface Props {
 }
 
 export function CreateProfileButton({ addProfile }: Props) {
-  return <Button onClick={addProfile}>Create new profile</Button>;
+  return (
+    <div className="container mx-auto pt-14">
+      <Button onClick={addProfile}>Create new profile</Button>
+    </div>
+  );
 }
