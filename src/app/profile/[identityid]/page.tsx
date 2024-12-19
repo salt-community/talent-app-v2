@@ -9,14 +9,14 @@ type Params = {
   params: Promise<{ identityid: string }>;
 };
 
-export default async function page({ params }: Params) {
+export default async function Page({ params }: Params) {
   const { identityid } = await params;
   const devIds = await developerService.getAllById(identityid);
 
   async function addProfile() {
     "use server";
     await iamService.createDeveloperProfile(identityid);
-    revalidatePath(`/developers/profile/${identityid}`);
+    revalidatePath(`/profile/${identityid}`);
   }
   if (devIds.length === 0) {
     return (
