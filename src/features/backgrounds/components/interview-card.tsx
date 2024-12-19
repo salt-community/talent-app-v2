@@ -24,23 +24,19 @@ export function InterviewCard({
   highlightedBackground
 }: Props) {
   return (
-    <Card
-      key={highlightedBackground.name}
-      className="max-w-sm flex flex-col"
-    >
-      <div className="relative h-80 w-full">
+    <Card key={highlightedBackground.name} className="max-w-sm flex flex-col">
         <Image
           src={highlightedBackground.imageUrl}
           alt={highlightedBackground.title}
-          fill
-          className="object-cover [object-position:top]"
+          width={600}
+          height={600}
+          className="object-cover [object-position:top] h-80 w-full"
         />
-      </div>
-      <CardContent className="p-4 flex flex-col gap-3">
+      <CardContent className="p-4 flex flex-col justify-between gap-3 h-full">
         <H2>{highlightedBackground.title}</H2>
         <p className="text-muted-foreground">{highlightedBackground.excerpt}</p>
 
-        <section className="flex gap-4 justify-between items-center mt-4 flex-1">
+        <section className="flex gap-4 justify-between items-center mt-4">
           <div className="flex gap-4 items-center ">
             <BackgroundAvatar url={highlightedBackground.avatarUrl} size="sm" />
             <div>
