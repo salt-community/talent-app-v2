@@ -12,16 +12,16 @@ docker compose up -d
 
 ```sh
 # Install dependencies
-pnpm i
+npm i
 
 # Push database changes
-pnpm drizzle-kit push
+npm run drizzle-kit push
 
 # Seed the database
-pnpm seed
+npm run seed
 
 # Start the development server
-pnpm dev
+npm run dev
 ```
 
 Create a Personal Access Token (PAT)
