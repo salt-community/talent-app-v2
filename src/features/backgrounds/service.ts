@@ -12,21 +12,21 @@ export function createBackgroundsService(
   async function addSkills(backgroundId: number, skills?: string[]) {
     if (skills && skills.length) {
       await repository.addSkills(
-        skills.map((name) => ({ backgroundId, name })),
+        skills.map((name) => ({ backgroundId, name }))
       );
     }
   }
   async function addLanguages(backgroundId: number, languages?: string[]) {
     if (languages && languages.length) {
       await repository.addLanguages(
-        languages.map((name) => ({ backgroundId, name })),
+        languages.map((name) => ({ backgroundId, name }))
       );
     }
   }
   async function addEducations(backgroundId: number, educations?: string[]) {
     if (educations && educations.length) {
       await repository.addEducations(
-        educations.map((name) => ({ backgroundId, name })),
+        educations.map((name) => ({ backgroundId, name }))
       );
     }
   }
@@ -41,19 +41,19 @@ export function createBackgroundsService(
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index,
+          array.findIndex((s) => s.name === skill.name) === index
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index,
+          array.findIndex((l) => l.name === language.name) === index
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index,
+          array.findIndex((e) => e.name === education.name) === index
       );
     },
     async add(background: BackgroundInsert) {
