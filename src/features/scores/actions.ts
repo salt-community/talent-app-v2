@@ -14,7 +14,7 @@ export async function addAssignmentAction(formData: FormData) {
     tags,
   };
 
-  scoresService.addAssignment(newAssignment);
+  await scoresService.addAssignment(newAssignment);
   revalidatePath("/");
 }
 

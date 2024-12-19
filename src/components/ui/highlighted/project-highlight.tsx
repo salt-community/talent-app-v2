@@ -13,8 +13,8 @@ import { BackgroundAvatar } from "@/features/backgrounds/components/avatar";
 
 type Props = { background: Background };
 
-export async function ProjectHighlight( { background } : Props) {
-  const project = (await projectService.getAll(background.devId))[0];
+export async function ProjectHighlight({ background }: Props) {
+  const project = (await projectService.getAll(background.devId)).data[0];
   const repository = project.repository.split("/")[4];
 
   return (
@@ -22,7 +22,7 @@ export async function ProjectHighlight( { background } : Props) {
       <CardHeader className="px-2 py-6">
         <div className="flex items-center gap-6">
           <Avatar>
-          <BackgroundAvatar size="sm" url={background.avatarUrl} />
+            <BackgroundAvatar size="sm" url={background.avatarUrl} />
           </Avatar>
           <div>
             <CardTitle className="text-xl">{background?.name}</CardTitle>
@@ -44,9 +44,7 @@ export async function ProjectHighlight( { background } : Props) {
           unoptimized
           className="m-2 object-fill h-60 rounded-lg "
         />
-        <p className="text-justify">
-          {project.description}
-        </p>
+        <p className="text-justify">{project.description}</p>
       </CardContent>
     </Card>
   );

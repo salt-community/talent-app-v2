@@ -1,21 +1,21 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { projectService } from "./instance";
 import { ProjectData, UpdatedProject } from "./types";
 
 export async function addProjectAction(project: ProjectData) {
   await projectService.add(project);
-  revalidatePath("/");
+  revalidate();
 }
 
 export async function deleteProjectAction(id: string) {
   await projectService.delete(id);
-  revalidatePath("/");
+  revalidate();
 }
 export async function updatePerformanceScoreAction(
   projectWebsite: string,
-  id: string,
+  id: string
 ) {
   await projectService.updatePerformance(projectWebsite, id);
 }
@@ -24,5 +24,5 @@ export async function updateDescriptionAction(updatedProject: UpdatedProject) {
 }
 
 export async function revalidate() {
-  revalidatePath("/");
+  revalidateTag("projects");
 }

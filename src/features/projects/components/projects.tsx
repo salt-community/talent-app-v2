@@ -8,7 +8,7 @@ type Props = {
 };
 
 export async function Projects({ devId }: Props) {
-  const data = await projectService.getAll(devId);
+  const { data } = await projectService.getAll(devId);
   const projects = data.sort((a, b) => a.title.localeCompare(b.title));
 
   if (projects.length === 0) {
