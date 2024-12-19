@@ -31,7 +31,7 @@ const ali = {
 
 export function Posts() {
   return (
-    <article className="flex flex-wrap gap-5 justify-center">
+    <article className="flex flex-wrap gap-10 justify-center">
       <InterviewCard highlightedBackground={meiliSearch}/>
       <InterviewCard highlightedBackground={sophia} />
       <InterviewCard highlightedBackground={ali} />

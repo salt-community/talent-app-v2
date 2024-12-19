@@ -47,7 +47,7 @@ export function InterviewCard({
               </p>
             </div>
           </div>
-          <Button asChild>
+          <Button asChild variant={'secondary'}>
             <Link href={`/`}>Read More</Link>
           </Button>
         </section>
