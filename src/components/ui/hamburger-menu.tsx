@@ -20,7 +20,7 @@ export function HamburgerMenu({ user }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild className="p-0">
-          <MenuIcon className="hover:bg-accent p-1" size={32} />
+        <MenuIcon className="hover:bg-accent p-1" size={32} />
       </SheetTrigger>
       <SheetContent className="pt-4">
         <SheetHeader className="p-0 m-0">
@@ -37,10 +37,12 @@ export function HamburgerMenu({ user }: Props) {
           {user?.role === "developer" && (
             <li
               className={`border-b ${
-                isActive("/developers") ? "border-primary" : "border-white"
+                isActive(`/developers/${user.id}`)
+                  ? "border-primary"
+                  : "border-white"
               } hover:border-primary`}
             >
-              <Link href={`/developers/${user.id}`}>My profile</Link>
+              <Link href={`/developers/profile/${user.id}`}>My profile</Link>
             </li>
           )}
           <li

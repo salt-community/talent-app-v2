@@ -42,8 +42,7 @@ export function createService(
       const existingUser = await repository.getUserId(userId);
 
       if (existingUser) {
-        const developerId = await getDeveloperId(existingUser.id);
-        return { id: developerId, role: existingUser.role };
+        return existingUser;
       }
 
       const claims = sessionClaims as SessionClaims;
