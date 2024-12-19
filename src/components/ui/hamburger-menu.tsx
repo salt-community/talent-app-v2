@@ -40,6 +40,15 @@ export function HamburgerMenu({ user }: Props) {
           >
             <Link href="/">Home</Link>
           </li>
+          {user?.role === "developer" && (
+            <li
+              className={`border-b ${
+                isActive("/developers") ? "border-primary" : "border-white"
+              } hover:border-primary`}
+            >
+              <Link href={`/developers/${user.id}`}>My profile</Link>
+            </li>
+          )}
           <li
             className={`border-b ${
               isActive("/dashboard") ? "border-primary" : "border-white"
@@ -54,22 +63,6 @@ export function HamburgerMenu({ user }: Props) {
           >
             <Link href="/developers">Developers</Link>
           </li>
-          <li
-            className={`border-b ${
-              isActive("/search") ? "border-primary" : "border-white"
-            } hover:border-primary`}
-          >
-            <Link href="/highlighted">Highlighted</Link>
-          </li>
-          {user?.role === "developer" && (
-            <li
-              className={`border-b ${
-                isActive("/search") ? "border-primary" : "border-white"
-              } hover:border-primary`}
-            >
-              <Link href={`/developers/${user.id}`}>My profile</Link>
-            </li>
-          )}
         </ul>
       </SheetContent>
     </Sheet>
