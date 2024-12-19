@@ -1,6 +1,5 @@
 import { HighlightPage } from "@/features";
 import { Search } from "./developers/search";
-import "dotenv/config";
 import { Developers } from "@/features";
 import { backgroundsService } from "@/features";
 
