@@ -11,6 +11,7 @@ import {
   SessionClaims,
 } from "@/features";
 import { validateSessionClaims } from "./logic";
+import { claim } from "./session";
 
 type Role = keyof typeof ROLES;
 type Permission = (typeof ROLES)[Role][number];
@@ -20,7 +21,6 @@ export function createService(
   addDeveloper: (
     developerProfile: DeveloperProfileInsert
   ) => Promise<Developer>,
-  getDeveloperId: (identityId: string) => Promise<string>,
   addDeveloperBackground: (background: BackgroundInsert) => Promise<void>
 ) {
   const repository = createRepository(db);
@@ -49,12 +49,8 @@ export function createService(
       if (!validateSessionClaims(claims)) {
         return;
       }
+      const { domain } = claim(claims);
 
-      const { first_name, last_name, email } = claims;
-      const name = `${first_name} ${last_name}`;
-      const domain = email?.split("@")[1];
-
-      console.log("domain", name);
       if (domain === SALT_DOMAIN) {
         const newUser = await repository.addIdentity({ clerkId: userId });
 
@@ -62,15 +58,15 @@ export function createService(
       }
     },
 
-    async createDeveloperProfile(
-      identityId: string,
-      name: string,
-      email: string
-    ) {
+    async createDeveloperProfile(id: string) {
+      const { sessionClaims } = await auth();
+      const claims = sessionClaims as SessionClaims;
+
+      const { name, email } = claim(claims);
       const developer = await addDeveloper({
         name,
         email,
-        identityId,
+        identityId: id,
       });
 
       await addDeveloperBackground({
