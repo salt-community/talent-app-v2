@@ -10,9 +10,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <ClerkProvider>
         <SignedIn>
-          <main className="w-full">{children}</main>;
+          <main className="w-full">{children}</main>
         </SignedIn>
-        
         <SignedOut>
           <RedirectToSignIn />
         </SignedOut>
