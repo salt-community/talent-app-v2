@@ -6,8 +6,8 @@ export function HighlightPage(){
  return(
   <>
   <Hero/>
-  <HighlightedDevelopers/>
   <Posts/>
+  <HighlightedDevelopers/>
 
   </>
  )

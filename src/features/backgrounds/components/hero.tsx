@@ -1,15 +1,19 @@
-import { H1 } from "@/components";
+import { Button } from "@/components";
+
 
 
 export function Hero() {
   return (
     <>
-      <section className=" h-96 flex flex-col items-center justify-center gap-4 px-4">
-        <H1>Salt Talent App</H1>
-        <p className="text-paragraph text-center">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum et
-          itaque minima.
-        </p>
+      <section className="flex flex-col items-center md:pr-96 justify-center text-center gap-4 md:py-52 py-32 bg-[url('/hero4.png')] bg-cover">
+        <h1 className="text-xl uppercase">School of Applied Technology</h1>
+        <h2 className="text-transparent bg-clip-text bg-gradient-to-l from-[#f6806b] to-[#458cc6] text-6xl pb-4 md:px-40 font-bold">
+          {"Tomorrow's Developers"}
+        </h2>
+        <h2 className="text-5xl pb-4 md:px-40 px-8 font-bold">
+          Available Today
+        </h2>
+        <Button>Sign In</Button>
       </section>
     </>
   );
