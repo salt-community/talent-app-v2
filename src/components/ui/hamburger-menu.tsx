@@ -42,7 +42,7 @@ export function HamburgerMenu({ user }: Props) {
                   : "border-white"
               } hover:border-primary`}
             >
-              <Link href={`/developers/profile/${user.id}`}>My profile</Link>
+              <Link href={`/profile/${user.id}`}>My profile</Link>
             </li>
           )}
           <li
