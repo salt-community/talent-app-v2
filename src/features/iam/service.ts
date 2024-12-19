@@ -28,7 +28,7 @@ export function createService(db: Db) {
       if (id) return;
 
       const primaryEmail = sessionClaims?.primaryEmail as string;
-
+                        
       if (primaryEmail.split("@")[1] === "appliedtechnology.se") {
         await repository.addIdentity({ clerkId: userId });
       }
