@@ -12,6 +12,9 @@ export function createDevelopersService(db: Db) {
     async getById(identityId: string) {
       return await repository.getById(identityId);
     },
+    async getAllById(identityId: string) {
+      return await repository.getAllById(identityId);
+    },
     async add(developerProfile: DeveloperProfileInsert) {
       return await repository.add(developerProfile);
     },
