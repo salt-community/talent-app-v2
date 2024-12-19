@@ -1,0 +1,3 @@
+ARG MEILI_MASTER_KEY
+FROM getmeili/meilisearch
+EXPOSE 7700
