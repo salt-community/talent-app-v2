@@ -2,11 +2,12 @@ import { Repository } from "./repository";
 import { BackgroundInsert } from "./db";
 import { BackgroundUpdate } from "./types";
 import { MeiliClient } from "./meili";
+import { DeveloperProfileStatus } from "../developer-profiles";
 
 export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
-  getHighlightedDevIds: () => Promise<string[]>,
+  getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
 ) {
   async function addSkills(backgroundId: number, skills?: string[]) {
     if (skills && skills.length) {
@@ -74,12 +75,17 @@ export function createBackgroundsService(
         await repository.updateEducations(background.id, background.educations),
       ]);
     },
-    async getAllHighlightedDevIds() {
-      return await getHighlightedDevIds();
-    },
 
     async searchDevIds(search: string | undefined) {
-      return await meiliClient.searchBackgrounds(search);
+      const allDevIds = await meiliClient.searchDevIds(search);
+      const filteredDevIds = [];
+      for (const devId of allDevIds) {
+        const status = await getDevStatusByDevId(devId);
+        if (status === "highlighted") {
+          filteredDevIds.push(devId);
+        }
+      }
+      return filteredDevIds;
     },
 
     async removeAllBackgrounsFromMeili() {
