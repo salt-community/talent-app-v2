@@ -93,7 +93,7 @@ export function createService(
       await repository.addIdentity(identity);
     },
 
-    async checkAccess(permission: Permission) {
+    async checkAccess(permission: Permission): Promise<boolean> {
       const { userId } = await auth();
       if (userId) {
         const roles = await repository.getIdentityRole(userId);
