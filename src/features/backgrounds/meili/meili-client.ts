@@ -14,7 +14,7 @@ export function createMeiliClient() {
   }
 
   return {
-    async searchBackgrounds(search: string | undefined) {
+    async searchDevIds(search: string | undefined) {
       const index = getMeiliSearch().index(BACKGROUNDS_UID);
       const response = await index.search(search);
       return response.hits.map((hit) => hit.devId as string);
