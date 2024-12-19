@@ -1,5 +1,5 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { scoresService } from "./instance";
 import { getFormData } from "./utils";
 
@@ -15,7 +15,7 @@ export async function addAssignmentAction(formData: FormData) {
   };
 
   await scoresService.addAssignment(newAssignment);
-  revalidatePath("/");
+  revalidateTag("assignments");
 }
 
 export async function editAssignmentAction(formData: FormData) {
@@ -30,6 +30,6 @@ export async function editAssignmentAction(formData: FormData) {
     tags,
   };
 
-  scoresService.updateAssignment(Number(assignmentId), updatedAssignment);
-  revalidatePath("/");
+  await scoresService.updateAssignment(Number(assignmentId), updatedAssignment);
+  revalidateTag("assignments");
 }

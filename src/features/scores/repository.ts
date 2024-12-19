@@ -9,10 +9,13 @@ export function createRepository(db: Db) {
       await db.insert(assignmentTable).values(newAssignment);
     },
     async getAssignmentsById(devId: string) {
-      return await db
-        .select()
-        .from(assignmentTable)
-        .where(eq(assignmentTable.devId, devId));
+      return {
+        assignments: await db
+          .select()
+          .from(assignmentTable)
+          .where(eq(assignmentTable.devId, devId)),
+        tags: ["assignments"],
+      };
     },
     async deleteAllAssignments() {
       await db.delete(assignmentTable);

@@ -9,7 +9,7 @@ import { Assignments } from "./accordion/assignments";
 type Props = { devId: string };
 
 export async function ScoreBoard({ devId }: Props) {
-  const assignments = await scoresService.getAssignmentsByDevId(devId);
+  const { assignments } = await scoresService.getAssignmentsByDevId(devId);
 
   return (
     <section className="min-w-72">
@@ -19,8 +19,7 @@ export async function ScoreBoard({ devId }: Props) {
       <SpiderGraph assignments={assignments} />
       <Assignments assignments={assignments} />
       <div className="flex justify-center">
-
-      <AddAssignment devId={devId} />
+        <AddAssignment devId={devId} />
       </div>
     </section>
   );
