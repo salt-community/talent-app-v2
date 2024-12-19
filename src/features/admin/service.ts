@@ -14,7 +14,7 @@ export function createAdminService(
 ) {
   return {
     async getAllDeveloperProfiles() {
-      checkAccess("admin.getAllDeveloperProfiles");
+      await checkAccess("admin.getAllDeveloperProfiles");
       return await getAllDeveloperProfiles();
     },
     async deleteDeveloperProfile(id: string) {

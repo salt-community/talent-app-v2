@@ -17,9 +17,3 @@ export type BackgroundUpdate = Partial<BackgroundSelect> &
     languages: string[];
     educations: string[];
   };
-
-export type ServiceMethods = {
-  syncBackgroundSearchIndex: (
-    background: Record<string, unknown>[],
-  ) => Promise<unknown>;
-};

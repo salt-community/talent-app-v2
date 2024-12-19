@@ -97,8 +97,10 @@ export function createService(
       const { userId } = await auth();
       if (userId) {
         const roles = await repository.getIdentityRole(userId);
-        return checkAccess(roles, permission);
+        checkAccess(roles, permission);
+        return true;
       }
+      return false;
     },
   };
 }

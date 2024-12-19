@@ -1,5 +1,5 @@
 import { DeveloperCard } from "@/components/ui/developer-card";
-import { BackgroundCard } from "@/features/backgrounds/components/background-card";
+import { BackgroundCard } from "@/features";
 import { Projects } from "@/features";
 import { ScoreBoard } from "@/features/scores";
 
