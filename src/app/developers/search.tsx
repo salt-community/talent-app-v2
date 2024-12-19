@@ -18,7 +18,7 @@ export function Search() {
 
       redirect(`/developers/?${searchParams.toString()}`);
     },
-    300
+    300,
   );
 
   return (

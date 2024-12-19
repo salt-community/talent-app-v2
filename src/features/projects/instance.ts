@@ -6,7 +6,7 @@ import { iamService } from "@/features";
 export const projectService = createService(
   db,
   developerService.getAll,
-  iamService.checkAccess
+  iamService.checkAccess,
 );
 
 export const seedProjectService = createService(
@@ -17,5 +17,5 @@ export const seedProjectService = createService(
       return true;
     }
     return false;
-  }
+  },
 );

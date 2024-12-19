@@ -4,7 +4,7 @@ import { developerProfileStatus } from "./types";
 
 export const developerStatuses = pgEnum(
   "developer_statuses",
-  developerProfileStatus
+  developerProfileStatus,
 );
 
 export const developerProfiles = pgTable("developer_profiles", {

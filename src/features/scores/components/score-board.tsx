@@ -19,8 +19,7 @@ export async function ScoreBoard({ devId }: Props) {
       <SpiderGraph assignments={assignments} />
       <Assignments assignments={assignments} />
       <div className="flex justify-center">
-
-      <AddAssignment devId={devId} />
+        <AddAssignment devId={devId} />
       </div>
     </section>
   );

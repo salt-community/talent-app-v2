@@ -9,7 +9,7 @@ import { CheckAccess } from "@/features";
 export function createService(
   db: Db,
   getAllIdentities: DeveloperProfile,
-  checkAccess: CheckAccess
+  checkAccess: CheckAccess,
 ) {
   const reps = createRepository(db);
   const client = createClient();

@@ -6,7 +6,7 @@ type Props = {
 
 export function Status({ status }: Props) {
   let color;
-  let fillColor
+  let fillColor;
 
   if (status === "published") {
     color = "#60a5fa";

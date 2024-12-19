@@ -10,7 +10,7 @@ export function createAdminService(
   getAllDeveloperProfiles: GetAllDeveloperProfiles,
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
-  checkAccess: CheckAccess
+  checkAccess: CheckAccess,
 ) {
   return {
     async getAllDeveloperProfiles() {

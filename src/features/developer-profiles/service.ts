@@ -20,8 +20,9 @@ export function createDevelopersService(db: Db) {
     },
     async getHighlightedDevIds() {
       const highlighted = await repository.getAll();
-      return highlighted.filter((dev) => dev.status === "highlighted").map((dev) => dev.id)
+      return highlighted
+        .filter((dev) => dev.status === "highlighted")
+        .map((dev) => dev.id);
     },
-
   };
 }

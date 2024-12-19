@@ -1,2 +1,2 @@
-export * from "./instance"
+export * from "./instance";
 export * from "./components";

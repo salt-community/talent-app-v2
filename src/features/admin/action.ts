@@ -11,7 +11,7 @@ export async function deleteDeveloperProfileAction(id: string) {
 
 export async function updateStatusAction(
   id: string,
-  status: DeveloperProfileStatus
+  status: DeveloperProfileStatus,
 ) {
   await adminService.updateStatus(id, status);
 }

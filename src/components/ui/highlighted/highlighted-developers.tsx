@@ -18,7 +18,7 @@ export async function HighlightedDevelopers() {
         {highlightedDevIds.map((devId) => (
           <li key={devId} className="">
             <Card className="p-2 h-full flex justify-center min-w-[20rem]">
-              <CardContent >
+              <CardContent>
                 <Background devid={devId} />
               </CardContent>
             </Card>

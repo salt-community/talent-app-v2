@@ -1,4 +1,4 @@
-;import { Search } from "./search";
+import { Search } from "./search";
 import { backgroundsService } from "@/features";
 import { Developers } from "@/features";
 
@@ -10,7 +10,7 @@ export default async function Page({ searchParams }: Props) {
   return (
     <main className="px-4">
       <Search />
-      <Developers devIds={devIds}/>
+      <Developers devIds={devIds} />
     </main>
   );
 }

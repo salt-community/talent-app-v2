@@ -5,5 +5,5 @@ export const adminService = createAdminService(
   developerService.getAll,
   developerService.delete,
   developerService.updateStatus,
-  iamService.checkAccess
+  iamService.checkAccess,
 );

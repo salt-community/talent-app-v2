@@ -1,7 +1,5 @@
 import { Button } from "@/components";
 
-
-
 export function Hero() {
   return (
     <>

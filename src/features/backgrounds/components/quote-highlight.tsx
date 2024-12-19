@@ -22,9 +22,7 @@ export function QuoteHighlight({ background }: Props) {
             "I am a full-stack JavaScript developer with a passion for building scalable web applications."
           }
         </blockquote>
-        <div
-          className="gap-2 flex justify-end w-full items-center"
-        >
+        <div className="gap-2 flex justify-end w-full items-center">
           <div className="flex flex-col gap-0">
             <p className="text-xl font-semibold ">{background.name}</p>
             <p className="text-lg leading-none">{background.title}</p>

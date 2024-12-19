@@ -1,9 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import { BackgroundAvatar } from "./avatar";
@@ -20,18 +17,16 @@ type Props = {
   };
 };
 
-export function InterviewCard({
-  highlightedBackground
-}: Props) {
+export function InterviewCard({ highlightedBackground }: Props) {
   return (
     <Card key={highlightedBackground.name} className="max-w-sm flex flex-col">
-        <Image
-          src={highlightedBackground.imageUrl}
-          alt={highlightedBackground.title}
-          width={600}
-          height={600}
-          className="object-cover [object-position:top] h-80 w-full"
-        />
+      <Image
+        src={highlightedBackground.imageUrl}
+        alt={highlightedBackground.title}
+        width={600}
+        height={600}
+        className="object-cover [object-position:top] h-80 w-full"
+      />
       <CardContent className="p-4 flex flex-col justify-between gap-3 h-full">
         <H2>{highlightedBackground.title}</H2>
         <p className="text-muted-foreground">{highlightedBackground.excerpt}</p>
@@ -47,7 +42,7 @@ export function InterviewCard({
               </p>
             </div>
           </div>
-          <Button asChild variant={'secondary'}>
+          <Button asChild variant={"secondary"}>
             <Link href={`/`}>Read More</Link>
           </Button>
         </section>

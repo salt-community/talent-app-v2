@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { backgroundsService } from "./instance";
 import { z } from "zod";
 import { redirect } from "next/navigation";
+import { SocialLink } from "./db";
 
 const backgroundUpdate = z.object({
   id: z.coerce.number(),
@@ -11,6 +12,8 @@ const backgroundUpdate = z.object({
   name: z.string().nonempty(),
   title: z.string().nonempty(),
   bio: z.string(),
+  github: z.string(),
+  cv: z.string(),
   skills: z
     .string()
     .transform((val) =>
@@ -38,8 +41,12 @@ export async function updateBackgroundAction(
 ) {
   const update = Object.fromEntries(formData.entries());
   const validatedUpdate = backgroundUpdate.parse(update);
+  const links: SocialLink[] = [
+    { name: "Github", url: validatedUpdate.github },
+    { name: "Resume", url: validatedUpdate.cv },
+  ];
 
-  await backgroundsService.update(validatedUpdate);
+  await backgroundsService.update({ ...validatedUpdate, links });
 
   revalidatePath("/");
   redirect(`/developers/${validatedUpdate.devId}`);
