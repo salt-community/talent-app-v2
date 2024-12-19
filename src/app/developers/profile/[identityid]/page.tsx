@@ -18,7 +18,18 @@ export default async function page({ params }: Params) {
     await iamService.createDeveloperProfile(identityid);
     revalidatePath(`/developers/profile/${identityid}`);
   }
-
+  if (devIds.length === 0) {
+    return (
+      <main className="px-4 container mx-auto">
+        <p>
+          Note: New profiles are automatically assigned a developer role. If you
+          need a different role (such as admin), please contact an administrator
+          to request a role change.
+        </p>
+        <CreateProfileButton addProfile={addProfile} />
+      </main>
+    );
+  }
   return (
     <main className="px-4 container mx-auto">
       <ul className="pt-14 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
