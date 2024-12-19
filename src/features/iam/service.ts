@@ -4,14 +4,16 @@ import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
 import { ROLES } from "./roles";
 import { auth } from "@clerk/nextjs/server";
-import { BackgroundInsert, DeveloperProfileInsert } from "@/features";
+import {
+  BackgroundInsert,
+  Developer,
+  DeveloperProfileInsert,
+  SessionClaims,
+} from "@/features";
+import { validateSessionClaims } from "./logic";
 
 type Role = keyof typeof ROLES;
 type Permission = (typeof ROLES)[Role][number];
-
-type Developer = {
-  id: string;
-};
 
 export function createService(
   db: Db,
@@ -32,47 +34,65 @@ export function createService(
     },
 
     async controlUser() {
+      const SALT_DOMAIN = "appliedtechnology.se";
       const { userId, sessionClaims } = await auth();
 
       if (!userId) return;
 
-      const user = await repository.getUserId(userId);
-      if (user) {
-        const devId = await getDeveloperId(user.id);
-        return { id: devId, role: user.role };
+      const existingUser = await repository.getUserId(userId);
+
+      if (existingUser) {
+        const developerId = await getDeveloperId(existingUser.id);
+        return { id: developerId, role: existingUser.role };
       }
 
-      const { first_name, last_name } = sessionClaims;
+      const claims = sessionClaims as SessionClaims;
+      if (!validateSessionClaims(claims)) {
+        return;
+      }
+
+      const { first_name, last_name, email } = claims;
       const name = `${first_name} ${last_name}`;
-      const primaryEmail = sessionClaims?.email as string;
+      const domain = email?.split("@")[1];
 
-      if (primaryEmail.split("@")[1] === "appliedtechnology.se") {
-        const user = await repository.addIdentity({ clerkId: userId });
+      console.log("domain", name);
+      if (domain === SALT_DOMAIN) {
+        const newUser = await repository.addIdentity({ clerkId: userId });
 
-        const developer = await addDeveloper({
-          name: name,
-          email: primaryEmail,
-          identityId: user.id,
-        });
-
-        await addDeveloperBackground({
-          name: name,
-          devId: developer.id,
-          title: "",
-          bio: "",
-          links: [],
-          skills: [],
-          languages: [],
-          educations: [],
-        });
-
-        return { id: developer.id, role: user.role };
+        return newUser;
       }
+    },
+
+    async createDeveloperProfile(
+      identityId: string,
+      name: string,
+      email: string
+    ) {
+      const developer = await addDeveloper({
+        name,
+        email,
+        identityId,
+      });
+
+      await addDeveloperBackground({
+        name,
+        devId: developer.id,
+        title: "",
+        bio: "",
+        links: [],
+        skills: [],
+        languages: [],
+        educations: [],
+      });
+      return {
+        id: developer.id,
+      };
     },
 
     async addIdentity(identity: IdentityInsert) {
       await repository.addIdentity(identity);
     },
+
     async checkAccess(permission: Permission) {
       const { userId } = await auth();
       if (userId) {
