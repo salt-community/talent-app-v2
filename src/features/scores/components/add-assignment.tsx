@@ -71,7 +71,7 @@ export function AddAssignment({ devId }: Props) {
           <DialogFooter>
             <Button
               type="submit"
-              className="bg-gray-800 text-white hover:bg-gray-700 text-sm px-4 py-2 rounded-md"
+              className="w-full"
               onClick={() => setIsDialogOpen(false)}
               disabled={title.length === 0}
             >

@@ -128,7 +128,7 @@ export function DialogForm({
 
             <DialogFooter className="w-full flex items-start border-gray-800">
               <div className="flex-grow" />
-              <Button type="submit" disabled={isPending}>
+              <Button className="w-full" type="submit" disabled={isPending}>
                 {isPending ? (
                   <>
                     <Loader2 className="animate-spin" />
