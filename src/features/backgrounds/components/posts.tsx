@@ -28,13 +28,15 @@ const ali = {
   date: "Dec 18, 2024",
 };
 
-
 export function Posts() {
   return (
-    <article className="flex flex-wrap gap-10 justify-center">
-      <InterviewCard highlightedBackground={meiliSearch}/>
-      <InterviewCard highlightedBackground={sophia} />
-      <InterviewCard highlightedBackground={ali} />
-    </article>
+    <>
+      <h2 className="text-center text-4xl font-semibold py-14">Developers</h2>
+      <article className="flex flex-wrap gap-10 justify-center">
+        <InterviewCard highlightedBackground={meiliSearch} />
+        <InterviewCard highlightedBackground={sophia} />
+        <InterviewCard highlightedBackground={ali} />
+      </article>
+    </>
   );
 }
