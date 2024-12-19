@@ -19,7 +19,7 @@ export function createRepository(db: DB) {
         with: { skills: true, languages: true, educations: true },
       });
     },
-    async getBackgrounByDevId(devId: string) {
+    async getBackgroundByDevId(devId: string) {
       return await db.query.backgrounds.findFirst({
         with: { skills: true, languages: true, educations: true },
         where: eq(backgrounds.devId, devId),
