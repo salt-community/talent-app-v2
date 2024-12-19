@@ -3,16 +3,13 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'talentv2-meilisearch'
+app = 'my-meilisearch'
 primary_region = 'ams'
 kill_signal = 'SIGINT'
 kill_timeout = '5s'
 
 [experimental]
   auto_rollback = true
-
-[build]
-  image = 'getmeili/meilisearch'
 
 [[mounts]]
   source = 'disc1'
