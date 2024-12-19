@@ -15,13 +15,13 @@ import {
   updateDescriptionAction,
   deleteProjectAction,
   updatePerformanceScoreAction,
-  revalidate,
 } from "../actions";
 import { useState } from "react";
 import UpdateDescription from "./update-description";
 import UpdateScore from "./updateScore";
 import DeleteProject from "./delete-project";
 import { updateFormSchema } from "../validation";
+import { revalidateTag } from "next/cache";
 
 type Props = {
   project: Project;
@@ -38,7 +38,7 @@ export default function EditProjectDetails({ project }: Props) {
       console.log("error updating performance:", error);
     }
     setLoading(false);
-    revalidate();
+    revalidateTag("projects");
   }
 
   async function onSubmit(values: z.infer<typeof updateFormSchema>) {
@@ -52,7 +52,7 @@ export default function EditProjectDetails({ project }: Props) {
     } catch (error) {
       console.log("error updating performance:", error);
     }
-    revalidate();
+    revalidateTag("projects");
   }
   async function deleteProject() {
     await deleteProjectAction(project.id);

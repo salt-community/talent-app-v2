@@ -1,17 +1,16 @@
 "use server";
-
 import { revalidateTag } from "next/cache";
 import { projectService } from "./instance";
 import { ProjectData, UpdatedProject } from "./types";
 
 export async function addProjectAction(project: ProjectData) {
   await projectService.add(project);
-  revalidate();
+  revalidateTag("projects");
 }
 
 export async function deleteProjectAction(id: string) {
   await projectService.delete(id);
-  revalidate();
+  revalidateTag("projects");
 }
 export async function updatePerformanceScoreAction(
   projectWebsite: string,
@@ -21,8 +20,4 @@ export async function updatePerformanceScoreAction(
 }
 export async function updateDescriptionAction(updatedProject: UpdatedProject) {
   await projectService.updateDescription(updatedProject);
-}
-
-export async function revalidate() {
-  revalidateTag("projects");
 }
