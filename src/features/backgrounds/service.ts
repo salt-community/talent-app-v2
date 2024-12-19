@@ -8,6 +8,7 @@ export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
+  getHighlightedDevIds: () => Promise<string[]>,
 ) {
   async function addSkills(backgroundId: number, skills?: string[]) {
     if (skills && skills.length) {
@@ -76,6 +77,10 @@ export function createBackgroundsService(
       ]);
     },
 
+    async getHighlightedDevIds() {
+      return await getHighlightedDevIds();
+    },
+
     async searchDevIds(search: string | undefined) {
       const allDevIds = await meiliClient.searchDevIds(search);
       const filteredDevIds = [];
@@ -87,7 +92,6 @@ export function createBackgroundsService(
       }
       return filteredDevIds;
     },
-
     async removeAllBackgrounsFromMeili() {
       await meiliClient.deleteAllBackgrounds();
     },
