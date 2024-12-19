@@ -1,6 +1,8 @@
 import { Card, CardContent } from "@/components";
-import { developerService } from "@/features";
+import { developerService, iamService } from "@/features";
 import { Background } from "@/features/backgrounds/components/background";
+import { CreateProfileButton } from "@/features/backgrounds/components/create-profile-button";
+import { revalidatePath } from "next/cache";
 import React from "react";
 
 type Params = {
@@ -9,11 +11,16 @@ type Params = {
 
 export default async function page({ params }: Params) {
   const { identityid } = await params;
-  console.log("identity", identityid);
   const devIds = await developerService.getAllById(identityid);
-  console.log("devIds", devIds);
+
+  async function addProfile() {
+    "use server";
+    await iamService.createDeveloperProfile(identityid);
+    revalidatePath(`/developers/profile/${identityid}`);
+  }
+
   return (
-    <main className="px-4">
+    <main className="px-4 container mx-auto">
       <ul className="pt-14 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {devIds.map((devId) => (
           <li key={devId.id} className="">
@@ -25,7 +32,7 @@ export default async function page({ params }: Params) {
           </li>
         ))}
       </ul>
-      <button>Create new profile</button>
+      <CreateProfileButton addProfile={addProfile} />
     </main>
   );
 }
