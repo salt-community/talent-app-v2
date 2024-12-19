@@ -1,4 +1,3 @@
-// app/dashboard/page.tsx
 import { H1 } from "@/components";
 import { adminService } from "../instance";
 import { DeveloperProfileList } from "./developer-profile-list";
