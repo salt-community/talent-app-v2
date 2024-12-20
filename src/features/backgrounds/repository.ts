@@ -64,17 +64,23 @@ export function createRepository(db: DB) {
     async update(background: BackgroundUpdate) {
       const transactionId = await db.transaction(async (tx) => {
         const { id: backgroundId, ...rest } = background;
-        tx.update(backgrounds)
+        await tx
+          .update(backgrounds)
           .set({ ...rest })
           .where(eq(backgrounds.id, backgroundId));
-
         await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
         for (const skill of background.skills) {
           await tx.insert(skills).values({ backgroundId, name: skill });
         }
+        await tx
+          .delete(languages)
+          .where(eq(languages.backgroundId, backgroundId));
         for (const language of background.languages) {
           await tx.insert(languages).values({ backgroundId, name: language });
         }
+        await tx
+          .delete(educations)
+          .where(eq(educations.backgroundId, backgroundId));
         for (const education of background.educations) {
           await tx.insert(educations).values({ backgroundId, name: education });
         }
