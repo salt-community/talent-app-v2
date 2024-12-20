@@ -30,7 +30,7 @@ const ali = {
 
 export function Posts() {
   return (
-    <section className="md:bg-secondary pb-14">
+    <section className="bg-secondary pb-14">
       <h2 className="text-center text-4xl font-semibold py-14">Developers</h2>
       <article className="flex flex-wrap gap-10 justify-center">
         <InterviewCard highlightedBackground={meiliSearch} />
