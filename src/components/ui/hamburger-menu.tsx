@@ -12,7 +12,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-export function HamburgerMenu() {
+type Props = {
+  user: { id: string; role: string } | undefined;
+};
+
+export function HamburgerMenu({ user }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
@@ -38,6 +42,17 @@ export function HamburgerMenu() {
               Home
             </Link>
           </li>
+          {user?.role === "developer" && (
+            <li
+              className={`border-b ${
+                isActive(`/profile/${user.id}`)
+                  ? "border-primary"
+                  : "border-white"
+              } hover:border-primary`}
+            >
+              <Link href={`/profile/${user.id}`}>My profile</Link>
+            </li>
+          )}
           <li
             className={`border-b ${
               isActive("/dashboard") ? "border-primary" : "border-white"

@@ -9,8 +9,14 @@ export function createDevelopersService(db: Db) {
     async getAll() {
       return await repository.getAll();
     },
+    async getById(identityId: string) {
+      return await repository.getById(identityId);
+    },
+    async getAllById(identityId: string) {
+      return await repository.getAllById(identityId);
+    },
     async add(developerProfile: DeveloperProfileInsert) {
-      await repository.add(developerProfile);
+      return await repository.add(developerProfile);
     },
     async delete(id: string) {
       await repository.delete(id);
