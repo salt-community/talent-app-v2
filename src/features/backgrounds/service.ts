@@ -86,7 +86,7 @@ export function createBackgroundsService(
       const filteredDevIds = [];
       for (const devId of allDevIds) {
         const status = await getDevStatusByDevId(devId);
-        if (status === "highlighted") {
+        if (status === "highlighted" || status === "published") {
           filteredDevIds.push(devId);
         }
       }
