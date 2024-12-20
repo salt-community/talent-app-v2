@@ -25,18 +25,18 @@ export function createMeiliClient() {
       const response = await index.addDocuments([background], {
         primaryKey: PRIMARY_KEY,
       });
-      await getMeiliSearch().waitForTask(response.taskUid);
+      return await getMeiliSearch().waitForTask(response.taskUid);
     },
 
     async deleteBackground(devId: string) {
       const index = getMeiliSearch().index(BACKGROUNDS_UID);
       const response = await index.deleteDocument(devId);
-      await getMeiliSearch().waitForTask(response.taskUid);
+      return await getMeiliSearch().waitForTask(response.taskUid);
     },
     async deleteAllBackgrounds() {
       const index = getMeiliSearch().index(BACKGROUNDS_UID);
       const response = await index.deleteAllDocuments();
-      await getMeiliSearch().waitForTask(response.taskUid);
+      return await getMeiliSearch().waitForTask(response.taskUid);
     },
   };
 }

@@ -43,16 +43,16 @@ export const languages = pgTable("background_languages", {
   level: integer().notNull().default(5),
 });
 
-export const transaction = pgEnum("transaction", ["upsert", "delete"]);
+export const operation = pgEnum("operation", ["upsert", "delete"]);
 
-export const meiliTransactions = pgTable("meili_transactions", {
+export const meiliSearchOutbox = pgTable("meili_search_outbox", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   devId: uuid("dev_id").notNull(),
-  transactionType: transaction().notNull(),
+  operation: operation().notNull(),
 });
 
-export type TransactionInsert = typeof meiliTransactions.$inferInsert;
-export type TransactionSelect = typeof meiliTransactions.$inferSelect;
+export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;
+export type OutboxMessageSelect = typeof meiliSearchOutbox.$inferSelect;
 
 export type BackgroundInsert = typeof backgrounds.$inferInsert & {
   skills: string[];

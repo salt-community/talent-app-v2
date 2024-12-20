@@ -10,34 +10,73 @@ export function createBackgroundsService(
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
   getHighlightedDevIds: () => Promise<string[]>,
 ) {
-  async function addSkills(backgroundId: number, skills?: string[]) {
-    if (skills && skills.length) {
-      await repository.addSkills(
-        skills.map((name) => ({ backgroundId, name })),
-      );
-    }
-  }
-  async function addLanguages(backgroundId: number, languages?: string[]) {
-    if (languages && languages.length) {
-      await repository.addLanguages(
-        languages.map((name) => ({ backgroundId, name })),
-      );
-    }
-  }
-  async function addEducations(backgroundId: number, educations?: string[]) {
-    if (educations && educations.length) {
-      await repository.addEducations(
-        educations.map((name) => ({ backgroundId, name })),
-      );
-    }
-  }
+  repository.getAllOutboxMessage().then((outboxMessages) => {
+    outboxMessages.forEach(async (outboxMessage) => {
+      let succeeded = false;
+      switch (outboxMessage.operation) {
+        case "upsert":
+          const background = await repository.getBackgroundByDevId(
+            outboxMessage.devId,
+          );
+          if (!background) {
+            succeeded = true;
+            break;
+          }
+          const skills = background.skills.map((skill) => skill.name);
+          const languages = background.languages.map(
+            (language) => language.name,
+          );
+          const educations = background.educations.map(
+            (education) => education.name,
+          );
+          await meiliClient.upsertBackground({
+            ...background,
+            skills,
+            languages,
+            educations,
+          });
+          succeeded = true;
+          break;
+        case "delete":
+          succeeded =
+            (await meiliClient.deleteBackground(outboxMessage.devId)).status ===
+            "succeeded";
+          break;
+      }
+      if (succeeded) {
+        await repository.removeOutboxMessage(outboxMessage.id);
+      }
+    });
+  });
+
+  // async function addSkills(backgroundId: number, skills?: string[]) {
+  //   if (skills && skills.length) {
+  //     await repository.addSkills(
+  //       skills.map((name) => ({ backgroundId, name })),
+  //     );
+  //   }
+  // }
+  // async function addLanguages(backgroundId: number, languages?: string[]) {
+  //   if (languages && languages.length) {
+  //     await repository.addLanguages(
+  //       languages.map((name) => ({ backgroundId, name })),
+  //     );
+  //   }
+  // }
+  // async function addEducations(backgroundId: number, educations?: string[]) {
+  //   if (educations && educations.length) {
+  //     await repository.addEducations(
+  //       educations.map((name) => ({ backgroundId, name })),
+  //     );
+  //   }
+  // }
 
   return {
     async getAllBackgrounds() {
       return await repository.getAllBackgrounds();
     },
     async getBackgroundByDevId(devId: string) {
-      return await repository.getBackgrounByDevId(devId);
+      return await repository.getBackgroundByDevId(devId);
     },
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
@@ -58,23 +97,24 @@ export function createBackgroundsService(
       );
     },
     async add(background: BackgroundInsert) {
-      const backgroundId = await repository.add(background);
-      await meiliClient.upsertBackground({ id: backgroundId, ...background });
-      await Promise.all([
-        await addSkills(backgroundId, background.skills),
-        await addLanguages(backgroundId, background.languages),
-        await addEducations(backgroundId, background.educations),
-      ]);
+      const { transactionId, backgroundId } = await repository.add(background);
+
+      const result = await meiliClient.upsertBackground({
+        id: backgroundId,
+        ...background,
+      });
+      if (result.status === "succeeded") {
+        await repository.removeOutboxMessage(transactionId);
+      }
     },
 
     async update(background: BackgroundUpdate) {
-      await repository.update(background);
-      await meiliClient.upsertBackground(background);
-      await Promise.all([
-        await repository.updateSkills(background.id, background.skills),
-        await repository.updateLanguages(background.id, background.languages),
-        await repository.updateEducations(background.id, background.educations),
-      ]);
+      const { transactionId } = await repository.update(background);
+
+      const result = await meiliClient.upsertBackground(background);
+      if (result.status === "succeeded") {
+        await repository.removeOutboxMessage(transactionId);
+      }
     },
 
     async getHighlightedDevIds() {
@@ -84,7 +124,7 @@ export function createBackgroundsService(
     async searchDevIds(search: string | undefined) {
       const cleanSearch = search?.trim();
       let allDevIds = [];
-      if (!cleanSearch || cleanSearch !== "") {
+      if (!cleanSearch || cleanSearch === "") {
         allDevIds = (await this.getAllBackgrounds()).map(
           (background) => background.devId
         );
@@ -100,7 +140,7 @@ export function createBackgroundsService(
       }
       return filteredDevIds;
     },
-    async removeAllBackgrounsFromMeili() {
+    async removeAllBackgroundsFromMeili() {
       await meiliClient.deleteAllBackgrounds();
     },
     async getAllPosts() {
