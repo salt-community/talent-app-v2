@@ -19,6 +19,7 @@ import { FormTextArea } from "./form-text-area";
 import { CheckboxBoard } from "./checkbox-board";
 import { editAssignmentAction } from "../actions";
 import type { CategoryTag } from "../categories";
+import DeleteAssignment from "./delete-assignment";
 //import { useDebouncedCallback } from 'use-debounce';
 
 type Props = {
@@ -100,6 +101,7 @@ export function EditAssignment({ assignment }: Props) {
               Save Changes
             </Button>
           </DialogFooter>
+            <DeleteAssignment id={assignment.id}/>
         </form>
       </DialogContent>
     </Dialog>

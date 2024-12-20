@@ -33,3 +33,8 @@ export async function editAssignmentAction(formData: FormData) {
   scoresService.updateAssignment(Number(assignmentId), updatedAssignment);
   revalidatePath("/");
 }
+
+export async function deleteAssignmentAction(id: number) {
+  await scoresService.deleteAssignment(id);
+  revalidatePath("/")
+}
