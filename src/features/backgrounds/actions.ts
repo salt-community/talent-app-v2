@@ -11,6 +11,8 @@ const backgroundUpdate = z.object({
   name: z.string().nonempty(),
   title: z.string().nonempty(),
   bio: z.string(),
+  github: z.string(),
+  cv: z.string(),
   skills: z
     .string()
     .transform((val) =>
@@ -38,8 +40,11 @@ export async function updateBackgroundAction(
 ) {
   const update = Object.fromEntries(formData.entries());
   const validatedUpdate = backgroundUpdate.parse(update);
-
-  await backgroundsService.update(validatedUpdate);
+  const links: SocialLink[] = [
+    { name: "Github", url: validatedUpdate.github },
+    { name: "Resume", url: validatedUpdate.cv },
+  ];
+  await backgroundsService.update({ ...validatedUpdate, links });
 
   revalidatePath("/");
   redirect(`/developers/${validatedUpdate.devId}`);
