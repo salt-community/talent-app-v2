@@ -22,13 +22,13 @@ export function Assignment({ assignment }: Props) {
           </div>
           <AccordionTrigger>
             <ProgressRing percentage={assignment.score} />
-            <span className="px-4">{assignment.title}</span>
+            <span className="px-4 text-paragraph">{assignment.title}</span>
           </AccordionTrigger>
         </div>
 
         <AccordionContent>
           <div className="flex flex-col mr-2 pl-8">
-            <span className="flex flex-row gap-4 pb-2 items-center pl-1">
+            <span className="flex flex-row gap-4 pb-2 items-center pl-1 text-paragraph">
               {assignment.comment}
             </span>
             <span className="flex flex-wrap gap-2 pb-2 items-center">
