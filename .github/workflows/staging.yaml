@@ -1,4 +1,4 @@
-name: Vercel Production Deployment
+name: Vercel Staging Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -8,7 +8,6 @@ on:
       - main
 jobs:
   Deploy:
-    environment: production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
