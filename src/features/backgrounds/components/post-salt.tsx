@@ -1,5 +1,5 @@
 export function PostSalt(){
  return(
-  <h2>Salt</h2>
+  <h2>Experience in Salt</h2>
  )
 }
