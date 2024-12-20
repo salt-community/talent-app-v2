@@ -14,7 +14,7 @@ import { BackgroundUpdate } from "./types";
 import { highlightedDevelopers } from "./db/posts-data";
 
 export function createRepository(db: DB) {
-  const postData = highlightedDevelopers
+  const posts = highlightedDevelopers
   return {
     async getAllBackgrounds() {
       return await db.query.backgrounds.findMany({
@@ -92,7 +92,7 @@ export function createRepository(db: DB) {
       });
     },
     async getAllPosts() {
-      return postData;
+      return posts;
     },
   };
 }
