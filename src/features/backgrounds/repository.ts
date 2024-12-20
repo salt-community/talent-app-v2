@@ -91,9 +91,9 @@ export function createRepository(db: DB) {
           .values(educationList.map((name) => ({ backgroundId, name })));
       });
     },
-    async getAllPostData() {
+    async getAllPosts() {
       return postData;
-    }
+    },
   };
 }
 export type Repository = ReturnType<typeof createRepository>;
