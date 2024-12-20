@@ -1,13 +1,9 @@
-import { PostBackground } from "./post-background";
-import { PostIntroduction } from "./post-introduction";
-import { PostSalt } from "./post-salt";
+import { H1 } from "@/components";
 
-export function Post(){
- return (
-  <main>
-   <PostIntroduction/>
-   <PostBackground/>
-   <PostSalt/>
-  </main>
- )
+export function Post() {
+  return <main>
+   
+   <H1>Designing for Inclusion in Technology</H1>
+
+  </main>;
 }
