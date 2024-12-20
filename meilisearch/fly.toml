@@ -3,8 +3,8 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'my-meilisearch'
-primary_region = 'ams'
+app = 'talent-app-v2-meilisearch'
+primary_region = 'arn'
 kill_signal = 'SIGINT'
 kill_timeout = '5s'
 
@@ -12,7 +12,7 @@ kill_timeout = '5s'
   auto_rollback = true
 
 [[mounts]]
-  source = 'disc1'
+  source = 'talent_app_v2_meilisearch_disc'
   destination = '/meili_data'
   initial_size = '1GB'
 
