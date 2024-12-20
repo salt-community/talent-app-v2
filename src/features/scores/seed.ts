@@ -1,10 +1,21 @@
+import { db } from "@/db";
 import { categoryTags } from "./categories";
-import { scoresService } from "./instance";
+import { createService } from "./service";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, Math.floor(Math.random() * maxTags) + 1);
 };
+
+const scoresService = createService(
+  db,
+  async function checkAccess(permission: string): Promise<boolean> {
+    if (permission) {
+      return true;
+    }
+    return false;
+  });
+
 
 export const seedAssignments = async (devIds: string[]) => {
   const assignmentTitles = [
@@ -41,7 +52,7 @@ export const seedAssignments = async (devIds: string[]) => {
   for (let i = 0; i < devIds.length; i++) {
     const newAssignment = {
       devId: devIds[i],
-      title: assignmentTitles[Math.floor(Math.random() * 26)],
+      title: assignmentTitles[Math.floor(Math.random() * 25)],
       comment: `comment - ${i + 1}`,
       score: Math.round(Math.random() * 100),
       tags: getRandomTags(categoryTags, maxTags),
