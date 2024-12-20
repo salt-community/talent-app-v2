@@ -82,7 +82,15 @@ export function createBackgroundsService(
     },
 
     async searchDevIds(search: string | undefined) {
-      const allDevIds = await meiliClient.searchDevIds(search);
+      const cleanSearch = search?.trim();
+      let allDevIds = [];
+      if (!cleanSearch || cleanSearch !== "") {
+        allDevIds = (await this.getAllBackgrounds()).map(
+          (background) => background.devId,
+        );
+      } else {
+        allDevIds = await meiliClient.searchDevIds(search);
+      }
       const filteredDevIds = [];
       for (const devId of allDevIds) {
         const status = await getDevStatusByDevId(devId);
