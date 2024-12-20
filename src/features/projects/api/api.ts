@@ -4,7 +4,7 @@ dotenv.config();
 export const createClient = () => {
   const fetchResponse = async (url: string) => {
     try {
-      const token = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
+      const token = process.env.GOOGLE_PAGE_SPEED_API_KEY;
 
       const response = await fetch(url, {
         headers: {
@@ -53,14 +53,7 @@ export const createClient = () => {
     },
 
     testPagePerformance: async (url: string) => {
-      const apiKey = process.env.GOOGLE_API_KEY;
-      // const isPerformanceFeatureEnabled =
-      //   process.env.PERFORMANCE_FEATURE_ENABLED === "true";
-
-      // if (!isPerformanceFeatureEnabled || !apiKey) {
-      //   console.log("Skipping performance test");
-      //   return "NA";
-      // }
+      const apiKey = process.env.PAGE_SPEED_INSIGHTS_API_KEY;
       const pageUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${url}&key=${apiKey}`;
       let performanceScore = 0;
 
