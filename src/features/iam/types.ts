@@ -8,7 +8,7 @@ export type CheckAccess = iamService["checkAccess"];
 export interface SessionClaims extends JwtPayload {
   first_name?: string;
   last_name?: string;
-  primaryEmail?: string;
+  email?: string | undefined;
 }
 
 export type Developer = {

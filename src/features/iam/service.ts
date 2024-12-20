@@ -65,6 +65,7 @@ export function createService(
       const claims = sessionClaims as SessionClaims;
 
       const { name, email } = claim(claims);
+      if (!email) return;
       const developer = await addDeveloper({
         name,
         email,

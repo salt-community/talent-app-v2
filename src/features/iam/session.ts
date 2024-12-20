@@ -3,7 +3,7 @@ import { SessionClaims } from "./types";
 
 export function claim(claims: SessionClaims) {
   if (!validateSessionClaims(claims)) {
-    return { name: "", domain: "" };
+    return { name: "", domain: "", email: "" };
   }
 
   const { first_name, last_name, email } = claims;
