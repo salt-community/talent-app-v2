@@ -58,7 +58,7 @@ export function HamburgerMenu({ user }: Props) {
               isActive("/dashboard") ? "border-primary" : "border-white"
             } hover:border-primary`}
           >
-            <Link href="/dashboard" onClick={closeMenu}>
+            <Link href="/admin/developers" onClick={closeMenu}>
               Admin
             </Link>
           </li>

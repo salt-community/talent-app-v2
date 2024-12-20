@@ -6,6 +6,8 @@ export type Roles = typeof roles;
 export const identities = pgTable("identities", {
   id: uuid("id").primaryKey().defaultRandom(),
   clerkId: varchar("clerk_id").notNull(),
+  name: varchar("name").notNull(),
+  email: varchar("email").notNull(),
   role: roles().notNull().default("developer"),
 });
 

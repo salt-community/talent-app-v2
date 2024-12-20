@@ -8,6 +8,7 @@ import {
   BackgroundInsert,
   Developer,
   DeveloperProfileInsert,
+  IdentityRole,
   SessionClaims,
 } from "@/features";
 import { validateSessionClaims } from "./logic";
@@ -33,12 +34,16 @@ export function createService(
       return await repository.getIdentityById(id);
     },
 
+    async updateRole(id: string, newRole: IdentityRole) {
+      await repository.updateRole(id, newRole);
+    },
+
     async controlUser() {
       const SALT_DOMAIN = "appliedtechnology.se";
       const { userId, sessionClaims } = await auth();
 
       if (!userId) {
-        return;
+        return { id: "", role: "not signed in" };
       }
 
       const existingUser = await repository.getUserId(userId);
@@ -52,10 +57,15 @@ export function createService(
         return;
       }
 
-      const { domain } = claim(claims);
+      const { name, email, domain } = claim(claims);
 
       if (domain === SALT_DOMAIN) {
-        const newUser = await repository.addIdentity({ clerkId: userId });
+        if (!email) return;
+        const newUser = await repository.addIdentity({
+          name: name,
+          email: email,
+          clerkId: userId,
+        });
         return newUser;
       }
     },

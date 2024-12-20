@@ -1,6 +1,7 @@
 import { Db } from "@/db";
 import { IdentityInsert, identities } from "./schema";
 import { eq } from "drizzle-orm";
+import { IdentityRole } from "./types";
 
 export function createRepository(db: Db) {
   return {
@@ -30,6 +31,12 @@ export function createRepository(db: Db) {
         .from(identities)
         .where(eq(identities.clerkId, id));
       return role[0];
+    },
+    async updateRole(id: string, newRole: IdentityRole) {
+      await db
+        .update(identities)
+        .set({ role: newRole })
+        .where(eq(identities.id, id));
     },
   };
 }
