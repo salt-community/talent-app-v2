@@ -14,7 +14,7 @@ export async function addAssignmentAction(formData: FormData) {
     tags,
   };
 
-  scoresService.addAssignment(newAssignment);
+  await scoresService.addAssignment(newAssignment);
   revalidatePath("/");
 }
 
@@ -30,7 +30,7 @@ export async function editAssignmentAction(formData: FormData) {
     tags,
   };
 
-  scoresService.updateAssignment(Number(assignmentId), updatedAssignment);
+  await scoresService.updateAssignment(Number(assignmentId), updatedAssignment);
   revalidatePath("/");
 }
 

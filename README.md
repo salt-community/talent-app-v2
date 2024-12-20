@@ -2,20 +2,16 @@
 
 ```sh
 # Copy environment variables to .env
-cp .env.local .env
-```
+cp .env.example .env
 
-```sh
 # Start Docker containers
-docker compose up -d
-```
+docker compose up
 
-```sh
 # Install dependencies
 npm i
 
 # Push database changes
-npm run drizzle-kit push
+npm run db:push
 
 # Seed the database
 npm run seed
@@ -24,10 +20,37 @@ npm run seed
 npm run dev
 ```
 
-Create a Personal Access Token (PAT)
+## Create GitHub Personal Access Token
 
-1. Go to GitHub Personal Access Tokens.
-2. Click on Generate new token.
-3. Select the appropriate scope:
-   • This is for reading public data only, you don’t need to select any scopes.
-4. Copy your token – it will only be displayed once. Make sure to save it securely.
+    •	Go to GitHub Personal Access Tokens.
+    •	Click on Generate new token.
+    •	Select the appropriate scope:
+    •	This is for reading public data only. You don’t need to select any scopes.
+    •	Copy your token – it will only be displayed once. Make sure to save it securely.
+
+## Setting Up Clerk
+
+    •	Navigate to config > session.
+    •	Click Edit Customize session token.
+    •	Paste the following into the customized session:
+
+```
+{
+	"email": "{{user.primary_email_address}}",
+	"last_name": "{{user.last_name}}",
+	"first_name": "{{user.first_name}}"
+}
+```
+
+## Create Google PageSpeed Insights API Key
+
+    •	Log in to Google Cloud Console.
+    •	Scroll down and click on Get a Key.
+    •	Create or select a project:
+    •	If you already have a project, select it from the project list and then make a key.
+    •	To create a new project:
+            1. Click the Select a Project dropdown in the top navigation bar.
+            2. Click New Project.
+            3. Enter a name for your project and click Create.
+    •	Copy the key.
+    •	Secure your API key by restricting it to specific IPs or referrers if needed.
