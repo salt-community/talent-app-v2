@@ -34,14 +34,14 @@ export function InterviewCard({
         />
       <CardContent className="p-4 flex flex-col justify-between gap-3 h-full">
         <H2>{highlightedBackground.title}</H2>
-        <p className="text-muted-foreground">{highlightedBackground.excerpt}</p>
+        <p className="text-paragraphLight">{highlightedBackground.excerpt}</p>
 
         <section className="flex gap-4 justify-between items-center mt-4">
           <div className="flex gap-4 items-center ">
             <BackgroundAvatar url={highlightedBackground.avatarUrl} size="sm" />
             <div>
               <p className="font-semibold">{highlightedBackground.name}</p>
-              <p className="flex items-center gap-1 text-muted-foreground">
+              <p className="flex items-center gap-1 text-paragraphLight">
                 <CalendarIcon className="h-3 w-3" />
                 {highlightedBackground.date}
               </p>
