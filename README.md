@@ -31,3 +31,15 @@ Create a Personal Access Token (PAT)
 3. Select the appropriate scope:
    • This is for reading public data only, you don’t need to select any scopes.
 4. Copy your token – it will only be displayed once. Make sure to save it securely.
+
+Setting up clerk
+1. navigate to config > session
+2. click edit Customize session token
+3. paste this in to the Customized session
+```
+{
+	"email": "{{user.primary_email_address}}",
+	"last_name": "{{user.last_name}}",
+	"first_name": "{{user.first_name}}"
+}
+```
