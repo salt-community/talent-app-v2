@@ -13,7 +13,7 @@ export function ProjectDescription({ description }: Props) {
   return (
     <button onClick={toggleText}>
       <p
-        className={`mt-2 mx-2 text-justify overflow-hidden ${
+        className={`mt-2 mx-2 text-justify overflow-hidden text-paragraph ${
           isExpanded ? "line-clamp-4" : "line-clamp-none"
         }`}
       >

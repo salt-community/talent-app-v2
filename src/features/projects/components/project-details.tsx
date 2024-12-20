@@ -23,7 +23,7 @@ export default function ProjectDetails({ project }: Props) {
             className="ml-2  opacity-80 hover:opacity-100"
           >
             <H3>{project.title}</H3>
-            <p className="text-xs text-gray-400 flex items-center gap-2">
+            <p className="text-xs text-paragraphLight flex items-center gap-2">
               <FaGithub size={16} color="gray" />
               Last commit {"Today"}
             </p>

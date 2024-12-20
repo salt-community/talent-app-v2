@@ -8,7 +8,7 @@ type Props = {
 export default function ProjectMetric({ name, metric }: Props) {
   return (
     <article className="flex flex-col items-center my-2">
-      <p className="text-gray-400 text-sm">{name}</p>
+      <p className="text-paragraphLight text-sm">{name}</p>
       <p className="font-semibold">{metric}</p>
     </article>
   );
