@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { backgroundsService } from "./instance";
 import { z } from "zod";
 import { redirect } from "next/navigation";
+import { SocialLink } from "./db";
 
 const backgroundUpdate = z.object({
   id: z.coerce.number(),

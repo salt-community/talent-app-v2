@@ -7,7 +7,8 @@ on:
     branches:
       - main
 jobs:
-  Deploy-Production:
+  Deploy:
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
