@@ -4,13 +4,10 @@ import {
   BackgroundInsert,
   DB,
   skills,
-  SkillInsert,
-  LanguageInsert,
-  EducationInsert,
   languages,
   educations,
-  meiliTransactions,
-  TransactionInsert,
+  meiliSearchOutbox,
+  OutboxMessageInsert,
 } from "./db";
 import { BackgroundUpdate } from "./types";
 import { highlightedDevelopers } from "./db/posts-data";
@@ -23,66 +20,102 @@ export function createRepository(db: DB) {
         with: { skills: true, languages: true, educations: true },
       });
     },
-    async getBackgrounByDevId(devId: string) {
+    async getBackgroundByDevId(devId: string) {
       return await db.query.backgrounds.findFirst({
         with: { skills: true, languages: true, educations: true },
         where: eq(backgrounds.devId, devId),
       });
     },
     async add(background: BackgroundInsert) {
-      return (
-        await db
-          .insert(backgrounds)
-          .values(background)
-          .returning({ id: backgrounds.id })
-      )[0].id;
+      const { transactionId, backgroundId } = await db.transaction(
+        async (tx) => {
+          const backgroundId = (
+            await tx
+              .insert(backgrounds)
+              .values(background)
+              .returning({ id: backgrounds.id })
+          )[0].id;
+
+          await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
+          for (const skill of background.skills) {
+            await tx.insert(skills).values({ backgroundId, name: skill });
+          }
+          for (const language of background.languages) {
+            await tx.insert(languages).values({ backgroundId, name: language });
+          }
+          for (const education of background.educations) {
+            await tx
+              .insert(educations)
+              .values({ backgroundId, name: education });
+          }
+
+          const transactionId = (
+            await tx
+              .insert(meiliSearchOutbox)
+              .values({ devId: background.devId, operation: "upsert" })
+              .returning({ id: meiliSearchOutbox.id })
+          )[0].id;
+
+          return { transactionId, backgroundId };
+        },
+      );
+      return { transactionId, backgroundId: backgroundId };
     },
     async update(background: BackgroundUpdate) {
-      const { id, ...rest } = background;
-      return db
-        .update(backgrounds)
-        .set({ ...rest })
-        .where(eq(backgrounds.id, id));
+      const transactionId = await db.transaction(async (tx) => {
+        const { id: backgroundId, ...rest } = background;
+        tx.update(backgrounds)
+          .set({ ...rest })
+          .where(eq(backgrounds.id, backgroundId));
+
+        await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
+        for (const skill of background.skills) {
+          await tx.insert(skills).values({ backgroundId, name: skill });
+        }
+        for (const language of background.languages) {
+          await tx.insert(languages).values({ backgroundId, name: language });
+        }
+        for (const education of background.educations) {
+          await tx.insert(educations).values({ backgroundId, name: education });
+        }
+
+        return (
+          await tx
+            .insert(meiliSearchOutbox)
+            .values({ devId: background.devId, operation: "upsert" })
+            .returning({ id: meiliSearchOutbox.id })
+        )[0].id;
+      });
+      return { transactionId };
     },
     async getAllSkills() {
       return await db.query.skills.findMany();
     },
-    async addSkills(skillList: SkillInsert[]) {
-      return await db.insert(skills).values(skillList);
-    },
     async getAllLanguages() {
       return await db.query.languages.findMany();
-    },
-    async addLanguages(languageList: LanguageInsert[]) {
-      return await db.insert(languages).values(languageList);
     },
     async getAllEducations() {
       return await db.query.educations.findMany();
     },
-    async addEducations(educationList: EducationInsert[]) {
-      return await db.insert(educations).values(educationList);
+    async getAllOutboxMessage() {
+      return await db.query.meiliSearchOutbox.findMany();
     },
-
-    async updateSkills(backgroundId: number, skillList: string[]) {
-      await db.transaction(async (tx) => {
-        await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
+    async addOutboxItem(transaction: OutboxMessageInsert) {
+      return await db.transaction(async (tx) => {
         await tx
-          .insert(skills)
-          .values(skillList.map((name) => ({ backgroundId, name })));
+          .delete(meiliSearchOutbox)
+          .where(eq(meiliSearchOutbox.devId, transaction.devId));
+        return (
+          await tx
+            .insert(meiliSearchOutbox)
+            .values(transaction)
+            .returning({ id: meiliSearchOutbox.id })
+        )[0].id;
       });
     },
-
-    async updateLanguages(backgroundId: number, languageList: string[]) {
-      await db.transaction(async (tx) => {
-        await tx
-          .delete(languages)
-          .where(eq(languages.backgroundId, backgroundId));
-        await tx
-          .insert(languages)
-          .values(languageList.map((name) => ({ backgroundId, name })));
-      });
+    async removeOutboxMessage(id: number) {
+      await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     },
-
     async updateEducations(backgroundId: number, educationList: string[]) {
       await db.transaction(async (tx) => {
         await tx
@@ -108,7 +141,6 @@ export function createRepository(db: DB) {
     async removeTransaction(id: number) {
       await db.delete(meiliTransactions).where(eq(meiliTransactions.id, id));
     },
-
   };
 }
 export type Repository = ReturnType<typeof createRepository>;
