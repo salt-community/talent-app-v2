@@ -78,6 +78,7 @@ export function DialogForm({
               <Input
                 name="name"
                 id="name"
+                required
                 defaultValue={background.name}
                 placeholder="Fullname..."
                 className="col-span-3"
