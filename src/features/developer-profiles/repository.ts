@@ -8,8 +8,26 @@ export function createDevelopersRepository(db: Db) {
     async getAll() {
       return await db.select().from(developerProfiles);
     },
+    async getById(id: string) {
+      const developerId = await db
+        .select({ id: developerProfiles.id })
+        .from(developerProfiles)
+        .where(eq(developerProfiles.identityId, id));
+      return developerId[0].id;
+    },
+    async getAllById(id: string) {
+      const developerId = await db
+        .select({ id: developerProfiles.id })
+        .from(developerProfiles)
+        .where(eq(developerProfiles.identityId, id));
+      return developerId;
+    },
     async add(developerProfile: DeveloperProfileInsert) {
-      await db.insert(developerProfiles).values(developerProfile);
+      const devId = await db
+        .insert(developerProfiles)
+        .values(developerProfile)
+        .returning({ id: developerProfiles.id });
+      return devId[0];
     },
     async delete(id: string) {
       await db.delete(developerProfiles).where(eq(developerProfiles.id, id));

@@ -1,8 +1,7 @@
+import { iamService } from "./instance";
 import { IdentityInsert } from "./schema";
-import { createService } from "./service";
-import { db } from "@/db";
 
-const service = createService(db);
+// const service = createService(db);
 export async function seedIdentities() {
   const identities: IdentityInsert[] = [];
 
@@ -12,6 +11,6 @@ export async function seedIdentities() {
     });
   }
   for (const identity of identities) {
-    await service.addIdentity(identity);
+    await iamService.addIdentity(identity);
   }
 }
