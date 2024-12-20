@@ -11,6 +11,7 @@ import { H2 } from "@/components";
 
 type Props = {
   highlightedBackground: {
+    id: string;
     imageUrl: string;
     title: string;
     excerpt: string;
@@ -48,7 +49,7 @@ export function InterviewCard({
             </div>
           </div>
           <Button asChild variant={'secondary'}>
-            <Link href={`/`}>Read More</Link>
+            <Link href={`/posts/${highlightedBackground.id}`}>Read More</Link>
           </Button>
         </section>
       </CardContent>
