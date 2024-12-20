@@ -23,9 +23,7 @@ export default function RootLayout({
             <Header />
             {children}
             <Toaster />
-            <SignedIn>
-              <h1>Hello World for singed in users</h1>
-            </SignedIn>
+            <SignedIn></SignedIn>
           </main>
         </body>
       </html>

@@ -37,7 +37,9 @@ export function createService(
       const SALT_DOMAIN = "appliedtechnology.se";
       const { userId, sessionClaims } = await auth();
 
-      if (!userId) return;
+      if (!userId) {
+        return;
+      }
 
       const existingUser = await repository.getUserId(userId);
 
@@ -49,11 +51,11 @@ export function createService(
       if (!validateSessionClaims(claims)) {
         return;
       }
+
       const { domain } = claim(claims);
 
       if (domain === SALT_DOMAIN) {
         const newUser = await repository.addIdentity({ clerkId: userId });
-
         return newUser;
       }
     },

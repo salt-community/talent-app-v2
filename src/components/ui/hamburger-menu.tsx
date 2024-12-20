@@ -37,7 +37,7 @@ export function HamburgerMenu({ user }: Props) {
           {user?.role === "developer" && (
             <li
               className={`border-b ${
-                isActive(`/developers/${user.id}`)
+                isActive(`/profile/${user.id}`)
                   ? "border-primary"
                   : "border-white"
               } hover:border-primary`}
