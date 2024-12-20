@@ -19,7 +19,7 @@ export function DeveloperProfileList({
       <DashboardAvatar />
       <div className="flex justify-between items-center w-full">
         <div>
-          <p>{name}</p>
+          <p className="text-header">{name}</p>
           <p className="text-paragraphLight text-sm">{email}</p>
         </div>
         <StatusMenu id={id} developerStatus={status} />
