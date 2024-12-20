@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { roboto } from "@/components/ui/fonts";
 import { Header } from "@/components/navbar";
-import { ClerkProvider, SignedIn } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
@@ -23,7 +23,6 @@ export default function RootLayout({
             <Header />
             {children}
             <Toaster />
-            <SignedIn></SignedIn>
           </main>
         </body>
       </html>

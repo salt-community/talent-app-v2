@@ -1,32 +1,10 @@
+import { projects } from "./permissions/projects";
+import { backgrounds } from "./permissions/backgrounds";
+import { scores } from "./permissions/scores";
+import { admins } from "./permissions/admins";
+
 export const ROLES = {
-  admin: [
-    //Background feature
-    "backgrounds.getAll",
-    "backgrounds.getById",
-    "backgrounds.add",
-    "backgrounds.update",
-
-    //Score feature
-    "scores.addAssignment",
-    "scores.getAssignmentsById",
-    "scores.deleteAllAssignments",
-    "scores.deleteAssignment",
-    "scores.updateAssignment",
-
-    //Project feature
-    "project.getAll",
-    "project.add",
-    "project.updateDescription",
-    "project.delete",
-    "project.updatePerformance",
-
-    //Admin feature
-    "admin.getAllDeveloperProfiles",
-    "admin.deleteDeveloperProfile",
-    "admin.updateStatus",
-  ],
-  developer: ["developerProfile.getAll"],
-
-  //under construction
+  admin: [...backgrounds, ...scores, ...projects, ...admins],
+  developer: [backgrounds[1]],
   core: [],
 } as const;

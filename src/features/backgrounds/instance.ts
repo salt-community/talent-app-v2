@@ -7,5 +7,6 @@ import { createMeiliClient } from "./meili";
 export const backgroundsService = createBackgroundsService(
   createRepository(db),
   createMeiliClient(),
+  developerService.getStatusById,
   developerService.getHighlightedDevIds,
 );
