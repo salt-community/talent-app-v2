@@ -124,6 +124,30 @@ export function DialogForm({
                 inputPlaceholder={"Add a skill"}
                 suggestedTags={allSkills}
               />
+               <Label htmlFor="github" className="text-right">
+                Github
+              </Label>
+              <Input
+                defaultValue={
+                  background.links.find((e) => e.name === "Github")?.url
+                }
+                placeholder="Github..."
+                name="github"
+                id="github"
+                className="col-span-3"
+              />
+              <Label htmlFor="github" className="text-right">
+                CV link
+              </Label>
+              <Input
+                defaultValue={
+                  background.links.find((e) => e.name === "Resume")?.url
+                }
+                placeholder="CV..."
+                name="cv"
+                id="cv"
+                className="col-span-3"
+              />
             </div>
 
             <DialogFooter className="w-full flex items-start border-gray-800">
