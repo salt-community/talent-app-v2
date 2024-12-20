@@ -3,15 +3,13 @@ import { BackgroundBasicInfo } from "./basic-info";
 import { backgroundsService } from "../instance";
 import Link from "next/link";
 import { SkillsBadges } from "./skills-badges";
+import { notFound } from "next/navigation";
 
-type Props = { devid?: string };
+type Props = { devid: string };
 export async function Background({ devid }: Props) {
-  const background = devid
-    ? await backgroundsService.getBackgroundByDevId(devid)
-    : (await backgroundsService.getAllBackgrounds())[0];
-  if (!background) {
-    return null;
-  }
+  const background = await backgroundsService.getBackgroundByDevId(devid);
+
+  if (!background) return null;
 
   return (
     <Link href={`/developers/${devid}`}>
