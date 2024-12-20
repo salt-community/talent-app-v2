@@ -12,7 +12,7 @@ export type Background = BackgroundSelect & {
 };
 
 export type BackgroundUpdate = Partial<BackgroundSelect> &
-  Required<Pick<BackgroundSelect, "id">> & {
+  Required<Pick<BackgroundSelect, "id" | "devId">> & {
     skills: string[];
     languages: string[];
     educations: string[];

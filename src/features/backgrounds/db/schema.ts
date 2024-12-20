@@ -1,4 +1,11 @@
-import { integer, jsonb, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  jsonb,
+  pgEnum,
+  pgTable,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -35,6 +42,17 @@ export const languages = pgTable("background_languages", {
   name: varchar().notNull(),
   level: integer().notNull().default(5),
 });
+
+export const transaction = pgEnum("transaction", ["upsert", "delete"]);
+
+export const meiliTransactions = pgTable("meili_transactions", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  devId: uuid("dev_id").notNull(),
+  transactionType: transaction().notNull(),
+});
+
+export type TransactionInsert = typeof meiliTransactions.$inferInsert;
+export type TransactionSelect = typeof meiliTransactions.$inferSelect;
 
 export type BackgroundInsert = typeof backgrounds.$inferInsert & {
   skills: string[];

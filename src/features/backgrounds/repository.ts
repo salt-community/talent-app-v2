@@ -9,6 +9,8 @@ import {
   EducationInsert,
   languages,
   educations,
+  meiliTransactions,
+  TransactionInsert,
 } from "./db";
 import { BackgroundUpdate } from "./types";
 import { highlightedDevelopers } from "./db/posts-data";
@@ -94,6 +96,19 @@ export function createRepository(db: DB) {
     async getAllPosts() {
       return posts;
     },
+
+    async getTransactionsByDev(devId: string) {
+      return await db.query.meiliTransactions.findMany();
+    },
+
+    async addTransaction(transaction: TransactionInsert) {
+      await db.insert(meiliTransactions).values(transaction);
+    },
+
+    async removeTransaction(id: number) {
+      await db.delete(meiliTransactions).where(eq(meiliTransactions.id, id));
+    },
+
   };
 }
 export type Repository = ReturnType<typeof createRepository>;
