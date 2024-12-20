@@ -8,6 +8,7 @@ import {
   BackgroundInsert,
   Developer,
   DeveloperProfileInsert,
+  IdentityRole,
   SessionClaims,
 } from "@/features";
 import { validateSessionClaims } from "./logic";
@@ -31,6 +32,10 @@ export function createService(
 
     async getIdentityById(id: string) {
       return await repository.getIdentityById(id);
+    },
+
+    async updateRole(id: string, newRole: IdentityRole) {
+      await repository.updateRole(id, newRole);
     },
 
     async controlUser() {
