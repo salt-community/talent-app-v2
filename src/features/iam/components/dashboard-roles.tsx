@@ -11,8 +11,8 @@ export async function DashboardRoles() {
         <IdentityProfileList
           id={identity.id}
           key={identity.id}
-          // name={identity.name}
-          // email={identity.email}
+          name={identity.name}
+          email={identity.email}
           role={identity.role}
         />
       ))}

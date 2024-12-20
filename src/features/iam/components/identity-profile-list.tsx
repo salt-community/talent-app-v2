@@ -1,24 +1,27 @@
-import { DashboardAvatar } from "@/features/admin/components/dashboard-avatar";
 import React from "react";
 import { StatusMenuIdentity } from "./status-menu-identities";
 import { IdentityRole } from "../types";
+import DashboardAvatarIdentity from "./dashboard-avatar-identity";
 
 type Props = {
   id: string;
-  // name: string;
-  // email: string;
+  name: string;
+  email: string;
   role: IdentityRole;
 };
 
-export default function IdentityProfileList({ id, role }: Props) {
+export default function IdentityProfileList({ id, name, email, role }: Props) {
+  console.log("name:", role);
   return (
     <div className="flex items-center py-3 gap-2">
-      <DashboardAvatar />
+      <DashboardAvatarIdentity />
       <div className="flex justify-between items-center w-full">
         <div>
-          {/* <p>{name}</p>
-          <p className="text-paragraphLight text-sm">{email}</p> */}
-          <p>{role}</p>
+          <p>{name}</p>
+          <p className="text-paragraphLight text-sm">{email}</p>
+        </div>
+        <div className="flex">
+          <p className="px-4">{role}</p>
           <StatusMenuIdentity id={id} role={role} />
         </div>
       </div>
