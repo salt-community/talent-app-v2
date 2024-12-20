@@ -2,12 +2,12 @@
 
 ```sh
 # Copy environment variables to .env
-cp .env.local .env
+cp .env.example .env
 ```
 
 ```sh
 # Start Docker containers
-docker compose up -d
+docker compose up
 ```
 
 ```sh
@@ -15,10 +15,10 @@ docker compose up -d
 npm i
 
 # Push database changes
-npm run drizzle-kit push
+npm run db:push
 
 # Seed the database
-npm run seed
+npm run seedg
 
 # Start the development server
 npm run dev
