@@ -11,8 +11,10 @@ import {
   educations,
 } from "./db";
 import { BackgroundUpdate } from "./types";
+import { highlightedDevelopers } from "./db/posts-data";
 
 export function createRepository(db: DB) {
+  const postData = highlightedDevelopers
   return {
     async getAllBackgrounds() {
       return await db.query.backgrounds.findMany({
@@ -89,6 +91,9 @@ export function createRepository(db: DB) {
           .values(educationList.map((name) => ({ backgroundId, name })));
       });
     },
+    async getAllPostData() {
+      return postData;
+    }
   };
 }
 export type Repository = ReturnType<typeof createRepository>;
