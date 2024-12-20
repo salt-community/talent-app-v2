@@ -46,10 +46,10 @@ export function SpiderGraph({ assignments }: Props) {
           <PolarGrid stroke="#d3d3d3" />
           <PolarAngleAxis
             dataKey="category"
-            stroke="#808080"
+            stroke="#6B6460"
             tick={{
               dy: 5,
-              fill: "#808080",
+              fill: "#6B6460",
             }}
             tickLine={false}
           />
