@@ -5,11 +5,18 @@ import { H2 } from "@/components/ui/header/header-h2";
 import { scoresService } from "../instance";
 import { AddAssignment } from "./add-assignment";
 import { Assignments } from "./accordion/assignments";
+import { Assignment } from "../types";
+import { CustomError, errorHandler } from "@/lib";
 
 type Props = { devId: string };
 
 export async function ScoreBoard({ devId }: Props) {
-  const assignments = await scoresService.getAssignmentsByDevId(devId);
+  let assignments: Assignment[] = [];
+    try {
+    assignments = await scoresService.getAssignmentsByDevId(devId);
+  } catch (error) {
+    errorHandler(error as CustomError)
+  }
 
   return (
     <section className="min-w-72">
@@ -19,8 +26,7 @@ export async function ScoreBoard({ devId }: Props) {
       <SpiderGraph assignments={assignments} />
       <Assignments assignments={assignments} />
       <div className="flex justify-center">
-
-      <AddAssignment devId={devId} />
+        <AddAssignment devId={devId} />
       </div>
     </section>
   );
