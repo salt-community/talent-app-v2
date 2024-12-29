@@ -18,7 +18,7 @@ export function CheckboxBoard({ tags, handleChangeTag }: Props) {
               key={index}
               tag={tag}
               {...(tags !== undefined ? { checked: tags.includes(tag) } : {})}
-              handleChangeTag={handleChangeTag}
+              {...(handleChangeTag ? { handleChangeTag } : {})}
             />
           );
         })}
