@@ -1,18 +1,18 @@
 export type Assignment = {
   id: number;
   devId: string;
-  score: number;
   title: string;
-  comment: string | null;
-  tags: string[];
+  score: number;
+  comment?: string;
+  tags?: string[];
 };
 
-export type AssignmentUpdates = {
+export type AssignmentFormData = {
   devId: string;
-  score?: number;
   title: string;
-  comment?: string | null;
-  tags?: string[];
+  score: string;
+  comment: string;
+  tags: string[];
 };
 
 export type NewAssignment = Omit<Assignment, "id">;
