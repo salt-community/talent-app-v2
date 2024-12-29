@@ -32,7 +32,7 @@ export function Assignment({ assignment }: Props) {
               {assignment.comment}
             </span>
             <span className="flex flex-wrap gap-2 pb-2 items-center">
-              {assignment.tags.map((tag, index) => (
+              {(assignment.tags ?? []).map((tag, index) => (
                 <span
                   key={index}
                   className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-gray-500 text-primary-foreground hover:bg-gray-600 cursor-default"
