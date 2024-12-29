@@ -1,0 +1,36 @@
+Date: 2024-12-28 12:51:41
+Title: App error
+Status code: 500
+Message: You do not have permission
+Complete stack: Error: You do not have permission
+    at checkAccess (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:4596:15)
+    at checkAccess (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:4813:174)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.getAssignmentsByDevId (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:6198:13)
+    at async ScoreBoard (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:6480:23)
+
+-------------------------------------------------------------------------------------
+Date: 2024-12-28 12:51:41
+Title: App error
+Status code: 500
+Message: You do not have permission
+Complete stack: Error: You do not have permission
+    at checkAccess (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:4596:15)
+    at checkAccess (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:4813:174)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.getAssignmentsByDevId (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:6198:13)
+    at async ScoreBoard (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:6480:23)
+
+-------------------------------------------------------------------------------------
+Date: 2024-12-28 12:51:48
+Title: App error
+Status code: 500
+Message: You do not have permission
+Complete stack: Error: You do not have permission
+    at checkAccess (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:4596:15)
+    at checkAccess (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:4813:174)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.getAssignmentsByDevId (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:6198:13)
+    at async ScoreBoard (C:\Users\E15\code\saltsthlm\final-group-project\talent-app-v2\.next\server\chunks\ssr\[root of the server]__5af73d._.js:6480:23)
+
+-------------------------------------------------------------------------------------
