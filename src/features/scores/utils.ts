@@ -1,4 +1,6 @@
-export const getFormData = (formData: FormData) => {
+import type { AssignmentFormData } from "./types";
+
+export const getFormData = (formData: FormData): AssignmentFormData => {
   const devId = formData.get("devId") as string;
   const title = formData.get("title") as string;
   const comment = formData.get("comment") as string;
