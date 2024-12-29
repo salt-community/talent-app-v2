@@ -1,3 +1,4 @@
+import { UnauthorizedError } from "@/lib";
 import { ROLES } from "./roles";
 type Role = keyof typeof ROLES;
 type Permission = (typeof ROLES)[Role][number];
@@ -10,6 +11,6 @@ export function checkAccess(
     permission
   );
   if (!hasAccess) {
-    throw new Error("You do not have permission");
+    throw new UnauthorizedError("You do not have permission");
   }
 }
