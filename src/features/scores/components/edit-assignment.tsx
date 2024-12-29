@@ -1,4 +1,5 @@
 "use client";
+
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,26 +13,26 @@ import {
 } from "@/components/ui/dialog";
 
 import { Assignment } from "../types";
-import { useState } from "react";
-
+import { useActionState, useEffect, useState } from "react";
 import { InputField } from "./input-field";
 import { FormTextArea } from "./form-text-area";
 import { CheckboxBoard } from "./checkbox-board";
 import { editAssignmentAction } from "../actions";
 import type { CategoryTag } from "../categories";
 import DeleteAssignment from "./delete-assignment";
-//import { useDebouncedCallback } from 'use-debounce';
 
 type Props = {
   assignment: Assignment;
 };
 
 export function EditAssignment({ assignment }: Props) {
-  const [score, setScore] = useState(assignment.score);
+  const [state, action] = useActionState(editAssignmentAction, undefined);
+  const [score, setScore] = useState(assignment.score.toString());
   const [title, setTitle] = useState(assignment.title);
   const [comment, setComment] = useState(assignment.comment);
-  const [tags, setTags] = useState(assignment.tags);
+  const [tags, setTags] = useState(assignment.tags || []);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handleChangeTag = (isChecked: boolean, tag: CategoryTag) => {
     if (isChecked) {
@@ -40,14 +41,47 @@ export function EditAssignment({ assignment }: Props) {
       setTags(tags.filter((currentTag) => currentTag !== tag));
     }
   };
+
   const handleChangeInput = (inputValue: string, label: string) => {
     if (label === "Title") setTitle(inputValue);
-    if (label === "Score") setScore(Number(inputValue));
+    if (label === "Score") setScore(inputValue);
     if (label === "Comment") setComment(inputValue);
   };
 
+  useEffect(() => {
+    setIsFormValid(
+      title.trim() !== "" &&
+        score.trim() !== "" &&
+        !isNaN(Number(score)) &&
+        Number(score) >= 0 &&
+        Number(score) <= 100,
+    );
+  }, [title, score]);
+
+  useEffect(() => {
+    if (state?.errorMessage) {
+      setIsDialogOpen(true);
+    } else {
+      setIsDialogOpen(false);
+    }
+  }, [state?.errorMessage]);
+
+  useEffect(() => {
+    setTags(state?.newAssignment.tags || []);
+  }, [state?.newAssignment.tags]);
+
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <Dialog
+      open={isDialogOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          setIsDialogOpen(false);
+          setTitle("");
+          setScore("");
+          setComment("");
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <Pencil
           type="submit"
@@ -66,27 +100,26 @@ export function EditAssignment({ assignment }: Props) {
             Alter the details below to edit the assignment.
           </DialogDescription>
         </DialogHeader>
-        <form action={editAssignmentAction} className="space-y-4">
+        <form action={action} className="space-y-4">
           <input type="hidden" name="assignmentId" value={assignment.id} />
           <input type="hidden" name="devId" value={assignment.devId} />
           <div className="grid gap-4">
             <InputField
               label="Title"
               inputType="text"
-              value={title}
+              defaultValue={state?.newAssignment.title || title}
               handleChangeInput={handleChangeInput}
             />
-
             <InputField
               label="Score"
               inputType="number"
-              value={score}
+              defaultValue={state?.newAssignment.score.toString() || score}
               handleChangeInput={handleChangeInput}
             />
 
             <FormTextArea
               label="Comment"
-              value={comment}
+              defaultValue={state?.newAssignment.comment || comment}
               handleChangeInput={handleChangeInput}
             />
             <CheckboxBoard tags={tags} handleChangeTag={handleChangeTag} />
@@ -95,13 +128,21 @@ export function EditAssignment({ assignment }: Props) {
             <Button
               type="submit"
               className="w-full"
-              onClick={() => setIsDialogOpen(false)}
-              disabled={title.length === 0}
+              onClick={() => {
+                if (isFormValid) {
+                  setIsDialogOpen(false);
+                  setTitle("");
+                  setScore("");
+                }
+              }}
             >
               Save Changes
             </Button>
           </DialogFooter>
-            <DeleteAssignment id={assignment.id}/>
+          {state?.errorMessage && (
+            <p className="text-red-600">{state.errorMessage}</p>
+          )}
+          <DeleteAssignment id={assignment.id} />
         </form>
       </DialogContent>
     </Dialog>
