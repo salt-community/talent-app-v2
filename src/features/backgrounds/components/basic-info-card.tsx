@@ -16,7 +16,6 @@ export async function BackgroundBasicInfoCard({ background, devId }: Props) {
   const filteredLinks = background.links.filter((e) => e.name !== "LinkedIn");
 
   const editAccess = await backgroundsService.editAccess(devId);
-  console.log(editAccess);
   return (
     <>
       <section className="flex justify-between w-full">
