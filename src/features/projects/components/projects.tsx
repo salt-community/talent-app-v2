@@ -8,20 +8,26 @@ type Props = {
 };
 
 export async function Projects({ devId }: Props) {
-  const data = await projectService.getAll(devId);
-  const projects = data.sort((a, b) => a.title.localeCompare(b.title));
+  const projects = await projectService.getAll(devId);
+
+  const editAccess = await projectService.checkProfileAccess(devId);
 
   if (projects.length === 0) {
     return (
       <div>
         <H2>Projects</H2>
-        <div className="flex flex-col justify-center mt-4">
-          <p>Add your projects here</p>
-        </div>
-        <Separator className="mt-4 mb-2" />
-        <div className="flex justify-center">
-          <ProjectForm userId={devId} />
-        </div>
+        {editAccess && (
+          <>
+            <div className="flex flex-col justify-center mt-4">
+              <p>Add your projects here</p>
+            </div>
+            <Separator className="mt-4 mb-2" />
+
+            <div className="flex justify-center">
+              <ProjectForm userId={devId} />
+            </div>
+          </>
+        )}
       </div>
     );
   }
@@ -32,14 +38,16 @@ export async function Projects({ devId }: Props) {
       <div className="flex flex-col justify-center mt-4">
         {projects.map((project) => (
           <div key={project.id}>
-            <ProjectDetails project={project} />
+            <ProjectDetails project={project} editAccess={editAccess} />
             <Separator className="mt-4 mb-2" />
           </div>
         ))}
       </div>
-      <div className="flex justify-center">
-        <ProjectForm userId={devId} />
-      </div>
+      {editAccess && (
+        <div className="flex justify-center">
+          <ProjectForm userId={devId} />
+        </div>
+      )}
     </div>
   );
 }

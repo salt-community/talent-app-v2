@@ -9,7 +9,8 @@ import { CheckAccess } from "@/features";
 export function createService(
   db: Db,
   getAllIdentities: DeveloperProfile,
-  checkAccess: CheckAccess
+  checkAccess: CheckAccess,
+  checkUserAccess: (id: string) => Promise<boolean>
 ) {
   const reps = createRepository(db);
   const client = createClient();
@@ -19,7 +20,12 @@ export function createService(
     },
     getAll: async (userId: string) => {
       checkAccess("project.getAll");
-      return await reps.getAll(userId);
+
+      const projects = await reps.getAll(userId);
+      const sortedProjects = projects.sort((a, b) =>
+        a.title.localeCompare(b.title)
+      );
+      return sortedProjects;
     },
     add: async ({
       repository,
@@ -76,6 +82,9 @@ export function createService(
         newPerformanceScore: newPerformanceScore,
         id: id,
       });
+    },
+    checkProfileAccess: async (id: string) => {
+      return checkUserAccess(id);
     },
   };
 }

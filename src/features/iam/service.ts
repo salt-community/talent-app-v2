@@ -22,6 +22,7 @@ export function createService(
   addDeveloper: (
     developerProfile: DeveloperProfileInsert
   ) => Promise<Developer>,
+  getById: (id: string) => Promise<string>,
   addDeveloperBackground: (background: BackgroundInsert) => Promise<void>
 ) {
   const repository = createRepository(db);
@@ -99,6 +100,19 @@ export function createService(
 
     async addIdentity(identity: IdentityInsert) {
       await repository.addIdentity(identity);
+    },
+
+    async checkUserAccess(devId: string) {
+      const { userId } = await auth();
+      if (!userId) return false;
+
+      const identity = await repository.getIdentityRole(userId);
+
+      if (identity.roles === "admin") return true;
+
+      const developerId = await getById(identity.id);
+      if (developerId === devId) return true;
+      return false;
     },
 
     async checkAccess(permission: Permission): Promise<boolean> {
