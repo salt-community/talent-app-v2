@@ -7,6 +7,14 @@ export type GetAllDeveloperProfiles = DevelopersService["getAll"];
 export type DeleteDeveloperProfile = DevelopersService["delete"];
 export type UpdateStatus = DevelopersService["updateStatus"];
 
+export type Developer = {
+  name: string;
+  id: string;
+  identityId: string | null;
+  email: string;
+  status: "unpublished" | "published" | "highlighted";
+};
+
 export const developerProfileStatus = [
   "unpublished",
   "published",
