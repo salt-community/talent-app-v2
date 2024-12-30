@@ -13,6 +13,7 @@ import {
 } from "@/features";
 import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
+import { slugify } from "@/lib/utils";
 
 type Role = keyof typeof ROLES;
 type Permission = (typeof ROLES)[Role][number];
@@ -81,6 +82,7 @@ export function createService(
         name,
         email,
         identityId: id,
+        slug: slugify(name)
       });
 
       await addDeveloperBackground({
