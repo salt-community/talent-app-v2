@@ -12,22 +12,30 @@ type Props = { devId: string };
 
 export async function ScoreBoard({ devId }: Props) {
   let assignments: Assignment[] = [];
-    try {
+  try {
     assignments = await scoresService.getAssignmentsByDevId(devId);
   } catch (error) {
-    errorHandler(error as CustomError)
+    errorHandler(error as CustomError);
   }
+  const viewAccess = await scoresService.viewAccess(devId);
+  const editAccess = await scoresService.editAccess();
 
   return (
     <section className="min-w-72">
-      <Separator className="my-4" />
-      <H2>Salt Scoring</H2>
-      <AverageScore assignments={assignments} />
-      <SpiderGraph assignments={assignments} />
-      <Assignments assignments={assignments} />
-      <div className="flex justify-center">
-        <AddAssignment devId={devId} />
-      </div>
+      {viewAccess && (
+        <>
+          <Separator className="my-4" />
+          <H2>Salt Scoring</H2>
+          <AverageScore assignments={assignments} />
+          <SpiderGraph assignments={assignments} />
+          <Assignments assignments={assignments} />
+          {editAccess && (
+            <div className="flex justify-center">
+              <AddAssignment devId={devId} />
+            </div>
+          )}
+        </>
+      )}
     </section>
   );
 }

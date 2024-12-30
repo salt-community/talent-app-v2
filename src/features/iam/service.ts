@@ -74,10 +74,17 @@ export function createService(
       if (identity.roles === "admin") return true;
 
       const developerId = await getById(identity.id);
-      if (developerId === devId) return true;
-      return false;
+      return developerId === devId ? true : false;
     },
 
+    async editAccess() {
+      const { userId } = await auth();
+      if (!userId) return false;
+
+      const identity = await repository.getIdentityRole(userId);
+
+      return identity.roles === "admin" ? true : false;
+    },
     async checkAccess(permission: Permission): Promise<boolean> {
       const { userId } = await auth();
       if (userId) {

@@ -5,11 +5,15 @@ import type { NewAssignment } from "./types";
 import { assignmentUpdates, CheckAccess } from "@/features";
 import { NotFoundError } from "@/lib";
 
-export const createService = (db: Db, checkAccess: CheckAccess) => {
+export const createService = (
+  db: Db,
+  checkAccess: CheckAccess,
+  editAccess: () => Promise<boolean>,
+  viewAccess: (id: string) => Promise<boolean>
+) => {
   const repository = createRepository(db);
   return {
     addAssignment: async (newAssignment: NewAssignment) => {
-      
       await checkAccess("scores.addAssignment");
       assignmentUpdates.parse(newAssignment);
       await repository.addAssignment(newAssignment);
@@ -38,6 +42,12 @@ export const createService = (db: Db, checkAccess: CheckAccess) => {
       await checkAccess("scores.addAssignment");
       const updates = assignmentUpdates.parse(rawData);
       return await repository.updateAssignment(id, updates);
+    },
+    viewAccess: async (id: string) => {
+      return viewAccess(id);
+    },
+    editAccess: async () => {
+      return editAccess();
     },
   };
 };
