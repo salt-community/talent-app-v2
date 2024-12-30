@@ -20,8 +20,8 @@ export default function IdentityProfileList({ id, name, email, role }: Props) {
           <p>{name}</p>
           <p className="text-paragraphLight text-sm">{email}</p>
         </div>
-        <div className="flex">
-          <p className="px-4">{role}</p>
+        <div className="flex justify-center">
+          <p className="px-4 hidden md:block">{role}</p>
           <StatusMenuIdentity id={id} role={role} />
         </div>
       </div>
