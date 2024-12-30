@@ -7,7 +7,6 @@ import {
   languages,
   educations,
   meiliSearchOutbox,
-  OutboxMessageInsert,
 } from "./db";
 import { BackgroundUpdate } from "./types";
 import { highlightedDevelopers } from "./db/posts-data";
@@ -106,46 +105,11 @@ export function createRepository(db: DB) {
     async getAllOutboxMessage() {
       return await db.query.meiliSearchOutbox.findMany();
     },
-    async addOutboxItem(transaction: OutboxMessageInsert) {
-      return await db.transaction(async (tx) => {
-        await tx
-          .delete(meiliSearchOutbox)
-          .where(eq(meiliSearchOutbox.devId, transaction.devId));
-        return (
-          await tx
-            .insert(meiliSearchOutbox)
-            .values(transaction)
-            .returning({ id: meiliSearchOutbox.id })
-        )[0].id;
-      });
-    },
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     },
-    async updateEducations(backgroundId: number, educationList: string[]) {
-      await db.transaction(async (tx) => {
-        await tx
-          .delete(educations)
-          .where(eq(educations.backgroundId, backgroundId));
-        await tx
-          .insert(educations)
-          .values(educationList.map((name) => ({ backgroundId, name })));
-      });
-    },
     async getAllPosts() {
       return posts;
-    },
-
-    async getTransactionsByDev(devId: string) {
-      return await db.query.meiliTransactions.findMany();
-    },
-
-    async addTransaction(transaction: TransactionInsert) {
-      await db.insert(meiliTransactions).values(transaction);
-    },
-
-    async removeTransaction(id: number) {
-      await db.delete(meiliTransactions).where(eq(meiliTransactions.id, id));
     },
   };
 }
