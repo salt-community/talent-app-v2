@@ -4,7 +4,7 @@ dotenv.config();
 export const createClient = () => {
   const fetchResponse = async (url: string) => {
     try {
-      const token = process.env.GOOGLE_PAGE_SPEED_API_KEY;
+      const token = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
 
       const response = await fetch(url, {
         headers: {
@@ -27,6 +27,7 @@ export const createClient = () => {
   return {
     getTotalOfCommits: async (user: string, repo: string) => {
       const url = `https://api.github.com/repos/${user}/${repo}/stats/participation`;
+
       const data = await fetchResponse(url);
 
       if (!data || !data.all) {
@@ -37,19 +38,13 @@ export const createClient = () => {
     },
 
     getAllIssues: async (user: string, repo: string) => {
-      const url = `https://api.github.com/repos/${user}/${repo}/issues`;
-      return await fetchResponse(url);
-    },
+      const url = `https://api.github.com/search/issues?q=repo:${user}/${repo}+type:issue`;
 
-    getDuration: async (user: string, repo: string) => {
-      const url = `https://api.github.com/repos/${user}/${repo}/commits`;
-      const data = await fetchResponse(url);
+      const result = await fetchResponse(url);
 
-      if (!data || data.length === 0) {
-        return null;
-      }
+      const issues = result.total_count;
 
-      return data[0].commit.author.date.split("T")[0];
+      return issues;
     },
 
     testPagePerformance: async (url: string) => {
