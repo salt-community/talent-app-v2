@@ -11,7 +11,8 @@ export function LevelRectangle({ percentage }: Props) {
     if (percentage <= 69) return "#2196f3";
     if (percentage <= 79) return "#9c27b0";
     if (percentage <= 89) return "#800080";
-    return "#ff7961";
+    if (percentage <= 100) return "#ff7961";
+    return "#808080";
   };
 
   const getLevel = (percentage: number) => {
@@ -20,7 +21,8 @@ export function LevelRectangle({ percentage }: Props) {
     if (percentage <= 69) return 2;
     if (percentage <= 79) return 3;
     if (percentage <= 89) return 4;
-    return 5;
+    if (percentage <= 100) return 5;
+    return 0;
   };
 
   const borderColor = getStrokeColor(percentage);
