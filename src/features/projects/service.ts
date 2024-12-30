@@ -35,8 +35,6 @@ export function createService(
       imageUrl,
     }: ProjectData) => {
       checkAccess("project.add");
-      const commits = "120";
-      const issues = "52";
       let performance: string;
       if (projectWebsite.length !== 0) {
         performance = await client.testPagePerformance(projectWebsite);
@@ -44,7 +42,15 @@ export function createService(
         performance = "NA";
       }
 
-      const { username, title } = extractRepositoryDetails(repository);
+      const { username, titleFromUrl } = extractRepositoryDetails(repository);
+
+      const commits = await client.getTotalOfCommits(username, titleFromUrl);
+      const issues = await client.getAllIssues(username, titleFromUrl);
+
+      const title = titleFromUrl
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
 
       const newProject: ProjectInsert = {
         username,
