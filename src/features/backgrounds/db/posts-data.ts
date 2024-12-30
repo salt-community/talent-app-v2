@@ -14,34 +14,37 @@ export const highlightedDevelopers = [
     questions: [
       {
         id: "q1",
-        question: "Why did you choose MeiliSearch for the Talent App?",
+        question:
+          "What motivated you to integrate MeiliSearch into the Talent App?",
         answer:
-          "MeiliSearch stood out for its balance between speed, relevance, and developer-friendliness. It was lightweight and easy to integrate, which made it the ideal choice for our needs.",
+          "I've always been fascinated by the power of fast, relevant search. In previous projects, I noticed how crucial it was for users to find the information they need without delay. When I learned about MeiliSearch—how lightweight it is, how quickly you can get it running, and how precise it is at returning results—I knew it was the perfect fit for improving our Talent App's search functionality. That initial spark of curiosity drove me to explore its capabilities and see how they could enhance our user experience.",
       },
       {
         id: "q2",
-        question: "What challenges did you face during the integration?",
+        question:
+          "How did the integration process influence your perspective on creating search features?",
         answer:
-          "One major challenge was handling real-time updates in search results without compromising speed. We had to fine-tune indexing to ensure scalability as the data grew.",
+          "Working with MeiliSearch taught me a lot about balancing simplicity with scalability. It's straightforward to implement yet powerful enough to handle significant amounts of data. This experience has shown me that designing effective search isn't just about getting results; it's about creating an intuitive, fast, and flexible user experience. When users can quickly locate the right talent profiles, project briefs, or resources, it makes the entire application feel more dynamic and user-friendly.",
       },
       {
         id: "q3",
-        question: "How does search improve the Talent App user experience?",
+        question:
+          "In what ways did MeiliSearch improve the Talent App for end users?",
         answer:
-          "Efficient search ensures users can find what they need quickly and accurately, which is critical in an app that matches talents to opportunities. It makes the app feel more intuitive and responsive.",
+          "Before integrating MeiliSearch, our search was functional but not always intuitive—users sometimes struggled to find exactly what they were looking for. With MeiliSearch, queries became a lot faster, and the ranking of results feels more natural. Users can now find relevant profiles and resources almost instantly, which boosts engagement and satisfaction. A good search engine reduces frustration; it helps people connect with the content they need—and that's a huge step in making the Talent App a go-to platform for both recruiters and candidates.",
       },
       {
         id: "q4",
         question:
-          "What advice do you have for developers implementing search functionality?",
+          "What advice would you offer to other developers interested in implementing a search solution?",
         answer:
-          "Always start with understanding your users' search behavior and data structure. Choose tools that fit your use case and focus on relevance and performance tuning.",
+          "First, keep the user's journey front and center. Ask yourself: How will people search? What kind of information will they need? How do I ensure the results are relevant and quick to load? Then, don't be afraid to experiment. MeiliSearch is quite developer-friendly, so you can spin up a test environment and quickly see if it meets your use case. Finally, remember that search is an ongoing effort—analyzing queries, optimizing indexing, and refining filters all go a long way in delivering the best possible user experience.",
       },
     ],
   },
   {
     id: "2",
-    headline: "Passionate about solving real-world problems through code.",
+    headline: "Passionate about solving real-world problems through code",
     imageUrl: "/adrienn.png",
     title: "Designing for Inclusion in Technology",
     excerpt:
