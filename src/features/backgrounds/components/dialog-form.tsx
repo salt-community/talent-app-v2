@@ -15,8 +15,9 @@ import { TagsInput } from "./tags-input";
 import { Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Background } from "../types";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { EducationSelect, LanguageSelect, SkillSelect } from "../db";
+import { BackgroundAvatar } from "./avatar";
 
 type Props = {
   background: Background;
@@ -39,6 +40,7 @@ export function DialogForm({
   if (message) {
     console.error(message);
   }
+  const [avatarUrl, setAvatarUrl] = useState(background.avatarUrl);
 
   return (
     <Dialog>
@@ -72,6 +74,19 @@ export function DialogForm({
                 defaultValue={background.devId}
                 hidden
               />
+              <Label htmlFor="avatarUrl">
+                Profile picture
+              </Label>
+              <div className="flex items-center gap-2">
+                <BackgroundAvatar url={avatarUrl} />
+                <Input
+                  name="avatarUrl"
+                  id="avatarUrl"
+                  placeholder="Profile picture url..."
+                  value={avatarUrl}
+                  onChange={(e) => setAvatarUrl(e.target.value)}
+                />
+              </div>
               <Label htmlFor="name" className="text-right">
                 Name
               </Label>
@@ -125,7 +140,7 @@ export function DialogForm({
                 inputPlaceholder={"Add a skill"}
                 suggestedTags={allSkills}
               />
-               <Label htmlFor="github" className="text-right">
+              <Label htmlFor="github" className="text-right">
                 Github
               </Label>
               <Input

@@ -1,4 +1,4 @@
-FROM getmeili/meilisearch:v1.11.3
+FROM getmeili/meilisearch:v1.12.0
 ARG MEILI_MASTER_KEY
-ARG ENV
+ARG MEILI_ENV
 EXPOSE 7700

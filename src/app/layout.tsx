@@ -19,7 +19,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${roboto.className} antialiased overscroll-none p-0`}>
-          <main className="space-y-1">
+          <main className="space-y-1 w-full">
             <Header />
             {children}
             <Toaster />

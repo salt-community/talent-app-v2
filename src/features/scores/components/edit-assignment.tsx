@@ -59,12 +59,12 @@ export function EditAssignment({ assignment }: Props) {
   }, [title, score]);
 
   useEffect(() => {
-    if (state?.errorMessage) {
+    if (state?.errorMessages) {
       setIsDialogOpen(true);
     } else {
       setIsDialogOpen(false);
     }
-  }, [state?.errorMessage]);
+  }, [state?.errorMessages]);
 
   useEffect(() => {
     setTags(state?.newAssignment.tags || []);
@@ -108,15 +108,16 @@ export function EditAssignment({ assignment }: Props) {
               label="Title"
               inputType="text"
               defaultValue={state?.newAssignment.title || title}
+              errorMessage={state?.errorMessages?.titleError}
               handleChangeInput={handleChangeInput}
             />
             <InputField
               label="Score"
               inputType="number"
               defaultValue={state?.newAssignment.score.toString() || score}
+              errorMessage={state?.errorMessages?.scoreError}
               handleChangeInput={handleChangeInput}
             />
-
             <FormTextArea
               label="Comment"
               defaultValue={state?.newAssignment.comment || comment}
@@ -138,11 +139,11 @@ export function EditAssignment({ assignment }: Props) {
             >
               Save Changes
             </Button>
-          </DialogFooter>
-          {state?.errorMessage && (
-            <p className="text-red-600">{state.errorMessage}</p>
-          )}
+          </DialogFooter>          
           <DeleteAssignment id={assignment.id} />
+          {state?.errorMessages ? (
+            <p className="text-red-600 font-bold h-6">Form error. Please make the necessary changes.</p>
+          ) : <p className="h-6"></p>}
         </form>
       </DialogContent>
     </Dialog>

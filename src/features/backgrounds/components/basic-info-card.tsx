@@ -27,9 +27,7 @@ export async function BackgroundBasicInfoCard({ background, devId }: Props) {
             </p>
 
             <H2>{background.name}</H2>
-            {isFeatureBioEnabled && (
-              <p className="font-light text-slate-600">{background.bio}</p>
-            )}
+            <p className="font-light text-slate-600">{background.bio}</p>
           </div>
         </div>
         <ul className="flex flex-col gap-2 justify-end items-top h-full">

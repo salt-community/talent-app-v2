@@ -14,7 +14,7 @@ type Props = {
 
 export function Assignment({ assignment }: Props) {
   return (
-    <Accordion type="single" collapsible className="mx-auto max-w-96">
+    <Accordion type="single" collapsible className="mx-auto">
       <AccordionItem value="item-1">
         <div>
           <div className="flex pr-2 mt-2 justify-end">

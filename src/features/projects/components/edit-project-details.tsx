@@ -19,7 +19,7 @@ import {
 } from "../actions";
 import { useState } from "react";
 import UpdateDescription from "./update-description";
-import UpdateScore from "./updateScore";
+import UpdateScore from "./update-score";
 import DeleteProject from "./delete-project";
 import { updateFormSchema } from "../validation";
 

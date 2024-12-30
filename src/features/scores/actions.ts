@@ -8,7 +8,10 @@ import { ZodError } from "zod";
 import { errorHandler } from "@/lib";
 
 type PreviousState = {
-  errorMessage: string;
+  errorMessages: {
+    titleError?: string;
+    scoreError?: string;
+  };
   newAssignment: NewAssignment;  
 } | undefined;
 
@@ -27,10 +30,14 @@ export async function addAssignmentAction(_: PreviousState, formData: FormData) 
     await scoresService.addAssignment(newAssignment);
   } catch (error) {
     if (error instanceof ZodError) {
-      const jsonArray = JSON.parse(error.message);
-      const errorMessage = jsonArray[0].message as string;
+      const titleError = error.flatten().fieldErrors.title?.[0];
+      const scoreError = error.flatten().fieldErrors.score?.[0];
+  
       return {
-        errorMessage,
+        errorMessages: {
+          titleError,
+          scoreError
+        },
         newAssignment
       }
     }
@@ -55,11 +62,16 @@ export async function editAssignmentAction(_: PreviousState, formData: FormData)
   try {
     await scoresService.updateAssignment(Number(assignmentId), newAssignment);
   } catch (error) {
+
     if (error instanceof ZodError) {
-      const jsonArray = JSON.parse(error.message);
-      const errorMessage = jsonArray[0].message as string;
+      const titleError = error.flatten().fieldErrors.title?.[0];
+      const scoreError = error.flatten().fieldErrors.score?.[0];
+  
       return {
-        errorMessage,
+        errorMessages: {
+          titleError,
+          scoreError
+        },
         newAssignment
       }
     }
