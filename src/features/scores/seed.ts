@@ -1,6 +1,5 @@
-import { db } from "@/db";
 import { categoryTags } from "./categories";
-import { createService } from "./service";
+import { seedScoresService } from "./instance";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
@@ -59,7 +58,7 @@ export const seedAssignments = async (devIds: string[]) => {
     };
 
     try {
-      await scoresService.addAssignment(newAssignment);
+      await seedScoresService.addAssignment(newAssignment);
     } catch (error) {
       console.error("Something went wrong when seeding assignments: " + error);
     }

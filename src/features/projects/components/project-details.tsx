@@ -14,6 +14,7 @@ type Props = {
 
 export default function ProjectDetails({ project }: Props) {
   const repository = project.repository.split("/")[4];
+
   return (
     <>
       <div className="flex justify-between items-baseline">
@@ -36,7 +37,7 @@ export default function ProjectDetails({ project }: Props) {
           src={
             project.imageUrl
               ? `https://raw.githubusercontent.com/${project.username}/${repository}/main/public/${project.imageUrl}`
-              : "/placholder-img.png"
+              : "/placeholder-img.png"
           }
           width={250}
           height={240}
