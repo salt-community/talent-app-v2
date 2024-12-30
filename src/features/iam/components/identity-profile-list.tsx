@@ -21,7 +21,7 @@ export default function IdentityProfileList({ id, name, email, role }: Props) {
           <p className="text-paragraphLight text-sm">{email}</p>
         </div>
         <div className="flex justify-center">
-          <p className="px-4 hidden md:block">{role}</p>
+          <p className="px-4 hidden md:block capitalize">{role}</p>
           <StatusMenuIdentity id={id} role={role} />
         </div>
       </div>

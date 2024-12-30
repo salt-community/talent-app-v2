@@ -42,7 +42,7 @@ export function StatusMenu({ id, developerStatus }: Props) {
 
   return (
     <div className="flex items-center gap-4">
-      <p className="px-4 hidden md:block">{status}</p>
+      <p className="px-4 hidden md:block capitalize">{status}</p>
       <Status status={status} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
