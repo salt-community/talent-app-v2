@@ -1,7 +1,7 @@
 import { validateSessionClaims } from "./logic";
-import { SessionClaims } from "./types";
+import { SessionClaimsIam } from "./types";
 
-export function claim(claims: SessionClaims) {
+export function claim(claims: SessionClaimsIam) {
   if (!validateSessionClaims(claims)) {
     return { name: "", domain: "", email: "" };
   }

@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { categoryTags } from "./categories";
 import { createService } from "./service";
+import { iamService } from "../iam";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
@@ -15,7 +16,9 @@ export const seedAssignments = async (devIds: string[]) => {
         return true;
       }
       return false;
-    }
+    },
+    iamService.editAccess,
+    iamService.checkUserAccess
   );
 
   const assignmentTitles = [

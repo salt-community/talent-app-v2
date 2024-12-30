@@ -1,8 +1,8 @@
 import { Repository } from "./repository";
 import { BackgroundInsert, OutboxMessageSelect } from "./db";
-import { BackgroundUpdate } from "./types";
+import { BackgroundUpdate, DeveloperProfile } from "./types";
 import { MeiliClient } from "./meili";
-import { Developer, DeveloperProfileStatus } from "../developer-profiles";
+import { DeveloperProfileStatus } from "../developer-profiles";
 import { TaskStatus } from "meilisearch";
 import { backgroundsService } from "./instance";
 
@@ -12,7 +12,7 @@ export function createBackgroundsService(
   meiliClient: MeiliClient,
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
   getHighlightedDevIds: () => Promise<string[]>,
-  getDeveloperById: (id: string) => Promise<Developer>,
+  getDeveloperById: (id: string) => Promise<DeveloperProfile>,
   checkUserAccess: (id: string) => Promise<boolean>
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {

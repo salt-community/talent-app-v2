@@ -17,3 +17,11 @@ export type BackgroundUpdate = Partial<BackgroundSelect> &
     languages: string[];
     educations: string[];
   };
+
+export type DeveloperProfile = {
+  name: string;
+  id: string;
+  identityId: string | null;
+  email: string;
+  status: "unpublished" | "published" | "highlighted";
+};
