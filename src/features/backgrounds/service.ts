@@ -1,5 +1,5 @@
 import { Repository } from "./repository";
-import { BackgroundInsert } from "./db";
+import { BackgroundInsert, OutboxMessageSelect } from "./db";
 import { BackgroundUpdate } from "./types";
 import { MeiliClient } from "./meili";
 import { DeveloperProfileStatus } from "../developer-profiles";
@@ -10,71 +10,91 @@ export function createBackgroundsService(
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
   getHighlightedDevIds: () => Promise<string[]>,
 ) {
-  async function addSkills(backgroundId: number, skills?: string[]) {
-    if (skills && skills.length) {
-      await repository.addSkills(
-        skills.map((name) => ({ backgroundId, name })),
-      );
+  repository.getAllOutboxMessage().then((outboxMessages) => {
+    outboxMessages.forEach((outboxMessage) => {
+      updateMeilisearchFor(outboxMessage);
+    });
+  });
+
+  async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
+    let succeeded = false;
+    switch (outboxMessage.operation) {
+      case "upsert":
+        const background = await repository.getBackgroundByDevId(
+          outboxMessage.devId,
+        );
+        if (!background) {
+          succeeded = true;
+          break;
+        }
+        const skills = background.skills.map((s) => s.name);
+        const languages = background.languages.map((l) => l.name);
+        const educations = background.educations.map((e) => e.name);
+        const upsertResult = await meiliClient.upsertBackground({
+          ...background,
+          skills,
+          languages,
+          educations,
+        });
+        succeeded = upsertResult.status === "succeeded";
+        break;
+      case "delete":
+        const deleteResult = await meiliClient.deleteBackground(
+          outboxMessage.devId,
+        );
+        succeeded = deleteResult.status === "succeeded";
+        break;
     }
-  }
-  async function addLanguages(backgroundId: number, languages?: string[]) {
-    if (languages && languages.length) {
-      await repository.addLanguages(
-        languages.map((name) => ({ backgroundId, name })),
-      );
+    if (succeeded) {
+      await repository.removeOutboxMessage(outboxMessage.id);
     }
-  }
-  async function addEducations(backgroundId: number, educations?: string[]) {
-    if (educations && educations.length) {
-      await repository.addEducations(
-        educations.map((name) => ({ backgroundId, name })),
-      );
-    }
-  }
+  };
 
   return {
     async getAllBackgrounds() {
       return await repository.getAllBackgrounds();
     },
     async getBackgroundByDevId(devId: string) {
-      return await repository.getBackgrounByDevId(devId);
+      return await repository.getBackgroundByDevId(devId);
     },
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index
+          array.findIndex((s) => s.name === skill.name) === index,
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index
+          array.findIndex((l) => l.name === language.name) === index,
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index
+          array.findIndex((e) => e.name === education.name) === index,
       );
     },
     async add(background: BackgroundInsert) {
-      const backgroundId = await repository.add(background);
-      await meiliClient.upsertBackground({ id: backgroundId, ...background });
-      await Promise.all([
-        await addSkills(backgroundId, background.skills),
-        await addLanguages(backgroundId, background.languages),
-        await addEducations(backgroundId, background.educations),
-      ]);
+      const { outboxMessageId, backgroundId } =
+        await repository.add(background);
+
+      const result = await meiliClient.upsertBackground({
+        id: backgroundId,
+        ...background,
+      });
+      if (result.status === "succeeded") {
+        await repository.removeOutboxMessage(outboxMessageId);
+      }
     },
 
     async update(background: BackgroundUpdate) {
-      await repository.update(background);
-      await meiliClient.upsertBackground(background);
-      await Promise.all([
-        await repository.updateSkills(background.id, background.skills),
-        await repository.updateLanguages(background.id, background.languages),
-        await repository.updateEducations(background.id, background.educations),
-      ]);
+      const { outboxMessageId } = await repository.update(background);
+
+      const result = await meiliClient.upsertBackground(background);
+      if (result.status === "succeeded") {
+        await repository.removeOutboxMessage(outboxMessageId);
+      }
     },
 
     async getHighlightedDevIds() {
@@ -84,9 +104,9 @@ export function createBackgroundsService(
     async searchDevIds(search: string | undefined) {
       const cleanSearch = search?.trim();
       let allDevIds = [];
-      if (!cleanSearch || cleanSearch !== "") {
+      if (!cleanSearch || cleanSearch === "") {
         allDevIds = (await this.getAllBackgrounds()).map(
-          (background) => background.devId
+          (background) => background.devId,
         );
       } else {
         allDevIds = await meiliClient.searchDevIds(search);
@@ -100,11 +120,20 @@ export function createBackgroundsService(
       }
       return filteredDevIds;
     },
-    async removeAllBackgrounsFromMeili() {
+    async removeAllBackgroundsFromMeili() {
       await meiliClient.deleteAllBackgrounds();
     },
     async getAllPosts() {
       return await repository.getAllPosts();
+    },
+    async doesMeilisearchNeedUpdate() {
+      return (await repository.getAllOutboxMessage()).length > 0;
+    },
+    async updateMeilisearch() {
+      const outboxMessages = await repository.getAllOutboxMessage();
+      for (const outboxMessage of outboxMessages) {
+        updateMeilisearchFor(outboxMessage);
+      }
     },
   };
 }

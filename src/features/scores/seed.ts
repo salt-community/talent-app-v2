@@ -1,5 +1,6 @@
+import { db } from "@/db";
 import { categoryTags } from "./categories";
-import { seedScoresService } from "./instance";
+import { createService } from "./service";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
@@ -7,6 +8,16 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
 };
 
 export const seedAssignments = async (devIds: string[]) => {
+  const scoresService = createService(
+    db,
+    async function checkAccess(permission: string): Promise<boolean> {
+      if (permission) {
+        return true;
+      }
+      return false;
+    }
+  );
+
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",
     "Create a RESTful API with Node.js",
@@ -35,7 +46,7 @@ export const seedAssignments = async (devIds: string[]) => {
     "Design an Accessibility-First Web App",
   ];
 
-  seedScoresService.deleteAllAssignments();
+  await scoresService.deleteAllAssignments();
 
   const maxTags = categoryTags.length;
   for (let i = 0; i < devIds.length; i++) {
@@ -48,7 +59,7 @@ export const seedAssignments = async (devIds: string[]) => {
     };
 
     try {
-      await seedScoresService.addAssignment(newAssignment);
+      await scoresService.addAssignment(newAssignment);
     } catch (error) {
       console.error("Something went wrong when seeding assignments: " + error);
     }

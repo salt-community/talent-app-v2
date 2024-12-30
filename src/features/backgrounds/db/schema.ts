@@ -1,4 +1,11 @@
-import { integer, jsonb, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  jsonb,
+  pgEnum,
+  pgTable,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -35,6 +42,17 @@ export const languages = pgTable("background_languages", {
   name: varchar().notNull(),
   level: integer().notNull().default(5),
 });
+
+export const operation = pgEnum("operation", ["upsert", "delete"]);
+
+export const meiliSearchOutbox = pgTable("meili_search_outbox", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  devId: uuid("dev_id").notNull(),
+  operation: operation().notNull(),
+});
+
+export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;
+export type OutboxMessageSelect = typeof meiliSearchOutbox.$inferSelect;
 
 export type BackgroundInsert = typeof backgrounds.$inferInsert & {
   skills: string[];
