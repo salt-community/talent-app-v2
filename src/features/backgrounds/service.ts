@@ -126,5 +126,14 @@ export function createBackgroundsService(
     async getAllPosts() {
       return await repository.getAllPosts();
     },
+    async doesMeilisearchNeedUpdate() {
+      return (await repository.getAllOutboxMessage()).length > 0;
+    },
+    async updateMeilisearch() {
+      const outboxMessages = await repository.getAllOutboxMessage();
+      for (const outboxMessage of outboxMessages) {
+        updateMeilisearchFor(outboxMessage);
+      }
+    },
   };
 }
