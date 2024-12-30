@@ -1,12 +1,10 @@
 import { Post } from "@/features";
 
-export default async function Page(props: { params: Promise<{ id: string }> }) {
+export default async function Page(props: {
+  params: Promise<{ devid: string }>;
+}) {
   const params = await props.params;
-  const developerId = params.id;
+  const developerId = params.devid;
 
-  console.log(developerId)
-  
-
-  return (
-   <Post developerId={developerId}/>
-  )}
+  return <Post developerId={developerId} />;
+}
