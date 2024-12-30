@@ -15,6 +15,9 @@ export function createDevelopersService(db: Db) {
     async getById(identityId: string) {
       return await repository.getById(identityId);
     },
+    async getDeveloperById(identityId: string) {
+      return await repository.getDeveloperById(identityId);
+    },
     async getAllById(identityId: string) {
       return await repository.getAllById(identityId);
     },
@@ -47,17 +50,6 @@ export function createDevelopersService(db: Db) {
         email,
         identityId: id,
       });
-
-      // await addDeveloperBackground({
-      //   name,
-      //   devId: developer.id,
-      //   title: "",
-      //   bio: "",
-      //   links: [],
-      //   skills: [],
-      //   languages: [],
-      //   educations: [],
-      // });
       return {
         id: developer.id,
       };

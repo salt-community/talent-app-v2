@@ -2,13 +2,15 @@ import { Repository } from "./repository";
 import { BackgroundInsert, OutboxMessageSelect } from "./db";
 import { BackgroundUpdate } from "./types";
 import { MeiliClient } from "./meili";
-import { DeveloperProfileStatus } from "../developer-profiles";
+import { Developer, DeveloperProfileStatus } from "../developer-profiles";
+import { backgroundsService } from "./instance";
 
 export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
   getHighlightedDevIds: () => Promise<string[]>,
+  getDeveloperById: (id: string) => Promise<Developer>,
   checkUserAccess: (id: string) => Promise<boolean>
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {
@@ -79,7 +81,6 @@ export function createBackgroundsService(
     async add(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } =
         await repository.add(background);
-
       const result = await meiliClient.upsertBackground({
         id: backgroundId,
         ...background,
@@ -141,6 +142,21 @@ export function createBackgroundsService(
     },
     async editAccess(id: string) {
       return checkUserAccess(id);
+    },
+    async getDeveloper(id: string) {
+      const developer = await getDeveloperById(id);
+      await backgroundsService.add({
+        name: developer.name,
+        devId: developer.id,
+        title: "developer",
+        bio: "",
+        links: [],
+        skills: [],
+        languages: [],
+        educations: [],
+      });
+      console.log("developer created");
+      return developer;
     },
   };
 }

@@ -10,5 +10,6 @@ export const backgroundsService = createBackgroundsService(
   createMeiliClient(),
   developerService.getStatusById,
   developerService.getHighlightedDevIds,
+  developerService.getDeveloperById,
   iamService.checkUserAccess
 );
