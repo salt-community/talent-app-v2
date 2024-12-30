@@ -3,7 +3,9 @@ import { BackgroundInsert, OutboxMessageSelect } from "./db";
 import { BackgroundUpdate } from "./types";
 import { MeiliClient } from "./meili";
 import { DeveloperProfileStatus } from "../developer-profiles";
+import { TaskStatus } from "meilisearch";
 
+const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
@@ -30,19 +32,19 @@ export function createBackgroundsService(
         const skills = background.skills.map((s) => s.name);
         const languages = background.languages.map((l) => l.name);
         const educations = background.educations.map((e) => e.name);
-        const upsertResult = await meiliClient.upsertBackground({
+        const upsertStatus = await meiliClient.upsertBackground({
           ...background,
           skills,
           languages,
           educations,
         });
-        succeeded = upsertResult.status === "succeeded";
+        succeeded = OK_STATUSES.includes(upsertStatus);
         break;
       case "delete":
-        const deleteResult = await meiliClient.deleteBackground(
+        const deleteStatus = await meiliClient.deleteBackground(
           outboxMessage.devId,
         );
-        succeeded = deleteResult.status === "succeeded";
+        succeeded = OK_STATUSES.includes(deleteStatus);
         break;
     }
     if (succeeded) {
@@ -79,11 +81,11 @@ export function createBackgroundsService(
       const { outboxMessageId, backgroundId } =
         await repository.add(background);
 
-      const result = await meiliClient.upsertBackground({
+      const status = await meiliClient.upsertBackground({
         id: backgroundId,
         ...background,
       });
-      if (result.status === "succeeded") {
+      if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
       }
     },
@@ -91,8 +93,8 @@ export function createBackgroundsService(
     async update(background: BackgroundUpdate) {
       const { outboxMessageId } = await repository.update(background);
 
-      const result = await meiliClient.upsertBackground(background);
-      if (result.status === "succeeded") {
+      const status = await meiliClient.upsertBackground(background);
+      if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
       }
     },
