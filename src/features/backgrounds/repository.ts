@@ -27,7 +27,7 @@ export function createRepository(db: DB) {
       });
     },
     async add(background: BackgroundInsert) {
-      const { transactionId, backgroundId } = await db.transaction(
+      const { outboxMessageId, backgroundId } = await db.transaction(
         async (tx) => {
           const backgroundId = (
             await tx
@@ -49,20 +49,20 @@ export function createRepository(db: DB) {
               .values({ backgroundId, name: education });
           }
 
-          const transactionId = (
+          const outboxMessageId = (
             await tx
               .insert(meiliSearchOutbox)
               .values({ devId: background.devId, operation: "upsert" })
               .returning({ id: meiliSearchOutbox.id })
           )[0].id;
 
-          return { transactionId, backgroundId };
+          return { outboxMessageId, backgroundId };
         },
       );
-      return { transactionId, backgroundId: backgroundId };
+      return { outboxMessageId, backgroundId };
     },
     async update(background: BackgroundUpdate) {
-      const transactionId = await db.transaction(async (tx) => {
+      const outboxMessageId = await db.transaction(async (tx) => {
         const { id: backgroundId, ...rest } = background;
         await tx
           .update(backgrounds)
@@ -92,7 +92,7 @@ export function createRepository(db: DB) {
             .returning({ id: meiliSearchOutbox.id })
         )[0].id;
       });
-      return { transactionId };
+      return { outboxMessageId };
     },
     async getAllSkills() {
       return await db.query.skills.findMany();
