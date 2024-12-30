@@ -128,8 +128,20 @@ export function createBackgroundsService(
       }
       return filteredDevIds;
     },
-    async removeAllBackgroundsFromMeili() {
+    async repopulateMeiliSearch() {
       await meiliClient.deleteAllBackgrounds();
+      const backgrounds = await this.getAllBackgrounds();
+      for (const background of backgrounds) {
+        const skills = background.skills.map((s) => s.name);
+        const languages = background.languages.map((l) => l.name);
+        const educations = background.educations.map((e) => e.name);
+        await meiliClient.upsertBackground({
+          ...background,
+          skills,
+          languages,
+          educations,
+        });
+      }
     },
     async getAllPosts() {
       return await repository.getAllPosts();
