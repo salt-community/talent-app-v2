@@ -52,6 +52,6 @@ export async function updateBackgroundAction(
 }
 
 export async function addBackground(id: string) {
-  const developer = await backgroundsService.getDeveloper(id);
+  const developer = await backgroundsService.addDeveloperBackground(id);
   return developer;
 }

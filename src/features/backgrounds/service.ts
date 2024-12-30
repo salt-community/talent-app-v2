@@ -143,19 +143,18 @@ export function createBackgroundsService(
     async editAccess(id: string) {
       return checkUserAccess(id);
     },
-    async getDeveloper(id: string) {
+    async addDeveloperBackground(id: string) {
       const developer = await getDeveloperById(id);
       await backgroundsService.add({
         name: developer.name,
         devId: developer.id,
-        title: "developer",
-        bio: "",
+        title: "developer2",
+        bio: "test",
         links: [],
         skills: [],
         languages: [],
         educations: [],
       });
-      console.log("developer created");
       return developer;
     },
   };
