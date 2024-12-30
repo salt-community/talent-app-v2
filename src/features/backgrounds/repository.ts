@@ -112,7 +112,6 @@ export function createRepository(db: DB) {
       return posts;
     },
     async getPostById(id: string) {
-      console.log({id})
       return posts.find((post) => post.id === id);
     }
   };
