@@ -4,6 +4,7 @@ type Props = {
   label: string;
   inputType: "text" | "number";
   defaultValue?: string;
+  errorMessage?: string;
   handleChangeInput?: (inputValue: string, label: string) => void;
 };
 
@@ -11,6 +12,7 @@ export function InputField({
   label,
   inputType,
   defaultValue,
+  errorMessage,
   handleChangeInput,
 }: Props) {
   return (
@@ -26,6 +28,7 @@ export function InputField({
         }}
         required
       />
+      {errorMessage ? <p className="text-red-600 mt-[-0.8rem] h-6">{errorMessage}</p> : <p className="mt-[-0.8rem] h-6"></p>}      
     </>
   );
 }
