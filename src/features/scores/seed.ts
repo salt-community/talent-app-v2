@@ -1,5 +1,6 @@
+import { db } from "@/db";
 import { categoryTags } from "./categories";
-import { seedScoresService } from "./instance";
+import { createService } from "./service";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
