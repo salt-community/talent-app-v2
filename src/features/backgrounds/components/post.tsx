@@ -2,28 +2,27 @@ import Image from "next/image";
 import { QuoteHighlight } from "./quote-highlight";
 import { HeroPost } from "./hero-post";
 
-export function Post() {
+export async function Post({ developerId }: { developerId: string }) {
+  const post = await backgroundsService.getPostById(developerId);
+
   return (
     <main
       className="space-y-4 md:w-10/12 md:mx-auto p-3
     "
     >
-      <HeroPost />
+      <HeroPost name={post.name} headline={post.headline}/>
       <QuoteHighlight />
       <section className="space-y-4">
         <article className="flex items-start">
           <div className="space-y-3">
             <h2 className="text-2xl font-bold text-paragraph leading-none">
-              Designing for Inclusion in Technology
+              {post.title}
             </h2>
-            <p className="text-sm text-paragraphLight">
-              Exploring the role of accessibility in modern design and how
-              inclusive practices shape better user experiences.
-            </p>
+            <p className="text-sm text-paragraphLight">{post.excerpt}</p>
           </div>
           <Image
-            src={"/adrienn.png"}
-            alt={"highlightedBackground.title"}
+            src={post.imageUrl}
+            alt={post.name}
             width={200}
             height={200}
             className="object-cover h-52 w-52 md:h-80 md:w-auto"
