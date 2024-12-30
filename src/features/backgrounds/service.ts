@@ -126,6 +126,9 @@ export function createBackgroundsService(
     async getAllPosts() {
       return await repository.getAllPosts();
     },
+    async getPostById(developerId: string) {
+      return await repository.getPostById(developerId);
+    },
     async doesMeilisearchNeedUpdate() {
       return (await repository.getAllOutboxMessage()).length > 0;
     },
