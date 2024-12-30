@@ -19,7 +19,12 @@ export function createService(
     },
     getAll: async (userId: string) => {
       checkAccess("project.getAll");
-      return await reps.getAll(userId);
+
+      const projects = await reps.getAll(userId);
+      const sortedProjects = projects.sort((a, b) =>
+        a.title.localeCompare(b.title)
+      );
+      return sortedProjects;
     },
     add: async ({
       repository,
