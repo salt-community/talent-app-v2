@@ -35,20 +35,18 @@ export async function Projects({ devId }: Props) {
   return (
     <div className="mt-4">
       <H2>Projects</H2>
+      <div className="flex flex-col justify-center mt-4">
+        {projects.map((project) => (
+          <div key={project.id}>
+            <ProjectDetails project={project} />
+            <Separator className="mt-4 mb-2" />
+          </div>
+        ))}
+      </div>
       {personalAccess && (
-        <>
-          <div className="flex flex-col justify-center mt-4">
-            {projects.map((project) => (
-              <div key={project.id}>
-                <ProjectDetails project={project} />
-                <Separator className="mt-4 mb-2" />
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-center">
-            <ProjectForm userId={devId} />
-          </div>
-        </>
+        <div className="flex justify-center">
+          <ProjectForm userId={devId} />
+        </div>
       )}
     </div>
   );
