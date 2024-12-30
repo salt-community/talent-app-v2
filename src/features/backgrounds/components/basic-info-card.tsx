@@ -8,8 +8,6 @@ import { backgroundsService } from "../instance";
 type Props = { background: Background; devId: string };
 
 export async function BackgroundBasicInfoCard({ background, devId }: Props) {
-  const isFeatureBioEnabled = process.env.NEXT_PUBLIC_FEATURE_BIO === "ON";
-
   const allSkills = await backgroundsService.getAllSkills();
   const allLanguages = await backgroundsService.getAllLanguages();
   const allEducations = await backgroundsService.getAllEducations();
