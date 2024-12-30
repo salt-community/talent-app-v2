@@ -9,6 +9,7 @@ import { SocialLink } from "./db";
 const backgroundUpdate = z.object({
   id: z.coerce.number(),
   devId: z.string().nonempty(),
+  avatarUrl: z.string().url().optional(),
   name: z.string().nonempty(),
   title: z.string().nonempty().optional(),
   bio: z.string().optional(),
