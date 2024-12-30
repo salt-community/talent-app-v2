@@ -4,12 +4,7 @@ import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
 import { ROLES } from "./roles";
 import { auth } from "@clerk/nextjs/server";
-import {
-  Developer,
-  DeveloperProfileInsert,
-  IdentityRole,
-  SessionClaims,
-} from "@/features";
+import { IdentityRole, SessionClaims } from "@/features";
 import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
 
@@ -18,9 +13,6 @@ type Permission = (typeof ROLES)[Role][number];
 
 export function createService(
   db: Db,
-  addDeveloper: (
-    developerProfile: DeveloperProfileInsert
-  ) => Promise<Developer>,
   getById: (id: string) => Promise<string>
 ) {
   const repository = createRepository(db);
