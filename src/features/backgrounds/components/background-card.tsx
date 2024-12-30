@@ -12,7 +12,7 @@ export async function BackgroundCard({ devid }: Props) {
   }
 
   return (
-    <div className="space-y-2 max-w-96">
+    <div className="space-y-2">
       <div className="flex justify-between items-start w-full">
         <BackgroundBasicInfoCard background={background} />
       </div>

@@ -7,9 +7,9 @@ type Props = {
 
 export function DeveloperCard({ children }: Props) {
   return (
-    <div className="md:flex md:flex-col md:justify-center md:items-center">
-      <Card className="md: mx-auto max-w-96 ">
-        <CardContent>{children}</CardContent>
+    <div className="py-6 md:py-8 md:px-32 lg:px-60">
+      <Card className="mx-auto border-none">
+        <CardContent className="">{children}</CardContent>
       </Card>
     </div>
   );
