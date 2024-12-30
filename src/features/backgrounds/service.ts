@@ -9,6 +9,7 @@ export function createBackgroundsService(
   meiliClient: MeiliClient,
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
   getHighlightedDevIds: () => Promise<string[]>,
+  getSlugById: (devId: string) => Promise<string>
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {
     outboxMessages.forEach((outboxMessage) => {
@@ -100,7 +101,9 @@ export function createBackgroundsService(
     async getHighlightedDevIds() {
       return await getHighlightedDevIds();
     },
-
+    async getSlugById(devId: string) {
+      return await getSlugById(devId);
+    },
     async searchDevIds(search: string | undefined) {
       const cleanSearch = search?.trim();
       let allDevIds = [];
