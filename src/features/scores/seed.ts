@@ -59,7 +59,7 @@ export const seedAssignments = async (devIds: string[]) => {
     };
 
     try {
-      await seedScoresService.addAssignment(newAssignment);
+      await scoresService.addAssignment(newAssignment);
     } catch (error) {
       console.error("Something went wrong when seeding assignments: " + error);
     }
