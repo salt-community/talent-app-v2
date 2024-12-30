@@ -18,27 +18,27 @@ const backgroundUpdate = z.object({
   skills: z
     .string()
     .transform((val) =>
-      JSON.parse(val).map((skill: { text: string }) => skill.text),
+      JSON.parse(val).map((skill: { text: string }) => skill.text)
     )
     .pipe(z.array(z.string())),
   languages: z
     .string()
     .transform((val) =>
-      JSON.parse(val).map((language: { text: string }) => language.text),
+      JSON.parse(val).map((language: { text: string }) => language.text)
     )
     .pipe(z.array(z.string())),
 
   educations: z
     .string()
     .transform((val) =>
-      JSON.parse(val).map((education: { text: string }) => education.text),
+      JSON.parse(val).map((education: { text: string }) => education.text)
     )
     .pipe(z.array(z.string())),
 });
 
 export async function updateBackgroundAction(
   _: void | null | string,
-  formData: FormData,
+  formData: FormData
 ) {
   const update = Object.fromEntries(formData.entries());
   const validatedUpdate = backgroundUpdate.parse(update);
@@ -50,4 +50,9 @@ export async function updateBackgroundAction(
 
   revalidatePath("/");
   redirect(`/developers/${validatedUpdate.devId}`);
+}
+
+export async function addBackground(id: string) {
+  const developer = await backgroundsService.addDeveloperBackground(id);
+  return developer;
 }

@@ -2,8 +2,9 @@ import { Repository } from "./repository";
 import { BackgroundInsert, OutboxMessageSelect } from "./db";
 import { BackgroundUpdate } from "./types";
 import { MeiliClient } from "./meili";
-import { DeveloperProfileStatus } from "../developer-profiles";
+import { Developer, DeveloperProfileStatus } from "../developer-profiles";
 import { TaskStatus } from "meilisearch";
+import { backgroundsService } from "./instance";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
@@ -11,6 +12,8 @@ export function createBackgroundsService(
   meiliClient: MeiliClient,
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
   getHighlightedDevIds: () => Promise<string[]>,
+  getDeveloperById: (id: string) => Promise<Developer>,
+  checkUserAccess: (id: string) => Promise<boolean>
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {
     outboxMessages.forEach((outboxMessage) => {
@@ -23,7 +26,7 @@ export function createBackgroundsService(
     switch (outboxMessage.operation) {
       case "upsert":
         const background = await repository.getBackgroundByDevId(
-          outboxMessage.devId,
+          outboxMessage.devId
         );
         if (!background) {
           succeeded = true;
@@ -42,7 +45,7 @@ export function createBackgroundsService(
         break;
       case "delete":
         const deleteStatus = await meiliClient.deleteBackground(
-          outboxMessage.devId,
+          outboxMessage.devId
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
         break;
@@ -50,7 +53,7 @@ export function createBackgroundsService(
     if (succeeded) {
       await repository.removeOutboxMessage(outboxMessage.id);
     }
-  };
+  }
 
   return {
     async getAllBackgrounds() {
@@ -62,19 +65,19 @@ export function createBackgroundsService(
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index,
+          array.findIndex((s) => s.name === skill.name) === index
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index,
+          array.findIndex((l) => l.name === language.name) === index
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index,
+          array.findIndex((e) => e.name === education.name) === index
       );
     },
     async add(background: BackgroundInsert) {
@@ -108,7 +111,7 @@ export function createBackgroundsService(
       let allDevIds = [];
       if (!cleanSearch || cleanSearch === "") {
         allDevIds = (await this.getAllBackgrounds()).map(
-          (background) => background.devId,
+          (background) => background.devId
         );
       } else {
         allDevIds = await meiliClient.searchDevIds(search);
@@ -139,6 +142,23 @@ export function createBackgroundsService(
       for (const outboxMessage of outboxMessages) {
         updateMeilisearchFor(outboxMessage);
       }
+    },
+    async editAccess(id: string) {
+      return checkUserAccess(id);
+    },
+    async addDeveloperBackground(id: string) {
+      const developer = await getDeveloperById(id);
+      await backgroundsService.add({
+        name: developer.name,
+        devId: developer.id,
+        title: "developer2",
+        bio: "test",
+        links: [],
+        skills: [],
+        languages: [],
+        educations: [],
+      });
+      return developer;
     },
   };
 }

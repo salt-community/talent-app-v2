@@ -5,14 +5,17 @@ import { SocialLink } from "./social-link";
 import { DialogForm } from "./dialog-form";
 import { backgroundsService } from "../instance";
 
-type Props = { background: Background };
+type Props = { background: Background; devId: string };
 
-export async function BackgroundBasicInfoCard({ background }: Props) {
+export async function BackgroundBasicInfoCard({ background, devId }: Props) {
+  const isFeatureBioEnabled = process.env.NEXT_PUBLIC_FEATURE_BIO === "ON";
+
   const allSkills = await backgroundsService.getAllSkills();
   const allLanguages = await backgroundsService.getAllLanguages();
   const allEducations = await backgroundsService.getAllEducations();
   const filteredLinks = background.links.filter((e) => e.name !== "LinkedIn");
 
+  const editAccess = await backgroundsService.editAccess(devId);
   return (
     <>
       <section className="flex justify-between w-full">
@@ -28,12 +31,14 @@ export async function BackgroundBasicInfoCard({ background }: Props) {
           </div>
         </div>
         <ul className="flex flex-col gap-2 justify-end items-top h-full">
-          <DialogForm
-            background={background}
-            allSkills={allSkills}
-            allLanguages={allLanguages}
-            allEducations={allEducations}
-          />
+          {editAccess && (
+            <DialogForm
+              background={background}
+              allSkills={allSkills}
+              allLanguages={allLanguages}
+              allEducations={allEducations}
+            />
+          )}
           {filteredLinks &&
             filteredLinks.map((link) => (
               <li key={link.url} className="h-full flex justify-start">

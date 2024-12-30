@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components";
-import { developerService, iamService } from "@/features";
+import { developerService } from "@/features";
 import { Background } from "@/features/backgrounds/components/background";
 import { CreateProfileButton } from "@/features/backgrounds/components/create-profile-button";
 import { revalidatePath } from "next/cache";
@@ -15,7 +15,7 @@ export default async function Page({ params }: Params) {
 
   async function addProfile() {
     "use server";
-    await iamService.createDeveloperProfile(identityid);
+    await developerService.createDeveloperProfile(identityid);
     revalidatePath(`/profile/${identityid}`);
   }
   if (devIds.length === 0) {
