@@ -9,6 +9,7 @@ export const createService = (db: Db, checkAccess: CheckAccess) => {
   const repository = createRepository(db);
   return {
     addAssignment: async (newAssignment: NewAssignment) => {
+      
       await checkAccess("scores.addAssignment");
       assignmentUpdates.parse(newAssignment);
       await repository.addAssignment(newAssignment);
