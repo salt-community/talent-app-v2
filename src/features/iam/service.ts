@@ -106,8 +106,11 @@ export function createService(
       const { userId } = await auth();
       if (!userId) return false;
 
-      const identityId = await repository.getIdentityRole(userId);
-      const developerId = await getById(identityId.id);
+      const identity = await repository.getIdentityRole(userId);
+
+      if (identity.roles === "admin") return true;
+
+      const developerId = await getById(identity.id);
       if (developerId === devId) return true;
       return false;
     },
