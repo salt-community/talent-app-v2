@@ -4,6 +4,7 @@ import { roboto } from "@/components/ui/fonts";
 import { Header } from "@/components/navbar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
+import {Footer} from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Talent app",
@@ -23,6 +24,7 @@ export default function RootLayout({
             <Header />
             {children}
             <Toaster />
+            <Footer/>
           </main>
         </body>
       </html>

@@ -43,4 +43,4 @@ next-env.d.ts
 /meili_data
 
 # Ignore logs folder
-/src/logs
+/src/logs/*.txt

@@ -5,6 +5,7 @@ import { MeiliClient } from "./meili";
 import { DeveloperProfileStatus } from "../developer-profiles";
 import { TaskStatus } from "meilisearch";
 import { backgroundsService } from "./instance";
+import { CreateDeveloperProfile, GetAllById } from "@/features";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
@@ -13,7 +14,9 @@ export function createBackgroundsService(
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
   getHighlightedDevIds: () => Promise<string[]>,
   getDeveloperById: (id: string) => Promise<DeveloperProfile>,
-  checkUserAccess: (id: string) => Promise<boolean>
+  checkUserAccess: (id: string) => Promise<boolean>,
+  createDeveloperProfile: CreateDeveloperProfile,
+  getAllById: GetAllById
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {
     outboxMessages.forEach((outboxMessage) => {
@@ -125,8 +128,20 @@ export function createBackgroundsService(
       }
       return filteredDevIds;
     },
-    async removeAllBackgroundsFromMeili() {
+    async repopulateMeiliSearch() {
       await meiliClient.deleteAllBackgrounds();
+      const backgrounds = await this.getAllBackgrounds();
+      for (const background of backgrounds) {
+        const skills = background.skills.map((s) => s.name);
+        const languages = background.languages.map((l) => l.name);
+        const educations = background.educations.map((e) => e.name);
+        await meiliClient.upsertBackground({
+          ...background,
+          skills,
+          languages,
+          educations,
+        });
+      }
     },
     async getAllPosts() {
       return await repository.getAllPosts();
@@ -151,14 +166,20 @@ export function createBackgroundsService(
       await backgroundsService.add({
         name: developer.name,
         devId: developer.id,
-        title: "developer2",
-        bio: "test",
+        title: "developer",
+        bio: "",
         links: [],
         skills: [],
         languages: [],
         educations: [],
       });
       return developer;
+    },
+    async createDeveloperProfile(identityId: string) {
+      await createDeveloperProfile(identityId);
+    },
+    async getAllDeveloperProfilesById(identityId: string) {
+      return await getAllById(identityId);
     },
   };
 }

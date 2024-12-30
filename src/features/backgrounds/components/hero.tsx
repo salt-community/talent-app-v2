@@ -1,7 +1,7 @@
 export function Hero() {
   return (
     <>
-      <section className="flex flex-col items-center md:pr-96 justify-center text-center gap-4 md:py-60 py-36 md:bg-[url('/hero.jpg')] md:bg-cover">
+      <section className="flex flex-col items-center md:pr-96 justify-center text-center gap-4 md:py-60 py-40 bg-[url('/hero.jpg')] bg-[length:210%_auto] md:bg-cover md:bg-center">
         <h1 className="md:text-xl  text-md uppercase">
           School of Applied Technology
         </h1>

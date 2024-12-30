@@ -36,6 +36,7 @@ export function createMeiliClient() {
     async deleteAllBackgrounds() {
       const index = getMeiliSearch().index(BACKGROUNDS_UID);
       const response = await index.deleteAllDocuments();
+      await index.waitForTask(response.taskUid);
       return response.status;
     },
   };

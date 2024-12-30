@@ -10,7 +10,8 @@
     "seed": "tsx src/seed/seed.ts",
     "studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "repopulate-meili": "tsx src/seed/repopulate-meili.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.6.0",
