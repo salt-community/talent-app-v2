@@ -7,17 +7,17 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   return shuffled.slice(0, Math.floor(Math.random() * maxTags) + 1);
 };
 
-const scoresService = createService(
-  db,
-  async function checkAccess(permission: string): Promise<boolean> {
-    if (permission) {
-      return true;
-    }
-    return false;
-  });
-
-
 export const seedAssignments = async (devIds: string[]) => {
+  const scoresService = createService(
+    db,
+    async function checkAccess(permission: string): Promise<boolean> {
+      if (permission) {
+        return true;
+      }
+      return false;
+    }
+  );
+
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",
     "Create a RESTful API with Node.js",
@@ -46,7 +46,7 @@ export const seedAssignments = async (devIds: string[]) => {
     "Design an Accessibility-First Web App",
   ];
 
-  scoresService.deleteAllAssignments();
+  await scoresService.deleteAllAssignments();
 
   const maxTags = categoryTags.length;
   for (let i = 0; i < devIds.length; i++) {
