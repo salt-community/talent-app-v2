@@ -5,6 +5,7 @@ import { MeiliClient } from "./meili";
 import { Developer, DeveloperProfileStatus } from "../developer-profiles";
 import { TaskStatus } from "meilisearch";
 import { backgroundsService } from "./instance";
+import { CreateDeveloperProfile, GetAllById } from "@/features";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
@@ -13,7 +14,9 @@ export function createBackgroundsService(
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
   getHighlightedDevIds: () => Promise<string[]>,
   getDeveloperById: (id: string) => Promise<Developer>,
-  checkUserAccess: (id: string) => Promise<boolean>
+  checkUserAccess: (id: string) => Promise<boolean>,
+  createDeveloperProfile: CreateDeveloperProfile,
+  getAllById: GetAllById
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {
     outboxMessages.forEach((outboxMessage) => {
@@ -159,6 +162,12 @@ export function createBackgroundsService(
         educations: [],
       });
       return developer;
+    },
+    async createDeveloperProfile(identityId: string) {
+      await createDeveloperProfile(identityId);
+    },
+    async getAllDeveloperProfilesById(identityId: string) {
+      return await getAllById(identityId);
     },
   };
 }

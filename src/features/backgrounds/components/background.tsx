@@ -19,7 +19,6 @@ export async function Background({ devid }: Props) {
       </Link>
     );
   }
-
   return (
     <Link href={`/developers/${devid}`}>
       <div className="space-y-2 max-w-96">

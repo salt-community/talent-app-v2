@@ -4,6 +4,7 @@ import { createService } from "./service";
 type iamService = ReturnType<typeof createService>;
 
 export type CheckAccess = iamService["checkAccess"];
+export type CreateDeveloperProfile = iamService["createDeveloperProfile"];
 
 export interface SessionClaims extends JwtPayload {
   first_name?: string;
