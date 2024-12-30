@@ -1,10 +1,13 @@
 import Image from "next/image";
 import { QuoteHighlight } from "./quote-highlight";
 import { HeroPost } from "./hero-post";
+import { backgroundsService } from "../instance";
 
 export async function Post({ developerId }: { developerId: string }) {
   const post = await backgroundsService.getPostById(developerId);
-
+  if (!post) {
+    return null;
+  }
   return (
     <main
       className="space-y-4 md:w-10/12 md:mx-auto p-3
