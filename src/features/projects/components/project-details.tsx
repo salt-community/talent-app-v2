@@ -10,9 +10,10 @@ import MetricSidebar from "./project-metric-sidebar";
 
 type Props = {
   project: Project;
+  editAccess: boolean;
 };
 
-export default function ProjectDetails({ project }: Props) {
+export default function ProjectDetails({ project, editAccess }: Props) {
   const repository = project.repository.split("/")[4];
 
   return (
@@ -30,7 +31,9 @@ export default function ProjectDetails({ project }: Props) {
             </p>
           </Link>
         </div>
-        <EditProjectDetails key={project.id} project={project} />
+        {editAccess && (
+          <EditProjectDetails key={project.id} project={project} />
+        )}{" "}
       </div>
       <section className="flex justify-between items-start mt-2 gap-2">
         <Image

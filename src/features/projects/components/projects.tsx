@@ -10,13 +10,13 @@ type Props = {
 export async function Projects({ devId }: Props) {
   const projects = await projectService.getAll(devId);
 
-  const personalAccess = await projectService.checkProfileAccess(devId);
+  const editAccess = await projectService.checkProfileAccess(devId);
 
   if (projects.length === 0) {
     return (
       <div>
         <H2>Projects</H2>
-        {personalAccess && (
+        {editAccess && (
           <>
             <div className="flex flex-col justify-center mt-4">
               <p>Add your projects here</p>
@@ -38,12 +38,12 @@ export async function Projects({ devId }: Props) {
       <div className="flex flex-col justify-center mt-4">
         {projects.map((project) => (
           <div key={project.id}>
-            <ProjectDetails project={project} />
+            <ProjectDetails project={project} editAccess={editAccess} />
             <Separator className="mt-4 mb-2" />
           </div>
         ))}
       </div>
-      {personalAccess && (
+      {editAccess && (
         <div className="flex justify-center">
           <ProjectForm userId={devId} />
         </div>
