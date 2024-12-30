@@ -4,13 +4,7 @@ import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
 import { ROLES } from "./roles";
 import { auth } from "@clerk/nextjs/server";
-import {
-  BackgroundInsert,
-  Developer,
-  DeveloperProfileInsert,
-  IdentityRole,
-  SessionClaims,
-} from "@/features";
+import { IdentityRole, SessionClaims } from "@/features";
 import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
 
@@ -19,11 +13,7 @@ type Permission = (typeof ROLES)[Role][number];
 
 export function createService(
   db: Db,
-  addDeveloper: (
-    developerProfile: DeveloperProfileInsert
-  ) => Promise<Developer>,
-  getById: (id: string) => Promise<string>,
-  addDeveloperBackground: (background: BackgroundInsert) => Promise<void>
+  getById: (id: string) => Promise<string>
 ) {
   const repository = createRepository(db);
   return {
@@ -69,33 +59,6 @@ export function createService(
         });
         return newUser;
       }
-    },
-
-    async createDeveloperProfile(id: string) {
-      const { sessionClaims } = await auth();
-      const claims = sessionClaims as SessionClaims;
-
-      const { name, email } = claim(claims);
-      if (!email) return;
-      const developer = await addDeveloper({
-        name,
-        email,
-        identityId: id,
-      });
-
-      await addDeveloperBackground({
-        name,
-        devId: developer.id,
-        title: "",
-        bio: "",
-        links: [],
-        skills: [],
-        languages: [],
-        educations: [],
-      });
-      return {
-        id: developer.id,
-      };
     },
 
     async addIdentity(identity: IdentityInsert) {

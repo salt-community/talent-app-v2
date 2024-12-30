@@ -8,11 +8,11 @@ services:
       POSTGRES_PASSWORD: Nyttpassword2
 
   meilisearch:
-    image: getmeili/meilisearch:latest
+    image: getmeili/meilisearch:v1.12.0
     container_name: talent-dev-meilisearch
     ports:
       - "7700:7700"
     environment:
       MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
     volumes:
-      - ./meili_data:/meili_data
+      - ./data.ms:/data.ms

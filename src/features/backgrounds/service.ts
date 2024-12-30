@@ -2,13 +2,21 @@ import { Repository } from "./repository";
 import { BackgroundInsert, OutboxMessageSelect } from "./db";
 import { BackgroundUpdate } from "./types";
 import { MeiliClient } from "./meili";
-import { DeveloperProfileStatus } from "../developer-profiles";
+import { Developer, DeveloperProfileStatus } from "../developer-profiles";
+import { TaskStatus } from "meilisearch";
+import { backgroundsService } from "./instance";
+import { CreateDeveloperProfile, GetAllById } from "@/features";
 
+const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
   getHighlightedDevIds: () => Promise<string[]>,
+  getDeveloperById: (id: string) => Promise<Developer>,
+  checkUserAccess: (id: string) => Promise<boolean>,
+  createDeveloperProfile: CreateDeveloperProfile,
+  getAllById: GetAllById
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {
     outboxMessages.forEach((outboxMessage) => {
@@ -21,7 +29,7 @@ export function createBackgroundsService(
     switch (outboxMessage.operation) {
       case "upsert":
         const background = await repository.getBackgroundByDevId(
-          outboxMessage.devId,
+          outboxMessage.devId
         );
         if (!background) {
           succeeded = true;
@@ -30,25 +38,25 @@ export function createBackgroundsService(
         const skills = background.skills.map((s) => s.name);
         const languages = background.languages.map((l) => l.name);
         const educations = background.educations.map((e) => e.name);
-        const upsertResult = await meiliClient.upsertBackground({
+        const upsertStatus = await meiliClient.upsertBackground({
           ...background,
           skills,
           languages,
           educations,
         });
-        succeeded = upsertResult.status === "succeeded";
+        succeeded = OK_STATUSES.includes(upsertStatus);
         break;
       case "delete":
-        const deleteResult = await meiliClient.deleteBackground(
-          outboxMessage.devId,
+        const deleteStatus = await meiliClient.deleteBackground(
+          outboxMessage.devId
         );
-        succeeded = deleteResult.status === "succeeded";
+        succeeded = OK_STATUSES.includes(deleteStatus);
         break;
     }
     if (succeeded) {
       await repository.removeOutboxMessage(outboxMessage.id);
     }
-  };
+  }
 
   return {
     async getAllBackgrounds() {
@@ -60,30 +68,30 @@ export function createBackgroundsService(
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index,
+          array.findIndex((s) => s.name === skill.name) === index
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index,
+          array.findIndex((l) => l.name === language.name) === index
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index,
+          array.findIndex((e) => e.name === education.name) === index
       );
     },
     async add(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } =
         await repository.add(background);
 
-      const result = await meiliClient.upsertBackground({
+      const status = await meiliClient.upsertBackground({
         id: backgroundId,
         ...background,
       });
-      if (result.status === "succeeded") {
+      if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
       }
     },
@@ -91,8 +99,8 @@ export function createBackgroundsService(
     async update(background: BackgroundUpdate) {
       const { outboxMessageId } = await repository.update(background);
 
-      const result = await meiliClient.upsertBackground(background);
-      if (result.status === "succeeded") {
+      const status = await meiliClient.upsertBackground(background);
+      if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
       }
     },
@@ -106,7 +114,7 @@ export function createBackgroundsService(
       let allDevIds = [];
       if (!cleanSearch || cleanSearch === "") {
         allDevIds = (await this.getAllBackgrounds()).map(
-          (background) => background.devId,
+          (background) => background.devId
         );
       } else {
         allDevIds = await meiliClient.searchDevIds(search);
@@ -137,6 +145,29 @@ export function createBackgroundsService(
       for (const outboxMessage of outboxMessages) {
         updateMeilisearchFor(outboxMessage);
       }
+    },
+    async editAccess(id: string) {
+      return checkUserAccess(id);
+    },
+    async addDeveloperBackground(id: string) {
+      const developer = await getDeveloperById(id);
+      await backgroundsService.add({
+        name: developer.name,
+        devId: developer.id,
+        title: "developer2",
+        bio: "test",
+        links: [],
+        skills: [],
+        languages: [],
+        educations: [],
+      });
+      return developer;
+    },
+    async createDeveloperProfile(identityId: string) {
+      await createDeveloperProfile(identityId);
+    },
+    async getAllDeveloperProfilesById(identityId: string) {
+      return await getAllById(identityId);
     },
   };
 }
