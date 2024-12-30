@@ -8,9 +8,9 @@ type Params = {
 };
 
 export default async function DeveloperDetailPage({ params }: Params) {
-  const { slug } = await params; // slug
+  const { slug } = await params;
   const devid = await developerService.getIdBySlug(slug);
-  
+
   return (
     <DeveloperCard>
       <BackgroundCard devid={devid} />
