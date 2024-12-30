@@ -1,10 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { backgroundsService } from "./instance";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { SocialLink } from "./db";
+import { revalidatePath } from "next/cache";
 
 const backgroundUpdate = z.object({
   id: z.coerce.number(),
@@ -58,5 +58,5 @@ export async function addBackground(id: string) {
 }
 export async function addDeveloperProfileAction(identityId: string) {
   await backgroundsService.createDeveloperProfile(identityId);
-  revalidatePath("/profile");
+  revalidatePath(`/profile/${identityId}`);
 }

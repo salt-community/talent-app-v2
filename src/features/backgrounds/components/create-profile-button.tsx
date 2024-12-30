@@ -3,13 +3,13 @@
 import { Button } from "@/components";
 
 interface Props {
-  addProfile: () => Promise<void>;
+  onAddProfile: () => void;
 }
 
-export function CreateProfileButton({ addProfile }: Props) {
+export function CreateProfileButton({ onAddProfile }: Props) {
   return (
     <div className="container mx-auto pt-14">
-      <Button onClick={addProfile}>Create new profile</Button>
+      <Button onClick={onAddProfile}>Create new profile</Button>
     </div>
   );
 }

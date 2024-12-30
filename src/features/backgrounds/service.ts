@@ -166,8 +166,8 @@ export function createBackgroundsService(
       await backgroundsService.add({
         name: developer.name,
         devId: developer.id,
-        title: "developer2",
-        bio: "test",
+        title: "developer",
+        bio: "",
         links: [],
         skills: [],
         languages: [],
