@@ -111,6 +111,10 @@ export function createRepository(db: DB) {
     async getAllPosts() {
       return posts;
     },
+    async getPostById(id: string) {
+      console.log({id})
+      return posts.find((post) => post.id === id);
+    }
   };
 }
 export type Repository = ReturnType<typeof createRepository>;
