@@ -1,4 +1,4 @@
-import { H1, H2 } from "@/components";
+import { H2 } from "@/components";
 import Image from "next/image";
 import { QuoteHighlight } from "./quote-highlight";
 import { HeroPost } from "./hero-post";
@@ -20,7 +20,7 @@ export function Post() {
         />
       </div>
       <QuoteHighlight />
-      <section className="space-y-4 outline-dashed">
+      <section className="space-y-4">
         <article className="space-y-2">
           <div className="space-y-2">
             <H2>Designing for Inclusion in Technology</H2>
