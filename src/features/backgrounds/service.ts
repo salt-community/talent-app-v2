@@ -8,7 +8,8 @@ export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
   getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
-  getHighlightedDevIds: () => Promise<string[]>
+  getHighlightedDevIds: () => Promise<string[]>,
+  checkUserAccess: (id: string) => Promise<boolean>
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {
     outboxMessages.forEach((outboxMessage) => {
@@ -138,8 +139,8 @@ export function createBackgroundsService(
         updateMeilisearchFor(outboxMessage);
       }
     },
-    async editAccess() {
-      return true;
+    async editAccess(id: string) {
+      return checkUserAccess(id);
     },
   };
 }

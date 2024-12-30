@@ -1,7 +1,10 @@
 import { Db } from "@/db";
 import { createDevelopersRepository } from "./repository";
 import { DeveloperProfileInsert } from "./schema";
-import { DeveloperProfileStatus } from "./types";
+import { DeveloperProfileStatus, SessionClaims } from "./types";
+import { auth } from "@clerk/nextjs/server";
+import { claim } from "./session";
+import { developerService } from "./instance";
 
 export function createDevelopersService(db: Db) {
   const repository = createDevelopersRepository(db);
@@ -32,6 +35,32 @@ export function createDevelopersService(db: Db) {
       return highlighted
         .filter((dev) => dev.status === "highlighted")
         .map((dev) => dev.id);
+    },
+    async createDeveloperProfile(id: string) {
+      const { sessionClaims } = await auth();
+      const claims = sessionClaims as SessionClaims;
+
+      const { name, email } = claim(claims);
+      if (!email) return;
+      const developer = await developerService.add({
+        name,
+        email,
+        identityId: id,
+      });
+
+      // await addDeveloperBackground({
+      //   name,
+      //   devId: developer.id,
+      //   title: "",
+      //   bio: "",
+      //   links: [],
+      //   skills: [],
+      //   languages: [],
+      //   educations: [],
+      // });
+      return {
+        id: developer.id,
+      };
     },
   };
 }

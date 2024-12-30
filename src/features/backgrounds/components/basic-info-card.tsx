@@ -7,7 +7,7 @@ import { backgroundsService } from "../instance";
 
 type Props = { background: Background; devId: string };
 
-export async function BackgroundBasicInfoCard({ background }: Props) {
+export async function BackgroundBasicInfoCard({ background, devId }: Props) {
   const isFeatureBioEnabled = process.env.NEXT_PUBLIC_FEATURE_BIO === "ON";
 
   const allSkills = await backgroundsService.getAllSkills();
@@ -15,7 +15,7 @@ export async function BackgroundBasicInfoCard({ background }: Props) {
   const allEducations = await backgroundsService.getAllEducations();
   const filteredLinks = background.links.filter((e) => e.name !== "LinkedIn");
 
-  const editAccess = await backgroundsService.editAccess();
+  const editAccess = await backgroundsService.editAccess(devId);
   console.log(editAccess);
   return (
     <>
