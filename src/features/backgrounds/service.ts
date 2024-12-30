@@ -1,5 +1,5 @@
 import { Repository } from "./repository";
-import { BackgroundInsert } from "./db";
+import { BackgroundInsert, OutboxMessageSelect } from "./db";
 import { BackgroundUpdate } from "./types";
 import { MeiliClient } from "./meili";
 import { DeveloperProfileStatus } from "../developer-profiles";
@@ -11,65 +11,44 @@ export function createBackgroundsService(
   getHighlightedDevIds: () => Promise<string[]>,
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {
-    outboxMessages.forEach(async (outboxMessage) => {
-      let succeeded = false;
-      switch (outboxMessage.operation) {
-        case "upsert":
-          const background = await repository.getBackgroundByDevId(
-            outboxMessage.devId,
-          );
-          if (!background) {
-            succeeded = true;
-            break;
-          }
-          const skills = background.skills.map((skill) => skill.name);
-          const languages = background.languages.map(
-            (language) => language.name,
-          );
-          const educations = background.educations.map(
-            (education) => education.name,
-          );
-          await meiliClient.upsertBackground({
-            ...background,
-            skills,
-            languages,
-            educations,
-          });
-          succeeded = true;
-          break;
-        case "delete":
-          succeeded =
-            (await meiliClient.deleteBackground(outboxMessage.devId)).status ===
-            "succeeded";
-          break;
-      }
-      if (succeeded) {
-        await repository.removeOutboxMessage(outboxMessage.id);
-      }
+    outboxMessages.forEach((outboxMessage) => {
+      updateMeilisearchFor(outboxMessage);
     });
   });
 
-  // async function addSkills(backgroundId: number, skills?: string[]) {
-  //   if (skills && skills.length) {
-  //     await repository.addSkills(
-  //       skills.map((name) => ({ backgroundId, name })),
-  //     );
-  //   }
-  // }
-  // async function addLanguages(backgroundId: number, languages?: string[]) {
-  //   if (languages && languages.length) {
-  //     await repository.addLanguages(
-  //       languages.map((name) => ({ backgroundId, name })),
-  //     );
-  //   }
-  // }
-  // async function addEducations(backgroundId: number, educations?: string[]) {
-  //   if (educations && educations.length) {
-  //     await repository.addEducations(
-  //       educations.map((name) => ({ backgroundId, name })),
-  //     );
-  //   }
-  // }
+  async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
+    let succeeded = false;
+    switch (outboxMessage.operation) {
+      case "upsert":
+        const background = await repository.getBackgroundByDevId(
+          outboxMessage.devId,
+        );
+        if (!background) {
+          succeeded = true;
+          break;
+        }
+        const skills = background.skills.map((s) => s.name);
+        const languages = background.languages.map((l) => l.name);
+        const educations = background.educations.map((e) => e.name);
+        const upsertResult = await meiliClient.upsertBackground({
+          ...background,
+          skills,
+          languages,
+          educations,
+        });
+        succeeded = upsertResult.status === "succeeded";
+        break;
+      case "delete":
+        const deleteResult = await meiliClient.deleteBackground(
+          outboxMessage.devId,
+        );
+        succeeded = deleteResult.status === "succeeded";
+        break;
+    }
+    if (succeeded) {
+      await repository.removeOutboxMessage(outboxMessage.id);
+    }
+  };
 
   return {
     async getAllBackgrounds() {
@@ -81,39 +60,40 @@ export function createBackgroundsService(
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index
+          array.findIndex((s) => s.name === skill.name) === index,
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index
+          array.findIndex((l) => l.name === language.name) === index,
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index
+          array.findIndex((e) => e.name === education.name) === index,
       );
     },
     async add(background: BackgroundInsert) {
-      const { transactionId, backgroundId } = await repository.add(background);
+      const { outboxMessageId, backgroundId } =
+        await repository.add(background);
 
       const result = await meiliClient.upsertBackground({
         id: backgroundId,
         ...background,
       });
       if (result.status === "succeeded") {
-        await repository.removeOutboxMessage(transactionId);
+        await repository.removeOutboxMessage(outboxMessageId);
       }
     },
 
     async update(background: BackgroundUpdate) {
-      const { transactionId } = await repository.update(background);
+      const { outboxMessageId } = await repository.update(background);
 
       const result = await meiliClient.upsertBackground(background);
       if (result.status === "succeeded") {
-        await repository.removeOutboxMessage(transactionId);
+        await repository.removeOutboxMessage(outboxMessageId);
       }
     },
 
@@ -126,7 +106,7 @@ export function createBackgroundsService(
       let allDevIds = [];
       if (!cleanSearch || cleanSearch === "") {
         allDevIds = (await this.getAllBackgrounds()).map(
-          (background) => background.devId
+          (background) => background.devId,
         );
       } else {
         allDevIds = await meiliClient.searchDevIds(search);
