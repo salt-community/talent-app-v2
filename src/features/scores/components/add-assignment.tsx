@@ -53,12 +53,12 @@ export function AddAssignment({ devId }: Props) {
   }, [title, score]);
 
   useEffect(() => {
-    if (state?.errorMessage) {
+    if (state?.errorMessages) {
       setIsDialogOpen(true);
     } else {
       setIsDialogOpen(false);
     }
-  }, [state?.errorMessage]);
+  }, [state?.errorMessages]);
 
   useEffect(() => {
     setTags(state?.newAssignment.tags || []);
@@ -102,12 +102,14 @@ export function AddAssignment({ devId }: Props) {
               inputType="text"
               handleChangeInput={handleChangeInput}
               defaultValue={state?.newAssignment.title}
+              errorMessage={state?.errorMessages?.titleError}
             />
             <InputField
               label="Score"
               inputType="number"
               handleChangeInput={handleChangeInput}
               defaultValue={state?.newAssignment.score.toString()}
+              errorMessage={state?.errorMessages?.scoreError}
             />
             <FormTextArea
               label="Comment"
@@ -130,9 +132,9 @@ export function AddAssignment({ devId }: Props) {
               Save Changes
             </Button>
           </DialogFooter>
-          {state?.errorMessage && (
-            <p className="text-red-600">{state.errorMessage}</p>
-          )}
+          {state?.errorMessages ? (
+            <p className="text-red-600 font-bold h-6">Form error. Please make the necessary changes.</p>
+          ) : <p className="h-6"></p>}
         </form>
       </DialogContent>
     </Dialog>
