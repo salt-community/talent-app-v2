@@ -3,18 +3,31 @@ import { backgroundsService } from "../instance";
 import { DeveloperProfileCard } from "./developer-profile-card";
 import { addDeveloperProfileAction } from "../actions";
 import { CreateProfileButton } from "./create-profile-button";
+import { errorHandler } from "@/lib";
 
 type Props = {
   identityid: string;
 };
 
 export async function CreateDeveloperProfileCard({ identityid }: Props) {
-  const devIds =
-    await backgroundsService.getAllDeveloperProfilesById(identityid);
+  let devIds: {
+    id: string
+  }[] = [];
+
+  try {
+    devIds = await backgroundsService.getAllDeveloperProfilesById(identityid);
+  } catch (error) {
+    errorHandler(error);
+  }
 
   async function addProfile() {
     "use server";
-    await addDeveloperProfileAction(identityid);
+    
+    try {
+      await addDeveloperProfileAction(identityid);
+    } catch (error) {
+      errorHandler(error)
+    }
   }
 
   return (
