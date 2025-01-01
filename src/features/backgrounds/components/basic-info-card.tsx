@@ -4,16 +4,28 @@ import { Background } from "../types";
 import { SocialLink } from "./social-link";
 import { DialogForm } from "./dialog-form";
 import { backgroundsService } from "../instance";
+import type { LanguageSelect, SkillSelect, EducationSelect } from "../db";
+import { errorHandler } from "@/lib";
 
 type Props = { background: Background; devId: string };
 
 export async function BackgroundBasicInfoCard({ background, devId }: Props) {
-  const allSkills = await backgroundsService.getAllSkills();
-  const allLanguages = await backgroundsService.getAllLanguages();
-  const allEducations = await backgroundsService.getAllEducations();
+  let allSkills: SkillSelect[] = [];
+  let allLanguages: LanguageSelect[] = [];
+  let allEducations: EducationSelect[] = [];
+  let editAccess = false;
+  
   const filteredLinks = background.links.filter((e) => e.name !== "LinkedIn");
+  
+  try {
+    allSkills = await backgroundsService.getAllSkills();
+    allLanguages = await backgroundsService.getAllLanguages();
+    allEducations = await backgroundsService.getAllEducations();
+    editAccess = await backgroundsService.editAccess(devId);
+  } catch (error) {
+    errorHandler(error);  
+  }
 
-  const editAccess = await backgroundsService.editAccess(devId);
   return (
     <>
       <section className="flex justify-between w-full">
