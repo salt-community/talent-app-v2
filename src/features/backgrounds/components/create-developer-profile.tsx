@@ -1,22 +1,23 @@
 "use server";
 
-import React from "react";
-import { backgroundsService } from "../instance";
-import { DeveloperProfileCard } from "./developer-profile-card";
-import { CreateProfileButton } from "./create-profile-button";
 import { errorHandler } from "@/lib";
+import { backgroundsService } from "../instance";
+import { CreateProfileButton } from "./create-profile-button";
+import { DeveloperProfileCard } from "./developer-profile-card";
 
 type Props = {
-  identityid: string;
+  identityId: string;
 };
 
-export async function CreateDeveloperProfileCard({ identityid }: Props) {
+export async function CreateDeveloperProfileCard({
+  identityId: identityId,
+}: Props) {
   let devIds: {
     id: string;
   }[] = [];
 
   try {
-    devIds = await backgroundsService.getAllDeveloperProfilesById(identityid);
+    devIds = await backgroundsService.getAllDeveloperProfilesById(identityId);
   } catch (error) {
     errorHandler(error);
   }
@@ -25,7 +26,7 @@ export async function CreateDeveloperProfileCard({ identityid }: Props) {
     <div>
       <div className="flex flex-col p-4 items-center gap-4">
         <h1 className="text-xl font-semibold">Developer Profiles</h1>
-        <CreateProfileButton identityid={identityid} />
+        <CreateProfileButton identityId={identityId} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

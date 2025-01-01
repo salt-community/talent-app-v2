@@ -1,11 +1,11 @@
 "use server";
 
-import { backgroundsService } from "./instance";
-import { z, ZodError } from "zod";
-import { redirect } from "next/navigation";
-import { SocialLink } from "./db";
-import { revalidatePath } from "next/cache";
 import { errorHandler } from "@/lib";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { z, ZodError } from "zod";
+import { SocialLink } from "./db";
+import { backgroundsService } from "./instance";
 
 const backgroundUpdate = z.object({
   id: z.coerce.number(),

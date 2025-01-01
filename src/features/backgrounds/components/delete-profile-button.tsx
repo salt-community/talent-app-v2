@@ -1,9 +1,9 @@
 "use client";
 
 import { AlertDialogDemo } from "@/components";
-import { deleteDeveloperProfileAction } from "../actions";
-import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { X } from "lucide-react";
+import { deleteDeveloperProfileAction } from "../actions";
 
 interface Props {
   devId: string;
@@ -22,7 +22,7 @@ export function DeleteProfileButton({ devId }: Props) {
   return (
     <AlertDialogDemo
       title={"Are you sure?"}
-      description={"This will delete your assignment!"}
+      description={"This will delete your profile!"}
       onConfirm={() => deleteProfile()}
     >
       <X />

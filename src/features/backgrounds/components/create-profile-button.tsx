@@ -1,16 +1,16 @@
 "use client";
 import { AlertDialogDemo, Button } from "@/components";
-import { addDeveloperProfileAction } from "../actions";
 import { useRouter } from "next/navigation";
+import { addDeveloperProfileAction } from "../actions";
 
 interface Props {
-  identityid: string;
+  identityId: string;
 }
 
-export function CreateProfileButton({ identityid }: Props) {
+export function CreateProfileButton({ identityId: identityId }: Props) {
   const router = useRouter();
   const addProfile = async () => {
-    await addDeveloperProfileAction(identityid);
+    await addDeveloperProfileAction(identityId);
     router.refresh();
   };
 
