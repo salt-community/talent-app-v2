@@ -2,9 +2,18 @@ import Image from "next/image";
 import { QuoteHighlight } from "./quote-highlight";
 import { HeroPost } from "./hero-post";
 import { backgroundsService } from "../instance";
+import type { HighlightedDeveloper } from "../db/posts-data";
+import { errorHandler } from "@/lib";
 
 export async function Post({ developerId }: { developerId: string }) {
-  const post = await backgroundsService.getPostById(developerId);
+  let post: HighlightedDeveloper | undefined;
+
+  try {
+    post = await backgroundsService.getPostById(developerId);
+  } catch (error) {
+      errorHandler(error);
+  }
+
   if (!post) {
     return null;
   }
