@@ -36,8 +36,10 @@ export function createService(
     }: ProjectData) => {
       checkAccess("project.add");
       let performance: string;
+
       if (projectWebsite.length !== 0) {
         performance = await client.testPagePerformance(projectWebsite);
+        console.log(performance);
       } else {
         performance = "NA";
       }
@@ -81,7 +83,6 @@ export function createService(
       }
     },
     updatePerformance: async (projectWebsite: string, id: string) => {
-      checkAccess("project.updatePerformance");
       const newPerformanceScore =
         await client.testPagePerformance(projectWebsite);
       reps.updatePerformanceScore({

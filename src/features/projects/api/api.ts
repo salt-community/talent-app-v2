@@ -48,7 +48,7 @@ export const createClient = () => {
     },
 
     testPagePerformance: async (url: string) => {
-      const apiKey = process.env.PAGE_SPEED_INSIGHTS_API_KEY;
+      const apiKey = process.env.GOOGLE_PAGE_SPEED_API_KEY;
       const pageUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${url}&key=${apiKey}`;
       let performanceScore = 0;
 
@@ -56,6 +56,7 @@ export const createClient = () => {
         const response = await fetch(pageUrl);
         const data = await response.json();
         performanceScore = data.lighthouseResult.categories.performance.score;
+        console.log("Performance score:", performanceScore);
       } catch (error) {
         console.error("Error fetching performance score:", error);
         return "NA";
