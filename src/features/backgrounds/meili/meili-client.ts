@@ -1,4 +1,4 @@
-import MeiliSearch from "meilisearch";
+import MeiliSearch, { Settings } from "meilisearch";
 import { BackgroundUpdate } from "../types";
 import { createMeiliSearch } from "./meili-search";
 
@@ -38,6 +38,19 @@ export function createMeiliClient() {
       const response = await index.deleteAllDocuments();
       await index.waitForTask(response.taskUid);
       return response.status;
+    },
+
+    async getSettings() {
+      const index = getMeiliSearch().index(BACKGROUNDS_UID);
+      const settings = await index.getSettings();
+      return settings;
+    },
+
+    async resetSettings() {
+      const index = getMeiliSearch().index(BACKGROUNDS_UID);
+      const task = await index.resetSettings();
+      const resetSettingsTask = await index.waitForTask(task.taskUid);
+      return resetSettingsTask.status;
     },
   };
 }
