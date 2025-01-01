@@ -19,7 +19,7 @@ type Props = {
   description: string;
   buttonText: string;
   onSynonymChange: (synonym: Synonym) => void;
-  meiliSynonym: Synonym | undefined;
+  meiliSynonym?: Synonym;
   children: React.ReactNode;
 };
 export function SynonymDialog({

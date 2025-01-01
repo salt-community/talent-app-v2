@@ -9,21 +9,25 @@ type Props = { synonyms: [string, string[]][] };
 export function MeiliSynonyms({ synonyms }: Props) {
   const [currentSynonyms, setCurrentSynonyms] = useState(synonyms);
 
-  const handleSynonymChange = (synonym: [string, string[]]) => {
-    const synonyms = currentSynonyms.filter(([s]) => s !== synonym[0]);
-    setCurrentSynonyms([...synonyms, synonym]);
-  };
-
   return (
-    <div className="py-8 p-4">
+    <div className="py-8 p-4 spacy">
       <span className="font-bold">Synonyms:</span>
-      <div className="p-2 space-y-2 w-fit">
+      <div className="p-2 space-y-2 w-full md:w-96">
+        <input
+          hidden
+          name="synonyms"
+          defaultValue={JSON.stringify(currentSynonyms)}
+        />
         {currentSynonyms.length > 0 ? (
           currentSynonyms.map((synonym) => (
             <MeiliSynonym
               key={synonym[0] + synonym[1].join(",")}
               synonym={synonym}
-              onSynonymChange={handleSynonymChange}
+              onSynonymChange={(updatedSynonym) =>
+                setCurrentSynonyms((prev) =>
+                  prev.map((s) => (s === synonym ? updatedSynonym : s)),
+                )
+              }
               onRemove={() => {
                 const synonyms = currentSynonyms.filter((s) => s !== synonym);
                 setCurrentSynonyms(synonyms);
@@ -35,8 +39,9 @@ export function MeiliSynonyms({ synonyms }: Props) {
         )}
         <div className="flex justify-end">
           <SynonymDialog
-            meiliSynonym={undefined}
-            onSynonymChange={handleSynonymChange}
+            onSynonymChange={(synonym) =>
+              setCurrentSynonyms((prev) => [...prev, synonym])
+            }
             title={"Add synonym"}
             description={"Add a new synonym and its pairs"}
             buttonText={"Add"}
@@ -58,9 +63,20 @@ function MeiliSynonym({
   onSynonymChange: (synonym: Synonym) => void;
   onRemove: () => void;
 }) {
+  const [word, pairs] = synonym;
   return (
-    <div className="border rounded-md p-2 flex gap-4 justify-between items-center w-full md:w-96">
-      {synonym[0]}: {synonym[1].join(", ")}
+    <div className="border rounded-md p-2 flex gap-4 justify-between items-center">
+      <div>
+        <label className="font-bold">{word}: </label>
+        {pairs.map((synonym) => (
+          <label
+            key={synonym}
+            className="text-sm text-gray-500 border rounded-full px-2 py-1"
+          >
+            {synonym}
+          </label>
+        ))}
+      </div>
       <div className="flex gap">
         <SynonymDialog
           meiliSynonym={synonym}
