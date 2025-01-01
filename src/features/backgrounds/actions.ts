@@ -92,7 +92,6 @@ export async function updateBackgroundAction(
     redirect(`/developers/${validatedUpdate.devId}`);
   }
 }
-
 export async function addBackground(id: string) {
   const developer = await backgroundsService.addDeveloperBackground(id);
   return developer;
@@ -104,5 +103,5 @@ export async function addDeveloperProfileAction(identityId: string) {
 
 export async function deleteDeveloperProfileAction(devId: string) {
   await backgroundsService.deleteDeveloperProfile(devId);
-  revalidatePath("/profile");
+  revalidatePath(`/profile}`);
 }

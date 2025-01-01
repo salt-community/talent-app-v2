@@ -4,6 +4,7 @@ import { Background } from "./background";
 import { X } from "lucide-react";
 import { errorHandler } from "@/lib";
 import { backgroundsService } from "../instance";
+import { deleteDeveloperProfileAction } from "../actions";
 
 type Props = {
   devId: string;
@@ -14,7 +15,7 @@ export function DeveloperProfileCard({ devId }: Props) {
     "use server";
 
     try {
-      await backgroundsService.deleteDeveloperProfile(devId);
+      await deleteDeveloperProfileAction(devId);
     } catch (error) {
       errorHandler(error);
     }
