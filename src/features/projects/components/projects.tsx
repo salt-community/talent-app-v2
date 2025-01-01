@@ -2,8 +2,8 @@ import { Separator, H2 } from "@/components";
 import { projectService } from "../instance";
 import ProjectDetails from "./project-details";
 import ProjectForm from "./project-form";
-import { CustomError, errorHandler } from "@/lib";
-import { Project } from "../types";
+import { type CustomError, errorHandler } from "@/lib";
+import type { Project } from "../types";
 
 type Props = {
   devId: string;

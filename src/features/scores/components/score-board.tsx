@@ -5,8 +5,8 @@ import { H2 } from "@/components/ui/header/header-h2";
 import { scoresService } from "../instance";
 import { AddAssignment } from "./add-assignment";
 import { Assignments } from "./accordion/assignments";
-import { Assignment } from "../types";
-import { CustomError, errorHandler } from "@/lib";
+import type { Assignment } from "../types";
+import { type CustomError, errorHandler } from "@/lib";
 
 type Props = { devId: string };
 

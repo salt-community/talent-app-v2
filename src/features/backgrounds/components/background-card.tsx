@@ -4,7 +4,7 @@ import { BackgroundBasicInfoCard } from "./basic-info-card";
 import { SkillsBadges } from "./skills-badges";
 import BackgroundSkeleton from "./background-skeleton";
 import type { Background } from "../types";
-import { CustomError, errorHandler } from "@/lib";
+import { type CustomError, errorHandler } from "@/lib";
 
 type Props = { devid: string };
 
