@@ -49,6 +49,10 @@ export function MeiliSynonyms({ synonyms }: Props) {
             <Button size="sm">Add synonyms</Button>
           </SynonymDialog>
         </div>
+        {JSON.stringify(synonyms.toSorted()) !==
+          JSON.stringify(currentSynonyms.toSorted()) && (
+          <span>Please, update the synonyms</span>
+        )}
       </div>
     </div>
   );
