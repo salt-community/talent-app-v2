@@ -5,14 +5,15 @@ import {
   UpdateStatus,
   CheckAccess,
 } from "@/features";
-import { RepopulateMeiliSearch } from "../backgrounds/types";
+import { MeilisearchConfigurationClient } from "./types";
+import { Settings } from "meilisearch";
 
 export function createAdminService(
   getAllDeveloperProfiles: GetAllDeveloperProfiles,
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
   checkAccess: CheckAccess,
-  repopulateMeilisearch: RepopulateMeiliSearch,
+  meilisearchConfigurationClient: MeilisearchConfigurationClient,
 ) {
   return {
     async getAllDeveloperProfiles() {
@@ -29,7 +30,27 @@ export function createAdminService(
     },
     async repopulateMeilisearch() {
       await checkAccess("admin.repopulateMeilisearch");
-      await repopulateMeilisearch();
+      await meilisearchConfigurationClient.repopulate();
+    },
+    async syncMeilisearch() {
+      await checkAccess("admin.syncMeilisearch");
+      await meilisearchConfigurationClient.sync();
+    },
+    async doesMeilisearchNeedSync() {
+      await checkAccess("admin.doesMeilisearchNeedSync");
+      return await meilisearchConfigurationClient.doesNeedSync();
+    },
+    async getMeilisearchSettings() {
+      await checkAccess("admin.getMeilisearchSettings");
+      return await meilisearchConfigurationClient.getSettings();
+    },
+    async updateMeilisearchSettings(settings: Settings) {
+      await checkAccess("admin.updateMeilisearchSettings");
+      await meilisearchConfigurationClient.updateSettings(settings);
+    },
+    async resetMeilisearchSettings() {
+      await checkAccess("admin.resetMeilisearchSettings");
+      await meilisearchConfigurationClient.resetSettings();
     },
   };
 }

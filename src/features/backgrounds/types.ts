@@ -19,5 +19,4 @@ export type BackgroundUpdate = Partial<BackgroundSelect> &
     educations: string[];
   };
 
-  export type BackgroundService = ReturnType<typeof createBackgroundsService>;
-  export type RepopulateMeiliSearch = BackgroundService["repopulateMeiliSearch"];
+  export type BackgroundsService = ReturnType<typeof createBackgroundsService>;

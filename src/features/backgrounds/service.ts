@@ -7,7 +7,7 @@ import {
   Developer,
   DeveloperProfileStatus,
 } from "../developer-profiles";
-import { TaskStatus } from "meilisearch";
+import { Settings, TaskStatus } from "meilisearch";
 import { backgroundsService } from "./instance";
 import { CreateDeveloperProfile, GetAllById } from "@/features";
 
@@ -21,7 +21,7 @@ export function createBackgroundsService(
   checkUserAccess: (id: string) => Promise<boolean>,
   createDeveloperProfile: CreateDeveloperProfile,
   getAllById: GetAllById,
-  deleteDeveloperProfile: DeleteDeveloperProfile
+  deleteDeveloperProfile: DeleteDeveloperProfile,
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {
     outboxMessages.forEach((outboxMessage) => {
@@ -34,7 +34,7 @@ export function createBackgroundsService(
     switch (outboxMessage.operation) {
       case "upsert":
         const background = await repository.getBackgroundByDevId(
-          outboxMessage.devId
+          outboxMessage.devId,
         );
         if (!background) {
           succeeded = true;
@@ -53,7 +53,7 @@ export function createBackgroundsService(
         break;
       case "delete":
         const deleteStatus = await meiliClient.deleteBackground(
-          outboxMessage.devId
+          outboxMessage.devId,
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
         break;
@@ -73,19 +73,19 @@ export function createBackgroundsService(
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index
+          array.findIndex((s) => s.name === skill.name) === index,
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index
+          array.findIndex((l) => l.name === language.name) === index,
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index
+          array.findIndex((e) => e.name === education.name) === index,
       );
     },
     async add(background: BackgroundInsert) {
@@ -119,7 +119,7 @@ export function createBackgroundsService(
       let allDevIds = [];
       if (!cleanSearch || cleanSearch === "") {
         allDevIds = (await this.getAllBackgrounds()).map(
-          (background) => background.devId
+          (background) => background.devId,
         );
       } else {
         allDevIds = await meiliClient.searchDevIds(search);
@@ -133,6 +133,7 @@ export function createBackgroundsService(
       }
       return filteredDevIds;
     },
+
     async repopulateMeiliSearch() {
       await meiliClient.deleteAllBackgrounds();
       const backgrounds = await repository.getAllBackgrounds();
@@ -148,20 +149,31 @@ export function createBackgroundsService(
         });
       }
     },
+
+    async syncMeilisearch() {
+      const outboxMessages = await repository.getAllOutboxMessage();
+      for (const outboxMessage of outboxMessages) {
+        updateMeilisearchFor(outboxMessage);
+      }
+    },
+    async doesMeilisearchNeedSync() {
+      return (await repository.getAllOutboxMessage()).length > 0;
+    },
+    async getMeilisearchSettings() {
+      return await meiliClient.getSettings();
+    },
+    async updateMeilisearchSettings(settings: Settings) {
+      await meiliClient.updateSettings(settings);
+    },
+    async resetMeilisearchSettings() {
+      await meiliClient.resetSettings();
+    },
+
     async getAllPosts() {
       return await repository.getAllPosts();
     },
     async getPostById(developerId: string) {
       return await repository.getPostById(developerId);
-    },
-    async doesMeilisearchNeedUpdate() {
-      return (await repository.getAllOutboxMessage()).length > 0;
-    },
-    async updateMeilisearch() {
-      const outboxMessages = await repository.getAllOutboxMessage();
-      for (const outboxMessage of outboxMessages) {
-        updateMeilisearchFor(outboxMessage);
-      }
     },
     async editAccess(id: string) {
       return checkUserAccess(id);
