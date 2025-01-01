@@ -8,3 +8,5 @@ export type MeilisearchConfigurationClient = {
   updateSettings: BackgroundsService["updateMeilisearchSettings"];
   resetSettings: BackgroundsService["resetMeilisearchSettings"];
 };
+
+export type Synonym = [string, string[]];
