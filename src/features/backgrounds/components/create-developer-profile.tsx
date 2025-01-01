@@ -29,6 +29,7 @@ export async function CreateDeveloperProfileCard({ identityid }: Props) {
       errorHandler(error);
     }
   }
+
   return (
     <div>
       <div className="flex flex-col p-4 items-center gap-4">
@@ -37,12 +38,8 @@ export async function CreateDeveloperProfileCard({ identityid }: Props) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {devIds.map((devId) => (
-          <DeveloperProfileCard
-            key={devId.id}
-            identityId={identityid}
-            devId={devId.id}
-          />
+        {devIds.map((devId, index) => (
+          <DeveloperProfileCard key={index} devId={devId.id} />
         ))}
       </div>
     </div>
