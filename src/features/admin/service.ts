@@ -5,12 +5,14 @@ import {
   UpdateStatus,
   CheckAccess,
 } from "@/features";
+import { RepopulateMeiliSearch } from "../backgrounds/types";
 
 export function createAdminService(
   getAllDeveloperProfiles: GetAllDeveloperProfiles,
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
-  checkAccess: CheckAccess
+  checkAccess: CheckAccess,
+  repopulateMeilisearch: RepopulateMeiliSearch,
 ) {
   return {
     async getAllDeveloperProfiles() {
@@ -24,6 +26,10 @@ export function createAdminService(
     async updateStatus(id: string, status: DeveloperProfileStatus) {
       await checkAccess("admin.updateStatus");
       await updateStatus(id, status);
+    },
+    async repopulateMeilisearch() {
+      await checkAccess("admin.repopulateMeilisearch");
+      await repopulateMeilisearch();
     },
   };
 }

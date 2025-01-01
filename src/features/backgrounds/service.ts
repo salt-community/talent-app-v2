@@ -135,7 +135,7 @@ export function createBackgroundsService(
     },
     async repopulateMeiliSearch() {
       await meiliClient.deleteAllBackgrounds();
-      const backgrounds = await this.getAllBackgrounds();
+      const backgrounds = await repository.getAllBackgrounds();
       for (const background of backgrounds) {
         const skills = background.skills.map((s) => s.name);
         const languages = background.languages.map((l) => l.name);
