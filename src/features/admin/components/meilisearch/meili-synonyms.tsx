@@ -4,6 +4,7 @@ import { SynonymDialog } from "./synonym-dialog";
 import { Button } from "@/components";
 import { Synonym } from "../../types";
 import { Pencil, Trash } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 type Props = { synonyms: [string, string[]][] };
 export function MeiliSynonyms({ synonyms }: Props) {
@@ -39,9 +40,14 @@ export function MeiliSynonyms({ synonyms }: Props) {
         )}
         <div className="flex justify-end">
           <SynonymDialog
-            onSynonymChange={(synonym) =>
-              setCurrentSynonyms((prev) => [...prev, synonym])
-            }
+            onSynonymChange={(synonym) => {
+              if (currentSynonyms.some((s) => s[0] === synonym[0])) {
+                toast({
+                  variant: "destructive",
+                  description: "Synonym already exists, edit it instead",
+                });
+              } else setCurrentSynonyms((prev) => [...prev, synonym]);
+            }}
             title={"Add synonym"}
             description={"Add a new synonym and its pairs"}
             buttonText={"Add"}
