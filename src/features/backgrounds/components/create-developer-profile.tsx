@@ -1,7 +1,8 @@
+"use server";
+
 import React from "react";
 import { backgroundsService } from "../instance";
 import { DeveloperProfileCard } from "./developer-profile-card";
-import { addDeveloperProfileAction } from "../actions";
 import { CreateProfileButton } from "./create-profile-button";
 import { errorHandler } from "@/lib";
 
