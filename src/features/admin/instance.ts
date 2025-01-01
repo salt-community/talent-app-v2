@@ -6,5 +6,12 @@ export const adminService = createAdminService(
   developerService.delete,
   developerService.updateStatus,
   iamService.checkAccess,
-  backgroundsService.repopulateMeiliSearch,
+  {
+    repopulate: backgroundsService.repopulateMeiliSearch,
+    sync: backgroundsService.syncMeilisearch,
+    doesNeedSync: backgroundsService.doesMeilisearchNeedSync,
+    getSettings: backgroundsService.getMeilisearchSettings,
+    updateSettings: backgroundsService.updateMeilisearchSettings,
+    resetSettings: backgroundsService.resetMeilisearchSettings,
+  },
 );

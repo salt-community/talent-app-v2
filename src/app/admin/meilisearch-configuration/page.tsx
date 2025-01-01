@@ -1,4 +1,4 @@
-import { MeiliDashboard } from "@/features/admin/components/meli/meili-dashboard";
+import { MeiliDashboard } from "@/features";
 
 export default function Page() {
   return <MeiliDashboard />;

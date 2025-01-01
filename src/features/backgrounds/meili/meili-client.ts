@@ -45,7 +45,12 @@ export function createMeiliClient() {
       const settings = await index.getSettings();
       return settings;
     },
-
+    async updateSettings(settings: Settings) {
+      const index = getMeiliSearch().index(BACKGROUNDS_UID);
+      const task = await index.updateSettings(settings);
+      const updateSettingsTask = await index.waitForTask(task.taskUid);
+      return updateSettingsTask.status;
+    },
     async resetSettings() {
       const index = getMeiliSearch().index(BACKGROUNDS_UID);
       const task = await index.resetSettings();
