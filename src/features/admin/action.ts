@@ -27,8 +27,11 @@ export async function syncMeilisearchAction() {
 }
 
 export async function updateMeilisearchSettingsAction(formData: FormData) {
-  const settings: Settings = Object.fromEntries(formData.entries());
-  console.log(settings);
+  const synonymsData = formData.get("synonyms") as string;
+  const parsedSynonyms = JSON.parse(synonymsData) as [string, string[]][];
+  const synonyms = Object.fromEntries(parsedSynonyms);
+  const settings = { synonyms: synonyms };
+
   await adminService.updateMeilisearchSettings(settings);
   revalidatePath("/admin/meilisearch-configuration");
 }
