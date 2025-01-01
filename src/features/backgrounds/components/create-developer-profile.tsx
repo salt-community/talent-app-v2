@@ -11,7 +11,7 @@ type Props = {
 
 export async function CreateDeveloperProfileCard({ identityid }: Props) {
   let devIds: {
-    id: string
+    id: string;
   }[] = [];
 
   try {
@@ -22,27 +22,29 @@ export async function CreateDeveloperProfileCard({ identityid }: Props) {
 
   async function addProfile() {
     "use server";
-    
+
     try {
       await addDeveloperProfileAction(identityid);
     } catch (error) {
-      errorHandler(error)
+      errorHandler(error);
     }
   }
-
   return (
-    <>
-      <div className=" md:grid-cols-3 grid grid-cols-1 gap-4">
-        {devIds.map((devId, index) => (
+    <div>
+      <div className="flex flex-col p-4 items-center gap-4">
+        <h1 className="text-xl font-semibold">Developer Profiles</h1>
+        <CreateProfileButton onAddProfile={addProfile} />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {devIds.map((devId) => (
           <DeveloperProfileCard
-            key={index}
+            key={devId.id}
             identityId={identityid}
             devId={devId.id}
           />
         ))}
       </div>
-
-      <CreateProfileButton onAddProfile={addProfile} />
-    </>
+    </div>
   );
 }

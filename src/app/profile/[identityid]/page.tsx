@@ -7,10 +7,5 @@ type Params = {
 export default async function Page({ params }: Params) {
   const { identityid } = await params;
 
-  return (
-    <>
-      <h1>Developer Profile</h1>
-      <CreateDeveloperProfileCard identityid={identityid} />
-    </>
-  );
+  return <CreateDeveloperProfileCard identityid={identityid} />;
 }
