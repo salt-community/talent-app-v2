@@ -4,6 +4,7 @@ import {
   LanguageSelect,
   SkillSelect,
 } from "./db";
+import { createBackgroundsService } from "./service";
 
 export type Background = BackgroundSelect & {
   skills: SkillSelect[];
@@ -17,3 +18,6 @@ export type BackgroundUpdate = Partial<BackgroundSelect> &
     languages: string[];
     educations: string[];
   };
+
+  export type BackgroundService = ReturnType<typeof createBackgroundsService>;
+  export type RepopulateMeiliSearch = BackgroundService["repopulateMeiliSearch"];
