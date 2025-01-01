@@ -6,7 +6,7 @@ import { scoresService } from "../instance";
 import { AddAssignment } from "./add-assignment";
 import { Assignments } from "./accordion/assignments";
 import type { Assignment } from "../types";
-import { type CustomError, errorHandler } from "@/lib";
+import { errorHandler } from "@/lib";
 
 type Props = { devId: string };
 
@@ -15,7 +15,7 @@ export async function ScoreBoard({ devId }: Props) {
     try {
     assignments = await scoresService.getAssignmentsByDevId(devId);
   } catch (error) {
-    errorHandler(error as CustomError)
+    errorHandler(error)
   }
 
   return (

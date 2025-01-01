@@ -2,7 +2,7 @@ import { Separator, H2 } from "@/components";
 import { projectService } from "../instance";
 import ProjectDetails from "./project-details";
 import ProjectForm from "./project-form";
-import { type CustomError, errorHandler } from "@/lib";
+import { errorHandler } from "@/lib";
 import type { Project } from "../types";
 
 type Props = {
@@ -18,7 +18,7 @@ export async function Projects({ devId }: Props) {
     
     editAccess = await projectService.checkProfileAccess(devId);
   } catch (error) {
-    errorHandler(error as CustomError)
+    errorHandler(error)
   }
 
   if (projects.length === 0) {
