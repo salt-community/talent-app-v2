@@ -1,5 +1,11 @@
-import { Card, CardHeader, CardTitle, CardContent, Separator } from "@/components";
-import { MeiliConfiguration } from "./meili-configuration";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  Separator,
+} from "@/components";
+import { MeiliSettings } from "./meili-configuration";
 import { MeiliPopulation } from "./meili-population";
 
 export function MeiliDashboard() {
@@ -11,7 +17,7 @@ export function MeiliDashboard() {
       <CardContent className="flex flex-col gap-8">
         <MeiliPopulation />
         <Separator />
-        <MeiliConfiguration />
+        <MeiliSettings />
       </CardContent>
     </Card>
   );

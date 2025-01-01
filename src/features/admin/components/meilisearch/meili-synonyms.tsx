@@ -1,5 +1,3 @@
-
-
 type Props = { synonyms?: [string, string[]][] };
 export function MeiliSynonyms({ synonyms }: Props) {
   return (
