@@ -32,14 +32,11 @@ export function DialogForm({
   allLanguages,
   allEducations,
 }: Props) {
-  const [message, formAction, isPending] = useActionState(
+  const [state, formAction, isPending] = useActionState(
     updateBackgroundAction,
-    null,
+    undefined,
   );
 
-  if (message) {
-    console.error(message);
-  }
   const [avatarUrl, setAvatarUrl] = useState(background.avatarUrl);
 
   return (
@@ -83,7 +80,8 @@ export function DialogForm({
                   name="avatarUrl"
                   id="avatarUrl"
                   placeholder="Profile picture url..."
-                  value={avatarUrl}
+                  defaultValue={state?.update.avatarUrl as string || avatarUrl}
+                  errorMessage={state?.errorMessages?.avatarUrlError}
                   onChange={(e) => setAvatarUrl(e.target.value)}
                 />
               </div>
@@ -94,7 +92,8 @@ export function DialogForm({
                 name="name"
                 id="name"
                 required
-                defaultValue={background.name}
+                defaultValue={state?.update.name as string === "" ? "" : state?.update.name as string || background.name}
+                errorMessage={state?.errorMessages?.nameError}
                 placeholder="Fullname..."
                 className="col-span-3"
               />
@@ -106,7 +105,8 @@ export function DialogForm({
                 placeholder="Role..."
                 name="title"
                 id="title"
-                defaultValue={background.title}
+                defaultValue={state?.update.title as string === "" ? "" : state?.update.title as string || background.title}
+                errorMessage={state?.errorMessages?.titleError}
                 className="col-span-3"
               />
               <Label htmlFor="bio" className="text-right">
@@ -180,6 +180,9 @@ export function DialogForm({
               </Button>
               <div className="flex-grow" />
             </DialogFooter>
+            {state?.errorMessages ? (
+            <p className="text-red-600 font-bold h-6">Form error. Please make the necessary changes.</p>
+          ) : <p className="h-6"></p>}
           </form>
         </ScrollArea>
       </DialogContent>
