@@ -2,15 +2,24 @@ import { Separator, H2 } from "@/components";
 import { projectService } from "../instance";
 import ProjectDetails from "./project-details";
 import ProjectForm from "./project-form";
+import { CustomError, errorHandler } from "@/lib";
+import { Project } from "../types";
 
 type Props = {
   devId: string;
 };
 
 export async function Projects({ devId }: Props) {
-  const projects = await projectService.getAll(devId);
-
-  const editAccess = await projectService.checkProfileAccess(devId);
+  let projects: Project[] = [];
+  let editAccess = false;
+  
+  try {
+    projects = await projectService.getAll(devId);
+    
+    editAccess = await projectService.checkProfileAccess(devId);
+  } catch (error) {
+    errorHandler(error as CustomError)
+  }
 
   if (projects.length === 0) {
     return (
