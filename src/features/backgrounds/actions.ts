@@ -97,11 +97,19 @@ export async function addBackground(id: string) {
   return developer;
 }
 export async function addDeveloperProfileAction(identityId: string) {
-  await backgroundsService.createDeveloperProfile(identityId);
+  try {
+    await backgroundsService.createDeveloperProfile(identityId);
+  } catch (error) {
+    errorHandler(error);
+  }
   revalidatePath("/profile");
 }
 
 export async function deleteDeveloperProfileAction(devId: string) {
-  await backgroundsService.deleteDeveloperProfile(devId);
+  try {
+    await backgroundsService.deleteDeveloperProfile(devId);
+  } catch (error) {
+    errorHandler(error);
+  }
   revalidatePath("/profile");
 }
