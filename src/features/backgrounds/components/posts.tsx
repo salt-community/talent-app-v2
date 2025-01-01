@@ -1,8 +1,16 @@
+import { errorHandler } from "@/lib";
+import { HighlightedDeveloper } from "../db/posts-data";
 import { backgroundsService } from "../instance";
 import { InterviewCard } from "./interview-card";
 
 export async function Posts() {
-  const posts = await backgroundsService.getAllPosts();
+  let posts: HighlightedDeveloper[] = [];
+  
+  try {
+    posts = await backgroundsService.getAllPosts();
+  } catch (error) {
+    errorHandler(error);
+  } 
   
   return (
     <section className="bg-secondary pb-14">
