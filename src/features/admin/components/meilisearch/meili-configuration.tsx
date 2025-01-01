@@ -4,7 +4,7 @@ import { LoadingButton } from "./loading-button";
 import { H3 } from "@/components";
 import { adminService } from "../../instance";
 
-export async function MeiliConfiguration() {
+export async function MeiliSettings() {
   const settings = await adminService.getMeilisearchSettings();
 
   return (
