@@ -16,6 +16,7 @@ export function MeiliSynonyms({ synonyms }: Props) {
           <span className="text-gray-500">No synonyms yet</span>
         )}
       </div>
+      <Button size="sm">Add synonyms</Button>
     </div>
   );
 }
