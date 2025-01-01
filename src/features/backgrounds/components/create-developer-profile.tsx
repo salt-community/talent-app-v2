@@ -20,21 +20,11 @@ export async function CreateDeveloperProfileCard({ identityid }: Props) {
     errorHandler(error);
   }
 
-  async function addProfile() {
-    "use server";
-
-    try {
-      await addDeveloperProfileAction(identityid);
-    } catch (error) {
-      errorHandler(error);
-    }
-  }
-
   return (
     <div>
       <div className="flex flex-col p-4 items-center gap-4">
         <h1 className="text-xl font-semibold">Developer Profiles</h1>
-        <CreateProfileButton onAddProfile={addProfile} />
+        <CreateProfileButton identityid={identityid} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

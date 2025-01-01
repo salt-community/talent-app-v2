@@ -98,7 +98,6 @@ export async function addBackground(id: string) {
 }
 export async function addDeveloperProfileAction(identityId: string) {
   await backgroundsService.createDeveloperProfile(identityId);
-  revalidatePath(`/profile/${identityId}`);
 }
 
 export async function deleteDeveloperProfileAction(devId: string) {
