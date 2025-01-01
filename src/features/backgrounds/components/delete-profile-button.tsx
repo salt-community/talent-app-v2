@@ -20,14 +20,12 @@ export function DeleteProfileButton({ devId }: Props) {
   };
 
   return (
-    <>
-      <AlertDialogDemo
-        title={"Are you sure?"}
-        description={"This will delete your assignment!"}
-        onConfirm={() => deleteProfile()}
-      >
-        <X />
-      </AlertDialogDemo>
-    </>
+    <AlertDialogDemo
+      title={"Are you sure?"}
+      description={"This will delete your assignment!"}
+      onConfirm={() => deleteProfile()}
+    >
+      <X />
+    </AlertDialogDemo>
   );
 }

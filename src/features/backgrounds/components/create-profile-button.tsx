@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components";
+import { AlertDialogDemo, Button } from "@/components";
 import { addDeveloperProfileAction } from "../actions";
 
 interface Props {
@@ -11,5 +11,13 @@ export function CreateProfileButton({ identityid }: Props) {
     await addDeveloperProfileAction(identityid);
   };
 
-  return <Button onClick={addProfile}>Create new profile</Button>;
+  return (
+    <AlertDialogDemo
+      title={"Confirmation Required"}
+      description={"Are you sure you want to create a new profile?"}
+      onConfirm={() => addProfile()}
+    >
+      <Button>Create New Profile</Button>
+    </AlertDialogDemo>
+  );
 }
