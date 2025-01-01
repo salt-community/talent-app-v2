@@ -1,9 +1,16 @@
 import { Card, CardContent } from "@/components";
 import { backgroundsService } from "@/features";
 import { Background } from "./background";
+import { errorHandler } from "@/lib";
 
 export async function HighlightedDevelopers() {
-  const highlightedDevIds = await backgroundsService.getHighlightedDevIds();
+  let highlightedDevIds: string[] = [];
+
+  try {
+    highlightedDevIds = await backgroundsService.getHighlightedDevIds();
+  } catch (error) {
+    errorHandler(error);
+  }
 
   return (
     <main className="px-4">
