@@ -12,7 +12,8 @@ type Props = { devId: string };
 
 export async function ScoreBoard({ devId }: Props) {
   let assignments: Assignment[] = [];
-    try {
+  
+  try {
     assignments = await scoresService.getAssignmentsByDevId(devId);
   } catch (error) {
     errorHandler(error)
