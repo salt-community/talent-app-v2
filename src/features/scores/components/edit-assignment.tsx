@@ -66,9 +66,10 @@ export function EditAssignment({ assignment }: Props) {
     }
   }, [state?.errorMessages]);
 
-  useEffect(() => {
-    setTags(state?.newAssignment.tags || []);
-  }, [state?.newAssignment.tags]);
+  useEffect(() => { 
+    if (state?.newAssignment && state.newAssignment.tags !== tags) { 
+      setTags(state.newAssignment.tags || []); 
+    } }, [state?.newAssignment, tags]);
 
   return (
     <Dialog
@@ -76,9 +77,6 @@ export function EditAssignment({ assignment }: Props) {
       onOpenChange={(open) => {
         if (!open) {
           setIsDialogOpen(false);
-          setTitle("");
-          setScore("");
-          setComment("");
         }
       }}
     >
