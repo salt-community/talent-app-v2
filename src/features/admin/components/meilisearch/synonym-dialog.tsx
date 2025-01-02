@@ -52,7 +52,7 @@ export function SynonymDialog({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <div className="flex gap-2">
+        <div className="">
           <Input
             type="text"
             placeholder="Synonym"
