@@ -2,32 +2,29 @@
 
 import { FaGithub } from "react-icons/fa6";
 import type { SocialLink } from "../db";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Props = SocialLink & { size?: number };
 
 export function SocialLink({ url, name, size = 20 }: Props) {
-  const router = useRouter();
-
-  const handleNavigation = () => {
-    router.push(url);
-  };
-
   return (
     <>
       {name === "Github" && (
-        <button onClick={handleNavigation}>
+        <Link href={url} target="_blank" rel="noopener noreferrer">
           <FaGithub size={size} />
-        </button>
+        </Link>
       )}
       {name === "Resume" && (
-        <button
-          onClick={handleNavigation}
+        <Link
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
           className="font-bold text-[16px] leading-none"
         >
           CV{" "}
-        </button>
+        </Link>
       )}
     </>
   );
 }
+
