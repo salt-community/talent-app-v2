@@ -26,6 +26,7 @@ import { useToast } from "@/hooks/use-toast";
 import { formSchema } from "../validation";
 import { useState } from "react";
 import { Plus } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   userId: string;
@@ -33,6 +34,7 @@ type Props = {
 
 export default function ProjectForm({ userId }: Props) {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -40,8 +42,8 @@ export default function ProjectForm({ userId }: Props) {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("Form submitted with values:", values);
     try {
+      setLoading(true);
       await addProjectAction({
         repository: values.repository,
         projectWebsite: values.projectWebsite ? values.projectWebsite : "",
@@ -61,6 +63,7 @@ export default function ProjectForm({ userId }: Props) {
         description: error instanceof Error ? error.message : String(error),
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -155,9 +158,11 @@ export default function ProjectForm({ userId }: Props) {
             <DialogFooter>
               <Button
                 type="submit"
+                disabled={loading}
                 className="bg-zinc-900 text-white text-sm rounded-md w-full h-10 hover:bg-zinc-800"
               >
-                Submit{" "}
+                {loading ? <Loader2 className="animate-spin" /> : undefined}
+                {loading ? "Submitting, please wait..." : "Submit"}
               </Button>
             </DialogFooter>
           </form>

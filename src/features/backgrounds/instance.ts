@@ -13,5 +13,6 @@ export const backgroundsService = createBackgroundsService(
   developerService.getDeveloperById,
   iamService.checkUserAccess,
   developerService.createDeveloperProfile,
-  developerService.getAllById
+  developerService.getAllById,
+  developerService.delete
 );

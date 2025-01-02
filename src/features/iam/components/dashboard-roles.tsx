@@ -22,6 +22,12 @@ export async function DashboardRoles() {
           >
             Identities
           </Link>
+          <Link
+            href={"/admin/meilisearch-configuration"}
+            className="py-1 px-4 rounded-md text-paragraphLight"
+          >
+            Search Configuration
+          </Link>
         </div>
       </div>
       {identities.map((identity) => (

@@ -4,6 +4,7 @@ import {
   LanguageSelect,
   SkillSelect,
 } from "./db";
+import { createBackgroundsService } from "./service";
 
 export type Background = BackgroundSelect & {
   skills: SkillSelect[];
@@ -25,3 +26,5 @@ export type DeveloperProfile = {
   email: string;
   status: "unpublished" | "published" | "highlighted";
 };
+
+export type BackgroundsService = ReturnType<typeof createBackgroundsService>;

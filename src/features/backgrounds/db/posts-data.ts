@@ -1,4 +1,20 @@
-export const highlightedDevelopers = [
+export type HighlightedDeveloper = { 
+  id: string; 
+  headline: string; 
+  imageUrl: string; 
+  title: string; 
+  excerpt: string; 
+  avatarUrl: string; 
+  name: string; 
+  date: string; 
+  questions: { 
+    id: string; 
+    question: string; 
+    answer: string; 
+  }[]; 
+};
+
+export const highlightedDevelopers: HighlightedDeveloper[] = [
   {
     id: "1",
     headline:

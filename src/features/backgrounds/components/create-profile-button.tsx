@@ -1,15 +1,26 @@
 "use client";
-
-import { Button } from "@/components";
+import { AlertDialogDemo, Button } from "@/components";
+import { useRouter } from "next/navigation";
+import { addDeveloperProfileAction } from "../actions";
 
 interface Props {
-  onAddProfile: () => void;
+  identityId: string;
 }
 
-export function CreateProfileButton({ onAddProfile }: Props) {
+export function CreateProfileButton({ identityId: identityId }: Props) {
+  const router = useRouter();
+  const addProfile = async () => {
+    await addDeveloperProfileAction(identityId);
+    router.refresh();
+  };
+
   return (
-    <div className="container mx-auto pt-14">
-      <Button onClick={onAddProfile}>Create new profile</Button>
-    </div>
+    <AlertDialogDemo
+      title={"Confirmation Required"}
+      description={"Are you sure you want to create a new profile?"}
+      onConfirm={() => addProfile()}
+    >
+      <Button>Create New Profile</Button>
+    </AlertDialogDemo>
   );
 }

@@ -10,7 +10,7 @@ import {
 export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   devId: uuid("dev_id").notNull(),
-  avatarUrl: varchar("avatar_url").notNull().default("/avatar.png"),
+  avatarUrl: varchar("avatar_url").notNull().default(""),
   name: varchar().notNull(),
   title: varchar().notNull(),
   bio: varchar().notNull(),

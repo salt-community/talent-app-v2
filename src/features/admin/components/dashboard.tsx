@@ -23,6 +23,12 @@ export async function Dashboard() {
           >
             Identities
           </Link>
+          <Link
+            href={"/admin/meilisearch-configuration"}
+            className="py-1 px-4 rounded-md text-paragraphLight"
+          >
+            Search Configuration
+          </Link>
         </div>
       </div>
       {developers.map((dev) => (

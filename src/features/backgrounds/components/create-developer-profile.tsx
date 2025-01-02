@@ -1,35 +1,39 @@
-import React from "react";
+"use server";
+
+import { errorHandler } from "@/lib";
 import { backgroundsService } from "../instance";
-import { DeveloperProfileCard } from "./developer-profile-card";
-import { addDeveloperProfileAction } from "../actions";
 import { CreateProfileButton } from "./create-profile-button";
+import { DeveloperProfileCard } from "./developer-profile-card";
 
 type Props = {
-  identityid: string;
+  identityId: string;
 };
 
-export async function CreateDeveloperProfileCard({ identityid }: Props) {
-  const devIds =
-    await backgroundsService.getAllDeveloperProfilesById(identityid);
+export async function CreateDeveloperProfileCard({
+  identityId: identityId,
+}: Props) {
+  let devIds: {
+    id: string;
+  }[] = [];
 
-  async function addProfile() {
-    "use server";
-    await addDeveloperProfileAction(identityid);
+  try {
+    devIds = await backgroundsService.getAllDeveloperProfilesById(identityId);
+  } catch (error) {
+    errorHandler(error);
   }
 
   return (
-    <>
-      <div className=" md:grid-cols-3 grid grid-cols-1 gap-4">
-        {devIds.map((devId, index) => (
-          <DeveloperProfileCard
-            key={index}
-            identityId={identityid}
-            devId={devId.id}
-          />
-        ))}
+    <div>
+      <div className="flex flex-col p-4 items-center gap-4">
+        <h1 className="text-xl font-semibold">Developer Profiles</h1>
+        <CreateProfileButton identityId={identityId} />
       </div>
 
-      <CreateProfileButton onAddProfile={addProfile} />
-    </>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {devIds.map((devId, index) => (
+          <DeveloperProfileCard key={index} devId={devId.id} />
+        ))}
+      </div>
+    </div>
   );
 }

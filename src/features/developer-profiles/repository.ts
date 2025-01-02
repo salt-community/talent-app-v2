@@ -45,7 +45,7 @@ export function createDevelopersRepository(db: Db) {
           .select({ status: developerProfiles.status })
           .from(developerProfiles)
           .where(eq(developerProfiles.id, id))
-      )[0].status;
+      )[0]?.status;
     },
     async updateStatus(id: string, statues: DeveloperProfileStatus) {
       await db

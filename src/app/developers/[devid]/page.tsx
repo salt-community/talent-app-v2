@@ -3,6 +3,9 @@ import { BackgroundCard } from "@/features";
 import { Projects } from "@/features";
 import { ScoreBoard } from "@/features/scores";
 
+// Maximum timeout duration for the page speed API
+export const maxDuration = 60;
+
 type Params = {
   params: Promise<{ devid: string }>;
 };

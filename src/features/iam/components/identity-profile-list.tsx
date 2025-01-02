@@ -11,7 +11,6 @@ type Props = {
 };
 
 export default function IdentityProfileList({ id, name, email, role }: Props) {
-  console.log("name:", role);
   return (
     <div className="flex items-center py-3 gap-2">
       <DashboardAvatarIdentity />

@@ -2,8 +2,11 @@ import { Repository } from "./repository";
 import { BackgroundInsert, OutboxMessageSelect } from "./db";
 import { BackgroundUpdate, DeveloperProfile } from "./types";
 import { MeiliClient } from "./meili";
-import { DeveloperProfileStatus } from "../developer-profiles";
-import { TaskStatus } from "meilisearch";
+import {
+  DeleteDeveloperProfile,
+  DeveloperProfileStatus,
+} from "../developer-profiles";
+import { Settings, TaskStatus } from "meilisearch";
 import { backgroundsService } from "./instance";
 import { CreateDeveloperProfile, GetAllById } from "@/features";
 
@@ -16,7 +19,8 @@ export function createBackgroundsService(
   getDeveloperById: (id: string) => Promise<DeveloperProfile>,
   checkUserAccess: (id: string) => Promise<boolean>,
   createDeveloperProfile: CreateDeveloperProfile,
-  getAllById: GetAllById
+  getAllById: GetAllById,
+  deleteDeveloperProfile: DeleteDeveloperProfile
 ) {
   repository.getAllOutboxMessage().then((outboxMessages) => {
     outboxMessages.forEach((outboxMessage) => {
@@ -128,9 +132,12 @@ export function createBackgroundsService(
       }
       return filteredDevIds;
     },
+    async isSearchHealthOk() {
+      return await meiliClient.isHealthOk();
+    },
     async repopulateMeiliSearch() {
       await meiliClient.deleteAllBackgrounds();
-      const backgrounds = await this.getAllBackgrounds();
+      const backgrounds = await repository.getAllBackgrounds();
       for (const background of backgrounds) {
         const skills = background.skills.map((s) => s.name);
         const languages = background.languages.map((l) => l.name);
@@ -143,20 +150,31 @@ export function createBackgroundsService(
         });
       }
     },
+
+    async syncMeilisearch() {
+      const outboxMessages = await repository.getAllOutboxMessage();
+      for (const outboxMessage of outboxMessages) {
+        updateMeilisearchFor(outboxMessage);
+      }
+    },
+    async doesMeilisearchNeedSync() {
+      return (await repository.getAllOutboxMessage()).length > 0;
+    },
+    async getMeilisearchSettings() {
+      return await meiliClient.getSettings();
+    },
+    async updateMeilisearchSettings(settings: Settings) {
+      await meiliClient.updateSettings(settings);
+    },
+    async resetMeilisearchSettings() {
+      await meiliClient.resetSettings();
+    },
+
     async getAllPosts() {
       return await repository.getAllPosts();
     },
     async getPostById(developerId: string) {
       return await repository.getPostById(developerId);
-    },
-    async doesMeilisearchNeedUpdate() {
-      return (await repository.getAllOutboxMessage()).length > 0;
-    },
-    async updateMeilisearch() {
-      const outboxMessages = await repository.getAllOutboxMessage();
-      for (const outboxMessage of outboxMessages) {
-        updateMeilisearchFor(outboxMessage);
-      }
     },
     async editAccess(id: string) {
       return checkUserAccess(id);
@@ -180,6 +198,9 @@ export function createBackgroundsService(
     },
     async getAllDeveloperProfilesById(identityId: string) {
       return await getAllById(identityId);
+    },
+    async deleteDeveloperProfile(devId: string) {
+      await deleteDeveloperProfile(devId);
     },
   };
 }
