@@ -10,16 +10,19 @@ import { EditAssignment } from "./edit-assignment";
 
 type Props = {
   assignment: AssignmentType;
+  editAccess: boolean;
 };
 
-export function Assignment({ assignment }: Props) {
+export function Assignment({ assignment, editAccess }: Props) {
   return (
     <Accordion type="single" collapsible className="mx-auto">
       <AccordionItem value="item-1">
         <div>
-          <div className="flex pr-2 mt-2 justify-end">
-            <EditAssignment assignment={assignment} />
-          </div>
+          {editAccess && (
+            <div className="flex pr-2 mt-2 justify-end">
+              <EditAssignment assignment={assignment} />
+            </div>
+          )}
           <AccordionTrigger>
             <ProgressRing percentage={assignment.score} />
             <span className="px-4 text-paragraph">{assignment.title}</span>

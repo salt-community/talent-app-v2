@@ -5,9 +5,10 @@ import { Assignment } from "../assignment";
 
 type Props = {
   assignments: AssignmentType[];
+  editAccess: boolean;
 };
 
-export function Assignments({ assignments }: Props) {
+export function Assignments({ assignments, editAccess }: Props) {
   const [visibleCount, setVisibleCount] = useState(5);
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 5);
@@ -20,7 +21,11 @@ export function Assignments({ assignments }: Props) {
   return (
     <>
       {assignments.slice(0, visibleCount).map((assignment) => (
-        <Assignment key={assignment.id} assignment={assignment} />
+        <Assignment
+          key={assignment.id}
+          assignment={assignment}
+          editAccess={editAccess}
+        />
       ))}
 
       <div className="mt-2 text-center">

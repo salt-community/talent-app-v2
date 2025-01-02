@@ -29,7 +29,7 @@ export async function ScoreBoard({ devId }: Props) {
           <H2>Salt Scoring</H2>
           <AverageScore assignments={assignments} />
           <SpiderGraph assignments={assignments} />
-          <Assignments assignments={assignments} />
+          <Assignments assignments={assignments} editAccess={editAccess} />
           {editAccess && (
             <div className="flex justify-center">
               <AddAssignment devId={devId} />
