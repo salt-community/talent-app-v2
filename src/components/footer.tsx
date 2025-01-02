@@ -9,7 +9,7 @@ export const Footer = () => {
         <div className="flex flex-wrap justify-between">
           <div className="w-full md:w-1/2 mb-8 md:mb-0">
             <Link href="/" className="text-2xl font-bold">
-              {"<salt/>"}
+              {"</salt>"}
             </Link>
             <p className="text-sm mt-4 max-w-md">
               School of Applied Technology: Accelerating growth in tech through

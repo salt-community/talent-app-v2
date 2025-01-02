@@ -30,7 +30,7 @@ export function HamburgerMenu({ user }: Props) {
       </SheetTrigger>
       <SheetContent className="pt-4">
         <SheetHeader className="p-0 m-0">
-          <SheetTitle className="text-xl">{"<salt/>"}</SheetTitle>
+          <SheetTitle className="text-xl">{"</salt>"}</SheetTitle>
         </SheetHeader>
         <ul className="flex flex-col gap-4 py-2">
           <li
