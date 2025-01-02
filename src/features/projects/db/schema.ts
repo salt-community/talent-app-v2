@@ -10,6 +10,7 @@ export const projects = pgTable("projects", {
   description: varchar("description").notNull(),
   performance: varchar("performance").notNull(),
   commits: varchar("commits").notNull(),
+  lastCommit: varchar("last_commits"),
   issues: varchar("issues").notNull(),
   userId: uuid("userId").notNull().defaultRandom(),
 });
