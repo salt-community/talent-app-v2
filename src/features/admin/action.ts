@@ -17,12 +17,12 @@ export async function updateStatusAction(
 }
 
 export async function repopulateMeilisearchAction() {
-  await adminService.repopulateMeilisearch();
+  await adminService.repopulateSearch();
   revalidatePath("/admin/meilisearch-configuration");
 }
 
 export async function syncMeilisearchAction() {
-  await adminService.syncMeilisearch();
+  await adminService.syncSearch();
   revalidatePath("/admin/meilisearch-configuration");
 }
 
@@ -32,11 +32,11 @@ export async function updateMeilisearchSettingsAction(formData: FormData) {
   const synonyms = Object.fromEntries(parsedSynonyms);
   const settings = { synonyms: synonyms };
 
-  await adminService.updateMeilisearchSettings(settings);
+  await adminService.updateSearchSettings(settings);
   revalidatePath("/admin/meilisearch-configuration");
 }
 
 export async function resetMeilisearchSettingsAction() {
-  await adminService.resetMeilisearchSettings();
+  await adminService.resetSearchSettings();
   revalidatePath("/admin/meilisearch-configuration");
 }

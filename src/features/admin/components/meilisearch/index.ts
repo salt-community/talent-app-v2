@@ -1,1 +1,1 @@
-export * from "./meili-dashboard";
+export * from "./search-dashboard";

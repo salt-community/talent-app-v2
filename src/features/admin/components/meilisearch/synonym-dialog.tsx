@@ -19,7 +19,7 @@ type Props = {
   description: string;
   buttonText: string;
   onSynonymChange: (synonym: Synonym) => void;
-  meiliSynonym?: Synonym;
+  searchSynonym?: Synonym;
   children: React.ReactNode;
 };
 export function SynonymDialog({
@@ -27,11 +27,11 @@ export function SynonymDialog({
   description,
   buttonText,
   onSynonymChange,
-  meiliSynonym,
+  searchSynonym,
   children,
 }: Props) {
-  const [synonym, setSynonym] = useState(meiliSynonym?.[0] || "");
-  const [synonymPairs, setSynonymPairs] = useState(meiliSynonym?.[1] || []);
+  const [synonym, setSynonym] = useState(searchSynonym?.[0] || "");
+  const [synonymPairs, setSynonymPairs] = useState(searchSynonym?.[1] || []);
 
   const handleOnClick = () => {
     const pairs = synonymPairs

@@ -7,7 +7,7 @@ import { Pencil, Trash } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 type Props = { synonyms: [string, string[]][] };
-export function MeiliSynonyms({ synonyms }: Props) {
+export function SearchSynonyms({ synonyms }: Props) {
   const [currentSynonyms, setCurrentSynonyms] = useState(synonyms);
 
   return (
@@ -21,7 +21,7 @@ export function MeiliSynonyms({ synonyms }: Props) {
         />
         {currentSynonyms.length > 0 ? (
           currentSynonyms.map((synonym) => (
-            <MeiliSynonym
+            <SearchSynonym
               key={synonym[0] + synonym[1].join(",")}
               synonym={synonym}
               onSynonymChange={(updatedSynonym) =>
@@ -64,7 +64,7 @@ export function MeiliSynonyms({ synonyms }: Props) {
   );
 }
 
-function MeiliSynonym({
+function SearchSynonym({
   synonym,
   onSynonymChange,
   onRemove,
@@ -89,7 +89,7 @@ function MeiliSynonym({
       </div>
       <div className="flex gap">
         <SynonymDialog
-          meiliSynonym={synonym}
+          searchSynonym={synonym}
           onSynonymChange={onSynonymChange}
           title={"Edit synonym"}
           description={"Edit the synonym and its pairs"}
