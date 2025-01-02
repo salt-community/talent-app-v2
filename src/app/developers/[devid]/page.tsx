@@ -3,6 +3,8 @@ import { BackgroundCard } from "@/features";
 import { Projects } from "@/features";
 import { ScoreBoard } from "@/features/scores";
 
+export const maxDuration = 60;
+
 type Params = {
   params: Promise<{ devid: string }>;
 };

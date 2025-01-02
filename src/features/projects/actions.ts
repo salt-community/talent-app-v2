@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { projectService } from "./instance";
 import { ProjectData, UpdatedProject } from "./types";
 
-export const maxDuration = 60;
 
 export async function addProjectAction(project: ProjectData) {
   await projectService.add(project);
