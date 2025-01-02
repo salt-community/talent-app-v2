@@ -12,12 +12,17 @@ import { BackgroundUpdate } from "./types";
 import { highlightedDevelopers } from "./db/posts-data";
 
 export function createRepository(db: DB) {
-  const posts = highlightedDevelopers
+  const posts = highlightedDevelopers;
   return {
     async getAllBackgrounds() {
       return await db.query.backgrounds.findMany({
         with: { skills: true, languages: true, educations: true },
       });
+    },
+    async getAllDevIds() {
+      return (
+        await db.query.backgrounds.findMany({ columns: { devId: true } })
+      ).map((row) => row.devId);
     },
     async getBackgroundByDevId(devId: string) {
       return await db.query.backgrounds.findFirst({
@@ -113,7 +118,7 @@ export function createRepository(db: DB) {
     },
     async getPostById(id: string) {
       return posts.find((post) => post.id === id);
-    }
+    },
   };
 }
 export type Repository = ReturnType<typeof createRepository>;

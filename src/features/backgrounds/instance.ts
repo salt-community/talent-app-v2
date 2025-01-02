@@ -8,7 +8,7 @@ import { iamService } from "@/features";
 export const backgroundsService = createBackgroundsService(
   createRepository(db),
   createMeiliClient(),
-  developerService.getStatusById,
+  developerService.getPublishedOrHighlightedDevIds,
   developerService.getHighlightedDevIds,
   developerService.getDeveloperById,
   iamService.checkUserAccess,

@@ -1,5 +1,5 @@
 import { Db } from "@/db";
-import { eq } from "drizzle-orm";
+import { eq, ne } from "drizzle-orm";
 import { DeveloperProfileInsert, developerProfiles } from "./schema";
 import { DeveloperProfileStatus } from "./types";
 
@@ -39,13 +39,13 @@ export function createDevelopersRepository(db: Db) {
     async delete(id: string) {
       await db.delete(developerProfiles).where(eq(developerProfiles.id, id));
     },
-    async getStatusById(id: string) {
+    async getPublishedOrHighlightedDevIds() {
       return (
         await db
-          .select({ status: developerProfiles.status })
+          .select({ devId: developerProfiles.id })
           .from(developerProfiles)
-          .where(eq(developerProfiles.id, id))
-      )[0]?.status;
+          .where(ne(developerProfiles.status, "unpublished"))
+      ).map((row) => row.devId);
     },
     async updateStatus(id: string, statues: DeveloperProfileStatus) {
       await db

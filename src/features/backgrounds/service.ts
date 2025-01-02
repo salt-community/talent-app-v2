@@ -2,11 +2,7 @@ import { Repository } from "./repository";
 import { BackgroundInsert, OutboxMessageSelect } from "./db";
 import { BackgroundUpdate } from "./types";
 import { MeiliClient } from "./meili";
-import {
-  DeleteDeveloperProfile,
-  Developer,
-  DeveloperProfileStatus,
-} from "../developer-profiles";
+import { DeleteDeveloperProfile, Developer } from "../developer-profiles";
 import { Settings, TaskStatus } from "meilisearch";
 import { backgroundsService } from "./instance";
 import { CreateDeveloperProfile, GetAllById } from "@/features";
@@ -15,7 +11,7 @@ const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
-  getDevStatusByDevId: (devId: string) => Promise<DeveloperProfileStatus>,
+  getPublishedOrHighlightedDevIds: () => Promise<string[]>,
   getHighlightedDevIds: () => Promise<string[]>,
   getDeveloperById: (id: string) => Promise<Developer>,
   checkUserAccess: (id: string) => Promise<boolean>,
@@ -116,21 +112,18 @@ export function createBackgroundsService(
 
     async searchDevIds(search: string | undefined) {
       const cleanSearch = search?.trim();
-      let allDevIds = [];
-      if (!cleanSearch || cleanSearch === "") {
-        allDevIds = (await this.getAllBackgrounds()).map(
-          (background) => background.devId,
-        );
-      } else {
-        allDevIds = await meiliClient.searchDevIds(search);
-      }
-      const filteredDevIds = [];
-      for (const devId of allDevIds) {
-        const status = await getDevStatusByDevId(devId);
-        if (status === "highlighted" || status === "published") {
-          filteredDevIds.push(devId);
-        }
-      }
+      const time = performance.now();
+      const [searchedDevIds, publishedOrHighlightedDevIds] = await Promise.all([
+        !cleanSearch || cleanSearch === ""
+          ? await repository.getAllDevIds()
+          : await meiliClient.searchDevIds(search),
+        await getPublishedOrHighlightedDevIds(),
+      ]);
+
+      const filteredDevIds = searchedDevIds.filter((devId) =>
+        publishedOrHighlightedDevIds.includes(devId),
+      );
+      console.log("Search time:", performance.now() - time);
       return filteredDevIds;
     },
     async isSearchHealthOk() {
