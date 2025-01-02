@@ -29,7 +29,6 @@ export const createClient = () => {
       const url = `https://api.github.com/repos/${user}/${repo}/stats/participation`;
 
       const data = await fetchResponse(url);
-      console.log("commits:", data);
       if (!data || !data.all) {
         return null;
       }
