@@ -16,18 +16,18 @@ export async function MeiliPopulation() {
       <div className="flex gap-4">
         <Form action={repopulateMeilisearchAction}>
           <LoadingButton
-            text="Repopulate Meilisearch"
+            text="Repopulate"
             loadingText="Repopulating..."
           />
         </Form>
         <Form action={syncMeilisearchAction}>
           {needToSync ? (
             <LoadingButton
-              text="Update Meilisearch"
+              text="Update"
               loadingText="Updating..."
             />
           ) : (
-            <Button disabled>Update Meilisearch</Button>
+            <Button disabled>Update</Button>
           )}
         </Form>
       </div>

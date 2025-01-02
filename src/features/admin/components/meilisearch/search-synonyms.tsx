@@ -11,9 +11,9 @@ export function SearchSynonyms({ synonyms }: Props) {
   const [currentSynonyms, setCurrentSynonyms] = useState(synonyms);
 
   return (
-    <div className="py-8 p-4 spacy">
-      <span className="font-bold">Synonyms:</span>
-      <div className="p-2 space-y-2 w-full md:w-96">
+    <div className="pb-6">
+      <span className="font-bold">Synonyms</span>
+      <div className=" space-y-2 w-full md:w-96">
         <input
           hidden
           name="synonyms"
@@ -26,7 +26,7 @@ export function SearchSynonyms({ synonyms }: Props) {
               synonym={synonym}
               onSynonymChange={(updatedSynonym) =>
                 setCurrentSynonyms((prev) =>
-                  prev.map((s) => (s === synonym ? updatedSynonym : s)),
+                  prev.map((s) => (s === synonym ? updatedSynonym : s))
                 )
               }
               onRemove={() => {
@@ -36,9 +36,9 @@ export function SearchSynonyms({ synonyms }: Props) {
             />
           ))
         ) : (
-          <span className="text-gray-500">No synonyms yet</span>
+          <span className="text-paragraphLight">No synonyms yet</span>
         )}
-        <div className="flex justify-end">
+        <div className="flex">
           <SynonymDialog
             onSynonymChange={(synonym) => {
               if (currentSynonyms.some((s) => s[0] === synonym[0])) {
@@ -52,7 +52,7 @@ export function SearchSynonyms({ synonyms }: Props) {
             description={"Add a new synonym and its pairs"}
             buttonText={"Add"}
           >
-            <Button size="sm">Add synonyms</Button>
+            <Button variant={"outline"}>+ Add synonyms</Button>
           </SynonymDialog>
         </div>
         {JSON.stringify(synonyms.toSorted()) !==
@@ -75,9 +75,9 @@ function SearchSynonym({
 }) {
   const [word, pairs] = synonym;
   return (
-    <div className="border rounded-md p-2 flex gap-4 justify-between items-center">
+    <div className=" rounded-md p-2 flex gap-4 justify-between items-center">
       <div>
-        <label className="font-bold">{word}: </label>
+        <label className="font-bold pr-2">{word} </label>
         {pairs.map((synonym) => (
           <label
             key={synonym}

@@ -9,7 +9,20 @@ export function createMeiliClient() {
   let meiliSearch: MeiliSearch | null = null;
 
   function getMeiliSearch() {
-    if (!meiliSearch) meiliSearch = createMeiliSearch();
+    if (!meiliSearch) {
+      meiliSearch = createMeiliSearch();
+      meiliSearch.index(BACKGROUNDS_UID).updateSettings({
+        displayedAttributes: ["devId"],
+        searchableAttributes: [
+          "name",
+          "title",
+          "bio",
+          "skills",
+          "languages",
+          "educations",
+        ],
+      });
+    }
     return meiliSearch;
   }
 
