@@ -39,7 +39,14 @@ export function createMeiliClient() {
       await index.waitForTask(response.taskUid);
       return response.status;
     },
-
+    async isHealthOk() {
+      try {
+        const health = await getMeiliSearch().health();
+        return health.status === "available";
+      } catch {
+        return false;
+      }
+    },
     async getSettings() {
       const index = getMeiliSearch().index(BACKGROUNDS_UID);
       const settings = await index.getSettings();

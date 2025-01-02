@@ -133,7 +133,9 @@ export function createBackgroundsService(
       }
       return filteredDevIds;
     },
-
+    async isSearchHealthOk() {
+      return await meiliClient.isHealthOk();
+    },
     async repopulateMeiliSearch() {
       await meiliClient.deleteAllBackgrounds();
       const backgrounds = await repository.getAllBackgrounds();
