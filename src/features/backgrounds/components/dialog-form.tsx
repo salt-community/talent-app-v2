@@ -79,6 +79,7 @@ export function DialogForm({
                 <Input
                   name="avatarUrl"
                   id="avatarUrl"
+                  required
                   placeholder="Profile picture url..."
                   defaultValue={state?.update.avatarUrl as string || avatarUrl}
                   errorMessage={state?.errorMessages?.avatarUrlError}
@@ -105,6 +106,7 @@ export function DialogForm({
                 placeholder="Role..."
                 name="title"
                 id="title"
+                required
                 defaultValue={state?.update.title as string === "" ? "" : state?.update.title as string || background.title}
                 errorMessage={state?.errorMessages?.titleError}
                 className="col-span-3"
