@@ -29,7 +29,6 @@ export const createClient = () => {
       const url = `https://api.github.com/repos/${user}/${repo}/stats/participation`;
 
       const data = await fetchResponse(url);
-
       if (!data || !data.all) {
         return null;
       }
@@ -41,14 +40,20 @@ export const createClient = () => {
       const url = `https://api.github.com/search/issues?q=repo:${user}/${repo}+type:issue`;
 
       const result = await fetchResponse(url);
-
       const issues = result.total_count;
 
       return issues;
     },
+    getAllCommits: async (user: string, repo: string) => {
+      const url = `https://api.github.com/search/issues?q=repo:${user}/${repo}/commits`;
+
+      const result = await fetchResponse(url);
+      const lastCommit = result.items[0].created_at.split("T")[0];
+      return lastCommit;
+    },
 
     testPagePerformance: async (url: string) => {
-      const apiKey = process.env.PAGE_SPEED_INSIGHTS_API_KEY;
+      const apiKey = process.env.GOOGLE_PAGE_SPEED_API_KEY;
       const pageUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${url}&key=${apiKey}`;
       let performanceScore = 0;
 
