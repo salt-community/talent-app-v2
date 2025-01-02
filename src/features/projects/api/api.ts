@@ -45,10 +45,12 @@ export const createClient = () => {
 
       return issues;
     },
-    getAllCommits: async (user: string, repo: string) => {
+    getLastCommits: async (user: string, repo: string) => {
       const url = `https://api.github.com/search/issues?q=repo:${user}/${repo}/commits`;
 
       const result = await fetchResponse(url);
+      console.log(url);
+      console.log({ result });
       const lastCommit = result.items[0].created_at.split("T")[0];
       return lastCommit;
     },
