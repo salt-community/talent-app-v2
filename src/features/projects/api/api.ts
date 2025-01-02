@@ -55,9 +55,7 @@ export const createClient = () => {
       try {
         const response = await fetch(pageUrl);
         const data = await response.json();
-        console.log({ data: data });
         performanceScore = data.lighthouseResult.categories.performance.score;
-        console.log("Performance score:", performanceScore);
       } catch (error) {
         console.error("Error fetching performance score:", error);
         return "NA";
