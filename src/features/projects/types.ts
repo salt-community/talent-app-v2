@@ -11,7 +11,7 @@ export type Project = {
   performance: string;
   description: string;
   commits: string;
-  lastCommit: string;
+  lastCommit: string | null;
   issues: string;
 };
 

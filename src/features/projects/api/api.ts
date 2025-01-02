@@ -29,7 +29,6 @@ export const createClient = () => {
       const url = `https://api.github.com/repos/${user}/${repo}/stats/participation`;
 
       const data = await fetchResponse(url);
-      console.log("commits:", data);
       if (!data || !data.all) {
         return null;
       }
@@ -64,7 +63,6 @@ export const createClient = () => {
         const response = await fetch(pageUrl);
         const data = await response.json();
         performanceScore = data.lighthouseResult.categories.performance.score;
-        console.log("Performance score:", performanceScore);
       } catch (error) {
         console.error("Error fetching performance score:", error);
         return "NA";

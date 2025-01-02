@@ -51,7 +51,7 @@ export async function BackgroundBasicInfoCard({ background, devId }: Props) {
           )}
           {filteredLinks &&
             filteredLinks.map((link) => (
-              <li key={link.url} className="h-full flex justify-start">
+              <li key={link.name} className="h-full flex justify-start">
                 <SocialLink name={link.name} url={link.url} />
               </li>
             ))}

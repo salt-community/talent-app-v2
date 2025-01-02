@@ -5,6 +5,13 @@ import { admins } from "./permissions/admins";
 
 export const ROLES = {
   admin: [...backgrounds, ...scores, ...projects, ...admins],
-  developer: [backgrounds[1], projects[0], projects[1], scores[1], scores[0]],
+  developer: [
+    backgrounds[1],
+    projects[0],
+    projects[1],
+    projects[4],
+    scores[0],
+    scores[1],
+  ],
   core: [],
 } as const;
