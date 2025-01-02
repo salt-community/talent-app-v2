@@ -14,12 +14,12 @@ export function createMeiliClient() {
       meiliSearch.index(BACKGROUNDS_UID).updateSettings({
         displayedAttributes: ["devId"],
         searchableAttributes: [
+          "skills",
+          "educations",
+          "languages",
           "name",
           "title",
           "bio",
-          "skills",
-          "languages",
-          "educations",
         ],
       });
     }
