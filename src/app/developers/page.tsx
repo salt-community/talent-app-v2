@@ -15,7 +15,7 @@ export default async function Page({ searchParams }: Props) {
   }
 
   return (
-    <main className="px-4">
+    <main className="px-4 pb-6">
       <Search />
       <Developers devIds={devIds}/>
     </main>
