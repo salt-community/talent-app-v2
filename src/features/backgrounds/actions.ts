@@ -10,7 +10,7 @@ import { backgroundsService } from "./instance";
 const backgroundUpdate = z.object({
   id: z.coerce.number(),
   devId: z.string().nonempty(),
-  avatarUrl: z.string().url().optional(),
+  avatarUrl: z.string().url().optional().or(z.literal("")),
   name: z.string().nonempty("Name must contain at least 1 character(s)"),
   title: z
     .string()

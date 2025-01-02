@@ -79,7 +79,6 @@ export function DialogForm({
                 <Input
                   name="avatarUrl"
                   id="avatarUrl"
-                  required
                   placeholder="Profile picture url..."
                   defaultValue={state?.update.avatarUrl as string || avatarUrl}
                   errorMessage={state?.errorMessages?.avatarUrlError}
