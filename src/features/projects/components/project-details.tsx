@@ -27,7 +27,7 @@ export default function ProjectDetails({ project, editAccess }: Props) {
             <H3>{project.title}</H3>
             <p className="text-xs text-paragraphLight flex items-center gap-2">
               <FaGithub size={16} color="gray" />
-              Last commit {"Today"}
+              Last commit {project.lastCommit}
             </p>
           </Link>
         </div>

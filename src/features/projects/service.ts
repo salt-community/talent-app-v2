@@ -48,7 +48,7 @@ export function createService(
 
       const commits = await client.getTotalOfCommits(username, titleFromUrl);
       const issues = await client.getAllIssues(username, titleFromUrl);
-
+      const lastCommit = await client.getAllCommits(username, titleFromUrl);
       const title = titleFromUrl
         .split("-")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -63,6 +63,7 @@ export function createService(
         description,
         issues,
         commits,
+        lastCommit,
         userId,
         imageUrl,
       };

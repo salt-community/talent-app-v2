@@ -130,8 +130,6 @@ export function EditAssignment({ assignment }: Props) {
               onClick={() => {
                 if (isFormValid) {
                   setIsDialogOpen(false);
-                  setTitle("");
-                  setScore("");
                 }
               }}
             >
