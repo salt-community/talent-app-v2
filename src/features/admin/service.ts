@@ -28,6 +28,10 @@ export function createAdminService(
       await checkAccess("admin.updateStatus");
       await updateStatus(id, status);
     },
+    async isSearchHealthOk() {
+      await checkAccess("admin.isSearchHealthOk");
+      return await searchConfigurationClient.isHealthOk();
+    },
     async repopulateSearch() {
       await checkAccess("admin.repopulateSearch");
       await searchConfigurationClient.repopulate();

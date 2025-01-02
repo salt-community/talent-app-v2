@@ -1,4 +1,5 @@
 export const admins = [
+  "admin.isSearchHealthOk",
   "admin.getAllDeveloperProfiles",
   "admin.deleteDeveloperProfile",
   "admin.updateStatus",

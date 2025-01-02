@@ -1,6 +1,7 @@
 import { BackgroundsService } from "../backgrounds/types";
 
 export type SearchConfigurationClient = {
+  isHealthOk: BackgroundsService["isSearchHealthOk"];
   repopulate: BackgroundsService["repopulateMeiliSearch"];
   sync: BackgroundsService["syncMeilisearch"];
   doesNeedSync: BackgroundsService["doesMeilisearchNeedSync"];
