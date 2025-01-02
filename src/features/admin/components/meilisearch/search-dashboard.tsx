@@ -6,8 +6,8 @@ import {
   Separator,
   H1,
 } from "@/components";
-import { MeiliSettings } from "./meili-configuration";
-import { MeiliPopulation } from "./meili-population";
+import { SearchSettings } from "./search-configuration";
+import { MeiliPopulation } from "./search-population";
 import Link from "next/link";
 
 export function MeiliDashboard() {
@@ -40,7 +40,7 @@ export function MeiliDashboard() {
         <CardContent className="flex flex-col gap-8">
           <MeiliPopulation />
           <Separator />
-          <MeiliSettings />
+          <SearchSettings />
         </CardContent>
       </Card>
     </div>

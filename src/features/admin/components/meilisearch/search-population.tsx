@@ -1,11 +1,14 @@
 import { LoadingButton } from "./loading-button";
-import { repopulateMeilisearchAction, syncMeilisearchAction } from "../../action";
+import {
+  repopulateMeilisearchAction,
+  syncMeilisearchAction,
+} from "../../action";
 import Form from "next/form";
 import { Button, H3 } from "@/components";
 import { adminService } from "../../instance";
 
 export async function MeiliPopulation() {
-  const needToSync = await adminService.doesMeilisearchNeedSync();
+  const needToSync = await adminService.doesSearchNeedSync();
 
   return (
     <div className="space-y-4">

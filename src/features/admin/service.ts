@@ -5,7 +5,7 @@ import {
   UpdateStatus,
   CheckAccess,
 } from "@/features";
-import { MeilisearchConfigurationClient } from "./types";
+import { SearchConfigurationClient } from "./types";
 import { Settings } from "meilisearch";
 
 export function createAdminService(
@@ -13,7 +13,7 @@ export function createAdminService(
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
   checkAccess: CheckAccess,
-  meilisearchConfigurationClient: MeilisearchConfigurationClient,
+  searchConfigurationClient: SearchConfigurationClient,
 ) {
   return {
     async getAllDeveloperProfiles() {
@@ -28,29 +28,29 @@ export function createAdminService(
       await checkAccess("admin.updateStatus");
       await updateStatus(id, status);
     },
-    async repopulateMeilisearch() {
-      await checkAccess("admin.repopulateMeilisearch");
-      await meilisearchConfigurationClient.repopulate();
+    async repopulateSearch() {
+      await checkAccess("admin.repopulateSearch");
+      await searchConfigurationClient.repopulate();
     },
-    async syncMeilisearch() {
-      await checkAccess("admin.syncMeilisearch");
-      await meilisearchConfigurationClient.sync();
+    async syncSearch() {
+      await checkAccess("admin.syncSearch");
+      await searchConfigurationClient.sync();
     },
-    async doesMeilisearchNeedSync() {
-      await checkAccess("admin.doesMeilisearchNeedSync");
-      return await meilisearchConfigurationClient.doesNeedSync();
+    async doesSearchNeedSync() {
+      await checkAccess("admin.doesSearchNeedSync");
+      return await searchConfigurationClient.doesNeedSync();
     },
-    async getMeilisearchSettings() {
-      await checkAccess("admin.getMeilisearchSettings");
-      return await meilisearchConfigurationClient.getSettings();
+    async getSearchSettings() {
+      await checkAccess("admin.getSearchSettings");
+      return await searchConfigurationClient.getSettings();
     },
-    async updateMeilisearchSettings(settings: Settings) {
-      await checkAccess("admin.updateMeilisearchSettings");
-      await meilisearchConfigurationClient.updateSettings(settings);
+    async updateSearchSettings(settings: Settings) {
+      await checkAccess("admin.updateSearchSettings");
+      await searchConfigurationClient.updateSettings(settings);
     },
-    async resetMeilisearchSettings() {
-      await checkAccess("admin.resetMeilisearchSettings");
-      await meilisearchConfigurationClient.resetSettings();
+    async resetSearchSettings() {
+      await checkAccess("admin.resetSearchSettings");
+      await searchConfigurationClient.resetSettings();
     },
   };
 }
