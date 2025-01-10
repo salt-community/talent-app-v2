@@ -17,20 +17,14 @@ export function createBackgroundsService(
   checkUserAccess: (id: string) => Promise<boolean>,
   createDeveloperProfile: CreateDeveloperProfile,
   getAllById: GetAllById,
-  deleteDeveloperProfile: DeleteDeveloperProfile,
+  deleteDeveloperProfile: DeleteDeveloperProfile
 ) {
-  repository.getAllOutboxMessage().then((outboxMessages) => {
-    outboxMessages.forEach((outboxMessage) => {
-      updateMeilisearchFor(outboxMessage);
-    });
-  });
-
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;
     switch (outboxMessage.operation) {
       case "upsert":
         const background = await repository.getBackgroundByDevId(
-          outboxMessage.devId,
+          outboxMessage.devId
         );
         if (!background) {
           succeeded = true;
@@ -49,7 +43,7 @@ export function createBackgroundsService(
         break;
       case "delete":
         const deleteStatus = await meiliClient.deleteBackground(
-          outboxMessage.devId,
+          outboxMessage.devId
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
         break;
@@ -69,19 +63,19 @@ export function createBackgroundsService(
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index,
+          array.findIndex((s) => s.name === skill.name) === index
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index,
+          array.findIndex((l) => l.name === language.name) === index
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index,
+          array.findIndex((e) => e.name === education.name) === index
       );
     },
     async add(background: BackgroundInsert) {
@@ -121,7 +115,7 @@ export function createBackgroundsService(
       ]);
 
       const filteredDevIds = searchedDevIds.filter((devId) =>
-        publishedOrHighlightedDevIds.includes(devId),
+        publishedOrHighlightedDevIds.includes(devId)
       );
       console.log("Search time:", performance.now() - time);
       return filteredDevIds;
