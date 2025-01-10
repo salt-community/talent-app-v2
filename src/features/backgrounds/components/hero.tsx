@@ -9,6 +9,7 @@ export function Hero() {
           alt="Hero background"
           className="object-cover"
           fill
+          priority
         />
         <div className="z-10">
           <h1 className=" md:text-xl  text-md uppercase">
