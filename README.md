@@ -1,4 +1,8 @@
-# Setting Up the Project
+# Talent App v2
+
+The app helps us match the right talent with different client opportunities.
+
+## Setting Up the Project
 
 ```sh
 # Copy environment variables to .env
