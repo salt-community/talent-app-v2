@@ -16,7 +16,7 @@ export default async function DeveloperDetailPage({ params }: Params) {
   return (
     <DeveloperCard>
       <BackgroundCard devid={devid} />
-      <ScoreBoard devId={devid} />
+      {process.env.FF_SCORES === "ON" && <ScoreBoard devId={devid} />}
       <Projects devId={devid} />
     </DeveloperCard>
   );
