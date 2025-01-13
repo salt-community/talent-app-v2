@@ -2,14 +2,14 @@ import { checkAccess } from "./check-access";
 import { createRepository } from "./repository";
 import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
-import { ROLES } from "./roles";
+import { roles } from "./roles";
 import { auth } from "@clerk/nextjs/server";
 import { IdentityRole, SessionClaims } from "@/features";
 import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
 
-type Role = keyof typeof ROLES;
-type Permission = (typeof ROLES)[Role][number];
+type Role = keyof typeof roles;
+type Permission = (typeof roles)[Role][number];
 
 export function createService(
   db: Db,

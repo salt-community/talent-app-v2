@@ -3,7 +3,7 @@ import { backgrounds } from "./permissions/backgrounds";
 import { scores } from "./permissions/scores";
 import { admins } from "./permissions/admins";
 
-export const ROLES = {
+export const roles = {
   admin: [...backgrounds, ...scores, ...projects, ...admins],
   developer: [
     backgrounds[1],
@@ -16,5 +16,5 @@ export const ROLES = {
   core: [],
 } as const;
 
-export type Role = keyof typeof ROLES;
-export type Permission = (typeof ROLES)[Role][number];
+export type Role = keyof typeof roles;
+export type Permission = (typeof roles)[Role][number];
