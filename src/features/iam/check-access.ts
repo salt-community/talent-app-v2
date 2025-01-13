@@ -1,7 +1,5 @@
 import { UnauthorizedError } from "@/lib";
-import { ROLES } from "./roles";
-type Role = keyof typeof ROLES;
-type Permission = (typeof ROLES)[Role][number];
+import { Permission, Role, ROLES } from "./roles";
 
 export function checkAccess(
   user: { id: string; roles: Role },

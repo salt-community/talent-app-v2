@@ -15,3 +15,6 @@ export const ROLES = {
   ],
   core: [],
 } as const;
+
+export type Role = keyof typeof ROLES;
+export type Permission = (typeof ROLES)[Role][number];
