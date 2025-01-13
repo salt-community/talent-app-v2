@@ -13,7 +13,7 @@ export const roles = {
     scores[0],
     scores[1],
   ],
-  core: [],
+  core: [backgrounds[0], backgrounds[1], projects[0]],
 } as const;
 
 export type Role = keyof typeof roles;
