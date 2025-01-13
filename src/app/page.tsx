@@ -1,5 +1,5 @@
 import { HighlightPage } from "@/features";
 
 export default async function Home() {
-  return <HighlightPage />;
+  return process.env.FF_NEW_HIGHLIGHTS === "ON" ? <></> : <HighlightPage />;
 }
