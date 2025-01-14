@@ -1,17 +1,24 @@
-import { projects } from "./permissions/projects";
-import { backgroundsPermissions } from "./permissions/backgrounds";
-import { scores } from "./permissions/scores";
-import { admins } from "./permissions/admins";
+import {
+  scores,
+  projects,
+  admins,
+  backgroundsPermissionsObject,
+} from "./permissions";
 
-export const roles = {
-  admin: [...backgroundsPermissions, ...scores, ...projects, ...admins],
-  developer: [
-    backgroundsPermissions[1],
+export const rolesPermissions = {
+  guest: new Set([backgroundsPermissionsObject.getBackgroundByDevId]),
+  admin: new Set([
+    ...Object.values(backgroundsPermissionsObject),
+    ...scores,
+    ...projects,
+    ...admins,
+  ]),
+  developer: new Set([
     projects[0],
     projects[1],
     projects[4],
     scores[0],
     scores[1],
-  ],
-  core: [backgroundsPermissions[0], backgroundsPermissions[1], projects[0]],
+  ]),
+  core: new Set([projects[0]]),
 } as const;

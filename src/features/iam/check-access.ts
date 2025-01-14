@@ -1,15 +1,17 @@
 import { UnauthorizedError } from "@/lib";
-import { roles } from "./roles";
+import { rolesPermissions } from "./roles";
 import { Permission, Role } from "./permissions";
 
-export function checkAccess(
-  user: { id: string; roles: Role },
-  permission: Permission
-) {
-  const hasAccess = (roles[user.roles] as readonly Permission[]).includes(
-    permission
-  );
-  if (!hasAccess) {
-    throw new UnauthorizedError(`Missing permission "${permission}"`);
+export function checkAccess(roles: Role[], permission: Permission) {
+  for (const role of roles) {
+    const hasPermission = (rolesPermissions[role] as Set<string>).has(
+      permission
+    );
+
+    if (hasPermission) {
+      return;
+    }
   }
+
+  throw new UnauthorizedError(`Missing permission "${permission}"`);
 }

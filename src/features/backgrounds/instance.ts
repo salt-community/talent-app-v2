@@ -1,11 +1,11 @@
 import { db } from "./db";
 import { createRepository } from "./repository";
 import { createBackgroundsService } from "./service";
-import { developerService } from "@/features";
+import { developerService, secureService } from "@/features";
 import { createMeiliClient } from "./meili";
 import { iamService } from "@/features";
 
-export const backgroundsService = createBackgroundsService(
+const insecureBackgroundsService = createBackgroundsService(
   createRepository(db),
   createMeiliClient(),
   developerService.getPublishedOrHighlightedDevIds,
@@ -16,3 +16,14 @@ export const backgroundsService = createBackgroundsService(
   developerService.getAllById,
   developerService.delete
 );
+
+const { deleteDeveloperProfile, getBackgroundByDevId } = secureService(
+  "backgrounds",
+  insecureBackgroundsService
+);
+
+export const backgroundsService = {
+  ...insecureBackgroundsService,
+  deleteDeveloperProfile,
+  getBackgroundByDevId,
+};

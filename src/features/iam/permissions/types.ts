@@ -1,4 +1,5 @@
-import { roles } from "../roles";
+import { rolesPermissions } from "../roles";
 
-export type Role = keyof typeof roles;
-export type Permission = (typeof roles)[Role][number];
+export type Role = keyof typeof rolesPermissions;
+export type PermissionSets = (typeof rolesPermissions)[Role];
+export type Permission = PermissionSets extends Set<infer U> ? U : never;

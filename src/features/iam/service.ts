@@ -6,7 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { IdentityRole, SessionClaims } from "@/features";
 import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
-import { Permission } from "./permissions";
+import { Permission, Role } from "./permissions";
 
 export function createService(
   db: Db,
@@ -77,10 +77,14 @@ export function createService(
 
     async checkAccess(permission: Permission): Promise<void> {
       const { userId } = await auth();
+      const roles: Role[] = ["guest"];
+
       if (userId) {
-        const roles = await repository.getIdentityRole(userId);
-        return checkAccess(roles, permission);
+        const identityRole = await repository.getIdentityRole(userId);
+        roles.push(identityRole.roles);
       }
+
+      return checkAccess(roles, permission);
     },
   };
 }
