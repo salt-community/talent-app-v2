@@ -12,13 +12,13 @@ type Props = {
 export async function Projects({ devId }: Props) {
   let projects: Project[] = [];
   let editAccess = false;
-  
+
   try {
     projects = await projectService.getAll(devId);
-    
+
     editAccess = await projectService.checkProfileAccess(devId);
   } catch (error) {
-    errorHandler(error)
+    errorHandler(error);
   }
 
   if (projects.length === 0) {

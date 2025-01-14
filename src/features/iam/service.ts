@@ -78,14 +78,12 @@ export function createService(
       return false;
     },
 
-    async checkAccess(permission: Permission): Promise<boolean> {
+    async checkAccess(permission: Permission): Promise<void> {
       const { userId } = await auth();
       if (userId) {
         const roles = await repository.getIdentityRole(userId);
-        checkAccess(roles, permission);
-        return true;
+        return checkAccess(roles, permission);
       }
-      return false;
     },
   };
 }
