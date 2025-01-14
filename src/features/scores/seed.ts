@@ -10,12 +10,7 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
 export const seedAssignments = async (devIds: string[]) => {
   const scoresService = createService(
     db,
-    async function checkAccess(permission: string): Promise<boolean> {
-      if (permission) {
-        return true;
-      }
-      return false;
-    }
+    async function checkAccess(): Promise<void> {}
   );
 
   const assignmentTitles = [

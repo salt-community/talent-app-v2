@@ -1,4 +1,4 @@
-import { checkAccess } from "./check-access";
+import { checkAccess } from "./permissions/check-access";
 import { createRepository } from "./repository";
 import { IdentityInsert } from "./schema";
 import { Db } from "@/db";

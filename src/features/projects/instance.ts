@@ -13,11 +13,8 @@ export const projectService = createService(
 export const seedProjectService = createService(
   db,
   developerService.getAll,
-  async function checkAccess(permission: string): Promise<boolean> {
-    if (permission) {
-      return true;
-    }
-    return false;
-  },
-  iamService.checkUserAccess
+  async function checkAccess(): Promise<void> {},
+  async function checkUserAccess(): Promise<boolean> {
+    return true;
+  }
 );
