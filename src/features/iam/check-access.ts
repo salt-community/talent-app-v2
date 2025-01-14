@@ -10,6 +10,6 @@ export function checkAccess(
     permission
   );
   if (!hasAccess) {
-    throw new UnauthorizedError("You do not have permission");
+    throw new UnauthorizedError(`Missing permission "${permission}"`);
   }
 }
