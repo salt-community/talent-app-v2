@@ -3,13 +3,6 @@ import { iamService } from "../iam";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Service = { [key: string]: (args: any) => Promise<any> };
 
-export type PermissionsSchema<
-  TFeatureName extends string,
-  TService extends Service,
-> = {
-  [K in keyof TService]: `${TFeatureName}.${K extends string ? K : never}`;
-};
-
 export function secureService<
   TFeatureName extends string,
   TService extends Service,
