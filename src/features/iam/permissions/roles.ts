@@ -1,7 +1,7 @@
-import { projects } from "./permissions/projects";
-import { backgrounds } from "./permissions/backgrounds";
-import { scores } from "./permissions/scores";
-import { admins } from "./permissions/admins";
+import { projects } from "./projects";
+import { backgrounds } from "./backgrounds";
+import { scores } from "./scores";
+import { admins } from "./admins";
 
 export const roles = {
   admin: [...backgrounds, ...scores, ...projects, ...admins],
