@@ -1,6 +1,6 @@
 import { UnauthorizedError } from "@/lib";
 import { roles } from "./roles";
-import { Permission, Role } from "./types";
+import { Permission, Role } from "./permissions";
 
 export function checkAccess(
   user: { id: string; roles: Role },
