@@ -14,7 +14,9 @@ export function secureService<
   const securedService = serviceMethodNames.reduce((acc, serviceMethodName) => {
     const permission = `${featureName}.${serviceMethodName}` as const;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async function securedServiceMethod(args: any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await iamService.checkAccess(permission as any);
 
       return service[serviceMethodName](args);
