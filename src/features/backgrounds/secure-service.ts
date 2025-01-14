@@ -1,7 +1,6 @@
 import { iamService } from "../iam";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Service = { [key: string]: (args: any) => Promise<any> };
+type Service = { [key: string]: (args: unknown) => Promise<unknown> };
 
 export function secureService<
   TFeatureName extends string,
@@ -14,8 +13,7 @@ export function secureService<
   const securedService = serviceMethodNames.reduce((acc, serviceMethodName) => {
     const permission = `${featureName}.${serviceMethodName}` as const;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async function securedServiceMethod(args: any) {
+    async function securedServiceMethod(args: unknown) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await iamService.checkAccess(permission as any);
 
