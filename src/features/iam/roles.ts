@@ -1,14 +1,15 @@
-import {
-  scores,
-  projects,
-  admins,
-  backgroundsPermissionsObject,
-} from "./permissions";
+import { scores, projects, admins, backgrounds } from "./permissions";
 
 export const rolesPermissions = {
-  guest: new Set([backgroundsPermissionsObject.getBackgroundByDevId]),
+  guest: new Set([
+    backgrounds.getBackgroundByDevId,
+    backgrounds.getAllSkills,
+    backgrounds.getAllLanguages,
+    backgrounds.getAllEducations,
+    backgrounds.editAccess,
+  ]),
   admin: new Set([
-    ...Object.values(backgroundsPermissionsObject),
+    ...Object.values(backgrounds),
     ...scores,
     ...projects,
     ...admins,
@@ -19,6 +20,28 @@ export const rolesPermissions = {
     projects[4],
     scores[0],
     scores[1],
+    backgrounds.add,
+    backgrounds.addDeveloperBackground,
+    backgrounds.createDeveloperProfile,
+    backgrounds.deleteDeveloperProfile,
+    backgrounds.getAllBackgrounds,
+    backgrounds.getAllDeveloperProfilesById,
+    backgrounds.getAllEducations,
+    backgrounds.getAllLanguages,
+    backgrounds.getAllPosts,
+    backgrounds.getAllSkills,
+    backgrounds.getBackgroundByDevId,
+    backgrounds.update,
   ]),
-  core: new Set([projects[0]]),
+  core: new Set([
+    projects[0],
+    backgrounds.getAllBackgrounds,
+    backgrounds.getAllDeveloperProfilesById,
+    backgrounds.getAllEducations,
+    backgrounds.getAllLanguages,
+    backgrounds.getAllPosts,
+    backgrounds.getAllSkills,
+    backgrounds.getBackgroundByDevId,
+    backgrounds.update,
+  ]),
 } as const;

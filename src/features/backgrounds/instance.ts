@@ -17,13 +17,7 @@ const insecureBackgroundsService = createBackgroundsService(
   developerService.delete
 );
 
-const { deleteDeveloperProfile, getBackgroundByDevId } = secureService(
+export const backgroundsService = secureService(
   "backgrounds",
   insecureBackgroundsService
 );
-
-export const backgroundsService = {
-  ...insecureBackgroundsService,
-  deleteDeveloperProfile,
-  getBackgroundByDevId,
-};
