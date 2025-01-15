@@ -1,5 +1,5 @@
 import { Separator, H2 } from "@/components";
-import { projectService } from "../instance";
+import { projectsService } from "../instance";
 import ProjectDetails from "./project-details";
 import ProjectForm from "./project-form";
 import { errorHandler } from "@/lib";
@@ -14,9 +14,9 @@ export async function Projects({ devId }: Props) {
   let editAccess = false;
 
   try {
-    projects = await projectService.getAll(devId);
+    projects = await projectsService.getAll(devId);
 
-    editAccess = await projectService.checkProfileAccess(devId);
+    editAccess = await projectsService.checkProfileAccess(devId);
   } catch (error) {
     errorHandler(error);
   }

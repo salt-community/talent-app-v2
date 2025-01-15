@@ -30,7 +30,7 @@ export const createClient = () => {
 
       const data = await fetchResponse(url);
       if (!data || !data.all) {
-        return null;
+        return "NA";
       }
 
       return data.all.reduce((acc: number, value: number) => acc + value, 0);
@@ -40,6 +40,11 @@ export const createClient = () => {
       const url = `https://api.github.com/search/issues?q=repo:${user}/${repo}+type:issue`;
 
       const result = await fetchResponse(url);
+
+      if (!result) {
+        return "NA";
+      }
+
       const issues = result.total_count;
 
       return issues;
@@ -48,8 +53,11 @@ export const createClient = () => {
       const url = `https://api.github.com/repos/${user}/${repo}/commits`;
 
       const result = await fetchResponse(url);
-      console.log(url);
-      console.log({ result });
+
+      if (!result) {
+        return "NA";
+      }
+
       const lastCommit = result[0].commit.committer.date.split("T")[0];
       return lastCommit;
     },

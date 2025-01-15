@@ -2,5 +2,4 @@ export * from "./seed";
 export * from "./types";
 export * from "./instance";
 export * from "./components";
-export * from "./permissions";
 export * from "./secure-service";

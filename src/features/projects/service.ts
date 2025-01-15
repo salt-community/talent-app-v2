@@ -4,12 +4,10 @@ import { ProjectInsert } from "./db";
 import { createClient } from "./api/api";
 import { DeveloperProfile, ProjectData, UpdatedProject } from "./types";
 import { extractRepositoryDetails } from "./logic";
-import { CheckAccess } from "@/features";
 
 export function createService(
   db: Db,
   getAllIdentities: DeveloperProfile,
-  checkAccess: CheckAccess,
   checkUserAccess: (id: string) => Promise<boolean>
 ) {
   const reps = createRepository(db);
@@ -32,7 +30,6 @@ export function createService(
       userId,
       imageUrl,
     }: ProjectData) => {
-      checkAccess("project.add");
       let performance: string;
 
       if (projectWebsite.length !== 0) {
@@ -69,24 +66,22 @@ export function createService(
       await reps.add(newProject);
     },
     updateDescription: async (updatedProject: UpdatedProject) => {
-      checkAccess("project.updateDescription");
-
       await reps.update(updatedProject);
     },
     delete: async (id: string) => {
-      checkAccess("project.delete");
       try {
         await reps.delete(id);
       } catch (error) {
         console.log("Error while deleting project:", error);
       }
     },
-    updatePerformance: async (projectWebsite: string, id: string) => {
-      const newPerformanceScore =
-        await client.testPagePerformance(projectWebsite);
+    updatePerformance: async (args: { projectWebsite: string; id: string }) => {
+      const newPerformanceScore = await client.testPagePerformance(
+        args.projectWebsite
+      );
       reps.updatePerformanceScore({
         newPerformanceScore: newPerformanceScore,
-        id: id,
+        id: args.id,
       });
     },
     checkProfileAccess: async (id: string) => {
