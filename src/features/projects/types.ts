@@ -1,4 +1,4 @@
-import { developerService } from "../developer-profiles/instance";
+import { developerProfilesService } from "../developer-profiles/instance";
 import { createService } from "./service";
 
 export type Project = {
@@ -34,6 +34,6 @@ export type UpdatedPerformance = {
   newPerformanceScore: string;
 };
 
-export type DeveloperProfile = typeof developerService.getAll;
+export type DeveloperProfile = typeof developerProfilesService.getAll;
 
 export type ProjectsService = ReturnType<typeof createService>;

@@ -4,7 +4,7 @@ import { DeveloperProfileInsert } from "./schema";
 import { DeveloperProfileStatus, SessionClaims } from "./types";
 import { auth } from "@clerk/nextjs/server";
 import { claim } from "./session";
-import { developerService } from "./instance";
+import { developerProfilesService } from "./instance";
 
 export function createDevelopersService(db: Db) {
   const repository = createDevelopersRepository(db);
@@ -45,7 +45,7 @@ export function createDevelopersService(db: Db) {
 
       const { name, email } = claim(claims);
       if (!email) return;
-      const developer = await developerService.add({
+      const developer = await developerProfilesService.add({
         name,
         email,
         identityId: id,

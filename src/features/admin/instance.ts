@@ -1,10 +1,14 @@
 import { createAdminService } from "./service";
-import { backgroundsService, developerService, iamService } from "@/features";
+import {
+  backgroundsService,
+  developerProfilesService,
+  iamService,
+} from "@/features";
 
 export const adminService = createAdminService(
-  developerService.getAll,
-  developerService.delete,
-  developerService.updateStatus,
+  developerProfilesService.getAll,
+  developerProfilesService.delete,
+  developerProfilesService.updateStatus,
   iamService.checkAccess,
   {
     isHealthOk: backgroundsService.isSearchHealthOk,
@@ -14,5 +18,5 @@ export const adminService = createAdminService(
     getSettings: backgroundsService.getMeilisearchSettings,
     updateSettings: backgroundsService.updateMeilisearchSettings,
     resetSettings: backgroundsService.resetMeilisearchSettings,
-  },
+  }
 );

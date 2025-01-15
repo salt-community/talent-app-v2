@@ -2,7 +2,7 @@ import {
   seedIdentities,
   backgroundsSeed,
   seedAssignments,
-  developerService,
+  developerProfilesService,
   seedDeveloperProfiles,
   seedProjects,
 } from "@/features";
@@ -11,7 +11,7 @@ import {
   console.log("Start seeding...");
   await seedIdentities();
   await seedDeveloperProfiles();
-  const devIds = (await developerService.getAll()).map(
+  const devIds = (await developerProfilesService.getAll()).map(
     (developer) => developer.id
   );
   await seedAssignments(devIds);

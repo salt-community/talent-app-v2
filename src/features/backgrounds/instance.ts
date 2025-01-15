@@ -1,20 +1,20 @@
 import { db } from "./db";
 import { createRepository } from "./repository";
 import { createBackgroundsService } from "./service";
-import { developerService, secureService } from "@/features";
+import { developerProfilesService, secureService } from "@/features";
 import { createMeiliClient } from "./meili";
 import { iamService } from "@/features";
 
 const insecureBackgroundsService = createBackgroundsService(
   createRepository(db),
   createMeiliClient(),
-  developerService.getPublishedOrHighlightedDevIds,
-  developerService.getHighlightedDevIds,
-  developerService.getDeveloperById,
+  developerProfilesService.getPublishedOrHighlightedDevIds,
+  developerProfilesService.getHighlightedDevIds,
+  developerProfilesService.getDeveloperById,
   iamService.checkUserAccess,
-  developerService.createDeveloperProfile,
-  developerService.getAllById,
-  developerService.delete
+  developerProfilesService.createDeveloperProfile,
+  developerProfilesService.getAllById,
+  developerProfilesService.delete
 );
 
 export const backgroundsService = secureService(
