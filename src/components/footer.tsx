@@ -58,7 +58,7 @@ export const Footer = () => {
         </div>
         <div className="border-t border-gray-200 mt-4 pt-6 text-sm text-center md:text-left">
           <p>
-            © {new Date().getFullYear()} School of Applied Technology, JSFS-STHLM-2024-09-27. All
+            © {new Date().getFullYear()} School of Applied Technology. All
             rights reserved.
           </p>
         </div>
