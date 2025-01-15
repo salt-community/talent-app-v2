@@ -6,7 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { claim } from "./session";
 import { developerProfilesService } from "./instance";
 
-export function createDevelopersService(db: Db) {
+export function createDeveloperProfilesService(db: Db) {
   const repository = createDevelopersRepository(db);
   return {
     async getAll() {
@@ -27,8 +27,8 @@ export function createDevelopersService(db: Db) {
     async delete(id: string) {
       await repository.delete(id);
     },
-    async updateStatus(id: string, status: DeveloperProfileStatus) {
-      await repository.updateStatus(id, status);
+    async updateStatus(args: { id: string; status: DeveloperProfileStatus }) {
+      await repository.updateStatus(args.id, args.status);
     },
     async getPublishedOrHighlightedDevIds() {
       return await repository.getPublishedOrHighlightedDevIds();
@@ -56,3 +56,7 @@ export function createDevelopersService(db: Db) {
     },
   };
 }
+
+export type DeveloperProfilesService = ReturnType<
+  typeof createDeveloperProfilesService
+>;

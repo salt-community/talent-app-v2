@@ -1,5 +1,11 @@
 import { db } from "@/db";
 
-import { createDevelopersService } from "./service";
+import { createDeveloperProfilesService } from "./service";
+import { secureService } from "@/features";
 
-export const developerProfilesService = createDevelopersService(db);
+const insecureDeveloperProfilesService = createDeveloperProfilesService(db);
+
+export const developerProfilesService = secureService(
+  "developerProfiles",
+  insecureDeveloperProfilesService
+);

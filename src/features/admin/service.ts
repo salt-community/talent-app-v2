@@ -13,7 +13,7 @@ export function createAdminService(
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
   checkAccess: CheckAccess,
-  searchConfigurationClient: SearchConfigurationClient,
+  searchConfigurationClient: SearchConfigurationClient
 ) {
   return {
     async getAllDeveloperProfiles() {
@@ -26,7 +26,7 @@ export function createAdminService(
     },
     async updateStatus(id: string, status: DeveloperProfileStatus) {
       await checkAccess("admin.updateStatus");
-      await updateStatus(id, status);
+      await updateStatus({ id, status });
     },
     async isSearchHealthOk() {
       await checkAccess("admin.isSearchHealthOk");

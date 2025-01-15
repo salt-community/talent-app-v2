@@ -1,7 +1,7 @@
-import { createDevelopersService } from "./service";
+import { createDeveloperProfilesService } from "./service";
 import { JwtPayload } from "jsonwebtoken";
 
-type DevelopersService = ReturnType<typeof createDevelopersService>;
+type DevelopersService = ReturnType<typeof createDeveloperProfilesService>;
 
 export type GetAllDeveloperProfiles = DevelopersService["getAll"];
 export type DeleteDeveloperProfile = DevelopersService["delete"];
