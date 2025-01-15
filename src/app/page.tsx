@@ -1,3 +1,4 @@
+import { H1 } from "@/components";
 import {
   Developers,
   developerProfilesService,
@@ -9,7 +10,9 @@ export default async function Home() {
     await developerProfilesService.getHighlightedDevIds();
 
   return process.env.FF_NEW_HIGHLIGHTS === "ON" ? (
-    <Developers devIds={highlightedDeveloperProfileIds} />
+    <div className="container mx-auto flex flex-col justify-center px-4 py-4 gap-4">
+      <Developers devIds={highlightedDeveloperProfileIds} />
+    </div>
   ) : (
     <HighlightPage />
   );
