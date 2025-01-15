@@ -1,3 +1,5 @@
+// TODO: Remove as the admin-dashboard is just an aggregation of the other features.
+
 export const admins = [
   "admin.isSearchHealthOk",
   "admin.getAllDeveloperProfiles",
