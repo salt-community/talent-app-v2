@@ -8,6 +8,8 @@ import {
 
 export const rolesPermissions = {
   guest: new Set([
+    backgrounds.getPostById,
+    backgrounds.getAllPosts,
     backgrounds.getBackgroundByDevId,
     backgrounds.getAllSkills,
     backgrounds.getAllLanguages,
