@@ -164,8 +164,9 @@ export function createBackgroundsService(
     async getPostById(developerId: string) {
       return await repository.getPostById(developerId);
     },
-    async editAccess(id: string) {
-      return checkUserAccess(id);
+    async editAccess(developerProfileId: string) {
+      //identity id
+      return checkUserAccess(developerProfileId);
     },
     async addDeveloperBackground(id: string) {
       const developer = await getDeveloperById(id);

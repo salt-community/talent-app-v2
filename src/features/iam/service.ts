@@ -10,7 +10,6 @@ import { Permission, Role } from "./permissions";
 
 export function createService(
   db: Db,
-  getById: (id: string) => Promise<string>
 ) {
   const repository = createRepository(db);
   return {
@@ -35,12 +34,13 @@ export function createService(
       }
 
       const existingUser = await repository.getUserId(userId);
-
+  
       if (existingUser) {
         return existingUser;
       }
 
       const claims = sessionClaims as SessionClaims;
+      
       if (!validateSessionClaims(claims)) {
         return;
       }
@@ -62,7 +62,7 @@ export function createService(
       await repository.addIdentity(identity);
     },
 
-    async checkUserAccess(devId: string) {
+    async checkUserAccess(identityId: string) {
       const { userId } = await auth();
       if (!userId) return false;
 
@@ -70,9 +70,8 @@ export function createService(
 
       if (identity.roles === "admin") return true;
 
-      const developerId = await getById(identity.id);
-      if (developerId === devId) return true;
-      return false;
+      return identity.id === identityId 
+   
     },
 
     async checkAccess(permission: Permission): Promise<void> {
