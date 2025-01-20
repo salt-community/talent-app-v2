@@ -2,7 +2,6 @@ import { iamService } from "./instance";
 import { faker } from "@faker-js/faker";
 import { IdentityInsert } from "./schema";
 
-// const service = createService(db);
 export async function seedIdentities() {
   const identities: IdentityInsert[] = [];
 
