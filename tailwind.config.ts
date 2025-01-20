@@ -66,6 +66,7 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         brandPink: "hsl(var(--color-brand-pink))",
+        lightGray: "hsl(var(--color-gray-light))"
       },
       borderRadius: {
         lg: "var(--radius)",

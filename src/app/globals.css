@@ -50,6 +50,7 @@ body {
     --color-good: 292 62% 47%;
     --color-excellent: 300 100% 25%;
     --color-brand-pink: 346 86.3% 65.7%;
+    --color-gray-light: 0, 0%, 60%;
   }
   .dark {
     --background: 20 14.3% 4.1%;
