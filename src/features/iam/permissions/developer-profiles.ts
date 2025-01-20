@@ -16,4 +16,6 @@ export const developerProfiles: PermissionsSchema<
   getPublishedOrHighlightedDevIds:
     "developerProfiles.getPublishedOrHighlightedDevIds",
   updateStatus: "developerProfiles.updateStatus",
+  getIdentityIdByDeveloperProfileId:
+    "developerProfiles.getIdentityIdByDeveloperProfileId",
 };
