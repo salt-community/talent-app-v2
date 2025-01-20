@@ -9,6 +9,7 @@ import {
 const insecurePojectService = createService(
   db,
   developerProfilesService.getAll,
+  developerProfilesService.getIdentityIdByDeveloperProfileId,
   iamService.checkUserAccess
 );
 
@@ -17,6 +18,7 @@ export const projectsService = secureService("projects", insecurePojectService);
 export const seedProjectService = createService(
   db,
   developerProfilesService.getAll,
+  developerProfilesService.getIdentityIdByDeveloperProfileId,
   async function checkUserAccess(): Promise<boolean> {
     return true;
   }

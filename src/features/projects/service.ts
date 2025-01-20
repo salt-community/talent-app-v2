@@ -8,6 +8,7 @@ import { extractRepositoryDetails } from "./logic";
 export function createService(
   db: Db,
   getAllIdentities: DeveloperProfile,
+  getIdentityIdByDeveloperProfileId: (id: string) => Promise<string | null>,
   checkUserAccess: (id: string) => Promise<boolean>
 ) {
   const reps = createRepository(db);
@@ -84,8 +85,15 @@ export function createService(
         id: args.id,
       });
     },
-    checkProfileAccess: async (id: string) => {
-      return checkUserAccess(id);
+    checkProfileAccess: async (developerProfileId: string) => {
+      const identityId =
+        await getIdentityIdByDeveloperProfileId(developerProfileId);
+
+      if (!identityId) {
+        return false;
+      }
+
+      return checkUserAccess(identityId);
     },
   };
 }
