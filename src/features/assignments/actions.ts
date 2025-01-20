@@ -1,21 +1,26 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { scoresService } from "./instance";
+import { assignmentsService } from "./instance";
 import { getFormData } from "./utils";
 import type { NewAssignment } from "./types";
 import { ZodError } from "zod";
 import { errorHandler } from "@/lib";
 
-type PreviousState = {
-  errorMessages: {
-    titleError?: string;
-    scoreError?: string;
-  };
-  newAssignment: NewAssignment;  
-} | undefined;
+type PreviousState =
+  | {
+      errorMessages: {
+        titleError?: string;
+        scoreError?: string;
+      };
+      newAssignment: NewAssignment;
+    }
+  | undefined;
 
-export async function addAssignmentAction(_: PreviousState, formData: FormData) {
+export async function addAssignmentAction(
+  _: PreviousState,
+  formData: FormData
+) {
   const { devId, title, score, comment, tags } = getFormData(formData);
 
   const newAssignment = {
@@ -27,19 +32,19 @@ export async function addAssignmentAction(_: PreviousState, formData: FormData) 
   };
 
   try {
-    await scoresService.addAssignment(newAssignment);
+    await assignmentsService.addAssignment(newAssignment);
   } catch (error) {
     if (error instanceof ZodError) {
       const titleError = error.flatten().fieldErrors.title?.[0];
       const scoreError = error.flatten().fieldErrors.score?.[0];
-  
+
       return {
         errorMessages: {
           titleError,
-          scoreError
+          scoreError,
         },
-        newAssignment
-      }
+        newAssignment,
+      };
     }
     errorHandler(error);
   }
@@ -47,7 +52,10 @@ export async function addAssignmentAction(_: PreviousState, formData: FormData) 
   revalidatePath("/developers");
 }
 
-export async function editAssignmentAction(_: PreviousState, formData: FormData) {
+export async function editAssignmentAction(
+  _: PreviousState,
+  formData: FormData
+) {
   const assignmentId = formData.get("assignmentId") as string;
   const { title, comment, score, tags, devId } = getFormData(formData);
 
@@ -60,20 +68,22 @@ export async function editAssignmentAction(_: PreviousState, formData: FormData)
   };
 
   try {
-    await scoresService.updateAssignment(Number(assignmentId), newAssignment);
+    await assignmentsService.updateAssignment(
+      Number(assignmentId),
+      newAssignment
+    );
   } catch (error) {
-
     if (error instanceof ZodError) {
       const titleError = error.flatten().fieldErrors.title?.[0];
       const scoreError = error.flatten().fieldErrors.score?.[0];
-  
+
       return {
         errorMessages: {
           titleError,
-          scoreError
+          scoreError,
         },
-        newAssignment
-      }
+        newAssignment,
+      };
     }
     errorHandler(error);
   }
@@ -83,7 +93,7 @@ export async function editAssignmentAction(_: PreviousState, formData: FormData)
 
 export async function deleteAssignmentAction(id: number) {
   try {
-    await scoresService.deleteAssignment(id); 
+    await assignmentsService.deleteAssignment(id);
   } catch (error) {
     errorHandler(error);
   }
