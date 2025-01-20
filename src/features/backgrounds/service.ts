@@ -17,7 +17,8 @@ export function createBackgroundsService(
   checkUserAccess: (id: string) => Promise<boolean>,
   createDeveloperProfile: CreateDeveloperProfile,
   getAllById: GetAllById,
-  deleteDeveloperProfile: DeleteDeveloperProfile
+  deleteDeveloperProfile: DeleteDeveloperProfile,
+  getIdentityIdByDeveloperProfileId: (id: string) => Promise<string|null>,
 ) {
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;
@@ -165,8 +166,8 @@ export function createBackgroundsService(
       return await repository.getPostById(developerId);
     },
     async editAccess(developerProfileId: string) {
-      //identity id
-      return checkUserAccess(developerProfileId);
+      const identityId = await getIdentityIdByDeveloperProfileId(developerProfileId)
+      return checkUserAccess(identityId!);
     },
     async addDeveloperBackground(id: string) {
       const developer = await getDeveloperById(id);

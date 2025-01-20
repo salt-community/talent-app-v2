@@ -14,7 +14,8 @@ const insecureBackgroundsService = createBackgroundsService(
   iamService.checkUserAccess,
   developerProfilesService.createDeveloperProfile,
   developerProfilesService.getAllById,
-  developerProfilesService.delete
+  developerProfilesService.delete,
+  developerProfilesService.getIdentityIdByDeveloperProfileId,
 );
 
 export const backgroundsService = secureService(

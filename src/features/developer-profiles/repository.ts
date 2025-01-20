@@ -53,5 +53,13 @@ export function createDevelopersRepository(db: Db) {
         .set({ status: statues })
         .where(eq(developerProfiles.id, id));
     },
+    async getIdentityIdByDeveloperProfileId(developerProfileId: string) {
+      const [developerProfile] = await db
+        .select()
+        .from(developerProfiles)
+        .where(eq(developerProfiles.id, developerProfileId));
+
+      return developerProfile?.identityId;
+    },
   };
 }

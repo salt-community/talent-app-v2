@@ -54,6 +54,9 @@ export function createDeveloperProfilesService(db: Db) {
         id: developer.id,
       };
     },
+    async getIdentityIdByDeveloperProfileId(developerProfileId: string) {
+      return await repository.getIdentityIdByDeveloperProfileId(developerProfileId)
+    }
   };
 }
 
