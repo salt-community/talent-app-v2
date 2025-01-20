@@ -1,7 +1,7 @@
 import { DeveloperCard } from "@/components/ui/developer-card";
 import { BackgroundCard } from "@/features";
 import { Projects } from "@/features";
-import { ScoreBoard } from "@/features/scores";
+import { ScoreBoard } from "@/features/assignments";
 
 // Maximum timeout duration for the page speed API
 export const maxDuration = 60;
