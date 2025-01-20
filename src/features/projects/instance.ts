@@ -1,7 +1,10 @@
 import { db } from "@/db";
 import { createService } from "./service";
-import { developerProfilesService } from "../developer-profiles/instance";
-import { iamService, secureService } from "@/features";
+import {
+  iamService,
+  secureService,
+  developerProfilesService,
+} from "@/features";
 
 const insecurePojectService = createService(
   db,
