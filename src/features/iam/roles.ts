@@ -57,6 +57,7 @@ export const rolesPermissions = {
     developerProfiles.getById,
     developerProfiles.getDeveloperById,
     developerProfiles.getPublishedOrHighlightedDevIds,
+    developerProfiles.getIdentityIdByDeveloperProfileId
   ]),
   core: new Set([
     backgrounds.getAllBackgrounds,
