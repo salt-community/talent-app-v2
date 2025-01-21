@@ -1,13 +1,14 @@
 import { Db } from "@/db";
 import { createRepository } from "./repository";
 import type { NewAssignment } from "./types";
-import { assignmentUpdates, CheckAccess } from "@/features";
+import { CheckAccess } from "@/features";
 import { NotFoundError } from "@/lib";
+import { assignmentUpdates } from "./validation";
 
 export const createService = (db: Db, checkAccess: CheckAccess) => {
   const repository = createRepository(db);
   return {
-    addAssignment: async (newAssignment: NewAssignment) => {      
+    addAssignment: async (newAssignment: NewAssignment) => {
       await checkAccess("scores.addAssignment");
       assignmentUpdates.parse(newAssignment);
       await repository.addAssignment(newAssignment);
