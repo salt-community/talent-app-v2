@@ -14,7 +14,8 @@ export async function ScoreBoard({ devId }: Props) {
   let assignments: Assignment[] = [];
 
   try {
-    assignments = await assignmentsService.getAssignmentsByDevId(devId);
+    assignments =
+      await assignmentsService.getAssignmentsByDeveloperProfileId(devId);
   } catch (error) {
     errorHandler(error);
   }

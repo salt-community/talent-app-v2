@@ -13,7 +13,7 @@ export const createAssignmentsService = (db: Db, checkAccess: CheckAccess) => {
       assignmentUpdates.parse(newAssignment);
       await repository.addAssignment(newAssignment);
     },
-    getAssignmentsByDevId: async (devId: string) => {
+    getAssignmentsByDeveloperProfileId: async (devId: string) => {
       await checkAccess("scores.getAssignmentsById");
       return await repository.getAssignmentsById(devId);
     },
