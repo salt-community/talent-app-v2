@@ -68,10 +68,10 @@ export async function editAssignmentAction(
   };
 
   try {
-    await assignmentsService.updateAssignment(
-      Number(assignmentId),
-      newAssignment
-    );
+    await assignmentsService.updateAssignment({
+      id: Number(assignmentId),
+      rawData: newAssignment,
+    });
   } catch (error) {
     if (error instanceof ZodError) {
       const titleError = error.flatten().fieldErrors.title?.[0];

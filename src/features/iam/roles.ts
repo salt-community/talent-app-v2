@@ -1,5 +1,5 @@
 import {
-  scores,
+  assignments,
   projects,
   admins,
   backgrounds,
@@ -19,17 +19,17 @@ export const rolesPermissions = {
     projects.getAll,
     developerProfiles.getById,
     developerProfiles.getHighlightedDevIds,
+    // TODO: remove this permission when it doesn't crash the app.
+    assignments.getAssignmentsByDeveloperProfileId,
   ]),
   admin: new Set([
     ...Object.values(backgrounds),
     ...Object.values(projects),
     ...Object.values(developerProfiles),
-    ...scores,
+    ...Object.values(assignments),
     ...admins,
   ]),
   developer: new Set([
-    scores[0],
-    scores[1],
     backgrounds.add,
     backgrounds.addDeveloperBackground,
     backgrounds.createDeveloperProfile,
@@ -58,7 +58,7 @@ export const rolesPermissions = {
     developerProfiles.getById,
     developerProfiles.getDeveloperById,
     developerProfiles.getPublishedOrHighlightedDevIds,
-    developerProfiles.getIdentityIdByDeveloperProfileId
+    developerProfiles.getIdentityIdByDeveloperProfileId,
   ]),
   core: new Set([
     backgrounds.getAllBackgrounds,

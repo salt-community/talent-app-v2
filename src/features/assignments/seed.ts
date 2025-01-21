@@ -8,10 +8,7 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
 };
 
 export const seedAssignments = async (devIds: string[]) => {
-  const scoresService = createAssignmentsService(
-    db,
-    async function checkAccess(): Promise<void> {}
-  );
+  const scoresService = createAssignmentsService(db);
 
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",

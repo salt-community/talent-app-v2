@@ -1,8 +1,10 @@
 import { db } from "@/db";
 import { createAssignmentsService } from "./service";
-import { iamService } from "@/features";
+import { secureService } from "@/features";
 
-export const assignmentsService = createAssignmentsService(
-  db,
-  iamService.checkAccess
+const insecureAssignmentsService = createAssignmentsService(db);
+
+export const assignmentsService = secureService(
+  "assignments",
+  insecureAssignmentsService
 );

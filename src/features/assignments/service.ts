@@ -1,28 +1,23 @@
 import { Db } from "@/db";
 import { createRepository } from "./repository";
 import type { NewAssignment } from "./types";
-import { CheckAccess } from "@/features";
 import { NotFoundError } from "@/lib";
 import { assignmentUpdates } from "./validation";
 
-export const createAssignmentsService = (db: Db, checkAccess: CheckAccess) => {
+export const createAssignmentsService = (db: Db) => {
   const repository = createRepository(db);
   return {
     addAssignment: async (newAssignment: NewAssignment) => {
-      await checkAccess("scores.addAssignment");
       assignmentUpdates.parse(newAssignment);
       await repository.addAssignment(newAssignment);
     },
     getAssignmentsByDeveloperProfileId: async (devId: string) => {
-      await checkAccess("scores.getAssignmentsById");
       return await repository.getAssignmentsById(devId);
     },
     deleteAllAssignments: async () => {
-      await checkAccess("scores.deleteAllAssignments");
       await repository.deleteAllAssignments();
     },
     deleteAssignment: async (id: number) => {
-      await checkAccess("scores.deleteAssignment");
       const result = await repository.deleteAssignment(id);
       if (!result)
         throw new NotFoundError("Error occurred when deleting assignment");
@@ -33,10 +28,9 @@ export const createAssignmentsService = (db: Db, checkAccess: CheckAccess) => {
         throw new NotFoundError("Error occurred when getting assignment");
       return assignment[0];
     },
-    updateAssignment: async (id: number, rawData: NewAssignment) => {
-      await checkAccess("scores.addAssignment");
-      const updates = assignmentUpdates.parse(rawData);
-      return await repository.updateAssignment(id, updates);
+    updateAssignment: async (args: { id: number; rawData: NewAssignment }) => {
+      const updates = assignmentUpdates.parse(args.rawData);
+      return await repository.updateAssignment(args.id, updates);
     },
   };
 };

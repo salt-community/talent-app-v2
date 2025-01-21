@@ -1,3 +1,5 @@
+import { createAssignmentsService } from "./service";
+
 export type Assignment = {
   id: number;
   devId: string;
@@ -16,3 +18,5 @@ export type AssignmentFormData = {
 };
 
 export type NewAssignment = Omit<Assignment, "id">;
+
+export type AssignmentsService = ReturnType<typeof createAssignmentsService>;
