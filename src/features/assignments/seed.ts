@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { categoryTags } from "./categories";
-import { createService } from "./service";
+import { createAssignmentsService } from "./service";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
@@ -8,7 +8,7 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
 };
 
 export const seedAssignments = async (devIds: string[]) => {
-  const scoresService = createService(
+  const scoresService = createAssignmentsService(
     db,
     async function checkAccess(): Promise<void> {}
   );

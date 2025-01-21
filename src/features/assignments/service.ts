@@ -5,7 +5,7 @@ import { CheckAccess } from "@/features";
 import { NotFoundError } from "@/lib";
 import { assignmentUpdates } from "./validation";
 
-export const createService = (db: Db, checkAccess: CheckAccess) => {
+export const createAssignmentsService = (db: Db, checkAccess: CheckAccess) => {
   const repository = createRepository(db);
   return {
     addAssignment: async (newAssignment: NewAssignment) => {
