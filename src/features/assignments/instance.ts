@@ -1,5 +1,8 @@
 import { db } from "@/db";
-import { createService } from "./service";
+import { createAssignmentsService } from "./service";
 import { iamService } from "@/features";
 
-export const assignmentsService = createService(db, iamService.checkAccess);
+export const assignmentsService = createAssignmentsService(
+  db,
+  iamService.checkAccess
+);
