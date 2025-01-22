@@ -29,7 +29,7 @@ export async function CreateDeveloperProfileCard({
         <CreateProfileButton identityId={identityId} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 mx-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-4">
         {devIds.map((devId, index) => (
           <DeveloperProfileCard key={index} devId={devId.id} />
         ))}
