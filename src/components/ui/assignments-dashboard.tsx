@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "./separator";
+import { AssignmentsView } from "./assignments-view";
 
 export function AssignmentsDashboard() {
   const [tab, setTab] = React.useState("assignments");
@@ -25,8 +26,9 @@ export function AssignmentsDashboard() {
             Statistics
           </TabsTrigger>
         </TabsList>
+        <Separator className="my-8" />
+        <AssignmentsView />
       </Tabs>
-      <Separator className="my-5" />
     </section>
   );
 }
