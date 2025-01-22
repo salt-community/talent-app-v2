@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function ProjectDetails({ project, editAccess }: Props) {
-  const repository = project.repository.split("/")[4];
+  //const repository = project.repository.split("/")[4];
   return (
     <>
       <div className="flex justify-between items-baseline">
@@ -36,11 +36,7 @@ export default function ProjectDetails({ project, editAccess }: Props) {
       </div>
       <section className="flex justify-between items-start mt-2 gap-2">
         <Image
-          src={
-            project.imageUrl
-              ? `https://raw.githubusercontent.com/${project.username}/${repository}/main/${project.imageUrl}`
-              : "/placeholder-img.png"
-          }
+          src={project.imageUrl ? project.imageUrl : "/placeholder-img.png"}
           width={250}
           height={240}
           alt=""

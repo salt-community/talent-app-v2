@@ -126,14 +126,13 @@ export default function ProjectForm({ userId }: Props) {
               <FormLabel>Image</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="image.png"
+                  placeholder="https://example.com"
                   type="text"
                   {...form.register("imageUrl")}
                 />
               </FormControl>
               <FormDescription>
-                The name of a picture in your public-folder. Make sure it is
-                available on the main branch.
+                Link to the image.
               </FormDescription>
               <FormMessage>
                 {form.formState.errors.projectWebsite?.message}
