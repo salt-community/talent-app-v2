@@ -41,6 +41,11 @@ export type UpdatedIssues = {
   id: string;
   newIssuesCount: string;
 };
+export type UpdatedLastCommit = {
+  id: string;
+  lastCommit: string;
+};
+
 export type DeveloperProfile = typeof developerProfilesService.getAll;
 
 export type ProjectsService = ReturnType<typeof createService>;

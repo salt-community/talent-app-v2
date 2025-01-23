@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import {
   UpdatedCommits,
   UpdatedIssues,
+  UpdatedLastCommit,
   UpdatedPerformance,
   UpdatedProject,
 } from "./types";
@@ -51,6 +52,14 @@ export function createRepository(db: Db) {
           issues: updatedIssues.newIssuesCount,
         })
         .where(eq(projects.id, updatedIssues.id));
+    },
+    updateLastCommit: async (updatedLastCommit: UpdatedLastCommit) => {
+      await db
+        .update(projects)
+        .set({
+          lastCommit: updatedLastCommit.lastCommit,
+        })
+        .where(eq(projects.id, updatedLastCommit.id));
     },
   };
 }
