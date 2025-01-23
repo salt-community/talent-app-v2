@@ -35,6 +35,13 @@ export async function updateIssuesAction(
 ) {
   await projectsService.updateIssues({ user, repo, id });
 }
+export async function updateLastCommitAction(
+  user: string,
+  repo: string,
+  id: string
+) {
+  await projectsService.updateLastCommit({ user, repo, id });
+}
 export async function updateDescriptionAction(updatedProject: UpdatedProject) {
   await projectsService.updateDescription(updatedProject);
 }
