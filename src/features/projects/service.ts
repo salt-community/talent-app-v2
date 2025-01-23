@@ -97,6 +97,23 @@ export function createService(
         lastCommit: lastCommit,
       });
     },
+    updateCommits: async (args: { user: string; repo: string; id: string }) => {
+      const newCommitCount = await client.getTotalOfCommits(
+        args.user,
+        args.repo
+      );
+      reps.updateCommits({
+        newCommitsCount: newCommitCount,
+        id: args.id,
+      });
+    },
+    updateIssues: async (args: { user: string; repo: string; id: string }) => {
+      const newIssuesCount = await client.getAllIssues(args.user, args.repo);
+      reps.updateIssues({
+        newIssuesCount: newIssuesCount,
+        id: args.id,
+      });
+    },
     checkProfileAccess: async (developerProfileId: string) => {
       const identityId =
         await getIdentityIdByDeveloperProfileId(developerProfileId);
