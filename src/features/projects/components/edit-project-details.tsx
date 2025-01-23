@@ -19,7 +19,7 @@ import {
 } from "../actions";
 import { useState } from "react";
 import UpdateDescription from "./update-description";
-import UpdateScore from "./update-score";
+import UpdateData from "./update-data";
 import DeleteProject from "./delete-project";
 import { updateFormSchema } from "../validation";
 
@@ -74,7 +74,7 @@ export default function EditProjectDetails({ project }: Props) {
               Make changes to your project here. Click save when you´re done.
             </DialogDescription>
           </DialogHeader>
-          <UpdateScore onClick={updatePerformance} loading={loading} />
+          <UpdateData onClick={updatePerformance} loading={loading} />
           <UpdateDescription onSubmit={onSubmit} placeholder={placeholder} />
           <DeleteProject onClick={deleteProject} />
         </DialogContent>

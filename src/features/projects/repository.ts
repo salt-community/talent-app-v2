@@ -1,7 +1,12 @@
 import { Db } from "@/db";
 import { ProjectInsert, projects } from "./db";
 import { eq } from "drizzle-orm";
-import { UpdatedPerformance, UpdatedProject } from "./types";
+import {
+  UpdatedCommits,
+  UpdatedIssues,
+  UpdatedPerformance,
+  UpdatedProject,
+} from "./types";
 
 export function createRepository(db: Db) {
   return {
@@ -30,6 +35,22 @@ export function createRepository(db: Db) {
           performance: updatedPerformance.newPerformanceScore,
         })
         .where(eq(projects.id, updatedPerformance.id));
+    },
+    updateCommits: async (updatedCommits: UpdatedCommits) => {
+      await db
+        .update(projects)
+        .set({
+          commits: updatedCommits.newCommitsCount,
+        })
+        .where(eq(projects.id, updatedCommits.id));
+    },
+    updateIssues: async (updatedIssues: UpdatedIssues) => {
+      await db
+        .update(projects)
+        .set({
+          issues: updatedIssues.newIssuesCount,
+        })
+        .where(eq(projects.id, updatedIssues.id));
     },
   };
 }

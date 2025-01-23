@@ -4,7 +4,6 @@ import ProjectDetails from "./project-details";
 import ProjectForm from "./project-form";
 import { errorHandler } from "@/lib";
 import type { Project } from "../types";
-import { createClient } from "../api/api";
 
 type Props = {
   devId: string;
@@ -12,29 +11,11 @@ type Props = {
 
 export async function Projects({ devId }: Props) {
   let projects: Project[] = [];
-  let updatedProjects: Project[] = [];
   let editAccess = false;
-  const client = createClient();
+
   try {
     projects = await projectsService.getAll(devId);
-    if (projects.length > 0) {
-      updatedProjects = await Promise.all(
-        projects.map(async (project) => {
-          try{
-            const { username, title } = project;
-            return {
-              ...project,
-              commits: await client.getTotalOfCommits(username, title),
-              issues: await client.getAllIssues(username, title),
-              lastCommit: await client.getLastCommit(username, title),
-            };
-          } catch(error){
-            errorHandler(error);
-            return project
-          }
-        })
-      );
-    }
+
     editAccess = await projectsService.checkProfileAccess(devId);
   } catch (error) {
     errorHandler(error);
@@ -59,12 +40,12 @@ export async function Projects({ devId }: Props) {
       </div>
     );
   }
-  //todo: project details have to be up to date
+
   return (
     <div className="mt-4">
       <H2>Projects</H2>
       <div className="flex flex-col justify-center mt-4 lg:grid lg:grid-cols-2 md:gap-8">
-        {updatedProjects.map((project) => (
+        {projects.map((project) => (
           <div key={project.id} className="md:p-5 md:border md:rounded-md">
             <ProjectDetails project={project} editAccess={editAccess} />
             <Separator className="mt-4 mb-6 md:hidden" />
