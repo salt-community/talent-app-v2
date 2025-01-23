@@ -11,4 +11,5 @@ export const projects: PermissionsSchema<"projects", ProjectsService> = {
   updatePerformance: "projects.updatePerformance",
   updateCommits: "projects.updateCommits",
   updateIssues: "projects.updateIssues",
+  updateLastCommit: "projects.updateLastCommit"
 };

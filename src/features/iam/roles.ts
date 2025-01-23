@@ -51,6 +51,7 @@ export const rolesPermissions = {
     projects.updatePerformance,
     projects.updateCommits,
     projects.updateIssues,
+    projects.updateLastCommit,
     developerProfiles.getById,
     developerProfiles.getHighlightedDevIds,
     developerProfiles.add,
