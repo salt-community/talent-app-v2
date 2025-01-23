@@ -21,6 +21,20 @@ export async function updateProjectDataAction(
 ) {
   await projectsService.updateProjectData({ id, projectWebsite, user, repo });
 }
+export async function updateCommitsAction(
+  user: string,
+  repo: string,
+  id: string
+) {
+  await projectsService.updateCommits({ user, repo, id });
+}
+export async function updateIssuesAction(
+  user: string,
+  repo: string,
+  id: string
+) {
+  await projectsService.updateIssues({ user, repo, id });
+}
 export async function updateDescriptionAction(updatedProject: UpdatedProject) {
   await projectsService.updateDescription(updatedProject);
 }
