@@ -102,6 +102,20 @@ export function createService(
         id: args.id,
       });
     },
+    updateLastCommit: async (args: {
+      user: string;
+      repo: string;
+      id: string;
+    }) => {
+      const updatedLastCommit = await client.getLastCommit(
+        args.user,
+        args.repo
+      );
+      reps.updateLastCommit({
+        lastCommit: updatedLastCommit,
+        id: args.id,
+      });
+    },
     checkProfileAccess: async (developerProfileId: string) => {
       const identityId =
         await getIdentityIdByDeveloperProfileId(developerProfileId);
