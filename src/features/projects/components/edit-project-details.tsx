@@ -15,7 +15,8 @@ import {
   updateDescriptionAction,
   deleteProjectAction,
   revalidate,
-  updateProjectDataAction,
+  updateCommitsAction,
+  updateIssuesAction,
 } from "../actions";
 import { useState } from "react";
 import UpdateDescription from "./update-description";
@@ -23,6 +24,7 @@ import UpdateData from "./update-data";
 import UpdateData from "./update-data";
 import DeleteProject from "./delete-project";
 import { updateFormSchema } from "../validation";
+import { extractRepositoryDetails } from "../logic";
 import { extractRepositoryDetails } from "../logic";
 
 type Props = {
@@ -35,14 +37,15 @@ export default function EditProjectDetails({ project }: Props) {
     project.repository
   );
   async function updateProjectData() {
+  const { username, titleFromUrl } = extractRepositoryDetails(
+    project.repository
+  );
+  async function updateProjectData() {
     try {
       setLoading(true);
-      await updateProjectDataAction(
-        project.id,
-        project.projectWebsite!,
-        username,
-        titleFromUrl
-      );
+      await updatePerformanceScoreAction(project.projectWebsite!, project.id);
+      await updateCommitsAction(username, titleFromUrl, project.id);
+      await updateIssuesAction(username, titleFromUrl, project.id);
     } catch (error) {
       console.log("error updating project:", error);
     }
@@ -83,7 +86,7 @@ export default function EditProjectDetails({ project }: Props) {
               Make changes to your project here. Click save when you´re done.
             </DialogDescription>
           </DialogHeader>
-          <UpdateData onClick={updatePerformance} loading={loading} />
+          <UpdateData onClick={updateProjectData} loading={loading} />
           <UpdateDescription onSubmit={onSubmit} placeholder={placeholder} />
           <DeleteProject onClick={deleteProject} />
         </DialogContent>
