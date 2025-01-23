@@ -20,6 +20,7 @@ import {
 import { useState } from "react";
 import UpdateDescription from "./update-description";
 import UpdateData from "./update-data";
+import UpdateData from "./update-data";
 import DeleteProject from "./delete-project";
 import { updateFormSchema } from "../validation";
 import { extractRepositoryDetails } from "../logic";
@@ -82,7 +83,7 @@ export default function EditProjectDetails({ project }: Props) {
               Make changes to your project here. Click save when you´re done.
             </DialogDescription>
           </DialogHeader>
-          <UpdateData onClick={updateProjectData} loading={loading} />
+          <UpdateData onClick={updatePerformance} loading={loading} />
           <UpdateDescription onSubmit={onSubmit} placeholder={placeholder} />
           <DeleteProject onClick={deleteProject} />
         </DialogContent>
