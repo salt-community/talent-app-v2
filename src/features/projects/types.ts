@@ -33,7 +33,14 @@ export type UpdatedPerformance = {
   id: string;
   newPerformanceScore: string;
 };
-
+export type UpdatedCommits = {
+  id: string;
+  newCommitsCount: string;
+};
+export type UpdatedIssues = {
+  id: string;
+  newIssuesCount: string;
+};
 export type DeveloperProfile = typeof developerProfilesService.getAll;
 
 export type ProjectsService = ReturnType<typeof createService>;
