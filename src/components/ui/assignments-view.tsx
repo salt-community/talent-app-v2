@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
-import { AddAssignmentForm } from "./add-assignmentform";
+import { ClassAssignmentForm } from "./class-assignmentform";
 
 export function AssignmentsView() {
   const [subTab, setSubTab] = useState("add");
@@ -16,7 +16,7 @@ export function AssignmentsView() {
         </TabsList>
 
         <TabsContent value="add">
-          <AddAssignmentForm />
+          <ClassAssignmentForm />
         </TabsContent>
         <TabsContent value="list">{/* <ListAssignments /> */}</TabsContent>
       </Tabs>

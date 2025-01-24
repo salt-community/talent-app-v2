@@ -24,7 +24,7 @@ const classAssignmentSchema = z.object({
 
 type FormValues = z.infer<typeof classAssignmentSchema>;
 
-export function AddAssignmentForm() {
+export function ClassAssignmentForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
