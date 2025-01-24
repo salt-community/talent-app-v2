@@ -7,33 +7,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { addAssignmentAction } from "@/features/assignments/actions";
 
-const assignmentSchema = z.object({
+const classAssignmentSchema = z.object({
   title: z.string().nonempty("Title is required"),
   score: z
     .string()
     .transform((val) => Number(val))
     .refine((num) => !isNaN(num), "Score must be a number")
     .refine((num) => num >= 0, "Score must be >= 0"),
-  comment: z.string().optional(),
+  description: z.string().optional(),
   tags: z
     .string()
     .optional()
     .transform((val) => (val ? val.split(",").map((t) => t.trim()) : [])),
-  dueDate: z
-    .string()
-    .optional()
-    .refine(
-      (value) => {
-        if (!value) return true;
-        const dateVal = new Date(value);
-        return dateVal > new Date();
-      },
-      { message: "Due date must be in the future" }
-    ),
   // cohort field here later
 });
 
-type FormValues = z.infer<typeof assignmentSchema>;
+type FormValues = z.infer<typeof classAssignmentSchema>;
 
 export function AddAssignmentForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,13 +33,12 @@ export function AddAssignmentForm() {
     formState: { errors },
     reset,
   } = useForm<FormValues>({
-    resolver: zodResolver(assignmentSchema),
+    resolver: zodResolver(classAssignmentSchema),
     defaultValues: {
       title: "",
       score: 0,
-      comment: "",
+      description: "",
       tags: [],
-      dueDate: "",
     },
   });
 
@@ -61,11 +49,8 @@ export function AddAssignmentForm() {
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("score", data.score.toString());
-      formData.append("comment", data.comment || "");
+      formData.append("description", data.description || "");
       formData.append("tags", (data.tags ?? []).join(","));
-      if (data.dueDate) {
-        formData.append("dueDate", data.dueDate);
-      }
 
       const result = await addAssignmentAction(undefined, formData);
       console.log("RESULT ==>", result);
@@ -126,15 +111,15 @@ export function AddAssignmentForm() {
 
       <div>
         <label htmlFor="comment" className="block font-semibold">
-          Comment
+          Description
         </label>
         <textarea
           id="comment"
           className="border px-2 py-1 w-full"
-          {...register("comment")}
+          {...register("description")}
         />
-        {errors.comment && (
-          <p className="text-red-600 text-sm">{errors.comment.message}</p>
+        {errors.description && (
+          <p className="text-red-600 text-sm">{errors.description.message}</p>
         )}
       </div>
 
@@ -148,21 +133,6 @@ export function AddAssignmentForm() {
           className="border px-2 py-1 w-full"
           {...register("tags")}
         />
-      </div>
-
-      <div>
-        <label htmlFor="dueDate" className="block font-semibold">
-          Due Date
-        </label>
-        <input
-          id="dueDate"
-          type="date"
-          className="border px-2 py-1 w-full"
-          {...register("dueDate")}
-        />
-        {errors.dueDate && (
-          <p className="text-red-600 text-sm">{errors.dueDate.message}</p>
-        )}
       </div>
 
       <button
