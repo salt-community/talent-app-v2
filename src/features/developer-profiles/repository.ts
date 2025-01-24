@@ -29,6 +29,18 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(developerProfiles.identityId, id));
       return developerId;
     },
+    async getAllByCohort(cohortName: string) {
+      return await db
+        .select()
+        .from(developerProfiles)
+        .where(eq(developerProfiles.cohort, cohortName));
+    },
+    async updateCohort(id: string, newCohort: string) {
+      await db
+        .update(developerProfiles)
+        .set({ cohort: newCohort })
+        .where(eq(developerProfiles.id, id));
+    },
     async add(developerProfile: DeveloperProfileInsert) {
       const devId = await db
         .insert(developerProfiles)
