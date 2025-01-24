@@ -29,14 +29,15 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(developerProfiles.identityId, id));
       return developerId;
     },
-    async getAllByCohort(cohortName: string) {
-      return await db
-        .select()
+    async getAllByCohort(cohort: string): Promise<string[]> {
+      const devs = await db
+        .select({ devId: developerProfiles.id })
         .from(developerProfiles)
-        .where(eq(developerProfiles.cohort, cohortName));
+        .where(eq(developerProfiles.cohort, cohort));
+      return devs.map((row) => row.devId);
     },
     async updateCohort(id: string, newCohort: string) {
-      await db
+      return await db
         .update(developerProfiles)
         .set({ cohort: newCohort })
         .where(eq(developerProfiles.id, id));
