@@ -1,4 +1,4 @@
-import { DeveloperProfilesService } from "@/features";
+import { DeveloperProfilesService } from "@/features/developer-profiles";
 import { PermissionsSchema } from "../secure-service";
 
 export const developerProfiles: PermissionsSchema<
@@ -18,4 +18,6 @@ export const developerProfiles: PermissionsSchema<
   updateStatus: "developerProfiles.updateStatus",
   getIdentityIdByDeveloperProfileId:
     "developerProfiles.getIdentityIdByDeveloperProfileId",
+  updateCohort: "developerProfiles.updateCohort",
+  getAllByCohort: "developerProfiles.getAllByCohort",
 };
