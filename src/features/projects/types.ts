@@ -29,22 +29,14 @@ export type UpdatedProject = {
   description: string;
   imageUrl: string;
 };
-export type UpdatedPerformance = {
-  id: string;
-  newPerformanceScore: string;
-};
-export type UpdatedCommits = {
-  id: string;
-  newCommitsCount: string;
-};
-export type UpdatedIssues = {
-  id: string;
-  newIssuesCount: string;
-};
-export type UpdatedLastCommit = {
-  id: string;
-  lastCommit: string;
-};
+
+export type UpdatedProjectData = {
+  id: string,
+  newPerformanceScore: string,
+  newCommitsCount: string,
+  newIssuesCount: string,
+  lastCommit: string
+}
 
 export type DeveloperProfile = typeof developerProfilesService.getAll;
 

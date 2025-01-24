@@ -13,32 +13,13 @@ export async function deleteProjectAction(id: string) {
   await projectsService.delete(id);
   revalidatePath("/");
 }
-export async function updatePerformanceScoreAction(
+export async function updateProjectDataAction(
+  id: string,
   projectWebsite: string,
-  id: string
-) {
-  await projectsService.updatePerformance({ projectWebsite, id });
-}
-export async function updateCommitsAction(
   user: string,
   repo: string,
-  id: string
 ) {
-  await projectsService.updateCommits({ user, repo, id });
-}
-export async function updateIssuesAction(
-  user: string,
-  repo: string,
-  id: string
-) {
-  await projectsService.updateIssues({ user, repo, id });
-}
-export async function updateLastCommitAction(
-  user: string,
-  repo: string,
-  id: string
-) {
-  await projectsService.updateLastCommit({ user, repo, id });
+  await projectsService.updateProjectData({ id,projectWebsite, user, repo });
 }
 export async function updateDescriptionAction(updatedProject: UpdatedProject) {
   await projectsService.updateDescription(updatedProject);

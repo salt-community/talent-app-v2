@@ -1,13 +1,7 @@
 import { Db } from "@/db";
 import { ProjectInsert, projects } from "./db";
 import { eq } from "drizzle-orm";
-import {
-  UpdatedCommits,
-  UpdatedIssues,
-  UpdatedLastCommit,
-  UpdatedPerformance,
-  UpdatedProject,
-} from "./types";
+import { UpdatedProject, UpdatedProjectData } from "./types";
 
 export function createRepository(db: Db) {
   return {
@@ -29,37 +23,16 @@ export function createRepository(db: Db) {
     delete: async (id: string) => {
       await db.delete(projects).where(eq(projects.id, id));
     },
-    updatePerformanceScore: async (updatedPerformance: UpdatedPerformance) => {
+    updateProjectData: async (updatedProjectData: UpdatedProjectData) => {
       await db
         .update(projects)
         .set({
-          performance: updatedPerformance.newPerformanceScore,
+          performance: updatedProjectData.newPerformanceScore,
+          commits: updatedProjectData.newCommitsCount,
+          issues: updatedProjectData.newIssuesCount,
+          lastCommit: updatedProjectData.lastCommit,
         })
-        .where(eq(projects.id, updatedPerformance.id));
-    },
-    updateCommits: async (updatedCommits: UpdatedCommits) => {
-      await db
-        .update(projects)
-        .set({
-          commits: updatedCommits.newCommitsCount,
-        })
-        .where(eq(projects.id, updatedCommits.id));
-    },
-    updateIssues: async (updatedIssues: UpdatedIssues) => {
-      await db
-        .update(projects)
-        .set({
-          issues: updatedIssues.newIssuesCount,
-        })
-        .where(eq(projects.id, updatedIssues.id));
-    },
-    updateLastCommit: async (updatedLastCommit: UpdatedLastCommit) => {
-      await db
-        .update(projects)
-        .set({
-          lastCommit: updatedLastCommit.lastCommit,
-        })
-        .where(eq(projects.id, updatedLastCommit.id));
+        .where(eq(projects.id, updatedProjectData.id));
     },
   };
 }
