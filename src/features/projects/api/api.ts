@@ -67,14 +67,16 @@ export const createClient = () => {
       const pageUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${url}&key=${apiKey}`;
       let performanceScore = 0;
 
-      try {
-        const response = await fetch(pageUrl);
-        const data = await response.json();
-        performanceScore = data.lighthouseResult.categories.performance.score;
-      } catch (error) {
-        console.error("Error fetching performance score:", error);
-        return "NA";
-      }
+      if (url) {
+        try {
+          const response = await fetch(pageUrl);
+          const data = await response.json();
+          performanceScore = data.lighthouseResult.categories.performance.score;
+        } catch (error) {
+          console.error("Error fetching performance score:", error);
+          return "NA";
+        }
+      } else return "NA";
 
       return `${(performanceScore * 100).toString()}%`;
     },

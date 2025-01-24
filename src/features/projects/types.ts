@@ -31,12 +31,12 @@ export type UpdatedProject = {
 };
 
 export type UpdatedProjectData = {
-  id: string,
-  newPerformanceScore: string,
-  newCommitsCount: string,
-  newIssuesCount: string,
-  lastCommit: string
-}
+  id: string;
+  newPerformanceScore: string;
+  newCommitsCount: string;
+  newIssuesCount: string;
+  lastCommit: string;
+};
 
 export type DeveloperProfile = typeof developerProfilesService.getAll;
 
