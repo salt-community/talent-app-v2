@@ -5,28 +5,23 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { addAssignmentAction } from "@/features/assignments/actions";
+import { addCohortAssignmentAction } from "@/features/assignments/actions";
+import { AssignmentFormData } from "@/features";
 
 const classAssignmentSchema = z.object({
   title: z.string().nonempty("Title is required"),
-  score: z
-    .string()
-    .transform((val) => Number(val))
-    .refine((num) => !isNaN(num), "Score must be a number")
-    .refine((num) => num >= 0, "Score must be >= 0"),
   description: z.string().optional(),
   tags: z
     .string()
     .optional()
-    .transform((val) => (val ? val.split(",").map((t) => t.trim()) : [])),
-  // cohort field here later
+    .transform((val) => (val ? val.split(",") : [])),
+  cohort: z.string().nonempty("Please provide a cohort"),
 });
 
 type FormValues = z.infer<typeof classAssignmentSchema>;
 
 export function ClassAssignmentForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -36,38 +31,34 @@ export function ClassAssignmentForm() {
     resolver: zodResolver(classAssignmentSchema),
     defaultValues: {
       title: "",
-      score: 0,
       description: "",
       tags: [],
+      cohort: "",
     },
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: AssignmentFormData) => {
     setIsSubmitting(true);
 
     try {
       const formData = new FormData();
-      formData.append("title", data.title);
-      formData.append("score", data.score.toString());
+      formData.append("title", data.title || "");
       formData.append("description", data.description || "");
       formData.append("tags", (data.tags ?? []).join(","));
+      formData.append("cohort", data.cohort || "");
 
-      const result = await addAssignmentAction(undefined, formData);
-      console.log("RESULT ==>", result);
+      const result = await addCohortAssignmentAction(undefined, formData);
 
       if (result?.errorMessages) {
         if (result.errorMessages.titleError) {
           toast.error(result.errorMessages.titleError);
         }
-        if (result.errorMessages.scoreError) {
-          toast.error(result.errorMessages.scoreError);
-        }
       } else {
-        toast.success("Assignment created successfully!");
+        toast.success("Cohort assignment created successfully!");
         reset();
       }
     } catch (err) {
-      toast.error("Failed to add assignment. Check console or logs.");
+      toast.error("Failed to add assignment to cohort. Check console or logs.");
       console.error(err);
     } finally {
       setIsSubmitting(false);
@@ -80,11 +71,8 @@ export function ClassAssignmentForm() {
       className="space-y-4 w-full max-w-md"
     >
       <div>
-        <label htmlFor="title" className="block font-semibold">
-          Title
-        </label>
+        <label className="block font-semibold">Title</label>
         <input
-          id="title"
           type="text"
           className="border px-2 py-1 w-full"
           {...register("title")}
@@ -95,26 +83,20 @@ export function ClassAssignmentForm() {
       </div>
 
       <div>
-        <label htmlFor="score" className="block font-semibold">
-          Score
-        </label>
+        <label className="block font-semibold">Cohort</label>
         <input
-          id="score"
-          type="number"
+          type="text"
           className="border px-2 py-1 w-full"
-          {...register("score")}
+          {...register("cohort")}
         />
-        {errors.score && (
-          <p className="text-red-600 text-sm">{errors.score.message}</p>
+        {errors.cohort && (
+          <p className="text-red-600 text-sm">{errors.cohort.message}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="comment" className="block font-semibold">
-          Description
-        </label>
+        <label className="block font-semibold">Description</label>
         <textarea
-          id="comment"
           className="border px-2 py-1 w-full"
           {...register("description")}
         />
@@ -124,11 +106,8 @@ export function ClassAssignmentForm() {
       </div>
 
       <div>
-        <label htmlFor="tags" className="block font-semibold">
-          Tags (comma-separated)
-        </label>
+        <label className="block font-semibold">Tags (comma-separated)</label>
         <input
-          id="tags"
           type="text"
           className="border px-2 py-1 w-full"
           {...register("tags")}
@@ -140,7 +119,7 @@ export function ClassAssignmentForm() {
         disabled={isSubmitting}
         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
       >
-        {isSubmitting ? "Adding..." : "Add Assignment"}
+        {isSubmitting ? "Adding..." : "Add Assignment to Cohort"}
       </button>
     </form>
   );
