@@ -21,6 +21,9 @@ export function createDeveloperProfilesService(db: Db) {
     async getAllById(identityId: string) {
       return await repository.getAllById(identityId);
     },
+    async getAllByCohort(cohort: string) {
+      return await repository.getAllByCohort(cohort);
+    },
     async add(developerProfile: DeveloperProfileInsert) {
       return await repository.add(developerProfile);
     },
@@ -30,7 +33,8 @@ export function createDeveloperProfilesService(db: Db) {
     async updateStatus(args: { id: string; status: DeveloperProfileStatus }) {
       await repository.updateStatus(args.id, args.status);
     },
-    async updateCohort(id: string, newCohort: string) {
+    async updateCohort(args: { id: string; newCohort: string }) {
+      const { id, newCohort } = args;
       return await repository.updateCohort(id, newCohort);
     },
     async getPublishedOrHighlightedDevIds() {
