@@ -37,7 +37,7 @@ export const createClient = () => {
     },
 
     getAllIssues: async (user: string, repo: string) => {
-      const url = `https://api.github.com/search/issues?q=repo:${user}/${repo}+type:issue`;
+      const url = `https://api.github.com/repos/${user}/${repo}/issues`;
 
       const result = await fetchResponse(url);
 
@@ -45,10 +45,14 @@ export const createClient = () => {
         return "NA";
       }
 
-      const issues = result.total_count;
+      const issues = result[0]?.number;
 
+      if (!issues) {
+        return 0;
+      }
       return issues;
     },
+
     getLastCommit: async (user: string, repo: string) => {
       const url = `https://api.github.com/repos/${user}/${repo}/commits`;
 
