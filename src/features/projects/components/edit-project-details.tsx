@@ -15,9 +15,7 @@ import {
   updateDescriptionAction,
   deleteProjectAction,
   revalidate,
-  updateCommitsAction,
-  updateIssuesAction,
-  updateLastCommitAction,
+  updateProjectDataAction,
 } from "../actions";
 import { useState } from "react";
 import UpdateDescription from "./update-description";
@@ -44,12 +42,12 @@ export default function EditProjectDetails({ project }: Props) {
   async function updateProjectData() {
     try {
       setLoading(true);
-      await Promise.all([
-        updatePerformanceScoreAction(project.projectWebsite!, project.id),
-        updateCommitsAction(username, titleFromUrl, project.id),
-        updateIssuesAction(username, titleFromUrl, project.id),
-        updateLastCommitAction(username, titleFromUrl, project.id),
-      ]);
+      await updateProjectDataAction(
+        project.id,
+        project.projectWebsite!,
+        username,
+        titleFromUrl
+      );
     } catch (error) {
       console.log("error updating project:", error);
     }
