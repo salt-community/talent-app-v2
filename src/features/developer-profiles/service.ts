@@ -30,6 +30,9 @@ export function createDeveloperProfilesService(db: Db) {
     async updateStatus(args: { id: string; status: DeveloperProfileStatus }) {
       await repository.updateStatus(args.id, args.status);
     },
+    async updateCohort(id: string, newCohort: string) {
+      return await repository.updateCohort(id, newCohort);
+    },
     async getPublishedOrHighlightedDevIds() {
       return await repository.getPublishedOrHighlightedDevIds();
     },
@@ -55,8 +58,10 @@ export function createDeveloperProfilesService(db: Db) {
       };
     },
     async getIdentityIdByDeveloperProfileId(developerProfileId: string) {
-      return await repository.getIdentityIdByDeveloperProfileId(developerProfileId)
-    }
+      return await repository.getIdentityIdByDeveloperProfileId(
+        developerProfileId
+      );
+    },
   };
 }
 
