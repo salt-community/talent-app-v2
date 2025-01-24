@@ -10,11 +10,13 @@ export type Assignment = {
 };
 
 export type AssignmentFormData = {
-  devId: string;
-  title: string;
-  score: string;
-  comment: string;
-  tags: string[];
+  devId?: string;
+  title?: string;
+  score?: string;
+  comment?: string;
+  tags?: string[];
+  cohort?: string;
+  description?: string;
 };
 
 export type NewAssignment = Omit<Assignment, "id">;
