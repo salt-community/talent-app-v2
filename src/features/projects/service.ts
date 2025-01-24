@@ -76,44 +76,25 @@ export function createService(
         console.log("Error while deleting project:", error);
       }
     },
-    updatePerformance: async (args: { projectWebsite: string; id: string }) => {
-      const newPerformanceScore = await client.testPagePerformance(
-        args.projectWebsite
-      );
-      reps.updatePerformanceScore({
-        newPerformanceScore: newPerformanceScore,
-        id: args.id,
-      });
-    },
-    updateCommits: async (args: { user: string; repo: string; id: string }) => {
-      const newCommitCount = await client.getTotalOfCommits(
-        args.user,
-        args.repo
-      );
-      reps.updateCommits({
-        newCommitsCount: newCommitCount,
-        id: args.id,
-      });
-    },
-    updateIssues: async (args: { user: string; repo: string; id: string }) => {
-      const newIssuesCount = await client.getAllIssues(args.user, args.repo);
-      reps.updateIssues({
-        newIssuesCount: newIssuesCount,
-        id: args.id,
-      });
-    },
-    updateLastCommit: async (args: {
+    updateProjectData: async (args: {
+      id: string;
+      projectWebsite: string;
       user: string;
       repo: string;
-      id: string;
     }) => {
-      const updatedLastCommit = await client.getLastCommit(
-        args.user,
-        args.repo
-      );
-      reps.updateLastCommit({
-        lastCommit: updatedLastCommit,
+      const [newPerformanceScore, newCommitsCount, newIssuesCount, lastCommit] =
+        await Promise.all([
+          client.testPagePerformance(args.projectWebsite),
+          client.getTotalOfCommits(args.user, args.repo),
+          client.getAllIssues(args.user, args.repo),
+          client.getLastCommit(args.user, args.repo),
+        ]);
+      reps.updateProjectData({
         id: args.id,
+        newPerformanceScore: newPerformanceScore,
+        newCommitsCount: newCommitsCount,
+        newIssuesCount: newIssuesCount,
+        lastCommit: lastCommit,
       });
     },
     checkProfileAccess: async (developerProfileId: string) => {
