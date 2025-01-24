@@ -9,4 +9,7 @@ export const projects: PermissionsSchema<"projects", ProjectsService> = {
   getAllDevelopers: "projects.getAllDevelopers",
   updateDescription: "projects.updateDescription",
   updatePerformance: "projects.updatePerformance",
+  updateCommits: "projects.updateCommits",
+  updateIssues: "projects.updateIssues",
+  updateLastCommit: "projects.updateLastCommit"
 };
