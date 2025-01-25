@@ -1,10 +1,37 @@
-import { integer, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgTable,
+  timestamp,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
+import { cohorts } from "../backgrounds";
+import { sql } from "drizzle-orm";
+import { identities } from "../iam/schema";
 
-export const assignmentTable = pgTable("score_assignments", {
+export const assignmentTable = pgTable("assignments", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  devId: uuid("dev_id").notNull(),
   title: varchar().notNull(),
-  comment: varchar(),
-  score: integer().notNull(),
   tags: varchar().array().notNull(),
+  cohortId: uuid("cohort_id").references(() => cohorts.id, {
+    onDelete: "set null",
+  }),
+  comment: varchar("comment").default("no comment provided"),
+  categories: varchar("categories").array().default(["general"]),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const assignmentScores = pgTable("assignment_scores", {
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  assignmentId: uuid("assignment_id").references(() => assignmentTable.id, {
+    onDelete: "cascade",
+  }),
+  identityId: uuid("identity_id").references(() => identities.id, {
+    onDelete: "cascade",
+  }),
+  score: integer("score").notNull().default(0),
+  comment: varchar("comment").default("no comment provided"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
