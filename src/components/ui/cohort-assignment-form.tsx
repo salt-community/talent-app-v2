@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { addCohortAssignmentAction } from "@/features/assignments/actions";
 import { AssignmentFormData } from "@/features";
 
-const classAssignmentSchema = z.object({
+const cohortAssignmentSchema = z.object({
   title: z.string().nonempty("Title is required"),
   description: z.string().optional(),
   tags: z
@@ -18,9 +18,9 @@ const classAssignmentSchema = z.object({
   cohort: z.string().nonempty("Please provide a cohort"),
 });
 
-type FormValues = z.infer<typeof classAssignmentSchema>;
+type FormValues = z.infer<typeof cohortAssignmentSchema>;
 
-export function ClassAssignmentForm() {
+export function CohortAssignmentForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
@@ -28,7 +28,7 @@ export function ClassAssignmentForm() {
     formState: { errors },
     reset,
   } = useForm<FormValues>({
-    resolver: zodResolver(classAssignmentSchema),
+    resolver: zodResolver(cohortAssignmentSchema),
     defaultValues: {
       title: "",
       description: "",
@@ -55,6 +55,8 @@ export function ClassAssignmentForm() {
         }
       } else {
         toast.success("Cohort assignment created successfully!");
+        console.log("Cohort assignment created successfully!", result);
+
         reset();
       }
     } catch (err) {
