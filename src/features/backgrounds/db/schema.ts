@@ -3,9 +3,11 @@ import {
   jsonb,
   pgEnum,
   pgTable,
+  timestamp,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -41,6 +43,15 @@ export const languages = pgTable("background_languages", {
     .references(() => backgrounds.id, { onDelete: "cascade" }),
   name: varchar().notNull(),
   level: integer().notNull().default(5),
+});
+
+export const cohorts = pgTable("cohorts", {
+  id: uuid()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  description: varchar("description").notNull().default("assignment"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const operation = pgEnum("operation", ["upsert", "delete"]);

@@ -15,7 +15,6 @@ export const developerProfiles = pgTable("developer_profiles", {
   name: varchar().notNull(),
   email: varchar().notNull(),
   status: developerStatuses().notNull().default("unpublished"),
-  cohort: varchar("cohort").notNull().default(""),
 });
 
 export type DeveloperProfileSelect = typeof developerProfiles.$inferSelect;
