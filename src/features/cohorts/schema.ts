@@ -13,7 +13,7 @@ import { identities } from "../iam/schema";
 export const cohortStatuses = pgEnum("cohort_statuses", CohortStatus);
 
 export const cohorts = pgTable("cohorts", {
-  id: uuid()
+  id: uuid("id")
     .primaryKey()
     .default(sql`gen_random_uuid()`),
   identityId: varchar("identity_id").default("1"),
@@ -27,7 +27,7 @@ export type CohortSelect = typeof cohorts.$inferSelect;
 export type CohortInsert = typeof cohorts.$inferInsert;
 
 export const cohortIdentities = pgTable("cohorts_identities", {
-  id: uuid()
+  id: uuid("id")
     .primaryKey()
     .default(sql`gen_random_uuid()`),
   cohortId: integer("cohort_id")

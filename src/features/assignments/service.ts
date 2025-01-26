@@ -1,36 +1,58 @@
 import { Db } from "@/db";
-import { createRepository } from "./repository";
-import type { NewAssignment } from "./types";
-import { NotFoundError } from "@/lib";
-import { assignmentUpdates } from "./validation";
+import { createAssignmentsRepository } from "./repository";
+import { NewAssignment, NewAssignmentScore } from "./types";
+import { assignmentTable } from "./schema";
 
-export const createAssignmentsService = (db: Db) => {
-  const repository = createRepository(db);
+export function createAssignmentsService(db: Db) {
+  const repo = createAssignmentsRepository(db);
+
   return {
-    addAssignment: async (newAssignment: NewAssignment) => {
-      assignmentUpdates.parse(newAssignment);
-      await repository.addAssignment(newAssignment);
+    async createAssignment(data: NewAssignment) {
+      return await repo.createAssignment(data);
     },
-    getAssignmentsByDeveloperProfileId: async (devId: string) => {
-      return await repository.getAssignmentsById(devId);
+
+    async getAssignmentById(assignmentId: string) {
+      return await repo.getAssignmentById(assignmentId);
     },
-    deleteAllAssignments: async () => {
-      await repository.deleteAllAssignments();
+
+    async getAssignmentsByCohortId(cohortId: string) {
+      return await repo.getAssignmentsByCohortId(cohortId);
     },
-    deleteAssignment: async (id: number) => {
-      const result = await repository.deleteAssignment(id);
-      if (!result)
-        throw new NotFoundError("Error occurred when deleting assignment");
+
+    async createAssignmentScore(data: NewAssignmentScore) {
+      return await repo.createAssignmentScore(data);
     },
-    getAssignmentById: async (id: number) => {
-      const assignment = await repository.getAssignmentById(id);
-      if (assignment.length === 0)
-        throw new NotFoundError("Error occurred when getting assignment");
-      return assignment[0];
+
+    async getScoresByAssignmentId(assignmentId: string) {
+      return await repo.getScoresByAssignmentId(assignmentId);
     },
-    updateAssignment: async (args: { id: number; rawData: NewAssignment }) => {
-      const updates = assignmentUpdates.parse(args.rawData);
-      return await repository.updateAssignment(args.id, updates);
+
+    async getScoresByIdentityId(identityId: string) {
+      return await repo.getScoresByIdentityId(identityId);
+    },
+
+    async deleteAllAssignments() {
+      return await repo.deleteAllAssignments();
+    },
+
+    async deleteAssignment(assignmentId: string) {
+      return await repo.deleteAssignment(assignmentId);
+    },
+
+    async getAssignmentsByCohort(cohortId: string) {
+      return await repo.getAssignmentsByCohort(cohortId);
+    },
+
+    async updateAssignment({
+      id,
+      rawData,
+    }: {
+      id: string;
+      rawData: Partial<Omit<typeof assignmentTable.$inferInsert, "id">>;
+    }) {
+      return await repo.updateAssignment(id, rawData);
     },
   };
-};
+}
+
+export type AssignmentsService = ReturnType<typeof createAssignmentsService>;

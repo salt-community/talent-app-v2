@@ -1,26 +1,43 @@
-import type { AssignmentFormData } from "./types";
+import type { AssignmentFormData, AssignmentScoreFormData } from "./types";
 
 export const getFormData = (formData: FormData): AssignmentFormData => {
-  const devId = formData.get("devId") as string;
-  const title = formData.get("title") as string;
-  const comment = formData.get("comment") as string;
-  const score = formData.get("score") as string;
+  const title = formData.get("title") as string | null;
+  const cohortId = formData.get("cohortId") as string | null;
+  const comment = formData.get("comment") as string | null;
+  const categories = (formData.get("categories") as string)?.split(",") || [];
+  const tags = (formData.get("tags") as string)?.split(",") || [];
 
-  const tags: string[] = [];
-
-  if (formData.get("conversation") as string) tags.push("conversation");
-  if (formData.get("teamCollaboration") as string)
-    tags.push("team collaboration");
-  if (formData.get("management") as string) tags.push("management");
-  if (formData.get("design") as string) tags.push("design");
-  if (formData.get("backend") as string) tags.push("backend");
-  if (formData.get("frontend") as string) tags.push("frontend");
+  if (!title || !cohortId) {
+    throw new Error("Missing required fields: title or cohortId");
+  }
 
   return {
-    devId,
     title,
-    comment,
-    score,
+    cohortId,
+    comment: comment || undefined,
+    categories,
     tags,
+  };
+};
+
+export const getAssignmentScoreFormData = (
+  formData: FormData
+): AssignmentScoreFormData => {
+  const assignmentId = formData.get("assignmentId") as string | null;
+  const identityId = formData.get("identityId") as string | null;
+  const score = formData.get("score") as string | null;
+  const comment = formData.get("comment") as string | null;
+
+  if (!assignmentId || !identityId || !score) {
+    throw new Error(
+      "Missing required fields: assignmentId, identityId, or score"
+    );
+  }
+
+  return {
+    assignmentId,
+    identityId,
+    score,
+    comment: comment || undefined,
   };
 };

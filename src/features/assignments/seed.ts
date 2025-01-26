@@ -1,14 +1,16 @@
 import { db } from "@/db";
 import { categoryTags } from "./categories";
 import { createAssignmentsService } from "./service";
+import { createCohortsService } from "../cohorts/service";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, Math.floor(Math.random() * maxTags) + 1);
 };
 
-export const seedAssignments = async (devIds: string[]) => {
-  const scoresService = createAssignmentsService(db);
+export const seedAssignments = async (cohortId: string) => {
+  const assignmentsService = createAssignmentsService(db);
+  const cohortsService = createCohortsService(db);
 
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",
@@ -38,22 +40,37 @@ export const seedAssignments = async (devIds: string[]) => {
     "Design an Accessibility-First Web App",
   ];
 
-  await scoresService.deleteAllAssignments();
+  await assignmentsService.deleteAllAssignments();
 
-  const maxTags = categoryTags.length;
-  for (let i = 0; i < devIds.length; i++) {
+  const cohortIdentities = await cohortsService.getCohortIdentities(cohortId);
+
+  for (let i = 0; i < 5; i++) {
     const newAssignment = {
-      devId: devIds[i],
-      title: assignmentTitles[Math.floor(Math.random() * 25)],
-      comment: `comment - ${i + 1}`,
-      score: Math.round(Math.random() * 100),
-      tags: getRandomTags(categoryTags, maxTags),
+      cohortId,
+      title:
+        assignmentTitles[Math.floor(Math.random() * assignmentTitles.length)],
+      comment: `This is a comment for assignment ${i + 1}`,
+      tags: getRandomTags(categoryTags, categoryTags.length),
+      categories: getRandomTags(categoryTags, 3),
     };
 
     try {
-      await scoresService.addAssignment(newAssignment);
+      const createdAssignment =
+        await assignmentsService.createAssignment(newAssignment);
+
+      const scorePromises = cohortIdentities.map(async (identity) => {
+        const newScore = {
+          assignmentId: createdAssignment.id.toString(),
+          identityId: identity.identityId.toString(),
+          score: Math.floor(Math.random() * 101).toString(),
+          comment: `Score comment for identity ${identity.identityId}`,
+        };
+        return assignmentsService.createAssignmentScore(newScore);
+      });
+
+      await Promise.all(scorePromises);
     } catch (error) {
-      console.error("Something went wrong when seeding assignments: " + error);
+      console.error("Error while seeding assignments and scores:", error);
     }
   }
 };

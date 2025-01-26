@@ -1,16 +1,12 @@
-import {
-  integer,
-  pgTable,
-  timestamp,
-  uuid,
-  varchar,
-} from "drizzle-orm/pg-core";
-import { cohorts } from "../backgrounds";
+import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { identities } from "../iam/schema";
+import { cohorts } from "../cohorts/schema";
 
 export const assignmentTable = pgTable("assignments", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: varchar()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   title: varchar().notNull(),
   tags: varchar().array().notNull(),
   cohortId: uuid("cohort_id").references(() => cohorts.id, {
@@ -31,7 +27,7 @@ export const assignmentScores = pgTable("assignment_scores", {
   identityId: uuid("identity_id").references(() => identities.id, {
     onDelete: "cascade",
   }),
-  score: integer("score").notNull().default(0),
+  score: varchar("score").notNull().default("0"),
   comment: varchar("comment").default("no comment provided"),
   createdAt: timestamp("created_at").defaultNow(),
 });
