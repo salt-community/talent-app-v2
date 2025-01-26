@@ -15,7 +15,7 @@ describe("Cohort Services", () => {
     testCohortId = cohort.id;
   });
 
-  test("should fetch all cohorts", async () => {
+  test("should fetch all cohorts!", async () => {
     const cohorts = await cohortsService.getAll();
     expect(Array.isArray(cohorts)).toBe(true);
     expect(cohorts.length).toBeGreaterThan(0);
