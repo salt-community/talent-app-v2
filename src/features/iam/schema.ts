@@ -1,5 +1,5 @@
 import { pgTable, pgEnum, uuid, varchar } from "drizzle-orm/pg-core";
-import { cohorts } from "../backgrounds";
+import { cohort } from "../cohorts/schema";
 
 export const roles = pgEnum("roles", ["developer", "core", "admin"]);
 export type Roles = typeof roles;
@@ -10,7 +10,7 @@ export const identities = pgTable("identities", {
   name: varchar("name").notNull(),
   email: varchar("email").notNull(),
   role: roles().notNull().default("developer"),
-  cohortId: uuid("cohort_id").references(() => cohorts.id, {
+  cohortId: uuid("cohort_id").references(() => cohort.id, {
     onDelete: "set null",
   }),
 });
