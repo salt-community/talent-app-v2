@@ -19,8 +19,6 @@ export const rolesPermissions = {
     projects.getAll,
     developerProfiles.getById,
     developerProfiles.getHighlightedDevIds,
-    // TODO: remove this permission when it doesn't crash the app.
-    assignments.getAssignmentsByDeveloperProfileId,
   ]),
   admin: new Set([
     ...Object.values(backgrounds),
@@ -59,6 +57,8 @@ export const rolesPermissions = {
     developerProfiles.getDeveloperById,
     developerProfiles.getPublishedOrHighlightedDevIds,
     developerProfiles.getIdentityIdByDeveloperProfileId,
+    assignments.getAssignmentsByCohortId,
+    assignments.getScoresByIdentityId,
   ]),
   core: new Set([
     backgrounds.getAllBackgrounds,
@@ -82,5 +82,8 @@ export const rolesPermissions = {
     developerProfiles.getById,
     developerProfiles.getDeveloperById,
     developerProfiles.getPublishedOrHighlightedDevIds,
+    assignments.getAssignmentsByCohort,
+    assignments.getAssignmentsByCohortId,
+    assignments.getAssignmentById,
   ]),
 } as const;
