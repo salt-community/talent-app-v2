@@ -2,8 +2,12 @@ import { db } from "@/db";
 import { cohorts } from "@/features/cohorts/schema";
 import { identities } from "@/features/iam/schema";
 import { faker } from "@faker-js/faker";
+import { cohorts } from "@/features/cohorts/schema";
+import { identities } from "@/features/iam/schema";
+import { faker } from "@faker-js/faker";
 
 async function seed() {
+  console.log("Seeding cohorts...");
   console.log("Seeding cohorts...");
   await db.insert(cohorts).values([
     { name: "FS-2025", description: "FullStack C# Cohort" },
@@ -20,7 +24,7 @@ async function seed() {
       name: `${faker.person.firstName()} ${faker.person.lastName()}`,
       email: faker.internet.email(),
       clerkId: `clerk-${i}`,
-      cohortId: "2",
+      cohortId: null,
     });
   }
   await db.insert(identities).values(fakeIdentities);
