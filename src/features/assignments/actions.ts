@@ -20,7 +20,7 @@ type PreviousState =
   | undefined;
 
 export async function addAssignmentAction(
-  _: PreviousState,
+  _: unknown,
   formData: FormData
 ): Promise<
   | {

@@ -11,10 +11,10 @@ import { Plus } from "lucide-react";
 import { addAssignmentAction } from "../actions";
 
 export function AddAssignmentForm() {
-  const [state, formAction, isPending] = useActionState(addAssignmentAction, {
-    errorMessages: undefined,
-    newAssignment: undefined,
-  });
+  const [state, formAction, isPending] = useActionState(
+    addAssignmentAction,
+    null
+  );
 
   return (
     <Dialog>
