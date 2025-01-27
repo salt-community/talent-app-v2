@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { skills } from "./data";
-import { backgroundsService } from "../instance";
+import { insecureBackgroundsService } from "../instance";
 
 export async function backgroundsSeed(devIds: string[]) {
   const avatars = await getAvatars(devIds.length);
@@ -74,7 +74,7 @@ export async function backgroundsSeed(devIds: string[]) {
   });
   await Promise.all(
     backgrounds.map(async (background) => {
-      await backgroundsService.add(background);
+      await insecureBackgroundsService.add(background);
     })
   );
   console.log("Done seeding Backgrounds...");

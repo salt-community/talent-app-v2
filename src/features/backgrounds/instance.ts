@@ -5,7 +5,7 @@ import { developerProfilesService, secureService } from "@/features";
 import { createMeiliClient } from "./meili";
 import { iamService } from "@/features";
 
-const insecureBackgroundsService = createBackgroundsService(
+export const insecureBackgroundsService = createBackgroundsService(
   createRepository(db),
   createMeiliClient(),
   developerProfilesService.getPublishedOrHighlightedDevIds,
@@ -15,7 +15,7 @@ const insecureBackgroundsService = createBackgroundsService(
   developerProfilesService.createDeveloperProfile,
   developerProfilesService.getAllById,
   developerProfilesService.delete,
-  developerProfilesService.getIdentityIdByDeveloperProfileId,
+  developerProfilesService.getIdentityIdByDeveloperProfileId
 );
 
 export const backgroundsService = secureService(

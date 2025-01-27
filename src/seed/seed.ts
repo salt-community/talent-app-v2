@@ -1,14 +1,17 @@
+import { db } from "@/db";
 import {
-  seedIdentities,
   backgroundsSeed,
+  createDeveloperProfilesService,
   seedAssignments,
-  developerProfilesService,
   seedDeveloperProfiles,
+  seedIdentities,
   seedProjects,
 } from "@/features";
 
 (async () => {
-  console.log("Start seeding...");
+  const developerProfilesService = createDeveloperProfilesService(db);
+
+  console.log("Starting to seed...");
   await seedIdentities();
   await seedDeveloperProfiles();
   const devIds = (await developerProfilesService.getAll()).map(
@@ -17,5 +20,5 @@ import {
   await seedAssignments(devIds);
   await backgroundsSeed(devIds);
   await seedProjects();
-  console.log("Done seeding...");
+  console.log("Done seeding!");
 })();
