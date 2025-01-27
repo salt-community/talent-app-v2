@@ -8,9 +8,7 @@ import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
 import { Permission, Role } from "./permissions";
 
-export function createService(
-  db: Db,
-) {
+export function createService(db: Db) {
   const repository = createRepository(db);
   return {
     async getAllIdentities() {
@@ -34,13 +32,13 @@ export function createService(
       }
 
       const existingUser = await repository.getUserId(userId);
-  
+
       if (existingUser) {
         return existingUser;
       }
 
       const claims = sessionClaims as SessionClaims;
-      
+
       if (!validateSessionClaims(claims)) {
         return;
       }
@@ -70,8 +68,7 @@ export function createService(
 
       if (identity.roles === "admin") return true;
 
-      return identity.id === identityId 
-   
+      return identity.id === identityId;
     },
 
     async checkAccess(permission: Permission): Promise<void> {
