@@ -3,11 +3,14 @@ import { PermissionsSchema } from "../secure-service";
 
 export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
   {
-    addAssignment: "assignments.addAssignment",
+    createAssignment: "assignments.createAssignment",
     deleteAllAssignments: "assignments.deleteAllAssignments",
     deleteAssignment: "assignments.deleteAssignment",
     getAssignmentById: "assignments.getAssignmentById",
-    getAssignmentsByDeveloperProfileId:
-      "assignments.getAssignmentsByDeveloperProfileId",
+    getAssignmentsByCohortId: "assignments.getAssignmentsByCohortId",
+    getAssignmentsByCohort: "assignments.getAssignmentsByCohort",
+    createAssignmentScore: "assignments.createAssignmentScore",
+    getScoresByAssignmentId: "assignments.getScoresByAssignmentId",
+    getScoresByIdentityId: "assignments.getScoresByIdentityId",
     updateAssignment: "assignments.updateAssignment",
   };
