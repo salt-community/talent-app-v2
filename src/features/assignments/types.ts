@@ -1,10 +1,10 @@
 import { createAssignmentsService } from "./service";
 
 export type Assignment = {
-  id: number;
+  id: string;
   title: string;
   tags: string[];
-  cohortId: string;
+  cohortId?: string;
   comment?: string;
   categories?: string[];
   createdAt: Date;
@@ -22,10 +22,9 @@ export type AssignmentScore = {
 export type AssignmentFormData = {
   title: string;
   tags: string[];
-  cohortId: string;
+  cohortId?: string;
   comment?: string;
   categories?: string[];
-  description?: string;
 };
 
 export type AssignmentScoreFormData = {
@@ -36,6 +35,7 @@ export type AssignmentScoreFormData = {
 };
 
 export type NewAssignment = Omit<Assignment, "id" | "createdAt">;
+
 export type NewAssignmentScore = Omit<AssignmentScore, "id" | "createdAt">;
 
 export type AssignmentsService = ReturnType<typeof createAssignmentsService>;
