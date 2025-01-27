@@ -1,7 +1,8 @@
-import { db } from "@/db";
+import { cohortsService } from "../cohorts/service";
 import { categoryTags } from "./categories";
 import { createAssignmentsService } from "./service";
-import { createCohortsService } from "../cohorts/service";
+
+import { db } from "@/db";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
@@ -10,7 +11,7 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
 
 export const seedAssignments = async (cohortId: string) => {
   const assignmentsService = createAssignmentsService(db);
-  const cohortsService = createCohortsService(db);
+  const CreatedCohortService = cohortsService(db);
 
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",
@@ -42,7 +43,8 @@ export const seedAssignments = async (cohortId: string) => {
 
   await assignmentsService.deleteAllAssignments();
 
-  const cohortIdentities = await cohortsService.getCohortIdentities(cohortId);
+  const cohortIdentities =
+    await CreatedCohortService.getCohortIdentities(cohortId);
 
   for (let i = 0; i < 5; i++) {
     const newAssignment = {
