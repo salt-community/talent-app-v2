@@ -1,9 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { ReactNode } from "react";
 import { ZodError } from "zod";
 import { errorHandler } from "@/lib";
-import { NewAssignment, NewAssignmentScore } from "./types";
+import { Assignment, NewAssignment, NewAssignmentScore } from "./types";
 import { assignmentsService } from "./instance";
 import { getFormData, getAssignmentScoreFormData } from "./utils";
 
@@ -23,6 +24,7 @@ export async function addAssignmentAction(
   formData: FormData
 ): Promise<
   | {
+      successMessage: ReactNode;
       errorMessages?: {
         titleError?: string;
       };
@@ -46,6 +48,7 @@ export async function addAssignmentAction(
     if (error instanceof ZodError) {
       const titleError = error.flatten().fieldErrors.title?.[0];
       return {
+        successMessage: null,
         errorMessages: { titleError },
         newAssignment,
       };
@@ -148,4 +151,58 @@ export async function addAssignmentScoreAction(
   }
 
   revalidatePath(`/assignments/${assignmentId}`);
+}
+
+export async function getAssignmentByIdAction(
+  _: PreviousState,
+  formData: FormData
+): Promise<NewAssignment | undefined> {
+  const assignmentId = formData.get("assignmentId") as string | null;
+
+  if (!assignmentId) {
+    throw new Error("Missing required field: assignmentId");
+  }
+
+  try {
+    const assignment = await assignmentsService.getAssignmentById(assignmentId);
+
+    if (!assignment) {
+      throw new Error(`Assignment with ID ${assignmentId} not found`);
+    }
+
+    return {
+      title: assignment.title ?? "Untitled",
+      tags: assignment.tags ?? [],
+      cohortId: assignment.cohortId ?? "",
+      comment: assignment.comment ?? "",
+      categories: assignment.categories ?? [],
+    };
+  } catch (error) {
+    errorHandler(error);
+  }
+
+  revalidatePath(`/assignments/${assignmentId}`);
+}
+
+export async function fetchAssignmentsByCohortAction(
+  previousState: Assignment[] | undefined,
+  { cohortId }: { cohortId: string }
+): Promise<Assignment[]> {
+  try {
+    const assignments =
+      await assignmentsService.getAssignmentsByCohortId(cohortId);
+
+    return assignments.map((assignment) => ({
+      id: assignment.id,
+      title: assignment.title ?? "Untitled",
+      tags: assignment.tags ?? [],
+      cohortId: assignment.cohortId ?? "",
+      comment: assignment.comment ?? "",
+      categories: assignment.categories ?? [],
+      createdAt: assignment.createdAt ?? new Date(),
+    }));
+  } catch (error) {
+    errorHandler(error);
+    return previousState ?? [];
+  }
 }

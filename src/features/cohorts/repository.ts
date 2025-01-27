@@ -31,7 +31,9 @@ export function createCohortsRepository(db: Db) {
     async deleteCohort(cohortId: string) {
       return await db.delete(cohorts).where(eq(cohorts.id, cohortId));
     },
-    async updateCohortStatus(cohortId: string, status: CohortStatus) {
+
+    async updateCohortStatus(args: { cohortId: string; status: CohortStatus }) {
+      const { cohortId, status } = args;
       return await db
         .update(cohorts)
         .set({ status })

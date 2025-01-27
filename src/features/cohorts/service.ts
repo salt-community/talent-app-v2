@@ -2,7 +2,7 @@ import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
 import { CohortStatus } from "./types";
 
-export function createCohortsService(db: Db) {
+export function cohortsService(db: Db) {
   const repo = createCohortsRepository(db);
 
   return {
@@ -18,13 +18,16 @@ export function createCohortsService(db: Db) {
     async getCohortIdentities(cohortId: string) {
       return await repo.getCohortIdentities(cohortId);
     },
-    async delete(cohortId: string) {
+    async deleteCohort(cohortId: string) {
       return await repo.deleteCohort(cohortId);
     },
-    async updateStatus(cohortId: string, status: CohortStatus) {
-      return await repo.updateCohortStatus(cohortId, status);
+    async updateCohortStatus(args: { cohortId: string; status: CohortStatus }) {
+      return await repo.updateCohortStatus({
+        cohortId: args.cohortId,
+        status: args.status,
+      });
     },
   };
 }
 
-export type CohortsService = ReturnType<typeof createCohortsService>;
+export type CohortsService = ReturnType<typeof cohortsService>;
