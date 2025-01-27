@@ -1,12 +1,6 @@
-import {
-  CustomError,
-  UnauthorizedError,
-  ForbiddenError,
-  NotFoundError,
-} from "@/lib";
-import { writeToLogFile } from "./write-to-log-file";
+import { UnauthorizedError, ForbiddenError, NotFoundError } from "@/lib";
 
-export const errorHandler = (error: unknown) => {  
+export const errorHandler = (error: unknown) => {
   let errorText =
     `Title: Internal server error\n` +
     `Status code: 500\n` +
@@ -35,6 +29,6 @@ export const errorHandler = (error: unknown) => {
   } else if (typeof error === "string" || typeof error === "number") {
     error = new Error(error.toString());
   }
-  writeToLogFile(error as CustomError, errorText);
+
   throw new Error(errorText);
 };
