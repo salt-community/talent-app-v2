@@ -1,4 +1,4 @@
-import { cohortsService } from "../cohorts/service";
+import { createCohortsService } from "../cohorts/service";
 import { categoryTags } from "./categories";
 import { createAssignmentsService } from "./service";
 
@@ -11,7 +11,7 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
 
 export const seedAssignments = async (cohortId: string) => {
   const assignmentsService = createAssignmentsService(db);
-  const CreatedCohortService = cohortsService(db);
+  const CreatedCohortService = createCohortsService(db);
 
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",

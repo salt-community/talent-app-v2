@@ -1,8 +1,8 @@
 import { secureService } from "@/features";
-import { cohortsService } from "./service";
+import { createCohortsService } from "./service";
 import { db } from "@/db";
 
-const insecureCohortService = cohortsService(db);
+const insecureCohortService = createCohortsService(db);
 
 export const createCohortsService = secureService(
   "cohorts",

@@ -2,7 +2,7 @@ import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
 import { CohortStatus } from "./types";
 
-export function cohortsService(db: Db) {
+export function createCohortsService(db: Db) {
   const repo = createCohortsRepository(db);
 
   return {
@@ -30,4 +30,4 @@ export function cohortsService(db: Db) {
   };
 }
 
-export type CohortsService = ReturnType<typeof cohortsService>;
+export type CohortsService = ReturnType<typeof createCohortsService>;
