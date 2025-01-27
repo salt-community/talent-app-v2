@@ -1,35 +1,47 @@
-import { Separator } from "@/components/ui/separator";
+"use client";
+
+import { useEffect } from "react";
+import { errorHandler } from "@/lib";
+import { useActionState } from "react";
+import type { Assignment } from "../types";
+import { fetchAssignmentsByCohortAction } from "@/features/assignments/actions";
+import { Separator, H2 } from "@/components/ui";
 import { AverageScore } from "./average-score";
 import { SpiderGraph } from "./spider-graph";
-import { H2 } from "@/components/ui/header/header-h2";
-import { assignmentsService } from "../instance";
-import { AddAssignment } from "./add-assignment";
-import { Assignments } from "./accordion/assignments";
-import type { Assignment } from "../types";
-import { errorHandler } from "@/lib";
+import { Assignments } from "./accordion";
 
-type Props = { devId: string };
+interface IScoreBoardProps {
+  cohortId: string;
+}
 
-export async function ScoreBoard({ devId }: Props) {
-  let assignments: Assignment[] = [];
+export function ScoreBoard({ cohortId }: IScoreBoardProps): JSX.Element {
+  const [assignments, fetchAssignments, isPending] = useActionState(
+    fetchAssignmentsByCohortAction,
+    [] as Assignment[],
+    `/cohorts/${cohortId}`
+  );
 
-  try {
-    assignments =
-      await assignmentsService.getAssignmentsByDeveloperProfileId(devId);
-  } catch (error) {
-    errorHandler(error);
-  }
+  useEffect(() => {
+    (async () => {
+      try {
+        await fetchAssignments({ cohortId });
+      } catch (error) {
+        errorHandler(error);
+      }
+    })();
+  }, []);
 
   return (
     <section className="min-w-72">
       <Separator className="my-4" />
       <H2>Salt Scoring</H2>
+      {isPending && <p>Loading assignments...</p>}
+      {!isPending && assignments.length === 0 && (
+        <p>No assignments found for this cohort.</p>
+      )}
       <AverageScore assignments={assignments} />
       <SpiderGraph assignments={assignments} />
       <Assignments assignments={assignments} />
-      <div className="flex justify-center">
-        <AddAssignment devId={devId} />
-      </div>
     </section>
   );
 }
