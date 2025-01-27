@@ -1,6 +1,6 @@
-import { cohortsService } from "./service";
+import { createCohortsService } from "./service";
 
-type CohortService = ReturnType<typeof cohortsService>;
+type CohortService = ReturnType<typeof createCohortsService>;
 
 export type GetAllCohorts = CohortService["getAll"];
 export type GetCohortIdentities = CohortService["getCohortIdentities"];

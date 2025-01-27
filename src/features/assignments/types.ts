@@ -4,10 +4,10 @@ export type Assignment = {
   id: string;
   title: string;
   tags: string[];
-  cohortId?: string;
-  comment?: string;
-  categories?: string[];
-  createdAt: Date;
+  cohortId: string | null;
+  comment: string | null;
+  categories: string[] | null;
+  createdAt: Date | null;
 };
 
 export type AssignmentScore = {
@@ -15,14 +15,14 @@ export type AssignmentScore = {
   assignmentId: string;
   identityId: string;
   score: string;
-  comment?: string;
-  createdAt: Date;
+  comment: string | null;
+  createdAt: Date | null;
 };
 
 export type AssignmentFormData = {
   title: string;
   tags: string[];
-  cohortId?: string;
+  cohortId: string | null;
   comment?: string;
   categories?: string[];
 };
