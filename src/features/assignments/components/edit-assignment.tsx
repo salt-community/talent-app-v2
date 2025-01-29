@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { editAssignmentAction } from "../actions";
 import { Assignment } from "../types";
 import { createAssignmentsService } from "../service";
 
@@ -19,7 +18,7 @@ interface EditAssignmentFormProps {
 }
 
 export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
-  const [state, formAction, isPending] = useActionState(createAssignmentsService {
+  const [state, formAction, isPending] = useActionState(createAssignmentsService: {
     successMessage: null,
     errorMessages: { titleError: undefined },
     newAssignment: assignment,

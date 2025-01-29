@@ -1,40 +1,37 @@
 import { Db } from "@/db";
-import { assignmentTable, assignmentScores } from "./schema";
 import { eq } from "drizzle-orm";
-import { NewAssignment } from "./types";
+import { AssignmentScoreFormData, NewAssignment } from "./types";
+import { assignmentsTable, assignmentScores } from "./schema";
 
 export function createAssignmentsRepository(db: Db) {
   return {
-    async createAssignment(data: FormData) {
-      const [insertedCohort] = await db
-        .insert(assignmentTable)
-        .values(data)
+    async createAssignment(data: NewAssignment) {
+      const [insertedAssignment] = await db
+        .insert(assignmentsTable)
+        .values({
+          ...data,
+          cohortId: data.cohortId ?? "",
+        })
         .returning();
-      return insertedCohort;
+      return insertedAssignment;
     },
-    // title: varchar().notNull(),
-    // tags: varchar().array().notNull(),
-    // cohortId: uuid("cohort_id").notNull(),
-    // comment: varchar("comment").default("no comment provided"),
-    // categories: varchar("categories").array().default(["general"]),
-    // createdAt: timestamp("created_at").defaultNow(),
 
-    async getAssignmentById(assignmentId: string) {
+    async getAssignmentById(id: string) {
       const [assignment] = await db
         .select()
-        .from(assignmentTable)
-        .where(eq(assignmentTable.id, assignmentId));
+        .from(assignmentsTable)
+        .where(eq(assignmentsTable.id, id));
       return assignment;
     },
 
     async getAssignmentsByCohortId(cohortId: string) {
       return await db
         .select()
-        .from(assignmentTable)
-        .where(eq(assignmentTable.cohortId, cohortId));
+        .from(assignmentsTable)
+        .where(eq(assignmentsTable.cohortId, cohortId));
     },
 
-    async createAssignmentScore(assignmentId: string, data: FormData) {
+    async createAssignmentScore(data: AssignmentScoreFormData) {
       const [score] = await db
         .insert(assignmentScores)
         .values(data)
@@ -57,20 +54,23 @@ export function createAssignmentsRepository(db: Db) {
     },
 
     async deleteAllAssignments() {
-      await db.delete(assignmentTable);
+      await db.delete(assignmentsTable);
     },
 
     async deleteAssignment(assignmentId: string) {
-      await db
-        .delete(assignmentTable)
-        .where(eq(assignmentTable.id, assignmentId));
+      return await db
+        .delete(assignmentsTable)
+        .where(eq(assignmentsTable.id, assignmentId));
     },
 
-    async updateAssignment(assignmentId: string, data: FormData) {
+    async updateAssignment(id: string, data: Partial<NewAssignment>) {
       const [updatedAssignment] = await db
-        .update(assignmentTable)
-        .set(data)
-        .where(eq(assignmentTable.id, assignmentId))
+        .update(assignmentsTable)
+        .set({
+          ...data,
+          cohortId: data.cohortId ?? "",
+        })
+        .where(eq(assignmentsTable.id, id))
         .returning();
       return updatedAssignment;
     },
@@ -78,8 +78,8 @@ export function createAssignmentsRepository(db: Db) {
     async getAssignmentsByCohort(cohortId: string) {
       return await db
         .select()
-        .from(assignmentTable)
-        .where(eq(assignmentTable.cohortId, cohortId));
+        .from(assignmentsTable)
+        .where(eq(assignmentsTable.cohortId, cohortId));
     },
   };
 }

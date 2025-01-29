@@ -1,7 +1,7 @@
 import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
-export const assignmentTable = pgTable("assignments", {
+export const assignmentsTable = pgTable("assignments", {
   id: varchar()
     .primaryKey()
     .default(sql`gen_random_uuid()`),

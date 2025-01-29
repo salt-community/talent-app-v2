@@ -1,6 +1,8 @@
 import type { AssignmentFormData, AssignmentScoreFormData } from "./types";
 
-export const getFormData = (formData: FormData): AssignmentFormData => {
+export const getAssignmentFormData = (
+  formData: FormData
+): AssignmentFormData => {
   const title = formData.get("title") as string | null;
   const cohortId = formData.get("cohortId") as string | null;
   const comment = formData.get("comment") as string | null;
@@ -14,7 +16,7 @@ export const getFormData = (formData: FormData): AssignmentFormData => {
   return {
     title,
     cohortId,
-    comment: comment || undefined,
+    comment: comment,
     categories,
     tags,
   };
@@ -38,6 +40,6 @@ export const getAssignmentScoreFormData = (
     assignmentId,
     identityId,
     score,
-    comment: comment || undefined,
+    comment: comment,
   };
 };
