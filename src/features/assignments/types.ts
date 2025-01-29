@@ -23,15 +23,15 @@ export type AssignmentFormData = {
   title: string;
   tags: string[];
   cohortId: string | null;
-  comment?: string;
-  categories?: string[];
+  comment: string | null;
+  categories: string[] | null;
 };
 
 export type AssignmentScoreFormData = {
   assignmentId: string;
   identityId: string;
   score: string;
-  comment?: string;
+  comment: string | null;
 };
 
 export type NewAssignment = Omit<Assignment, "id" | "createdAt">;

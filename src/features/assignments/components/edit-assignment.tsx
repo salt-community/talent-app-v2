@@ -1,145 +1,142 @@
 "use client";
 
-import { Pencil } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useActionState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-import { Assignment, AssignmentScore } from "../types";
-import { useActionState, useEffect, useState } from "react";
-import { InputField } from "./input-field";
-import { FormTextArea } from "./form-text-area";
-import { CheckboxBoard } from "./checkbox-board";
-import type { CategoryTag } from "../categories";
-// import DeleteAssignment from "./delete-assignment";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import { editAssignmentAction } from "../actions";
+import { Assignment } from "../types";
+import { createAssignmentsService } from "../service";
 
-type Props = {
+interface EditAssignmentFormProps {
   assignment: Assignment;
-  assignmentScore: AssignmentScore;
-};
+}
 
-export function EditAssignment({ assignment, assignmentScore }: Props) {
-  const [state, action] = useActionState(editAssignmentAction, undefined);
-  const [score, setScore] = useState(assignmentScore.score.toString());
-  const [title, setTitle] = useState(assignment.title);
-  const [tags, setTags] = useState(assignment.tags || []);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  const handleChangeTag = (isChecked: boolean, tag: CategoryTag) => {
-    if (isChecked) {
-      setTags([...tags, tag]);
-    } else {
-      setTags(tags.filter((currentTag) => currentTag !== tag));
-    }
-  };
-
-  const handleChangeInput = (inputValue: string, label: string) => {
-    if (label === "Title") setTitle(inputValue);
-    if (label === "Score") setScore(inputValue);
-  };
-
-  useEffect(() => {
-    setIsFormValid(
-      title.trim() !== "" &&
-        score.trim() !== "" &&
-        !isNaN(Number(score)) &&
-        Number(score) >= 0 &&
-        Number(score) <= 100
-    );
-  }, [title, score]);
-
-  useEffect(() => {
-    if (state?.errorMessages) {
-      setIsDialogOpen(true);
-    } else {
-      setIsDialogOpen(false);
-    }
-  }, [state?.errorMessages]);
-
-  useEffect(() => {
-    if (state?.newAssignment && state.newAssignment.tags !== tags) {
-      setTags(state.newAssignment.tags || []);
-    }
-  }, [state?.newAssignment, tags]);
+export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
+  const [state, formAction, isPending] = useActionState(createAssignmentsService {
+    successMessage: null,
+    errorMessages: { titleError: undefined },
+    newAssignment: assignment,
+  });
 
   return (
-    <Dialog
-      open={isDialogOpen}
-      onOpenChange={(open) => {
-        if (!open) {
-          setIsDialogOpen(false);
-        }
-      }}
-    >
+    <Dialog>
       <DialogTrigger asChild>
-        <Pencil
-          type="submit"
-          size={20}
-          strokeWidth={2.5}
-          className="cursor-pointer hover:text-gray-600"
-          onClick={() => setIsDialogOpen(true)}
-        />
+        <Button variant="outline">
+          <Plus className="mr-2" size={16} />
+          Edit Assignment
+        </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white border border-gray-300 rounded-md shadow-md">
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-gray-800 text-lg font-semibold">
-            Edit {assignment.title}
-          </DialogTitle>
-          <DialogDescription className="text-sm text-gray-600">
-            Alter the details below to edit the assignment.
-          </DialogDescription>
+          <DialogTitle>Edit Assignment</DialogTitle>
         </DialogHeader>
-        <form action={action} className="space-y-4">
+        <form action={formAction} className="space-y-4">
           <input type="hidden" name="assignmentId" value={assignment.id} />
-          <div className="grid gap-4">
-            <InputField
-              label="Title"
-              inputType="text"
-              errorMessage={state?.errorMessages?.titleError}
-              handleChangeInput={handleChangeInput}
-            />
-            <InputField
-              label="Score"
-              inputType="number"
-              errorMessage={state?.errorMessages?.titleError}
-              handleChangeInput={handleChangeInput}
-            />
-            <FormTextArea
-              label="Comment"
-              handleChangeInput={handleChangeInput}
-            />
-            <CheckboxBoard tags={tags} handleChangeTag={handleChangeTag} />
-          </div>
-          <DialogFooter>
-            <Button
-              type="submit"
-              className="w-full"
-              onClick={() => {
-                if (isFormValid) {
-                  setIsDialogOpen(false);
-                }
-              }}
+
+          {/* Title */}
+          <div>
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700"
             >
-              Save Changes
-            </Button>
-          </DialogFooter>
-          {/* <DeleteAssignment id={assignment.id} /> */}
-          {state?.errorMessages ? (
-            <p className="text-red-600 font-bold h-6">
-              Form error. Please make the necessary changes.
-            </p>
-          ) : (
-            <p className="h-6"></p>
-          )}
+              Title
+            </label>
+            <input
+              id="title"
+              name="title"
+              type="text"
+              defaultValue={assignment.title}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
+            {state?.errorMessages?.titleError && (
+              <p className="mt-1 text-sm text-red-600">
+                {state.errorMessages?.titleError}
+              </p>
+            )}
+          </div>
+
+          {/* Tags */}
+          <div>
+            <label
+              htmlFor="tags"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Tags (comma-separated)
+            </label>
+            <input
+              id="tags"
+              name="tags"
+              type="text"
+              defaultValue={assignment.tags.join(", ")}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          {/* Cohort ID */}
+          <div>
+            <label
+              htmlFor="cohortId"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Cohort ID
+            </label>
+            <input
+              id="cohortId"
+              name="cohortId"
+              type="text"
+              defaultValue={assignment.cohortId ?? ""}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          {/* Comment */}
+          <div>
+            <label
+              htmlFor="comment"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Comment
+            </label>
+            <textarea
+              id="comment"
+              name="comment"
+              defaultValue={assignment.comment ?? ""}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          {/* Categories */}
+          <div>
+            <label
+              htmlFor="categories"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Categories (comma-separated)
+            </label>
+            <input
+              id="categories"
+              name="categories"
+              type="text"
+              defaultValue={assignment.categories?.join(", ") ?? ""}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700"
+            disabled={isPending}
+          >
+            {isPending ? "Updating..." : "Update Assignment"}
+          </button>
         </form>
       </DialogContent>
     </Dialog>

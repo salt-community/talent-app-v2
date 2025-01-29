@@ -18,6 +18,4 @@ export const developerProfiles: PermissionsSchema<
   updateStatus: "developerProfiles.updateStatus",
   getIdentityIdByDeveloperProfileId:
     "developerProfiles.getIdentityIdByDeveloperProfileId",
-  updateCohort: "developerProfiles.updateCohort",
-  getAllByCohort: "developerProfiles.getAllByCohort",
 };

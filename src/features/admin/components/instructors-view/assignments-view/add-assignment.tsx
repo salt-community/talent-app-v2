@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { addAssignmentAction } from "../actions";
+import { addAssignmentAction } from "@/features/assignments";
 
 export function AddAssignmentForm() {
   const [state, formAction, isPending] = useActionState(

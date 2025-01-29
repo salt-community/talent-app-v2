@@ -1,4 +1,4 @@
-import { createCohortsService } from "../cohorts/service";
+import { createCohortsService } from "../../../../../cohorts/service";
 import { categoryTags } from "./categories";
 import { createAssignmentsService } from "./service";
 

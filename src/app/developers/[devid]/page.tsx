@@ -1,23 +1,21 @@
 import { DeveloperCard } from "@/components/ui/developer-card";
-import { BackgroundCard } from "@/features";
-import { Projects } from "@/features";
-import { ScoreBoard } from "@/features/assignments";
+import { ScoreBoard } from "@/features/admin/components/instructors-view/assignments-view/assignments";
 
 // Maximum timeout duration for the page speed API
 export const maxDuration = 60;
 
 type Params = {
-  params: Promise<{ devid: string }>;
+  params: Promise<{ cohortId: string }>;
 };
 
 export default async function DeveloperDetailPage({ params }: Params) {
-  const { devid } = await params;
+  const { cohortId } = await params;
 
   return (
     <DeveloperCard>
-      <BackgroundCard devid={devid} />
-      {process.env.FF_SCORES === "ON" && <ScoreBoard devId={devid} />}
-      <Projects devId={devid} />
+      {/* <BackgroundCard devid={devId} /> */}
+      {process.env.FF_SCORES === "ON" && <ScoreBoard cohortId={cohortId} />}
+      {/* <Projects devId={devId} /> */}
     </DeveloperCard>
   );
 }

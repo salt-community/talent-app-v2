@@ -1,18 +1,23 @@
 import { Db } from "@/db";
 import { assignmentTable, assignmentScores } from "./schema";
 import { eq } from "drizzle-orm";
+import { NewAssignment } from "./types";
 
 export function createAssignmentsRepository(db: Db) {
   return {
-    async createAssignment(
-      data: Omit<typeof assignmentTable.$inferInsert, "id">
-    ) {
-      const [assignment] = await db
+    async createAssignment(data: FormData) {
+      const [insertedCohort] = await db
         .insert(assignmentTable)
         .values(data)
         .returning();
-      return assignment;
+      return insertedCohort;
     },
+    // title: varchar().notNull(),
+    // tags: varchar().array().notNull(),
+    // cohortId: uuid("cohort_id").notNull(),
+    // comment: varchar("comment").default("no comment provided"),
+    // categories: varchar("categories").array().default(["general"]),
+    // createdAt: timestamp("created_at").defaultNow(),
 
     async getAssignmentById(assignmentId: string) {
       const [assignment] = await db
@@ -29,9 +34,7 @@ export function createAssignmentsRepository(db: Db) {
         .where(eq(assignmentTable.cohortId, cohortId));
     },
 
-    async createAssignmentScore(
-      data: Omit<typeof assignmentScores.$inferInsert, "id">
-    ) {
+    async createAssignmentScore(assignmentId: string, data: FormData) {
       const [score] = await db
         .insert(assignmentScores)
         .values(data)
@@ -63,10 +66,7 @@ export function createAssignmentsRepository(db: Db) {
         .where(eq(assignmentTable.id, assignmentId));
     },
 
-    async updateAssignment(
-      assignmentId: string,
-      data: Partial<Omit<typeof assignmentTable.$inferInsert, "id">>
-    ) {
+    async updateAssignment(assignmentId: string, data: FormData) {
       const [updatedAssignment] = await db
         .update(assignmentTable)
         .set(data)

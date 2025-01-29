@@ -4,7 +4,12 @@ import { revalidatePath } from "next/cache";
 import { ReactNode } from "react";
 import { ZodError } from "zod";
 import { errorHandler } from "@/lib";
-import { Assignment, NewAssignment, NewAssignmentScore } from "./types";
+import {
+  Assignment,
+  AssignmentScoreFormData,
+  NewAssignment,
+  NewAssignmentScore,
+} from "./types";
 import { assignmentsService } from "./instance";
 import { getFormData, getAssignmentScoreFormData } from "./utils";
 
@@ -15,7 +20,7 @@ type PreviousState =
         scoreError?: string;
       };
       newAssignment?: NewAssignment;
-      newAssignmentScore?: NewAssignmentScore;
+      newAssignmentScore?: AssignmentScoreFormData;
     }
   | undefined;
 
@@ -67,7 +72,7 @@ export async function editAssignmentAction(
       errorMessages?: {
         titleError?: string;
       };
-      newAssignment?: NewAssignment;
+      newAssignment?: FormData;
     }
   | undefined
 > {
@@ -89,14 +94,14 @@ export async function editAssignmentAction(
   try {
     await assignmentsService.updateAssignment({
       id: assignmentId,
-      rawData: newAssignment,
+      rawData: FormData,
     });
   } catch (error) {
     if (error instanceof ZodError) {
       const titleError = error.flatten().fieldErrors.title?.[0];
       return {
         errorMessages: { titleError },
-        newAssignment,
+        newAssignment: formData,
       };
     }
     errorHandler(error);
@@ -130,7 +135,7 @@ export async function addAssignmentScoreAction(
   const { assignmentId, identityId, score, comment } =
     getAssignmentScoreFormData(formData);
 
-  const newAssignmentScore: NewAssignmentScore = {
+  const newAssignmentScore: AssignmentScoreFormData = {
     assignmentId,
     identityId,
     score,
@@ -192,7 +197,7 @@ export async function fetchAssignmentsByCohortAction(
     const assignments =
       await assignmentsService.getAssignmentsByCohortId(cohortId);
 
-    return assignments.map((assignment) => ({
+    return assignments.map((assignment: Assignment) => ({
       id: assignment.id,
       title: assignment.title ?? "Untitled",
       tags: assignment.tags ?? [],

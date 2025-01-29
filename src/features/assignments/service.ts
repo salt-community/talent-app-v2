@@ -1,13 +1,12 @@
 import { Db } from "@/db";
 import { createAssignmentsRepository } from "./repository";
 import { NewAssignment, NewAssignmentScore } from "./types";
-import { assignmentTable } from "./schema";
 
 export function createAssignmentsService(db: Db) {
   const repo = createAssignmentsRepository(db);
 
   return {
-    async createAssignment(data: NewAssignment) {
+    async createAssignment(data: FormData) {
       return await repo.createAssignment(data);
     },
 
@@ -19,8 +18,8 @@ export function createAssignmentsService(db: Db) {
       return await repo.getAssignmentsByCohortId(cohortId);
     },
 
-    async createAssignmentScore(data: NewAssignmentScore) {
-      return await repo.createAssignmentScore(data);
+    async createAssignmentScore(assignmentId: string, data: FormData) {
+      return await repo.createAssignmentScore(assignmentId, data);
     },
 
     async getScoresByAssignmentId(assignmentId: string) {
@@ -43,13 +42,7 @@ export function createAssignmentsService(db: Db) {
       return await repo.getAssignmentsByCohort(cohortId);
     },
 
-    async updateAssignment({
-      id,
-      rawData,
-    }: {
-      id: string;
-      rawData: Partial<Omit<typeof assignmentTable.$inferInsert, "id">>;
-    }) {
+    async updateAssignment({ id, rawData }: { id: string; rawData: FormData }) {
       return await repo.updateAssignment(id, rawData);
     },
   };
