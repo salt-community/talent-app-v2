@@ -17,7 +17,9 @@ import {
   const devIds = (await developerProfilesService.getAll()).map(
     (developer) => developer.id
   );
-  await seedAssignments(devIds);
+  for (const devId of devIds) {
+    await seedAssignments(devId);
+  }
   await backgroundsSeed(devIds);
   await seedProjects();
   console.log("Done seeding!");

@@ -1,5 +1,3 @@
-"use client";
-
 import { useActionState } from "react";
 import {
   Dialog,
@@ -10,36 +8,27 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Assignment } from "../types";
-import { createAssignmentsService } from "../service";
+import { addAssignmentAction } from "@/features/assignments";
 
-interface EditAssignmentFormProps {
-  assignment: Assignment;
-}
-
-export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
-  const [state, formAction, isPending] = useActionState(createAssignmentsService: {
-    successMessage: null,
-    errorMessages: { titleError: undefined },
-    newAssignment: assignment,
-  });
+export function AddAssignmentForm() {
+  const [state, formAction, isPending] = useActionState(
+    addAssignmentAction,
+    null
+  );
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">
           <Plus className="mr-2" size={16} />
-          Edit Assignment
+          Add Assignment
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Assignment</DialogTitle>
+          <DialogTitle>Add Assignment</DialogTitle>
         </DialogHeader>
         <form action={formAction} className="space-y-4">
-          <input type="hidden" name="assignmentId" value={assignment.id} />
-
-          {/* Title */}
           <div>
             <label
               htmlFor="title"
@@ -51,18 +40,15 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
               id="title"
               name="title"
               type="text"
-              defaultValue={assignment.title}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
             {state?.errorMessages?.titleError && (
               <p className="mt-1 text-sm text-red-600">
-                {state.errorMessages?.titleError}
+                {state.errorMessages.titleError}
               </p>
             )}
           </div>
-
-          {/* Tags */}
           <div>
             <label
               htmlFor="tags"
@@ -74,12 +60,9 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
               id="tags"
               name="tags"
               type="text"
-              defaultValue={assignment.tags.join(", ")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
-
-          {/* Cohort ID */}
           <div>
             <label
               htmlFor="cohortId"
@@ -91,12 +74,9 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
               id="cohortId"
               name="cohortId"
               type="text"
-              defaultValue={assignment.cohortId ?? ""}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
-
-          {/* Comment */}
           <div>
             <label
               htmlFor="comment"
@@ -107,12 +87,9 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
             <textarea
               id="comment"
               name="comment"
-              defaultValue={assignment.comment ?? ""}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
-
-          {/* Categories */}
           <div>
             <label
               htmlFor="categories"
@@ -124,17 +101,15 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
               id="categories"
               name="categories"
               type="text"
-              defaultValue={assignment.categories?.join(", ") ?? ""}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
-
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700"
             disabled={isPending}
           >
-            {isPending ? "Updating..." : "Update Assignment"}
+            {isPending ? "Adding..." : "Add Assignment"}
           </button>
         </form>
       </DialogContent>

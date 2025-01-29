@@ -1,9 +1,9 @@
-import { db } from "./db";
 import { createRepository } from "./repository";
 import { createBackgroundsService } from "./service";
 import { developerProfilesService, secureService } from "@/features";
 import { createMeiliClient } from "./meili";
 import { iamService } from "@/features";
+import { db } from "@/db";
 
 export const insecureBackgroundsService = createBackgroundsService(
   createRepository(db),

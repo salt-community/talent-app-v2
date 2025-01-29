@@ -1,22 +1,41 @@
 import { createAssignmentsService } from "./service";
 
 export type Assignment = {
-  id: number;
-  devId: string;
+  id: string;
   title: string;
-  score: number;
-  comment?: string;
-  tags?: string[];
+  tags: string[];
+  cohortId: string | null;
+  comment: string | null;
+  categories: string[] | null;
+  createdAt: Date | null;
+};
+
+export type AssignmentScore = {
+  id: string;
+  assignmentId: string;
+  identityId: string;
+  score: string;
+  comment: string | null;
+  createdAt: Date | null;
 };
 
 export type AssignmentFormData = {
-  devId: string;
   title: string;
-  score: string;
-  comment: string;
   tags: string[];
+  cohortId: string | null;
+  comment: string | null;
+  categories: string[] | null;
 };
 
-export type NewAssignment = Omit<Assignment, "id">;
+export type AssignmentScoreFormData = {
+  assignmentId: string;
+  identityId: string;
+  score: string;
+  comment: string | null;
+};
+
+export type NewAssignment = Omit<Assignment, "id" | "createdAt">;
+
+export type NewAssignmentScore = Omit<AssignmentScore, "id" | "createdAt">;
 
 export type AssignmentsService = ReturnType<typeof createAssignmentsService>;

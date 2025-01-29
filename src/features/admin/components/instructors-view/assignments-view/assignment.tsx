@@ -4,12 +4,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components";
-import { ProgressRing } from "./progress-ring";
-import { Assignment as AssignmentType } from "../types";
-import { EditAssignment } from "./edit-assignment";
+// import { ProgressRing } from "./progress-ring";
+import { EditAssignmentForm } from "@/features/assignments/components/edit-assignment";
+import type { Assignment } from "@/features/assignments/types";
 
 type Props = {
-  assignment: AssignmentType;
+  assignment: Assignment;
+  // assignmentScore: AssignmentScore;
 };
 
 export function Assignment({ assignment }: Props) {
@@ -18,10 +19,10 @@ export function Assignment({ assignment }: Props) {
       <AccordionItem value="item-1">
         <div>
           <div className="flex pr-2 mt-2 justify-end">
-            <EditAssignment assignment={assignment} />
+            <EditAssignmentForm assignment={assignment} />
           </div>
           <AccordionTrigger>
-            <ProgressRing percentage={assignment.score} />
+            {/* <ProgressRing percentage={assignmentScore} /> */}
             <span className="px-4 text-paragraph">{assignment.title}</span>
           </AccordionTrigger>
         </div>

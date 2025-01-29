@@ -1,4 +1,4 @@
-import { DeveloperProfilesService } from "@/features";
+import { DeveloperProfilesService } from "@/features/developer-profiles";
 import { PermissionsSchema } from "../secure-service";
 
 export const developerProfiles: PermissionsSchema<

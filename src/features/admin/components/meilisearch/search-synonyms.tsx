@@ -39,11 +39,11 @@ export function SearchSynonyms({ synonyms }: Props) {
           <span className="text-paragraphLight">No synonyms yet</span>
         )}
         <div className="flex">
-          <SynonymDialog
+          {/* <SynonymDialog
             onSynonymChange={(synonym) => {
               if (currentSynonyms.some((s) => s[0] === synonym[0])) {
                 toast({
-                  variant: "destructive",
+                  variant: "default",
                   description: "Synonym already exists, edit it instead",
                 });
               } else setCurrentSynonyms((prev) => [...prev, synonym]);
@@ -53,7 +53,7 @@ export function SearchSynonyms({ synonyms }: Props) {
             buttonText={"Add"}
           >
             <Button variant={"outline"}>+ Add synonyms</Button>
-          </SynonymDialog>
+          </SynonymDialog> */}
         </div>
         {JSON.stringify(synonyms.toSorted()) !==
           JSON.stringify(currentSynonyms.toSorted()) && (

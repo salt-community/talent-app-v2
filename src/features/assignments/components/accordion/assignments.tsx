@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Assignment as AssignmentType } from "../../types";
-import { Assignment } from "../assignment";
+import { Assignment } from "../../../admin/components/instructors-view/assignments-view/assignment";
 
 type Props = {
   assignments: AssignmentType[];
