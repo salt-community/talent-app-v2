@@ -1,10 +1,7 @@
 import { db } from "@/db";
-import { cohorts } from "@/features/cohorts/schema";
-import { identities } from "@/features/iam/schema";
+import { cohorts } from "./schema";
 import { faker } from "@faker-js/faker";
-import { cohorts } from "@/features/cohorts/schema";
-import { identities } from "@/features/iam/schema";
-import { faker } from "@faker-js/faker";
+import { identities } from "../iam/schema";
 
 async function seed() {
   console.log("Seeding cohorts...");
