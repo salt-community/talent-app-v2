@@ -1,4 +1,4 @@
-import { createCohortsService } from "../../../../../cohorts/service";
+import { createCohortsService } from "../cohorts/service";
 import { categoryTags } from "./categories";
 import { createAssignmentsService } from "./service";
 
@@ -43,8 +43,7 @@ export const seedAssignments = async (cohortId: string) => {
 
   await assignmentsService.deleteAllAssignments();
 
-  const cohortIdentities =
-    await CreatedCohortService.getCohortIdentities(cohortId);
+  const cohortList = await CreatedCohortService.getAll();
 
   for (let i = 0; i < 5; i++) {
     const newAssignment = {
@@ -60,12 +59,11 @@ export const seedAssignments = async (cohortId: string) => {
       const createdAssignment =
         await assignmentsService.createAssignment(newAssignment);
 
-      const scorePromises = cohortIdentities.map(async (identity) => {
+      const scorePromises = cohortList.map(async (cohort) => {
         const newScore = {
           assignmentId: createdAssignment.id.toString(),
-          identityId: identity.identityId.toString(),
           score: Math.floor(Math.random() * 101).toString(),
-          comment: `Score comment for identity ${identity.identityId}`,
+          comment: `Comment for cohort ${cohort.name}`,
         };
         return assignmentsService.createAssignmentScore(newScore);
       });
