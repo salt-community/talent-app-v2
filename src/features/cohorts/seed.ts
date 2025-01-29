@@ -20,7 +20,7 @@ async function seed() {
       name: `${faker.person.firstName()} ${faker.person.lastName()}`,
       email: faker.internet.email(),
       clerkId: `clerk-${i}`,
-      cohortId: null,
+      cohortId: "2",
     });
   }
   await db.insert(identities).values(fakeIdentities);

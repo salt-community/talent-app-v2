@@ -1,10 +1,7 @@
-import { secureService } from "@/features";
-import { createCohortsService } from "./service";
 import { db } from "@/db";
+import { createCohortsService } from "./service";
+import { secureService } from "@/features";
 
 const insecureCohortService = createCohortsService(db);
 
-export const createCohortsService = secureService(
-  "cohorts",
-  insecureCohortService
-);
+export const cohortsService = secureService("cohorts", insecureCohortService);

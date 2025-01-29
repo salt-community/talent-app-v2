@@ -1,24 +1,27 @@
 import { createCohortsService } from "./service";
 
-type CohortService = ReturnType<typeof createCohortsService>;
+export type CohortsService = ReturnType<typeof createCohortsService>;
 
-export type GetAllCohorts = CohortService["getAll"];
-export type GetCohortIdentities = CohortService["getCohortIdentities"];
-export type GetCohortById = CohortService["getCohortById"];
-export type DeleteCohorts = CohortService["deleteCohort"];
-export type UpdateCohortStatus = CohortService["updateCohortStatus"];
-export type CreateCohort = CohortService["createCohort"];
+export type GetAllCohorts = CohortsService["getAll"];
+export type GetCohortById = CohortsService["getCohortById"];
+export type DeleteCohort = CohortsService["deleteCohort"];
+export type UpdateCohortStatus = CohortsService["updateCohortStatus"];
+export type CreateCohort = CohortsService["createCohort"];
+
+export const CohortStatus = ["planned", "ongoing", "finished"] as const;
+export type CohortStatus = (typeof CohortStatus)[number];
 
 export type Cohort = {
   id: string;
   name: string;
-  status: "planned" | "ongoing" | "finished";
+  status: CohortStatus;
   description: string;
-  createdAt: Date;
+  createdAt: Date | null;
 };
 
-export type NewCohort = Omit<Cohort, "id" | "createdAt">;
-
-export const CohortStatus = ["planned", "ongoing", "finished"] as const;
-
-export type CohortStatus = (typeof CohortStatus)[number];
+export type CohortFormData = {
+  name: string;
+  status: CohortStatus;
+  description?: string;
+  identityId?: string;
+};

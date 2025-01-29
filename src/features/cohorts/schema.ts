@@ -15,7 +15,6 @@ export const cohorts = pgTable("cohorts", {
   id: uuid("id")
     .primaryKey()
     .default(sql`gen_random_uuid()`),
-  identityId: varchar("identity_id").default("1"),
   name: varchar().notNull(),
   status: cohortStatuses().notNull().default("planned"),
   description: varchar("description").notNull().default("assignment"),
