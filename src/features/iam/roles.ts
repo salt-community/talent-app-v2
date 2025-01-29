@@ -4,6 +4,7 @@ import {
   admins,
   backgrounds,
   developerProfiles,
+  cohorts,
 } from "./permissions";
 
 export const rolesPermissions = {
@@ -25,6 +26,7 @@ export const rolesPermissions = {
     ...Object.values(projects),
     ...Object.values(developerProfiles),
     ...Object.values(assignments),
+    ...Object.values(cohorts),
     ...admins,
   ]),
   developer: new Set([
