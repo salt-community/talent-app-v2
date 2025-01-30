@@ -9,37 +9,32 @@ import {
 } from "recharts";
 import { CardContent } from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { Assignment } from "../types";
-import { calculateAverageCategoryScore } from "../logic";
 import { categoryTags } from "../categories";
 import { capitalizeFirstLetter } from "@/lib/utils";
+import { useAssignments } from "../assignments-context";
+import { calculateAverageCategoryScore } from "../logic";
 
 const chartConfig = {
   desktop: {
     label: "Desktop",
     color: "hsl(var(--chart-1))",
   },
-} satisfies ChartConfig;
-
-type Props = {
-  assignments: Assignment[];
 };
 
-export function SpiderGraph({ assignments }: Props) {
-  const chartData = categoryTags.map((tag) => {
-    return {
-      category: capitalizeFirstLetter(tag),
-      score: calculateAverageCategoryScore(assignments, tag),
-    };
-  });
+export function SpiderGraph() {
+  const { assignments } = useAssignments();
+
+  const chartData = categoryTags.map((tag) => ({
+    category: capitalizeFirstLetter(tag),
+    score: calculateAverageCategoryScore(assignments, tag),
+  }));
 
   return (
-    <CardContent className="">
+    <CardContent>
       <ChartContainer config={chartConfig} className="mx-auto max-h-[250px]">
         <RadarChart data={chartData} outerRadius="80%">
           <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
@@ -47,10 +42,7 @@ export function SpiderGraph({ assignments }: Props) {
           <PolarAngleAxis
             dataKey="category"
             stroke="#6B6460"
-            tick={{
-              dy: 5,
-              fill: "#6B6460",
-            }}
+            tick={{ dy: 5, fill: "#6B6460" }}
             tickLine={false}
           />
           <PolarRadiusAxis

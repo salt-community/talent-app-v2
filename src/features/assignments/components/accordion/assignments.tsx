@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAssignments } from "../../assignments-context";
+import { Assignment } from "@/features/admin/components/instructors-view/assignments-view/assignment";
 
 export function Assignments() {
   const { assignments, loadAssignments } = useAssignments();
@@ -24,7 +25,7 @@ export function Assignments() {
   return (
     <>
       {visibleAssignments.map((assignment) => (
-        <AssignmentCard key={assignment.id} assignment={assignment} />
+        <Assignment key={assignment.id} assignment={assignment} />
       ))}
 
       <div className="mt-2 text-center">

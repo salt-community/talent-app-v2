@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,22 +10,38 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Assignment } from "../types";
-import { createAssignmentsService } from "../service";
+import type { Assignment } from "../types";
+import { useAssignments } from "../assignments-context";
 
 interface EditAssignmentFormProps {
   assignment: Assignment;
 }
 
 export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
-  const [state, formAction, isPending] = useActionState(createAssignmentsService: {
-    successMessage: null,
-    errorMessages: { titleError: undefined },
-    newAssignment: assignment,
-  });
+  const { updateAssignment } = useAssignments();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsUpdating(true);
+    setErrorMessage(null);
+
+    try {
+      const formData = new FormData(event.currentTarget);
+      await updateAssignment(assignment.id, formData);
+      setIsDialogOpen(false);
+    } catch (error) {
+      setErrorMessage("Failed to update assignment (score or other fields).");
+      console.error(error);
+    } finally {
+      setIsUpdating(false);
+    }
+  }
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
           <Plus className="mr-2" size={16} />
@@ -36,105 +52,56 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
         <DialogHeader>
           <DialogTitle>Edit Assignment</DialogTitle>
         </DialogHeader>
-        <form action={formAction} className="space-y-4">
-          <input type="hidden" name="assignmentId" value={assignment.id} />
-
-          {/* Title */}
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label
-              htmlFor="title"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label className="block text-sm font-medium text-gray-700">
               Title
             </label>
             <input
-              id="title"
               name="title"
               type="text"
               defaultValue={assignment.title}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             />
-            {state?.errorMessages?.titleError && (
-              <p className="mt-1 text-sm text-red-600">
-                {state.errorMessages?.titleError}
-              </p>
-            )}
           </div>
 
-          {/* Tags */}
+          {/* Score */}
           <div>
-            <label
-              htmlFor="tags"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label className="block text-sm font-medium text-gray-700">
+              Score (0–100)
+            </label>
+            <input
+              name="score"
+              type="number"
+              min={0}
+              max={100}
+              defaultValue={assignment.score?.toString() ?? "0"}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
               Tags (comma-separated)
             </label>
             <input
-              id="tags"
               name="tags"
               type="text"
               defaultValue={assignment.tags.join(", ")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md"
             />
           </div>
 
-          {/* Cohort ID */}
-          <div>
-            <label
-              htmlFor="cohortId"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Cohort ID
-            </label>
-            <input
-              id="cohortId"
-              name="cohortId"
-              type="text"
-              defaultValue={assignment.cohortId ?? ""}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
-          {/* Comment */}
-          <div>
-            <label
-              htmlFor="comment"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Comment
-            </label>
-            <textarea
-              id="comment"
-              name="comment"
-              defaultValue={assignment.comment ?? ""}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
-          {/* Categories */}
-          <div>
-            <label
-              htmlFor="categories"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Categories (comma-separated)
-            </label>
-            <input
-              id="categories"
-              name="categories"
-              type="text"
-              defaultValue={assignment.categories?.join(", ") ?? ""}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
+          {errorMessage && (
+            <p className="text-red-600 text-sm">{errorMessage}</p>
+          )}
           <button
             type="submit"
+            disabled={isUpdating}
             className="w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700"
-            disabled={isPending}
           >
-            {isPending ? "Updating..." : "Update Assignment"}
+            {isUpdating ? "Updating..." : "Update Assignment"}
           </button>
         </form>
       </DialogContent>

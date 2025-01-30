@@ -1,44 +1,12 @@
-import { Assignment, AssignmentScore } from "./types";
+import type { Assignment } from "./types";
 
-export const calculateAverageAssignmentsScore = (
-  assignmentScores: AssignmentScore[]
-): number => {
-  const scores = assignmentScores
-    .map((assignment) => Number(assignment.score))
-    .filter((score) => !isNaN(score));
-
-  if (scores.length === 0) return 0;
-
-  const averageAssignmentScore =
-    scores.reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      0
-    ) / scores.length;
-
-  return Math.round(averageAssignmentScore);
-};
-
-export const calculateAverageCategoryScore = (
-  assignmentScores: AssignmentScore[],
+export function calculateAverageCategoryScore(
   assignments: Assignment[],
   category: string
-): number => {
-  const categoryAssignmentIds = assignments
-    .filter((assignment) => (assignment.tags ?? []).includes(category))
-    .map((assignment) => assignment.id);
+): number {
+  const filtered = assignments.filter((a) => (a.tags ?? []).includes(category));
+  if (filtered.length === 0) return 0;
 
-  const scores = assignmentScores
-    .filter((score) => categoryAssignmentIds.includes(score.assignmentId))
-    .map((assignmentScore) => Number(assignmentScore.score))
-    .filter((score) => !isNaN(score));
-
-  if (scores.length === 0) return 0;
-
-  const averageCategoryScore =
-    scores.reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      0
-    ) / scores.length;
-
-  return Math.round(averageCategoryScore);
-};
+  const sum = filtered.reduce((acc, curr) => acc + (curr.score ?? 0), 0);
+  return Math.round(sum / filtered.length);
+}
