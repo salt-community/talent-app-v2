@@ -32,7 +32,12 @@ export default function EditProjectDetails({ project }: Props) {
   async function updateProjectData() {
     try {
       setLoading(true);
-      await updateProjectDataAction(project.id, project.projectWebsite!);
+      await updateProjectDataAction(
+        project.id,
+        project.userId,
+        project.repository,
+        project.projectWebsite!
+      );
     } catch (error) {
       console.log("error updating project:", error);
     }
