@@ -20,11 +20,8 @@ import {
 import { useState } from "react";
 import UpdateDescription from "./update-description";
 import UpdateData from "./update-data";
-import UpdateData from "./update-data";
 import DeleteProject from "./delete-project";
 import { updateFormSchema } from "../validation";
-import { extractRepositoryDetails } from "../logic";
-import { extractRepositoryDetails } from "../logic";
 
 type Props = {
   project: Project;
@@ -32,22 +29,10 @@ type Props = {
 
 export default function EditProjectDetails({ project }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
-  const { username, titleFromUrl } = extractRepositoryDetails(
-    project.repository
-  );
-  async function updateProjectData() {
-  const { username, titleFromUrl } = extractRepositoryDetails(
-    project.repository
-  );
   async function updateProjectData() {
     try {
       setLoading(true);
-      await updateProjectDataAction(
-        project.id,
-        project.projectWebsite!,
-        username,
-        titleFromUrl
-      );
+      await updateProjectDataAction(project.id, project.projectWebsite!);
     } catch (error) {
       console.log("error updating project:", error);
     }
