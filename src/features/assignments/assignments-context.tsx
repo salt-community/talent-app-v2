@@ -8,19 +8,30 @@ import {
   useCallback,
 } from "react";
 import { Assignment } from "./types";
+import {
+  addAssignmentAction,
+  updateAssignmentAction,
+  getAllAssignmentsAction,
+  deleteAssignmentAction,
+  deleteAllAssignmentsAction,
+} from "./actions";
 
-import { getAllAssignmentsAction, addAssignmentAction } from "./actions";
-
-type AssignmentsContextType = {
+type AssignmentsContextValue = {
   assignments: Assignment[];
   loadAssignments: () => Promise<void>;
   createAssignment: (formData: FormData) => Promise<void>;
+  updateAssignment: (assignmentId: string, formData: FormData) => Promise<void>;
+  deleteAssignment: (assignmentId: string) => Promise<void>;
+  deleteAllAssignments: () => Promise<void>;
 };
 
-const AssignmentsContext = createContext<AssignmentsContextType>({
+const AssignmentsContext = createContext<AssignmentsContextValue>({
   assignments: [],
   loadAssignments: async () => {},
   createAssignment: async () => {},
+  updateAssignment: async () => {},
+  deleteAssignment: async () => {},
+  deleteAllAssignments: async () => {},
 });
 
 type AssignmentsProviderProps = {
@@ -37,8 +48,8 @@ export function AssignmentsProvider({
 
   const loadAssignments = useCallback(async () => {
     try {
-      const fetchedAssignments = await getAllAssignmentsAction(assignments, {});
-      setAssignments(fetchedAssignments);
+      const newAssignments = await getAllAssignmentsAction(assignments, {});
+      setAssignments(newAssignments ?? []);
     } catch (error) {
       console.error("Failed to load assignments:", error);
     }
@@ -57,12 +68,52 @@ export function AssignmentsProvider({
     [loadAssignments]
   );
 
+  const updateAssignment = useCallback(
+    async (assignmentId: string, formData: FormData) => {
+      try {
+        if (!formData.has("assignmentId")) {
+          formData.set("assignmentId", assignmentId);
+        }
+        await updateAssignmentAction(null, formData);
+        await loadAssignments();
+      } catch (error) {
+        console.error("Failed to update assignment:", error);
+      }
+    },
+    [loadAssignments]
+  );
+  const deleteAssignment = useCallback(
+    async (assignmentId: string) => {
+      try {
+        const formData = new FormData();
+        formData.set("assignmentId", assignmentId);
+        await deleteAssignmentAction(formData);
+        await loadAssignments();
+      } catch (error) {
+        console.error("Failed to delete assignment:", error);
+      }
+    },
+    [loadAssignments]
+  );
+
+  const deleteAllAssignments = useCallback(async () => {
+    try {
+      await deleteAllAssignmentsAction();
+      await loadAssignments();
+    } catch (error) {
+      console.error("Failed to delete all assignments:", error);
+    }
+  }, [loadAssignments]);
+
   return (
     <AssignmentsContext.Provider
       value={{
         assignments,
         loadAssignments,
         createAssignment,
+        updateAssignment,
+        deleteAssignment,
+        deleteAllAssignments,
       }}
     >
       {children}
