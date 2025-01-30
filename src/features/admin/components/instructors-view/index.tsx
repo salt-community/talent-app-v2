@@ -1,12 +1,12 @@
 "use client";
 
-import * as React from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "../../../../components/ui/separator";
-import { AssignmentsView } from "./assignments-view/assignments-view";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
+import { Assignments } from "@/features/assignments/components/accordion";
 
 export function InstructorsDashboard() {
-  const [tab, setTab] = React.useState("assignments");
+  const [tab, setTab] = useState("assignments");
 
   return (
     <section className="p-4">
@@ -16,33 +16,32 @@ export function InstructorsDashboard() {
 
       <Tabs value={tab} onValueChange={setTab} className="text-center">
         <TabsList className="gap-4 p-4">
-          <TabsTrigger
-            value="assignments"
-            className="px-6 py-2 text-l active:weight-bold"
-          >
-            Assignments
-          </TabsTrigger>
-          <TabsTrigger
-            value="scoring"
-            className="px-6 py-2 text-l active:weight-bold"
-          >
-            Scoring
-          </TabsTrigger>
-          <TabsTrigger
-            value="statistics"
-            className="px-6 py-2 text-l active:weight-bold"
-          >
-            Cohorts
-          </TabsTrigger>
-          <TabsTrigger
-            value="statistics"
-            className="px-6 py-2 text-l active:weight-bold"
-          >
-            Statistics
-          </TabsTrigger>
+          <TabsTrigger value="assignments">Assignments</TabsTrigger>
+          <TabsTrigger value="scoring">Scoring</TabsTrigger>
+          <TabsTrigger value="cohorts">Cohorts</TabsTrigger>
+          <TabsTrigger value="statistics">Statistics</TabsTrigger>
         </TabsList>
+
         <Separator className="my-8" />
-        <AssignmentsView />
+
+        <TabsContent value="assignments">
+          <Assignments />
+        </TabsContent>
+
+        <TabsContent value="scoring">
+          {/* <ScoringView /> */}
+          <p>Scoring TBD...</p>
+        </TabsContent>
+
+        <TabsContent value="cohorts">
+          {/* <CohortsView /> */}
+          <p>Cohorts TBD...</p>
+        </TabsContent>
+
+        <TabsContent value="statistics">
+          {/* <StatisticsView /> */}
+          <p>Statistics TBD...</p>
+        </TabsContent>
       </Tabs>
     </section>
   );

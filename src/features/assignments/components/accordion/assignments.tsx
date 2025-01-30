@@ -1,14 +1,16 @@
 "use client";
-import { useState } from "react";
-import { Assignment as AssignmentType } from "../../types";
-import { Assignment } from "../../../admin/components/instructors-view/assignments-view/assignment";
 
-type Props = {
-  assignments: AssignmentType[];
-};
+import { useEffect, useState } from "react";
+import { useAssignments } from "../../assignments-context";
 
-export function Assignments({ assignments }: Props) {
+export function Assignments() {
+  const { assignments, loadAssignments } = useAssignments();
   const [visibleCount, setVisibleCount] = useState(5);
+
+  useEffect(() => {
+    void loadAssignments();
+  }, [loadAssignments]);
+
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 5);
   };
@@ -17,10 +19,12 @@ export function Assignments({ assignments }: Props) {
     setVisibleCount((prev) => Math.max(5, prev - 5));
   };
 
+  const visibleAssignments = assignments.slice(0, visibleCount);
+
   return (
     <>
-      {assignments.slice(0, visibleCount).map((assignment) => (
-        <Assignment key={assignment.id} assignment={assignment} />
+      {visibleAssignments.map((assignment) => (
+        <AssignmentCard key={assignment.id} assignment={assignment} />
       ))}
 
       <div className="mt-2 text-center">

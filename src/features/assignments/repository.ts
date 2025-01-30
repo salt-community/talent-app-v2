@@ -16,6 +16,10 @@ export function createAssignmentsRepository(db: Db) {
       return insertedAssignment;
     },
 
+    async getAllAssignments() {
+      return await db.select().from(assignmentsTable);
+    },
+
     async getAssignmentById(id: string) {
       const [assignment] = await db
         .select()

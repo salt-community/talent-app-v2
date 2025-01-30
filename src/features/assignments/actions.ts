@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { ReactNode } from "react";
 import { ZodError } from "zod";
 import { errorHandler } from "@/lib";
-import { AssignmentScoreFormData, NewAssignment } from "./types";
+import { Assignment, AssignmentScoreFormData, NewAssignment } from "./types";
 import { assignmentsService } from "./instance";
 import { getAssignmentFormData } from "./utils";
 
@@ -99,6 +99,21 @@ export async function updateAssignmentAction(
     }
     errorHandler(error);
   }
+  revalidatePath("/assignments");
+}
 
+export async function getAllAssignmentsAction(
+  previousState: Assignment[] | undefined,
+  _args: Record<string, never> = {}
+) {
+  try {
+    const allAssignments = await assignmentsService.getAllAssignments(_args);
+    if (allAssignments.length === 0) {
+      return previousState ?? [];
+    }
+    return allAssignments;
+  } catch (error) {
+    errorHandler(error);
+  }
   revalidatePath("/assignments");
 }

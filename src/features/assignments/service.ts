@@ -6,6 +6,10 @@ export function createAssignmentsService(db: Db) {
   const repo = createAssignmentsRepository(db);
 
   return {
+    async getAllAssignments() {
+      return await repo.getAllAssignments();
+    },
+
     async createAssignment(data: NewAssignment) {
       return await repo.createAssignment(data);
     },
