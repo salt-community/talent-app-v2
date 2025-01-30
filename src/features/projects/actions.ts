@@ -13,8 +13,7 @@ export async function deleteProjectAction(id: string) {
   await projectsService.delete(id);
   revalidatePath("/");
 }
-export async function updateProjectDataAction(
-  id: string,
+
 export async function updateProjectDataAction(
   id: string,
   projectWebsite: string,
