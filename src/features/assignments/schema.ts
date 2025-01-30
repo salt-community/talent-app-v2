@@ -1,12 +1,19 @@
-import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgTable,
+  timestamp,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
 export const assignmentsTable = pgTable("assignments", {
-  id: varchar()
+  id: varchar("id")
     .primaryKey()
     .default(sql`gen_random_uuid()`),
-  title: varchar().notNull(),
-  tags: varchar().array().notNull(),
+  title: varchar("title").notNull(),
+  score: integer("score").notNull().default(0),
+  tags: varchar("tags").array().notNull().default([]),
   cohortId: uuid("cohort_id").notNull(),
   comment: varchar("comment").default("no comment provided"),
   categories: varchar("categories").array().default(["general"]),
