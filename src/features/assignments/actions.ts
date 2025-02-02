@@ -141,7 +141,7 @@ export async function deleteAssignmentAction(
 
 export async function deleteAllAssignmentsAction(): Promise<void> {
   try {
-    await assignmentsService.deleteAllAssignmentsAction();
+    await assignmentsService.deleteAllAssignmentsAction({});
   } catch (error) {
     if (error instanceof ZodError) {
       throw new Error("Fields are not valid");
