@@ -15,8 +15,9 @@ import {
 } from "@/components/ui/chart";
 import { categoryTags } from "../categories";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import { useAssignments } from "../assignments-context";
+// import { useAssignments } from "../assignments-context";
 import { calculateAverageCategoryScore } from "../logic";
+import { Assignment } from "../types";
 
 const chartConfig = {
   desktop: {
@@ -25,8 +26,12 @@ const chartConfig = {
   },
 };
 
-export function SpiderGraph() {
-  const { assignments } = useAssignments();
+type Props = {
+  assignments: Assignment[];
+};
+
+export function SpiderGraph({ assignments }: Props) {
+  // const { assignments } = useAssignments();
 
   const chartData = categoryTags.map((tag) => ({
     category: capitalizeFirstLetter(tag),

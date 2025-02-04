@@ -19,7 +19,7 @@ export async function ScoreBoard({ cohortId }: ScoreBoardProps) {
 
       <AverageScore assignments={assignments} />
       <SpiderGraph assignments={assignments} />
-      <Assignments assignments={assignments} />
+      <Assignments />
     </section>
   );
 }
