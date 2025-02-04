@@ -1,14 +1,17 @@
 "use client";
+
 import { useState } from "react";
 import { SynonymDialog } from "./synonym-dialog";
 import { Button } from "@/components";
 import { Synonym } from "../../types";
 import { Pencil, Trash } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = { synonyms: [string, string[]][] };
+
 export function SearchSynonyms({ synonyms }: Props) {
   const [currentSynonyms, setCurrentSynonyms] = useState(synonyms);
+  const { toast } = useToast();
 
   return (
     <div className="pb-6">
@@ -39,12 +42,12 @@ export function SearchSynonyms({ synonyms }: Props) {
           <span className="text-paragraphLight">No synonyms yet</span>
         )}
         <div className="flex">
-          {/* <SynonymDialog
+          <SynonymDialog
             onSynonymChange={(synonym) => {
               if (currentSynonyms.some((s) => s[0] === synonym[0])) {
                 toast({
-                  variant: "default",
-                  description: "Synonym already exists, edit it instead",
+                  title: "Synonym already exists",
+                  description: "The synonym already exists",
                 });
               } else setCurrentSynonyms((prev) => [...prev, synonym]);
             }}
@@ -53,7 +56,7 @@ export function SearchSynonyms({ synonyms }: Props) {
             buttonText={"Add"}
           >
             <Button variant={"outline"}>+ Add synonyms</Button>
-          </SynonymDialog> */}
+          </SynonymDialog>
         </div>
         {JSON.stringify(synonyms.toSorted()) !==
           JSON.stringify(currentSynonyms.toSorted()) && (
