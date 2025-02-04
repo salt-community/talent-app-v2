@@ -2,9 +2,9 @@ import { db } from "@/db";
 import { cohorts } from "./schema";
 import { faker } from "@faker-js/faker";
 import { identities } from "../iam/schema";
+import { v4 as uuidv4 } from "uuid";
 
-async function seed() {
-  console.log("Seeding cohorts...");
+export async function seedCohorts() {
   console.log("Seeding cohorts...");
   await db.insert(cohorts).values([
     { name: "FS-2025", description: "FullStack C# Cohort" },
@@ -17,7 +17,7 @@ async function seed() {
   const fakeIdentities = [];
   for (let i = 0; i < 5; i++) {
     fakeIdentities.push({
-      id: `identity-${i}`,
+      id: uuidv4(),
       name: `${faker.person.firstName()} ${faker.person.lastName()}`,
       email: faker.internet.email(),
       clerkId: `clerk-${i}`,
@@ -28,7 +28,3 @@ async function seed() {
 
   console.log("Seeding complete!");
 }
-
-seed().catch((err) => {
-  console.error("Seeding error:", err);
-});

@@ -3,6 +3,7 @@ import {
   backgroundsSeed,
   createDeveloperProfilesService,
   seedAssignments,
+  seedCohorts,
   seedDeveloperProfiles,
   seedIdentities,
   seedProjects,
@@ -22,5 +23,6 @@ import {
   }
   await backgroundsSeed(devIds);
   await seedProjects();
+  await seedCohorts();
   console.log("Done seeding!");
 })();

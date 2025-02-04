@@ -1,5 +1,4 @@
 import { pgTable, pgEnum, uuid, varchar } from "drizzle-orm/pg-core";
-import { cohorts } from "../cohorts/schema";
 
 export const roles = pgEnum("roles", ["developer", "core", "admin"]);
 export type Roles = typeof roles;
