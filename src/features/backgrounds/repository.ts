@@ -15,20 +15,13 @@ export function createRepository(db: DB) {
   const posts = highlightedDevelopers;
   return {
     async getAllBackgrounds() {
-      return await db.query.backgrounds.findMany({
-        with: { skills: true, languages: true, educations: true },
-      });
+      return db.select().from(backgrounds);
     },
     async getAllDevIds() {
-      return (
-        await db.query.backgrounds.findMany({ columns: { devId: true } })
-      ).map((row) => row.devId);
+      return db.select({ devId: backgrounds.devId }).from(backgrounds);
     },
     async getBackgroundByDevId(devId: string) {
-      return await db.query.backgrounds.findFirst({
-        with: { skills: true, languages: true, educations: true },
-        where: eq(backgrounds.devId, devId),
-      });
+      return db.select().from(backgrounds).where(eq(backgrounds.devId, devId));
     },
     async add(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } = await db.transaction(
@@ -61,7 +54,7 @@ export function createRepository(db: DB) {
           )[0].id;
 
           return { outboxMessageId, backgroundId };
-        },
+        }
       );
       return { outboxMessageId, backgroundId };
     },
@@ -99,16 +92,16 @@ export function createRepository(db: DB) {
       return { outboxMessageId };
     },
     async getAllSkills() {
-      return await db.query.skills.findMany();
+      return await db.select().from(skills);
     },
     async getAllLanguages() {
-      return await db.query.languages.findMany();
+      return await db.select().from(languages);
     },
     async getAllEducations() {
-      return await db.query.educations.findMany();
+      return await db.select().from(educations);
     },
     async getAllOutboxMessage() {
-      return await db.query.meiliSearchOutbox.findMany();
+      return await db.select().from(skills);
     },
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
