@@ -1,5 +1,7 @@
+import { developerProfilesService } from "@/features";
 import { Dashboard } from "@/features/admin";
 
-export default function AdminDevelopersPage() {
-  return <Dashboard />;
+export default async function AdminDevelopersPage() {
+  const developers = await developerProfilesService.getAll();
+  return <Dashboard developers={developers} />;
 }
