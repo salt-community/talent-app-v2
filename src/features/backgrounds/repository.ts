@@ -15,13 +15,28 @@ export function createRepository(db: DB) {
   const posts = highlightedDevelopers;
   return {
     async getAllBackgrounds() {
-      return db.select().from(backgrounds);
+      return db
+        .select()
+        .from(backgrounds)
+        .innerJoin(skills, eq(skills.backgroundId, backgrounds.id))
+        .innerJoin(languages, eq(languages.backgroundId, backgrounds.id))
+        .innerJoin(educations, eq(educations.backgroundId, backgrounds.id));
     },
     async getAllDevIds() {
-      return db.select({ devId: backgrounds.devId }).from(backgrounds);
+      const developerId = db
+        .select({ devId: backgrounds.devId })
+        .from(backgrounds);
+
+      return (await developerId).map((developerId) => developerId.devId);
     },
     async getBackgroundByDevId(devId: string) {
-      return db.select().from(backgrounds).where(eq(backgrounds.devId, devId));
+      return db
+        .select()
+        .from(backgrounds)
+        .where(eq(backgrounds.devId, devId))
+        .innerJoin(skills, eq(skills.backgroundId, backgrounds.id))
+        .innerJoin(languages, eq(languages.backgroundId, backgrounds.id))
+        .innerJoin(educations, eq(educations.backgroundId, backgrounds.id));
     },
     async add(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } = await db.transaction(
@@ -101,7 +116,7 @@ export function createRepository(db: DB) {
       return await db.select().from(educations);
     },
     async getAllOutboxMessage() {
-      return await db.select().from(skills);
+      return await db.select().from(meiliSearchOutbox);
     },
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));

@@ -6,6 +6,9 @@ type Props = {
 };
 
 export function Row({ title, content }: Props) {
+  if (!content || content.length === 0) {
+    return null;
+  }
   return (
     <section className="justify-between mt-1">
       <h3 className="font-semibold">{title}</h3>

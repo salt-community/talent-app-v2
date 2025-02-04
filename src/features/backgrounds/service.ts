@@ -31,11 +31,19 @@ export function createBackgroundsService(
           succeeded = true;
           break;
         }
-        const skills = background.skills.map((s) => s.name);
-        const languages = background.languages.map((l) => l.name);
-        const educations = background.educations.map((e) => e.name);
+        const skills = background
+          .map((s) => s.background_skills?.name)
+          .filter((name): name is string => !!name);
+        const languages = background
+          .map((l) => l.background_languages?.name)
+          .filter((name): name is string => !!name);
+        const educations = background
+          .map((e) => e.background_educations?.name)
+          .filter((name): name is string => !!name);
+
         const upsertStatus = await meiliClient.upsertBackground({
-          ...background,
+          id: background[0].backgrounds.id,
+          devId: background[0].backgrounds.devId,
           skills,
           languages,
           educations,
@@ -107,7 +115,6 @@ export function createBackgroundsService(
 
     async searchDevIds(search: string | undefined) {
       const cleanSearch = search?.trim();
-      const time = performance.now();
       const [searchedDevIds, publishedOrHighlightedDevIds] = await Promise.all([
         !cleanSearch || cleanSearch === ""
           ? await repository.getAllDevIds()
@@ -118,7 +125,6 @@ export function createBackgroundsService(
       const filteredDevIds = searchedDevIds.filter((devId) =>
         publishedOrHighlightedDevIds.includes(devId)
       );
-      console.log("Search time:", performance.now() - time);
       return filteredDevIds;
     },
     async isSearchHealthOk() {
@@ -127,17 +133,18 @@ export function createBackgroundsService(
     async repopulateMeiliSearch() {
       await meiliClient.deleteAllBackgrounds();
       const backgrounds = await repository.getAllBackgrounds();
-      for (const background of backgrounds) {
-        const skills = background.skills.map((s) => s.name);
-        const languages = background.languages.map((l) => l.name);
-        const educations = background.educations.map((e) => e.name);
-        await meiliClient.upsertBackground({
-          ...background,
-          skills,
-          languages,
-          educations,
-        });
-      }
+
+      const skills = backgrounds.map((s) => s.background_skills?.name);
+      const languages = backgrounds.map((l) => l.background_languages?.name);
+      const educations = backgrounds.map((e) => e.background_educations?.name);
+
+      await meiliClient.upsertBackground({
+        id: backgrounds[0].backgrounds?.id,
+        devId: backgrounds[0].backgrounds?.devId,
+        skills,
+        languages,
+        educations,
+      });
     },
 
     async syncMeilisearch() {

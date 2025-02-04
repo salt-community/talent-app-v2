@@ -19,4 +19,4 @@ export type BackgroundUpdate = Partial<BackgroundSelect> &
     educations: string[];
   };
 
-  export type BackgroundsService = ReturnType<typeof createBackgroundsService>;
+export type BackgroundsService = ReturnType<typeof createBackgroundsService>;
