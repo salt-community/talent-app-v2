@@ -3,7 +3,6 @@
 import { H1 } from "@/components";
 import { DeveloperProfileList } from "./developer-profile-list";
 import Link from "next/link";
-// import { useDevelopers } from "@/features/developer-profiles/developer-context";
 import { Developer } from "@/features/developer-profiles";
 
 type Props = {
@@ -11,8 +10,6 @@ type Props = {
 };
 
 export function Dashboard({ developers }: Props) {
-  // const { developers } = useDevelopers();
-  console.log(developers);
   return (
     <div className="container mx-auto flex flex-col justify-center px-4 py-4 gap-4">
       <div className="md:flex md:justify-between">
