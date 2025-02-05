@@ -21,9 +21,9 @@ export function AddCohortForm() {
           className="border px-2 py-1 w-full"
           required
         />
-        {state?.errorMessages?.nameError && (
+        {state?.errorMessages?.titleError && (
           <p className="text-red-600 text-sm">
-            {state.errorMessages.nameError}
+            {state.errorMessages.titleError}
           </p>
         )}
       </div>
