@@ -14,13 +14,13 @@ import {
 import { TagsInput } from "./tags-input";
 import { Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Background } from "../types";
+import { Backgrounds } from "../types";
 import { useActionState, useState } from "react";
 import { EducationSelect, LanguageSelect, SkillSelect } from "../db";
 import { BackgroundAvatar } from "./avatar";
 
 type Props = {
-  background: Background;
+  background: Backgrounds;
   allSkills: SkillSelect[];
   allLanguages: LanguageSelect[];
   allEducations: EducationSelect[];
@@ -34,7 +34,7 @@ export function DialogForm({
 }: Props) {
   const [state, formAction, isPending] = useActionState(
     updateBackgroundAction,
-    undefined,
+    undefined
   );
 
   const [avatarUrl, setAvatarUrl] = useState(background.avatarUrl);
@@ -71,16 +71,16 @@ export function DialogForm({
                 defaultValue={background.devId}
                 hidden
               />
-              <Label htmlFor="avatarUrl">
-                Profile picture
-              </Label>
+              <Label htmlFor="avatarUrl">Profile picture</Label>
               <div className="flex items-center gap-2">
                 <BackgroundAvatar url={avatarUrl} />
                 <Input
                   name="avatarUrl"
                   id="avatarUrl"
                   placeholder="Profile picture url..."
-                  defaultValue={state?.update.avatarUrl as string || avatarUrl}
+                  defaultValue={
+                    (state?.update.avatarUrl as string) || avatarUrl
+                  }
                   errorMessage={state?.errorMessages?.avatarUrlError}
                   onChange={(e) => setAvatarUrl(e.target.value)}
                 />
@@ -92,7 +92,11 @@ export function DialogForm({
                 name="name"
                 id="name"
                 required
-                defaultValue={state?.update.name as string === "" ? "" : state?.update.name as string || background.name}
+                defaultValue={
+                  (state?.update.name as string) === ""
+                    ? ""
+                    : (state?.update.name as string) || background.name
+                }
                 errorMessage={state?.errorMessages?.nameError}
                 placeholder="Fullname..."
                 className="col-span-3"
@@ -106,7 +110,11 @@ export function DialogForm({
                 name="title"
                 id="title"
                 required
-                defaultValue={state?.update.title as string === "" ? "" : state?.update.title as string || background.title}
+                defaultValue={
+                  (state?.update.title as string) === ""
+                    ? ""
+                    : (state?.update.title as string) || background.title
+                }
                 errorMessage={state?.errorMessages?.titleError}
                 className="col-span-3"
               />
@@ -122,21 +130,21 @@ export function DialogForm({
               />
 
               <TagsInput
-                userTags={background.languages}
+                userTags={background.background_languages}
                 inputName={"languages"}
                 inputPlaceholder={"Add a language"}
                 suggestedTags={allLanguages}
               />
 
               <TagsInput
-                userTags={background.educations}
+                userTags={background.background_educations}
                 inputName={"educations"}
                 inputPlaceholder={"Add an education"}
                 suggestedTags={allEducations}
               />
 
               <TagsInput
-                userTags={background.skills}
+                userTags={background.background_skills}
                 inputName={"skills"}
                 inputPlaceholder={"Add a skill"}
                 suggestedTags={allSkills}
@@ -182,8 +190,12 @@ export function DialogForm({
               <div className="flex-grow" />
             </DialogFooter>
             {state?.errorMessages ? (
-            <p className="text-red-600 font-bold h-6">Form error. Please make the necessary changes.</p>
-          ) : <p className="h-6"></p>}
+              <p className="text-red-600 font-bold h-6">
+                Form error. Please make the necessary changes.
+              </p>
+            ) : (
+              <p className="h-6"></p>
+            )}
           </form>
         </ScrollArea>
       </DialogContent>

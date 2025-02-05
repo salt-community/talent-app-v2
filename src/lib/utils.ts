@@ -33,11 +33,11 @@ export function getFormData(formData: FormData): AssignmentFormData {
 
   return {
     devId: devId ?? undefined,
-    title: title ?? undefined,
-    score: score ?? undefined,
-    comment: comment ?? undefined,
-    tags: tagsString ? tagsString.split(",") : undefined,
-    cohort: cohort ?? undefined,
-    description: description ?? undefined,
+    title: title ?? "",
+    tags: tagsString ? tagsString.split(",") : [],
+    score: score ?? "",
+    cohortId: cohort ?? "",
+    comment: comment ?? "",
+    categories: description ? description.split(",") : [],
   };
 }

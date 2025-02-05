@@ -90,7 +90,10 @@ export async function updateAssignmentAction(
   };
 
   try {
-    await assignmentsService.updateAssignment(newAssignment);
+    await assignmentsService.updateAssignment({
+      id: assignmentId,
+      rawData: newAssignment,
+    });
   } catch (error) {
     if (error instanceof ZodError) {
       const titleError = error.flatten().fieldErrors.title?.[0];
@@ -105,11 +108,10 @@ export async function updateAssignmentAction(
 }
 
 export async function getAllAssignmentsAction(
-  previousState: Assignment[] | undefined,
-  _args: Record<string, never> = {}
+  previousState: Assignment[] | undefined
 ) {
   try {
-    const allAssignments = await assignmentsService.getAllAssignments(_args);
+    const allAssignments = await assignmentsService.getAllAssignments();
     if (allAssignments.length === 0) {
       return previousState ?? [];
     }
@@ -141,7 +143,7 @@ export async function deleteAssignmentAction(
 
 export async function deleteAllAssignmentsAction(): Promise<void> {
   try {
-    await assignmentsService.deleteAllAssignmentsAction({});
+    await assignmentsService.deleteAllAssignments();
   } catch (error) {
     if (error instanceof ZodError) {
       throw new Error("Fields are not valid");

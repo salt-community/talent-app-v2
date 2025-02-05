@@ -23,8 +23,10 @@ export type AssignmentScore = {
 };
 
 export type AssignmentFormData = {
+  devId: string | undefined;
   title: string;
   tags: string[];
+  score: string;
   cohortId: string | null;
   comment: string | null;
   categories: string[] | null;

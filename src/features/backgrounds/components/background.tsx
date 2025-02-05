@@ -25,7 +25,7 @@ export async function Background({ devId: devId }: Props) {
     <Link href={`/developers/${devId}`}>
       <div className="space-y-2 max-w-96">
         <div className="flex justify-between items-start">
-          <BackgroundBasicInfo background={background} />
+          <BackgroundBasicInfo background={background[0].backgrounds} />
         </div>
 
         <div>

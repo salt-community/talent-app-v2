@@ -48,7 +48,7 @@ export function AssignmentsProvider({
 
   const loadAssignments = useCallback(async () => {
     try {
-      const newAssignments = await getAllAssignmentsAction(assignments, {});
+      const newAssignments = await getAllAssignmentsAction(assignments);
       setAssignments(newAssignments ?? []);
     } catch (error) {
       console.error("Failed to load assignments:", error);

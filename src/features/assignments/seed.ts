@@ -53,6 +53,7 @@ export const seedAssignments = async (cohortId: string) => {
       comment: `This is a comment for assignment ${i + 1}`,
       tags: getRandomTags(categoryTags, categoryTags.length),
       categories: getRandomTags(categoryTags, 3),
+      score: Math.floor(Math.random() * 101),
     };
 
     try {
@@ -62,6 +63,7 @@ export const seedAssignments = async (cohortId: string) => {
       const scorePromises = cohortList.map(async (cohort) => {
         const newScore = {
           assignmentId: createdAssignment.id.toString(),
+          identityId: cohort.id.toString(),
           score: Math.floor(Math.random() * 101).toString(),
           comment: `Comment for cohort ${cohort.name}`,
         };
