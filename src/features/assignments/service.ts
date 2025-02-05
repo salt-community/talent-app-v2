@@ -46,7 +46,13 @@ export function createAssignmentsService(db: Db) {
       return await repo.getAssignmentsByCohort(cohortId);
     },
 
-    async updateAssignment(id: string, rawData: Partial<NewAssignment>) {
+    async updateAssignment({
+      id,
+      rawData,
+    }: {
+      id: string;
+      rawData: Partial<NewAssignment>;
+    }) {
       return await repo.updateAssignment(id, rawData);
     },
   };
