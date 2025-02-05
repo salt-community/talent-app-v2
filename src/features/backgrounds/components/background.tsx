@@ -4,19 +4,11 @@ import { backgroundsService } from "../instance";
 import Link from "next/link";
 import { SkillsBadges } from "./skills-badges";
 import BackgroundSkeleton from "./background-skeleton";
-import { Background as BackgroundType } from "../types";
-import { errorHandler } from "@/lib";
 
 type Props = { devId: string };
 
 export async function Background({ devId: devId }: Props) {
-  let background: BackgroundType | undefined;
-
-  try {
-    background = await backgroundsService.getBackgroundByDevId(devId);
-  } catch (error) {
-    errorHandler(error);
-  }
+  const background = await backgroundsService.getBackgroundByDevId(devId);
 
   if (!background) {
     return (
@@ -37,9 +29,19 @@ export async function Background({ devId: devId }: Props) {
         </div>
 
         <div>
-          <Row title="Languages" content={background.languages} />
-          <Row title="Education" content={background.educations} />
-          <SkillsBadges skills={background.skills} />
+          <Row
+            title="Languages"
+            content={background.map((b) => b.background_languages)}
+          />
+          <Row
+            title="Education"
+            content={background.map((l) => l.background_languages)}
+          />
+          <SkillsBadges
+            skills={background
+              .map((s) => s.background_skills)
+              .filter((skill) => skill !== null)}
+          />
         </div>
       </div>
     </Link>

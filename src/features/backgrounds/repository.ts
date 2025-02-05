@@ -34,7 +34,7 @@ export function createRepository(db: DB) {
         .select()
         .from(backgrounds)
         .where(eq(backgrounds.devId, devId))
-        .innerJoin(skills, eq(skills.backgroundId, backgrounds.id))
+        .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
         .innerJoin(languages, eq(languages.backgroundId, backgrounds.id))
         .innerJoin(educations, eq(educations.backgroundId, backgrounds.id));
     },
