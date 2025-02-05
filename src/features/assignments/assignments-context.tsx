@@ -74,7 +74,7 @@ export function AssignmentsProvider({
         if (!formData.has("assignmentId")) {
           formData.set("assignmentId", assignmentId);
         }
-        await updateAssignmentAction(null, formData);
+        await updateAssignmentAction(undefined, formData);
         await loadAssignments();
       } catch (error) {
         console.error("Failed to update assignment:", error);
