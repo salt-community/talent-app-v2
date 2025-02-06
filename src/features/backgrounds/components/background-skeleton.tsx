@@ -5,13 +5,15 @@ import { addBackground } from "../actions";
 import type { Developer } from "@/features/developer-profiles";
 import { errorHandler } from "@/lib";
 
-type Props = { devId: string };
+type Props = { developerProfileId: string };
 
-export default async function BackgroundSkeleton({ devId }: Props) {
+export default async function BackgroundSkeleton({
+  developerProfileId,
+}: Props) {
   let developer: Developer | undefined;
 
   try {
-    developer = await addBackground(devId);
+    developer = await addBackground(developerProfileId);
   } catch (error) {
     errorHandler(error);
   }
