@@ -13,8 +13,8 @@ export async function HighlightedDevelopers() {
   }
 
   return (
-    <div className="px-8">
-      <ul className="pt-10 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+    <>
+      <ul className="px-8 pt-10 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {highlightedDevIds.map((devId) => (
           <li key={devId} className="">
             <Card className="p-2 h-full flex justify-center min-w-[20rem]">
@@ -25,6 +25,6 @@ export async function HighlightedDevelopers() {
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 }
