@@ -109,7 +109,7 @@ export function createBackgroundsService(
       }
     },
 
-    async getHighlightedDevIds() {
+    async getHighlightedDeveloperProfileIds() {
       return await getHighlightedDevIds();
     },
 
