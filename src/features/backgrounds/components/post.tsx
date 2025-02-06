@@ -5,13 +5,17 @@ import { backgroundsService } from "../instance";
 import type { HighlightedDeveloper } from "../db/posts-data";
 import { errorHandler } from "@/lib";
 
-export async function Post({ developerId }: { developerId: string }) {
+type Props = {
+  developerProfileId: string;
+};
+
+export async function Post({ developerProfileId }: Props) {
   let post: HighlightedDeveloper | undefined;
 
   try {
-    post = await backgroundsService.getPostById(developerId);
+    post = await backgroundsService.getPostById(developerProfileId);
   } catch (error) {
-      errorHandler(error);
+    errorHandler(error);
   }
 
   if (!post) {
