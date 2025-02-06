@@ -19,4 +19,17 @@ export type BackgroundUpdate = Partial<BackgroundSelect> &
     educations: string[];
   };
 
+export type PreviousState =
+  | {
+      errorMessages: {
+        avatarUrlError?: string;
+        nameError?: string;
+        titleError?: string;
+      };
+      update: {
+        [k: string]: FormDataEntryValue;
+      };
+    }
+  | undefined;
+
 export type BackgroundsService = ReturnType<typeof createBackgroundsService>;

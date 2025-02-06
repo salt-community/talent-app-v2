@@ -3,57 +3,11 @@
 import { errorHandler } from "@/lib";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { z, ZodError } from "zod";
+import { ZodError } from "zod";
 import { SocialLink } from "./db";
 import { backgroundsService } from "./instance";
-
-const backgroundUpdate = z.object({
-  id: z.coerce.number(),
-  devId: z.string().nonempty(),
-  avatarUrl: z.string().url().optional().or(z.literal("")),
-  name: z.string().nonempty("Name must contain at least 1 character(s)"),
-  title: z
-    .string()
-    .nonempty("Role must contain at least 1 character(s)")
-    .optional(),
-  bio: z.string().optional(),
-  github: z.string().optional(),
-  cv: z.string().optional(),
-  skills: z
-    .string()
-    .transform((val) =>
-      JSON.parse(val).map((skill: { text: string }) => skill.text)
-    )
-    .pipe(z.array(z.string())),
-  languages: z
-    .string()
-    .transform((val) =>
-      JSON.parse(val).map((language: { text: string }) => language.text)
-    )
-    .pipe(z.array(z.string())),
-
-  educations: z
-    .string()
-    .transform((val) =>
-      JSON.parse(val).map((education: { text: string }) => education.text)
-    )
-    .pipe(z.array(z.string())),
-});
-
-type BackgroundUpdate = z.infer<typeof backgroundUpdate>;
-
-type PreviousState =
-  | {
-      errorMessages: {
-        avatarUrlError?: string;
-        nameError?: string;
-        titleError?: string;
-      };
-      update: {
-        [k: string]: FormDataEntryValue;
-      };
-    }
-  | undefined;
+import { PreviousState } from "./types";
+import { backgroundUpdate, BackgroundUpdate } from "./validation";
 
 export async function updateBackgroundAction(
   _: PreviousState,
