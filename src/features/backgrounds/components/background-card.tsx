@@ -12,7 +12,7 @@ export async function Background({ developerProfileId }: Props) {
     await backgroundsService.getBackgroundByDevId(developerProfileId);
 
   if (background === undefined || background.length === 0) {
-    return <BackgroundSkeleton devId={developerProfileId} />;
+    return <BackgroundSkeleton developerProfileId={developerProfileId} />;
   }
 
   return (
