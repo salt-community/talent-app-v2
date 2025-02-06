@@ -10,6 +10,9 @@ type Props = { devId: string };
 export async function Background({ devId: devId }: Props) {
   const background = await backgroundsService.getBackgroundByDevId(devId);
 
+  if (background === undefined || background.length === 0) {
+    return <BackgroundSkeleton devId={devId} />;
+  }
   if (!background) {
     return (
       <Link href={`/developers/${devId}`}>
@@ -25,7 +28,9 @@ export async function Background({ devId: devId }: Props) {
     <Link href={`/developers/${devId}`}>
       <div className="space-y-2 max-w-96">
         <div className="flex justify-between items-start">
-          <BackgroundBasicInfo background={background[0].backgrounds} />
+          <BackgroundBasicInfo
+            background={background[0].backgrounds ?? undefined}
+          />
         </div>
 
         <div>
