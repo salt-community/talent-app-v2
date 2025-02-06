@@ -29,7 +29,7 @@ export function createRepository(db: DB) {
 
       return (await developerId).map((developerId) => developerId.devId);
     },
-    async getBackgroundByDevId(devId: string) {
+    async getBackgroundByDeveloperProfileId(devId: string) {
       return db
         .select()
         .from(backgrounds)

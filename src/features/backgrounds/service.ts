@@ -24,7 +24,7 @@ export function createBackgroundsService(
     let succeeded = false;
     switch (outboxMessage.operation) {
       case "upsert":
-        const background = await repository.getBackgroundByDevId(
+        const background = await repository.getBackgroundByDeveloperProfileId(
           outboxMessage.devId
         );
         if (!background) {
@@ -66,8 +66,10 @@ export function createBackgroundsService(
     async getAllBackgrounds() {
       return await repository.getAllBackgrounds();
     },
-    async getBackgroundByDeveloperProfileId(devId: string) {
-      return await repository.getBackgroundByDevId(devId);
+    async getBackgroundByDeveloperProfileId(developerProfileId: string) {
+      return await repository.getBackgroundByDeveloperProfileId(
+        developerProfileId
+      );
     },
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
