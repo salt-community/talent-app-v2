@@ -39,7 +39,7 @@ export function createDevelopersRepository(db: Db) {
     async delete(id: string) {
       await db.delete(developerProfiles).where(eq(developerProfiles.id, id));
     },
-    async getPublishedOrHighlightedDevIds() {
+    async getPublishedOrHighlightedDeveloperProfileIds() {
       return (
         await db
           .select({ devId: developerProfiles.id })
