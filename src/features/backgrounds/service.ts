@@ -115,7 +115,7 @@ export function createBackgroundsService(
       return await getHighlightedDeveloperProfileIds();
     },
 
-    async searchDevIds(search: string | undefined) {
+    async searchDeveloperProfileIds(search: string | undefined) {
       const cleanSearch = search?.trim();
       const [searchedDevIds, publishedOrHighlightedDevIds] = await Promise.all([
         !cleanSearch || cleanSearch === ""

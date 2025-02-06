@@ -26,6 +26,6 @@ export const backgrounds: PermissionsSchema<"backgrounds", BackgroundsService> =
     repopulateMeiliSearch: "backgrounds.repopulateMeiliSearch",
     syncMeilisearch: "backgrounds.syncMeilisearch",
     updateMeilisearchSettings: "backgrounds.updateMeilisearchSettings",
-    searchDevIds: "backgrounds.searchDevIds",
+    searchDeveloperProfileIds: "backgrounds.searchDeveloperProfileIds",
     update: "backgrounds.update",
   };

@@ -42,7 +42,7 @@ export const rolesPermissions = {
     backgrounds.getAllSkills,
     backgrounds.getBackgroundByDeveloperProfileId,
     backgrounds.update,
-    backgrounds.searchDevIds,
+    backgrounds.searchDeveloperProfileIds,
     projects.add,
     projects.checkProfileAccess,
     projects.delete,

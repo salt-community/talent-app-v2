@@ -8,7 +8,8 @@ export default async function Page({ searchParams }: Props) {
   const search = (await searchParams).search;
   let developerProfileIds: string[] = [];
   try {
-    developerProfileIds = await backgroundsService.searchDevIds(search);
+    developerProfileIds =
+      await backgroundsService.searchDeveloperProfileIds(search);
   } catch (error) {
     errorHandler(error);
   }
