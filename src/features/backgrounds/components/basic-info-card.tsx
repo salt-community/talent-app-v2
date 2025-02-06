@@ -1,15 +1,18 @@
 import { H2 } from "@/components";
 import { BackgroundAvatar } from "./avatar";
-import { Backgrounds } from "../types";
+import { BackgroundInfo } from "../types";
 import { SocialLink } from "./social-link";
 import { DialogForm } from "./dialog-form";
 import { backgroundsService } from "../instance";
 import type { LanguageSelect, SkillSelect, EducationSelect } from "../db";
 import { errorHandler } from "@/lib";
 
-type Props = { background: Backgrounds; devId: string };
+type Props = { background: BackgroundInfo; developerProfileId: string };
 
-export async function BackgroundBasicInfoCard({ background, devId }: Props) {
+export async function BackgroundBasicInfoCard({
+  background,
+  developerProfileId,
+}: Props) {
   let allSkills: SkillSelect[] = [];
   let allLanguages: LanguageSelect[] = [];
   let allEducations: EducationSelect[] = [];
@@ -21,7 +24,7 @@ export async function BackgroundBasicInfoCard({ background, devId }: Props) {
     allSkills = await backgroundsService.getAllSkills();
     allLanguages = await backgroundsService.getAllLanguages();
     allEducations = await backgroundsService.getAllEducations();
-    editAccess = await backgroundsService.editAccess(devId);
+    editAccess = await backgroundsService.editAccess(developerProfileId);
   } catch (error) {
     errorHandler(error);
   }

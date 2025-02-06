@@ -14,13 +14,13 @@ import {
 import { TagsInput } from "./tags-input";
 import { Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Backgrounds } from "../types";
+import { BackgroundInfo } from "../types";
 import { useActionState, useState } from "react";
 import { EducationSelect, LanguageSelect, SkillSelect } from "../db";
 import { BackgroundAvatar } from "./avatar";
 
 type Props = {
-  background: Backgrounds;
+  background: BackgroundInfo;
   allSkills: SkillSelect[];
   allLanguages: LanguageSelect[];
   allEducations: EducationSelect[];
@@ -130,21 +130,21 @@ export function DialogForm({
               />
 
               <TagsInput
-                userTags={background.background_languages}
+                userTags={background.languages}
                 inputName={"languages"}
                 inputPlaceholder={"Add a language"}
                 suggestedTags={allLanguages}
               />
 
               <TagsInput
-                userTags={background.background_educations}
+                userTags={background.educations}
                 inputName={"educations"}
                 inputPlaceholder={"Add an education"}
                 suggestedTags={allEducations}
               />
 
               <TagsInput
-                userTags={background.background_skills}
+                userTags={background.skills}
                 inputName={"skills"}
                 inputPlaceholder={"Add a skill"}
                 suggestedTags={allSkills}

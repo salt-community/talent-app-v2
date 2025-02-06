@@ -33,10 +33,25 @@ export function createRepository(db: DB) {
       return db
         .select()
         .from(backgrounds)
-        .where(eq(backgrounds.devId, developerProfileId))
-        .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
-        .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
-        .leftJoin(educations, eq(educations.backgroundId, backgrounds.id));
+        .where(eq(backgrounds.devId, developerProfileId));
+    },
+    async getSkillsByBackgroundId(backgroundId: number) {
+      return db
+        .select()
+        .from(skills)
+        .where(eq(skills.backgroundId, backgroundId));
+    },
+    async getLanguagesByBackgroundId(backgroundId: number) {
+      return db
+        .select()
+        .from(skills)
+        .where(eq(skills.backgroundId, backgroundId));
+    },
+    async getEducationsByBackgroundId(backgroundId: number) {
+      return db
+        .select()
+        .from(skills)
+        .where(eq(skills.backgroundId, backgroundId));
     },
     async add(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } = await db.transaction(

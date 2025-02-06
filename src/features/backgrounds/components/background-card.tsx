@@ -1,9 +1,9 @@
 import { Row } from "./row";
-import { BackgroundBasicInfo } from "./basic-info";
 import { backgroundsService } from "../instance";
 import Link from "next/link";
 import { SkillsBadges } from "./skills-badges";
 import BackgroundSkeleton from "./background-skeleton";
+import { BackgroundBasicInfoCard } from "./basic-info-card";
 
 type Props = { developerProfileId: string };
 
@@ -13,7 +13,7 @@ export async function Background({ developerProfileId }: Props) {
       developerProfileId
     );
 
-  if (background === undefined || background.length === 0) {
+  if (!background) {
     return <BackgroundSkeleton developerProfileId={developerProfileId} />;
   }
 
@@ -21,47 +21,28 @@ export async function Background({ developerProfileId }: Props) {
     <Link href={`/developers/${developerProfileId}`}>
       <div className="space-y-2 max-w-96">
         <div className="flex justify-between items-start">
-          <BackgroundBasicInfo background={background[0].backgrounds} />
+          <BackgroundBasicInfoCard
+            background={background ?? undefined}
+            developerProfileId={developerProfileId}
+          />
         </div>
 
         <div>
           <Row
             title="Languages"
-            content={background
-              .map((b) => b.background_languages)
-              .filter(
-                (
-                  lang
-                ): lang is {
-                  id: number;
-                  name: string;
-                  backgroundId: number;
-                  level: number;
-                } => lang !== null
-              )
-              .map(({ id, name }) => ({ id, name }))}
+            content={background.languages.map((language) => ({
+              id: language.id,
+              name: language.name,
+            }))}
           />
           <Row
             title="Education"
-            content={background
-              .map((b) => b.background_educations)
-              .filter(
-                (
-                  education
-                ): education is {
-                  id: number;
-                  name: string;
-                  backgroundId: number;
-                  level: number;
-                } => education !== null
-              )
-              .map(({ id, name }) => ({ id, name }))}
+            content={background.educations.map((education) => ({
+              id: education.id,
+              name: education.name,
+            }))}
           />
-          <SkillsBadges
-            skills={background
-              .map((s) => s.background_skills)
-              .filter((skill) => skill !== null)}
-          />
+          <SkillsBadges skills={background.skills} />
         </div>
       </div>
     </Link>

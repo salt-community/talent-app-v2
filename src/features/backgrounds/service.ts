@@ -31,19 +31,27 @@ export function createBackgroundsService(
           succeeded = true;
           break;
         }
-        const skills = background
-          .map((s) => s.background_skills?.name)
+        const backgroundSkills = await repository.getSkillsByBackgroundId(
+          background[0].id
+        );
+        const backgroundLanguages = await repository.getLanguagesByBackgroundId(
+          background[0].id
+        );
+        const backgroundEducation =
+          await repository.getEducationsByBackgroundId(background[0].id);
+        const skills = backgroundSkills
+          .map((skill) => skill?.name)
           .filter((name): name is string => !!name);
-        const languages = background
-          .map((l) => l.background_languages?.name)
+        const languages = backgroundLanguages
+          .map((language) => language?.name)
           .filter((name): name is string => !!name);
-        const educations = background
-          .map((e) => e.background_educations?.name)
+        const educations = backgroundEducation
+          .map((education) => education?.name)
           .filter((name): name is string => !!name);
 
         const upsertStatus = await meiliClient.upsertBackground({
-          id: background[0].backgrounds.id,
-          devId: background[0].backgrounds.devId,
+          id: background[0].id,
+          devId: background[0].devId,
           skills,
           languages,
           educations,
@@ -67,9 +75,21 @@ export function createBackgroundsService(
       return await repository.getAllBackgrounds();
     },
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
-      return await repository.getBackgroundByDeveloperProfileId(
-        developerProfileId
+      const background =
+        await repository.getBackgroundByDeveloperProfileId(developerProfileId);
+      const skills = await repository.getSkillsByBackgroundId(background[0].id);
+      const languages = await repository.getLanguagesByBackgroundId(
+        background[0].id
       );
+      const educations = await repository.getEducationsByBackgroundId(
+        background[0].id
+      );
+      return {
+        ...background[0],
+        skills: skills,
+        languages: languages,
+        educations: educations,
+      };
     },
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
