@@ -12,7 +12,8 @@ export const developerProfiles: PermissionsSchema<
   getAllById: "developerProfiles.getAllById",
   getById: "developerProfiles.getById",
   getDeveloperById: "developerProfiles.getDeveloperById",
-  getHighlightedDevIds: "developerProfiles.getHighlightedDevIds",
+  getHighlightedDeveloperProfileIds:
+    "developerProfiles.getHighlightedDeveloperProfileIds",
   getPublishedOrHighlightedDeveloperProfileIds:
     "developerProfiles.getPublishedOrHighlightedDeveloperProfileIds",
   updateStatus: "developerProfiles.updateStatus",

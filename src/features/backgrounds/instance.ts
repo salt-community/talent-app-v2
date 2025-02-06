@@ -9,7 +9,7 @@ export const insecureBackgroundsService = createBackgroundsService(
   createRepository(db),
   createMeiliClient(),
   developerProfilesService.getPublishedOrHighlightedDeveloperProfileIds,
-  developerProfilesService.getHighlightedDevIds,
+  developerProfilesService.getHighlightedDeveloperProfileIds,
   developerProfilesService.getDeveloperById,
   iamService.checkUserAccess,
   developerProfilesService.createDeveloperProfile,
