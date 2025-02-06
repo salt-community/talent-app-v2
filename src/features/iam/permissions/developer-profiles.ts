@@ -13,8 +13,8 @@ export const developerProfiles: PermissionsSchema<
   getById: "developerProfiles.getById",
   getDeveloperById: "developerProfiles.getDeveloperById",
   getHighlightedDevIds: "developerProfiles.getHighlightedDevIds",
-  getPublishedOrHighlightedDevIds:
-    "developerProfiles.getPublishedOrHighlightedDevIds",
+  getPublishedOrHighlightedDeveloperProfileIds:
+    "developerProfiles.getPublishedOrHighlightedDeveloperProfileIds",
   updateStatus: "developerProfiles.updateStatus",
   getIdentityIdByDeveloperProfileId:
     "developerProfiles.getIdentityIdByDeveloperProfileId",

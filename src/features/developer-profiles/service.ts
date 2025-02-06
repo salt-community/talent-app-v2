@@ -30,7 +30,7 @@ export function createDeveloperProfilesService(db: Db) {
     async updateStatus(args: { id: string; status: DeveloperProfileStatus }) {
       await repository.updateStatus(args.id, args.status);
     },
-    async getPublishedOrHighlightedDevIds() {
+    async getPublishedOrHighlightedDeveloperProfileIds() {
       return await repository.getPublishedOrHighlightedDeveloperProfileIds();
     },
     async getHighlightedDevIds() {

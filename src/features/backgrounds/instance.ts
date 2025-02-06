@@ -8,7 +8,7 @@ import { db } from "@/db";
 export const insecureBackgroundsService = createBackgroundsService(
   createRepository(db),
   createMeiliClient(),
-  developerProfilesService.getPublishedOrHighlightedDevIds,
+  developerProfilesService.getPublishedOrHighlightedDeveloperProfileIds,
   developerProfilesService.getHighlightedDevIds,
   developerProfilesService.getDeveloperById,
   iamService.checkUserAccess,
