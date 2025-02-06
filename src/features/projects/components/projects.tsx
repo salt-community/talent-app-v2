@@ -33,7 +33,7 @@ export async function Projects({ developerProfileId }: Props) {
             <Separator className="mt-4 mb-2" />
 
             <div className="flex justify-center">
-              <ProjectForm userId={developerProfileId} />
+              <ProjectForm developerProfileId={developerProfileId} />
             </div>
           </>
         )}
@@ -54,7 +54,7 @@ export async function Projects({ developerProfileId }: Props) {
       </div>
       {editAccess && (
         <div className="flex justify-center">
-          <ProjectForm userId={developerProfileId} />
+          <ProjectForm developerProfileId={developerProfileId} />
         </div>
       )}
     </div>

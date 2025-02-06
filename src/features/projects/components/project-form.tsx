@@ -29,10 +29,10 @@ import { Plus } from "lucide-react";
 import { Loader2 } from "lucide-react";
 
 type Props = {
-  userId: string;
+  developerProfileId: string;
 };
 
-export default function ProjectForm({ userId }: Props) {
+export default function ProjectForm({ developerProfileId }: Props) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -48,7 +48,7 @@ export default function ProjectForm({ userId }: Props) {
         repository: values.repository,
         projectWebsite: values.projectWebsite ? values.projectWebsite : "",
         description: values.description,
-        userId: userId,
+        userId: developerProfileId,
         imageUrl: values.imageUrl,
       });
       toast({
@@ -131,9 +131,7 @@ export default function ProjectForm({ userId }: Props) {
                   {...form.register("imageUrl")}
                 />
               </FormControl>
-              <FormDescription>
-                Link to the image.
-              </FormDescription>
+              <FormDescription>Link to the image.</FormDescription>
               <FormMessage>
                 {form.formState.errors.projectWebsite?.message}
               </FormMessage>
