@@ -29,11 +29,11 @@ export function createRepository(db: DB) {
 
       return (await developerId).map((developerId) => developerId.devId);
     },
-    async getBackgroundByDeveloperProfileId(devId: string) {
+    async getBackgroundByDeveloperProfileId(developerProfileId: string) {
       return db
         .select()
         .from(backgrounds)
-        .where(eq(backgrounds.devId, devId))
+        .where(eq(backgrounds.devId, developerProfileId))
         .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
         .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
         .leftJoin(educations, eq(educations.backgroundId, backgrounds.id));
