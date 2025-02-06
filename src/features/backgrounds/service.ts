@@ -66,7 +66,7 @@ export function createBackgroundsService(
     async getAllBackgrounds() {
       return await repository.getAllBackgrounds();
     },
-    async getBackgroundByDevId(devId: string) {
+    async getBackgroundByDeveloperProfileId(devId: string) {
       return await repository.getBackgroundByDevId(devId);
     },
     async getAllSkills() {

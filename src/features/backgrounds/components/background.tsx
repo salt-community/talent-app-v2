@@ -9,7 +9,9 @@ type Props = { developerProfileId: string };
 
 export async function Background({ developerProfileId }: Props) {
   const background =
-    await backgroundsService.getBackgroundByDevId(developerProfileId);
+    await backgroundsService.getBackgroundByDeveloperProfileId(
+      developerProfileId
+    );
   if (background === undefined || background.length === 0) {
     return <BackgroundSkeleton developerProfileId={developerProfileId} />;
   }

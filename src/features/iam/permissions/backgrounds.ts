@@ -14,7 +14,8 @@ export const backgrounds: PermissionsSchema<"backgrounds", BackgroundsService> =
     getAllEducations: "backgrounds.getAllEducations",
     getAllLanguages: "backgrounds.getAllLanguages",
     getAllSkills: "backgrounds.getAllSkills",
-    getBackgroundByDevId: "backgrounds.getBackgroundByDevId",
+    getBackgroundByDeveloperProfileId:
+      "backgrounds.getBackgroundByDeveloperProfileId",
     getAllPosts: "backgrounds.getAllPosts",
     getHighlightedDeveloperProfileIds:
       "backgrounds.getHighlightedDeveloperProfileIds",
