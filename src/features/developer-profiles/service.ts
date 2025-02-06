@@ -31,7 +31,7 @@ export function createDeveloperProfilesService(db: Db) {
       await repository.updateStatus(args.id, args.status);
     },
     async getPublishedOrHighlightedDevIds() {
-      return await repository.getPublishedOrHighlightedDevIds();
+      return await repository.getPublishedOrHighlightedDeveloperProfileIds();
     },
     async getHighlightedDevIds() {
       const highlighted = await repository.getAll();

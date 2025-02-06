@@ -30,11 +30,11 @@ export function createDevelopersRepository(db: Db) {
       return developerId;
     },
     async add(developerProfile: DeveloperProfileInsert) {
-      const devId = await db
+      const developerProfileId = await db
         .insert(developerProfiles)
         .values(developerProfile)
         .returning({ id: developerProfiles.id });
-      return devId[0];
+      return developerProfileId[0];
     },
     async delete(id: string) {
       await db.delete(developerProfiles).where(eq(developerProfiles.id, id));
