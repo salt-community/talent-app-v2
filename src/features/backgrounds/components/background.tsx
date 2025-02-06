@@ -9,21 +9,12 @@ type Props = { devId: string };
 
 export async function Background({ devId: devId }: Props) {
   const background = await backgroundsService.getBackgroundByDevId(devId);
+  console.log({ background: background });
 
   if (background === undefined || background.length === 0) {
     return <BackgroundSkeleton devId={devId} />;
   }
-  if (!background) {
-    return (
-      <Link href={`/developers/${devId}`}>
-        <div className="space-y-2 max-w-96">
-          <div className="flex justify-between items-start">
-            <BackgroundSkeleton devId={devId} />
-          </div>
-        </div>
-      </Link>
-    );
-  }
+
   return (
     <Link href={`/developers/${devId}`}>
       <div className="space-y-2 max-w-96">
