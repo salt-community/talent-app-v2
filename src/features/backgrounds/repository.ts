@@ -22,7 +22,7 @@ export function createRepository(db: DB) {
         .innerJoin(languages, eq(languages.backgroundId, backgrounds.id))
         .innerJoin(educations, eq(educations.backgroundId, backgrounds.id));
     },
-    async getAllDevIds() {
+    async getAllDeveloperProfileIds() {
       const developerId = db
         .select({ devId: backgrounds.devId })
         .from(backgrounds);

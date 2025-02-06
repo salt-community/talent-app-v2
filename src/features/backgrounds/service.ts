@@ -117,7 +117,7 @@ export function createBackgroundsService(
       const cleanSearch = search?.trim();
       const [searchedDevIds, publishedOrHighlightedDevIds] = await Promise.all([
         !cleanSearch || cleanSearch === ""
-          ? await repository.getAllDevIds()
+          ? await repository.getAllDeveloperProfileIds()
           : await meiliClient.searchDevIds(search),
         await getPublishedOrHighlightedDevIds(),
       ]);
