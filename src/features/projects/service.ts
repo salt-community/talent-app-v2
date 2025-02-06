@@ -17,8 +17,8 @@ export function createService(
     getAllDevelopers: async () => {
       return await getAllIdentities();
     },
-    getAll: async (userId: string) => {
-      const projects = await reps.getAll(userId);
+    getAll: async (developerProfileId: string) => {
+      const projects = await reps.getAll(developerProfileId);
       const sortedProjects = projects.sort((a, b) =>
         a.title.localeCompare(b.title)
       );
