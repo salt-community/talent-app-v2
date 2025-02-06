@@ -19,7 +19,7 @@ export async function HighlightedDevelopers() {
           <li key={devId} className="">
             <Card className="p-2 h-full flex justify-center min-w-[20rem]">
               <CardContent>
-                <Background devId={devId} />
+                <Background developerProfileId={devId} />
               </CardContent>
             </Card>
           </li>
