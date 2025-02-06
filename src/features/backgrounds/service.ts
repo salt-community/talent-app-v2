@@ -117,15 +117,18 @@ export function createBackgroundsService(
 
     async searchDeveloperProfileIds(search: string | undefined) {
       const cleanSearch = search?.trim();
-      const [searchedDevIds, publishedOrHighlightedDevIds] = await Promise.all([
+      const [
+        searchedDeveloperProfileIds,
+        publishedOrHighlightedDeveloperProfileIds,
+      ] = await Promise.all([
         !cleanSearch || cleanSearch === ""
           ? await repository.getAllDeveloperProfileIds()
           : await meiliClient.searchDevIds(search),
         await getPublishedOrHighlightedDevIds(),
       ]);
 
-      const filteredDeveloperProfileIds = searchedDevIds.filter((devId) =>
-        publishedOrHighlightedDevIds.includes(devId)
+      const filteredDeveloperProfileIds = searchedDeveloperProfileIds.filter(
+        (devId) => publishedOrHighlightedDeveloperProfileIds.includes(devId)
       );
       return filteredDeveloperProfileIds;
     },
