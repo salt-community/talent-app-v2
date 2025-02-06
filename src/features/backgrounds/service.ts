@@ -124,10 +124,10 @@ export function createBackgroundsService(
         await getPublishedOrHighlightedDevIds(),
       ]);
 
-      const filteredDevIds = searchedDevIds.filter((devId) =>
+      const filteredDeveloperProfileIds = searchedDevIds.filter((devId) =>
         publishedOrHighlightedDevIds.includes(devId)
       );
-      return filteredDevIds;
+      return filteredDeveloperProfileIds;
     },
     async isSearchHealthOk() {
       return await meiliClient.isHealthOk();
