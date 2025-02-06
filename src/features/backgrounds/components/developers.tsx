@@ -13,7 +13,7 @@ export function Developers({ devIds }: Props) {
           <li key={index} className="">
             <Card className="p-2 h-full justify-center min-w-[20rem]">
               <CardContent>
-                <Background devId={devId} />
+                <Background developerProfileId={devId} />
               </CardContent>
             </Card>
           </li>

@@ -6,17 +6,17 @@ import { errorHandler } from "@/lib";
 import type { Project } from "../types";
 
 type Props = {
-  devId: string;
+  developerProfileId: string;
 };
 
-export async function Projects({ devId }: Props) {
+export async function Projects({ developerProfileId }: Props) {
   let projects: Project[] = [];
   let editAccess = false;
 
   try {
-    projects = await projectsService.getAll(devId);
+    projects = await projectsService.getAll(developerProfileId);
 
-    editAccess = await projectsService.checkProfileAccess(devId);
+    editAccess = await projectsService.checkProfileAccess(developerProfileId);
   } catch (error) {
     errorHandler(error);
   }
@@ -33,7 +33,7 @@ export async function Projects({ devId }: Props) {
             <Separator className="mt-4 mb-2" />
 
             <div className="flex justify-center">
-              <ProjectForm userId={devId} />
+              <ProjectForm userId={developerProfileId} />
             </div>
           </>
         )}
@@ -54,7 +54,7 @@ export async function Projects({ devId }: Props) {
       </div>
       {editAccess && (
         <div className="flex justify-center">
-          <ProjectForm userId={devId} />
+          <ProjectForm userId={developerProfileId} />
         </div>
       )}
     </div>
