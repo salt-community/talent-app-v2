@@ -204,8 +204,8 @@ export function createBackgroundsService(
     async getAllDeveloperProfilesById(identityId: string) {
       return await getAllById(identityId);
     },
-    async deleteDeveloperProfile(devId: string) {
-      await deleteDeveloperProfile(devId);
+    async deleteDeveloperProfile(developerProfileId: string) {
+      await deleteDeveloperProfile(developerProfileId);
     },
   };
 }
