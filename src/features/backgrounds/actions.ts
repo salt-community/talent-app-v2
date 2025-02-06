@@ -105,9 +105,9 @@ export async function addDeveloperProfileAction(identityId: string) {
   revalidatePath("/profile");
 }
 
-export async function deleteDeveloperProfileAction(devId: string) {
+export async function deleteDeveloperProfileAction(developerProfileId: string) {
   try {
-    await backgroundsService.deleteDeveloperProfile(devId);
+    await backgroundsService.deleteDeveloperProfile(developerProfileId);
   } catch (error) {
     errorHandler(error);
   }
