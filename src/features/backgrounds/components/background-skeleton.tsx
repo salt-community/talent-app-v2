@@ -8,10 +8,10 @@ import { errorHandler } from "@/lib";
 type Props = { devId: string };
 
 export default async function BackgroundSkeleton({ devId }: Props) {
-  let developer: Developer | undefined; 
+  let developer: Developer | undefined;
 
   try {
-    developer = await addBackground(devId);  
+    developer = await addBackground(devId);
   } catch (error) {
     errorHandler(error);
   }

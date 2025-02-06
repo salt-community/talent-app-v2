@@ -2,7 +2,7 @@ import { Dot } from "lucide-react";
 
 type Props = {
   title: string;
-  content: { id: number; name: string }[];
+  content: { id: number; name: string }[] | null;
 };
 
 export function Row({ title, content }: Props) {

@@ -9,21 +9,10 @@ type Props = { devId: string };
 
 export async function Background({ devId: devId }: Props) {
   const background = await backgroundsService.getBackgroundByDevId(devId);
-
   if (background === undefined || background.length === 0) {
     return <BackgroundSkeleton devId={devId} />;
   }
-  if (!background) {
-    return (
-      <Link href={`/developers/${devId}`}>
-        <div className="space-y-2 max-w-96">
-          <div className="flex justify-between items-start">
-            <BackgroundSkeleton devId={devId} />
-          </div>
-        </div>
-      </Link>
-    );
-  }
+
   return (
     <Link href={`/developers/${devId}`}>
       <div className="space-y-2 max-w-96">
@@ -36,11 +25,35 @@ export async function Background({ devId: devId }: Props) {
         <div>
           <Row
             title="Languages"
-            content={background.map((b) => b.background_languages)}
+            content={background
+              .map((b) => b.background_languages)
+              .filter(
+                (
+                  lang
+                ): lang is {
+                  id: number;
+                  name: string;
+                  backgroundId: number;
+                  level: number;
+                } => lang !== null
+              )
+              .map(({ id, name }) => ({ id, name }))}
           />
           <Row
             title="Education"
-            content={background.map((l) => l.background_languages)}
+            content={background
+              .map((b) => b.background_educations)
+              .filter(
+                (
+                  education
+                ): education is {
+                  id: number;
+                  name: string;
+                  backgroundId: number;
+                  level: number;
+                } => education !== null
+              )
+              .map(({ id, name }) => ({ id, name }))}
           />
           <SkillsBadges
             skills={background

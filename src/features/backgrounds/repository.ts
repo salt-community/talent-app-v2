@@ -35,8 +35,8 @@ export function createRepository(db: DB) {
         .from(backgrounds)
         .where(eq(backgrounds.devId, devId))
         .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
-        .innerJoin(languages, eq(languages.backgroundId, backgrounds.id))
-        .innerJoin(educations, eq(educations.backgroundId, backgrounds.id));
+        .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
+        .leftJoin(educations, eq(educations.backgroundId, backgrounds.id));
     },
     async add(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } = await db.transaction(
