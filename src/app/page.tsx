@@ -1,8 +1,15 @@
-import { HighlightPage } from "@/features";
-import { HighlightedDevelopers } from "@/features";
+import {
+  developerProfilesService,
+  HighlightedDevelopers,
+  HighlightPage,
+} from "@/features";
 import { Hero } from "@/features/backgrounds/components/hero";
 
 export default async function Home() {
+  
+  const highlightedDeveloperProfileIds =
+    await developerProfilesService.getHighlightedDeveloperProfileIds();
+
   return process.env.FF_NEW_HIGHLIGHTS === "ON" ? (
     <div className="bg-zinc-50">
       <Hero />
@@ -14,7 +21,9 @@ export default async function Home() {
         world. Meet a standout talent and explore their journey
       </h3>
       <div className="px-4 pb-12">
-        <HighlightedDevelopers />
+        <HighlightedDevelopers
+          developerProfileIds={highlightedDeveloperProfileIds}
+        />
       </div>
     </div>
   ) : (
