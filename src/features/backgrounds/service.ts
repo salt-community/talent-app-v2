@@ -12,7 +12,7 @@ export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
   getPublishedOrHighlightedDevIds: () => Promise<string[]>,
-  getHighlightedDevIds: () => Promise<string[]>,
+  getHighlightedDeveloperProfileIds: () => Promise<string[]>,
   getDeveloperById: (id: string) => Promise<Developer>,
   checkUserAccess: (id: string) => Promise<boolean>,
   createDeveloperProfile: CreateDeveloperProfile,
@@ -112,7 +112,7 @@ export function createBackgroundsService(
     },
 
     async getHighlightedDeveloperProfileIds() {
-      return await getHighlightedDevIds();
+      return await getHighlightedDeveloperProfileIds();
     },
 
     async searchDevIds(search: string | undefined) {
