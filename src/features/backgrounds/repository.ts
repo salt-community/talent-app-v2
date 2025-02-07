@@ -44,14 +44,14 @@ export function createRepository(db: DB) {
     async getLanguagesByBackgroundId(backgroundId: number) {
       return db
         .select()
-        .from(skills)
-        .where(eq(skills.backgroundId, backgroundId));
+        .from(languages)
+        .where(eq(languages.backgroundId, backgroundId));
     },
     async getEducationsByBackgroundId(backgroundId: number) {
       return db
         .select()
-        .from(skills)
-        .where(eq(skills.backgroundId, backgroundId));
+        .from(educations)
+        .where(eq(educations.backgroundId, backgroundId));
     },
     async add(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } = await db.transaction(
