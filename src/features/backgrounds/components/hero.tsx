@@ -7,9 +7,9 @@ export function Hero() {
         <Image
           src="/hero.jpg"
           alt="Hero background"
-          className="object-cover"
+          className="object-cover object-left"
           fill
-          priority
+          priority={true}
         />
         <div className="z-10">
           <h1 className=" md:text-xl  text-md uppercase">
