@@ -32,7 +32,7 @@ export function getFormData(formData: FormData): AssignmentFormData {
   const description = formData.get("description") as string | null;
 
   return {
-    devId: devId ?? undefined,
+    developerProfileId: devId ?? undefined,
     title: title ?? "",
     tags: tagsString ? tagsString.split(",") : [],
     score: score ?? "",
@@ -41,3 +41,4 @@ export function getFormData(formData: FormData): AssignmentFormData {
     categories: description ? description.split(",") : [],
   };
 }
+  

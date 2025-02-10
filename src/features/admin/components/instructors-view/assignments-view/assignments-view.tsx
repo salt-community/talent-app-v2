@@ -8,7 +8,6 @@ import { Tabs, TabsTrigger } from "@/components/ui/tabs";
 import { Tag } from "lucide-react";
 import { TabsContent, TabsList } from "@radix-ui/react-tabs";
 import { Assignment, getAllAssignments } from "@/features/assignments";
-import { AddAssignmentForm } from "./add-assignment";
 
 export async function ListAssignments() {
   const assignments = await getAllAssignments();
