@@ -15,7 +15,7 @@ export async function ListAssignments() {
   if (!assignments) {
     return <p>No assignments found.</p>;
   }
-
+  console.log(assignments[0].tags);
   return (
     <Tabs defaultValue="assignments" className="m-6">
       <TabsList className="grid w-full grid-cols-2">
@@ -29,16 +29,16 @@ export async function ListAssignments() {
               <AccordionTrigger>{assignment.title}</AccordionTrigger>
               <AccordionContent>
                 <p>Comment: {assignment.comment}</p>
-                <Tag>Tags: {assignment.tags.join(", ")}</Tag>
+                <div className="flex mt-2">
+                  <Tag />
+                  <p className="px-2">{assignment.tags.join(", ")}</p>
+                </div>
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
       </TabsContent>
-      <TabsContent value="add">
-        <p>add</p>
-        {/* <AddAssignmentForm /> */}
-      </TabsContent>
+      <TabsContent value="add">{/* <AddAssignmentForm /> */}</TabsContent>
     </Tabs>
   );
 }
