@@ -15,13 +15,13 @@ import {
   console.log("Starting to seed...");
   await seedIdentities();
   await seedDeveloperProfiles();
-  const devIds = (await developerProfilesService.getAll()).map(
+  const developerProfileIds = (await developerProfilesService.getAll()).map(
     (developer) => developer.id
   );
-  for (const devId of devIds) {
-    await seedAssignments(devId);
+  for (const developerProfileId of developerProfileIds) {
+    await seedAssignments(developerProfileId);
   }
-  await backgroundsSeed(devIds);
+  await backgroundsSeed(developerProfileIds);
   await seedProjects();
   await seedCohorts();
   console.log("Done seeding!");
