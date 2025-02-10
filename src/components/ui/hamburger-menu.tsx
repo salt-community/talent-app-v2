@@ -53,6 +53,17 @@ export function HamburgerMenu({ user }: Props) {
               <Link href={`/profile/${user.id}`}>My profile</Link>
             </li>
           )}
+          {user?.role === "admin" && (
+            <li
+              className={`border-b ${
+                isActive(`/assignments/`)
+                  ? "border-primary"
+                  : "border-white"
+              } hover:border-primary`}
+            >
+              <Link href={`/assignments/`}>Assignments</Link>
+            </li>
+          )}
           <li
             className={`border-b ${
               isActive("/dashboard") ? "border-primary" : "border-white"
