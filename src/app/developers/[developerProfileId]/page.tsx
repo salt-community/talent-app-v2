@@ -1,5 +1,5 @@
 import { DeveloperCard } from "@/components/ui/developer-card";
-import { Background, Projects } from "@/features";
+import { BackgroundCard, Projects } from "@/features";
 
 // Maximum timeout duration for the page speed API
 export const maxDuration = 60;
@@ -12,7 +12,7 @@ export default async function DeveloperDetailPage({ params }: Params) {
   const { developerProfileId } = await params;
   return (
     <DeveloperCard>
-      <Background developerProfileId={developerProfileId} />
+      <BackgroundCard developerProfileId={developerProfileId} />
       <Projects developerProfileId={developerProfileId} />
     </DeveloperCard>
   );
