@@ -6,7 +6,7 @@ export const getAssignmentFormData = (
   const title = formData.get("title") as string | null;
   const cohortId = formData.get("cohortId") as string | null;
   const comment = formData.get("comment") as string | null;
-  const devId = formData.get("devId") as string | null;
+  const developerProfileId = formData.get("devId") as string | null;
   const score = formData.get("score") as string | null;
   const categories = (formData.get("categories") as string)?.split(",") || [];
   const tags = (formData.get("tags") as string)?.split(",") || [];
@@ -16,7 +16,7 @@ export const getAssignmentFormData = (
   }
 
   return {
-    devId: devId ?? undefined,
+    developerProfileId: developerProfileId ?? undefined,
     score: score ?? "",
     tags,
     title,

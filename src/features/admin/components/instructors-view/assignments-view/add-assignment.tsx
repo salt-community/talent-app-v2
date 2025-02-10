@@ -65,14 +65,14 @@ export function AddAssignmentForm() {
           </div>
           <div>
             <label
-              htmlFor="cohortId"
+              htmlFor="developerProfileId"
               className="block text-sm font-medium text-gray-700"
             >
               Cohort ID
             </label>
             <input
-              id="cohortId"
-              name="cohortId"
+              id="developerProfileId"
+              name="developerProfileId"
               type="text"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />

@@ -23,7 +23,7 @@ export type AssignmentScore = {
 };
 
 export type AssignmentFormData = {
-  devId: string | undefined;
+  developerProfileId: string | undefined;
   title: string;
   tags: string[];
   score: string;
