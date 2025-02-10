@@ -1,13 +1,12 @@
 import { Row } from "./row";
 import { backgroundsService } from "../instance";
-import Link from "next/link";
 import { SkillsBadges } from "./skills-badges";
 import BackgroundSkeleton from "./background-skeleton";
 import { BackgroundBasicInfoCard } from "./basic-info-card";
 
 type Props = { developerProfileId: string };
 
-export async function Background({ developerProfileId }: Props) {
+export async function BackgroundCard({ developerProfileId }: Props) {
   const background =
     await backgroundsService.getBackgroundByDeveloperProfileId(
       developerProfileId
@@ -18,11 +17,10 @@ export async function Background({ developerProfileId }: Props) {
   }
 
   return (
-    <Link href={`/developers/${developerProfileId}`}>
-      <div className="space-y-2 max-w-96">
-        <div className="flex justify-between items-start">
+      <div className="space-y-2">
+        <div className="flex justify-between items-start w-full">
           <BackgroundBasicInfoCard
-            background={background ?? undefined}
+            background={background}
             developerProfileId={developerProfileId}
           />
         </div>
@@ -45,6 +43,5 @@ export async function Background({ developerProfileId }: Props) {
           <SkillsBadges skills={background.skills} />
         </div>
       </div>
-    </Link>
   );
 }
