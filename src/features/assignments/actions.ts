@@ -125,7 +125,7 @@ export async function getAllAssignments() {
   try {
     const allAssignments = await assignmentsService.getAllAssignments();
     if (allAssignments.length === 0) {
-      return []
+      return [];
     }
     return allAssignments;
   } catch (error) {
