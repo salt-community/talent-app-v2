@@ -1,6 +1,4 @@
-"use client";
 
-import { useAssignments } from "@/features/assignments/assignments-context";
 import {
   Accordion,
   AccordionItem,
@@ -8,31 +6,26 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { Tabs, TabsTrigger } from "@/components/ui/tabs";
-import { useEffect, useState } from "react";
 import { Tag } from "lucide-react";
 import { TabsContent } from "@radix-ui/react-tabs";
+import { Assignment, getAllAssignments } from "@/features/assignments";
 
-export function ListAssignments() {
-  const { assignments, loadAssignments } = useAssignments();
-  const [tab, setTab] = useState("add");
+export async function ListAssignments() {
 
-  useEffect(() => {
-    loadAssignments();
-  }, [loadAssignments]);
-
-  if (!assignments?.length) {
+  const assignments =await getAllAssignments()
+  if (!assignments) {
     return <p>No assignments found.</p>;
   }
 
   return (
-    <div className="mt-6">
-      <Tabs value={tab} onValueChange={setTab}>
+    <div className="m-6">
+      <Tabs>
         <TabsContent value="assignments">
           <TabsTrigger value="add">Add Assignment</TabsTrigger>
         </TabsContent>
       </Tabs>
       <Accordion type="single" collapsible>
-        {assignments.map((assignment) => (
+        {assignments.map((assignment:Assignment) => (
           <AccordionItem key={assignment.id} value={assignment.id}>
             <AccordionTrigger>{assignment.title}</AccordionTrigger>
             <AccordionContent>

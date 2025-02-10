@@ -121,6 +121,18 @@ export async function getAllAssignmentsAction(
   }
   revalidatePath("/assignments");
 }
+export async function getAllAssignments() {
+  try {
+    const allAssignments = await assignmentsService.getAllAssignments();
+    if (allAssignments.length === 0) {
+      return []
+    }
+    return allAssignments;
+  } catch (error) {
+    errorHandler(error);
+  }
+  revalidatePath("/assignments");
+}
 
 export async function deleteAssignmentAction(
   formData: FormData
