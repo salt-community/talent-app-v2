@@ -15,7 +15,6 @@ export async function ListAssignments() {
   if (!assignments) {
     return <p>No assignments found.</p>;
   }
-  console.log(assignments[0].tags);
   return (
     <Tabs defaultValue="assignments" className="m-6">
       <TabsList className="grid w-full grid-cols-2">
