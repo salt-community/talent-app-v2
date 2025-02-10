@@ -17,6 +17,7 @@ import { updateFormSchema } from "../validation";
 type Placeholder = {
   description: string;
   imageUrl: string | null;
+  imageAlt: string | null;
 };
 
 type Props = {
@@ -30,6 +31,7 @@ export default function UpdateDescription({ onSubmit, placeholder }: Props) {
     defaultValues: {
       description: placeholder.description,
       imageUrl: placeholder.imageUrl!,
+      imageAlt: placeholder.imageAlt!,
     },
   });
   return (
@@ -44,6 +46,13 @@ export default function UpdateDescription({ onSubmit, placeholder }: Props) {
             <Input type="text" {...form.register("imageUrl")} />
           </FormControl>
           <FormMessage>{form.formState.errors.imageUrl?.message}</FormMessage>
+        </FormItem>
+        <FormItem>
+          <FormLabel>{"Image's alternative text"}</FormLabel>
+          <FormControl>
+            <Input type="text" {...form.register("imageAlt")} />
+          </FormControl>
+          <FormMessage>{form.formState.errors.imageAlt?.message}</FormMessage>
         </FormItem>
         <FormItem>
           <FormLabel>Description</FormLabel>

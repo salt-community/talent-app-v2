@@ -30,6 +30,7 @@ export function createService(
       projectWebsite,
       userId,
       imageUrl,
+      imageAlt
     }: ProjectData) => {
       let performance: string;
 
@@ -62,7 +63,10 @@ export function createService(
         lastCommit,
         userId,
         imageUrl,
+        imageAlt
       };
+
+      console.log(newProject);
 
       await reps.add(newProject);
     },

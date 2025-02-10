@@ -8,6 +8,7 @@ export type Project = {
   repository: string;
   title: string;
   imageUrl: string | null;
+  imageAlt: string | null;
   projectWebsite: string | null;
   performance: string;
   description: string;
@@ -22,12 +23,14 @@ export type ProjectData = {
   projectWebsite: string;
   userId: string;
   imageUrl?: string;
+  imageAlt?:string
 };
 
 export type UpdatedProject = {
   id: string;
   description: string;
   imageUrl: string;
+  imageAlt: string;
 };
 
 export type UpdatedProjectData = {

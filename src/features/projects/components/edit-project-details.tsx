@@ -36,7 +36,7 @@ export default function EditProjectDetails({ project }: Props) {
         project.id,
         project.userId,
         project.repository,
-        project.projectWebsite!
+        project.projectWebsite!,
       );
     } catch (error) {
       console.log("error updating project:", error);
@@ -50,6 +50,7 @@ export default function EditProjectDetails({ project }: Props) {
       id: project.id,
       description: values.description,
       imageUrl: values.imageUrl,
+      imageAlt: values.imageAlt,
     };
     try {
       await updateDescriptionAction(updateDescription);
@@ -64,6 +65,7 @@ export default function EditProjectDetails({ project }: Props) {
   const placeholder = {
     description: project.description,
     imageUrl: project.imageUrl,
+    imageAlt: project.imageAlt
   };
   return (
     <>

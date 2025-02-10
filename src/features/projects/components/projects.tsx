@@ -9,7 +9,7 @@ type Props = {
   developerProfileId: string;
 };
 
-export async function Projects({ developerProfileId }: Props) {
+export async function   Projects({ developerProfileId }: Props) {
   let projects: Project[] = [];
   let editAccess = false;
 

@@ -50,6 +50,7 @@ export default function ProjectForm({ developerProfileId }: Props) {
         description: values.description,
         userId: developerProfileId,
         imageUrl: values.imageUrl,
+        imageAlt: values.imageAlt
       });
       toast({
         title: "Project added",
@@ -132,6 +133,20 @@ export default function ProjectForm({ developerProfileId }: Props) {
                 />
               </FormControl>
               <FormDescription>Link to the image.</FormDescription>
+              <FormMessage>
+                {form.formState.errors.projectWebsite?.message}
+              </FormMessage>
+            </FormItem>
+            <FormItem>
+              <FormLabel>{"Image's alternative text"}</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Screenshot of the [project name] GitHub project"
+                  type="text"
+                  {...form.register("imageAlt")}
+                />
+              </FormControl>
+              <FormDescription>Alternative text for the image.</FormDescription>
               <FormMessage>
                 {form.formState.errors.projectWebsite?.message}
               </FormMessage>

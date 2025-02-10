@@ -39,7 +39,7 @@ export default function ProjectDetails({ project, editAccess }: Props) {
           src={project.imageUrl ? project.imageUrl : "/placeholder-img.png"}
           width={250}
           height={240}
-          alt=""
+          alt={project.imageAlt ? project.imageAlt : "Placeholder image"}
           unoptimized
           className="m-2 object-fill h-60 rounded-lg "
         />
