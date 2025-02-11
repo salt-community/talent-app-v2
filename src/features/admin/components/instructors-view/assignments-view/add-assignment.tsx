@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { createAssignmentAction } from "@/features/admin/action";
 
 export function AddAssignmentForm() {
@@ -40,14 +41,14 @@ export function AddAssignmentForm() {
       </div>
       <div>
         <label
-          htmlFor="developerProfileId"
+          htmlFor="cohortId"
           className="block text-sm font-medium text-gray-700"
         >
           Cohort ID
         </label>
         <input
-          id="developerProfileId"
-          name="developerProfileId"
+          id="cohortId"
+          name="cohortId"
           type="text"
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
@@ -79,13 +80,10 @@ export function AddAssignmentForm() {
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
-      <button
-        type="submit"
-        className="w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700"
-        disabled={false}
-      >
+      <Button type="submit" className="w-full ">
         {/* {isPending ? "Adding..." : "Add Assignment"} */}
-      </button>
+        Submit
+      </Button>
     </form>
   );
 }
