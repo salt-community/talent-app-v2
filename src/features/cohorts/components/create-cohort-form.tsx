@@ -1,3 +1,4 @@
+"use client";
 import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { addCohortAction } from "@/features/cohorts/actions";
@@ -53,18 +54,6 @@ export function AddCohortForm() {
           <option value="ongoing">Ongoing</option>
           <option value="finished">Finished</option>
         </select>
-      </div>
-
-      <div>
-        <label htmlFor="identityId" className="block font-semibold">
-          Identity ID
-        </label>
-        <input
-          id="identityId"
-          name="identityId"
-          type="text"
-          className="border px-2 py-1 w-full"
-        />
       </div>
 
       <Button type="submit" disabled={isPending}>
