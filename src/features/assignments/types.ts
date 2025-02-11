@@ -1,5 +1,7 @@
 import { createAssignmentsService } from "./service";
 
+export type CreateAssignment = AssignmentsService["createAssignment"];
+
 export type Assignment = {
   id: string;
   title: string;

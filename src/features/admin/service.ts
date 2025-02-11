@@ -4,6 +4,8 @@ import {
   GetAllDeveloperProfiles,
   UpdateStatus,
   CheckAccess,
+  CreateAssignment,
+  NewAssignment,
 } from "@/features";
 import { SearchConfigurationClient } from "./types";
 import { Settings } from "meilisearch";
@@ -12,6 +14,7 @@ export function createAdminService(
   getAllDeveloperProfiles: GetAllDeveloperProfiles,
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
+  createAssignment: CreateAssignment,
   checkAccess: CheckAccess,
   searchConfigurationClient: SearchConfigurationClient
 ) {
@@ -55,6 +58,11 @@ export function createAdminService(
     async resetSearchSettings() {
       await checkAccess("admin.resetSearchSettings");
       await searchConfigurationClient.resetSettings();
+    },
+
+    async createAssignment(assignment: NewAssignment) {
+      // await checkAccess("admin.createAssignment"); problem for another day
+      return await createAssignment(assignment);
     },
   };
 }

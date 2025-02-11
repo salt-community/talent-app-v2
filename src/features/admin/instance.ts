@@ -3,12 +3,14 @@ import {
   backgroundsService,
   developerProfilesService,
   iamService,
+  assignmentsService,
 } from "@/features";
 
 export const adminService = createAdminService(
   developerProfilesService.getAll,
   developerProfilesService.delete,
   developerProfilesService.updateStatus,
+  assignmentsService.createAssignment,
   iamService.checkAccess,
   {
     isHealthOk: backgroundsService.isSearchHealthOk,

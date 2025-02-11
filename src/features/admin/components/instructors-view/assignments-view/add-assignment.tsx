@@ -1,5 +1,4 @@
 "use client";
-import { useActionState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,14 +8,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { addAssignmentAction } from "@/features/assignments";
+import { createAssignmentAction } from "@/features/admin/action";
 
 export function AddAssignmentForm() {
-  const [state, formAction, isPending] = useActionState(
-    addAssignmentAction,
-    null
-  );
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -29,7 +23,7 @@ export function AddAssignmentForm() {
         <DialogHeader>
           <DialogTitle>Add Assignment</DialogTitle>
         </DialogHeader>
-        <form action={formAction} className="space-y-4">
+        <form action={createAssignmentAction} className="space-y-4">
           <div>
             <label
               htmlFor="title"
@@ -44,11 +38,11 @@ export function AddAssignmentForm() {
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
-            {state?.errorMessages?.titleError && (
+            {/* {state?.errorMessages?.titleError && (
               <p className="mt-1 text-sm text-red-600">
                 {state.errorMessages.titleError}
               </p>
-            )}
+            )} */}
           </div>
           <div>
             <label
@@ -108,9 +102,9 @@ export function AddAssignmentForm() {
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700"
-            disabled={isPending}
+            disabled={false}
           >
-            {isPending ? "Adding..." : "Add Assignment"}
+            {/* {isPending ? "Adding..." : "Add Assignment"} */}
           </button>
         </form>
       </DialogContent>
