@@ -1,6 +1,6 @@
 import { Db } from "@/db";
 import { eq } from "drizzle-orm";
-import { CohortStatus, Cohort, CohortFormData } from "./types";
+import { CohortStatus, CohortFormData } from "./types";
 import { cohorts } from "./schema";
 
 export function createCohortsRepository(db: Db) {

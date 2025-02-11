@@ -1,6 +1,6 @@
 import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
-import { CohortStatus, Cohort, CohortFormData } from "./types";
+import { CohortStatus, CohortFormData } from "./types";
 
 export function createCohortsService(db: Db) {
   const repo = createCohortsRepository(db);

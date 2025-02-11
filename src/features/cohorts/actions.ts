@@ -6,7 +6,7 @@ import { ZodError } from "zod";
 import { errorHandler } from "@/lib";
 import { cohortsService } from "./instance";
 import { getCohortFormData } from "./utils";
-import { Cohort, CohortFormData } from "./types";
+import { CohortFormData } from "./types";
 
 export async function addCohortAction(
   _: unknown,
