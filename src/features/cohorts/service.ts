@@ -1,6 +1,6 @@
 import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
-import { CohortStatus, Cohort } from "./types";
+import { CohortStatus, Cohort, CohortFormData } from "./types";
 
 export function createCohortsService(db: Db) {
   const repo = createCohortsRepository(db);
@@ -10,7 +10,7 @@ export function createCohortsService(db: Db) {
       return await repo.getAllCohorts();
     },
 
-    async createCohort(data: Cohort) {
+    async createCohort(data: CohortFormData) {
       return await repo.createCohort(data);
     },
 

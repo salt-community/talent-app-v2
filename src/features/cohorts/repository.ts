@@ -1,11 +1,11 @@
 import { Db } from "@/db";
 import { eq } from "drizzle-orm";
-import { CohortStatus, Cohort } from "./types";
+import { CohortStatus, Cohort, CohortFormData } from "./types";
 import { cohorts } from "./schema";
 
 export function createCohortsRepository(db: Db) {
   return {
-    async createCohort(data: Cohort) {
+    async createCohort(data: CohortFormData) {
       const [insertedCohort] = await db
         .insert(cohorts)
         .values(data)
