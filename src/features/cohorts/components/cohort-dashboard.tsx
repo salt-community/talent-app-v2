@@ -13,7 +13,9 @@ export function CohortDashboard() {
       <TabsContent value="cohorts">
         <CohortList />
       </TabsContent>
-      <TabsContent value="add">{/* <AddCohortForm />/ */}</TabsContent>
+      <TabsContent value="add">
+        <AddCohortForm />
+      </TabsContent>
     </Tabs>
   );
 }
