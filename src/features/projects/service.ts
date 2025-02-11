@@ -66,8 +66,6 @@ export function createService(
         imageAlt
       };
 
-      console.log(newProject);
-
       await reps.add(newProject);
     },
     updateDescription: async (updatedProject: UpdatedProject) => {

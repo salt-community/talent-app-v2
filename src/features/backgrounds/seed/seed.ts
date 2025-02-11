@@ -3,15 +3,14 @@ import { skills } from "./data";
 import { insecureBackgroundsService } from "../instance";
 
 export async function backgroundsSeed(devIds: string[]) {
-  const avatars = await getAvatars(devIds.length);
-
-  const backgrounds = devIds.map((devId, index) => {
+ 
+  const backgrounds = devIds.map((devId) => {
     return {
       devId: devId,
       name: faker.person.fullName(),
       title: faker.person.jobType(),
       bio: faker.person.bio(),
-      avatarUrl: avatars[index],
+      avatarUrl: faker.image.avatar(),
       languages: faker.helpers.arrayElements(
         [
           "English",
@@ -61,14 +60,17 @@ export async function backgroundsSeed(devIds: string[]) {
       ),
       skills: faker.helpers.arrayElements(skills, { min: 3, max: 10 }),
       links: faker.helpers
-        .arrayElements([
-          { url: "https://github.com/alimohseni99", name: "Github" },
-          {
-            url: "https://www.linkedin.com/in/ali-mohseni-se",
-            name: "LinkedIn",
-          },
-          { url: "https://www.alimohseni.se/", name: "Resume" },
-        ])
+        .arrayElements(
+          [
+            { url: "https://github.com/alimohseni99", name: "Github" },
+            {
+              url: "https://www.linkedin.com/in/ali-mohseni-se",
+              name: "LinkedIn",
+            },
+            { url: "https://www.alimohseni.se/", name: "Resume" },
+          ],
+          { min: 1, max: 3 }
+        )
         .sort((a, b) => a.name.localeCompare(b.name)),
     };
   });
@@ -78,12 +80,4 @@ export async function backgroundsSeed(devIds: string[]) {
     })
   );
   console.log("Done seeding Backgrounds...");
-}
-
-async function getAvatars(count: number) {
-  const result = await fetch(`https://randomuser.me/api/?results=${count}`);
-  const data = await result.json();
-  return data.results.map(
-    (user: { picture: { large: unknown } }) => user.picture.large
-  );
 }
