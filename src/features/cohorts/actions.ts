@@ -6,18 +6,7 @@ import { ZodError } from "zod";
 import { errorHandler } from "@/lib";
 import { cohortsService } from "./instance";
 import { getCohortFormData } from "./utils";
-import { Cohort } from "./types";
-
-// type PreviousState =
-//   | {
-//       errorMessages: {
-//         titleError?: string;
-//         scoreError?: string;
-//       };
-//       newCohort?: Cohort;
-//       newCohortScore?: Cohort;
-//     }
-//   | undefined;
+import { Cohort, CohortFormData } from "./types";
 
 export async function addCohortAction(
   _: unknown,
@@ -28,14 +17,13 @@ export async function addCohortAction(
       errorMessages?: {
         titleError?: string;
       };
-      newCohort?: Cohort;
+      newCohort?: CohortFormData;
     }
   | undefined
 > {
   const { name, description, status } = getCohortFormData(formData);
 
-  const newCohort: Cohort = {
-    createdAt: null,
+  const newCohort: CohortFormData = {
     name,
     description: description || "",
     status: status as "planned",
