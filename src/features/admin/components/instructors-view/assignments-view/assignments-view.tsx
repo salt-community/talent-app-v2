@@ -38,7 +38,7 @@ export async function ListAssignments() {
         </Accordion>
       </TabsContent>
       <TabsContent value="add">
-        <AddAssignmentForm />/
+        <AddAssignmentForm />
       </TabsContent>
     </Tabs>
   );
