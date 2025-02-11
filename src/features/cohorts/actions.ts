@@ -35,7 +35,6 @@ export async function addCohortAction(
   const { name, description, status } = getCohortFormData(formData);
 
   const newCohort: Cohort = {
-    id: "",
     createdAt: null,
     name,
     description: description || "",
@@ -59,7 +58,7 @@ export async function addCohortAction(
   revalidatePath("/cohorts");
 }
 
-export async function fetchCohortsAction(): Promise<Cohort[]> {
+export async function fetchCohortsAction() {
   try {
     return await cohortsService.getAll();
   } catch (error) {

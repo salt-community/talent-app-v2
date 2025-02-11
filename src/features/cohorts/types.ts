@@ -12,7 +12,7 @@ export const CohortStatus = ["planned", "ongoing", "finished"] as const;
 export type CohortStatus = (typeof CohortStatus)[number];
 
 export type Cohort = {
-  id: string;
+  id?: string;
   name: string;
   status: CohortStatus;
   description: string;
