@@ -8,7 +8,6 @@ import {
 } from "@/components";
 
 import { EditAssignmentForm } from "@/features/assignments/components/edit-assignment";
-import { ProgressRing } from "@/features/assignments/components/progress-ring";
 import type { Assignment } from "@/features/assignments/types";
 
 type Props = {
@@ -25,7 +24,6 @@ export function Assignment({ assignment }: Props) {
           </div>
 
           <AccordionTrigger>
-            <ProgressRing percentage={assignment.score ?? 0} />
             <span className="px-4 text-paragraph">{assignment.title}</span>
           </AccordionTrigger>
         </div>
