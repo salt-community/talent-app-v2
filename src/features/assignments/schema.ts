@@ -1,4 +1,3 @@
-import { sql } from "drizzle-orm";
 import {
   integer,
   pgTable,
@@ -12,8 +11,6 @@ export const assignmentsTable = pgTable("assignments", {
   cohortId: uuid("cohort_id").notNull(),
   title: varchar("title").notNull(),
   comment: varchar("comment").default(""),
-  // TODO: Remove and only use categories.
-  tags: varchar("tags").array().default([]),
   categories: varchar("categories").array().default([]),
   createdAt: timestamp("created_at").defaultNow(),
 });
