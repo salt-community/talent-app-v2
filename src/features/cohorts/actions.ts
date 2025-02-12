@@ -54,3 +54,6 @@ export async function fetchCohortsAction() {
     return [];
   }
 }
+export async function getCohortStudents(cohortId: string) {
+  return await cohortsService.getCohortStudents(cohortId);
+}
