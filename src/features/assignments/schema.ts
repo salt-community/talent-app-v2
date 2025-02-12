@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import {
   integer,
   pgTable,
@@ -7,7 +8,9 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const assignmentsTable = pgTable("assignments", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   title: varchar("title").notNull(),
   score: integer("score").notNull().default(0),
   tags: varchar("tags").array().notNull().default([]),
