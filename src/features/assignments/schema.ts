@@ -8,23 +8,21 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const assignmentsTable = pgTable("assignments", {
-  id: varchar("id")
-    .primaryKey()
-    .default(sql`gen_random_uuid()`),
-  title: varchar("title").notNull(),
-  score: integer("score").notNull().default(0),
-  tags: varchar("tags").array().notNull().default([]),
+  id: uuid("id").primaryKey().defaultRandom(),
   cohortId: uuid("cohort_id").notNull(),
-  comment: varchar("comment").default("no comment provided"),
-  categories: varchar("categories").array().default(["general"]),
+  title: varchar("title").notNull(),
+  comment: varchar("comment").default(""),
+  // TODO: Remove and only use categories.
+  tags: varchar("tags").array().default([]),
+  categories: varchar("categories").array().default([]),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const assignmentScores = pgTable("assignment_scores", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: uuid("id").primaryKey().defaultRandom(),
   assignmentId: uuid("assignment_id"),
   identityId: uuid("identity_id"),
-  score: varchar("score").notNull().default("0"),
-  comment: varchar("comment").default("no comment provided"),
+  score: integer("score").default(0),
+  comment: varchar("comment").default(""),
   createdAt: timestamp("created_at").defaultNow(),
 });
