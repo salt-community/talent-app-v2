@@ -2,11 +2,10 @@ import { faker } from "@faker-js/faker";
 import { skills } from "./data";
 import { insecureBackgroundsService } from "../instance";
 
-export async function backgroundsSeed(devIds: string[]) {
- 
-  const backgrounds = devIds.map((devId) => {
+export async function backgroundsSeed(developerProfileIds: string[]) {
+  const backgrounds = developerProfileIds.map((developerProfileId) => {
     return {
-      devId: devId,
+      developerProfileId: developerProfileId,
       name: faker.person.fullName(),
       title: faker.person.jobType(),
       bio: faker.person.bio(),

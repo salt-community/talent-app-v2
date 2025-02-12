@@ -1,17 +1,8 @@
 import { H2 } from "@/components";
 import { BackgroundAvatar } from "./avatar";
 import { SocialLink } from "../db";
+import { typeBackground } from "../types";
 type Props = { background: typeBackground };
-
-type typeBackground = {
-  id: number;
-  devId: string;
-  name: string;
-  avatarUrl: string;
-  title: string;
-  bio: string;
-  links: SocialLink[];
-};
 
 export function BackgroundBasicInfo({ background }: Props) {
   return (

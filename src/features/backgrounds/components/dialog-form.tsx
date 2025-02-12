@@ -67,8 +67,8 @@ export function DialogForm({
               />
               <input
                 type="text"
-                name={"devId"}
-                defaultValue={background.devId}
+                name={"developerProfileId"}
+                defaultValue={background.developerProfileId}
                 hidden
               />
               <Label htmlFor="avatarUrl">Profile picture</Label>

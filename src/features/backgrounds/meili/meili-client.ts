@@ -3,7 +3,7 @@ import { BackgroundUpdate } from "../types";
 import { createMeiliSearch } from "./meili-search";
 
 const BACKGROUNDS_UID = "backgrounds";
-const PRIMARY_KEY = "devId";
+const PRIMARY_KEY = "developerProfileId";
 
 export function createMeiliClient() {
   let meiliSearch: MeiliSearch | null = null;
@@ -12,7 +12,7 @@ export function createMeiliClient() {
     if (!meiliSearch) {
       meiliSearch = createMeiliSearch();
       meiliSearch.index(BACKGROUNDS_UID).updateSettings({
-        displayedAttributes: ["devId"],
+        displayedAttributes: ["developerProfileId"],
         searchableAttributes: [
           "skills",
           "educations",
@@ -27,10 +27,10 @@ export function createMeiliClient() {
   }
 
   return {
-    async searchDevIds(search: string | undefined) {
+    async searchDeveloperProfileIds(search: string | undefined) {
       const index = getMeiliSearch().index(BACKGROUNDS_UID);
       const response = await index.search(search);
-      return response.hits.map((hit) => hit.devId as string);
+      return response.hits.map((hit) => hit.developerProfileId as string);
     },
 
     async upsertBackground(background: BackgroundUpdate) {
@@ -41,9 +41,9 @@ export function createMeiliClient() {
       return response.status;
     },
 
-    async deleteBackground(devId: string) {
+    async deleteBackground(developerProfileId: string) {
       const index = getMeiliSearch().index(BACKGROUNDS_UID);
-      const response = await index.deleteDocument(devId);
+      const response = await index.deleteDocument(developerProfileId);
       return response.status;
     },
     async deleteAllBackgrounds() {

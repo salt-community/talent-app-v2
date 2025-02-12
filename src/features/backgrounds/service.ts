@@ -11,7 +11,7 @@ const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
-  getPublishedOrHighlightedDevIds: () => Promise<string[]>,
+  getPublishedOrHighlightedDeveloperProfileIds: () => Promise<string[]>,
   getHighlightedDeveloperProfileIds: () => Promise<string[]>,
   getDeveloperById: (id: string) => Promise<Developer>,
   checkUserAccess: (id: string) => Promise<boolean>,
@@ -25,7 +25,7 @@ export function createBackgroundsService(
     switch (outboxMessage.operation) {
       case "upsert":
         const background = await repository.getBackgroundByDeveloperProfileId(
-          outboxMessage.devId
+          outboxMessage.developerProfileId
         );
         if (!background) {
           succeeded = true;
@@ -51,7 +51,7 @@ export function createBackgroundsService(
 
         const upsertStatus = await meiliClient.upsertBackground({
           id: background[0].id,
-          devId: background[0].devId,
+          developerProfileId: background[0].developerProfileId,
           skills,
           languages,
           educations,
@@ -60,7 +60,7 @@ export function createBackgroundsService(
         break;
       case "delete":
         const deleteStatus = await meiliClient.deleteBackground(
-          outboxMessage.devId
+          outboxMessage.developerProfileId
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
         break;
@@ -143,12 +143,13 @@ export function createBackgroundsService(
       ] = await Promise.all([
         !cleanSearch || cleanSearch === ""
           ? await repository.getAllDeveloperProfileIds()
-          : await meiliClient.searchDevIds(search),
-        await getPublishedOrHighlightedDevIds(),
+          : await meiliClient.searchDeveloperProfileIds(search),
+        await getPublishedOrHighlightedDeveloperProfileIds(),
       ]);
 
       const filteredDeveloperProfileIds = searchedDeveloperProfileIds.filter(
-        (devId) => publishedOrHighlightedDeveloperProfileIds.includes(devId)
+        (developerProfileId) =>
+          publishedOrHighlightedDeveloperProfileIds.includes(developerProfileId)
       );
       return filteredDeveloperProfileIds;
     },
@@ -165,7 +166,7 @@ export function createBackgroundsService(
 
       await meiliClient.upsertBackground({
         id: backgrounds[0].backgrounds?.id,
-        devId: backgrounds[0].backgrounds?.devId,
+        developerProfileId: backgrounds[0].backgrounds?.developerProfileId,
         skills,
         languages,
         educations,
@@ -211,7 +212,7 @@ export function createBackgroundsService(
       const developer = await getDeveloperById(id);
       await backgroundsService.add({
         name: developer.name,
-        devId: developer.id,
+        developerProfileId: developer.id,
         title: "developer",
         bio: "",
         links: [],

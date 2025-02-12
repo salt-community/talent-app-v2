@@ -9,7 +9,7 @@ import {
 
 export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  devId: uuid("dev_id").notNull(),
+  developerProfileId: uuid("dev_id").notNull(),
   avatarUrl: varchar("avatar_url").notNull().default(""),
   name: varchar().notNull(),
   title: varchar().notNull(),
@@ -47,7 +47,7 @@ export const operation = pgEnum("operation", ["upsert", "delete"]);
 
 export const meiliSearchOutbox = pgTable("meili_search_outbox", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  devId: uuid("dev_id").notNull(),
+  developerProfileId: uuid("dev_id").notNull(),
   operation: operation().notNull(),
 });
 

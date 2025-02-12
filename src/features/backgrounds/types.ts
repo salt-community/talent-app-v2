@@ -15,7 +15,7 @@ export type Backgrounds = BackgroundSelect & {
 
 export type BackgroundInfo = {
   id: number;
-  devId: string;
+  developerProfileId: string;
   name: string;
   avatarUrl: string;
   title: string;
@@ -27,7 +27,7 @@ export type BackgroundInfo = {
 };
 
 export type BackgroundUpdate = Partial<BackgroundSelect> &
-  Required<Pick<BackgroundSelect, "id" | "devId">> & {
+  Required<Pick<BackgroundSelect, "id" | "developerProfileId">> & {
     skills: string[];
     languages: string[];
     educations: string[];
@@ -45,5 +45,15 @@ export type PreviousState =
       };
     }
   | undefined;
+
+export type typeBackground = {
+  id: number;
+  developerProfileId: string;
+  name: string;
+  avatarUrl: string;
+  title: string;
+  bio: string;
+  links: SocialLink[];
+};
 
 export type BackgroundsService = ReturnType<typeof createBackgroundsService>;
