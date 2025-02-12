@@ -11,7 +11,7 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
 
 export const seedAssignments = async (cohortId: string) => {
   const assignmentsService = createAssignmentsService(db);
-  const CreatedCohortService = createCohortsService(db);
+  const CreatedCohortService = createCohortsService(db); // need some kind of identity id, cant build otherwise
 
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",

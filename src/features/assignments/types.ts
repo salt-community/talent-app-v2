@@ -35,8 +35,9 @@ export type AssignmentFormData = {
 export type AssignmentScoreFormData = {
   assignmentId: string;
   identityId: string;
-  score: string;
+  score: number;
   comment: string | null;
+  createdAt: Date | null;
 };
 
 export type NewAssignmentScore = Omit<AssignmentScore, "id" | "createdAt">;

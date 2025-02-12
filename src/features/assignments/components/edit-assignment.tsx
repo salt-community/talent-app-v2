@@ -11,14 +11,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import type { Assignment } from "../types";
-import { useAssignments } from "../assignments-context";
 
 interface EditAssignmentFormProps {
   assignment: Assignment;
 }
 
 export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
-  const { updateAssignment } = useAssignments();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -29,8 +27,8 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
     setErrorMessage(null);
 
     try {
-      const formData = new FormData(event.currentTarget);
-      await updateAssignment(assignment.id, formData);
+      //const formData = new FormData(event.currentTarget);
+      //await updateAssignment(assignment.id, formData);
       setIsDialogOpen(false);
     } catch (error) {
       setErrorMessage("Failed to update assignment (score or other fields).");
@@ -76,7 +74,7 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
               type="number"
               min={0}
               max={100}
-              defaultValue={assignment.score?.toString() ?? "0"}
+              // defaultValue={assignment.score?.toString() ?? "0"}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             />
           </div>
@@ -88,7 +86,7 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
             <input
               name="tags"
               type="text"
-              defaultValue={assignment.tags.join(", ")}
+              //defaultValue={assignment.tags.join(", ")}
               className="mt-1 block w-full rounded-md"
             />
           </div>

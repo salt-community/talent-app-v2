@@ -3,7 +3,6 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
-import { Assignments } from "@/features/assignments/components/accordion";
 
 export function InstructorsDashboard() {
   const [tab, setTab] = useState("assignments");
@@ -24,9 +23,7 @@ export function InstructorsDashboard() {
 
         <Separator className="my-8" />
 
-        <TabsContent value="assignments">
-          <Assignments />
-        </TabsContent>
+        <TabsContent value="assignments"></TabsContent>
 
         <TabsContent value="scoring">
           {/* <ScoringView /> */}
