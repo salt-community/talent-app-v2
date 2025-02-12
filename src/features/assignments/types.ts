@@ -1,6 +1,7 @@
 import { createAssignmentsService } from "./service";
 
 export type CreateAssignment = AssignmentsService["createAssignment"];
+export type GetAllAssignments = AssignmentsService["getAllAssignments"];
 
 export type Assignment = {
   id: string;
@@ -17,7 +18,7 @@ export type AssignmentScore = {
   id: string;
   assignmentId: string;
   identityId: string;
-  score: string;
+  score: number;
   comment: string | null;
   createdAt: Date | null;
 };

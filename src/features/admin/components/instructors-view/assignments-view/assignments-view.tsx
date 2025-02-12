@@ -7,14 +7,19 @@ import {
 import { Tabs, TabsTrigger } from "@/components/ui/tabs";
 import { Tag } from "lucide-react";
 import { TabsContent, TabsList } from "@radix-ui/react-tabs";
-import { Assignment, getAllAssignments } from "@/features/assignments";
+import { Assignment } from "@/features/assignments";
 import { AddAssignmentForm } from "./add-assignment";
+import { adminService } from "../../../instance";
 
 export async function ListAssignments() {
-  const assignments = await getAllAssignments();
+  const assignments = await adminService.getAllAssignments();
+  const cohorts = adminService.getAllCohorts();
+  console.log({ cohorts: cohorts });
+
   if (!assignments) {
     return <p>No assignments found.</p>;
   }
+
   return (
     <Tabs defaultValue="assignments" className="m-6">
       <TabsList className="grid w-full grid-cols-2">

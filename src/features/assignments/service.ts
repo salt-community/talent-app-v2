@@ -1,6 +1,6 @@
 import { Db } from "@/db";
 import { createAssignmentsRepository } from "./repository";
-import { NewAssignment, NewAssignmentScore } from "./types";
+import { AssignmentScoreFormData, NewAssignment } from "./types";
 
 export function createAssignmentsService(db: Db) {
   const repo = createAssignmentsRepository(db);
@@ -22,7 +22,7 @@ export function createAssignmentsService(db: Db) {
       return await repo.getAssignmentsByCohortId(cohortId);
     },
 
-    async createAssignmentScore(data: NewAssignmentScore) {
+    async createAssignmentScore(data: AssignmentScoreFormData) {
       return await repo.createAssignmentScore(data);
     },
 

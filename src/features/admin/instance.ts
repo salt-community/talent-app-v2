@@ -4,6 +4,7 @@ import {
   developerProfilesService,
   iamService,
   assignmentsService,
+  cohortsService,
 } from "@/features";
 
 export const adminService = createAdminService(
@@ -11,6 +12,8 @@ export const adminService = createAdminService(
   developerProfilesService.delete,
   developerProfilesService.updateStatus,
   assignmentsService.createAssignment,
+  assignmentsService.getAllAssignments,
+  cohortsService.getAll,
   iamService.checkAccess,
   {
     isHealthOk: backgroundsService.isSearchHealthOk,
