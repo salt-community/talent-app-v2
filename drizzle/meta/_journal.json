@@ -15,6 +15,20 @@
       "when": 1734433279443,
       "tag": "0001_ancient_colossus",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1739366540230,
+      "tag": "0002_superb_betty_brant",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1739366975055,
+      "tag": "0003_clever_multiple_man",
+      "breakpoints": true
     }
   ]
 }
