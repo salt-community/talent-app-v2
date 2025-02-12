@@ -9,7 +9,7 @@ import {
 
 export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  developerProfileId: uuid("dev_id").notNull(),
+  developerProfileId: uuid("developer_profile_id").notNull(),
   avatarUrl: varchar("avatar_url").notNull().default(""),
   name: varchar().notNull(),
   title: varchar().notNull(),
