@@ -42,6 +42,15 @@ export function HamburgerMenu({ user }: Props) {
               Home
             </Link>
           </li>
+          <li
+            className={`border-b ${
+              isActive("/developers") ? "border-primary" : "border-white"
+            } hover:border-primary`}
+          >
+            <Link href="/developers" onClick={closeMenu}>
+              Developers
+            </Link>
+          </li>
           {user?.role === "developer" && (
             <li
               className={`border-b ${
@@ -55,33 +64,37 @@ export function HamburgerMenu({ user }: Props) {
           )}
           {user?.role === "admin" && (
             <li
-              className={`border-b ${
-                isActive(`/assignments/`)
-                  ? "border-primary"
-                  : "border-white"
-              } hover:border-primary`}
+            className={`border-b ${
+              isActive("/cohorts") ? "border-primary" : "border-white"
+            } hover:border-primary`}
+            >
+              <Link href="/cohorts" onClick={closeMenu}>
+                Cohorts
+              </Link>
+            </li>
+          )}
+          {user?.role === "admin" && (
+            <li
+            className={`border-b ${
+              isActive(`/assignments`) ? "border-primary" : "border-white"
+            } hover:border-primary`}
             >
               <Link href={`/assignments/`}>Assignments</Link>
             </li>
           )}
-          <li
+          {user?.role === "admin" && (
+            <li
             className={`border-b ${
-              isActive("/dashboard") ? "border-primary" : "border-white"
+              isActive("/admin/developers")
+              ? "border-primary"
+              : "border-white"
             } hover:border-primary`}
-          >
-            <Link href="/admin/developers" onClick={closeMenu}>
-              Admin
-            </Link>
-          </li>
-          <li
-            className={`border-b ${
-              isActive("/developers") ? "border-primary" : "border-white"
-            } hover:border-primary`}
-          >
-            <Link href="/developers" onClick={closeMenu}>
-              Developers
-            </Link>
-          </li>
+            >
+              <Link href="/admin/developers" onClick={closeMenu}>
+                Admin
+              </Link>
+            </li>
+          )}
         </ul>
       </SheetContent>
     </Sheet>
