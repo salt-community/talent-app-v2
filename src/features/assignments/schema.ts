@@ -5,7 +5,6 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm";
 
 export const assignmentsTable = pgTable("assignments", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -19,9 +18,7 @@ export const assignmentsTable = pgTable("assignments", {
 });
 
 export const assignmentScores = pgTable("assignment_scores", {
-  id: uuid("id")
-    .primaryKey()
-    .default(sql`gen_random_uuid()`),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
   assignmentId: uuid("assignment_id"),
   identityId: uuid("identity_id"),
   score: varchar("score").notNull().default("0"),
