@@ -10,7 +10,7 @@ import CohortStudents from "./cohort-students";
 export async function CohortList() {
   const cohorts = await fetchCohortsAction();
   return (
-    <Accordion type="single" collapsible>
+    <Accordion type="single" collapsible className="w-11/12 md:w-5/6 lg:w-4/6">
       {cohorts.map((cohort) => (
         <AccordionItem key={cohort.id} value={cohort.id}>
           <AccordionTrigger>{cohort.name}</AccordionTrigger>
