@@ -1,7 +1,6 @@
 import { Separator, H2 } from "@/components/ui";
 import { AverageScore } from "./average-score";
 import { SpiderGraph } from "./spider-graph";
-import { Assignments } from "./accordion";
 import { assignmentsService } from "../instance";
 
 type ScoreBoardProps = {
@@ -19,7 +18,6 @@ export async function ScoreBoard({ cohortId }: ScoreBoardProps) {
 
       <AverageScore assignments={assignments} />
       <SpiderGraph assignments={assignments} />
-      <Assignments />
     </section>
   );
 }
