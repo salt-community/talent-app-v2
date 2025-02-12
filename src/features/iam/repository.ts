@@ -1,7 +1,7 @@
 import { Db } from "@/db";
 import { IdentityInsert, identities } from "./schema";
 import { eq } from "drizzle-orm";
-import { identityRole, IdentityRole } from "./types";
+import { IdentityRole } from "./types";
 
 export function createRepository(db: Db) {
   return {
