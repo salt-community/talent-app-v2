@@ -7,4 +7,5 @@ export const cohorts: PermissionsSchema<"cohorts", CohortsService> = {
   getAll: "cohorts.getAll",
   deleteCohort: "cohorts.deleteCohort",
   updateCohortStatus: "cohorts.updateCohortStatus",
+  getCohortStudents: "cohorts.getCohortStudents",
 };
