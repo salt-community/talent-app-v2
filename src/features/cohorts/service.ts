@@ -1,7 +1,6 @@
 import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
 import { CohortStatus, CohortFormData } from "./types";
-import { identities } from "../iam/schema";
 
 type Identity = {
   cohortId: string | null;
