@@ -8,7 +8,6 @@ import {
 } from "@/components";
 
 import { EditAssignmentForm } from "@/features/assignments/components/edit-assignment";
-import { ProgressRing } from "@/features/assignments/components/progress-ring";
 import type { Assignment } from "@/features/assignments/types";
 
 type Props = {
@@ -25,7 +24,6 @@ export function Assignment({ assignment }: Props) {
           </div>
 
           <AccordionTrigger>
-            <ProgressRing percentage={assignment.score ?? 0} />
             <span className="px-4 text-paragraph">{assignment.title}</span>
           </AccordionTrigger>
         </div>
@@ -37,14 +35,14 @@ export function Assignment({ assignment }: Props) {
             </span>
 
             <span className="flex flex-wrap gap-2 items-center pb-2">
-              {(assignment.tags ?? []).map((tag, index) => (
+              {(assignment.categories ?? []).map((categories, index) => (
                 <span
                   key={index}
                   className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors 
                              focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 
                              border-transparent bg-gray-500 text-primary-foreground hover:bg-gray-600 cursor-default"
                 >
-                  {tag}
+                  {categories}
                 </span>
               ))}
             </span>

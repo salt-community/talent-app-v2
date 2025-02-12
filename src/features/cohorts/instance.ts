@@ -1,7 +1,10 @@
 import { db } from "@/db";
 import { createCohortsService } from "./service";
-import { secureService } from "@/features";
+import { iamService, secureService } from "@/features";
 
-const insecureCohortService = createCohortsService(db);
+const insecureCohortService = createCohortsService(
+  db,
+  iamService.getIdentityById
+);
 
 export const cohortsService = secureService("cohorts", insecureCohortService);

@@ -30,7 +30,9 @@ export async function ListAssignments() {
                 <p>Comment: {assignment.comment}</p>
                 <div className="flex mt-2">
                   <Tag />
-                  <p className="px-2">{assignment.tags.join(", ")}</p>
+                  <p className="px-2">
+                    {assignment.categories?.join(", ") || "No categories"}
+                  </p>
                 </div>
               </AccordionContent>
             </AccordionItem>

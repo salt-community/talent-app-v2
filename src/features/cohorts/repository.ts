@@ -1,7 +1,7 @@
 import { Db } from "@/db";
 import { eq } from "drizzle-orm";
 import { CohortStatus, CohortFormData } from "./types";
-import { cohorts } from "./schema";
+import { cohortIdentities, cohorts } from "./schema";
 
 export function createCohortsRepository(db: Db) {
   return {
@@ -24,7 +24,12 @@ export function createCohortsRepository(db: Db) {
     async getAllCohorts() {
       return await db.select().from(cohorts);
     },
-
+    async getCohortStudents(cohortId: string) {
+      return await db
+        .select()
+        .from(cohortIdentities)
+        .where(eq(cohortIdentities.cohortId, cohortId));
+    },
     async deleteCohort(cohortId: string) {
       return await db.delete(cohorts).where(eq(cohorts.id, cohortId));
     },

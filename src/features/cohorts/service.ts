@@ -2,28 +2,47 @@ import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
 import { CohortStatus, CohortFormData } from "./types";
 
-export function createCohortsService(db: Db) {
-  const repo = createCohortsRepository(db);
+type Identity = {
+  cohortId: string | null;
+  id: string;
+  name: string;
+  clerkId: string;
+  email: string;
+  role: "admin" | "core" | "developer";
+};
+
+export function createCohortsService(
+  db: Db,
+  getIdentityById: (id: string) => Promise<Identity>
+) {
+  const repository = createCohortsRepository(db);
 
   return {
     async getAll() {
-      return await repo.getAllCohorts();
+      return await repository.getAllCohorts();
     },
 
     async createCohort(data: CohortFormData) {
-      return await repo.createCohort(data);
+      return await repository.createCohort(data);
     },
 
     async getCohortById(cohortId: string) {
-      return await repo.getCohortById(cohortId);
+      return await repository.getCohortById(cohortId);
     },
 
     async deleteCohort(cohortId: string) {
-      return await repo.deleteCohort(cohortId);
+      return await repository.deleteCohort(cohortId);
     },
 
     async updateCohortStatus(args: { cohortId: string; status: CohortStatus }) {
-      return await repo.updateCohortStatus(args);
+      return await repository.updateCohortStatus(args);
+    },
+    async getCohortStudents(cohortId: string) {
+      const cohortStudents = await repository.getCohortStudents(cohortId);
+      const students = await Promise.all(
+        cohortStudents.map((student) => getIdentityById(student.identityId))
+      );
+      return students;
     },
   };
 }

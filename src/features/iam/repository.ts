@@ -9,7 +9,11 @@ export function createRepository(db: Db) {
       return await db.select().from(identities);
     },
     async getIdentityById(id: string) {
-      return await db.select().from(identities).where(eq(identities.id, id));
+      const identity = await db
+        .select()
+        .from(identities)
+        .where(eq(identities.id, id));
+      return identity[0];
     },
     async getUserId(id: string) {
       const userId = await db

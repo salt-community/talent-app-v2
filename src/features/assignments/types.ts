@@ -5,8 +5,6 @@ export type CreateAssignment = AssignmentsService["createAssignment"];
 export type Assignment = {
   id: string;
   title: string;
-  score: number; // add the 'score' property
-  tags: string[];
   cohortId: string | null;
   comment: string | null;
   categories: string[] | null;
