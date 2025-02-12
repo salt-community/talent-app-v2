@@ -24,16 +24,18 @@ export function createRepository(db: DB) {
     },
     async getAllDeveloperProfileIds() {
       const developerId = db
-        .select({ devId: backgrounds.devId })
+        .select({ developerProfileId: backgrounds.developerProfileId })
         .from(backgrounds);
 
-      return (await developerId).map((developerId) => developerId.devId);
+      return (await developerId).map(
+        (developerId) => developerId.developerProfileId
+      );
     },
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
       return db
         .select()
         .from(backgrounds)
-        .where(eq(backgrounds.devId, developerProfileId));
+        .where(eq(backgrounds.developerProfileId, developerProfileId));
     },
     async getSkillsByBackgroundId(backgroundId: number) {
       return db
@@ -79,7 +81,10 @@ export function createRepository(db: DB) {
           const outboxMessageId = (
             await tx
               .insert(meiliSearchOutbox)
-              .values({ devId: background.devId, operation: "upsert" })
+              .values({
+                developerProfileId: background.developerProfileId,
+                operation: "upsert",
+              })
               .returning({ id: meiliSearchOutbox.id })
           )[0].id;
 
@@ -115,7 +120,10 @@ export function createRepository(db: DB) {
         return (
           await tx
             .insert(meiliSearchOutbox)
-            .values({ devId: background.devId, operation: "upsert" })
+            .values({
+              developerProfileId: background.developerProfileId,
+              operation: "upsert",
+            })
             .returning({ id: meiliSearchOutbox.id })
         )[0].id;
       });

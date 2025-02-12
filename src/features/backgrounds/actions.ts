@@ -43,7 +43,7 @@ export async function updateBackgroundAction(
 
   if (validatedUpdate) {
     revalidatePath("/");
-    redirect(`/developers/${validatedUpdate.devId}`);
+    redirect(`/developers/${validatedUpdate.developerProfileId}`);
   }
 }
 export async function addBackground(id: string) {

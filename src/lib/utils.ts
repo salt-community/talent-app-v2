@@ -23,7 +23,7 @@ export function toCamelCase(str: string): string {
     .join("");
 }
 export function getFormData(formData: FormData): AssignmentFormData {
-  const devId = formData.get("devId") as string | null;
+  const developerProfileId = formData.get("devId") as string | null;
   const title = formData.get("title") as string | null;
   const score = formData.get("score") as string | null;
   const comment = formData.get("comment") as string | null;
@@ -32,7 +32,7 @@ export function getFormData(formData: FormData): AssignmentFormData {
   const description = formData.get("description") as string | null;
 
   return {
-    developerProfileId: devId ?? undefined,
+    developerProfileId: developerProfileId ?? undefined,
     title: title ?? "",
     tags: tagsString ? tagsString.split(",") : [],
     score: score ?? "",
@@ -41,4 +41,3 @@ export function getFormData(formData: FormData): AssignmentFormData {
     categories: description ? description.split(",") : [],
   };
 }
-  

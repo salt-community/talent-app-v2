@@ -12,12 +12,13 @@ type Props = {
 export async function CreateDeveloperProfileCard({
   identityId: identityId,
 }: Props) {
-  let devIds: {
+  let developerProfileIds: {
     id: string;
   }[] = [];
 
   try {
-    devIds = await backgroundsService.getAllDeveloperProfilesById(identityId);
+    developerProfileIds =
+      await backgroundsService.getAllDeveloperProfilesById(identityId);
   } catch (error) {
     errorHandler(error);
   }
@@ -30,8 +31,11 @@ export async function CreateDeveloperProfileCard({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-4">
-        {devIds.map((devId, index) => (
-          <DeveloperProfileCard key={index} devId={devId.id} />
+        {developerProfileIds.map((developerProfileId, index) => (
+          <DeveloperProfileCard
+            key={index}
+            developerProfileId={developerProfileId.id}
+          />
         ))}
       </div>
     </div>

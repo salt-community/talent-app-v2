@@ -6,13 +6,13 @@ import { X } from "lucide-react";
 import { deleteDeveloperProfileAction } from "../actions";
 
 interface Props {
-  devId: string;
+  developerProfileId: string;
 }
 
-export function DeleteProfileButton({ devId }: Props) {
+export function DeleteProfileButton({ developerProfileId }: Props) {
   const { toast } = useToast();
   const deleteProfile = async () => {
-    await deleteDeveloperProfileAction(devId);
+    await deleteDeveloperProfileAction(developerProfileId);
     toast({
       title: "Profile deleted",
       description: "Your profile has been deleted",
