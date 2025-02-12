@@ -1,13 +1,13 @@
 import { Db } from "@/db";
 import { eq } from "drizzle-orm";
 import { AssignmentScoreFormData, NewAssignment } from "./types";
-import { assignmentsTable, assignmentScores } from "./schema";
+import { assignments, assignmentScores } from "./schema";
 
 export function createAssignmentsRepository(db: Db) {
   return {
     async createAssignment(data: NewAssignment) {
       const [insertedAssignment] = await db
-        .insert(assignmentsTable)
+        .insert(assignments)
         .values({
           ...data,
           cohortId: data.cohortId ?? "",
@@ -17,22 +17,22 @@ export function createAssignmentsRepository(db: Db) {
     },
 
     async getAllAssignments() {
-      return await db.select().from(assignmentsTable);
+      return await db.select().from(assignments);
     },
 
     async getAssignmentById(id: string) {
       const [assignment] = await db
         .select()
-        .from(assignmentsTable)
-        .where(eq(assignmentsTable.id, id));
+        .from(assignments)
+        .where(eq(assignments.id, id));
       return assignment;
     },
 
     async getAssignmentsByCohortId(cohortId: string) {
       return await db
         .select()
-        .from(assignmentsTable)
-        .where(eq(assignmentsTable.cohortId, cohortId));
+        .from(assignments)
+        .where(eq(assignments.cohortId, cohortId));
     },
 
     async createAssignmentScore(data: AssignmentScoreFormData) {
@@ -58,23 +58,23 @@ export function createAssignmentsRepository(db: Db) {
     },
 
     async deleteAllAssignments() {
-      await db.delete(assignmentsTable);
+      await db.delete(assignments);
     },
 
     async deleteAssignment(assignmentId: string) {
       return await db
-        .delete(assignmentsTable)
-        .where(eq(assignmentsTable.id, assignmentId));
+        .delete(assignments)
+        .where(eq(assignments.id, assignmentId));
     },
 
     async updateAssignment(id: string, data: Partial<NewAssignment>) {
       const [updatedAssignment] = await db
-        .update(assignmentsTable)
+        .update(assignments)
         .set({
           ...data,
           cohortId: data.cohortId ?? "",
         })
-        .where(eq(assignmentsTable.id, id))
+        .where(eq(assignments.id, id))
         .returning();
       return updatedAssignment;
     },
@@ -82,8 +82,8 @@ export function createAssignmentsRepository(db: Db) {
     async getAssignmentsByCohort(cohortId: string) {
       return await db
         .select()
-        .from(assignmentsTable)
-        .where(eq(assignmentsTable.cohortId, cohortId));
+        .from(assignments)
+        .where(eq(assignments.cohortId, cohortId));
     },
   };
 }

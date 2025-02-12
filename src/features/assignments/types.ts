@@ -35,7 +35,7 @@ export type AssignmentFormData = {
 export type AssignmentScoreFormData = {
   assignmentId: string;
   identityId: string;
-  score: string;
+  score: number;
   comment: string | null;
 };
 
