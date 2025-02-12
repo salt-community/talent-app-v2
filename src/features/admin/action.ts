@@ -43,14 +43,12 @@ export async function resetMeilisearchSettingsAction() {
 
 export async function createAssignmentAction(formData: FormData) {
   const title = formData.get("title") as string;
-  const tags = (formData.get("tags") as string).split(",");
   const comment = formData.get("comment") as string;
   const cohortId = formData.get("cohortId") as string;
   const categories = (formData.get("categories") as string).split(",");
 
   const newAssignment = {
     title,
-    tags,
     score: 0,
     cohortId,
     comment,
