@@ -13,8 +13,7 @@ import { adminService } from "../../../instance";
 
 export async function ListAssignments() {
   const assignments = await adminService.getAllAssignments();
-  const cohorts = adminService.getAllCohorts();
-  console.log({ cohorts: cohorts });
+  const cohorts = await adminService.getAllCohorts();
 
   if (!assignments) {
     return <p>No assignments found.</p>;
@@ -45,7 +44,9 @@ export async function ListAssignments() {
         </Accordion>
       </TabsContent>
       <TabsContent value="add">
-        <AddAssignmentForm />
+        <div className="">
+          <AddAssignmentForm cohorts={cohorts} />
+        </div>
       </TabsContent>
     </Tabs>
   );

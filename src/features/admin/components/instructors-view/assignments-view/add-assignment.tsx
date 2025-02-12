@@ -1,75 +1,87 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { createAssignmentAction } from "@/features/admin/action";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+} from "@/components/ui/select";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
-export function AddAssignmentForm() {
+type Props = {
+  cohorts: { id: string; name: string }[];
+};
+
+export function AddAssignmentForm({ cohorts }: Props) {
+  const [selectedCohort, setSelectedCohort] = useState("");
+
   return (
-    <form action={createAssignmentAction} className="space-y-4">
+    <form action={createAssignmentAction} className="space-y-6">
       <div>
-        <label
-          htmlFor="title"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Title
-        </label>
-        <input
+        <Label htmlFor="title">Title</Label>
+        <Input
           id="title"
           name="title"
-          type="text"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Enter assignment title"
           required
-        />
-        {/* {state?.errorMessages?.titleError && (
-              <p className="mt-1 text-sm text-red-600">
-                {state.errorMessages.titleError}
-              </p>
-            )} */}
-      </div>
-      <div>
-        <label
-          htmlFor="categories"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Categories (comma-separated)
-        </label>
-        <input
-          id="categories"
-          name="categories"
-          type="text"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="cohortId"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Cohort ID
-        </label>
-        <input
-          id="cohortId"
-          name="cohortId"
-          type="text"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="comment"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Comment
-        </label>
-        <textarea
-          id="comment"
-          name="comment"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
 
-      <Button type="submit" className="w-full ">
-        {/* {isPending ? "Adding..." : "Add Assignment"} */}
-        Submit
+      <div>
+        <Label htmlFor="categories">Categories</Label>
+        <Input
+          id="categories"
+          name="categories"
+          placeholder="Enter categories (comma-separated)"
+        />
+        <p className="text-sm text-gray-500 mt-1">
+          Separate multiple categories with commas
+        </p>
+      </div>
+
+      <div>
+        <Label htmlFor="cohortId">Cohort</Label>
+        <Select value={selectedCohort} onValueChange={setSelectedCohort}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select a Cohort" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Cohorts</SelectLabel>
+              {cohorts.map((cohort) => (
+                <SelectItem
+                  key={cohort.id}
+                  value={cohort.id}
+                  className="cursor-pointer"
+                >
+                  {cohort.name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <input type="hidden" name="cohortId" value={selectedCohort} />
+      </div>
+
+      <div>
+        <Label htmlFor="comment">Comment</Label>
+        <Textarea
+          id="comment"
+          name="comment"
+          placeholder="Add any additional comments or instructions"
+          className="min-h-[100px]"
+        />
+      </div>
+
+      <Button type="submit" className="w-full">
+        Create Assignment
       </Button>
     </form>
   );
