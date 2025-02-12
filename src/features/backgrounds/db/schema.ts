@@ -47,7 +47,7 @@ export const operation = pgEnum("operation", ["upsert", "delete"]);
 
 export const meiliSearchOutbox = pgTable("meili_search_outbox", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  developerProfileId: uuid("dev_id").notNull(),
+  developerProfileId: uuid("developer_profile_id").notNull(),
   operation: operation().notNull(),
 });
 
