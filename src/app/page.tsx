@@ -3,7 +3,6 @@ import {
   HighlightedDevelopers,
   HighlightPage,
 } from "@/features";
-import { Hero } from "@/features/backgrounds/components/hero";
 
 export default async function Home() {
   
@@ -11,14 +10,13 @@ export default async function Home() {
     await developerProfilesService.getHighlightedDeveloperProfileIds();
 
   return process.env.FF_NEW_HIGHLIGHTS === "ON" ? (
-    <div className="bg-zinc-50">
-      <Hero />
-      <h2 className="text-center text-4xl font-extrabold pt-16 text-header">
+    <div>
+      <h2 className="text-center text-5xl font-extrabold pt-16 text-header">
         Our Developers in Focus
       </h2>
-      <h3 className="text-center text-lg pt-4 text-paragraphLight px-1">
+      <h3 className="text-center text-lg pt-6 text-paragraphLight px-6">
         Each developer has a unique story, skill set, and impact on the tech
-        world. Meet a standout talent and explore their journey
+        world. Meet a standout talent and explore their journey.
       </h3>
       <div className="md:px-4 pb-12">
         <HighlightedDevelopers
