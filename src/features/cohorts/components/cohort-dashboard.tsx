@@ -1,21 +1,16 @@
-import { Tabs, TabsTrigger } from "@/components/ui/tabs";
-import { TabsContent, TabsList } from "@radix-ui/react-tabs";
 import { CohortList } from "./cohort-list";
 import { AddCohortForm } from "./create-cohort-form";
 
 export function CohortDashboard() {
   return (
-    <Tabs defaultValue="cohorts" className="m-6">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="cohorts">Cohorts</TabsTrigger>
-        <TabsTrigger value="add">Add cohort</TabsTrigger>
-      </TabsList>
-      <TabsContent value="cohorts">
+    <>
+      <h1 className="text-center text-2xl py-6 font-bold">Cohorts</h1>
+      <div className="flex justify-center">
         <CohortList />
-      </TabsContent>
-      <TabsContent value="add">
+      </div>
+      <div className="flex justify-center">
         <AddCohortForm />
-      </TabsContent>
-    </Tabs>
+      </div>
+    </>
   );
 }
