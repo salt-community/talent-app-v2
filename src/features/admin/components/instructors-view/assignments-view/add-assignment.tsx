@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { createAssignmentAction } from "@/features/admin/action";
 import {
@@ -14,7 +15,14 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components";
 import { Plus } from "lucide-react";
 
 type Props = {
@@ -24,14 +32,32 @@ type Props = {
 export function AddAssignmentForm({ cohorts }: Props) {
   const [selectedCohort, setSelectedCohort] = useState("");
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    try {
+      await createAssignmentAction(formData);
+      setOpen(false);
+    } catch (error) {
+      console.error("Failed to create assignment:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          type="submit"
+          type="button"
           variant="outline"
           className="cursor-pointer flex gap-1 justify-center items-center mt-4 mb-4"
+          onClick={() => setOpen(true)}
         >
           <Plus className="text-primary font-semibold" size={18} />
           <p className="font-semibold">Add assignment</p>
@@ -41,10 +67,10 @@ export function AddAssignmentForm({ cohorts }: Props) {
         <DialogHeader>
           <DialogTitle>Add assignment</DialogTitle>
           <DialogDescription>
-            Add a new assignment here. Click submit when you´re done.
+            Add a new assignment here. Click submit when you are done.
           </DialogDescription>
         </DialogHeader>
-        <form action={createAssignmentAction} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <Label htmlFor="title">Title</Label>
             <Input
@@ -101,8 +127,8 @@ export function AddAssignmentForm({ cohorts }: Props) {
             />
           </div>
 
-          <Button type="submit" className="w-full">
-            Submit
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Submitting..." : "Submit"}
           </Button>
         </form>
       </DialogContent>
