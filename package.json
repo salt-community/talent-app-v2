@@ -8,14 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx src/seed/seed.ts",
-    "studio": "drizzle-kit studio",
+    "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
     "format": "prettier . --write",
     "repopulate-meili": "tsx src/seed/repopulate-meili.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "migrate": "drizzle-kit migrate",
-    "generate": "drizzle-kit generate"
+    "db:migrate": "drizzle-kit migrate",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.6.0",
