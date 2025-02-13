@@ -19,9 +19,25 @@ export type Cohort = {
   createdAt: Date | null;
 };
 
+export type CohortIdentity = {
+  cohortId: string;
+  identityId: string;
+};
 export type CohortFormData = {
   name: string;
   status: CohortStatus;
   description?: string;
   identityId?: string;
+};
+export type Identity = {
+  cohortId: string | null;
+  id: string;
+  name: string;
+  clerkId: string;
+  email: string;
+  role: "admin" | "core" | "developer";
+};
+export type UnassignedDevelopers = {
+  id: string;
+  name: string;
 };

@@ -1,19 +1,20 @@
 import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
-import { CohortStatus, CohortFormData } from "./types";
-
-type Identity = {
-  cohortId: string | null;
-  id: string;
-  name: string;
-  clerkId: string;
-  email: string;
-  role: "admin" | "core" | "developer";
-};
+import {
+  CohortStatus,
+  CohortFormData,
+  UnassignedDevelopers,
+  Identity,
+} from "./types";
 
 export function createCohortsService(
   db: Db,
-  getIdentityById: (id: string) => Promise<Identity>
+  getIdentityById: (id: string) => Promise<Identity>,
+  getAllUnassignedDevelopers: () => Promise<UnassignedDevelopers[]>,
+  updateCohort: (args: {
+    cohortId: string;
+    identityId: string;
+  }) => Promise<void>
 ) {
   const repository = createCohortsRepository(db);
 
@@ -43,6 +44,13 @@ export function createCohortsService(
         cohortStudents.map((student) => getIdentityById(student.identityId))
       );
       return students;
+    },
+    async getAllUnassignedDevelopers() {
+      return await getAllUnassignedDevelopers();
+    },
+    async addDeveloperToCohort(args: { cohortId: string; identityId: string }) {
+      await repository.addDeveloperToCohort(args);
+      await updateCohort(args);
     },
   };
 }

@@ -18,11 +18,16 @@ export function createService(db: Db) {
     async getIdentityById(id: string) {
       return await repository.getIdentityById(id);
     },
+    async getAllUnassignedDevelopers() {
+      return await repository.getAllUnassignedDevelopers();
+    },
 
     async updateRole(id: string, newRole: IdentityRole) {
       await repository.updateRole(id, newRole);
     },
-
+    async updateCohort(args: { cohortId: string; identityId: string }) {
+      await repository.updateCohort(args);
+    },
     async controlUser() {
       const SALT_DOMAIN = "appliedtechnology.se";
       const { userId, sessionClaims } = await auth();

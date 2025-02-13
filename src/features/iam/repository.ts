@@ -1,7 +1,8 @@
 import { Db } from "@/db";
 import { IdentityInsert, identities } from "./schema";
-import { eq } from "drizzle-orm";
+import { eq, isNull, and } from "drizzle-orm";
 import { IdentityRole } from "./types";
+import { CohortIdentity } from "../cohorts/";
 
 export function createRepository(db: Db) {
   return {
@@ -22,6 +23,14 @@ export function createRepository(db: Db) {
         .where(eq(identities.clerkId, id));
       return userId[0];
     },
+    async getAllUnassignedDevelopers() {
+      return await db
+        .select({ id: identities.id, name: identities.name })
+        .from(identities)
+        .where(
+          and(eq(identities.role, "developer"), isNull(identities.cohortId))
+        );
+    },
     async addIdentity(identity: IdentityInsert) {
       const userId = await db
         .insert(identities)
@@ -41,6 +50,12 @@ export function createRepository(db: Db) {
         .update(identities)
         .set({ role: newRole })
         .where(eq(identities.id, id));
+    },
+    async updateCohort(data: CohortIdentity) {
+      await db
+        .update(identities)
+        .set({ cohortId: data.cohortId })
+        .where(eq(identities.id, data.identityId));
     },
   };
 }
