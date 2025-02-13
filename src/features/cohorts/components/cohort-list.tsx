@@ -5,8 +5,8 @@ import {
   AccordionTrigger,
 } from "@/components";
 import { fetchCohortsAction } from "../actions";
-import CohortStudents from "./cohort-students";
 import CohortSelect from "./cohort-select";
+import CohortDevelopers from "./cohort-developers";
 
 export async function CohortList() {
   const cohorts = await fetchCohortsAction();
@@ -21,7 +21,7 @@ export async function CohortList() {
               <p>{cohort.status}</p>
             </div>
             <CohortSelect cohortId={cohort.id} />
-            <CohortStudents cohortId={cohort.id} />
+            <CohortDevelopers cohortId={cohort.id} />
           </AccordionContent>
         </AccordionItem>
       ))}
