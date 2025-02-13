@@ -2,6 +2,7 @@ import { seedProjectService } from "./instance";
 
 export async function seedProjects() {
   const developersProfiles = await seedProjectService.getAllDevelopers();
+
   const projects = [
     {
       repository: "https://github.com/DefyCab/contractor-companion",
@@ -22,7 +23,10 @@ export async function seedProjects() {
   ];
 
   try {
-    projects.map(async (project) => await seedProjectService.add(project));
+    for (const project of projects) {
+      await seedProjectService.add(project);
+    }
+
     console.log("Seeding of Projects complete!");
   } catch (error) {
     console.log("Error seeding Projects", error);
