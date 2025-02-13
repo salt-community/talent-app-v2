@@ -19,6 +19,10 @@ export type Cohort = {
   createdAt: Date | null;
 };
 
+export type CohortIdentity = {
+  cohortId: string;
+  identityId: string;
+};
 export type CohortFormData = {
   name: string;
   status: CohortStatus;

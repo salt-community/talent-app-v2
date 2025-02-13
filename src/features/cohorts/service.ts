@@ -10,7 +10,11 @@ import {
 export function createCohortsService(
   db: Db,
   getIdentityById: (id: string) => Promise<Identity>,
-  getAllUnassignedDevelopers: () => Promise<UnassignedDevelopers[]>
+  getAllUnassignedDevelopers: () => Promise<UnassignedDevelopers[]>,
+  updateCohort: (args: {
+    cohortId: string;
+    identityId: string;
+  }) => Promise<void>
 ) {
   const repository = createCohortsRepository(db);
 
@@ -43,6 +47,10 @@ export function createCohortsService(
     },
     async getAllUnassignedDevelopers() {
       return await getAllUnassignedDevelopers();
+    },
+    async addDeveloperToCohort(args: { cohortId: string; identityId: string }) {
+      await repository.addDeveloperToCohort(args);
+      await updateCohort(args);
     },
   };
 }

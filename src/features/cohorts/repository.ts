@@ -1,6 +1,6 @@
 import { Db } from "@/db";
 import { eq } from "drizzle-orm";
-import { CohortStatus, CohortFormData } from "./types";
+import { CohortStatus, CohortFormData, CohortIdentity } from "./types";
 import { cohortIdentities, cohorts } from "./schema";
 
 export function createCohortsRepository(db: Db) {
@@ -12,7 +12,9 @@ export function createCohortsRepository(db: Db) {
         .returning();
       return insertedCohort;
     },
-
+    async addDeveloperToCohort(data: CohortIdentity) {
+      await db.insert(cohortIdentities).values(data);
+    },
     async getCohortById(cohortId: string) {
       const [cohort] = await db
         .select()

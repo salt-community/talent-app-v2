@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { errorHandler } from "@/lib";
 import { cohortsService } from "./instance";
 import { CohortFormData } from "./types";
+import { da } from "@faker-js/faker";
 
 export async function addCohortAction(cohort: CohortFormData) {
   await cohortsService.createCohort(cohort);
@@ -24,4 +25,12 @@ export async function getCohortStudents(cohortId: string) {
 
 export async function getAllUnassignedDevelopers() {
   return await cohortsService.getAllUnassignedDevelopers();
+}
+
+export async function addDeveloperToCohort(
+  cohortId: string,
+  identityId: string
+) {
+  await cohortsService.addDeveloperToCohort({ cohortId, identityId });
+  revalidatePath("/cohorts");
 }
