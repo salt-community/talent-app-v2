@@ -4,9 +4,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import { Tabs, TabsTrigger } from "@/components/ui/tabs";
 import { Tag } from "lucide-react";
-import { TabsContent, TabsList } from "@radix-ui/react-tabs";
 import { Assignment } from "@/features/assignments";
 import { AddAssignmentForm } from "./add-assignment";
 import { adminService } from "../../../instance";
@@ -20,13 +18,14 @@ export async function ListAssignments() {
   }
 
   return (
-    <Tabs defaultValue="assignments" className="m-6">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="assignments">Assignments</TabsTrigger>
-        <TabsTrigger value="add">Add Assignment</TabsTrigger>
-      </TabsList>
-      <TabsContent value="assignments">
-        <Accordion type="single" collapsible>
+    <>
+      <h1 className="text-center text-2xl py-6 font-bold">Assignments</h1>
+      <div className="flex justify-center">
+        <Accordion
+          type="single"
+          className="w-11/12 md:w-5/6 lg:w-4/6"
+          collapsible
+        >
           {assignments.map((assignment: Assignment) => (
             <AccordionItem key={assignment.id} value={assignment.id}>
               <AccordionTrigger>{assignment.title}</AccordionTrigger>
@@ -42,12 +41,10 @@ export async function ListAssignments() {
             </AccordionItem>
           ))}
         </Accordion>
-      </TabsContent>
-      <TabsContent value="add">
-        <div className="">
-          <AddAssignmentForm cohorts={cohorts} />
-        </div>
-      </TabsContent>
-    </Tabs>
+      </div>
+      <div className="flex justify-center">
+        <AddAssignmentForm cohorts={cohorts} />
+      </div>
+    </>
   );
 }
