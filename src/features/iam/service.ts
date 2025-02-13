@@ -76,7 +76,7 @@ export function createService(db: Db) {
 
     async checkAccess(permission: Permission): Promise<void> {
       const { userId } = await auth();
-      const roles: Role[] = ["guest"];
+      const roles: string[] = ["guest"];
 
       if (userId) {
         const identityRole = await repository.getIdentityRole(userId);
