@@ -11,6 +11,8 @@ import {
 import { addDeveloperToCohort } from "../actions";
 import { UnassignedDevelopers } from "../types";
 import { useState } from "react";
+import { Button } from "@/components";
+import { Plus } from "lucide-react";
 
 type Props = {
   cohortId: string;
@@ -24,9 +26,10 @@ export default function CohortSelect({
 
   async function handleSubmit() {
     await addDeveloperToCohort(cohortId, selectedDeveloper);
+    setSelectedDeveloper("");
   }
   return (
-    <form action={handleSubmit}>
+    <form action={handleSubmit} className="mt-1">
       <Select value={selectedDeveloper} onValueChange={setSelectedDeveloper}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Select a student" />
@@ -43,7 +46,16 @@ export default function CohortSelect({
         </SelectContent>
       </Select>
       <input type="hidden" name="cohortId" value={selectedDeveloper} />
-      <button type="submit">Add</button>
+      {selectedDeveloper !== "" && (
+        <Button
+          type="submit"
+          variant="outline"
+          className="cursor-pointer flex gap-1 justify-center items-center mt-2 mb-4"
+        >
+          <Plus className="text-primary font-semibold" size={18} />
+          <p className="font-semibold">Add developer</p>
+        </Button>
+      )}
     </form>
   );
 }

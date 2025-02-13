@@ -17,7 +17,7 @@ export async function CohortList() {
         <AccordionItem key={cohort.id} value={cohort.id!}>
           <AccordionTrigger>{cohort.name}</AccordionTrigger>
           <AccordionContent>
-            <div className="flex justify-between">
+            <div className="flex justify-between border-b">
               <p>{cohort.description}</p>
               <p>{cohort.status}</p>
             </div>
