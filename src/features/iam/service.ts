@@ -62,7 +62,7 @@ export function createService(db: Db) {
     },
 
     async addIdentity(identity: IdentityInsert) {
-      await repository.addIdentity(identity);
+      return repository.addIdentity(identity);
     },
 
     async checkUserAccess(identityId: string) {
