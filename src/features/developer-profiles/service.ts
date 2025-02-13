@@ -1,7 +1,7 @@
 import { Db } from "@/db";
 import { createDevelopersRepository } from "./repository";
 import { DeveloperProfileInsert } from "./schema";
-import { DeveloperProfileStatus, SessionClaims } from "./types";
+import { SessionClaims } from "./types";
 import { auth } from "@clerk/nextjs/server";
 import { claim } from "./session";
 import { developerProfilesService } from "./instance";
@@ -27,7 +27,7 @@ export function createDeveloperProfilesService(db: Db) {
     async delete(id: string) {
       await repository.delete(id);
     },
-    async updateStatus(args: { id: string; status: DeveloperProfileStatus }) {
+    async updateStatus(args: { id: string; status: string }) {
       await repository.updateStatus(args.id, args.status);
     },
     async getPublishedOrHighlightedDeveloperProfileIds() {

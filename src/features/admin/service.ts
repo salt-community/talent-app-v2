@@ -1,6 +1,5 @@
 import {
   DeleteDeveloperProfile,
-  DeveloperProfileStatus,
   GetAllDeveloperProfiles,
   UpdateStatus,
   CheckAccess,
@@ -31,7 +30,7 @@ export function createAdminService(
       await checkAccess("admin.deleteDeveloperProfile");
       await deleteDeveloperProfile(id);
     },
-    async updateStatus(id: string, status: DeveloperProfileStatus) {
+    async updateStatus(id: string, status: string) {
       await checkAccess("admin.updateStatus");
       await updateStatus({ id, status });
     },

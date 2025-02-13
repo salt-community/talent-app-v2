@@ -2,7 +2,6 @@
 import * as z from "zod";
 import { revalidatePath } from "next/cache";
 import { adminService } from "./instance";
-import { DeveloperProfileStatus } from "@/features";
 import { assignmentSchema } from "./validation";
 
 export async function deleteDeveloperProfileAction(id: string) {
@@ -10,10 +9,7 @@ export async function deleteDeveloperProfileAction(id: string) {
   revalidatePath("/dashboard");
 }
 
-export async function updateStatusAction(
-  id: string,
-  status: DeveloperProfileStatus
-) {
+export async function updateStatusAction(id: string, status: string) {
   await adminService.updateStatus(id, status);
 }
 

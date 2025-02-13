@@ -5,7 +5,7 @@ type DeveloperProfileListProps = {
   id: string;
   name: string;
   email: string;
-  status: "unpublished" | "published" | "highlighted";
+  status: string;
 };
 
 export function DeveloperProfileList({
