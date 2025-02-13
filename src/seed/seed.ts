@@ -18,11 +18,17 @@ import {
   const developerProfileIds = (await developerProfilesService.getAll()).map(
     (developer) => developer.id
   );
+
+  const cohorts = await seedCohorts();
+
   for (const developerProfileId of developerProfileIds) {
-    await seedAssignments(developerProfileId);
+    // await seedAssignments(developerProfileId);
   }
   await backgroundsSeed(developerProfileIds);
   await seedProjects();
-  await seedCohorts();
+
   console.log("Done seeding!");
+
+  // TODO: Reactivate when all seeding calls have been fixed to properly await.
+  // await db.$client.end();
 })();
