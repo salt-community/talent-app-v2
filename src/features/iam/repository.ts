@@ -1,7 +1,6 @@
 import { Db } from "@/db";
 import { IdentityInsert, identities } from "./schema";
 import { eq } from "drizzle-orm";
-import { IdentityRole } from "./types";
 
 export function createRepository(db: Db) {
   return {
@@ -45,7 +44,7 @@ export function createRepository(db: Db) {
         .where(eq(identities.clerkId, id));
       return role[0];
     },
-    async updateRole(id: string, newRole: IdentityRole) {
+    async updateRole(id: string, newRole: string) {
       await db
         .update(identities)
         .set({ role: newRole })

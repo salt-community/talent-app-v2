@@ -11,20 +11,19 @@ import { useToast } from "@/hooks/use-toast";
 import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
 
-import type { IdentityRole } from "@/features";
 import { Status } from "./status";
 import { updateRoleAction } from "../action";
 
 type Props = {
   id: string;
-  role: IdentityRole;
+  role: string;
 };
 
 export function StatusMenuIdentity({ id, role }: Props) {
-  const [IdentityRole, setRole] = useState<IdentityRole>(role);
+  const [IdentityRole, setRole] = useState<string>(role);
   const { toast } = useToast();
 
-  async function onStatusChange(newRole: IdentityRole) {
+  async function onStatusChange(newRole: string) {
     await updateRoleAction(id, newRole);
     setRole(newRole);
     toast({
@@ -46,7 +45,7 @@ export function StatusMenuIdentity({ id, role }: Props) {
         <DropdownMenuContent className="w-56">
           <DropdownMenuRadioGroup
             value={IdentityRole}
-            onValueChange={(value) => onStatusChange(value as IdentityRole)}
+            onValueChange={(value) => onStatusChange(value as string)}
           >
             <DropdownMenuRadioItem value="admin">Admin</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="developer">

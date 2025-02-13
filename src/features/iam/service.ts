@@ -3,10 +3,10 @@ import { createRepository } from "./repository";
 import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
 import { auth } from "@clerk/nextjs/server";
-import { IdentityRole, SessionClaims } from "@/features";
+import { SessionClaims } from "@/features";
 import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
-import { Permission, Role } from "./permissions";
+import { Permission } from "./permissions";
 
 export function createService(db: Db) {
   const repository = createRepository(db);
@@ -22,7 +22,7 @@ export function createService(db: Db) {
       return await repository.getAllUnassignedDevelopers();
     },
 
-    async updateRole(id: string, newRole: IdentityRole) {
+    async updateRole(id: string, newRole: string) {
       await repository.updateRole(id, newRole);
     },
 
