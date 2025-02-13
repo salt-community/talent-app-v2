@@ -30,13 +30,12 @@ export function createService(
       projectWebsite,
       userId,
       imageUrl,
-      imageAlt
+      imageAlt,
     }: ProjectData) => {
       let performance: string;
 
       if (projectWebsite.length !== 0) {
         performance = await client.testPagePerformance(projectWebsite);
-        console.log(performance);
       } else {
         performance = "NA";
       }
@@ -63,7 +62,7 @@ export function createService(
         lastCommit,
         userId,
         imageUrl,
-        imageAlt
+        imageAlt,
       };
 
       await reps.add(newProject);
