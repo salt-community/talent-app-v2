@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { errorHandler } from "@/lib";
 import { cohortsService } from "./instance";
 import { CohortFormData } from "./types";
-import { da } from "@faker-js/faker";
 
 export async function addCohortAction(cohort: CohortFormData) {
   await cohortsService.createCohort(cohort);

@@ -1,6 +1,5 @@
 import { H2 } from "@/components";
 import { BackgroundAvatar } from "./avatar";
-import { SocialLink } from "../db";
 import { typeBackground } from "../types";
 type Props = { background: typeBackground };
 
