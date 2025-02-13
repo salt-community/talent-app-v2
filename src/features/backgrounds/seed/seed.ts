@@ -73,10 +73,10 @@ export async function backgroundsSeed(developerProfileIds: string[]) {
         .sort((a, b) => a.name.localeCompare(b.name)),
     };
   });
-  await Promise.all(
-    backgrounds.map(async (background) => {
-      await insecureBackgroundsService.add(background);
-    })
-  );
+
+  for (const background of backgrounds) {
+    await insecureBackgroundsService.add(background);
+  }
+
   console.log("Done seeding Backgrounds...");
 }
