@@ -8,7 +8,7 @@ export const developerProfiles = pgTable("developer_profiles", {
   identityId: varchar("identity_id").default("1"),
   name: varchar().notNull(),
   email: varchar().notNull(),
-  status: varchar("status").default("unpublished"),
+  status: varchar("status").notNull().default("unpublished"),
 });
 
 export type DeveloperProfileSelect = typeof developerProfiles.$inferSelect;
