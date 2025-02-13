@@ -30,7 +30,6 @@ export type CohortFormData = {
   identityId?: string;
 };
 export type Identity = {
-  cohortId: string | null;
   id: string;
   name: string;
   clerkId: string;

@@ -5,8 +5,7 @@ import { iamService, secureService } from "@/features";
 export const insecureCohortService = createCohortsService(
   db,
   iamService.getIdentityById,
-  iamService.getAllUnassignedDevelopers,
-  iamService.updateCohort
+  iamService.getAllUnassignedDevelopers
 );
 
 export const cohortsService = secureService("cohorts", insecureCohortService);
