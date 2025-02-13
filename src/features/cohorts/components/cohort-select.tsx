@@ -21,7 +21,7 @@ export default async function CohortSelect({ cohortId }: Props) {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Fruits</SelectLabel>
+          <SelectLabel>Developers</SelectLabel>
           {UnassignedDevelopers.map((developer, index) => (
             <SelectItem value={developer.id} key={index}>
               {developer.name}
