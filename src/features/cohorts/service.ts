@@ -1,19 +1,11 @@
 import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
-import { CohortStatus, CohortFormData } from "./types";
-
-type Identity = {
-  cohortId: string | null;
-  id: string;
-  name: string;
-  clerkId: string;
-  email: string;
-  role: "admin" | "core" | "developer";
-};
-type UnassignedDevelopers = {
-  id: string;
-  name: string;
-};
+import {
+  CohortStatus,
+  CohortFormData,
+  UnassignedDevelopers,
+  Identity,
+} from "./types";
 
 export function createCohortsService(
   db: Db,
