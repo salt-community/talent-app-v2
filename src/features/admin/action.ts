@@ -65,7 +65,6 @@ export async function createAssignmentAction(formData: FormData) {
     };
 
     await adminService.createAssignment(newAssignment);
-    console.log(newAssignment);
     revalidatePath("/admin/instructors/assignments");
   } catch (error) {
     if (error instanceof z.ZodError) {
