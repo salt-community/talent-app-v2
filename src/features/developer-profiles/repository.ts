@@ -1,7 +1,6 @@
 import { Db } from "@/db";
 import { eq, ne } from "drizzle-orm";
 import { DeveloperProfileInsert, developerProfiles } from "./schema";
-import { DeveloperProfileStatus } from "./types";
 
 export function createDevelopersRepository(db: Db) {
   return {
@@ -47,7 +46,7 @@ export function createDevelopersRepository(db: Db) {
           .where(ne(developerProfiles.status, "unpublished"))
       ).map((row) => row.devId);
     },
-    async updateStatus(id: string, status: DeveloperProfileStatus) {
+    async updateStatus(id: string, status: string) {
       await db
         .update(developerProfiles)
         .set({ status: status })
