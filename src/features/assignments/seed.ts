@@ -1,4 +1,3 @@
-import { CohortSelect } from "../cohorts";
 import { categoryTags } from "./categories";
 import { insecureAssignmentService } from "./instance";
 
@@ -7,7 +6,7 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   return shuffled.slice(0, Math.floor(Math.random() * maxTags) + 1);
 };
 
-export const seedAssignments = async (cohorts: CohortSelect[]) => {
+export const seedAssignments = async (cohortIds: string[]) => {
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",
     "Create a RESTful API with Node.js",
@@ -39,31 +38,14 @@ export const seedAssignments = async (cohorts: CohortSelect[]) => {
   await insecureAssignmentService.deleteAllAssignments();
 
   for (let i = 0; i < 5; i++) {
-    const newAssignment = {
-      cohortId: cohorts[0].id,
-      title:
-        assignmentTitles[Math.floor(Math.random() * assignmentTitles.length)],
-      comment: `This is a comment for assignment ${i + 1}`,
-      tags: getRandomTags(categoryTags, categoryTags.length),
-      categories: getRandomTags(categoryTags, 3),
-      score: Math.floor(Math.random() * 101),
-    };
-
     try {
-      const createdAssignment =
-        await insecureAssignmentService.createAssignment(newAssignment);
-
-      const scorePromises = cohorts.map(async (cohort) => {
-        return insecureAssignmentService.createAssignmentScore({
-          assignmentId: createdAssignment.id.toString(),
-          identityId: cohort.id.toString(),
-          score: Math.floor(Math.random() * 101),
-          comment: `Comment for cohort ${cohort.name}`,
-          createdAt: new Date(),
-        });
+      await insecureAssignmentService.createAssignment({
+        cohortId: cohortIds[0],
+        title:
+          assignmentTitles[Math.floor(Math.random() * assignmentTitles.length)],
+        comment: `This is a comment for assignment ${i + 1}`,
+        categories: getRandomTags(categoryTags, 3),
       });
-
-      await Promise.all(scorePromises);
     } catch (error) {
       console.error("Error while seeding assignments and scores:", error);
     }
