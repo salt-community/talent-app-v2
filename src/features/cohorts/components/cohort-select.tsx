@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAllUnassignedDevelopers } from "../actions";
+import { addDeveloperToCohort } from "../actions";
 import { UnassignedDevelopers } from "../types";
 import { useState } from "react";
 
