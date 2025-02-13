@@ -1,11 +1,17 @@
 import { UnauthorizedError } from "@/lib";
 import { rolesPermissions } from "./roles";
-import { Permission, Role } from "./permissions";
 
-export function checkAccess(roles: string[], permission: Permission) {
+export function checkAccess(roles: string[], permission: string) {
   for (const role of roles) {
-    const hasPermission =
-      rolesPermissions[role as keyof typeof rolesPermissions].has(permission);
+    // note: role as keyof typeof rolesPermissions is unsafe code
+    const rolePermission = rolesPermissions[
+      role as keyof typeof rolesPermissions
+    ] as Set<string>;
+    if (!rolePermission) {
+      throw new UnauthorizedError(`Invalid role: "${role}"`);
+    }
+
+    const hasPermission = rolePermission.has(permission);
 
     if (hasPermission) {
       return;
