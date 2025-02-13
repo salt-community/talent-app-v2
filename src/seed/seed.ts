@@ -10,12 +10,12 @@ import {
 
 (async () => {
   console.log("Starting to seed...");
-  const identityIds = await seedIdentities();
+  const identities = await seedIdentities();
 
-  const cohorts = await seedCohorts(identityIds);
+  const cohorts = await seedCohorts(identities);
   await seedAssignments(cohorts);
 
-  const developerProfileIds = await seedDeveloperProfiles();
+  const developerProfileIds = await seedDeveloperProfiles(identities);
   await backgroundsSeed(developerProfileIds);
 
   await seedProjects();

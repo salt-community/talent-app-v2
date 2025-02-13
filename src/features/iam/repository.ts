@@ -29,10 +29,13 @@ export function createRepository(db: Db) {
         .where(eq(identities.role, "developer"));
     },
     async addIdentity(identity: IdentityInsert) {
-      const userId = await db
-        .insert(identities)
-        .values(identity)
-        .returning({ id: identities.id, role: identities.role });
+      const userId = await db.insert(identities).values(identity).returning({
+        id: identities.id,
+        role: identities.role,
+        name: identities.name,
+        email: identities.email,
+        clerkId: identities.clerkId,
+      });
       return userId[0];
     },
     async getIdentityRole(id: string) {

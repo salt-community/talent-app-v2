@@ -1,16 +1,16 @@
 import { iamService } from "./instance";
 import { faker } from "@faker-js/faker";
-import { IdentityInsert } from "./schema";
+import { IdentityInsert, IdentitySelect } from "./schema";
 
 export async function seedIdentities() {
   console.log("Starting to seed identities...");
 
-  const identities: IdentityInsert[] = [];
+  const identitiesToInsert: IdentityInsert[] = [];
 
-  for (let i = 1; i < 30; i++) {
+  for (let i = 1; i <= 30; i++) {
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();
-    identities.push({
+    identitiesToInsert.push({
       clerkId: "##clerk_id##",
       name: `${firstName} ${lastName}`,
       email: faker.internet.email({
@@ -21,13 +21,13 @@ export async function seedIdentities() {
     });
   }
 
-  const identityIds: string[] = [];
+  const createdIdentities: IdentitySelect[] = [];
 
-  for (const identity of identities) {
-    identityIds.push((await iamService.addIdentity(identity)).id);
+  for (const identity of identitiesToInsert) {
+    createdIdentities.push(await iamService.addIdentity(identity));
   }
 
   console.log("Done seeding identities!");
 
-  return identityIds;
+  return createdIdentities;
 }

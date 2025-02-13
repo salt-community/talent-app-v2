@@ -1,7 +1,8 @@
+import { IdentitySelect } from "../iam";
 import { insecureCohortService } from "./instance";
 import { CohortFormData } from "./types";
 
-export async function seedCohorts(identityIds: string[]) {
+export async function seedCohorts(identities: IdentitySelect[]) {
   console.log("Seeding cohorts...");
 
   const cohorts: CohortFormData[] = [
@@ -34,13 +35,13 @@ export async function seedCohorts(identityIds: string[]) {
   for (let i = 0; i < cohortIds.length; i++) {
     const cohortId = cohortIds[i];
 
-    for (let j = 0; j < identityIds.length; j++) {
-      const identityId = identityIds[j];
+    for (let j = 0; j < identities.length; j++) {
+      const identity = identities[j];
 
       if (j % modulusLimit === i) {
         await insecureCohortService.addDeveloperToCohort({
           cohortId,
-          identityId,
+          identityId: identity.id,
         });
       }
     }

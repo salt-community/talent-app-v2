@@ -1,15 +1,16 @@
-import { faker } from "@faker-js/faker";
 import { DeveloperProfileInsert } from "./schema";
 import { insecureDeveloperProfilesService } from "./instance";
+import { IdentitySelect } from "../iam";
 
-export async function seedDeveloperProfiles() {
+export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
   console.log("Seeding developer profiles...");
 
   const developers: DeveloperProfileInsert[] = [];
-  for (let i = 0; i < 10; i++) {
+  for (const identity of identities) {
     developers.push({
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
+      identityId: identity.id,
+      name: identity.name,
+      email: identity.email,
     });
   }
 
