@@ -1,5 +1,4 @@
 "use client";
-import { useActionState } from "react";
 import { addCohortAction } from "@/features/cohorts/actions";
 import {
   Button,
@@ -9,15 +8,65 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  Form,
+  FormItem,
+  FormLabel,
+  Input,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  DialogFooter,
+  FormField,
 } from "@/components";
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { addCohortFormSchema } from "../validation";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 export function AddCohortForm() {
-  const [state, formAction, isPending] = useActionState(
-    addCohortAction,
-    undefined
-  );
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  const form = useForm<z.infer<typeof addCohortFormSchema>>({
+    resolver: zodResolver(addCohortFormSchema),
+  });
+
+  const onSubmit = async (values: z.infer<typeof addCohortFormSchema>) => {
+    try {
+      setLoading(true);
+      await addCohortAction({
+        name: values.name,
+        description: values.description ? values.description : "",
+        status: values.status,
+      });
+      toast({
+        title: "Cohort added",
+        description: "Cohort added successfully",
+      });
+      form.reset();
+      setOpen(false);
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: error instanceof Error ? error.message : String(error),
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -28,7 +77,7 @@ export function AddCohortForm() {
           className="cursor-pointer flex gap-1 justify-center items-center mt-4 mb-4"
         >
           <Plus className="text-primary font-semibold" size={18} />
-          <p className="font-semibold">Add new cohort</p>
+          <p className="font-semibold">Add cohort</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -38,62 +87,88 @@ export function AddCohortForm() {
             Add a new cohort here. Click submit when you´re done.
           </DialogDescription>
         </DialogHeader>
-        <form action={formAction} className="space-y-2">
-          <div>
-            <label htmlFor="name" className="text-sm">
-              Cohort Name
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              className="border px-2 py-1 w-full"
-              placeholder="FS-2025"
-              required
-            />
-            {state?.errorMessages?.titleError && (
-              <p className="text-red-600 text-sm">
-                {state.errorMessages.titleError}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="description" className="text-sm">
-              Description
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              className="border px-2 py-1 w-full"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="status" className="text-sm">
-              Status
-            </label>
-            <select
-              id="status"
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-3"
+          >
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input
+                  id="name"
+                  type="text"
+                  className="border px-2 py-1 w-full"
+                  placeholder="FS-2025"
+                  required
+                  {...form.register("name")}
+                />
+              </FormControl>
+              <FormDescription>This is the name of the cohort.</FormDescription>
+              <FormMessage>{form.formState.errors.name?.message}</FormMessage>
+            </FormItem>
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input
+                  id="description"
+                  type="text"
+                  placeholder="Fullstack Java class for 2025"
+                  {...form.register("description")}
+                />
+              </FormControl>
+              <FormDescription>
+                This is the description of the cohort.
+              </FormDescription>
+              <FormMessage>
+                {form.formState.errors.description?.message}
+              </FormMessage>
+            </FormItem>
+            <FormField
+              control={form.control}
               name="status"
-              className="border px-2 py-1 w-full"
-              required
-            >
-              <option value="planned">Planned</option>
-              <option value="ongoing">Ongoing</option>
-              <option value="finished">Finished</option>
-            </select>
-          </div>
-          <div className="flex justify-center">
-            <Button type="submit" disabled={isPending} className="w-full my-2">
-              {isPending ? "Creating..." : "Create Cohort"}
-            </Button>
-          </div>
-
-          {state?.successMessage && (
-            <p className="text-green-600 text-sm">{state.successMessage}</p>
-          )}
-        </form>
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Status</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Select a status" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Statuses</SelectLabel>
+                        <SelectItem value="planned">Planned</SelectItem>
+                        <SelectItem value="ongoing">Ongoing</SelectItem>
+                        <SelectItem value="finished">Finished</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>
+                    This is the status of the cohort.
+                  </FormDescription>
+                  <FormMessage>
+                    {form.formState.errors.status?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              <Button
+                type="submit"
+                disabled={loading}
+                className="bg-zinc-900 text-white text-sm rounded-md w-full h-10 hover:bg-zinc-800 mt-2"
+              >
+                {loading ? <Loader2 className="animate-spin" /> : undefined}
+                {loading ? "Submitting, please wait..." : "Submit"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
