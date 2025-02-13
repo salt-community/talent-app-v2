@@ -1,4 +1,4 @@
-import { cohortsService } from "./instance";
+import { insecureCohortService } from "./instance";
 import { CohortFormData } from "./types";
 
 export async function seedCohorts() {
@@ -23,8 +23,10 @@ export async function seedCohorts() {
   ];
 
   for (const cohort of cohorts) {
-    await cohortsService.createCohort(cohort);
+    await insecureCohortService.createCohort(cohort);
   }
 
   console.log("Seeding cohorts complete!");
+
+  return await insecureCohortService.getAll();
 }
