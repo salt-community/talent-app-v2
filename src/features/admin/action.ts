@@ -1,8 +1,9 @@
 "use server";
-
+import * as z from "zod";
 import { revalidatePath } from "next/cache";
 import { adminService } from "./instance";
 import { DeveloperProfileStatus } from "@/features";
+import { assignmentSchema } from "./validation";
 
 export async function deleteDeveloperProfileAction(id: string) {
   await adminService.deleteDeveloperProfile(id);
@@ -47,15 +48,34 @@ export async function createAssignmentAction(formData: FormData) {
   const cohortId = formData.get("cohortId") as string;
   const categories = (formData.get("categories") as string).split(",");
 
-  const newAssignment = {
-    title,
-    score: 0,
-    cohortId,
-    comment,
-    categories,
-  };
+  try {
+    assignmentSchema.parse({
+      title,
+      comment,
+      cohortId,
+      categories,
+    });
 
-  await adminService.createAssignment(newAssignment);
-  console.log(newAssignment);
-  revalidatePath("/admin/instructors/assignments");
+    const newAssignment = {
+      title,
+      score: 0,
+      cohortId,
+      comment,
+      categories,
+    };
+
+    await adminService.createAssignment(newAssignment);
+    console.log(newAssignment);
+    revalidatePath("/admin/instructors/assignments");
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error("Validation failed:", error.errors);
+      throw new Error(
+        "Validation failed: " + error.errors.map((e) => e.message).join(", ")
+      );
+    } else {
+      console.error("Unexpected error:", error);
+      throw error;
+    }
+  }
 }
