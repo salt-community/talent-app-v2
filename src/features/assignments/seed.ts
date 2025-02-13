@@ -1,18 +1,13 @@
-import { createCohortsService } from "../cohorts/service";
+import { CohortSelect } from "../cohorts";
 import { categoryTags } from "./categories";
-import { createAssignmentsService } from "./service";
-
-import { db } from "@/db";
+import { insecureAssignmentService } from "./instance";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, Math.floor(Math.random() * maxTags) + 1);
 };
 
-export const seedAssignments = async (cohortId: string) => {
-  const assignmentsService = createAssignmentsService(db);
-  const CreatedCohortService = createCohortsService(db); // need some kind of identity id, cant build otherwise
-
+export const seedAssignments = async (cohorts: CohortSelect[]) => {
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",
     "Create a RESTful API with Node.js",
@@ -41,13 +36,11 @@ export const seedAssignments = async (cohortId: string) => {
     "Design an Accessibility-First Web App",
   ];
 
-  await assignmentsService.deleteAllAssignments();
-
-  const cohortList = await CreatedCohortService.getAll();
+  await insecureAssignmentService.deleteAllAssignments();
 
   for (let i = 0; i < 5; i++) {
     const newAssignment = {
-      cohortId,
+      cohortId: cohorts[0].id,
       title:
         assignmentTitles[Math.floor(Math.random() * assignmentTitles.length)],
       comment: `This is a comment for assignment ${i + 1}`,
@@ -58,16 +51,16 @@ export const seedAssignments = async (cohortId: string) => {
 
     try {
       const createdAssignment =
-        await assignmentsService.createAssignment(newAssignment);
+        await insecureAssignmentService.createAssignment(newAssignment);
 
-      const scorePromises = cohortList.map(async (cohort) => {
-        const newScore = {
+      const scorePromises = cohorts.map(async (cohort) => {
+        return insecureAssignmentService.createAssignmentScore({
           assignmentId: createdAssignment.id.toString(),
           identityId: cohort.id.toString(),
-          score: Math.floor(Math.random() * 101).toString(),
+          score: Math.floor(Math.random() * 101),
           comment: `Comment for cohort ${cohort.name}`,
-        };
-        return assignmentsService.createAssignmentScore(newScore);
+          createdAt: new Date(),
+        });
       });
 
       await Promise.all(scorePromises);

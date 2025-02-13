@@ -30,4 +30,6 @@ export async function seedDeveloperProfiles() {
   }
 
   console.log("Done seeding developer profiles!");
+
+  return developerProfileIds;
 }
