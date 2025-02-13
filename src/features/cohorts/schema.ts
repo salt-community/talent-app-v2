@@ -14,11 +14,13 @@ export const cohorts = pgTable("cohorts", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const cohortIdentities = pgTable("cohorts_identities", {
+export const cohortIdentities = pgTable("cohort_identities", {
   id: uuid("id")
     .primaryKey()
     .default(sql`gen_random_uuid()`),
-  cohortId: uuid("cohort_id").notNull(),
+  cohortId: uuid("cohort_id")
+    .notNull()
+    .references(() => cohorts.id, { onDelete: "cascade" }),
   identityId: uuid("identity_id").notNull(),
 });
 

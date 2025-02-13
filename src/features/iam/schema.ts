@@ -9,7 +9,6 @@ export const identities = pgTable("identities", {
   name: varchar("name").notNull(),
   email: varchar("email").notNull(),
   role: roles().notNull().default("developer"),
-  cohortId: uuid("cohort_id"),
 });
 
 export type IdentitySelect = typeof identities.$inferSelect;
