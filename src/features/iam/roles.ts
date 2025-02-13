@@ -20,6 +20,8 @@ export const rolesPermissions = {
     projects.getAll,
     developerProfiles.getById,
     developerProfiles.getHighlightedDeveloperProfileIds,
+    developerProfiles.getIdentityIdByDeveloperProfileId,
+    assignments.getAssignmentsByCohortId,
   ]),
   admin: new Set([
     ...Object.values(backgrounds),
