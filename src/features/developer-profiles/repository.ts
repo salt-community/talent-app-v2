@@ -49,7 +49,10 @@ export function createDevelopersRepository(db: Db) {
     async updateStatus(id: string, status: string) {
       await db
         .update(developerProfiles)
-        .set({ status: status })
+        .set({
+          status: status as "unpublished" | "published" | "highlighted",
+          new_status: status,
+        })
         .where(eq(developerProfiles.id, id));
     },
     async getIdentityIdByDeveloperProfileId(developerProfileId: string) {
