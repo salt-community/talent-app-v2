@@ -7,11 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getAllUnassignedDevelopers } from "../actions";
 
 type Props = {
   cohortId: string;
 };
-export default function CohortSelect({ cohortId }: Props) {
+export default async function CohortSelect({ cohortId }: Props) {
+  const UnassignedDevelopers = await getAllUnassignedDevelopers();
   return (
     <Select>
       <SelectTrigger className="w-[180px]">
@@ -20,11 +22,11 @@ export default function CohortSelect({ cohortId }: Props) {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Fruits</SelectLabel>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem>
+          {UnassignedDevelopers.map((developer, index) => (
+            <SelectItem value={developer.id} key={index}>
+              {developer.name}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>

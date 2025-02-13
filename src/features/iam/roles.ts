@@ -90,5 +90,6 @@ export const rolesPermissions = {
     assignments.getAssignmentsByCohortId,
     assignments.getAssignmentById,
     assignments.createAssignment,
+    cohorts.getAllUnassignedDevelopers,
   ]),
 } as const;

@@ -18,6 +18,9 @@ export function createService(db: Db) {
     async getIdentityById(id: string) {
       return await repository.getIdentityById(id);
     },
+    async getAllUnassignedDevelopers() {
+      return await repository.getAllUnassignedDevelopers();
+    },
 
     async updateRole(id: string, newRole: IdentityRole) {
       await repository.updateRole(id, newRole);

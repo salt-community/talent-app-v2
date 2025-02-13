@@ -10,10 +10,15 @@ type Identity = {
   email: string;
   role: "admin" | "core" | "developer";
 };
+type UnassignedDevelopers = {
+  id: string;
+  name: string;
+};
 
 export function createCohortsService(
   db: Db,
-  getIdentityById: (id: string) => Promise<Identity>
+  getIdentityById: (id: string) => Promise<Identity>,
+  getAllUnassignedDevelopers: () => Promise<UnassignedDevelopers[]>
 ) {
   const repository = createCohortsRepository(db);
 
@@ -43,6 +48,9 @@ export function createCohortsService(
         cohortStudents.map((student) => getIdentityById(student.identityId))
       );
       return students;
+    },
+    async getAllUnassignedDevelopers() {
+      return await getAllUnassignedDevelopers();
     },
   };
 }
