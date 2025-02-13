@@ -1,3 +1,4 @@
+import { db } from "@/db";
 import {
   backgroundsSeed,
   seedAssignments,
@@ -21,6 +22,5 @@ import {
 
   console.log("Done seeding!");
 
-  // TODO: Reactivate when all seeding calls have been fixed to properly await.
-  // await db.$client.end();
+  await db.$client.end();
 })();
