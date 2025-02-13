@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-export const createClient = () => {
+export const createApi = () => {
   const fetchResponse = async (url: string) => {
     try {
       const token = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
@@ -86,3 +86,5 @@ export const createClient = () => {
     },
   };
 };
+
+export type Api = ReturnType<typeof createApi>;
