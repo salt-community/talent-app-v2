@@ -50,8 +50,7 @@ export function createDevelopersRepository(db: Db) {
       await db
         .update(developerProfiles)
         .set({
-          status: status as "unpublished" | "published" | "highlighted",
-          new_status: status,
+          status,
         })
         .where(eq(developerProfiles.id, id));
     },
