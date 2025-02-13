@@ -8,13 +8,10 @@ export type DeleteCohort = CohortsService["deleteCohort"];
 export type UpdateCohortStatus = CohortsService["updateCohortStatus"];
 export type CreateCohort = CohortsService["createCohort"];
 
-export const CohortStatus = ["planned", "ongoing", "finished"] as const;
-export type CohortStatus = (typeof CohortStatus)[number];
-
 export type Cohort = {
   id?: string;
   name: string;
-  status: CohortStatus;
+  status: string;
   description: string;
   createdAt: Date | null;
 };
@@ -25,7 +22,7 @@ export type CohortIdentity = {
 };
 export type CohortFormData = {
   name: string;
-  status: CohortStatus;
+  status: string;
   description?: string;
   identityId?: string;
 };

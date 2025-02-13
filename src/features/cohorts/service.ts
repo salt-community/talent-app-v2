@@ -1,11 +1,6 @@
 import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
-import {
-  CohortStatus,
-  CohortFormData,
-  UnassignedDevelopers,
-  Identity,
-} from "./types";
+import { CohortFormData, UnassignedDevelopers, Identity } from "./types";
 
 export function createCohortsService(
   db: Db,
@@ -31,7 +26,7 @@ export function createCohortsService(
       return await repository.deleteCohort(cohortId);
     },
 
-    async updateCohortStatus(args: { cohortId: string; status: CohortStatus }) {
+    async updateCohortStatus(args: { cohortId: string; status: string }) {
       return await repository.updateCohortStatus(args);
     },
     async getCohortStudents(cohortId: string) {

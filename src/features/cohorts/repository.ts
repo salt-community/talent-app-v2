@@ -1,6 +1,6 @@
 import { Db } from "@/db";
 import { eq } from "drizzle-orm";
-import { CohortStatus, CohortFormData, CohortIdentity } from "./types";
+import { CohortFormData, CohortIdentity } from "./types";
 import { cohortIdentities, cohorts } from "./schema";
 
 export function createCohortsRepository(db: Db) {
@@ -41,7 +41,7 @@ export function createCohortsRepository(db: Db) {
       status,
     }: {
       cohortId: string;
-      status: CohortStatus;
+      status: string;
     }) {
       return await db
         .update(cohorts)
