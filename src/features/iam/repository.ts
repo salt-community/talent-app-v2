@@ -1,8 +1,7 @@
 import { Db } from "@/db";
 import { IdentityInsert, identities } from "./schema";
-import { eq, isNull, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { IdentityRole } from "./types";
-import { CohortIdentity } from "../cohorts/";
 
 export function createRepository(db: Db) {
   return {
