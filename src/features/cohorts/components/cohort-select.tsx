@@ -15,7 +15,7 @@ export default function CohortSelect({ cohortId }: Props) {
   return (
     <Select>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a fruit" />
+        <SelectValue placeholder="Select a student" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
