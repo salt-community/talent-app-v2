@@ -25,7 +25,9 @@ export function createService(db: Db) {
     async updateRole(id: string, newRole: IdentityRole) {
       await repository.updateRole(id, newRole);
     },
-
+    async updateCohort(args: { cohortId: string; identityId: string }) {
+      await repository.updateCohort(args);
+    },
     async controlUser() {
       const SALT_DOMAIN = "appliedtechnology.se";
       const { userId, sessionClaims } = await auth();
