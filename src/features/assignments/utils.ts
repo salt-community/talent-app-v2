@@ -1,4 +1,4 @@
-import type { AssignmentFormData, AssignmentScoreFormData } from "./types";
+import type { AssignmentFormData } from "./types";
 
 export const getAssignmentFormData = (
   formData: FormData
@@ -7,7 +7,7 @@ export const getAssignmentFormData = (
   const cohortId = formData.get("cohortId") as string | null;
   const comment = formData.get("comment") as string | null;
   const developerProfileId = formData.get("devId") as string | null;
-  const score = formData.get("score") as string | null;
+  const score = formData.get("score") as number | null;
   const categories = (formData.get("categories") as string)?.split(",") || [];
   const tags = (formData.get("tags") as string)?.split(",") || [];
 
@@ -17,33 +17,11 @@ export const getAssignmentFormData = (
 
   return {
     developerProfileId: developerProfileId ?? undefined,
-    score: score ?? "",
+    score: score?.toString() ?? "",
     tags,
     title,
     cohortId,
     comment: comment,
     categories,
-  };
-};
-
-export const getAssignmentScoreFormData = (
-  formData: FormData
-): AssignmentScoreFormData => {
-  const assignmentId = formData.get("assignmentId") as string | null;
-  const identityId = formData.get("identityId") as string | null;
-  const score = formData.get("score") as string | null;
-  const comment = formData.get("comment") as string | null;
-
-  if (!assignmentId || !identityId || !score) {
-    throw new Error(
-      "Missing required fields: assignmentId, identityId, or score"
-    );
-  }
-
-  return {
-    assignmentId,
-    identityId,
-    score,
-    comment: comment,
   };
 };
