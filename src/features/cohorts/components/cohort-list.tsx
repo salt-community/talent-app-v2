@@ -7,6 +7,7 @@ import {
 import { fetchCohortsAction } from "../actions";
 import CohortSelect from "./cohort-select";
 import CohortDevelopers from "./cohort-developers";
+import CohortFormWrapper from "./cohort-form-wraper";
 
 export async function CohortList() {
   const cohorts = await fetchCohortsAction();
@@ -20,7 +21,7 @@ export async function CohortList() {
               <p>{cohort.description}</p>
               <p>{cohort.status}</p>
             </div>
-            <CohortSelect cohortId={cohort.id} />
+            <CohortFormWrapper cohortId={cohort.id} />
             <CohortDevelopers cohortId={cohort.id} />
           </AccordionContent>
         </AccordionItem>
