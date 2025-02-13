@@ -6,6 +6,7 @@ type Props = {
 };
 
 export function Developers({ developerProfileIds }: Props) {
+  const page = "search"
   return (
     <>
       <ul className="pt-20 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
@@ -13,7 +14,7 @@ export function Developers({ developerProfileIds }: Props) {
           <li key={index} className="">
             <Card className="p-2 h-full justify-center min-w-[20rem]">
               <CardContent>
-                <Background developerProfileId={developerProfileId} />
+                <Background developerProfileId={developerProfileId} page="search"/>
               </CardContent>
             </Card>
           </li>

@@ -15,7 +15,7 @@ export async function HighlightedDevelopers({developerProfileIds}: Props) {
           <li key={index} className="">
             <Card className="p-2 h-full flex justify-center min-w-[20rem]">
               <CardContent>
-                <Background developerProfileId={developerProfileId} />
+                <Background developerProfileId={developerProfileId} page="highlight" />
               </CardContent>
             </Card>
           </li>
