@@ -27,9 +27,7 @@ export function createRepository(db: Db) {
       return await db
         .select({ id: identities.id, name: identities.name })
         .from(identities)
-        .where(
-          and(eq(identities.role, "developer"), isNull(identities.cohortId))
-        );
+        .where(eq(identities.role, "developer"));
     },
     async addIdentity(identity: IdentityInsert) {
       const userId = await db
@@ -50,12 +48,6 @@ export function createRepository(db: Db) {
         .update(identities)
         .set({ role: newRole })
         .where(eq(identities.id, id));
-    },
-    async updateCohort(data: CohortIdentity) {
-      await db
-        .update(identities)
-        .set({ cohortId: data.cohortId })
-        .where(eq(identities.id, data.identityId));
     },
   };
 }
