@@ -1,13 +1,12 @@
 import React from "react";
 import { StatusMenuIdentity } from "./status-menu-identities";
-import { IdentityRole } from "../types";
 import DashboardAvatarIdentity from "./dashboard-avatar-identity";
 
 type Props = {
   id: string;
   name: string;
   email: string;
-  role: IdentityRole;
+  role: string;
 };
 
 export default function IdentityProfileList({ id, name, email, role }: Props) {
