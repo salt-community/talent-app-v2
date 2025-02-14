@@ -1,14 +1,13 @@
-import { Separator, H1 } from "@/components";
+import { Separator } from "@/components";
 import { SearchSettings } from "./search-configuration";
 import { MeiliPopulation } from "./search-population";
-import Link from "next/link";
 import { adminService } from "../../instance";
 
 export async function MeiliDashboard() {
   const isHealthy = await adminService.isSearchHealthOk();
 
   return (
-      <div>
+    <div>
       {isHealthy ? (
         <section className="container mx-auto h-full p-2">
           <div className="flex flex-col gap-8">

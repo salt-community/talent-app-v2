@@ -64,31 +64,22 @@ export function HamburgerMenu({ user }: Props) {
           )}
           {user?.role === "admin" && (
             <li
-            className={`border-b ${
-              isActive("/cohorts") ? "border-primary" : "border-white"
-            } hover:border-primary`}
+              className={`border-b ${
+                isActive("/cohorts") ? "border-primary" : "border-white"
+              } hover:border-primary`}
             >
-              <Link href="/cohorts" onClick={closeMenu}>
-                Cohorts
+              <Link href="/instructor-dashboard" onClick={closeMenu}>
+                Instructors Dashboard
               </Link>
             </li>
           )}
           {user?.role === "admin" && (
             <li
-            className={`border-b ${
-              isActive(`/assignments`) ? "border-primary" : "border-white"
-            } hover:border-primary`}
-            >
-              <Link href={`/assignments/`}>Assignments</Link>
-            </li>
-          )}
-          {user?.role === "admin" && (
-            <li
-            className={`border-b ${
-              isActive("/admin/developers")
-              ? "border-primary"
-              : "border-white"
-            } hover:border-primary`}
+              className={`border-b ${
+                isActive("/admin/developers")
+                  ? "border-primary"
+                  : "border-white"
+              } hover:border-primary`}
             >
               <Link href="/admin/developers" onClick={closeMenu}>
                 Admin

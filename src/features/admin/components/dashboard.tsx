@@ -1,8 +1,6 @@
 "use client";
 
-import { H1 } from "@/components";
 import { DeveloperProfileList } from "./developer-profile-list";
-import Link from "next/link";
 import { Developer } from "@/features/developer-profiles";
 
 type Props = {
