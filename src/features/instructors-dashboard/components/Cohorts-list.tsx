@@ -1,13 +1,12 @@
 "use client";
+
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Cohort } from "../types";
+import { Cohort } from "@/features"; // ask Marcus about this import if this is correct
 
 type Props = {
   cohorts: Cohort[];
 };
-
-//Remove this component later: Ali
 
 export function CohortList({ cohorts }: Props) {
   return (
