@@ -48,8 +48,7 @@ export function createRepository(db: Db) {
       await db
         .update(identities)
         .set({
-          role: newRole as "developer" | "core" | "admin",
-          new_role: newRole,
+          role: newRole,
         })
         .where(eq(identities.id, id));
     },
