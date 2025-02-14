@@ -31,7 +31,7 @@ export type Identity = {
   name: string;
   clerkId: string;
   email: string;
-  role: "admin" | "core" | "developer";
+  role: string;
 };
 export type UnassignedDevelopers = {
   id: string;

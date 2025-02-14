@@ -1,6 +1,5 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { IdentityRole } from "./types";
 
 const getIamService = async () => {
   const { iamService } = await import("./instance");
