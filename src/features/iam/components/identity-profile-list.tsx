@@ -16,7 +16,9 @@ export default function IdentityProfileList({ id, name, email, role }: Props) {
       <div className="flex justify-between items-center w-full">
         <div>
           <p>{name}</p>
-          <p className="text-paragraphLight text-sm">{email}</p>
+          <p className="text-paragraphLight text-sm max-w-[180px] truncate md:max-w-none md:whitespace-normal">
+            {email}
+          </p>
         </div>
         <div className="flex justify-center">
           <p className="px-4 hidden md:block capitalize">{role}</p>
