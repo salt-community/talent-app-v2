@@ -1,11 +1,4 @@
-import {
-  integer,
-  jsonb,
-  pgEnum,
-  pgTable,
-  uuid,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { integer, jsonb, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
