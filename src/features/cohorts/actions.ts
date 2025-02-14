@@ -3,12 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { errorHandler } from "@/lib";
 import { cohortsService } from "./instance";
-import { CohortFormData } from "./types";
-
-export async function addCohortAction(cohort: CohortFormData) {
-  await cohortsService.createCohort(cohort);
-  revalidatePath("/cohorts");
-}
 
 export async function fetchCohortsAction() {
   try {

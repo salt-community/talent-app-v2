@@ -1,5 +1,5 @@
 import { instructorService } from "../instance";
-//import { AddCohortForm } from "./add-cohort";
+import { AddCohortForm } from "./add-cohort";
 import { CohortList } from "./Cohorts-list";
 
 export async function InstructorsDashboard() {
@@ -12,7 +12,7 @@ export async function InstructorsDashboard() {
         <CohortList cohorts={cohorts} />
       </div>
       <div className="flex justify-center">
-        {/* <AddCohortForm />  not done yet */}
+        <AddCohortForm />
       </div>
     </div>
   );

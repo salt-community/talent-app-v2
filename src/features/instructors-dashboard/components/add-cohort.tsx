@@ -1,5 +1,6 @@
 "use client";
-import { addCohortAction } from "@/features/cohorts/actions";
+
+import { addCohortAction } from "../action";
 import {
   Button,
   DialogContent,
