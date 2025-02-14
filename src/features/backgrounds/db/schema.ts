@@ -71,5 +71,5 @@ export type EducationSelect = typeof educations.$inferSelect;
 
 export type SocialLink = {
   url: string;
-  name: "Github" | "LinkedIn" | "Resume";
+  name: string;
 };
