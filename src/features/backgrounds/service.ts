@@ -50,8 +50,7 @@ export function createBackgroundsService(
           .filter((name): name is string => !!name);
 
         const upsertStatus = await meiliClient.upsertBackground({
-          id: background[0].id,
-          developerProfileId: background[0].developerProfileId,
+          ...background[0],
           skills,
           languages,
           educations,
@@ -159,18 +158,34 @@ export function createBackgroundsService(
     async repopulateMeiliSearch() {
       await meiliClient.deleteAllBackgrounds();
       const backgrounds = await repository.getAllBackgrounds();
+      for (const background of backgrounds) {
+        const backgroundSkills = await repository.getSkillsByBackgroundId(
+          background.backgrounds.id
+        );
+        const backgroundLanguages = await repository.getLanguagesByBackgroundId(
+          background.backgrounds.id
+        );
+        const backgroundEducation =
+          await repository.getEducationsByBackgroundId(
+            background.backgrounds.id
+          );
+        const skills = backgroundSkills
+          .map((skill) => skill?.name)
+          .filter((name): name is string => !!name);
+        const languages = backgroundLanguages
+          .map((language) => language?.name)
+          .filter((name): name is string => !!name);
+        const educations = backgroundEducation
+          .map((education) => education?.name)
+          .filter((name): name is string => !!name);
 
-      const skills = backgrounds.map((s) => s.background_skills?.name);
-      const languages = backgrounds.map((l) => l.background_languages?.name);
-      const educations = backgrounds.map((e) => e.background_educations?.name);
-
-      await meiliClient.upsertBackground({
-        id: backgrounds[0].backgrounds?.id,
-        developerProfileId: backgrounds[0].backgrounds?.developerProfileId,
-        skills,
-        languages,
-        educations,
-      });
+        await meiliClient.upsertBackground({
+          ...background.backgrounds,
+          skills,
+          languages,
+          educations,
+        });
+      }
     },
 
     async syncMeilisearch() {

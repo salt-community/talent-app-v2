@@ -28,6 +28,7 @@ export type BackgroundInfo = {
 
 export type BackgroundUpdate = Partial<BackgroundSelect> &
   Required<Pick<BackgroundSelect, "id" | "developerProfileId">> & {
+    name: string;
     skills: string[];
     languages: string[];
     educations: string[];
