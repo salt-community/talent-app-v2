@@ -11,9 +11,12 @@ export function Developers({ developerProfileIds }: Props) {
       <ul className="pt-20 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {developerProfileIds.map((developerProfileId, index) => (
           <li key={index} className="">
-            <Card className="p-2 h-full justify-center min-w-[20rem]">
+            <Card className="p-2 h-full justify-center min-w-[20rem] cursor-pointer hover:shadow-lg transition-shadow">
               <CardContent>
-                <Background developerProfileId={developerProfileId} page="search"/>
+                <Background
+                  developerProfileId={developerProfileId}
+                  page="search"
+                />
               </CardContent>
             </Card>
           </li>
