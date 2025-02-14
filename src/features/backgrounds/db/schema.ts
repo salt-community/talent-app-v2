@@ -43,12 +43,10 @@ export const languages = pgTable("background_languages", {
   level: integer().notNull().default(5),
 });
 
-export const operation = pgEnum("operation", ["upsert", "delete"]);
-
 export const meiliSearchOutbox = pgTable("meili_search_outbox", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   developerProfileId: uuid("developer_profile_id").notNull(),
-  operation: operation().notNull(),
+  operation: varchar().notNull(),
 });
 
 export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;
