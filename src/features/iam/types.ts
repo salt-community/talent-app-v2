@@ -9,6 +9,3 @@ export interface SessionClaimsIam extends JwtPayload {
   last_name?: string;
   email?: string | undefined;
 }
-export const identityRole = ["admin", "core", "developer"] as const;
-
-export type IdentityRole = (typeof identityRole)[number];
