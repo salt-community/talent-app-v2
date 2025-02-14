@@ -15,7 +15,8 @@
     "test": "vitest",
     "test:watch": "vitest --watch",
     "db:migrate": "drizzle-kit migrate",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "migrate-identity-role": "tsx src/migrate_roles.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.6.0",

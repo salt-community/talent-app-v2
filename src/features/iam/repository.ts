@@ -47,7 +47,10 @@ export function createRepository(db: Db) {
     async updateRole(id: string, newRole: string) {
       await db
         .update(identities)
-        .set({ role: newRole })
+        .set({
+          role: newRole as "developer" | "core" | "admin",
+          new_role: newRole,
+        })
         .where(eq(identities.id, id));
     },
   };

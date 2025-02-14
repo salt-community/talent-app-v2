@@ -8,7 +8,8 @@ export const identities = pgTable("identities", {
   clerkId: varchar("clerk_id").notNull(),
   name: varchar("name").notNull(),
   email: varchar("email").notNull(),
-  role: varchar().notNull().default("developer"),
+  role: roles().notNull().default("developer"),
+  new_role: varchar().notNull().default("developer"),
 });
 
 export type IdentitySelect = typeof identities.$inferSelect;
