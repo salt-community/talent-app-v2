@@ -1,9 +1,313 @@
 {
-  "id": "6c6d9f05-54f0-4c2f-bde5-9a5cc3241d21",
+  "id": "62ce8529-db55-403d-972c-3fa09e09d3b9",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.assignment_scores": {
+      "name": "assignment_scores",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "assignment_id": {
+          "name": "assignment_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "identity_id": {
+          "name": "identity_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "score": {
+          "name": "score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "comment": {
+          "name": "comment",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "assignment_scores_assignment_id_assignments_id_fk": {
+          "name": "assignment_scores_assignment_id_assignments_id_fk",
+          "tableFrom": "assignment_scores",
+          "tableTo": "assignments",
+          "columnsFrom": [
+            "assignment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.assignments": {
+      "name": "assignments",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "cohort_id": {
+          "name": "cohort_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "comment": {
+          "name": "comment",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "categories": {
+          "name": "categories",
+          "type": "varchar[]",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{}'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cohort_identities": {
+      "name": "cohort_identities",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "cohort_id": {
+          "name": "cohort_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "identity_id": {
+          "name": "identity_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "cohort_identities_cohort_id_cohorts_id_fk": {
+          "name": "cohort_identities_cohort_id_cohorts_id_fk",
+          "tableFrom": "cohort_identities",
+          "tableTo": "cohorts",
+          "columnsFrom": [
+            "cohort_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cohorts": {
+      "name": "cohorts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'planned'"
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'assignment'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.developer_profiles": {
+      "name": "developer_profiles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "identity_id": {
+          "name": "identity_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1'"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'unpublished'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.identities": {
+      "name": "identities",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "clerk_id": {
+          "name": "clerk_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'developer'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.backgrounds": {
       "name": "backgrounds",
       "schema": "",
@@ -25,12 +329,18 @@
             "cycle": false
           }
         },
-        "avatarUrl": {
-          "name": "avatarUrl",
+        "developer_profile_id": {
+          "name": "developer_profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "avatar_url": {
+          "name": "avatar_url",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true,
-          "default": "'/avatar.png'"
+          "default": "''"
         },
         "name": {
           "name": "name",
@@ -47,24 +357,6 @@
         "bio": {
           "name": "bio",
           "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "languages": {
-          "name": "languages",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "educations": {
-          "name": "educations",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "skills": {
-          "name": "skills",
-          "type": "jsonb",
           "primaryKey": false,
           "notNull": true
         },
@@ -104,8 +396,8 @@
             "cycle": false
           }
         },
-        "backroundId": {
-          "name": "backroundId",
+        "background_id": {
+          "name": "background_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -119,13 +411,17 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "background_educations_backroundId_backgrounds_id_fk": {
-          "name": "background_educations_backroundId_backgrounds_id_fk",
+        "background_educations_background_id_backgrounds_id_fk": {
+          "name": "background_educations_background_id_backgrounds_id_fk",
           "tableFrom": "background_educations",
           "tableTo": "backgrounds",
-          "columnsFrom": ["backroundId"],
-          "columnsTo": ["id"],
-          "onDelete": "no action",
+          "columnsFrom": [
+            "background_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -156,8 +452,8 @@
             "cycle": false
           }
         },
-        "backroundId": {
-          "name": "backroundId",
+        "background_id": {
+          "name": "background_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -178,16 +474,63 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "background_languages_backroundId_backgrounds_id_fk": {
-          "name": "background_languages_backroundId_backgrounds_id_fk",
+        "background_languages_background_id_backgrounds_id_fk": {
+          "name": "background_languages_background_id_backgrounds_id_fk",
           "tableFrom": "background_languages",
           "tableTo": "backgrounds",
-          "columnsFrom": ["backroundId"],
-          "columnsTo": ["id"],
-          "onDelete": "no action",
+          "columnsFrom": [
+            "background_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.meili_search_outbox": {
+      "name": "meili_search_outbox",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "meili_search_outbox_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "developer_profile_id": {
+          "name": "developer_profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "operation": {
+          "name": "operation",
+          "type": "operation",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -215,8 +558,8 @@
             "cycle": false
           }
         },
-        "backroundId": {
-          "name": "backroundId",
+        "background_id": {
+          "name": "background_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -237,167 +580,20 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "background_skills_backroundId_backgrounds_id_fk": {
-          "name": "background_skills_backroundId_backgrounds_id_fk",
+        "background_skills_background_id_backgrounds_id_fk": {
+          "name": "background_skills_background_id_backgrounds_id_fk",
           "tableFrom": "background_skills",
           "tableTo": "backgrounds",
-          "columnsFrom": ["backroundId"],
-          "columnsTo": ["id"],
-          "onDelete": "no action",
+          "columnsFrom": [
+            "background_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.developer_profiles": {
-      "name": "developer_profiles",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "developer_profiles_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
-        },
-        "identity_id": {
-          "name": "identity_id",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'1'"
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "email": {
-          "name": "email",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "status": {
-          "name": "status",
-          "type": "developers_status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'unpublished'"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.identities": {
-      "name": "identities",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "clerk_id": {
-          "name": "clerk_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "roles": {
-          "name": "roles",
-          "type": "roles",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'developer'"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.score_assignments": {
-      "name": "score_assignments",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "score_assignments_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
-        },
-        "userId": {
-          "name": "userId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "title": {
-          "name": "title",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "comment": {
-          "name": "comment",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "score": {
-          "name": "score",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "tags": {
-          "name": "tags",
-          "type": "varchar[]",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -439,6 +635,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "image_alt": {
+          "name": "image_alt",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
         "project_website": {
           "name": "project_website",
           "type": "varchar",
@@ -462,6 +664,12 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
+        },
+        "last_commits": {
+          "name": "last_commits",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "issues": {
           "name": "issues",
@@ -487,15 +695,22 @@
     }
   },
   "enums": {
-    "public.developers_status": {
-      "name": "developers_status",
-      "schema": "public",
-      "values": ["unpublished", "published", "highlighted"]
-    },
     "public.roles": {
       "name": "roles",
       "schema": "public",
-      "values": ["developer", "client", "core", "admin"]
+      "values": [
+        "developer",
+        "core",
+        "admin"
+      ]
+    },
+    "public.operation": {
+      "name": "operation",
+      "schema": "public",
+      "values": [
+        "upsert",
+        "delete"
+      ]
     }
   },
   "schemas": {},
