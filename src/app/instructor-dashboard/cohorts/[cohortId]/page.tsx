@@ -1,4 +1,4 @@
-import { SelectedCohort } from "@/features";
+import { SelectedCohort } from "@/features/instructors-dashboard/components/selected-cohort";
 import React from "react";
 
 type Params = {
