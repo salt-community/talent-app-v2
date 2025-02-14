@@ -5,7 +5,7 @@ export const developerProfiles = pgTable("developer_profiles", {
   id: uuid()
     .primaryKey()
     .default(sql`gen_random_uuid()`),
-  identityId: varchar("identity_id").default("1"),
+  identityId: varchar("identity_id").notNull(),
   name: varchar().notNull(),
   email: varchar().notNull(),
   status: varchar("status").notNull().default("unpublished"),
