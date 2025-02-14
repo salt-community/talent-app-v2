@@ -1,5 +1,5 @@
 {
-  "id": "62ce8529-db55-403d-972c-3fa09e09d3b9",
+  "id": "2d2ca60f-8334-4a07-9835-ec4eabab7ad3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -232,8 +232,7 @@
           "name": "identity_id",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'1'"
+          "notNull": true
         },
         "name": {
           "name": "name",
@@ -523,8 +522,7 @@
         },
         "operation": {
           "name": "operation",
-          "type": "operation",
-          "typeSchema": "public",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         }
@@ -694,25 +692,7 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {
-    "public.roles": {
-      "name": "roles",
-      "schema": "public",
-      "values": [
-        "developer",
-        "core",
-        "admin"
-      ]
-    },
-    "public.operation": {
-      "name": "operation",
-      "schema": "public",
-      "values": [
-        "upsert",
-        "delete"
-      ]
-    }
-  },
+  "enums": {},
   "schemas": {},
   "sequences": {},
   "roles": {},

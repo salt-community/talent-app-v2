@@ -1,5 +1,3 @@
-CREATE TYPE "public"."roles" AS ENUM('developer', 'core', 'admin');--> statement-breakpoint
-CREATE TYPE "public"."operation" AS ENUM('upsert', 'delete');--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "assignment_scores" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"assignment_id" uuid,
@@ -34,7 +32,7 @@ CREATE TABLE IF NOT EXISTS "cohorts" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "developer_profiles" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"identity_id" varchar DEFAULT '1',
+	"identity_id" varchar NOT NULL,
 	"name" varchar NOT NULL,
 	"email" varchar NOT NULL,
 	"status" varchar DEFAULT 'unpublished' NOT NULL
@@ -74,7 +72,7 @@ CREATE TABLE IF NOT EXISTS "background_languages" (
 CREATE TABLE IF NOT EXISTS "meili_search_outbox" (
 	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "meili_search_outbox_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
 	"developer_profile_id" uuid NOT NULL,
-	"operation" "operation" NOT NULL
+	"operation" varchar NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "background_skills" (
