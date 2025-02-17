@@ -15,13 +15,13 @@ export async function AssignmentsDashboard({ cohortId }: Props) {
         <H1>{cohort.name}</H1>
         <div className="flex py-1 px-1 bg-gray-200 rounded-md justify-between mt-2 md:mt-0">
           <Link
-            href="/admin/developers"
+            href={`/instructor-dashboard/cohorts/${cohortId}/assignments`}
             className="py-1 px-4 rounded-md bg-black text-white"
           >
             Assignments
           </Link>
           <Link
-            href="/admin/identities"
+            href={`/instructor-dashboard/cohorts/${cohortId}/students`}
             className="mx-2 py-1 px-4 rounded-md text-paragraphLight"
           >
             Students
