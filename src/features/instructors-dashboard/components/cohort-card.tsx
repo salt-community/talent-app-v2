@@ -20,7 +20,7 @@ export function CohortCard({ cohorts }: Props) {
             key={cohort.id}
             className="w-full cursor-pointer hover:shadow-lg transition-shadow"
             onClick={() =>
-              router.push(`/instructor-dashboard/cohorts/${cohort.id}`)
+              router.push(`/instructor-dashboard/cohorts/${cohort.id}/assignments`)
             }
           >
             <CardHeader className="px-4 pt-4 pb-2">

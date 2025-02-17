@@ -1,2 +1,2 @@
 export * from "./instructors-dashboard";
-export * from "./selected-cohort";
+export * from "./assignments-dashboard";
