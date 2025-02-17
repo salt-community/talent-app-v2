@@ -23,7 +23,7 @@ export function CohortCard({ cohorts }: Props) {
               router.push(`/instructor-dashboard/cohorts/${cohort.id}`)
             }
           >
-            <CardHeader className="p-4">
+            <CardHeader className="px-4 pt-4 pb-2">
               <CardTitle className="scroll-m-20 text-1xl font-semibold tracking-tight">
                 {cohort.name.toUpperCase()}
               </CardTitle>
@@ -32,10 +32,9 @@ export function CohortCard({ cohorts }: Props) {
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0 px-4">
-              <div className="flex justify-between border-b pb-4">
+              <div className="flex justify-between pb-3">
                 <p className="text-sm text-muted-foreground">{cohort.status}</p>
               </div>
-              <div className="flex justify-start"></div>
             </CardContent>
           </Card>
         ))}
