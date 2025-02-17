@@ -7,7 +7,6 @@ import { SessionClaims } from "@/features";
 import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
 import { Permission } from "./permissions";
-import { permission } from "process";
 
 export function createService(db: Db) {
   const repository = createRepository(db);
