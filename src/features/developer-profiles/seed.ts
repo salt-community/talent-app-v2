@@ -9,6 +9,7 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
   for (const identity of identities) {
     developers.push({
       identityId: identity.id,
+      slug: identity.name.toLowerCase().replace(" ", "-"),
       name: identity.name,
       email: identity.email,
     });

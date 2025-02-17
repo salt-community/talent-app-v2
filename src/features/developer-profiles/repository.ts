@@ -62,5 +62,13 @@ export function createDevelopersRepository(db: Db) {
 
       return developerProfile?.identityId;
     },
+    async existsBySlug(slug: string) {
+      const [developerProfile] = await db
+        .select()
+        .from(developerProfiles)
+        .where(eq(developerProfiles.slug, slug));
+
+      return !!developerProfile;
+    },
   };
 }

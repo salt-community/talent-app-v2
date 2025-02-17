@@ -19,4 +19,5 @@ export const developerProfiles: PermissionsSchema<
   updateStatus: "developerProfiles.updateStatus",
   getIdentityIdByDeveloperProfileId:
     "developerProfiles.getIdentityIdByDeveloperProfileId",
+  generateUniqueSlug: "developerProfiles.generateUniqueSlug",
 };

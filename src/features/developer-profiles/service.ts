@@ -44,9 +44,11 @@ export function createDeveloperProfilesService(db: Db) {
       const claims = sessionClaims as SessionClaims;
 
       const { name, email } = claim(claims);
+      const slug = await this.generateUniqueSlug(name);
       if (!email) return;
       const developer = await developerProfilesService.add({
         name,
+        slug,
         email,
         identityId: id,
       });
@@ -59,7 +61,27 @@ export function createDeveloperProfilesService(db: Db) {
         developerProfileId
       );
     },
+    async generateUniqueSlug(name: string) {
+      const slug = generateSlug(name);
+      let uniqueSlug = slug;
+      let count = 1;
+
+      while (await repository.existsBySlug(uniqueSlug)) {
+        uniqueSlug = `${slug}-${count}`;
+        count++;
+      }
+
+      return uniqueSlug;
+    },
   };
+}
+function generateSlug(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/-+/g, "-")
+    .trim();
 }
 
 export type DeveloperProfilesService = ReturnType<
