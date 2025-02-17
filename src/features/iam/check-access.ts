@@ -1,5 +1,5 @@
 import { UnauthorizedError } from "@/lib";
-import { rolesPermissions } from "./roles";
+import { rolesPermissions, rolesViewPermissions } from "./roles";
 
 export function checkAccess(roles: string[], permission: string) {
   for (const role of roles) {
@@ -23,8 +23,8 @@ export function checkAccess(roles: string[], permission: string) {
 
 export function hasAccess(roles: string[], permission: string) {
   for (const role of roles) {
-    const rolePermission = rolesPermissions[
-      role as keyof typeof rolesPermissions
+    const rolePermission = rolesViewPermissions[
+      role as keyof typeof rolesViewPermissions
     ] as Set<string>;
     if (!rolePermission) {
       return false;

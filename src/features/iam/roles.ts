@@ -7,6 +7,7 @@ import {
   developerProfiles,
   cohorts,
   instructors,
+  projectPermissions,
 } from "./permissions";
 
 export const rolesPermissions = {
@@ -96,4 +97,11 @@ export const rolesPermissions = {
     instructors.getAllCohorts,
     instructors.getCohortById,
   ]),
+} as const;
+
+export const rolesViewPermissions = {
+  admin: new Set([projectPermissions.edit]),
+  core: new Set([projectPermissions.edit]),
+  developer: new Set([]),
+  guest: new Set([]),
 } as const;
