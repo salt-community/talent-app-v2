@@ -20,3 +20,22 @@ export function checkAccess(roles: string[], permission: string) {
 
   throw new UnauthorizedError(`Missing permission "${permission}"`);
 }
+
+export function hasAccess(roles: string[], permission: string) {
+  for (const role of roles) {
+    const rolePermission = rolesPermissions[
+      role as keyof typeof rolesPermissions
+    ] as Set<string>;
+    if (!rolePermission) {
+      return false;
+    }
+
+    const hasPermission = rolePermission.has(permission);
+
+    if (hasPermission) {
+      return true;
+    }
+  }
+
+  return false;
+}
