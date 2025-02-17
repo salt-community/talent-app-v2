@@ -1,4 +1,3 @@
-import { object } from "zod";
 import {
   assignments,
   projects,
@@ -19,6 +18,7 @@ export const rolesPermissions = {
     backgrounds.getAllLanguages,
     backgrounds.getAllEducations,
     projects.getAll,
+    projects.hasAccess,
     developerProfiles.getById,
     developerProfiles.getHighlightedDeveloperProfileIds,
     developerProfiles.getIdentityIdByDeveloperProfileId,
@@ -50,6 +50,7 @@ export const rolesPermissions = {
     projects.add,
     projects.delete,
     projects.getAll,
+    projects.hasAccess,
     projects.updateDescription,
     projects.updateProjectData,
     developerProfiles.getById,
@@ -77,6 +78,7 @@ export const rolesPermissions = {
     projects.updateDescription,
     projects.updateProjectData,
     projects.getAll,
+    projects.hasAccess,
     developerProfiles.getById,
     developerProfiles.getHighlightedDeveloperProfileIds,
     developerProfiles.add,

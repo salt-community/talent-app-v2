@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import { FaGithub } from "react-icons/fa6";
 import { H3 } from "@/components";
@@ -7,13 +6,15 @@ import { ProjectDescription } from "./project-description";
 import { Project } from "../types";
 import EditProjectDetails from "./edit-project-details";
 import MetricSidebar from "./project-metric-sidebar";
+import { projectsService } from "../instance";
 
 type Props = {
   project: Project;
 };
 
-export default function ProjectDetails({ project }: Props) {
+export default async function ProjectDetails({ project }: Props) {
   //const repository = project.repository.split("/")[4];
+  const hasAccess = await projectsService.hasAccess("project.edit");
   return (
     <>
       <div className="flex justify-between items-baseline">
@@ -29,8 +30,7 @@ export default function ProjectDetails({ project }: Props) {
             </p>
           </Link>
         </div>
-
-        <EditProjectDetails key={project.id} project={project} />
+        {hasAccess && <EditProjectDetails key={project.id} project={project} />}
       </div>
       <section className="flex justify-between items-start mt-2 gap-2">
         <Image

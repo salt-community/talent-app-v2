@@ -12,7 +12,7 @@ export const insecureProjectService = createService(
   db,
   createApi(),
   developerProfilesService.getAll,
-  developerProfilesService.getIdentityIdByDeveloperProfileId
+  iamService.hasCurrentUserAccess
 );
 
 export const projectsService = secureService(
@@ -29,5 +29,5 @@ export const seedProjectService = createService(
     testPagePerformance: async () => "NA",
   },
   insecureDeveloperProfilesService.getAll,
-  insecureDeveloperProfilesService.getIdentityIdByDeveloperProfileId
+  iamService.hasCurrentUserAccess
 );

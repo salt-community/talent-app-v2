@@ -9,6 +9,7 @@ export const projects: PermissionsSchema<"projects", ProjectsService> = {
   getAllDevelopers: "projects.getAllDevelopers",
   updateDescription: "projects.updateDescription",
   updateProjectData: "projects.updateProjectData",
+  hasAccess: "projects.hasAccess",
 };
 
 type ProjectViewPermission = "edit";
