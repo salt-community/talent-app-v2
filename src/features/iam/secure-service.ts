@@ -24,12 +24,12 @@ export function secureService<
 
     async function securedServiceMethod(args: unknown) {
       const { userId } = await auth();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const roles: string[] = ["guest"];
       if (userId) {
         const identityRoles = await iamService.getAllRolesByUserId(userId);
         roles.push(identityRoles.role);
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await iamService.checkAccess(permission as any, roles);
 
       return service[serviceMethodName](args);

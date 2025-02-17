@@ -2,7 +2,6 @@ import { createAdminService } from "./service";
 import {
   backgroundsService,
   developerProfilesService,
-  iamService,
   assignmentsService,
   cohortsService,
 } from "@/features";

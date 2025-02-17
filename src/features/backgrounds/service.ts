@@ -16,8 +16,7 @@ export function createBackgroundsService(
   getDeveloperById: (id: string) => Promise<Developer>,
   createDeveloperProfile: CreateDeveloperProfile,
   getAllById: GetAllById,
-  deleteDeveloperProfile: DeleteDeveloperProfile,
-  getIdentityIdByDeveloperProfileId: (id: string) => Promise<string | null>
+  deleteDeveloperProfile: DeleteDeveloperProfile
 ) {
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;

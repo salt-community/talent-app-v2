@@ -7,12 +7,9 @@ import { backgroundsService } from "../instance";
 import type { LanguageSelect, SkillSelect, EducationSelect } from "../db";
 import { errorHandler } from "@/lib";
 
-type Props = { background: BackgroundInfo; developerProfileId: string };
+type Props = { background: BackgroundInfo };
 
-export async function BackgroundBasicInfoCard({
-  background,
-  developerProfileId,
-}: Props) {
+export async function BackgroundBasicInfoCard({ background }: Props) {
   let allSkills: SkillSelect[] = [];
   let allLanguages: LanguageSelect[] = [];
   let allEducations: EducationSelect[] = [];
