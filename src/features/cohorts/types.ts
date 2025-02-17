@@ -6,7 +6,7 @@ export type GetAllCohorts = CohortsService["getAll"];
 export type GetCohortById = CohortsService["getCohortById"];
 export type DeleteCohort = CohortsService["deleteCohort"];
 export type UpdateCohortStatus = CohortsService["updateCohortStatus"];
-export type CreateCohort = CohortsService["createCohort"];
+export type AddCohort = CohortsService["addCohort"];
 
 export type Cohort = {
   id?: string;

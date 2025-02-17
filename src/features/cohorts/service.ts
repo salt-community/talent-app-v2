@@ -14,7 +14,7 @@ export function createCohortsService(
       return await repository.getAllCohorts();
     },
 
-    async createCohort(data: CohortFormData) {
+    async addCohort(data: CohortFormData) {
       return await repository.createCohort(data);
     },
 

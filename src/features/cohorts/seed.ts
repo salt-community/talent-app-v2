@@ -26,7 +26,7 @@ export async function seedCohorts(identities: IdentitySelect[]) {
   const cohortIds: string[] = [];
 
   for (const cohort of cohorts) {
-    const cohortId = (await insecureCohortService.createCohort(cohort)).id;
+    const cohortId = (await insecureCohortService.addCohort(cohort)).id;
     cohortIds.push(cohortId);
   }
 

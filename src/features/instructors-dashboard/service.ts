@@ -1,6 +1,6 @@
 import {
+  AddCohort,
   CohortFormData,
-  CreateCohort,
   GetAllCohorts,
   GetCohortById,
 } from "@/features";
@@ -8,7 +8,7 @@ import {
 export function createInstructorService(
   getAllCohorts: GetAllCohorts,
   getCohortById: GetCohortById,
-  createCohort: CreateCohort
+  addCohort: AddCohort
 ) {
   return {
     async getAllCohorts() {
@@ -18,7 +18,7 @@ export function createInstructorService(
       return await getCohortById(cohortId);
     },
     async createCohort(cohort: CohortFormData) {
-      return await createCohort(cohort);
+      return await addCohort(cohort);
     },
   };
 }

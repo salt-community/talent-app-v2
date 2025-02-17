@@ -4,5 +4,5 @@ import { cohortsService } from "@/features";
 export const instructorService = createInstructorService(
   cohortsService.getAll,
   cohortsService.getCohortById,
-  cohortsService.createCohort
+  cohortsService.addCohort
 );
