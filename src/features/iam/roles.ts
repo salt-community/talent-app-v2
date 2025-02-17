@@ -1,3 +1,4 @@
+import { object } from "zod";
 import {
   assignments,
   projects,
@@ -5,6 +6,7 @@ import {
   backgrounds,
   developerProfiles,
   cohorts,
+  instructors,
 } from "./permissions";
 
 export const rolesPermissions = {
@@ -28,6 +30,7 @@ export const rolesPermissions = {
     ...Object.values(developerProfiles),
     ...Object.values(assignments),
     ...Object.values(cohorts),
+    ...Object.values(instructors),
     ...admins,
   ]),
   developer: new Set([
@@ -91,5 +94,8 @@ export const rolesPermissions = {
     assignments.createAssignment,
     cohorts.getAllUnassignedDevelopers,
     cohorts.addDeveloperToCohort,
+    instructors.createCohort,
+    instructors.getAllCohorts,
+    instructors.getCohortById,
   ]),
 } as const;
