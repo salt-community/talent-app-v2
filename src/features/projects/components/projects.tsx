@@ -9,14 +9,11 @@ type Props = {
   developerProfileId: string;
 };
 
-export async function   Projects({ developerProfileId }: Props) {
+export async function Projects({ developerProfileId }: Props) {
   let projects: Project[] = [];
-  let editAccess = false;
 
   try {
     projects = await projectsService.getAll(developerProfileId);
-
-    editAccess = await projectsService.checkProfileAccess(developerProfileId);
   } catch (error) {
     errorHandler(error);
   }
@@ -25,18 +22,17 @@ export async function   Projects({ developerProfileId }: Props) {
     return (
       <div>
         <H2>Projects</H2>
-        {editAccess && (
-          <>
-            <div className="flex flex-col justify-center mt-4">
-              <p>Add your projects here</p>
-            </div>
-            <Separator className="mt-4 mb-2" />
 
-            <div className="flex justify-center">
-              <ProjectForm developerProfileId={developerProfileId} />
-            </div>
-          </>
-        )}
+        <>
+          <div className="flex flex-col justify-center mt-4">
+            <p>Add your projects here</p>
+          </div>
+          <Separator className="mt-4 mb-2" />
+
+          <div className="flex justify-center">
+            <ProjectForm developerProfileId={developerProfileId} />
+          </div>
+        </>
       </div>
     );
   }
@@ -47,16 +43,15 @@ export async function   Projects({ developerProfileId }: Props) {
       <div className="flex flex-col justify-center mt-4 lg:grid lg:grid-cols-2 md:gap-8">
         {projects.map((project) => (
           <div key={project.id} className="md:p-5 md:border md:rounded-md">
-            <ProjectDetails project={project} editAccess={editAccess} />
+            <ProjectDetails project={project} />
             <Separator className="mt-4 mb-6 md:hidden" />
           </div>
         ))}
       </div>
-      {editAccess && (
-        <div className="flex justify-center">
-          <ProjectForm developerProfileId={developerProfileId} />
-        </div>
-      )}
+
+      <div className="flex justify-center">
+        <ProjectForm developerProfileId={developerProfileId} />
+      </div>
     </div>
   );
 }

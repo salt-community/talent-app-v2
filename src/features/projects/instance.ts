@@ -12,8 +12,7 @@ export const insecureProjectService = createService(
   db,
   createApi(),
   developerProfilesService.getAll,
-  developerProfilesService.getIdentityIdByDeveloperProfileId,
-  iamService.checkUserAccess
+  developerProfilesService.getIdentityIdByDeveloperProfileId
 );
 
 export const projectsService = secureService(
@@ -30,8 +29,5 @@ export const seedProjectService = createService(
     testPagePerformance: async () => "NA",
   },
   insecureDeveloperProfilesService.getAll,
-  insecureDeveloperProfilesService.getIdentityIdByDeveloperProfileId,
-  async function checkUserAccess(): Promise<boolean> {
-    return true;
-  }
+  insecureDeveloperProfilesService.getIdentityIdByDeveloperProfileId
 );
