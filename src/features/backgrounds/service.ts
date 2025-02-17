@@ -14,7 +14,6 @@ export function createBackgroundsService(
   getPublishedOrHighlightedDeveloperProfileIds: () => Promise<string[]>,
   getHighlightedDeveloperProfileIds: () => Promise<string[]>,
   getDeveloperById: (id: string) => Promise<Developer>,
-  checkUserAccess: (id: string) => Promise<boolean>,
   createDeveloperProfile: CreateDeveloperProfile,
   getAllById: GetAllById,
   deleteDeveloperProfile: DeleteDeveloperProfile,
@@ -213,16 +212,7 @@ export function createBackgroundsService(
     async getPostById(developerId: string) {
       return await repository.getPostById(developerId);
     },
-    async editAccess(developerProfileId: string) {
-      const identityId =
-        await getIdentityIdByDeveloperProfileId(developerProfileId);
 
-      if (!identityId) {
-        return false;
-      }
-
-      return checkUserAccess(identityId);
-    },
     async addDeveloperBackground(id: string) {
       const developer = await getDeveloperById(id);
       await backgroundsService.add({
