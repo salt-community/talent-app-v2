@@ -4,7 +4,6 @@ import {
   developerProfilesService,
   assignmentsService,
   cohortsService,
-  getAllAssignmentsAction,
 } from "@/features";
 const x = {
   getAll: developerProfilesService.getAll,
