@@ -1,8 +1,12 @@
 import { createInstructorService } from "./service";
-import { cohortsService } from "@/features";
+import { cohortsService, secureService } from "@/features";
 
-export const instructorService = createInstructorService(
+export const insecureInstructorsService = createInstructorService(
   cohortsService.getAll,
   cohortsService.getCohortById,
   cohortsService.createCohort
+);
+export const instructorService = secureService(
+  "instructors",
+  insecureInstructorsService
 );
