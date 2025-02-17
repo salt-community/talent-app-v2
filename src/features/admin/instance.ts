@@ -2,18 +2,12 @@ import { createAdminService } from "./service";
 import {
   backgroundsService,
   developerProfilesService,
+  iamService,
   assignmentsService,
   cohortsService,
 } from "@/features";
-const x = {
-  getAll: developerProfilesService.getAll,
-  delete: developerProfilesService.delete,
-  updateStatus: developerProfilesService.updateStatus,
-  createAssignment: assignmentsService.createAssignment,
-  getAllAssignments: assignmentsService.getAllAssignments,
-  getAllCohorts: cohortsService.getAll,
-};
-export const internalService = createAdminService(
+
+export const adminService = createAdminService(
   developerProfilesService.getAll,
   developerProfilesService.delete,
   developerProfilesService.updateStatus,
@@ -30,4 +24,3 @@ export const internalService = createAdminService(
     resetSettings: backgroundsService.resetMeilisearchSettings,
   }
 );
-const secureService = { ...x, ...internalService };
