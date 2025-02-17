@@ -4,7 +4,8 @@ export type Role = keyof typeof rolesPermissions;
 export type PermissionSets = (typeof rolesPermissions)[Role];
 export type Permission = PermissionSets extends Set<infer U> ? U : never;
 
-export type ViewPermissionSets = (typeof rolesViewPermissions)[Role];
+export type ViewRole = keyof typeof rolesViewPermissions;
+export type ViewPermissionSets = (typeof rolesViewPermissions)[ViewRole];
 export type ViewPermission =
   ViewPermissionSets extends Set<infer U> ? U : never;
 
