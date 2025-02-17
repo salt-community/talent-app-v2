@@ -1,4 +1,4 @@
-import { checkAccess } from "./check-access";
+import { checkAccess, hasAccess } from "./check-access";
 import { createRepository } from "./repository";
 import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
@@ -7,6 +7,7 @@ import { SessionClaims } from "@/features";
 import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
 import { Permission } from "./permissions";
+import { permission } from "process";
 
 export function createService(db: Db) {
   const repository = createRepository(db);
@@ -14,7 +15,9 @@ export function createService(db: Db) {
     async getAllIdentities() {
       return repository.getAllIdentities();
     },
-
+    async getAllRolesByUserId(id: string) {
+      return await repository.getAllRolesByUserId(id);
+    },
     async getIdentityById(id: string) {
       return await repository.getIdentityById(id);
     },
@@ -63,26 +66,16 @@ export function createService(db: Db) {
       return repository.addIdentity(identity);
     },
 
-    async checkUserAccess(identityId: string) {
+    async hasCurrentUserAccess(identityId: string, permission: Permission) {
       const { userId } = await auth();
       if (!userId) return false;
-
-      const identity = await repository.getIdentityRole(userId);
-
-      if (identity.roles === "admin") return true;
-
-      return identity.id === identityId;
+      const roles: string[] = ["guest"];
+      const identityRole = await repository.getIdentityRole(userId);
+      roles.push(identityRole.roles);
+      return hasAccess(roles, permission);
     },
 
-    async checkAccess(permission: Permission): Promise<void> {
-      const { userId } = await auth();
-      const roles: string[] = ["guest"];
-
-      if (userId) {
-        const identityRole = await repository.getIdentityRole(userId);
-        roles.push(identityRole.roles);
-      }
-
+    async checkAccess(permission: Permission, roles: string[]): Promise<void> {
       return checkAccess(roles, permission);
     },
   };

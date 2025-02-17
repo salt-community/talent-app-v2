@@ -27,6 +27,13 @@ export function createRepository(db: Db) {
         .from(identities)
         .where(eq(identities.role, "developer"));
     },
+    async getAllRolesByUserId(id: string) {
+      const roles = await db
+        .select({ role: identities.role })
+        .from(identities)
+        .where(eq(identities.clerkId, id));
+      return roles[0];
+    },
     async addIdentity(identity: IdentityInsert) {
       const userId = await db.insert(identities).values(identity).returning({
         id: identities.id,

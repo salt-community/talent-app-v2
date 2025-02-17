@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs/server";
 import { iamService } from ".";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,8 +23,14 @@ export function secureService<
     const permission = `${featureName}.${serviceMethodName}` as const;
 
     async function securedServiceMethod(args: unknown) {
+      const { userId } = await auth();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await iamService.checkAccess(permission as any);
+      const roles: string[] = ["guest"];
+      if (userId) {
+        const identityRoles = await iamService.getAllRolesByUserId(userId);
+        roles.push(identityRoles.role);
+      }
+      await iamService.checkAccess(permission as any, roles);
 
       return service[serviceMethodName](args);
     }
