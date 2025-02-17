@@ -2,19 +2,25 @@ import { createAdminService } from "./service";
 import {
   backgroundsService,
   developerProfilesService,
-  iamService,
   assignmentsService,
   cohortsService,
+  getAllAssignmentsAction,
 } from "@/features";
-
-export const adminService = createAdminService(
+const x = {
+  getAll: developerProfilesService.getAll,
+  delete: developerProfilesService.delete,
+  updateStatus: developerProfilesService.updateStatus,
+  createAssignment: assignmentsService.createAssignment,
+  getAllAssignments: assignmentsService.getAllAssignments,
+  getAllCohorts: cohortsService.getAll,
+};
+export const internalService = createAdminService(
   developerProfilesService.getAll,
   developerProfilesService.delete,
   developerProfilesService.updateStatus,
   assignmentsService.createAssignment,
   assignmentsService.getAllAssignments,
   cohortsService.getAll,
-  iamService.checkAccess,
   {
     isHealthOk: backgroundsService.isSearchHealthOk,
     repopulate: backgroundsService.repopulateMeiliSearch,
@@ -25,3 +31,4 @@ export const adminService = createAdminService(
     resetSettings: backgroundsService.resetMeilisearchSettings,
   }
 );
+const secureService = { ...x, ...internalService };
