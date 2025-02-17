@@ -91,6 +91,7 @@ export const rolesPermissions = {
     assignments.createAssignment,
     cohorts.getAllUnassignedDevelopers,
     cohorts.addDeveloperToCohort,
+    cohorts.getAll,
     instructors.createCohort,
     instructors.getAllCohorts,
     instructors.getCohortById,
