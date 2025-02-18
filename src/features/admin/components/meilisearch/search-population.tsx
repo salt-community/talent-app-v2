@@ -7,7 +7,7 @@ import Form from "next/form";
 import { Button, H3 } from "@/components";
 import { adminService } from "../../instance";
 
-export const maxDuration = 180;
+export const maxDuration = 60;
 
 export async function MeiliPopulation() {
   const needToSync = await adminService.doesSearchNeedSync();
