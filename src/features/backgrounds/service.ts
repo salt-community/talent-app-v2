@@ -269,10 +269,15 @@ export function createBackgroundsService(
       if (!currentUser) {
         return;
       }
+
       const developerProfile = await getAllDeveloperProfilesByIdentityId(
         currentUser.id
       );
-      return developerProfile;
+      const user = {
+        ...currentUser,
+        developerProfile,
+      };
+      return user;
     },
   };
 }
