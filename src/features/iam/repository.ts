@@ -52,6 +52,9 @@ export function createRepository(db: Db) {
         })
         .where(eq(identities.id, id));
     },
+    async deleteIdentity(id: string) {
+      await db.delete(identities).where(eq(identities.id, id));
+    },
   };
 }
 

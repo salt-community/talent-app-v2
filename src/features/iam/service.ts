@@ -26,6 +26,9 @@ export function createService(db: Db) {
       await repository.updateRole(id, newRole);
     },
 
+    async deleteIdentity(id: string) {
+      await repository.deleteIdentity(id);
+    },
     async controlUser() {
       const SALT_DOMAIN = "appliedtechnology.se";
       const { userId, sessionClaims } = await auth();
