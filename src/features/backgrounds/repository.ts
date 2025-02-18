@@ -10,18 +10,31 @@ import {
 } from "./db";
 import { BackgroundUpdate } from "./types";
 import { highlightedDevelopers } from "./db/posts-data";
+import { sql } from "drizzle-orm";
 
 export function createRepository(db: DB) {
   const posts = highlightedDevelopers;
   return {
     async getAllBackgrounds() {
-      return db
-        .select()
-        .from(backgrounds)
-        .innerJoin(skills, eq(skills.backgroundId, backgrounds.id))
-        .innerJoin(languages, eq(languages.backgroundId, backgrounds.id))
-        .innerJoin(educations, eq(educations.backgroundId, backgrounds.id));
-    },
+  return db
+    .select({
+      id: backgrounds.id,
+      developerProfileId: backgrounds.developerProfileId,
+      name: backgrounds.name,
+      avatarUrl: backgrounds.avatarUrl,
+      title: backgrounds.title,
+      bio: backgrounds.bio,
+      links: backgrounds.links,
+      skills: sql<string[]>`ARRAY_AGG(DISTINCT ${skills.name})::VARCHAR[]`.as("skills"),
+      languages: sql<string[]>`ARRAY_AGG(DISTINCT ${languages.name})::VARCHAR[]`.as("languages"),
+      educations: sql<string[]>`ARRAY_AGG(DISTINCT ${educations.name})::VARCHAR[]`.as("educations"),
+    })
+    .from(backgrounds)
+    .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
+    .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
+    .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
+    .groupBy(backgrounds.id);
+},
     async getAllDeveloperProfileIds() {
       const developerId = db
         .select({ developerProfileId: backgrounds.developerProfileId })

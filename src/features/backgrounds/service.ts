@@ -164,38 +164,14 @@ export function createBackgroundsService(
     async isSearchHealthOk() {
       return await meiliClient.isHealthOk();
     },
-    async repopulateMeiliSearch() {
-      await meiliClient.deleteAllBackgrounds();
-      const backgrounds = await repository.getAllBackgrounds();
-      for (const background of backgrounds) {
-        const backgroundSkills = await repository.getSkillsByBackgroundId(
-          background.backgrounds.id
-        );
-        const backgroundLanguages = await repository.getLanguagesByBackgroundId(
-          background.backgrounds.id
-        );
-        const backgroundEducation =
-          await repository.getEducationsByBackgroundId(
-            background.backgrounds.id
-          );
-        const skills = backgroundSkills
-          .map((skill) => skill?.name)
-          .filter((name): name is string => !!name);
-        const languages = backgroundLanguages
-          .map((language) => language?.name)
-          .filter((name): name is string => !!name);
-        const educations = backgroundEducation
-          .map((education) => education?.name)
-          .filter((name): name is string => !!name);
+   async repopulateMeiliSearch() {
+  await meiliClient.deleteAllBackgrounds();
+  const backgrounds = await repository.getAllBackgrounds();
 
-        await meiliClient.upsertBackground({
-          ...background.backgrounds,
-          skills,
-          languages,
-          educations,
-        });
-      }
-    },
+  for (const background of backgrounds) {
+    await meiliClient.upsertBackground(background);
+  }
+},
 
     async syncMeilisearch() {
       const outboxMessages = await repository.getAllOutboxMessage();
