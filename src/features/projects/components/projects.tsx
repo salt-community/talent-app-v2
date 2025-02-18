@@ -4,15 +4,24 @@ import ProjectDetails from "./project-details";
 import ProjectForm from "./project-form";
 import { errorHandler } from "@/lib";
 import type { Project } from "../types";
+import { notFound } from "next/navigation";
 
 type Props = {
-  developerProfileId: string;
+  slug: string;
 };
 
-export async function   Projects({ developerProfileId }: Props) {
+export async function Projects({ slug }: Props) {
   let projects: Project[] = [];
   let editAccess = false;
 
+  const developerProfile = await projectsService.getAllDevelopers();
+  const developerProfileId = developerProfile.find(
+    (profile) => profile.slug === slug
+  )?.id;
+  console.log({ ProjectId: developerProfileId });
+  if (!developerProfileId) {
+    return notFound();
+  }
   try {
     projects = await projectsService.getAll(developerProfileId);
 

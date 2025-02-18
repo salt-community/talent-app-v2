@@ -5,17 +5,20 @@ import { BackgroundCard, Projects, ScoreBoard } from "@/features";
 export const maxDuration = 60;
 
 type Params = {
-  params: Promise<{ developerProfileId: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export default async function DeveloperDetailPage({ params }: Params) {
-  const { developerProfileId } = await params;
+  const { slug } = await params;
+
+  console.log({ slug: slug });
+
   return (
     <DeveloperCard>
-      <BackgroundCard developerProfileId={developerProfileId} />
+      <BackgroundCard slug={slug} />
       <ScoreBoard cohortId={"927d9e82-c0b1-4561-ac04-75883d7b01ae"} />
       {/* Hard coded cohortId? */}
-      <Projects developerProfileId={developerProfileId} />
+      <Projects slug={slug} />
     </DeveloperCard>
   );
 }

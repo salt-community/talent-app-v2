@@ -2,7 +2,11 @@ import { Repository } from "./repository";
 import { BackgroundInsert, OutboxMessageSelect } from "./db";
 import { BackgroundUpdate } from "./types";
 import { MeiliClient } from "./meili";
-import { DeleteDeveloperProfile, Developer } from "../developer-profiles";
+import {
+  DeleteDeveloperProfile,
+  Developer,
+  GetAllDeveloperProfiles,
+} from "../developer-profiles";
 import { Settings, TaskStatus } from "meilisearch";
 import { backgroundsService } from "./instance";
 import { CreateDeveloperProfile, GetAllById } from "@/features";
@@ -15,6 +19,7 @@ export function createBackgroundsService(
   getHighlightedDeveloperProfileIds: () => Promise<string[]>,
   getDeveloperById: (id: string) => Promise<Developer>,
   checkUserAccess: (id: string) => Promise<boolean>,
+  getAllDeveloperProfile: GetAllDeveloperProfiles,
   createDeveloperProfile: CreateDeveloperProfile,
   getAllById: GetAllById,
   deleteDeveloperProfile: DeleteDeveloperProfile,
@@ -245,6 +250,9 @@ export function createBackgroundsService(
     },
     async deleteDeveloperProfile(developerProfileId: string) {
       await deleteDeveloperProfile(developerProfileId);
+    },
+    async getAllDeveloperProfile() {
+      return await getAllDeveloperProfile();
     },
   };
 }
