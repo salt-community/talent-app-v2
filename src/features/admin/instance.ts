@@ -26,5 +26,6 @@ export const adminService = createAdminService(
   },
   iamService.deleteIdentity,
   developerProfilesService.deleteByIdentityId,
-  cohortsService.deleteCohortIdentity
+  cohortsService.deleteCohortIdentity,
+  backgroundsService.deleteBackgroundById
 );

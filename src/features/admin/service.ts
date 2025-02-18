@@ -22,7 +22,8 @@ export function createAdminService(
   searchConfigurationClient: SearchConfigurationClient,
   deleteIdentity: (id: string) => Promise<void>,
   deleteDeveloperProfileById: (id: string) => Promise<void>,
-  deleteCohortIdentityById: (id: string) => Promise<void>
+  deleteCohortIdentityById: (id: string) => Promise<void>,
+  deleteBackgroundById: (id: string) => Promise<void>
 ) {
   return {
     async getAllDeveloperProfiles() {
@@ -83,12 +84,15 @@ export function createAdminService(
       // developer_profile
       await deleteDeveloperProfileById(identityId);
       //cohort_identities
-      deleteCohortIdentityById(identityId);
+      await deleteCohortIdentityById(identityId);
       //background
-      //projects
-      //assignment_scores
-      //skills
-      //languages
+      const developerProfiles = await getAllDeveloperProfiles();
+      const filteredDeveloperProfiles = developerProfiles.filter(
+        (developerProfile) => developerProfile.identityId === identityId
+      );
+      for (const developerProfile of filteredDeveloperProfiles) {
+        await deleteBackgroundById(developerProfile.id);
+      }
       //educations
     },
   };
