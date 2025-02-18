@@ -1,0 +1,1 @@
+ALTER TABLE "developer_profiles" ALTER COLUMN "slug" DROP NOT NULL;

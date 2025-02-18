@@ -15,6 +15,13 @@
       "when": 1739808784021,
       "tag": "0001_foamy_satana",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1739866817285,
+      "tag": "0002_developer_profiles_nullable_slug",
+      "breakpoints": true
     }
   ]
 }
