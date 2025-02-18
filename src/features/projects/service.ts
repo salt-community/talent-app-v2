@@ -78,6 +78,9 @@ export function createService(
         console.log("Error while deleting project:", error);
       }
     },
+    deleteProjectsByDeveloperProfileId: async (developerProfileId: string) => {
+      await reps.deleteProjectsByDeveloperProfileId(developerProfileId);
+    },
     updateProjectData: async (args: {
       id: string;
       projectWebsite: string;

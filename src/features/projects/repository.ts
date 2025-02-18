@@ -17,12 +17,15 @@ export function createRepository(db: Db) {
         .set({
           description: updatedProject.description,
           imageUrl: updatedProject.imageUrl,
-          imageAlt:updatedProject.imageAlt
+          imageAlt: updatedProject.imageAlt,
         })
         .where(eq(projects.id, updatedProject.id));
     },
     delete: async (id: string) => {
       await db.delete(projects).where(eq(projects.id, id));
+    },
+    deleteProjectsByDeveloperProfileId: async (developerProfileId: string) => {
+      await db.delete(projects).where(eq(projects.userId, developerProfileId));
     },
     updateProjectData: async (updatedProjectData: UpdatedProjectData) => {
       await db
