@@ -27,6 +27,9 @@ export function createDeveloperProfilesService(db: Db) {
     async delete(id: string) {
       await repository.delete(id);
     },
+    async deleteByIdentityId(identityId: string) {
+      await repository.deleteByIdentityId(identityId);
+    },
     async updateStatus(args: { id: string; status: string }) {
       await repository.updateStatus(args.id, args.status);
     },

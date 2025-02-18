@@ -20,4 +20,5 @@ export const developerProfiles: PermissionsSchema<
   getIdentityIdByDeveloperProfileId:
     "developerProfiles.getIdentityIdByDeveloperProfileId",
   generateUniqueSlug: "developerProfiles.generateUniqueSlug",
+  deleteByIdentityId: "developerProfiles.deleteByIdentityId",
 };

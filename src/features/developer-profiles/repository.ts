@@ -38,6 +38,11 @@ export function createDevelopersRepository(db: Db) {
     async delete(id: string) {
       await db.delete(developerProfiles).where(eq(developerProfiles.id, id));
     },
+    async deleteByIdentityId(identityId: string) {
+      await db
+        .delete(developerProfiles)
+        .where(eq(developerProfiles.identityId, identityId));
+    },
     async getPublishedOrHighlightedDeveloperProfileIds() {
       return (
         await db
