@@ -1,10 +1,27 @@
 import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { HamburgerMenu } from "./ui/hamburger-menu";
-import { iamService } from "@/features";
+import { developerProfilesService, iamService } from "@/features";
 
 export async function Header() {
-  const user = await iamService.controlUser();
+  //const user = await iamService.controlUser();
+
+  const userIdentity = await iamService.controlUser();
+  if (!userIdentity) return null;
+
+  const users = await developerProfilesService.getDeveloperProfileByIdentityId(
+    userIdentity.id
+  );
+
+  if (!users[0].slug) return null;
+
+  const userWithRole = {
+    slug: users.map((user) => user.slug)[0]!,
+    role: userIdentity.role,
+    id: userIdentity.id,
+  };
+
+  if (!userWithRole) return null;
 
   return (
     <nav className="w-full h-12 px-3 shadow-sm sticky top-0 z-20 flex bg-background justify-between items-center md:px-10">
@@ -19,7 +36,7 @@ export async function Header() {
         </SignedOut>
         <SignedIn>
           <UserButton />
-          <HamburgerMenu user={user} />
+          <HamburgerMenu user={userWithRole} />
         </SignedIn>
       </div>
     </nav>

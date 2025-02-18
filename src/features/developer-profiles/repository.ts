@@ -67,6 +67,12 @@ export function createDevelopersRepository(db: Db) {
 
       return developerProfile?.identityId;
     },
+    async getDeveloperProfileByIdentityId(identityId: string) {
+      return await db
+        .select()
+        .from(developerProfiles)
+        .where(eq(developerProfiles.identityId, identityId));
+    },
     async existsBySlug(slug: string) {
       const [developerProfile] = await db
         .select()

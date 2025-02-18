@@ -76,6 +76,9 @@ export function createDeveloperProfilesService(db: Db) {
 
       return uniqueSlug;
     },
+    async getDeveloperProfileByIdentityId(identityId: string) {
+      return await repository.getDeveloperProfileByIdentityId(identityId);
+    },
     async updateMissingSlugs() {
       const developers = await repository.getAll();
       for (const developer of developers) {

@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
-  user: { id: string; role: string } | undefined;
+  user: { slug: string; id: string; role: string } | undefined;
 };
 
 export function HamburgerMenu({ user }: Props) {
@@ -59,7 +59,7 @@ export function HamburgerMenu({ user }: Props) {
                   : "border-white"
               } hover:border-primary`}
             >
-              <Link href={`/profile/${user.id}`}>My profile</Link>
+              <Link href={`/profile/${user.slug}`}>My profile</Link>
             </li>
           )}
           {user?.role === "admin" && (

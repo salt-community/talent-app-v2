@@ -9,6 +9,8 @@ export type UpdateStatus = DevelopersService["updateStatus"];
 export type GetAllById = DevelopersService["getAllById"];
 export type CreateDeveloperProfile =
   DevelopersService["createDeveloperProfile"];
+export type getDeveloperProfileByIdentityId =
+  DevelopersService["getDeveloperProfileByIdentityId"];
 
 export type Developer = {
   name: string;

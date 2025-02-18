@@ -65,6 +65,7 @@ export const rolesPermissions = {
     developerProfiles.getDeveloperById,
     developerProfiles.getPublishedOrHighlightedDeveloperProfileIds,
     developerProfiles.getIdentityIdByDeveloperProfileId,
+    developerProfiles.getDeveloperProfileByIdentityId,
     developerProfiles.getAll,
     assignments.getAssignmentsByCohortId,
     assignments.getScoresByIdentityId,

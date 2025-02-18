@@ -2,7 +2,6 @@ import { Search } from "./search";
 import { backgroundsService } from "@/features";
 import { Developers } from "@/features";
 import { errorHandler } from "@/lib";
-import { insecureDeveloperProfilesService } from "@/features";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 
@@ -10,7 +9,6 @@ export default async function Page({ searchParams }: Props) {
   const search = (await searchParams).search;
   let developerProfileIds: string[] = [];
 
-  updateMissingSlugs();
   try {
     developerProfileIds =
       await backgroundsService.searchDeveloperProfileIds(search);
@@ -24,8 +22,4 @@ export default async function Page({ searchParams }: Props) {
       <Developers developerProfileIds={developerProfileIds} />
     </main>
   );
-}
-
-async function updateMissingSlugs() {
-  await insecureDeveloperProfilesService.updateMissingSlugs();
 }
