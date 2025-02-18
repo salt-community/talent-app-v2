@@ -28,7 +28,7 @@ export function StatusMenuIdentity({ id, role }: Props) {
     await deleteUserAction(id);
     toast({
       title: "Profile deleted",
-      description: "The developer profile has been successfully deleted",
+      description: "The user profile has been successfully deleted",
     });
   }
 
