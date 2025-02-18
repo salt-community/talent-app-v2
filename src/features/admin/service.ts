@@ -83,23 +83,26 @@ export function createAdminService(
       //delete from tables
       //identities
       await deleteIdentity(identityId);
-      // developer_profile
-      await deleteDeveloperProfileById(identityId);
       //cohort_identities
       await deleteCohortIdentityById(identityId);
       //assignment_scores
       await deleteAssignmentScoreById(identityId);
 
       const developerProfiles = await getAllDeveloperProfiles();
+      console.log("profiles", developerProfiles);
       const filteredDeveloperProfiles = developerProfiles.filter(
-        (developerProfile) => developerProfile.identityId === identityId
+        (developerProfile) =>
+          developerProfile.identityId.trim() === identityId.trim()
       );
+      console.log("filtered", filteredDeveloperProfiles);
       for (const developerProfile of filteredDeveloperProfiles) {
         //background
         await deleteBackgroundById(developerProfile.id);
         //projects
         await deleteProjectsByDeveloperProfileId(developerProfile.id);
       }
+      // developer_profile
+      await deleteDeveloperProfileById(identityId);
     },
   };
 }
