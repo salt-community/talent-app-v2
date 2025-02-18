@@ -15,7 +15,6 @@ export const adminService = createAdminService(
   assignmentsService.createAssignment,
   assignmentsService.getAllAssignments,
   cohortsService.getAll,
-  iamService.checkAccess,
   {
     isHealthOk: backgroundsService.isSearchHealthOk,
     repopulate: backgroundsService.repopulateMeiliSearch,

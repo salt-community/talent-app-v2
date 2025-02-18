@@ -18,7 +18,6 @@ export function createAdminService(
   createAssignment: CreateAssignment,
   getAllAssignments: GetAllAssignments,
   getAllCohorts: GetAllCohorts,
-  checkAccess: CheckAccess,
   searchConfigurationClient: SearchConfigurationClient,
   deleteIdentity: (id: string) => Promise<void>,
   deleteDeveloperProfileById: (id: string) => Promise<void>,
