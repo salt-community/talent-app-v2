@@ -68,7 +68,7 @@ export function createAssignmentsRepository(db: Db) {
     },
     async deleteAssignmentScoreById(identityId: string) {
       await db
-        .delete(assignments)
+        .delete(assignmentScores)
         .where(eq(assignmentScores.identityId, identityId));
     },
 
