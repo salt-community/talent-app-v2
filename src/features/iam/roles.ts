@@ -104,5 +104,6 @@ export const rolesPermissions = {
     cohorts.getAllUnassignedDevelopers,
     cohorts.addDeveloperToCohort,
     cohorts.deleteCohortIdentity,
+    backgrounds.deleteBackgroundById,
   ]),
 } as const;

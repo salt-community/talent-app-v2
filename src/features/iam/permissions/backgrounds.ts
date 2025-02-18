@@ -29,4 +29,5 @@ export const backgrounds: PermissionsSchema<"backgrounds", BackgroundsService> =
     updateMeilisearchSettings: "backgrounds.updateMeilisearchSettings",
     searchDeveloperProfileIds: "backgrounds.searchDeveloperProfileIds",
     update: "backgrounds.update",
+    deleteBackgroundById: "backgrounds.deleteBackgroundById",
   };
