@@ -5,6 +5,7 @@ import {
   iamService,
   assignmentsService,
   cohortsService,
+  projectsService,
 } from "@/features";
 
 export const adminService = createAdminService(
@@ -27,5 +28,7 @@ export const adminService = createAdminService(
   iamService.deleteIdentity,
   developerProfilesService.deleteByIdentityId,
   cohortsService.deleteCohortIdentity,
-  backgroundsService.deleteBackgroundById
+  backgroundsService.deleteBackgroundById,
+  assignmentsService.deleteAssignmentScoreById,
+  projectsService.deleteProjectsByDeveloperProfileId
 );
