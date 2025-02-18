@@ -2,7 +2,6 @@ import {
   DeleteDeveloperProfile,
   GetAllDeveloperProfiles,
   UpdateStatus,
-  CheckAccess,
   CreateAssignment,
   NewAssignment,
   GetAllCohorts,
