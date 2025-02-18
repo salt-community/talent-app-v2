@@ -6,9 +6,10 @@ import {
   assignmentsService,
   cohortsService,
   projectsService,
+  secureService,
 } from "@/features";
 
-export const adminService = createAdminService(
+export const insecureAdminService = createAdminService(
   developerProfilesService.getAll,
   developerProfilesService.delete,
   developerProfilesService.updateStatus,
@@ -31,3 +32,5 @@ export const adminService = createAdminService(
   assignmentsService.deleteAssignmentScoreById,
   projectsService.deleteProjectsByDeveloperProfileId
 );
+
+export const adminService = secureService("admins", insecureAdminService);

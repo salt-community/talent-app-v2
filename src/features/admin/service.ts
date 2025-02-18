@@ -33,8 +33,8 @@ export function createAdminService(
     async deleteDeveloperProfile(id: string) {
       await deleteDeveloperProfile(id);
     },
-    async updateStatus(id: string, status: string) {
-      await updateStatus({ id, status });
+    async updateStatus(args: { id: string; status: string }) {
+      await updateStatus({ id: args.id, status: args.status });
     },
     async isSearchHealthOk() {
       return await searchConfigurationClient.isHealthOk();
