@@ -66,6 +66,11 @@ export function createAssignmentsRepository(db: Db) {
         .delete(assignments)
         .where(eq(assignments.id, assignmentId));
     },
+    async deleteAssignmentScoreById(identityId: string) {
+      await db
+        .delete(assignments)
+        .where(eq(assignmentScores.identityId, identityId));
+    },
 
     async updateAssignment(id: string, data: Partial<NewAssignment>) {
       const [updatedAssignment] = await db

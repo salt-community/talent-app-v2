@@ -41,6 +41,9 @@ export function createAssignmentsService(db: Db) {
     async deleteAssignment(assignmentId: string) {
       return await repo.deleteAssignment(assignmentId);
     },
+    async deleteAssignmentScoreById(identityId: string) {
+      await repo.deleteAssignmentScoreById(identityId);
+    },
 
     async getAssignmentsByCohort(cohortId: string) {
       return await repo.getAssignmentsByCohort(cohortId);
