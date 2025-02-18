@@ -11,4 +11,5 @@ export const admins = [
   "admin.getSearchSettings",
   "admin.updateSearchSettings",
   "admin.resetSearchSettings",
+  "admin.deleteUser",
 ] as const;
