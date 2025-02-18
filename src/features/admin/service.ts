@@ -19,7 +19,8 @@ export function createAdminService(
   getAllAssignments: GetAllAssignments,
   getAllCohorts: GetAllCohorts,
   checkAccess: CheckAccess,
-  searchConfigurationClient: SearchConfigurationClient
+  searchConfigurationClient: SearchConfigurationClient,
+  deleteIdentity: (id: string) => Promise<void>
 ) {
   return {
     async getAllDeveloperProfiles() {
@@ -76,6 +77,7 @@ export function createAdminService(
       console.log("deleting:", identityId);
       //delete from tables
       //identities
+      await deleteIdentity(identityId);
       // developer_profile
       //cohort_identities
       //background

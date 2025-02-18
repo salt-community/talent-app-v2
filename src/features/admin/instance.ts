@@ -23,5 +23,6 @@ export const adminService = createAdminService(
     getSettings: backgroundsService.getMeilisearchSettings,
     updateSettings: backgroundsService.updateMeilisearchSettings,
     resetSettings: backgroundsService.resetMeilisearchSettings,
-  }
+  },
+  iamService.deleteIdentity
 );
