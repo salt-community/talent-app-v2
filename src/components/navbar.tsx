@@ -13,8 +13,6 @@ export async function Header() {
     userIdentity.id
   );
 
-  if (!users[0].slug) return null;
-
   const userWithRole = {
     slug: users.map((user) => user.slug)[0]!,
     role: userIdentity.role,
