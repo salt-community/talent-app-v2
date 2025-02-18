@@ -14,7 +14,6 @@ import { useState } from "react";
 import { Status } from "./status";
 import { deleteUserAction, updateRoleAction } from "../action";
 import { DeleteDialog } from "@/features/admin/components/delete-button";
-import { adminService } from "@/features/admin/instance";
 
 type Props = {
   id: string;
