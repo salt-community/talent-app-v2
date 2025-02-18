@@ -243,7 +243,10 @@ export function createBackgroundsService(
       return developer;
     },
     async createDeveloperProfile(identityId: string) {
-      await createDeveloperProfile(identityId);
+      const developerProfile = await createDeveloperProfile(identityId);
+      if (developerProfile) {
+        await backgroundsService.addDeveloperBackground(developerProfile.id);
+      }
     },
     async getAllDeveloperProfilesById(identityId: string) {
       return await getAllById(identityId);
