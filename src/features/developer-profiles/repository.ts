@@ -75,5 +75,13 @@ export function createDevelopersRepository(db: Db) {
 
       return !!developerProfile;
     },
+    async insertSlug(id: string, slug: string) {
+      await db
+        .update(developerProfiles)
+        .set({
+          slug,
+        })
+        .where(eq(developerProfiles.id, id));
+    },
   };
 }

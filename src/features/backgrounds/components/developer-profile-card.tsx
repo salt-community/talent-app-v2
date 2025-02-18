@@ -13,7 +13,10 @@ export function DeveloperProfileCard({ developerProfileId }: Props) {
         <li className="">
           <Card className="p-2 h-full justify-center min-w-[20rem]">
             <CardContent>
-              <Background developerProfileId={developerProfileId} page="profile" />
+              <Background
+                developerProfileId={developerProfileId}
+                page="profile"
+              />
             </CardContent>
           </Card>
         </li>

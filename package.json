@@ -15,7 +15,8 @@
     "test": "vitest",
     "test:watch": "vitest --watch",
     "db:migrate": "drizzle-kit migrate",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "slugScript": "tsx src/slugsScript.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.6.0",

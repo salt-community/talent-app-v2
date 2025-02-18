@@ -76,6 +76,16 @@ export function createDeveloperProfilesService(db: Db) {
 
       return uniqueSlug;
     },
+    async updateMissingSlugs() {
+      const developers = await repository.getAll();
+      for (const developer of developers) {
+        if (!developer.slug) {
+          const newSlug = generateSlug(developer.name);
+          console.log(`Updating ${developer.name} with slug: ${newSlug}`);
+          await repository.insertSlug(developer.id, newSlug);
+        }
+      }
+    },
   };
 }
 function generateSlug(title: string) {
