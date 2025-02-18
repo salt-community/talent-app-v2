@@ -14,4 +14,5 @@ export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
     getScoresByIdentityId: "assignments.getScoresByIdentityId",
     updateAssignment: "assignments.updateAssignment",
     getAllAssignments: "assignments.getAllAssignments",
+    deleteAssignmentScoreById: "assignments.deleteAssignmentScoreById",
   };

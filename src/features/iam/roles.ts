@@ -101,6 +101,7 @@ export const rolesPermissions = {
     assignments.getAssignmentsByCohortId,
     assignments.getAssignmentById,
     assignments.createAssignment,
+    assignments.deleteAssignmentScoreById,
     cohorts.getAllUnassignedDevelopers,
     cohorts.addDeveloperToCohort,
     cohorts.deleteCohortIdentity,
