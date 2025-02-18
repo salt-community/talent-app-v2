@@ -49,6 +49,7 @@ export const rolesPermissions = {
     backgrounds.update,
     backgrounds.searchDeveloperProfileIds,
     backgrounds.getAllDeveloperProfile,
+    backgrounds.GetCurrentUsers,
     projects.add,
     projects.checkProfileAccess,
     projects.delete,
@@ -83,6 +84,7 @@ export const rolesPermissions = {
     backgrounds.searchDeveloperProfileIds,
     backgrounds.getAllDeveloperProfile,
     backgrounds.getAllDeveloperProfilesById,
+    backgrounds.deleteBackgroundById,
     projects.checkProfileAccess,
     projects.updateDescription,
     projects.updateProjectData,
@@ -108,6 +110,5 @@ export const rolesPermissions = {
     cohorts.getAllUnassignedDevelopers,
     cohorts.addDeveloperToCohort,
     cohorts.deleteCohortIdentity,
-    backgrounds.deleteBackgroundById,
   ]),
 } as const;

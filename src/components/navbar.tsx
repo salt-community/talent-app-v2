@@ -7,6 +7,7 @@ export async function Header() {
   //const user = await iamService.controlUser();
 
   const userIdentity = await iamService.controlUser();
+
   if (!userIdentity) return null;
 
   const users = await developerProfilesService.getDeveloperProfileByIdentityId(

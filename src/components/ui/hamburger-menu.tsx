@@ -59,7 +59,7 @@ export function HamburgerMenu({ user }: Props) {
                   : "border-white"
               } hover:border-primary`}
             >
-              <Link href={`/profile/${user.slug}`}>My profile</Link>
+              <Link href={`/profile/my-profiles`}>My profile</Link>
             </li>
           )}
           {user?.role === "admin" && (

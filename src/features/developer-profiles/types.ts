@@ -9,7 +9,7 @@ export type UpdateStatus = DevelopersService["updateStatus"];
 export type GetAllById = DevelopersService["getAllById"];
 export type CreateDeveloperProfile =
   DevelopersService["createDeveloperProfile"];
-export type getDeveloperProfileByIdentityId =
+export type GetDeveloperProfileByIdentityId =
   DevelopersService["getDeveloperProfileByIdentityId"];
 
 export type Developer = {

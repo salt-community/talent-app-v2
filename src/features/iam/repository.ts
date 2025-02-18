@@ -44,6 +44,12 @@ export function createRepository(db: Db) {
         .where(eq(identities.clerkId, id));
       return role[0];
     },
+    async getAllIdentityById(id: string) {
+      return await db
+        .select()
+        .from(identities)
+        .where(eq(identities.clerkId, id));
+    },
     async updateRole(id: string, newRole: string) {
       await db
         .update(identities)

@@ -62,6 +62,13 @@ export function createService(db: Db) {
       }
     },
 
+    async getCurrentUser() {
+      const { userId } = await auth();
+      if (!userId) return null;
+      const user = await repository.getUserId(userId);
+      return user;
+    },
+
     async addIdentity(identity: IdentityInsert) {
       return repository.addIdentity(identity);
     },
