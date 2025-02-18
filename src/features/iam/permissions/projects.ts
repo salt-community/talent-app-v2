@@ -5,6 +5,8 @@ export const projects: PermissionsSchema<"projects", ProjectsService> = {
   add: "projects.add",
   checkProfileAccess: "projects.checkProfileAccess",
   delete: "projects.delete",
+  deleteProjectsByDeveloperProfileId:
+    "projects.deleteProjectsByDeveloperProfileId",
   getAll: "projects.getAll",
   getAllDevelopers: "projects.getAllDevelopers",
   updateDescription: "projects.updateDescription",
