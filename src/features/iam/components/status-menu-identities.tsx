@@ -12,7 +12,9 @@ import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
 
 import { Status } from "./status";
-import { updateRoleAction } from "../action";
+import { deleteUserAction, updateRoleAction } from "../action";
+import { DeleteDialog } from "@/features/admin/components/delete-button";
+import { adminService } from "@/features/admin/instance";
 
 type Props = {
   id: string;
@@ -22,6 +24,14 @@ type Props = {
 export function StatusMenuIdentity({ id, role }: Props) {
   const [IdentityRole, setRole] = useState<string>(role);
   const { toast } = useToast();
+
+  async function onDelete() {
+    await deleteUserAction(id);
+    toast({
+      title: "Profile deleted",
+      description: "The developer profile has been successfully deleted",
+    });
+  }
 
   async function onStatusChange(newRole: string) {
     await updateRoleAction(id, newRole);
@@ -52,6 +62,7 @@ export function StatusMenuIdentity({ id, role }: Props) {
               Developer
             </DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="core">Core</DropdownMenuRadioItem>
+            <DeleteDialog onConfirm={onDelete} />
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>

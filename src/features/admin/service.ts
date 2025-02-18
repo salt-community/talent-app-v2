@@ -72,5 +72,18 @@ export function createAdminService(
       // await checkAccess("admin.createAssignment"); problem for another day
       return await createAssignment(assignment);
     },
+    async deleteUser(identityId: string) {
+      console.log("deleting:", identityId);
+      //delete from tables
+      //identities
+      // developer_profile
+      //cohort_identities
+      //background
+      //projects
+      //assignment_scores
+      //skills
+      //languages
+      //educations
+    },
   };
 }
