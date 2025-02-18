@@ -36,7 +36,7 @@ export function createCohortsRepository(db: Db) {
       return await db.delete(cohorts).where(eq(cohorts.id, cohortId));
     },
     async deleteCohortIdentity(identityId: string) {
-      return await db
+      await db
         .delete(cohortIdentities)
         .where(eq(cohortIdentities.identityId, identityId));
     },
