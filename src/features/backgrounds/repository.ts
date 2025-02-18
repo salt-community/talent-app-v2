@@ -150,6 +150,11 @@ export function createRepository(db: DB) {
     async getPostById(id: string) {
       return posts.find((post) => post.id === id);
     },
+    async deleteBackgroundById(developerProfileId: string) {
+      await db
+        .delete(backgrounds)
+        .where(eq(backgrounds.developerProfileId, developerProfileId));
+    },
   };
 }
 export type Repository = ReturnType<typeof createRepository>;

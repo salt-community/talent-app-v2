@@ -254,5 +254,8 @@ export function createBackgroundsService(
     async getAllDeveloperProfile() {
       return await getAllDeveloperProfile();
     },
+    async deleteBackgroundById(developerProfileId: string) {
+      await repository.deleteBackgroundById(developerProfileId);
+    },
   };
 }
