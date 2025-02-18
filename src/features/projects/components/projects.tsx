@@ -18,7 +18,6 @@ export async function Projects({ slug }: Props) {
   const developerProfileId = developerProfile.find(
     (profile) => profile.slug === slug
   )?.id;
-  console.log({ ProjectId: developerProfileId });
   if (!developerProfileId) {
     return notFound();
   }

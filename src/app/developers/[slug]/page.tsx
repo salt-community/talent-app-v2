@@ -11,8 +11,6 @@ type Params = {
 export default async function DeveloperDetailPage({ params }: Params) {
   const { slug } = await params;
 
-  console.log({ slug: slug });
-
   return (
     <DeveloperCard>
       <BackgroundCard slug={slug} />

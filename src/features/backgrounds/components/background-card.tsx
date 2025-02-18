@@ -13,7 +13,6 @@ export async function BackgroundCard({ slug }: Props) {
   const developerProfileId = developerProfile.find(
     (profile) => profile.slug === slug
   )?.id;
-  console.log({ BacakgroundCardId: developerProfileId });
 
   if (!developerProfileId) {
     return notFound();
