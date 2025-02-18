@@ -29,6 +29,7 @@ type Props = {
 
 export default function EditProjectDetails({ project }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   async function updateProjectData() {
     try {
       setLoading(true);
@@ -54,6 +55,7 @@ export default function EditProjectDetails({ project }: Props) {
     };
     try {
       await updateDescriptionAction(updateDescription);
+      setIsDialogOpen(false);
     } catch (error) {
       console.log("error updating performance:", error);
     }
@@ -69,7 +71,7 @@ export default function EditProjectDetails({ project }: Props) {
   };
   return (
     <>
-      <Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <Pencil size={20} strokeWidth={2.5} />
         </DialogTrigger>

@@ -10,7 +10,6 @@ import {
   Textarea,
 } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { updateFormSchema } from "../validation";
@@ -70,12 +69,13 @@ export default function UpdateDescription({ onSubmit, placeholder }: Props) {
           </FormMessage>
         </FormItem>
         <DialogFooter>
-          <DialogClose
+          <button
             type="submit"
             className="bg-zinc-900 text-white text-sm rounded-md w-full h-10 hover:bg-zinc-800"
+            disabled={form.formState.isSubmitting}
           >
-            Save changes{" "}
-          </DialogClose>
+            Save changes
+          </button>
         </DialogFooter>
       </form>
     </Form>
