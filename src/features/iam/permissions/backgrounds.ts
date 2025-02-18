@@ -30,4 +30,5 @@ export const backgrounds: PermissionsSchema<"backgrounds", BackgroundsService> =
     searchDeveloperProfileIds: "backgrounds.searchDeveloperProfileIds",
     update: "backgrounds.update",
     deleteBackgroundById: "backgrounds.deleteBackgroundById",
+    GetCurrentUsers: "backgrounds.GetCurrentUsers",
   };
