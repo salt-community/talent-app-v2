@@ -21,7 +21,8 @@ export function createAdminService(
   checkAccess: CheckAccess,
   searchConfigurationClient: SearchConfigurationClient,
   deleteIdentity: (id: string) => Promise<void>,
-  deleteDeveloperProfileById: (id: string) => Promise<void>
+  deleteDeveloperProfileById: (id: string) => Promise<void>,
+  deleteCohortIdentityById: (id: string) => Promise<void>
 ) {
   return {
     async getAllDeveloperProfiles() {
@@ -82,7 +83,7 @@ export function createAdminService(
       // developer_profile
       await deleteDeveloperProfileById(identityId);
       //cohort_identities
-
+      deleteCohortIdentityById(identityId);
       //background
       //projects
       //assignment_scores
