@@ -10,7 +10,7 @@ export async function deleteDeveloperProfileAction(id: string) {
 }
 
 export async function updateStatusAction(id: string, status: string) {
-  await adminService.updateStatus(id, status);
+  await adminService.updateStatus({ id, status });
 }
 
 export async function repopulateMeilisearchAction() {
