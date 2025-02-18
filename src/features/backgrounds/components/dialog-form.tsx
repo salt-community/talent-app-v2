@@ -15,7 +15,7 @@ import { TagsInput } from "./tags-input";
 import { Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { BackgroundInfo } from "../types";
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { EducationSelect, LanguageSelect, SkillSelect } from "../db";
 import { BackgroundAvatar } from "./avatar";
 
@@ -38,15 +38,23 @@ export function DialogForm({
   );
 
   const [avatarUrl, setAvatarUrl] = useState(background.avatarUrl);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isPending && state?.errorMessages === undefined) {
+      setIsOpen(false);
+    }
+  }, [isPending, state]);
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Pencil
           type="button"
           size={20}
           strokeWidth={2.5}
           className="cursor-pointer"
+          onClick={() => setIsOpen(true)}
         />
       </DialogTrigger>
       <DialogContent className="w-screen">

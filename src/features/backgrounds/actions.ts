@@ -2,7 +2,6 @@
 
 import { errorHandler } from "@/lib";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { ZodError } from "zod";
 import { SocialLink } from "./db";
 import { backgroundsService } from "./instance";
@@ -43,7 +42,6 @@ export async function updateBackgroundAction(
 
   if (validatedUpdate) {
     revalidatePath("/");
-    redirect(`/developers/${validatedUpdate.developerProfileId}`);
   }
 }
 export async function addBackground(id: string) {
