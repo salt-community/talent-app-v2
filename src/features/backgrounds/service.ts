@@ -24,7 +24,6 @@ export function createBackgroundsService(
   createDeveloperProfile: CreateDeveloperProfile,
   getAllById: GetAllById,
   deleteDeveloperProfile: DeleteDeveloperProfile,
-  getIdentityIdByDeveloperProfileId: (id: string) => Promise<string | null>,
   getAllDeveloperProfilesByIdentityId: GetDeveloperProfileByIdentityId,
   getCurrentUser: GetCurrentUser
 ) {
