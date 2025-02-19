@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Separator } from "@/components";
 import { Trash2 } from "lucide-react";
+import AddAssignmentButton from "./add-assignment-button";
 
 type Props = {
   name: string;
@@ -45,11 +46,9 @@ export async function AssignmentsDashboard({ name }: Props) {
       </div>
 
       <div className="space-y-6">
-        <div className="flex justify-between items-center -mb-2">
+        <div className="flex justify-between items-centes -mb-2">
           <h2 className="text-2xl font-semibold ">Assignments</h2>
-          <button className="bg-green-600 text-white px-4 py-1 rounded-md flex items-center gap-2">
-            <span>+</span> New assignment
-          </button>
+          <AddAssignmentButton cohorts={cohort} />
         </div>
 
         <Separator />

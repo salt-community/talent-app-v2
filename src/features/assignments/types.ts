@@ -4,6 +4,9 @@ export type CreateAssignment = AssignmentsService["createAssignment"];
 export type GetAllAssignments = AssignmentsService["getAllAssignments"];
 export type GetAssignmentsByCohortId =
   AssignmentsService["getAssignmentsByCohortId"];
+export type deleteAssignmentScoreById =
+  AssignmentsService["deleteAssignmentScoreById"];
+  
 
 export type Assignment = {
   id: string;
