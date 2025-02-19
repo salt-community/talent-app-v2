@@ -54,5 +54,12 @@ export function createCohortsRepository(db: Db) {
         .where(eq(cohorts.id, cohortId))
         .returning();
     },
+    async getCohortByName(name: string) {
+      const [cohort] = await db
+        .select()
+        .from(cohorts)
+        .where(eq(cohorts.name, name));
+      return cohort;
+    }
   };
 }

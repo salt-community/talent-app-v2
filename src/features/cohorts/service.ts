@@ -1,6 +1,6 @@
 import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
-import { CohortFormData, UnassignedDevelopers, Identity } from "./types";
+import { CohortFormData, Identity, UnassignedDevelopers } from "./types";
 
 export function createCohortsService(
   db: Db,

@@ -14,6 +14,7 @@ export function createMeiliClient() {
 
       const index = meiliSearch.index(BACKGROUNDS_UID);
 
+
       if (!index) {
         console.error("Index does not exist. Creating index now...");
         await meiliSearch.createIndex(BACKGROUNDS_UID, {
