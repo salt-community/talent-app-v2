@@ -9,14 +9,10 @@ import { errorHandler } from "@/lib";
 
 type Props = { background: BackgroundInfo; developerProfileId: string };
 
-export async function BackgroundBasicInfoCard({
-  background,
-  developerProfileId,
-}: Props) {
+export async function BackgroundBasicInfoCard({ background }: Props) {
   let allSkills: SkillSelect[] = [];
   let allLanguages: LanguageSelect[] = [];
   let allEducations: EducationSelect[] = [];
-  let editAccess = false;
 
   const filteredLinks = background.links.filter((e) => e.name !== "LinkedIn");
 
@@ -24,7 +20,6 @@ export async function BackgroundBasicInfoCard({
     allSkills = await backgroundsService.getAllSkills();
     allLanguages = await backgroundsService.getAllLanguages();
     allEducations = await backgroundsService.getAllEducations();
-    editAccess = await backgroundsService.editAccess(developerProfileId);
   } catch (error) {
     errorHandler(error);
   }
@@ -44,14 +39,12 @@ export async function BackgroundBasicInfoCard({
           </div>
         </div>
         <ul className="flex flex-col gap-2 justify-end items-top h-full">
-          {editAccess && (
-            <DialogForm
-              background={background}
-              allSkills={allSkills}
-              allLanguages={allLanguages}
-              allEducations={allEducations}
-            />
-          )}
+          <DialogForm
+            background={background}
+            allSkills={allSkills}
+            allLanguages={allLanguages}
+            allEducations={allEducations}
+          />
           {filteredLinks &&
             filteredLinks.map((link) => (
               <li key={link.name} className="h-full flex justify-start">

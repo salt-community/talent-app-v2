@@ -12,7 +12,7 @@ type Props = {
 
 export async function Projects({ slug }: Props) {
   let projects: Project[] = [];
-  let editAccess = false;
+  let hasAccess = false;
 
   const developerProfile = await projectsService.getAllDevelopers();
   const developerProfileId = developerProfile.find(
@@ -24,7 +24,7 @@ export async function Projects({ slug }: Props) {
   try {
     projects = await projectsService.getAll(developerProfileId);
 
-    editAccess = await projectsService.checkProfileAccess(developerProfileId);
+    hasAccess = await projectsService.hasCurrentUserAccess("project.edit");
   } catch (error) {
     errorHandler(error);
   }
@@ -33,7 +33,7 @@ export async function Projects({ slug }: Props) {
     return (
       <div>
         <H2>Projects</H2>
-        {editAccess && (
+        {hasAccess && (
           <>
             <div className="flex flex-col justify-center mt-4">
               <p>Add your projects here</p>
@@ -55,12 +55,12 @@ export async function Projects({ slug }: Props) {
       <div className="flex flex-col justify-center mt-4 lg:grid lg:grid-cols-2 md:gap-8">
         {projects.map((project) => (
           <div key={project.id} className="md:p-5 md:border md:rounded-md">
-            <ProjectDetails project={project} editAccess={editAccess} />
+            <ProjectDetails project={project} editAccess={hasAccess} />
             <Separator className="mt-4 mb-6 md:hidden" />
           </div>
         ))}
       </div>
-      {editAccess && (
+      {hasAccess && (
         <div className="flex justify-center">
           <ProjectForm developerProfileId={developerProfileId} />
         </div>

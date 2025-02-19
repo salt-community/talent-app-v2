@@ -1,4 +1,5 @@
 import { BackgroundsService } from "../backgrounds/types";
+import { createAdminService } from "./service";
 
 export type SearchConfigurationClient = {
   isHealthOk: BackgroundsService["isSearchHealthOk"];
@@ -11,3 +12,12 @@ export type SearchConfigurationClient = {
 };
 
 export type Synonym = [string, string[]];
+
+export type Identity = {
+  name: string;
+  id: string;
+  email: string;
+  clerkId: string;
+  role: string;
+};
+export type AdminsService = ReturnType<typeof createAdminService>;

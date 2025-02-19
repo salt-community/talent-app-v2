@@ -1,6 +1,6 @@
 import React from "react";
-import { StatusMenuIdentity } from "./status-menu-identities";
 import DashboardAvatarIdentity from "./dashboard-avatar-identity";
+import { StatusMenuIdentity } from "./status-menu-identities";
 
 type Props = {
   id: string;

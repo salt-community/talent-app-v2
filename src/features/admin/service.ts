@@ -1,33 +1,34 @@
 import {
   DeleteDeveloperProfile,
-  GetAllDeveloperProfiles,
   UpdateStatus,
   CreateAssignment,
   NewAssignment,
   GetAllCohorts,
   GetAllAssignments,
 } from "@/features";
-import { SearchConfigurationClient } from "./types";
+import { Identity, SearchConfigurationClient } from "./types";
 import { Settings } from "meilisearch";
 
 export function createAdminService(
-  getAllDeveloperProfiles: GetAllDeveloperProfiles,
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
   createAssignment: CreateAssignment,
   getAllAssignments: GetAllAssignments,
   getAllCohorts: GetAllCohorts,
   searchConfigurationClient: SearchConfigurationClient,
+  updateRole: (id: string, newRole: string) => Promise<void>,
+  getAllIdentities: () => Promise<Identity[]>,
   deleteIdentity: (id: string) => Promise<void>,
   deleteDeveloperProfileById: (id: string) => Promise<void>,
   deleteCohortIdentityById: (id: string) => Promise<void>,
   deleteBackgroundById: (id: string) => Promise<void>,
   deleteAssignmentScoreById: (id: string) => Promise<void>,
-  deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>
+  deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>,
+  getDeveloperProfileIdById: (id: string) => Promise<{ id: string }[]>
 ) {
   return {
-    async getAllDeveloperProfiles() {
-      return await getAllDeveloperProfiles();
+    async getAllIdentities() {
+      return getAllIdentities();
     },
     async deleteDeveloperProfile(id: string) {
       await deleteDeveloperProfile(id);
@@ -53,6 +54,9 @@ export function createAdminService(
     async updateSearchSettings(settings: Settings) {
       await searchConfigurationClient.updateSettings(settings);
     },
+    async updateRole(args: { id: string; newRole: string }) {
+      await updateRole(args.id, args.newRole);
+    },
     async resetSearchSettings() {
       await searchConfigurationClient.resetSettings();
     },
@@ -70,12 +74,9 @@ export function createAdminService(
       await deleteIdentity(identityId);
       await deleteCohortIdentityById(identityId);
       await deleteAssignmentScoreById(identityId);
-      const developerProfiles = await getAllDeveloperProfiles();
-      const filteredDeveloperProfiles = developerProfiles.filter(
-        (developerProfile) =>
-          developerProfile.identityId.trim() === identityId.trim()
-      );
-      for (const developerProfile of filteredDeveloperProfiles) {
+      const developerProfiles = await getDeveloperProfileIdById(identityId);
+
+      for (const developerProfile of developerProfiles) {
         await deleteBackgroundById(developerProfile.id);
         await deleteProjectsByDeveloperProfileId(developerProfile.id);
       }

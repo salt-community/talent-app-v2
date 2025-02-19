@@ -1,8 +1,8 @@
+import { adminService } from "../instance";
 import IdentityProfileList from "./identity-profile-list";
-import { iamService } from "../instance";
 
 export async function DashboardRoles() {
-  const identities = await iamService.getAllIdentities();
+  const identities = await adminService.getAllIdentities();
   return (
     <div>
       {identities.map((identity) => (

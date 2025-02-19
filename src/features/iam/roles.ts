@@ -5,6 +5,7 @@ import {
   backgrounds,
   developerProfiles,
   cohorts,
+  projectPermissions,
 } from "./permissions";
 
 export const rolesPermissions = {
@@ -16,8 +17,6 @@ export const rolesPermissions = {
     backgrounds.getAllLanguages,
     backgrounds.getAllEducations,
     backgrounds.getAllDeveloperProfile,
-    backgrounds.editAccess,
-    projects.checkProfileAccess,
     projects.getAll,
     developerProfiles.getById,
     developerProfiles.getAll,
@@ -32,7 +31,7 @@ export const rolesPermissions = {
     ...Object.values(developerProfiles),
     ...Object.values(assignments),
     ...Object.values(cohorts),
-    ...admins,
+    ...Object.values(admins),
   ]),
   developer: new Set([
     backgrounds.add,
@@ -51,7 +50,7 @@ export const rolesPermissions = {
     backgrounds.getAllDeveloperProfile,
     backgrounds.GetCurrentUsers,
     projects.add,
-    projects.checkProfileAccess,
+    projects.hasCurrentUserAccess,
     projects.delete,
     projects.getAll,
     projects.getAllDevelopers,
@@ -73,6 +72,8 @@ export const rolesPermissions = {
     assignments.getScoresByIdentityId,
   ]),
   core: new Set([
+    admins.deleteUser,
+    admins.updateRole,
     backgrounds.getAllBackgrounds,
     backgrounds.getAllDeveloperProfilesById,
     backgrounds.getAllEducations,
@@ -85,9 +86,9 @@ export const rolesPermissions = {
     backgrounds.getAllDeveloperProfile,
     backgrounds.getAllDeveloperProfilesById,
     backgrounds.deleteBackgroundById,
-    projects.checkProfileAccess,
     projects.updateDescription,
     projects.updateProjectData,
+    projects.hasCurrentUserAccess,
     projects.getAll,
     projects.getAllDevelopers,
     projects.deleteProjectsByDeveloperProfileId,
@@ -111,4 +112,11 @@ export const rolesPermissions = {
     cohorts.addDeveloperToCohort,
     cohorts.deleteCohortIdentity,
   ]),
+} as const;
+
+export const rolesViewPermissions = {
+  admin: new Set([projectPermissions.edit]),
+  core: new Set([]),
+  developer: new Set([projectPermissions.edit]),
+  guest: new Set([]),
 } as const;
