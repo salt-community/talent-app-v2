@@ -3,16 +3,9 @@
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Developer } from "../../types";
 
-type Props = {
-  developer: {
-    id: string;
-    name: string;
-    slug: string;
-  }[];
-};
-
-export default function StudentCard({ developer }: Props) {
+export default function StudentCard({ developer }: { developer: Developer }) {
   return (
     <Card>
       <CardHeader>
