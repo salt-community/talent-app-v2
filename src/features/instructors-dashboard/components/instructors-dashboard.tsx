@@ -1,6 +1,6 @@
 import { instructorService } from "../instance";
-import { AddCohortForm } from "./add-cohort";
-import { CohortCard } from "./cohort-card";
+import { AddCohortForm } from "./cohorts/add-cohort";
+import { CohortCard } from "./cohorts/cohort-card";
 
 export async function InstructorsDashboard() {
   const cohorts = await instructorService.getAllCohorts();

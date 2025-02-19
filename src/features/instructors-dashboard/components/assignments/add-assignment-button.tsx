@@ -6,8 +6,8 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components";
-import { AddAssignmentForm } from "./add-assignment-form";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { AddAssignmentForm } from "./add-assignment-form";
 
 type Props = {
   cohorts: { id: string; name: string }[];

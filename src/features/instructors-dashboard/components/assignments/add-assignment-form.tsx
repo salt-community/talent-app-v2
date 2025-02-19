@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { addAssignment } from "../action";
+import { addAssignment } from "../../action";
 
 type Props = {
   cohorts: { id: string; name: string }[];

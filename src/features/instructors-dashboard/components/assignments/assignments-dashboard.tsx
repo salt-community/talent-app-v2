@@ -1,9 +1,9 @@
 import React from "react";
-import { instructorService } from "../instance";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Separator } from "@/components";
 import { Trash2 } from "lucide-react";
+import { instructorService } from "../../instance";
 import AddAssignmentButton from "./add-assignment-button";
 
 type Props = {
