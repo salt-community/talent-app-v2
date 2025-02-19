@@ -31,7 +31,7 @@ export const rolesPermissions = {
     ...Object.values(developerProfiles),
     ...Object.values(assignments),
     ...Object.values(cohorts),
-    ...admins,
+    ...Object.values(admins),
   ]),
   developer: new Set([
     backgrounds.add,
@@ -72,6 +72,8 @@ export const rolesPermissions = {
     assignments.getScoresByIdentityId,
   ]),
   core: new Set([
+    admins.deleteUser,
+    admins.updateRole,
     backgrounds.getAllBackgrounds,
     backgrounds.getAllDeveloperProfilesById,
     backgrounds.getAllEducations,
