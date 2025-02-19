@@ -65,13 +65,3 @@ export async function deleteDeveloperProfileAction(developerProfileId: string) {
   }
   revalidatePath("/profile");
 }
-
-export async function getDeveloperProfilesAction(identityId: string) {
-  try {
-    const profiles =
-      await backgroundsService.getAllDeveloperProfilesById(identityId);
-    return profiles;
-  } catch (error) {
-    errorHandler(error);
-  }
-}
