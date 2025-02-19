@@ -24,7 +24,7 @@ export async function AssignmentsDashboard({ name }: Props) {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-6xl mx-auto p-20">
       <div className="mb-8">
         <h1 className="text-2xl font-semibold mb-2">{name.toUpperCase()}</h1>
         <div className="flex border-b">
@@ -46,7 +46,7 @@ export async function AssignmentsDashboard({ name }: Props) {
       </div>
 
       <div className="space-y-6">
-        <div className="flex justify-between items-centes -mb-2">
+        <div className="flex justify-between items-center -mb-2">
           <h2 className="text-2xl font-semibold ">Assignments</h2>
           <AddAssignmentButton cohorts={cohort} />
         </div>
