@@ -3,8 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Separator } from "@/components";
 import { Trash2 } from "lucide-react";
-import { instructorService } from "../../instance";
-import AddAssignmentButton from "./add-assignment-button";
+import { instructorService } from "../instance";
+import AddAssignmentButton from "./assignments/add-assignment-button";
 
 type Props = {
   name: string;
@@ -17,10 +17,12 @@ export async function AssignmentsDashboard({ name }: Props) {
   const cohortId = foundCohort.id;
   const assignments =
     await instructorService.getAssignmentsByCohortId(cohortId);
+  const students =
+    await instructorService.getCohortStudentsByCohortId(cohortId);
 
   const tabs = [
     { name: "Assignments", count: assignments.length, icon: "⭐" },
-    { name: "Students", count: 0, icon: "👥" },
+    { name: "Students", count: students.length, icon: "👥" },
   ];
 
   return (
