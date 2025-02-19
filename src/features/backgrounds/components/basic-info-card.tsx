@@ -7,9 +7,16 @@ import { backgroundsService } from "../instance";
 import type { LanguageSelect, SkillSelect, EducationSelect } from "../db";
 import { errorHandler } from "@/lib";
 
-type Props = { background: BackgroundInfo; developerProfileId: string };
+type Props = {
+  background: BackgroundInfo;
+  developerProfileId: string;
+  hasProfileAccess: boolean;
+};
 
-export async function BackgroundBasicInfoCard({ background }: Props) {
+export async function BackgroundBasicInfoCard({
+  background,
+  hasProfileAccess,
+}: Props) {
   let allSkills: SkillSelect[] = [];
   let allLanguages: LanguageSelect[] = [];
   let allEducations: EducationSelect[] = [];
@@ -39,12 +46,14 @@ export async function BackgroundBasicInfoCard({ background }: Props) {
           </div>
         </div>
         <ul className="flex flex-col gap-2 justify-end items-top h-full">
-          <DialogForm
-            background={background}
-            allSkills={allSkills}
-            allLanguages={allLanguages}
-            allEducations={allEducations}
-          />
+          {hasProfileAccess && (
+            <DialogForm
+              background={background}
+              allSkills={allSkills}
+              allLanguages={allLanguages}
+              allEducations={allEducations}
+            />
+          )}
           {filteredLinks &&
             filteredLinks.map((link) => (
               <li key={link.name} className="h-full flex justify-start">

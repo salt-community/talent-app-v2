@@ -5,9 +5,12 @@ import BackgroundSkeleton from "./background-skeleton";
 import { BackgroundBasicInfoCard } from "./basic-info-card";
 import { notFound } from "next/navigation";
 
-type Props = { developerProfileId: string };
+type Props = { developerProfileId: string; hasProfileAccess: boolean };
 
-export async function BackgroundCard({ developerProfileId }: Props) {
+export async function BackgroundCard({
+  developerProfileId,
+  hasProfileAccess,
+}: Props) {
   const background =
     await backgroundsService.getBackgroundByDeveloperProfileId(
       developerProfileId
@@ -23,6 +26,7 @@ export async function BackgroundCard({ developerProfileId }: Props) {
         <BackgroundBasicInfoCard
           background={background}
           developerProfileId={developerProfileId}
+          hasProfileAccess={hasProfileAccess}
         />
       </div>
 

@@ -8,16 +8,17 @@ import { notFound } from "next/navigation";
 
 type Props = {
   developerProfileId: string;
+  hasProfileAccess: boolean;
 };
 
-export async function Projects({ developerProfileId }: Props) {
+export async function Projects({
+  developerProfileId,
+  hasProfileAccess,
+}: Props) {
   let projects: Project[] = [];
-  let hasAccess = false;
 
   try {
     projects = await projectsService.getAll(developerProfileId);
-
-    hasAccess = await projectsService.hasCurrentUserAccess("project.edit");
   } catch (error) {
     errorHandler(error);
   }
@@ -26,7 +27,7 @@ export async function Projects({ developerProfileId }: Props) {
     return (
       <div>
         <H2>Projects</H2>
-        {hasAccess && (
+        {hasProfileAccess && (
           <>
             <div className="flex flex-col justify-center mt-4">
               <p>Add your projects here</p>
@@ -48,12 +49,12 @@ export async function Projects({ developerProfileId }: Props) {
       <div className="flex flex-col justify-center mt-4 lg:grid lg:grid-cols-2 md:gap-8">
         {projects.map((project) => (
           <div key={project.id} className="md:p-5 md:border md:rounded-md">
-            <ProjectDetails project={project} editAccess={hasAccess} />
+            <ProjectDetails project={project} editAccess={hasProfileAccess} />
             <Separator className="mt-4 mb-6 md:hidden" />
           </div>
         ))}
       </div>
-      {hasAccess && (
+      {hasProfileAccess && (
         <div className="flex justify-center">
           <ProjectForm developerProfileId={developerProfileId} />
         </div>

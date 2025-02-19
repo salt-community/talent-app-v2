@@ -2,6 +2,7 @@ import { DeveloperCard } from "@/components/ui/developer-card";
 import {
   BackgroundCard,
   developerProfilesService,
+  iamService,
   Projects,
   projectsService,
   ScoreBoard,
@@ -26,12 +27,22 @@ export default async function DeveloperDetailPage({ params }: Params) {
     return notFound();
   }
 
+  const hasProfileAccess = await iamService.hasProfileAccess(
+    developerProfile.identityId
+  );
+
   return (
     <DeveloperCard>
-      <BackgroundCard developerProfileId={developerProfile.id} />
+      <BackgroundCard
+        developerProfileId={developerProfile.id}
+        hasProfileAccess={hasProfileAccess}
+      />
       <ScoreBoard cohortId={"927d9e82-c0b1-4561-ac04-75883d7b01ae"} />
       {/* Hard coded cohortId? */}
-      <Projects developerProfileId={developerProfile.id} />
+      <Projects
+        developerProfileId={developerProfile.id}
+        hasProfileAccess={hasProfileAccess}
+      />
     </DeveloperCard>
   );
 }
