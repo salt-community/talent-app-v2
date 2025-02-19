@@ -9,14 +9,10 @@ import { errorHandler } from "@/lib";
 
 type Props = { background: BackgroundInfo; developerProfileId: string };
 
-export async function BackgroundBasicInfoCard({
-  background,
-  developerProfileId,
-}: Props) {
+export async function BackgroundBasicInfoCard({ background }: Props) {
   let allSkills: SkillSelect[] = [];
   let allLanguages: LanguageSelect[] = [];
   let allEducations: EducationSelect[] = [];
-  let editAccess = false;
 
   const filteredLinks = background.links.filter((e) => e.name !== "LinkedIn");
 

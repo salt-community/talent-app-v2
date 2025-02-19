@@ -4,13 +4,14 @@ import { ProjectInsert } from "./db";
 import { Api } from "./api";
 import { DeveloperProfile, ProjectData, UpdatedProject } from "./types";
 import { extractRepositoryDetails } from "./logic";
+import { ViewPermission } from "../iam/permissions";
 
 export function createService(
   db: Db,
   api: Api,
   getAllIdentities: DeveloperProfile,
   getIdentityIdByDeveloperProfileId: (id: string) => Promise<string | null>,
-  checkUserAccess: (id: string) => Promise<boolean>
+  hasCurrentUserAccess: (id: ViewPermission) => Promise<boolean>
 ) {
   const reps = createRepository(db);
 
@@ -102,15 +103,8 @@ export function createService(
         lastCommit: lastCommit,
       });
     },
-    checkProfileAccess: async (developerProfileId: string) => {
-      const identityId =
-        await getIdentityIdByDeveloperProfileId(developerProfileId);
-
-      if (!identityId) {
-        return false;
-      }
-
-      return checkUserAccess(identityId);
+    hasCurrentUserAccess: async (permission: ViewPermission) => {
+      return hasCurrentUserAccess(permission);
     },
   };
 }

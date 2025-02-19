@@ -4,7 +4,7 @@ import { PagePermissionsSchema } from "./types";
 
 export const projects: PermissionsSchema<"projects", ProjectsService> = {
   add: "projects.add",
-  checkProfileAccess: "projects.checkProfileAccess",
+  hasCurrentUserAccess: "projects.hasCurrentUserAccess",
   delete: "projects.delete",
   deleteProjectsByDeveloperProfileId:
     "projects.deleteProjectsByDeveloperProfileId",

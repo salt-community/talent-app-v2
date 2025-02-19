@@ -13,7 +13,7 @@ export const insecurePojectService = createService(
   createApi(),
   developerProfilesService.getAll,
   developerProfilesService.getIdentityIdByDeveloperProfileId,
-  iamService.checkUserAccess
+  iamService.hasCurrentUserAccess
 );
 
 export const projectsService = secureService("projects", insecurePojectService);
