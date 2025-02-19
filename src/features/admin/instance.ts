@@ -24,6 +24,8 @@ export const insecureAdminService = createAdminService(
     updateSettings: backgroundsService.updateMeilisearchSettings,
     resetSettings: backgroundsService.resetMeilisearchSettings,
   },
+  iamService.updateRole,
+  iamService.getAllIdentities,
   iamService.deleteIdentity,
   developerProfilesService.deleteByIdentityId,
   cohortsService.deleteCohortIdentity,

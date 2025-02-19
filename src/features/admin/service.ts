@@ -1,11 +1,11 @@
 import {
   DeleteDeveloperProfile,
-  GetAllDeveloperProfiles,
   UpdateStatus,
   CreateAssignment,
   NewAssignment,
   GetAllCohorts,
   GetAllAssignments,
+  Identity,
 } from "@/features";
 import { SearchConfigurationClient } from "./types";
 import { Settings } from "meilisearch";
@@ -17,6 +17,8 @@ export function createAdminService(
   getAllAssignments: GetAllAssignments,
   getAllCohorts: GetAllCohorts,
   searchConfigurationClient: SearchConfigurationClient,
+  updateRole: (id: string, newRole: string) => Promise<void>,
+  getAllIdentities: () => Promise<Identity[]>,
   deleteIdentity: (id: string) => Promise<void>,
   deleteDeveloperProfileById: (id: string) => Promise<void>,
   deleteCohortIdentityById: (id: string) => Promise<void>,
@@ -26,6 +28,9 @@ export function createAdminService(
   getDeveloperProfileIdById: (id: string) => Promise<{ id: string }[]>
 ) {
   return {
+    async getAllIdentities() {
+      return getAllIdentities();
+    },
     async deleteDeveloperProfile(id: string) {
       await deleteDeveloperProfile(id);
     },
@@ -49,6 +54,9 @@ export function createAdminService(
     },
     async updateSearchSettings(settings: Settings) {
       await searchConfigurationClient.updateSettings(settings);
+    },
+    async updateRole(args: { id: string; newRole: string }) {
+      await updateRole(args.id, args.newRole);
     },
     async resetSearchSettings() {
       await searchConfigurationClient.resetSettings();
