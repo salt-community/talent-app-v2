@@ -14,6 +14,9 @@ export function createService(db: Db) {
     async getAllIdentities() {
       return repository.getAllIdentities();
     },
+    async getAllRolesByUserId(userId: string) {
+      return repository.getAllRolesByUserId(userId);
+    },
 
     async getIdentityById(id: string) {
       return await repository.getIdentityById(id);
@@ -84,15 +87,7 @@ export function createService(db: Db) {
       return identity.id === identityId;
     },
 
-    async checkAccess(permission: Permission): Promise<void> {
-      const { userId } = await auth();
-      const roles: string[] = ["guest"];
-
-      if (userId) {
-        const identityRole = await repository.getIdentityRole(userId);
-        roles.push(identityRole.roles);
-      }
-
+    async checkAccess(permission: Permission, roles: string[]): Promise<void> {
       return checkAccess(roles, permission);
     },
   };
