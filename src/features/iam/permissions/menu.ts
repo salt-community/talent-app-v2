@@ -1,4 +1,3 @@
-import { Menu } from "lucide-react";
 import { PagePermissionsSchema } from "./types";
 
 type MenuViewPermission = "profile" | "admin" | "instructorsDashboard";
