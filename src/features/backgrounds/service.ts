@@ -79,9 +79,6 @@ export function createBackgroundsService(
   }
 
   return {
-    async getAllBackgrounds() {
-      return await repository.getAllBackgrounds();
-    },
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
       const background =
         await repository.getBackgroundByDeveloperProfileId(developerProfileId);
