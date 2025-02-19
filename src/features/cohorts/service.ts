@@ -1,11 +1,13 @@
 import { Db } from "@/db";
+import { GetDeveloperProfileByIdentityId } from "@/features";
 import { createCohortsRepository } from "./repository";
 import { CohortFormData, Identity, UnassignedDevelopers } from "./types";
 
 export function createCohortsService(
   db: Db,
   getIdentityById: (id: string) => Promise<Identity>,
-  getAllUnassignedDevelopers: () => Promise<UnassignedDevelopers[]>
+  getAllUnassignedDevelopers: () => Promise<UnassignedDevelopers[]>,
+  getAllDeveloperProfilesById: GetDeveloperProfileByIdentityId
 ) {
   const repository = createCohortsRepository(db);
 
@@ -32,13 +34,18 @@ export function createCohortsService(
     async updateCohortStatus(args: { cohortId: string; status: string }) {
       return await repository.updateCohortStatus(args);
     },
+
     async getCohortStudents(cohortId: string) {
       const cohortStudents = await repository.getCohortStudents(cohortId);
       const students = await Promise.all(
         cohortStudents.map((student) => getIdentityById(student.identityId))
       );
-      return students;
+      const developerProfiles = await Promise.all(
+        students.map((developer) => getAllDeveloperProfilesById(developer.id))
+      );
+      return developerProfiles.flat();
     },
+
     async getAllUnassignedDevelopers() {
       return await getAllUnassignedDevelopers();
     },

@@ -17,12 +17,14 @@ export async function AssignmentsDashboard({ name }: Props) {
   const cohortId = foundCohort.id;
   const assignments =
     await instructorService.getAssignmentsByCohortId(cohortId);
-  const students =
+  const developers =
     await instructorService.getCohortStudentsByCohortId(cohortId);
+
+  console.log({ developers: developers });
 
   const tabs = [
     { name: "Assignments", count: assignments.length, icon: "⭐" },
-    { name: "Students", count: students.length, icon: "👥" },
+    { name: "Students", count: developers.length, icon: "👥" },
   ];
 
   return (

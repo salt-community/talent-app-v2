@@ -10,7 +10,6 @@ export const developerProfiles: PermissionsSchema<
   createDeveloperProfile: "developerProfiles.createDeveloperProfile",
   getAll: "developerProfiles.getAll",
   getAllById: "developerProfiles.getAllById",
-  getById: "developerProfiles.getById",
   getDeveloperById: "developerProfiles.getDeveloperById",
   getHighlightedDeveloperProfileIds:
     "developerProfiles.getHighlightedDeveloperProfileIds",

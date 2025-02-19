@@ -1,11 +1,16 @@
 import { db } from "@/db";
+import {
+  developerProfilesService,
+  iamService,
+  secureService,
+} from "@/features";
 import { createCohortsService } from "./service";
-import { iamService, secureService } from "@/features";
 
 export const insecureCohortService = createCohortsService(
   db,
   iamService.getIdentityById,
-  iamService.getAllUnassignedDevelopers
+  iamService.getAllUnassignedDevelopers,
+  developerProfilesService.getDeveloperProfileByIdentityId
 );
 
 export const cohortsService = secureService("cohorts", insecureCohortService);
