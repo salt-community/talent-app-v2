@@ -38,30 +38,9 @@ export function createBackgroundsService(
           succeeded = true;
           break;
         }
-        const backgroundSkills = await repository.getSkillsByBackgroundId(
-          background[0].id
-        );
-        const backgroundLanguages = await repository.getLanguagesByBackgroundId(
-          background[0].id
-        );
-        const backgroundEducation =
-          await repository.getEducationsByBackgroundId(background[0].id);
-        const skills = backgroundSkills
-          .map((skill) => skill?.name)
-          .filter((name): name is string => !!name);
-        const languages = backgroundLanguages
-          .map((language) => language?.name)
-          .filter((name): name is string => !!name);
-        const educations = backgroundEducation
-          .map((education) => education?.name)
-          .filter((name): name is string => !!name);
-
         const upsertStatus = await meiliClient.upsertBackground([
           {
             ...background[0],
-            skills,
-            languages,
-            educations,
           },
         ]);
         succeeded = OK_STATUSES.includes(upsertStatus);
@@ -80,21 +59,8 @@ export function createBackgroundsService(
 
   return {
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
-      const background =
-        await repository.getBackgroundByDeveloperProfileId(developerProfileId);
-      const skills = await repository.getSkillsByBackgroundId(background[0].id);
-      const languages = await repository.getLanguagesByBackgroundId(
-        background[0].id
-      );
-      const educations = await repository.getEducationsByBackgroundId(
-        background[0].id
-      );
-      return {
-        ...background[0],
-        skills: skills,
-        languages: languages,
-        educations: educations,
-      };
+      const background = await repository.getBackgroundById(developerProfileId);
+      return background[0];
     },
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
@@ -162,7 +128,6 @@ export function createBackgroundsService(
 
       await meiliClient.upsertBackground(backgrounds);
     },
-
     async syncMeilisearch() {
       const outboxMessages = await repository.getAllOutboxMessage();
       for (const outboxMessage of outboxMessages) {
@@ -181,14 +146,12 @@ export function createBackgroundsService(
     async resetMeilisearchSettings() {
       await meiliClient.resetSettings();
     },
-
     async getAllPosts() {
       return await repository.getAllPosts();
     },
     async getPostById(developerId: string) {
       return await repository.getPostById(developerId);
     },
-
     async addDeveloperBackground(id: string) {
       const developer = await getDeveloperById(id);
       await backgroundsService.add({
