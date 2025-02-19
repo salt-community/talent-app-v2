@@ -7,6 +7,7 @@ import {
   cohorts,
   projectPermissions,
 } from "./permissions";
+import { MenuPermissions } from "./permissions/menu";
 
 export const rolesPermissions = {
   guest: new Set([
@@ -115,8 +116,12 @@ export const rolesPermissions = {
 } as const;
 
 export const rolesViewPermissions = {
-  admin: new Set([projectPermissions.edit]),
-  core: new Set([]),
-  developer: new Set([projectPermissions.edit]),
+  admin: new Set([
+    projectPermissions.edit,
+    MenuPermissions.instructorsDashboard,
+    MenuPermissions.admin,
+  ]),
+  core: new Set([MenuPermissions.admin, MenuPermissions.instructorsDashboard]),
+  developer: new Set([projectPermissions.edit, MenuPermissions.profile]),
   guest: new Set([]),
 } as const;

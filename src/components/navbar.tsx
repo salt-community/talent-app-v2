@@ -4,8 +4,6 @@ import { HamburgerMenu } from "./ui/hamburger-menu";
 import { developerProfilesService, iamService } from "@/features";
 
 export async function Header() {
-  //const user = await iamService.controlUser();
-
   const userIdentity = await iamService.controlUser();
 
   if (!userIdentity) return null;
@@ -13,6 +11,19 @@ export async function Header() {
   const users = await developerProfilesService.getDeveloperProfileByIdentityId(
     userIdentity.id
   );
+
+  const hasDeveloperAccess =
+    await iamService.hasCurrentUserAccess("menu.profile");
+  const hasAdminDashboardAccess =
+    await iamService.hasCurrentUserAccess("menu.admin");
+  const hasInstructorsDashboardAccess = await iamService.hasCurrentUserAccess(
+    "menu.instructorsDashboard"
+  );
+  const permissions = {
+    hasAdminDashboardAccess,
+    hasDeveloperAccess,
+    hasInstructorsDashboardAccess,
+  };
 
   const userWithRole = {
     slug: users.map((user) => user.slug)[0]!,
@@ -35,7 +46,7 @@ export async function Header() {
         </SignedOut>
         <SignedIn>
           <UserButton />
-          <HamburgerMenu user={userWithRole} />
+          <HamburgerMenu user={userWithRole} permissions={permissions} />
         </SignedIn>
       </div>
     </nav>
