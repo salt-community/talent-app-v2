@@ -11,7 +11,6 @@ import { SearchConfigurationClient } from "./types";
 import { Settings } from "meilisearch";
 
 export function createAdminService(
-  getAllDeveloperProfiles: GetAllDeveloperProfiles,
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
   createAssignment: CreateAssignment,
@@ -23,12 +22,10 @@ export function createAdminService(
   deleteCohortIdentityById: (id: string) => Promise<void>,
   deleteBackgroundById: (id: string) => Promise<void>,
   deleteAssignmentScoreById: (id: string) => Promise<void>,
-  deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>
+  deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>,
+  getDeveloperProfileIdById: (id: string) => Promise<{ id: string }[]>
 ) {
   return {
-    async getAllDeveloperProfiles() {
-      return await getAllDeveloperProfiles();
-    },
     async deleteDeveloperProfile(id: string) {
       await deleteDeveloperProfile(id);
     },
@@ -70,12 +67,9 @@ export function createAdminService(
       await deleteIdentity(identityId);
       await deleteCohortIdentityById(identityId);
       await deleteAssignmentScoreById(identityId);
-      const developerProfiles = await getAllDeveloperProfiles();
-      const filteredDeveloperProfiles = developerProfiles.filter(
-        (developerProfile) =>
-          developerProfile.identityId.trim() === identityId.trim()
-      );
-      for (const developerProfile of filteredDeveloperProfiles) {
+      const developerProfiles = await getDeveloperProfileIdById(identityId);
+
+      for (const developerProfile of developerProfiles) {
         await deleteBackgroundById(developerProfile.id);
         await deleteProjectsByDeveloperProfileId(developerProfile.id);
       }
