@@ -1,5 +1,3 @@
-import { AssignmentsDashboard } from "@/features";
-
 type Params = {
   params: Promise<{ name: string }>;
 };
@@ -7,5 +5,9 @@ type Params = {
 export default async function Page({ params }: Params) {
   const { name } = await params;
 
-  return <AssignmentsDashboard name={name} />;
+  return (
+    <div>
+      <h1>{name}</h1>
+    </div>
+  );
 }
