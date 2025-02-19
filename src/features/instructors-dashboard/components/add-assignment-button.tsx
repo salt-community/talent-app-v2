@@ -31,7 +31,10 @@ export default function AddAssignmentButton({ cohorts }: Props) {
           <DialogTitle>New Assignment</DialogTitle>
         </VisuallyHidden>
         <DialogContent>
-          <AddAssignmentForm cohorts={cohorts} />
+          <AddAssignmentForm
+            cohorts={cohorts}
+            onSuccess={() => setOpen(false)}
+          />
         </DialogContent>
       </Dialog>
     </>

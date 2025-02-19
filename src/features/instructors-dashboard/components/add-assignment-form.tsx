@@ -18,9 +18,10 @@ import { addAssignment } from "../action";
 
 type Props = {
   cohorts: { id: string; name: string }[];
+  onSuccess: () => void;
 };
 
-export function AddAssignmentForm({ cohorts }: Props) {
+export function AddAssignmentForm({ cohorts, onSuccess }: Props) {
   const [selectedCohort, setSelectedCohort] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -32,6 +33,7 @@ export function AddAssignmentForm({ cohorts }: Props) {
 
     try {
       await addAssignment(formData);
+      onSuccess();
     } catch (error) {
       console.error("Failed to create assignment:", error);
     } finally {
