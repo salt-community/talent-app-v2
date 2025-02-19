@@ -3,7 +3,6 @@ import { backgroundsService } from "../instance";
 import { SkillsBadges } from "./skills-badges";
 import BackgroundSkeleton from "./background-skeleton";
 import { BackgroundBasicInfoCard } from "./basic-info-card";
-import { notFound } from "next/navigation";
 
 type Props = { developerProfileId: string; hasProfileAccess: boolean };
 

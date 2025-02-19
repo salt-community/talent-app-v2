@@ -4,7 +4,6 @@ import ProjectDetails from "./project-details";
 import ProjectForm from "./project-form";
 import { errorHandler } from "@/lib";
 import type { Project } from "../types";
-import { notFound } from "next/navigation";
 
 type Props = {
   developerProfileId: string;

@@ -1,7 +1,6 @@
 import { DeveloperCard } from "@/components/ui/developer-card";
 import {
   BackgroundCard,
-  developerProfilesService,
   iamService,
   Projects,
   projectsService,
