@@ -7,20 +7,13 @@ import type { Project } from "../types";
 import { notFound } from "next/navigation";
 
 type Props = {
-  slug: string;
+  developerProfileId: string;
 };
 
-export async function Projects({ slug }: Props) {
+export async function Projects({ developerProfileId }: Props) {
   let projects: Project[] = [];
   let hasAccess = false;
 
-  const developerProfile = await projectsService.getAllDevelopers();
-  const developerProfileId = developerProfile.find(
-    (profile) => profile.slug === slug
-  )?.id;
-  if (!developerProfileId) {
-    return notFound();
-  }
   try {
     projects = await projectsService.getAll(developerProfileId);
 
