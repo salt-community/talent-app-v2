@@ -61,12 +61,12 @@ export function createMeiliClient() {
       return response.status;
     },
 
+
     async deleteAllBackgrounds() {
-      const meili = await initializeMeiliSearch();
-      const index = meili.index(BACKGROUNDS_UID);
-      const response = await index.deleteAllDocuments();
-      await index.waitForTask(response.taskUid);
-      return response.status;
+      const meiliSearch = await initializeMeiliSearch();
+      const index = meiliSearch.index(BACKGROUNDS_UID);
+      await index.delete();
+      await meiliSearch.createIndex(BACKGROUNDS_UID);
     },
 
     async isHealthOk() {
