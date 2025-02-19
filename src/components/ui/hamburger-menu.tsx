@@ -14,13 +14,17 @@ import { useState } from "react";
 
 type Props = {
   user: { slug: string; id: string; role: string } | undefined;
+  permissions: {
+    hasAdminDashboardAccess: boolean;
+    hasDeveloperAccess: boolean;
+    hasInstructorsDashboardAccess: boolean;
+  };
 };
 
-export function HamburgerMenu({ user }: Props) {
+export function HamburgerMenu({ user, permissions }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
-
   const closeMenu = () => setIsOpen(false);
 
   return (
@@ -51,10 +55,10 @@ export function HamburgerMenu({ user }: Props) {
               Developers
             </Link>
           </li>
-          {user?.role === "developer" && (
+          {permissions.hasDeveloperAccess && (
             <li
               className={`border-b ${
-                isActive(`/profile/${user.id}`)
+                isActive(`/profile/${user?.id}`)
                   ? "border-primary"
                   : "border-white"
               } hover:border-primary`}
@@ -62,7 +66,7 @@ export function HamburgerMenu({ user }: Props) {
               <Link href={`/profile/my-profiles`}>My profiles</Link>
             </li>
           )}
-          {user?.role === "admin" && (
+          {permissions.hasInstructorsDashboardAccess && (
             <li
               className={`border-b ${
                 isActive("/cohorts") ? "border-primary" : "border-white"
@@ -73,7 +77,7 @@ export function HamburgerMenu({ user }: Props) {
               </Link>
             </li>
           )}
-          {user?.role === "admin" && (
+          {permissions.hasAdminDashboardAccess && (
             <li
               className={`border-b ${
                 isActive("/admin/developers")
