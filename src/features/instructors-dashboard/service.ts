@@ -5,6 +5,7 @@ import {
   GetAllCohorts,
   GetAssignmentsByCohortId,
   GetCohortById,
+  GetCohortStudents,
   NewAssignment,
 } from "@/features";
 
@@ -14,6 +15,7 @@ export function createInstructorService(
   addCohort: AddCohort,
   getAssignmentsByCohortId: GetAssignmentsByCohortId,
   addAssignment: CreateAssignment,
+  getCohortStudentsByCohortId: GetCohortStudents
 ) {
   return {
     async getAllCohorts() {
@@ -30,6 +32,9 @@ export function createInstructorService(
     },
     async addAssignment(assignment: NewAssignment) {
       return await addAssignment(assignment);
+    },
+    async getCohortStudentsByCohortId(cohortId: string) {
+      return await getCohortStudentsByCohortId(cohortId);
     },
   };
 }
