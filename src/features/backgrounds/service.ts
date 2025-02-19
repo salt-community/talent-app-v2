@@ -20,7 +20,6 @@ export function createBackgroundsService(
   getPublishedOrHighlightedDeveloperProfileIds: () => Promise<string[]>,
   getHighlightedDeveloperProfileIds: () => Promise<string[]>,
   getDeveloperById: (id: string) => Promise<Developer>,
-  checkUserAccess: (id: string) => Promise<boolean>,
   getAllDeveloperProfile: GetAllDeveloperProfiles,
   createDeveloperProfile: CreateDeveloperProfile,
   getAllById: GetAllById,
@@ -164,14 +163,14 @@ export function createBackgroundsService(
     async isSearchHealthOk() {
       return await meiliClient.isHealthOk();
     },
-   async repopulateMeiliSearch() {
-  await meiliClient.deleteAllBackgrounds();
-  const backgrounds = await repository.getAllBackgrounds();
+    async repopulateMeiliSearch() {
+      await meiliClient.deleteAllBackgrounds();
+      const backgrounds = await repository.getAllBackgrounds();
 
-  for (const background of backgrounds) {
-    await meiliClient.upsertBackground(background);
-  }
-},
+      for (const background of backgrounds) {
+        await meiliClient.upsertBackground(background);
+      }
+    },
 
     async syncMeilisearch() {
       const outboxMessages = await repository.getAllOutboxMessage();
@@ -198,16 +197,7 @@ export function createBackgroundsService(
     async getPostById(developerId: string) {
       return await repository.getPostById(developerId);
     },
-    async editAccess(developerProfileId: string) {
-      const identityId =
-        await getIdentityIdByDeveloperProfileId(developerProfileId);
 
-      if (!identityId) {
-        return false;
-      }
-
-      return checkUserAccess(identityId);
-    },
     async addDeveloperBackground(id: string) {
       const developer = await getDeveloperById(id);
       await backgroundsService.add({
