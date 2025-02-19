@@ -11,9 +11,9 @@ import { useToast } from "@/hooks/use-toast";
 import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
 
-import { Status } from "./status";
 import { deleteUserAction, updateRoleAction } from "../action";
 import { DeleteDialog } from "@/features/admin/components/delete-button";
+import { StatusRole } from "./status-role";
 
 type Props = {
   id: string;
@@ -43,7 +43,7 @@ export function StatusMenuIdentity({ id, role }: Props) {
 
   return (
     <div className="flex items-center gap-4">
-      <Status status={IdentityRole} />
+      <StatusRole status={IdentityRole} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <EllipsisVertical
