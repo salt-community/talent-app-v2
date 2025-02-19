@@ -13,7 +13,7 @@ export type SearchConfigurationClient = {
 
 export type Synonym = [string, string[]];
 
-type Identity = {
+export type Identity = {
   name: string;
   id: string;
   email: string;

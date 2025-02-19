@@ -5,9 +5,8 @@ import {
   NewAssignment,
   GetAllCohorts,
   GetAllAssignments,
-  Identity,
 } from "@/features";
-import { SearchConfigurationClient } from "./types";
+import { Identity, SearchConfigurationClient } from "./types";
 import { Settings } from "meilisearch";
 
 export function createAdminService(
