@@ -44,10 +44,10 @@ export function createMeiliClient() {
       return response.hits.map((hit) => hit.developerProfileId as string);
     },
 
-    async upsertBackground(background: BackgroundUpdate) {
+    async upsertBackground(background: BackgroundUpdate[]) {
       const meili = await initializeMeiliSearch();
       const index = meili.index(BACKGROUNDS_UID);
-      const response = await index.addDocuments([background], {
+      const response = await index.addDocuments(background, {
         primaryKey: PRIMARY_KEY,
       });
       return response.status;

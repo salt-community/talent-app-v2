@@ -56,12 +56,14 @@ export function createBackgroundsService(
           .map((education) => education?.name)
           .filter((name): name is string => !!name);
 
-        const upsertStatus = await meiliClient.upsertBackground({
-          ...background[0],
-          skills,
-          languages,
-          educations,
-        });
+        const upsertStatus = await meiliClient.upsertBackground([
+          {
+            ...background[0],
+            skills,
+            languages,
+            educations,
+          },
+        ]);
         succeeded = OK_STATUSES.includes(upsertStatus);
         break;
       case "delete":
@@ -119,10 +121,9 @@ export function createBackgroundsService(
       const { outboxMessageId, backgroundId } =
         await repository.add(background);
 
-      const status = await meiliClient.upsertBackground({
-        id: backgroundId,
-        ...background,
-      });
+      const status = await meiliClient.upsertBackground([
+        { id: backgroundId, ...background },
+      ]);
       if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
       }
@@ -131,7 +132,7 @@ export function createBackgroundsService(
     async update(background: BackgroundUpdate) {
       const { outboxMessageId } = await repository.update(background);
 
-      const status = await meiliClient.upsertBackground(background);
+      const status = await meiliClient.upsertBackground([background]);
       if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
       }
@@ -166,9 +167,7 @@ export function createBackgroundsService(
       await meiliClient.deleteAllBackgrounds();
       const backgrounds = await repository.getAllBackgrounds();
 
-      for (const background of backgrounds) {
-        await meiliClient.upsertBackground(background);
-      }
+      await meiliClient.upsertBackground(backgrounds);
     },
 
     async syncMeilisearch() {
