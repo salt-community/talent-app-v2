@@ -1,4 +1,4 @@
-import { checkAccess } from "./check-access";
+import { checkAccess, hasAccess } from "./check-access";
 import { createRepository } from "./repository";
 import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
@@ -6,7 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { SessionClaims } from "@/features";
 import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
-import { Permission } from "./permissions";
+import { Permission, ViewPermission } from "./permissions";
 
 export function createService(db: Db) {
   const repository = createRepository(db);
@@ -76,15 +76,13 @@ export function createService(db: Db) {
       return repository.addIdentity(identity);
     },
 
-    async checkUserAccess(identityId: string) {
+    async hasCurrentUserAccess(permission: ViewPermission) {
       const { userId } = await auth();
       if (!userId) return false;
-
-      const identity = await repository.getIdentityRole(userId);
-
-      if (identity.roles === "admin") return true;
-
-      return identity.id === identityId;
+      const roles: string[] = ["guest"];
+      const identityRole = await repository.getIdentityRole(userId);
+      roles.push(identityRole.roles);
+      return hasAccess(roles, permission);
     },
 
     async checkAccess(permission: Permission, roles: string[]): Promise<void> {
