@@ -7,6 +7,9 @@ import {
   languages,
   educations,
   meiliSearchOutbox,
+  SkillSelect,
+  LanguageSelect,
+  EducationSelect,
 } from "./db";
 import { BackgroundUpdate } from "./types";
 import { highlightedDevelopers } from "./db/posts-data";
@@ -74,9 +77,15 @@ export function createRepository(db: DB) {
         .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
         .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
         .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
+        .where(
+          eq(
+            backgrounds.developerProfileId,
+            sql.raw(`'${developerProfileId}'::uuid`)
+          )
+        )
         .groupBy(backgrounds.id);
     },
-    async getBackgroundById(developerProfileId: String) {
+    async getBackgroundById(developerProfileId: string) {
       return await db
         .select({
           id: backgrounds.id,
@@ -86,20 +95,26 @@ export function createRepository(db: DB) {
           title: backgrounds.title,
           bio: backgrounds.bio,
           links: backgrounds.links,
-          skills: sql<any[]>`jsonb_agg(distinct jsonb_build_object(
+          skills: sql<SkillSelect[]>`jsonb_agg(distinct jsonb_build_object(
           'id', ${skills.id},
           'name', ${skills.name},
-          'backgroundId', ${skills.backgroundId}
+          'backgroundId', ${skills.backgroundId},
+          'level',${skills.level}
         ))`.as("skills"),
-          languages: sql<any[]>`jsonb_agg(distinct jsonb_build_object(
+          languages: sql<
+            LanguageSelect[]
+          >`jsonb_agg(distinct jsonb_build_object(
           'id', ${languages.id},
           'name', ${languages.name},
-          'backgroundId', ${languages.backgroundId}
+          'backgroundId', ${languages.backgroundId},
+          'level',${languages.level}
         ))`.as("languages"),
-          educations: sql<any[]>`jsonb_agg(distinct jsonb_build_object(
+          educations: sql<
+            EducationSelect[]
+          >`jsonb_agg(distinct jsonb_build_object(
           'id', ${educations.id},
           'name', ${educations.name},
-          'backgroundId', ${educations.backgroundId}
+          'backgroundId', ${educations.backgroundId},
         ))`.as("educations"),
         })
         .from(backgrounds)
