@@ -74,3 +74,11 @@ export async function createAssignmentAction(formData: FormData) {
     }
   }
 }
+export async function updateRoleAction(id: string, newRole: string) {
+  await adminService.updateRole({ id, newRole });
+  revalidatePath("/dashboard/identities");
+}
+export async function deleteUserAction(id: string) {
+  await adminService.deleteUser(id);
+  revalidatePath("/admin/identities");
+}
