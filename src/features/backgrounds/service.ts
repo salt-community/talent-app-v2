@@ -135,10 +135,6 @@ export function createBackgroundsService(
       }
     },
 
-    async getHighlightedDeveloperProfileIds() {
-      return await getHighlightedDeveloperProfileIds();
-    },
-
     async searchDeveloperProfileIds(search: string | undefined) {
       const cleanSearch = search?.trim();
       const [

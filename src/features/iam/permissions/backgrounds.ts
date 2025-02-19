@@ -16,8 +16,6 @@ export const backgrounds: PermissionsSchema<"backgrounds", BackgroundsService> =
     getBackgroundByDeveloperProfileId:
       "backgrounds.getBackgroundByDeveloperProfileId",
     getAllPosts: "backgrounds.getAllPosts",
-    getHighlightedDeveloperProfileIds:
-      "backgrounds.getHighlightedDeveloperProfileIds",
     getMeilisearchSettings: "backgrounds.getMeilisearchSettings",
     getPostById: "backgrounds.getPostById",
     isSearchHealthOk: "backgrounds.isSearchHealthOk",
