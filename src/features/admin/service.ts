@@ -36,9 +36,10 @@ export function createAdminService(
     async updateStatus(args: { id: string; status: string }) {
       await updateStatus({ id: args.id, status: args.status });
     },
-    async isSearchHealthOk() {
-      return await searchConfigurationClient.isHealthOk();
-    },
+    //unused right now
+    // async isSearchHealthOk() {
+    //   return await searchConfigurationClient.isHealthOk();
+    // },
     async repopulateSearch() {
       await searchConfigurationClient.repopulate();
     },
@@ -57,12 +58,15 @@ export function createAdminService(
     async updateRole(args: { id: string; newRole: string }) {
       await updateRole(args.id, args.newRole);
     },
+    //Ali - check if this is needed
     async getAllAssignments() {
       return await getAllAssignments();
     },
+    //Ali - check if this is needed
     async getAllCohorts() {
       return await getAllCohorts();
     },
+    //Ali - check if this is needed
     async createAssignment(assignment: NewAssignment) {
       return await createAssignment(assignment);
     },

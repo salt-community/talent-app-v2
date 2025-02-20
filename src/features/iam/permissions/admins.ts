@@ -4,7 +4,7 @@ import { AdminsService } from "@/features/admin/types";
 import { PermissionsSchema } from "../secure-service";
 
 export const admins: PermissionsSchema<"admins", AdminsService> = {
-  isSearchHealthOk: "admins.isSearchHealthOk",
+  // unused isSearchHealthOk: "admins.isSearchHealthOk",
   createAssignment: "admins.createAssignment",
   deleteDeveloperProfile: "admins.deleteDeveloperProfile",
   deleteUser: "admins.deleteUser",

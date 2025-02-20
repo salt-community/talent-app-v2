@@ -33,6 +33,7 @@ export async function updateMeilisearchSettingsAction(formData: FormData) {
   revalidatePath("/admin/meilisearch-configuration");
 }
 
+ //Ali - check if this is needed
 export async function createAssignmentAction(formData: FormData) {
   const title = formData.get("title") as string;
   const comment = formData.get("comment") as string;
@@ -55,6 +56,7 @@ export async function createAssignmentAction(formData: FormData) {
       categories,
     };
 
+    //Ali - check if this is needed
     await adminService.createAssignment(newAssignment);
     revalidatePath("/admin/instructors/assignments");
   } catch (error) {
