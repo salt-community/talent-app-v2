@@ -1,4 +1,4 @@
-import { AssignmentsDashboard, DeveloperDashboard } from "@/features";
+import { DeveloperDashboard } from "@/features";
 
 type Params = {
   params: Promise<{ name: string }>;

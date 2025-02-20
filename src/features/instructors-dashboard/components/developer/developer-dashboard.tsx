@@ -1,6 +1,5 @@
 import React from "react";
 import StudentCard from "./developer-card";
-import { Developer } from "../../types";
 import AddDeveloperButton from "./add-developer-button";
 import { instructorService } from "../../instance";
 import { notFound } from "next/navigation";
