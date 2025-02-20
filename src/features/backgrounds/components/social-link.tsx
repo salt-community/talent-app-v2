@@ -1,7 +1,7 @@
 "use client";
 
 import { FaGithub } from "react-icons/fa6";
-import type { SocialLink } from "../db";
+import type { SocialLink } from "../types";
 import Link from "next/link";
 
 type Props = SocialLink & { size?: number };
@@ -27,4 +27,3 @@ export function SocialLink({ url, name, size = 20 }: Props) {
     </>
   );
 }
-

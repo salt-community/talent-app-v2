@@ -1,6 +1,6 @@
 "use client";
 import { Badge } from "@/components/";
-import { SkillSelect } from "../db";
+import { SkillSelect } from "../types";
 
 type Props = {
   skills: SkillSelect[];

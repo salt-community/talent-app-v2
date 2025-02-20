@@ -14,9 +14,13 @@ import {
 import { TagsInput } from "./tags-input";
 import { Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BackgroundInfo } from "../types";
+import {
+  BackgroundInfo,
+  EducationSelect,
+  LanguageSelect,
+  SkillSelect,
+} from "../types";
 import { useActionState, useState, useEffect } from "react";
-import { EducationSelect, LanguageSelect, SkillSelect } from "../db";
 import { BackgroundAvatar } from "./avatar";
 
 type Props = {

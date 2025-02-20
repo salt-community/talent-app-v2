@@ -1,6 +1,9 @@
 import { Repository } from "./repository";
-import { BackgroundInsert, OutboxMessageSelect } from "./db";
-import { BackgroundUpdate } from "./types";
+import {
+  BackgroundInsert,
+  BackgroundUpdate,
+  OutboxMessageSelect,
+} from "./types";
 import { MeiliClient } from "./meili";
 import {
   DeleteDeveloperProfile,

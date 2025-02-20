@@ -3,9 +3,8 @@
 import { errorHandler } from "@/lib";
 import { revalidatePath } from "next/cache";
 import { ZodError } from "zod";
-import { SocialLink } from "./db";
 import { backgroundsService } from "./instance";
-import { PreviousState } from "./types";
+import { PreviousState, SocialLink } from "./types";
 import { backgroundUpdate, BackgroundUpdate } from "./validation";
 
 export async function updateBackgroundAction(

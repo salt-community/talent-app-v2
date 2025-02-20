@@ -1,17 +1,19 @@
 import { eq } from "drizzle-orm";
 import {
   backgrounds,
-  BackgroundInsert,
   DB,
   skills,
   languages,
   educations,
   meiliSearchOutbox,
-  SkillSelect,
-  LanguageSelect,
-  EducationSelect,
 } from "./db";
-import { BackgroundUpdate } from "./types";
+import {
+  BackgroundInsert,
+  BackgroundUpdate,
+  EducationSelect,
+  LanguageSelect,
+  SkillSelect,
+} from "./types";
 import { highlightedDevelopers } from "./db/posts-data";
 import { sql } from "drizzle-orm";
 
