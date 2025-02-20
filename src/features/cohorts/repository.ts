@@ -1,7 +1,7 @@
 import { Db } from "@/db";
 import { eq } from "drizzle-orm";
-import { CohortFormData, CohortIdentity } from "./types";
 import { cohortIdentities, cohorts } from "./schema";
+import { CohortFormData, CohortIdentity } from "./types";
 
 export function createCohortsRepository(db: Db) {
   return {
@@ -60,6 +60,19 @@ export function createCohortsRepository(db: Db) {
         .from(cohorts)
         .where(eq(cohorts.name, name));
       return cohort;
-    }
+    },
+    async addDevelopersToCohort(args: {
+      cohortId: string;
+      identityIds: string[];
+    }) {
+      await db
+        .insert(cohortIdentities)
+        .values(
+          args.identityIds.map((identityId) => ({
+            cohortId: args.cohortId,
+            identityId,
+          }))
+        );
+    },
   };
 }

@@ -52,6 +52,9 @@ export function createCohortsService(
     async addDeveloperToCohort(args: { cohortId: string; identityId: string }) {
       await repository.addDeveloperToCohort(args);
     },
+    async addDevelopersToCohort(args: { cohortId: string; identityIds: string[] }) {
+      await repository.addDevelopersToCohort(args);
+    }
   };
 }
 

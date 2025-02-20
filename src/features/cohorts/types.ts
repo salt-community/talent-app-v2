@@ -8,6 +8,7 @@ export type DeleteCohort = CohortsService["deleteCohort"];
 export type UpdateCohortStatus = CohortsService["updateCohortStatus"];
 export type AddCohort = CohortsService["addCohort"];
 export type GetCohortStudents = CohortsService["getCohortStudents"];
+export type AddDevelopersToCohort = CohortsService["addDevelopersToCohort"];
 
 export type Cohort = {
   id?: string;
