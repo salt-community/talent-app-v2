@@ -1,6 +1,6 @@
 import React from "react";
 import { DashboardAvatar } from "./dashboard-avatar";
-import { StatusMenu } from "./status-menu";
+import { DeveloperStatusMenu } from "./developer-status-menu";
 type DeveloperProfileListProps = {
   id: string;
   name: string;
@@ -24,7 +24,7 @@ export function DeveloperProfileList({
             {email}
           </p>
         </div>
-        <StatusMenu id={id} developerStatus={status} />
+        <DeveloperStatusMenu id={id} developerStatus={status} />
       </div>
     </div>
   );

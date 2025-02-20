@@ -4,7 +4,7 @@ type Props = {
   status: string;
 };
 
-export function StatusRole({ status }: Props) {
+export function IdentityStatus({ status }: Props) {
   let color;
   let fillColor;
 

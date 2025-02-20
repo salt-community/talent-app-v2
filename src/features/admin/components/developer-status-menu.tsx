@@ -10,40 +10,39 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
-
-import { deleteUserAction, updateRoleAction } from "../action";
+import { deleteDeveloperProfileAction, updateStatusAction } from "../action";
 import { DeleteDialog } from "./delete-button";
-import { StatusRole } from "./status-role";
+import { DeveloperStatus } from "./developer-status";
 
 type Props = {
   id: string;
-  role: string;
+  developerStatus: string;
 };
 
-export function StatusMenuIdentity({ id, role }: Props) {
-  const [IdentityRole, setRole] = useState<string>(role);
+export function DeveloperStatusMenu({ id, developerStatus }: Props) {
+  const [status, setStatus] = useState<string>(developerStatus);
   const { toast } = useToast();
 
   async function onDelete() {
-    await deleteUserAction(id);
+    await deleteDeveloperProfileAction(id);
     toast({
       title: "Profile deleted",
-      description: "The user profile has been successfully deleted",
+      description: "The developer profile has been successfully deleted",
     });
   }
-
-  async function onStatusChange(newRole: string) {
-    await updateRoleAction(id, newRole);
-    setRole(newRole);
+  async function onStatusChange(newStatus: string) {
+    await updateStatusAction(id, newStatus);
+    setStatus(newStatus);
     toast({
-      title: "Role updated",
-      description: "The role has been successfully updated",
+      title: "Status updated",
+      description: "The developer profile status has been successfully updated",
     });
   }
 
   return (
     <div className="flex items-center gap-4">
-      <StatusRole status={IdentityRole} />
+      <p className="px-4 hidden md:block capitalize">{status}</p>
+      <DeveloperStatus status={status} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <EllipsisVertical
@@ -53,14 +52,18 @@ export function StatusMenuIdentity({ id, role }: Props) {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuRadioGroup
-            value={IdentityRole}
+            value={status}
             onValueChange={(value) => onStatusChange(value as string)}
           >
-            <DropdownMenuRadioItem value="admin">Admin</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="developer">
-              Developer
+            <DropdownMenuRadioItem value="highlighted">
+              Highlighted
             </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="core">Core</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="published">
+              Published
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="unpublished">
+              Unpublished
+            </DropdownMenuRadioItem>
             <DeleteDialog onConfirm={onDelete} />
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>

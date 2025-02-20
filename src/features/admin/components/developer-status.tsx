@@ -4,17 +4,17 @@ type Props = {
   status: string;
 };
 
-export function Status({ status }: Props) {
+export function DeveloperStatus({ status }: Props) {
   let color;
-  let fillColor;
+  let fillColor
 
-  if (status === "admin") {
+  if (status === "published") {
     color = "#60a5fa";
     fillColor = "#bfdbfe";
-  } else if (status === "developer") {
+  } else if (status === "unpublished") {
     color = "#a1a1aa";
     fillColor = "#e4e4e7";
-  } else if (status === "core") {
+  } else if (status === "highlighted") {
     color = "#c084fc";
     fillColor = "#e9d5ff";
   }

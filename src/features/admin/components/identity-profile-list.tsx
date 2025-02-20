@@ -1,6 +1,6 @@
 import React from "react";
-import { StatusMenuIdentity } from "./status-menu-identities";
 import { DashboardAvatar } from "./dashboard-avatar";
+import { IdentityStatusMenu } from "./identity-status-menu";
 
 type Props = {
   id: string;
@@ -22,7 +22,7 @@ export default function IdentityProfileList({ id, name, email, role }: Props) {
         </div>
         <div className="flex justify-center">
           <p className="px-4 hidden md:block capitalize">{role}</p>
-          <StatusMenuIdentity id={id} role={role} />
+          <IdentityStatusMenu id={id} role={role} />
         </div>
       </div>
     </div>
