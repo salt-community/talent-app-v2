@@ -16,11 +16,11 @@ export default function AddDeveloperButton() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <button className="" onClick={() => setOpen(true)}>
-            <span>+</span> New assignment
+            <span>+</span> New Developer
           </button>
         </DialogTrigger>
         <VisuallyHidden>
-          <DialogTitle>New Assignment</DialogTitle>
+          <DialogTitle>New Developer</DialogTitle>
         </VisuallyHidden>
         <DialogContent>
           {/*

@@ -7,10 +7,7 @@ import { Developer } from "../../types";
 
 export default function StudentCard({ developer }: { developer: Developer }) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Total students</CardTitle>
-      </CardHeader>
+    <Card className="border-none shadow-none">
       <CardContent className="space-y-6">
         {developer.map((dev) => (
           <div key={dev.id} className="flex items-center justify-between group">
