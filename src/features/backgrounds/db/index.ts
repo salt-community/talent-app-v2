@@ -1,3 +1,1 @@
-export * from "./relations.schema";
-export * from "./db";
 export * from "./posts-data";

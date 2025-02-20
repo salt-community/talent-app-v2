@@ -16,9 +16,9 @@ import {
   meiliSearchOutbox,
   skills,
 } from "./db/schema";
-import { DB } from "./db";
+import { Db } from "@/db";
 
-export function createRepository(db: DB) {
+export function createRepository(db: Db) {
   const posts = highlightedDevelopers;
   return {
     async getAllBackgrounds() {
