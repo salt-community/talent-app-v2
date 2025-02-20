@@ -10,10 +10,10 @@ import MetricSidebar from "./project-metric-sidebar";
 
 type Props = {
   project: Project;
-  editAccess: boolean;
+  hasProfileAccess: boolean;
 };
 
-export default function ProjectDetails({ project, editAccess }: Props) {
+export default function ProjectDetails({ project, hasProfileAccess }: Props) {
   return (
     <>
       <div className="flex justify-between items-baseline">
@@ -29,7 +29,7 @@ export default function ProjectDetails({ project, editAccess }: Props) {
             </p>
           </Link>
         </div>
-        {editAccess && (
+        {hasProfileAccess && (
           <EditProjectDetails key={project.id} project={project} />
         )}{" "}
       </div>
