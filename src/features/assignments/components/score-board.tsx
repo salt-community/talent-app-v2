@@ -3,11 +3,18 @@ import { assignmentsService } from "../instance";
 
 type ScoreBoardProps = {
   cohortId: string;
+  hasProfileAccess: boolean;
 };
 
-export async function ScoreBoard({ cohortId }: ScoreBoardProps) {
+export async function ScoreBoard({
+  cohortId,
+  hasProfileAccess,
+}: ScoreBoardProps) {
   await assignmentsService.getAssignmentsByCohortId(cohortId);
 
+  if (!hasProfileAccess) {
+    return <></>;
+  }
   return (
     <section className="min-w-72">
       <Separator className="my-4" />
