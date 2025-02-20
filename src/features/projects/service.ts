@@ -15,24 +15,24 @@ export function createService(
   const reps = createRepository(db);
 
   return {
-    getAllDevelopers: async () => {
+    async getAllDevelopers() {
       return await getAllIdentities();
     },
-    getAll: async (developerProfileId: string) => {
+    async getAll(developerProfileId: string) {
       const projects = await reps.getAll(developerProfileId);
       const sortedProjects = projects.sort((a, b) =>
         a.title.localeCompare(b.title)
       );
       return sortedProjects;
     },
-    add: async ({
+    async add({
       repository,
       description,
       projectWebsite,
       userId,
       imageUrl,
       imageAlt,
-    }: ProjectData) => {
+    }: ProjectData) {
       let performance: string;
 
       if (projectWebsite.length !== 0) {
@@ -68,25 +68,25 @@ export function createService(
 
       await reps.add(newProject);
     },
-    updateDescription: async (updatedProject: UpdatedProject) => {
+    async updateDescription(updatedProject: UpdatedProject) {
       await reps.update(updatedProject);
     },
-    delete: async (id: string) => {
+    async delete(id: string) {
       try {
         await reps.delete(id);
       } catch (error) {
         console.log("Error while deleting project:", error);
       }
     },
-    deleteProjectsByDeveloperProfileId: async (developerProfileId: string) => {
+    async deleteProjectsByDeveloperProfileId(developerProfileId: string) {
       await reps.deleteProjectsByDeveloperProfileId(developerProfileId);
     },
-    updateProjectData: async (args: {
+    async updateProjectData(args: {
       id: string;
       projectWebsite: string;
       user: string;
       repo: string;
-    }) => {
+    }) {
       const [newPerformanceScore, newCommitsCount, newIssuesCount, lastCommit] =
         await Promise.all([
           api.testPagePerformance(args.projectWebsite),
@@ -102,7 +102,7 @@ export function createService(
         lastCommit: lastCommit,
       });
     },
-    hasCurrentUserAccess: async (permission: ViewPermission) => {
+    async hasCurrentUserAccess(permission: ViewPermission) {
       return hasCurrentUserAccess(permission);
     },
   };
