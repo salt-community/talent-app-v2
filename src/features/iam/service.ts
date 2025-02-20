@@ -43,7 +43,7 @@ export function createService(db: Db) {
       return await iamService.createUserIfValid(userId, sessionClaims);
     },
 
-    async createUserIfValid(userId: string, sessionClaims: any) {
+    async createUserIfValid(userId: string, sessionClaims: SessionClaims) {
       const SALT_DOMAIN = "appliedtechnology.se";
       if (!validateSessionClaims(sessionClaims))
         return { id: "", role: "guest" };
