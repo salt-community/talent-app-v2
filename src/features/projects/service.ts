@@ -9,14 +9,14 @@ import { ViewPermission } from "../iam/";
 export function createService(
   db: Db,
   api: Api,
-  getAllIdentities: DeveloperProfile,
+  getAllDeveloperProfiles: DeveloperProfile,
   hasCurrentUserAccess: (id: ViewPermission) => Promise<boolean>
 ) {
   const reps = createRepository(db);
 
   return {
     async getAllDevelopers() {
-      return await getAllIdentities();
+      return await getAllDeveloperProfiles();
     },
     async getAll(developerProfileId: string) {
       const projects = await reps.getAll(developerProfileId);
