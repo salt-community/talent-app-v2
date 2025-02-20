@@ -2,32 +2,31 @@
 
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { Star, Users } from "lucide-react";
 
-type Props = {
-  name: string;
-  assignmentsLength: number;
-  developersLength: number;
+type LayoutProps = {
+  children: React.ReactNode;
+  params: Promise<{ name: string }>;
 };
 
-export default function InstructorDashboardNavbar({
-  name,
-  assignmentsLength,
-  developersLength,
-}: Props) {
+export default function InstructorDashboardLayout({
+  children,
+  params,
+}: LayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const resolvedParams = React.use(params);
+  const name = resolvedParams.name;
 
   const tabs = [
     {
       name: "Assignments",
-      count: assignmentsLength,
-      icon: "⭐",
+      icon: <Star className="w-4 h-4" />,
       href: `/instructor-dashboard/cohorts/${name}/`,
     },
     {
       name: "Developers",
-      count: developersLength,
-      icon: "👥",
+      icon: <Users className="w-4 h-4" />,
       href: `/instructor-dashboard/cohorts/${name}/developers`,
     },
   ];
@@ -38,9 +37,10 @@ export default function InstructorDashboardNavbar({
   };
 
   return (
-    <div className="mb-8">
-      <h1 className="text-2xl font-semibold mb-2">{name.toUpperCase()}</h1>
-      <div className="flex border-b">
+    <div className="flex flex-col w-full p-28">
+      <h1 className="text-2xl font-bold p-4">{name.toUpperCase()}</h1>
+
+      <nav className="flex border-b">
         {tabs.map((tab) => (
           <a
             key={tab.name}
@@ -52,14 +52,13 @@ export default function InstructorDashboardNavbar({
                 : ""
             }`}
           >
-            <span>{tab.icon}</span>
-            <span>{tab.name}</span>
-            {typeof tab.count === "number" && (
-              <span className="ml-1 text-gray-600">{tab.count}</span>
-            )}
+            {tab.icon}
+            {tab.name}
           </a>
         ))}
-      </div>
+      </nav>
+
+      <main className="p-4">{children}</main>
     </div>
   );
 }

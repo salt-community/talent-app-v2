@@ -2,8 +2,8 @@ import React from "react";
 import { BackgroundAvatar } from "./avatar";
 import { H2 } from "@/components";
 import { addBackground } from "../actions";
-import type { Developer } from "@/features/developer-profiles";
 import { errorHandler } from "@/lib";
+import { Developer } from "@/features";
 
 type Props = { developerProfileId: string };
 

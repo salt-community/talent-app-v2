@@ -36,7 +36,10 @@ export default async function DeveloperDetailPage({ params }: Params) {
         developerProfileId={developerProfile.id}
         hasProfileAccess={hasProfileAccess}
       />
-      <ScoreBoard cohortId={"927d9e82-c0b1-4561-ac04-75883d7b01ae"} />
+      <ScoreBoard
+        cohortId={"927d9e82-c0b1-4561-ac04-75883d7b01ae"}
+        hasProfileAccess={hasProfileAccess}
+      />
       {/* Hard coded cohortId? */}
       <Projects
         developerProfileId={developerProfile.id}

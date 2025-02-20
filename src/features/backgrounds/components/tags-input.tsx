@@ -1,6 +1,6 @@
 "use client";
 
-import { Label } from "@/components/ui/label";
+import { Label } from "@/components/";
 import { Tag, TagInput } from "emblor";
 import { useState } from "react";
 
@@ -17,7 +17,7 @@ export function TagsInput({
   suggestedTags,
 }: Props) {
   const [tags, setTags] = useState<Tag[]>(
-    userTags.map((tag) => ({ id: String(tag.id), text: tag.name })),
+    userTags.map((tag) => ({ id: String(tag.id), text: tag.name }))
   );
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
 
