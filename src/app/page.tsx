@@ -1,7 +1,6 @@
 import {
   developerProfilesService,
   HighlightedDevelopers,
-  HighlightPage,
 } from "@/features";
 
 export default async function Home() {
@@ -9,7 +8,7 @@ export default async function Home() {
   const highlightedDeveloperProfileIds =
     await developerProfilesService.getHighlightedDeveloperProfileIds();
 
-  return process.env.FF_NEW_HIGHLIGHTS === "ON" ? (
+  return (
     <div>
       <h2 className="text-center text-5xl font-extrabold pt-16 text-header px-1">
         Our Developers in Focus
@@ -24,7 +23,5 @@ export default async function Home() {
         />
       </div>
     </div>
-  ) : (
-    <HighlightPage />
-  );
+  ) 
 }
