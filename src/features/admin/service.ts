@@ -57,9 +57,6 @@ export function createAdminService(
     async updateRole(args: { id: string; newRole: string }) {
       await updateRole(args.id, args.newRole);
     },
-    async resetSearchSettings() {
-      await searchConfigurationClient.resetSettings();
-    },
     async getAllAssignments() {
       return await getAllAssignments();
     },

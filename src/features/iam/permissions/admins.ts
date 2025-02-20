@@ -14,7 +14,6 @@ export const admins: PermissionsSchema<"admins", AdminsService> = {
   getAllIdentities: "admins.getAllIdentities",
   getSearchSettings: "admins.getSearchSettings",
   repopulateSearch: "admins.repopulateSearch",
-  resetSearchSettings: "admins.resetSearchSettings",
   syncSearch: "admins.syncSearch",
   updateRole: "admins.updateRole",
   updateSearchSettings: "admins.updateSearchSettings",

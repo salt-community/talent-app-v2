@@ -33,11 +33,6 @@ export async function updateMeilisearchSettingsAction(formData: FormData) {
   revalidatePath("/admin/meilisearch-configuration");
 }
 
-export async function resetMeilisearchSettingsAction() {
-  await adminService.resetSearchSettings();
-  revalidatePath("/admin/meilisearch-configuration");
-}
-
 export async function createAssignmentAction(formData: FormData) {
   const title = formData.get("title") as string;
   const comment = formData.get("comment") as string;
