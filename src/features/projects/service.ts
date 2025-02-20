@@ -10,7 +10,6 @@ export function createService(
   db: Db,
   api: Api,
   getAllIdentities: DeveloperProfile,
-  getIdentityIdByDeveloperProfileId: (id: string) => Promise<string | null>,
   hasCurrentUserAccess: (id: ViewPermission) => Promise<boolean>
 ) {
   const reps = createRepository(db);
