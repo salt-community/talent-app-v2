@@ -7,7 +7,9 @@ export async function InstructorsDashboard() {
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-center text-3xl py-6 font-bold">Dashboard</h1>
+      <h1 className="text-center text-3xl py-6 font-bold">
+        Instructor Dashboard
+      </h1>
       <div className="flex justify-center mb-8">
         <CohortCard cohorts={cohorts} />
       </div>
