@@ -1,7 +1,7 @@
 import { Db } from "@/db";
-import { ProjectInsert, projects } from "./db";
 import { eq } from "drizzle-orm";
 import { UpdatedProject, UpdatedProjectData } from "./types";
+import { ProjectInsert, projects } from "./schema";
 
 export function createRepository(db: Db) {
   return {
