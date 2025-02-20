@@ -113,8 +113,17 @@ export const rolesViewPermissions = {
     projectPermissions.edit,
     MenuPermissions.instructorsDashboard,
     MenuPermissions.admin,
+    MenuPermissions.hamburgerMenu,
   ]),
-  core: new Set([MenuPermissions.admin, MenuPermissions.instructorsDashboard]),
-  developer: new Set([projectPermissions.edit, MenuPermissions.profile]),
+  core: new Set([
+    MenuPermissions.admin,
+    MenuPermissions.instructorsDashboard,
+    MenuPermissions.hamburgerMenu,
+  ]),
+  developer: new Set([
+    projectPermissions.edit,
+    MenuPermissions.profile,
+    MenuPermissions.hamburgerMenu,
+  ]),
   guest: new Set([]),
 } as const;
