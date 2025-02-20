@@ -12,7 +12,7 @@ import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
 
 import { deleteUserAction, updateRoleAction } from "../action";
-import { DeleteDialog } from "@/features/admin/components/delete-button";
+import { DeleteDialog } from "./delete-button";
 import { StatusRole } from "./status-role";
 
 type Props = {
