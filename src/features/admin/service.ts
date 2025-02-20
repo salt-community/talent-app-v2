@@ -71,17 +71,14 @@ export function createAdminService(
       return await createAssignment(assignment);
     },
     async deleteUser(identityId: string) {
-      console.log("deleting:", identityId);
-      await deleteIdentity(identityId);
       await deleteCohortIdentityById(identityId);
-      await deleteAssignmentScoreById(identityId);
       const developerProfiles = await getDeveloperProfileIdById(identityId);
-
       for (const developerProfile of developerProfiles) {
         await deleteBackgroundById(developerProfile.id);
         await deleteProjectsByDeveloperProfileId(developerProfile.id);
       }
       await deleteDeveloperProfileById(identityId);
+      await deleteIdentity(identityId);
     },
   };
 }
