@@ -1,10 +1,10 @@
 import { Db } from "@/db";
 import { createRepository } from "./repository";
-import { ProjectInsert } from "./db";
 import { Api } from "./api";
 import { DeveloperProfile, ProjectData, UpdatedProject } from "./types";
 import { extractRepositoryDetails } from "./logic";
 import { ViewPermission } from "../iam/permissions";
+import { ProjectInsert } from "./schema";
 
 export function createService(
   db: Db,
