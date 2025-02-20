@@ -11,7 +11,7 @@ export default async function Home() {
 
   return process.env.FF_NEW_HIGHLIGHTS === "ON" ? (
     <div>
-      <h2 className="text-center text-5xl font-extrabold pt-16 text-header">
+      <h2 className="text-center text-5xl font-extrabold pt-16 text-header px-1">
         Our Developers in Focus
       </h2>
       <h3 className="text-center text-lg pt-6 text-paragraphLight px-6">
