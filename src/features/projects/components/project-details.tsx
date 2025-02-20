@@ -14,7 +14,6 @@ type Props = {
 };
 
 export default function ProjectDetails({ project, editAccess }: Props) {
-  //const repository = project.repository.split("/")[4];
   return (
     <>
       <div className="flex justify-between items-baseline">
