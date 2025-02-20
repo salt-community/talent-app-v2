@@ -12,11 +12,6 @@ export async function Background({ developerProfileId, page }: Props) {
     await backgroundsService.getBackgroundByDeveloperProfileId(
       developerProfileId
     );
-  const developerProfiles = await backgroundsService.getAllDeveloperProfile();
-
-  const developerSlug = developerProfiles.find(
-    (profile) => profile.id === developerProfileId
-  );
 
   if (!background) {
     return <BackgroundSkeleton developerProfileId={developerProfileId} />;
@@ -24,7 +19,7 @@ export async function Background({ developerProfileId, page }: Props) {
     return (
       <div className="space-y-2 max-w-96">
         <div className="flex justify-between items-start">
-          <BackgroundBasicInfo background={background ?? undefined} />
+          <BackgroundBasicInfo background={background} />
         </div>
 
         <div>
@@ -48,11 +43,17 @@ export async function Background({ developerProfileId, page }: Props) {
     );
   }
 
+  const developerProfiles = await backgroundsService.getAllDeveloperProfile();
+
+  const developerSlug = developerProfiles.find(
+    (profile) => profile.id === developerProfileId
+  );
+
   return (
     <Link href={`/developers/${developerSlug?.slug}`}>
       <div className="space-y-2 max-w-96">
         <div className="flex justify-between items-start">
-          <BackgroundBasicInfo background={background ?? undefined} />
+          <BackgroundBasicInfo background={background} />
         </div>
 
         <div>
