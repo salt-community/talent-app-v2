@@ -1,5 +1,4 @@
-import { Button } from "@/components";
-import { AlertDialogDemo } from "@/components/alert-dialog/alertDialog";
+import { AlertDialogDemo, Button } from "@/components";
 import React from "react";
 
 type Props = {
