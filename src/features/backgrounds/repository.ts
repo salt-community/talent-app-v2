@@ -1,12 +1,5 @@
 import { eq } from "drizzle-orm";
-import {
-  backgrounds,
-  DB,
-  skills,
-  languages,
-  educations,
-  meiliSearchOutbox,
-} from "./db";
+
 import {
   BackgroundInsert,
   BackgroundUpdate,
@@ -16,6 +9,14 @@ import {
 } from "./types";
 import { highlightedDevelopers } from "./db/posts-data";
 import { sql } from "drizzle-orm";
+import {
+  backgrounds,
+  educations,
+  languages,
+  meiliSearchOutbox,
+  skills,
+} from "./db/schema";
+import { DB } from "./db";
 
 export function createRepository(db: DB) {
   const posts = highlightedDevelopers;

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { backgrounds, educations, languages, skills } from ".";
+import { backgrounds, educations, languages, skills } from "./schema";
 
 export const backgroundsRelations = relations(backgrounds, ({ many }) => ({
   skills: many(skills),

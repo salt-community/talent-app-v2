@@ -4,7 +4,7 @@ import {
   languages,
   meiliSearchOutbox,
   skills,
-} from "./db";
+} from "./db/schema";
 import { createBackgroundsService } from "./service";
 
 export type Backgrounds = BackgroundSelect & {
