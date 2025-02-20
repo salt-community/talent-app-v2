@@ -11,6 +11,3 @@ export const developerProfiles = pgTable("developer_profiles", {
   email: varchar().notNull(),
   status: varchar("status").notNull().default("unpublished"),
 });
-
-export type DeveloperProfileSelect = typeof developerProfiles.$inferSelect;
-export type DeveloperProfileInsert = typeof developerProfiles.$inferInsert;

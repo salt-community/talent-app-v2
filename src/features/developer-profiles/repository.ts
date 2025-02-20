@@ -1,6 +1,7 @@
 import { Db } from "@/db";
 import { eq, ne } from "drizzle-orm";
-import { DeveloperProfileInsert, developerProfiles } from "./schema";
+import { developerProfiles } from "./schema";
+import { DeveloperProfileInsert } from "./types";
 
 export function createDevelopersRepository(db: Db) {
   return {

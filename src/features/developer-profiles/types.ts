@@ -1,3 +1,4 @@
+import { developerProfiles } from "./schema";
 import { createDeveloperProfilesService } from "./service";
 import { JwtPayload } from "jsonwebtoken";
 
@@ -25,3 +26,5 @@ export interface SessionClaims extends JwtPayload {
   last_name?: string;
   email?: string | undefined;
 }
+export type DeveloperProfileSelect = typeof developerProfiles.$inferSelect;
+export type DeveloperProfileInsert = typeof developerProfiles.$inferInsert;
