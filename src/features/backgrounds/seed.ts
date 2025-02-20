@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { skills } from "./data";
-import { insecureBackgroundsService } from "../instance";
+import { insecureBackgroundsService } from "./instance";
+import { skills } from "./seed-data";
 
 export async function backgroundsSeed(developerProfileIds: string[]) {
   const backgrounds = developerProfileIds.map((developerProfileId) => {
