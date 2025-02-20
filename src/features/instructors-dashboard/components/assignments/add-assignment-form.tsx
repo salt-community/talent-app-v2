@@ -30,7 +30,7 @@ export function AddAssignmentForm({ cohorts, onSuccess }: Props) {
     setLoading(true);
 
     const formData = new FormData(event.target as HTMLFormElement);
-
+    
     try {
       await addAssignmentAction(formData);
       onSuccess();

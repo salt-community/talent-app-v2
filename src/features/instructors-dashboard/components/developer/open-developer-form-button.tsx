@@ -30,7 +30,11 @@ export default function AddDeveloperButton({ cohortId, developer }: Props) {
           <DialogTitle>New Developer</DialogTitle>
         </VisuallyHidden>
         <DialogContent>
-          <AddDeveloperForm developer={developer} cohortId={cohortId} />
+          <AddDeveloperForm
+            developer={developer}
+            cohortId={cohortId}
+            onSuccess={() => setOpen(false)}
+          />
         </DialogContent>
       </Dialog>
     </>

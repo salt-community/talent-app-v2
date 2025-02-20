@@ -15,10 +15,12 @@ type Developer = {
 type Props = {
   cohortId: string;
   developer: Developer[];
+  onSuccess: () => void;
 };
 
-export const AddDeveloperForm = ({ cohortId, developer }: Props) => {
+export const AddDeveloperForm = ({ cohortId, developer, onSuccess }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedDevs, setSelectedDevs] = useState<Developer[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -43,13 +45,18 @@ export const AddDeveloperForm = ({ cohortId, developer }: Props) => {
   );
 
   async function handleSubmit() {
-    await addDevelopersToCohortAction(
-      cohortId,
-      selectedDevs.map((dev) => dev.identityId)
-    );
-    console.log({
-      selectedDevelopers: selectedDevs.map((dev) => dev.identityId),
-    });
+    try {
+      setLoading(true);
+      await addDevelopersToCohortAction(
+        cohortId,
+        selectedDevs.map((dev) => dev.identityId)
+      );
+      onSuccess();
+    } catch (error) {
+      console.error("Failed to add developers to cohort:", error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -121,9 +128,9 @@ export const AddDeveloperForm = ({ cohortId, developer }: Props) => {
         <Button
           onClick={handleSubmit}
           className="w-full"
-          disabled={selectedDevs.length === 0}
+          disabled={selectedDevs.length === 0 && loading}
         >
-          Add Developers
+          {loading ? "Adding Developers..." : "Add Developers"}
         </Button>
       </div>
     </div>
