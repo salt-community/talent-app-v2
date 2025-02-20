@@ -1,5 +1,6 @@
-import { DashboardRoles } from "@/features/admin/components/dashboard-roles";
+import { IdentityDashboard } from "@/features/admin/components/identity-dashboard";
+
 
 export default function Page() {
-  return <DashboardRoles />;
+  return <IdentityDashboard />;
 }
