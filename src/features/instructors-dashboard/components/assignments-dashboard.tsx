@@ -5,6 +5,7 @@ import { TrashIcon, Copy } from "lucide-react";
 import { instructorService } from "../instance";
 import AddAssignmentButton from "./assignments/add-assignment-button";
 import { Separator } from "@/components";
+import { CopyAssignmentButton } from "./assignments/copy-assignment-button";
 
 type Props = {
   name: string;
@@ -29,40 +30,38 @@ export async function AssignmentsDashboard({ name }: Props) {
       </div>
       <Separator className="mb-4" />
       <div className="space-y-4">
-        {assignments.map((assignment) => (
-          <div
-            key={assignment.id}
-            className="flex justify-between items-center border-b pb-4"
-          >
-            <div className="flex items-center gap-4">
-              <Link
-                href={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.title}`}
-                className="text-blue-700 font-medium hover:underline hover:underline-offset-4"
-              >
-                {assignment.title}
-              </Link>
-            </div>
+        {assignments.map((assignment) => {
+          return (
+            <div
+              key={assignment.id}
+              className="flex justify-between items-center border-b pb-4"
+            >
+              <div className="flex items-center gap-4">
+                <Link
+                  href={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.title}`}
+                  className="text-blue-700 font-medium hover:underline hover:underline-offset-4"
+                >
+                  {assignment.title}
+                </Link>
+              </div>
 
-            <div className="flex items-center gap-2">
-              {/* must convert to their own component later on when functionality is added  */}
-              <button
-                className="px-3 py-1.5 bg-gray-50 border border-gray-300 mr-2 flex items-center gap-2 text-sm hover:bg-gray-100 p-1.5 rounded-md transition-colors"
-                aria-label="Copy invite link"
-              >
-                <Copy size={16} />
-                Copy invite link
-              </button>
+              <div className="flex items-center gap-2">
+                <CopyAssignmentButton
+                  link={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.title}`}
+                />
 
-              <button
-                className="text-red-500 hover:bg-gray-100 p-1.5 rounded-md transition-colors"
-                aria-label="Delete"
-              >
-                <TrashIcon size={18} />
-              </button>
-              {/* all the way here */}
+                {/* must convert to their own component later on when functionality is added  */}
+                <button
+                  className="text-red-500 hover:bg-gray-100 p-1.5 rounded-md transition-colors"
+                  aria-label="Delete"
+                >
+                  <TrashIcon size={18} />
+                </button>
+                {/* all the way here */}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
