@@ -20,4 +20,13 @@ export type Identity = {
   clerkId: string;
   role: string;
 };
+
+export type Developer = {
+  name: string;
+  id: string;
+  identityId: string | null;
+  email: string;
+  status: string;
+};
+
 export type AdminsService = ReturnType<typeof createAdminService>;

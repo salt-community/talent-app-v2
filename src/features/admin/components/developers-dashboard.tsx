@@ -1,7 +1,7 @@
 "use client";
 
 import { DeveloperProfileList } from "./developer-profile-list";
-import { Developer } from "@/features/developer-profiles";
+import { Developer } from "../types";
 
 type Props = {
   developers: Developer[];
