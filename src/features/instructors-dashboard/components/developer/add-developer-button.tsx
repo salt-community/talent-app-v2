@@ -5,6 +5,7 @@ import {
   DialogTrigger,
   DialogContent,
   DialogTitle,
+  Separator,
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
