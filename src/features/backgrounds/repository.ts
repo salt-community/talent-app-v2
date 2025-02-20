@@ -15,7 +15,7 @@ import {
   languages,
   meiliSearchOutbox,
   skills,
-} from "./db/schema";
+} from "./schema";
 import { Db } from "@/db";
 
 export function createRepository(db: Db) {

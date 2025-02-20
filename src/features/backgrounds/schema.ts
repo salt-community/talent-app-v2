@@ -1,5 +1,5 @@
 import { integer, jsonb, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
-import { SocialLink } from "../types";
+import { SocialLink } from "./types";
 
 export const backgrounds = pgTable("backgrounds", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
