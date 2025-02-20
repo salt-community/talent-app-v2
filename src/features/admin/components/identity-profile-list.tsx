@@ -1,6 +1,6 @@
 import React from "react";
-import DashboardAvatarIdentity from "./dashboard-avatar-identity";
 import { StatusMenuIdentity } from "./status-menu-identities";
+import { DashboardAvatar } from "./dashboard-avatar";
 
 type Props = {
   id: string;
@@ -12,7 +12,7 @@ type Props = {
 export default function IdentityProfileList({ id, name, email, role }: Props) {
   return (
     <div className="flex items-center py-3 gap-2">
-      <DashboardAvatarIdentity />
+      <DashboardAvatar />
       <div className="flex justify-between items-center w-full">
         <div>
           <p>{name}</p>
