@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { TrashIcon, Copy } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 import { instructorService } from "../instance";
 import AddAssignmentButton from "./assignments/add-assignment-button";
 import { Separator } from "@/components";
