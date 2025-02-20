@@ -129,24 +129,6 @@ export function createRepository(db: DB) {
         )
         .groupBy(backgrounds.id);
     },
-    async getSkillsByBackgroundId(backgroundId: number) {
-      return db
-        .select()
-        .from(skills)
-        .where(eq(skills.backgroundId, backgroundId));
-    },
-    async getLanguagesByBackgroundId(backgroundId: number) {
-      return db
-        .select()
-        .from(languages)
-        .where(eq(languages.backgroundId, backgroundId));
-    },
-    async getEducationsByBackgroundId(backgroundId: number) {
-      return db
-        .select()
-        .from(educations)
-        .where(eq(educations.backgroundId, backgroundId));
-    },
     async add(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } = await db.transaction(
         async (tx) => {
