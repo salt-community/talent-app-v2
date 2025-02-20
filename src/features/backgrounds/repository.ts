@@ -22,7 +22,7 @@ export function createRepository(db: DB) {
   const posts = highlightedDevelopers;
   return {
     async getAllBackgrounds() {
-      return db
+      return await db
         .select({
           id: backgrounds.id,
           developerProfileId: backgrounds.developerProfileId,
@@ -48,7 +48,7 @@ export function createRepository(db: DB) {
         .groupBy(backgrounds.id);
     },
     async getAllDeveloperProfileIds() {
-      const developerId = db
+      const developerId = await db
         .select({ developerProfileId: backgrounds.developerProfileId })
         .from(backgrounds);
 
@@ -57,7 +57,7 @@ export function createRepository(db: DB) {
       );
     },
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
-      return db
+      return await db
         .select({
           id: backgrounds.id,
           developerProfileId: backgrounds.developerProfileId,
