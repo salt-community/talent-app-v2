@@ -13,13 +13,6 @@ export type Backgrounds = BackgroundSelect & {
   background_educations: EducationSelect[];
 };
 
-export type Developer = {
-  name: string;
-  id: string;
-  identityId: string | null;
-  email: string;
-  status: string;
-};
 export type BackgroundInfo = {
   id: number;
   developerProfileId: string;

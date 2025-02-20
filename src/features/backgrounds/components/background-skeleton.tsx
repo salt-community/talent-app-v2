@@ -3,7 +3,7 @@ import { BackgroundAvatar } from "./avatar";
 import { H2 } from "@/components";
 import { addBackground } from "../actions";
 import { errorHandler } from "@/lib";
-import { Developer } from "../types";
+import { Developer } from "@/features";
 
 type Props = { developerProfileId: string };
 
