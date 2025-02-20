@@ -8,10 +8,10 @@ export function createRepository(db: Db) {
     async getAll(userId: string) {
       return db.select().from(projects).where(eq(projects.userId, userId));
     },
-    add: async (project: ProjectInsert) => {
+    async add(project: ProjectInsert) {
       await db.insert(projects).values(project);
     },
-    update: async (updatedProject: UpdatedProject) => {
+    async update(updatedProject: UpdatedProject) {
       await db
         .update(projects)
         .set({
@@ -21,13 +21,13 @@ export function createRepository(db: Db) {
         })
         .where(eq(projects.id, updatedProject.id));
     },
-    delete: async (id: string) => {
+    async delete(id: string) {
       await db.delete(projects).where(eq(projects.id, id));
     },
-    deleteProjectsByDeveloperProfileId: async (developerProfileId: string) => {
+    async deleteProjectsByDeveloperProfileId(developerProfileId: string) {
       await db.delete(projects).where(eq(projects.userId, developerProfileId));
     },
-    updateProjectData: async (updatedProjectData: UpdatedProjectData) => {
+    async updateProjectData(updatedProjectData: UpdatedProjectData) {
       await db
         .update(projects)
         .set({
