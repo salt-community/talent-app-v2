@@ -33,14 +33,14 @@ export default function StudentCard({ developer }: { developer: Developer }) {
                 </Avatar>
 
                 <div className="flex flex-col">
-                  <Link
-                    href={`/developers/${dev.slug}`}
-                    className="text-foreground font-medium hover:underline hover:underline-offset-4"
-                  >
-                    {dev.name}
-                  </Link>
+                  {dev.name}
                   <div className="flex items-center space-x-2 text-muted-foreground text-sm">
-                    <span>@{dev.slug || dev.name.toLowerCase()}</span>
+                    <Link
+                      href={`/developers/${dev.slug}`}
+                      className="text-foreground font-medium hover:underline hover:underline-offset-4 hover:text-blue-700"
+                    >
+                      <span>@{dev.slug || dev.name.toLowerCase()}</span>
+                    </Link>
                   </div>
                 </div>
               </div>
