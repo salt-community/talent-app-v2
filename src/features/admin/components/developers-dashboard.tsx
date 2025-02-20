@@ -7,7 +7,7 @@ type Props = {
   developers: Developer[];
 };
 
-export function Dashboard({ developers }: Props) {
+export function DeveloperDashboard({ developers }: Props) {
   return (
     <div>
       {developers.map((dev) => (
