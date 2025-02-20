@@ -18,7 +18,6 @@ export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
   getPublishedOrHighlightedDeveloperProfileIds: () => Promise<string[]>,
-  getHighlightedDeveloperProfileIds: () => Promise<string[]>,
   getDeveloperById: (id: string) => Promise<Developer>,
   getAllDeveloperProfile: GetAllDeveloperProfiles,
   createDeveloperProfile: CreateDeveloperProfile,
@@ -39,9 +38,7 @@ export function createBackgroundsService(
           break;
         }
         const upsertStatus = await meiliClient.upsertBackground([
-          {
-            ...background[0],
-          },
+          background[0],
         ]);
         succeeded = OK_STATUSES.includes(upsertStatus);
         break;
