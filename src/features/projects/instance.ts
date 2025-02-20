@@ -8,7 +8,7 @@ import {
 } from "@/features";
 import { createApi } from "./api";
 
-export const insecurePojectService = createService(
+export const insecureProjectService = createService(
   db,
   createApi(),
   developerProfilesService.getAll,
@@ -16,7 +16,10 @@ export const insecurePojectService = createService(
   iamService.hasCurrentUserAccess
 );
 
-export const projectsService = secureService("projects", insecurePojectService);
+export const projectsService = secureService(
+  "projects",
+  insecureProjectService
+);
 
 export const seedProjectService = createService(
   db,
