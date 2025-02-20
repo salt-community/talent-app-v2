@@ -3,6 +3,7 @@ import {
   CohortFormData,
   CreateAssignment,
   GetAllCohorts,
+  GetAllDeveloperProfiles,
   GetAssignmentsByCohortId,
   GetCohortById,
   GetCohortStudents,
@@ -15,7 +16,8 @@ export function createInstructorService(
   addCohort: AddCohort,
   getAssignmentsByCohortId: GetAssignmentsByCohortId,
   addAssignment: CreateAssignment,
-  getCohortStudentsByCohortId: GetCohortStudents
+  getCohortStudentsByCohortId: GetCohortStudents,
+  getAllDevelopers: GetAllDeveloperProfiles
 ) {
   return {
     async getAllCohorts() {
@@ -35,6 +37,9 @@ export function createInstructorService(
     },
     async getCohortStudentsByCohortId(cohortId: string) {
       return await getCohortStudentsByCohortId(cohortId);
+    },
+    async getAllDevelopers() {
+      return await getAllDevelopers();
     },
   };
 }

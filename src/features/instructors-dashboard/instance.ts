@@ -1,4 +1,8 @@
-import { assignmentsService, cohortsService } from "@/features";
+import {
+  assignmentsService,
+  cohortsService,
+  developerProfilesService,
+} from "@/features";
 import { createInstructorService } from "./service";
 
 export const instructorService = createInstructorService(
@@ -7,5 +11,6 @@ export const instructorService = createInstructorService(
   cohortsService.addCohort,
   assignmentsService.getAssignmentsByCohortId,
   assignmentsService.createAssignment,
-  cohortsService.getCohortStudents
+  cohortsService.getCohortStudents,
+  developerProfilesService.getAll
 );

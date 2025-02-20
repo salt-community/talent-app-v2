@@ -7,8 +7,14 @@ import {
   DialogTitle,
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { AddDeveloperForm } from "./add-developer-form";
+import { Developer } from "../../types";
 
-export default function AddDeveloperButton() {
+type Props = {
+  developer: Developer;
+};
+
+export default function AddDeveloperButton({ developer }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,9 +29,7 @@ export default function AddDeveloperButton() {
           <DialogTitle>New Developer</DialogTitle>
         </VisuallyHidden>
         <DialogContent>
-          {/*
-          add form here to add developer
-          /> */}
+          <AddDeveloperForm developer={developer} />
         </DialogContent>
       </Dialog>
     </>
