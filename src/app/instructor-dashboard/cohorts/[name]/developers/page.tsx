@@ -1,7 +1,15 @@
-import React from 'react'
+import { DeveloperDashboard } from "@/features";
 
-export default function Page() {
+type Params = {
+  params: Promise<{ name: string }>;
+};
+
+export default async function Page({ params }: Params) {
+  const { name } = await params;
+
   return (
-    <div><h1>Hello World</h1></div>
-  )
+    <div>
+      <DeveloperDashboard name={name} />
+    </div>
+  );
 }

@@ -14,15 +14,13 @@ export async function AssignmentsDashboard({ name }: Props) {
   const cohort = await instructorService.getAllCohorts();
   const foundCohort = cohort.find((cohort) => cohort.name === name);
   if (!foundCohort) notFound();
+
   const cohortId = foundCohort.id;
   const assignments =
     await instructorService.getAssignmentsByCohortId(cohortId);
-  const developers =
-    await instructorService.getCohortStudentsByCohortId(cohortId);
 
-  console.log(developers);
   return (
-    <div className="max-w-6xl mx-auto ">
+    <div className="max-w-6xl mx-auto p-4">
       <div className="flex justify-between items-center py-2">
         <h2 className="text-2xl font-semibold">Assignments</h2>
         <div className="bg-green-600 text-white px-4 py-1 rounded-md flex items-center gap-2">
@@ -43,22 +41,17 @@ export async function AssignmentsDashboard({ name }: Props) {
               >
                 {assignment.title}
               </Link>
-              <div className="flex items-center gap-2">
-                <span className="flex items-center">
-                  <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                  Active
-                </span>
-              </div>
             </div>
 
             <div className="flex items-center gap-2">
-                <button
-                className="px-3 py-1.5 bg-gray-50 rounded-md border border-gray-300 mr-2 flex items-center gap-2 text-sm"
+              {/* must convert to their own component later on when functionality is added  */}
+              <button
+                className="px-3 py-1.5 bg-gray-50 border border-gray-300 mr-2 flex items-center gap-2 text-sm hover:bg-gray-100 p-1.5 rounded-md transition-colors"
                 aria-label="Copy invite link"
-                >
+              >
                 <Copy size={16} />
                 Copy invite link
-                </button>
+              </button>
 
               <button
                 className="text-red-500 hover:bg-gray-100 p-1.5 rounded-md transition-colors"
@@ -66,6 +59,7 @@ export async function AssignmentsDashboard({ name }: Props) {
               >
                 <TrashIcon size={18} />
               </button>
+              {/* all the way here */}
             </div>
           </div>
         ))}

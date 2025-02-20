@@ -1,7 +1,6 @@
 "use client";
-
-import React from "react";
-import { usePathname, useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Star, Users } from "lucide-react";
 
 type LayoutProps = {
@@ -13,52 +12,54 @@ export default function InstructorDashboardLayout({
   children,
   params,
 }: LayoutProps) {
-  const pathname = usePathname();
   const router = useRouter();
   const resolvedParams = React.use(params);
   const name = resolvedParams.name;
 
+  const [activeTab, setActiveTab] = useState("Assignments");
+
   const tabs = [
     {
       name: "Assignments",
-      icon: <Star className="w-4 h-4" />,
+      icon: <Star className="w-5 h-5" />,
       href: `/instructor-dashboard/cohorts/${name}/`,
     },
     {
       name: "Developers",
-      icon: <Users className="w-4 h-4" />,
+      icon: <Users className="w-5 h-5" />,
       href: `/instructor-dashboard/cohorts/${name}/developers`,
     },
   ];
 
-  const handleNavigation = (href: string, e: React.MouseEvent) => {
+  const handleNavigation = (
+    tabName: string,
+    href: string,
+    e: React.MouseEvent
+  ) => {
     e.preventDefault();
+    setActiveTab(tabName);
     router.push(href, { scroll: false });
   };
 
   return (
-    <div className="flex flex-col w-full p-28">
-      <h1 className="text-2xl font-bold p-4">{name.toUpperCase()}</h1>
-
-      <nav className="flex border-b">
+    <div className="w-full p-24">
+      <h1 className="text-2xl font-bold mb-4">{name.toUpperCase()}</h1>
+      <div className="flex border-b">
         {tabs.map((tab) => (
           <a
             key={tab.name}
             href={tab.href}
-            onClick={(e) => handleNavigation(tab.href, e)}
+            onClick={(e) => handleNavigation(tab.name, tab.href, e)}
             className={`px-4 py-2 flex items-center gap-2 cursor-pointer ${
-              pathname.includes(tab.name.toLowerCase())
-                ? "border-b-2 border-red-500"
-                : ""
+              activeTab === tab.name ? "border-b-2 border-red-500" : ""
             }`}
           >
             {tab.icon}
             {tab.name}
           </a>
         ))}
-      </nav>
-
-      <main className="p-4">{children}</main>
+      </div>
+      {children}
     </div>
   );
 }
