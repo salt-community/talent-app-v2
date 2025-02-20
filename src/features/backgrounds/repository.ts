@@ -96,26 +96,26 @@ export function createRepository(db: DB) {
           bio: backgrounds.bio,
           links: backgrounds.links,
           skills: sql<SkillSelect[]>`jsonb_agg(distinct jsonb_build_object(
-          'id', ${skills.id},
-          'name', ${skills.name},
-          'backgroundId', ${skills.backgroundId},
-          'level',${skills.level}
-        ))`.as("skills"),
+            'id', ${skills.id},
+            'name', ${skills.name},
+            'backgroundId', ${skills.backgroundId},
+            'level', ${skills.level}
+          ))`.as("skills"),
           languages: sql<
             LanguageSelect[]
           >`jsonb_agg(distinct jsonb_build_object(
-          'id', ${languages.id},
-          'name', ${languages.name},
-          'backgroundId', ${languages.backgroundId},
-          'level',${languages.level}
-        ))`.as("languages"),
+            'id', ${languages.id},
+            'name', ${languages.name},
+            'backgroundId', ${languages.backgroundId},
+            'level', ${languages.level}
+          ))`.as("languages"),
           educations: sql<
             EducationSelect[]
           >`jsonb_agg(distinct jsonb_build_object(
-          'id', ${educations.id},
-          'name', ${educations.name},
-          'backgroundId', ${educations.backgroundId},
-        ))`.as("educations"),
+            'id', ${educations.id},
+            'name', ${educations.name},
+            'backgroundId', ${educations.backgroundId}
+          ))`.as("educations"),
         })
         .from(backgrounds)
         .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
