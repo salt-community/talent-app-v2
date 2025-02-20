@@ -1,6 +1,6 @@
-import { DeveloperProfileInsert } from "./schema";
 import { insecureDeveloperProfilesService } from "./instance";
 import { IdentitySelect } from "../iam";
+import { DeveloperProfileInsert } from "./types";
 
 export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
   console.log("Seeding developer profiles...");

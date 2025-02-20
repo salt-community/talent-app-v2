@@ -2,9 +2,8 @@ import { Db } from "@/db";
 import { auth } from "@clerk/nextjs/server";
 import { developerProfilesService } from "./instance";
 import { createDevelopersRepository } from "./repository";
-import { DeveloperProfileInsert } from "./schema";
 import { claim } from "./session";
-import { SessionClaims } from "./types";
+import { DeveloperProfileInsert, SessionClaims } from "./types";
 
 export function createDeveloperProfilesService(db: Db) {
   const repository = createDevelopersRepository(db);
