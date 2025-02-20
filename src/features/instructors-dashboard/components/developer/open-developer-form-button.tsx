@@ -11,10 +11,11 @@ import { AddDeveloperForm } from "./add-developer-form";
 import { Developer } from "../../types";
 
 type Props = {
+  cohortId: string;
   developer: Developer;
 };
 
-export default function AddDeveloperButton({ developer }: Props) {
+export default function AddDeveloperButton({ cohortId, developer }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -29,7 +30,7 @@ export default function AddDeveloperButton({ developer }: Props) {
           <DialogTitle>New Developer</DialogTitle>
         </VisuallyHidden>
         <DialogContent>
-          <AddDeveloperForm developer={developer} />
+          <AddDeveloperForm developer={developer} cohortId={cohortId} />
         </DialogContent>
       </Dialog>
     </>

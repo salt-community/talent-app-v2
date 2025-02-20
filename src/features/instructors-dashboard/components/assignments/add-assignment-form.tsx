@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { addAssignment } from "../../action";
+import { addAssignmentAction } from "../../action";
 
 type Props = {
   cohorts: { id: string; name: string }[];
@@ -32,7 +32,7 @@ export function AddAssignmentForm({ cohorts, onSuccess }: Props) {
     const formData = new FormData(event.target as HTMLFormElement);
 
     try {
-      await addAssignment(formData);
+      await addAssignmentAction(formData);
       onSuccess();
     } catch (error) {
       console.error("Failed to create assignment:", error);

@@ -14,7 +14,7 @@ export async function addCohortAction(cohort: CohortFormData) {
   }
 }
 
-export async function addAssignment(formData: FormData) {
+export async function addAssignmentAction(formData: FormData) {
   const title = formData.get("title") as string;
   const comment = formData.get("comment") as string;
   const cohortId = formData.get("cohortId") as string;
@@ -48,5 +48,17 @@ export async function addAssignment(formData: FormData) {
       console.error("Unexpected error:", error);
       throw error;
     }
+  }
+}
+
+export async function addDevelopersToCohortAction(
+  cohortId: string,
+  identityIds: string[]
+) {
+  try {
+    instructorService.addDevelopersToCohort({ cohortId, identityIds });
+    revalidatePath("/admin/instructors/cohorts");
+  } catch (error) {
+    console.error(error);
   }
 }
