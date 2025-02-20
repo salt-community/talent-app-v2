@@ -3,4 +3,3 @@ export * from "./types";
 export * from "./instance";
 export * from "./secure-service";
 export type * from "./schema";
-export type * from "./permissions";

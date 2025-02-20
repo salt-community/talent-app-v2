@@ -4,7 +4,7 @@ import { ProjectInsert } from "./db";
 import { Api } from "./api";
 import { DeveloperProfile, ProjectData, UpdatedProject } from "./types";
 import { extractRepositoryDetails } from "./logic";
-import { ViewPermission } from "../iam/";
+import { ViewPermission } from "../iam/permissions";
 
 export function createService(
   db: Db,
