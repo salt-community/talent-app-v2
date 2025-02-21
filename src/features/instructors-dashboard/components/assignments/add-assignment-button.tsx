@@ -5,6 +5,7 @@ import {
   DialogTrigger,
   DialogContent,
   DialogTitle,
+  Button,
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AddAssignmentForm } from "./add-assignment-form";
@@ -20,9 +21,12 @@ export default function AddAssignmentButton({ cohorts }: Props) {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <button className="" onClick={() => setOpen(true)}>
+          <Button
+            className="bg-zinc-900 text-white rounded-md h-10 hover:bg-zinc-800 my-2"
+            onClick={() => setOpen(true)}
+          >
             <span>+</span> New assignment
-          </button>
+          </Button>
         </DialogTrigger>
         <VisuallyHidden>
           <DialogTitle>New Assignment</DialogTitle>

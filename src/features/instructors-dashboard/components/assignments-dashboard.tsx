@@ -24,9 +24,7 @@ export async function AssignmentsDashboard({ name }: Props) {
     <div className="max-w-6xl mx-auto p-4">
       <div className="flex justify-between items-center py-2">
         <h2 className="text-2xl font-semibold">Assignments</h2>
-        <div className="bg-green-600 text-white px-4 py-1 rounded-md flex items-center gap-2">
-          <AddAssignmentButton cohorts={cohort} />
-        </div>
+        <AddAssignmentButton cohorts={cohort} />
       </div>
       <Separator className="mb-4" />
       <div className="space-y-4">
