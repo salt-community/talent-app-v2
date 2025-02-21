@@ -23,11 +23,13 @@ export function CopyAssignmentButton({ link }: Props) {
   return (
     <button
       onClick={onClick}
-      className="px-3 py-1.5 bg-gray-50 border border-gray-300 mr-2 flex items-center gap-2 text-sm hover:bg-gray-100 p-1.5 rounded-md transition-colors"
+      className="px-3 py-1.5 ml-2 bg-gray-50 border border-gray-300 mr-2 items-center gap-2 text-sm hover:bg-gray-100 p-1.5 rounded-md transition-colors flex"
       aria-label="Copy invite link"
     >
       <Copy size={16} />
-      {copied ? "Copied!" : "Copy invite link"}
+      <span className="hidden sm:inline">
+        {copied ? "Copied!" : "Copy invite link"}
+      </span>
     </button>
   );
 }

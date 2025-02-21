@@ -44,7 +44,7 @@ export default function InstructorDashboardLayout({
   const activeTab = getActiveTab();
 
   return (
-    <div className="w-full p-36">
+    <div className="w-full p-4 md:px-32 ">
       <h1 className="text-2xl font-bold mb-4">{name.toUpperCase()}</h1>
       <div className="flex border-b">
         {tabs.map((tab) => (
