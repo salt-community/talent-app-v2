@@ -1,11 +1,18 @@
 import { Db } from "@/db";
 import { createAssignmentsRepository } from "./repository";
 import { AssignmentScoreFormData, NewAssignment } from "./types";
+import { CohortIdentity } from "../cohorts";
 
-export function createAssignmentsService(db: Db) {
+export function createAssignmentsService(
+  db: Db,
+  getCohortIdentityByIdentityId: (IdentityId: string) => Promise<CohortIdentity>
+) {
   const repo = createAssignmentsRepository(db);
 
   return {
+    async getCohortIdentity(identityId: string) {
+      return await getCohortIdentityByIdentityId(identityId);
+    },
     async getAllAssignments() {
       return await repo.getAllAssignments();
     },
