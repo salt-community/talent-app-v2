@@ -40,6 +40,12 @@ export function createCohortsRepository(db: Db) {
         .delete(cohortIdentities)
         .where(eq(cohortIdentities.identityId, identityId));
     },
+    async deleteCohortAndCohortIdentity(cohortId: string) {
+      await db.delete(cohorts).where(eq(cohorts.id, cohortId));
+      await db
+        .delete(cohortIdentities)
+        .where(eq(cohortIdentities.cohortId, cohortId));
+    },
 
     async updateCohortStatus({
       cohortId,
@@ -65,14 +71,12 @@ export function createCohortsRepository(db: Db) {
       cohortId: string;
       identityIds: string[];
     }) {
-      await db
-        .insert(cohortIdentities)
-        .values(
-          args.identityIds.map((identityId) => ({
-            cohortId: args.cohortId,
-            identityId,
-          }))
-        );
+      await db.insert(cohortIdentities).values(
+        args.identityIds.map((identityId) => ({
+          cohortId: args.cohortId,
+          identityId,
+        }))
+      );
     },
   };
 }
