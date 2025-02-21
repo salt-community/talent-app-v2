@@ -1,5 +1,4 @@
 import { Db } from "@/db";
-import { CohortIdentity } from "../cohorts";
 import { averageScore, averageScoresByCategory } from "./logic";
 import { createAssignmentsRepository } from "./repository";
 import { AssignmentScoreFormData, NewAssignment } from "./types";
