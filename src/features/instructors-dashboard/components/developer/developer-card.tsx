@@ -18,7 +18,7 @@ export default function StudentCard({ developer }: { developer: Developer }) {
               className="flex items-center justify-between group"
             >
               <div className="flex items-center space-x-4">
-                <Avatar>
+                <Avatar className="w-12 h-12">
                   <AvatarImage
                     src={
                       "https://api.dicebear.com/9.x/pixel-art/svg" +
@@ -31,7 +31,6 @@ export default function StudentCard({ developer }: { developer: Developer }) {
                     {dev.name.substring(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-
                 <div className="flex flex-col">
                   {dev.name}
                   <div className="flex items-center space-x-2 text-muted-foreground text-sm">
