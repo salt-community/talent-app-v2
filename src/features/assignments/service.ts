@@ -11,9 +11,6 @@ export function createAssignmentsService(
   const repo = createAssignmentsRepository(db);
 
   return {
-    async getCohortIdentity(identityId: string) {
-      return await getCohortIdentityByIdentityId(identityId);
-    },
     async getAllAssignments() {
       return await repo.getAllAssignments();
     },
