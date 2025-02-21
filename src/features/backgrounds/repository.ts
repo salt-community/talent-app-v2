@@ -7,7 +7,6 @@ import {
   LanguageSelect,
   SkillSelect,
 } from "./types";
-import { highlightedDevelopers } from "./db/posts-data";
 import { sql } from "drizzle-orm";
 import {
   backgrounds,
@@ -19,7 +18,6 @@ import {
 import { Db } from "@/db";
 
 export function createRepository(db: Db) {
-  const posts = highlightedDevelopers;
   return {
     async getAllBackgrounds() {
       return await db
@@ -220,12 +218,6 @@ export function createRepository(db: Db) {
     },
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
-    },
-    async getAllPosts() {
-      return posts;
-    },
-    async getPostById(id: string) {
-      return posts.find((post) => post.id === id);
     },
     async deleteBackgroundById(developerProfileId: string) {
       await db

@@ -146,12 +146,6 @@ export function createBackgroundsService(
     async resetMeilisearchSettings() {
       await meiliClient.resetSettings();
     },
-    async getAllPosts() {
-      return await repository.getAllPosts();
-    },
-    async getPostById(developerId: string) {
-      return await repository.getPostById(developerId);
-    },
     async addDeveloperBackground(id: string) {
       const developer = await getDeveloperById(id);
       await backgroundsService.add({

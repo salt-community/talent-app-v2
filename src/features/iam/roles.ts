@@ -11,8 +11,6 @@ import { MenuPermissions } from "./permissions/menu";
 
 export const rolesPermissions = {
   guest: new Set([
-    backgrounds.getPostById,
-    backgrounds.getAllPosts,
     backgrounds.getBackgroundByDeveloperProfileId,
     backgrounds.getAllSkills,
     backgrounds.getAllLanguages,
@@ -41,7 +39,6 @@ export const rolesPermissions = {
     backgrounds.getAllDeveloperProfilesById,
     backgrounds.getAllEducations,
     backgrounds.getAllLanguages,
-    backgrounds.getAllPosts,
     backgrounds.getAllSkills,
     backgrounds.getBackgroundByDeveloperProfileId,
     backgrounds.update,
@@ -74,7 +71,6 @@ export const rolesPermissions = {
     backgrounds.getAllDeveloperProfilesById,
     backgrounds.getAllEducations,
     backgrounds.getAllLanguages,
-    backgrounds.getAllPosts,
     backgrounds.getAllSkills,
     backgrounds.getBackgroundByDeveloperProfileId,
     backgrounds.update,
