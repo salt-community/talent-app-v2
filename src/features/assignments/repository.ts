@@ -52,9 +52,16 @@ export function createAssignmentsRepository(db: Db) {
 
     async getScoresByIdentityId(identityId: string) {
       return await db
-        .select()
+        .select({
+          score: assignmentScores.score,
+          categories: assignments.categories,
+        })
         .from(assignmentScores)
-        .where(eq(assignmentScores.identityId, identityId));
+        .where(eq(assignmentScores.identityId, identityId))
+        .leftJoin(
+          assignments,
+          eq(assignmentScores.assignmentId, assignments.id)
+        );
     },
 
     async deleteAllAssignments() {
