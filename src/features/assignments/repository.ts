@@ -54,14 +54,10 @@ export function createAssignmentsRepository(db: Db) {
       return await db
         .select({
           score: assignmentScores.score,
-          categories: assignments.categories,
+          category: assignmentScores.category,
         })
         .from(assignmentScores)
-        .where(eq(assignmentScores.identityId, identityId))
-        .leftJoin(
-          assignments,
-          eq(assignmentScores.assignmentId, assignments.id)
-        );
+        .where(eq(assignmentScores.identityId, identityId));
     },
 
     async deleteAllAssignments() {

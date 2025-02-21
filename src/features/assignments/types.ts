@@ -49,7 +49,7 @@ export type AssignmentScoreFormData = {
 
 export type CategoryScore = {
   score: number | null;
-  categories: string[] | null;
+  category: string | null;
 };
 
 export type CategoryAverage = {

@@ -26,8 +26,8 @@ export function averageScoresByCategory(
       .filter(
         (item) =>
           item.score !== null &&
-          item.categories !== null &&
-          item.categories.includes(category)
+          item.category !== null &&
+          item.category.includes(category)
       )
       .map((item) => item.score as number);
 
