@@ -1,7 +1,7 @@
 "use server";
 
 import { errorHandler } from "@/lib";
-import { backgroundsService } from "../instance";
+import { backgroundsService } from "../../backgrounds/instance";
 import { CreateProfileButton } from "./create-profile-button";
 import { DeveloperProfileCard } from "./developer-profile-card";
 import { notFound } from "next/navigation";

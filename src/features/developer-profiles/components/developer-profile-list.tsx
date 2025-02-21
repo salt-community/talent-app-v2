@@ -1,5 +1,5 @@
 import React from "react";
-import { backgroundsService } from "../instance";
+import { backgroundsService } from "../../backgrounds/instance";
 import { DeveloperProfileCard } from "./developer-profile-card";
 import { CreateProfileButton } from "./create-profile-button";
 import { notFound } from "next/navigation";

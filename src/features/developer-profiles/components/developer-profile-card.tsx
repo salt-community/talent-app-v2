@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components";
 import React from "react";
-import { Background } from "./background";
+import { Background } from "@/features";
 
 type Props = {
   developerProfileId: string;
