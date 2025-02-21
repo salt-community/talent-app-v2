@@ -25,9 +25,9 @@ export async function Projects({
   if (projects.length === 0) {
     return (
       <div className="mt-4">
-        <H2>Projects</H2>
         {hasProfileAccess && (
           <>
+            <H2>Projects</H2>
             <div className="flex flex-col justify-center mt-4">
               <p>Add your projects here</p>
             </div>
