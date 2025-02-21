@@ -51,12 +51,12 @@ export async function addAssignmentAction(formData: FormData) {
   }
 }
 
-export async function addDevelopersToCohortAction(
+export async function addIdentitiesToCohortAction(
   cohortId: string,
   identityIds: string[]
 ) {
   try {
-    instructorService.addIdentityToCohort({ cohortId, identityIds });
+    instructorService.addIdentitiesToCohort({ cohortId, identityIds });
     revalidatePath("/admin/instructors/cohorts");
   } catch (error) {
     console.error(error);

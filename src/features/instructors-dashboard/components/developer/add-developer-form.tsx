@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, X } from "lucide-react";
-import { addDevelopersToCohortAction } from "../../action";
+import { addIdentitiesToCohortAction } from "../../action";
 
 type Developer = {
   name: string;
@@ -47,7 +47,7 @@ export const AddDeveloperForm = ({ cohortId, developer, onSuccess }: Props) => {
   async function handleSubmit() {
     try {
       setLoading(true);
-      await addDevelopersToCohortAction(
+      await addIdentitiesToCohortAction(
         cohortId,
         selectedDevs.map((dev) => dev.identityId)
       );
