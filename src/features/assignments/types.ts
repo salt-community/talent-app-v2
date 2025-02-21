@@ -15,6 +15,7 @@ export type Assignment = {
   comment: string | null;
   categories: string[] | null;
   createdAt: Date | null;
+  slug: string;
 };
 
 export type NewAssignment = Omit<Assignment, "id" | "createdAt">;

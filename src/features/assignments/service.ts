@@ -19,7 +19,8 @@ export function createAssignmentsService(
     },
 
     async createAssignment(data: NewAssignment) {
-      return await repo.createAssignment(data);
+      const slug = generateSlug(data.title);
+      return await repo.createAssignment({ ...data, slug });
     },
 
     async getAssignmentById(assignmentId: string) {
@@ -80,5 +81,16 @@ export function createAssignmentsService(
     },
   };
 }
-
+function generateSlug(title: string) {
+  return title
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[åä]/g, "a")
+    .replace(/ö/g, "o")
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/-+/g, "-")
+    .trim();
+}
 export type AssignmentsService = ReturnType<typeof createAssignmentsService>;

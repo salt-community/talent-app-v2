@@ -45,9 +45,23 @@ export const seedAssignments = async (cohortIds: string[]) => {
           assignmentTitles[Math.floor(Math.random() * assignmentTitles.length)],
         comment: `This is a comment for assignment ${i + 1}`,
         categories: getRandomTags(categoryTags, 3),
+        slug: generateSlug(assignmentTitles[i]),
       });
     } catch (error) {
       console.error("Error while seeding assignments and scores:", error);
     }
   }
 };
+
+function generateSlug(title: string) {
+  return title
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[åä]/g, "a")
+    .replace(/ö/g, "o")
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/-+/g, "-")
+    .trim();
+}

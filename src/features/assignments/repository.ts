@@ -1,7 +1,7 @@
 import { Db } from "@/db";
 import { eq } from "drizzle-orm";
-import { AssignmentScoreFormData, NewAssignment } from "./types";
 import { assignments, assignmentScores } from "./schema";
+import { AssignmentScoreFormData, NewAssignment } from "./types";
 
 export function createAssignmentsRepository(db: Db) {
   return {
