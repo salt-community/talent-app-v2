@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { TrashIcon } from "lucide-react";
 import { instructorService } from "../../instance";
 import AddAssignmentButton from "./add-assignment-button";
 import { Separator } from "@/components";
 import { CopyAssignmentButton } from "./copy-assignment-button";
+import { DeleteAssignmentButton } from "./delete-assignment-button";
 
 type Props = {
   name: string;
@@ -47,15 +47,10 @@ export async function AssignmentsDashboard({ name }: Props) {
                 <CopyAssignmentButton
                   link={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.title}`}
                 />
-
-                {/* must convert to their own component later on when functionality is added  */}
-                <button
-                  className="text-red-500 hover:bg-gray-100 p-1.5 rounded-md transition-colors"
-                  aria-label="Delete"
-                >
-                  <TrashIcon size={18} />
-                </button>
-                {/* all the way here */}  
+                <DeleteAssignmentButton
+                  assignmentId={assignment.id}
+                  name={assignment.title}
+                />
               </div>
             </div>
           );

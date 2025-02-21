@@ -78,3 +78,11 @@ export async function deleteCohortAndCohortIdentityAction(cohortId: string) {
     console.error(error);
   }
 }
+export async function deleteAssignmentByIdAction(assignmentId: string) {
+  try {
+    await instructorService.deleteAssignmentById(assignmentId);
+    revalidatePath("/instructors-dashboard/cohorts");
+  } catch (error) {
+    console.error(error);
+  }
+}
