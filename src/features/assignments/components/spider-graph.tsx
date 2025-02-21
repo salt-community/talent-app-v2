@@ -29,10 +29,6 @@ type Props = {
 };
 
 export function SpiderGraph({ AverageScoresByCategory }: Props) {
-  const chartData = categoryTags.map((tag) => ({
-    category: capitalizeFirstLetter(tag),
-  }));
-
   return (
     <CardContent>
       <ChartContainer config={chartConfig} className="mx-auto max-h-[250px]">
