@@ -34,7 +34,6 @@ export const rolesPermissions = {
   developer: new Set([
     backgrounds.add,
     backgrounds.addDeveloperBackground,
-    backgrounds.getAllDeveloperProfilesById,
     backgrounds.getAllEducations,
     backgrounds.getAllLanguages,
     backgrounds.getAllSkills,
@@ -66,7 +65,6 @@ export const rolesPermissions = {
   core: new Set([
     admins.deleteUser,
     admins.updateRole,
-    backgrounds.getAllDeveloperProfilesById,
     backgrounds.getAllEducations,
     backgrounds.getAllLanguages,
     backgrounds.getAllSkills,
@@ -74,7 +72,6 @@ export const rolesPermissions = {
     backgrounds.update,
     backgrounds.searchDeveloperProfileIds,
     backgrounds.getAllDeveloperProfile,
-    backgrounds.getAllDeveloperProfilesById,
     backgrounds.deleteBackgroundById,
     projects.updateDescription,
     projects.updateProjectData,

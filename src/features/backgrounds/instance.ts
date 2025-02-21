@@ -11,8 +11,7 @@ export const insecureBackgroundsService = createBackgroundsService(
   createMeiliClient(),
   developerProfilesService.getPublishedOrHighlightedDeveloperProfileIds,
   developerProfilesService.getDeveloperById,
-  developerProfilesService.getAll,
-  developerProfilesService.getAllById
+  developerProfilesService.getAll
 );
 
 export const backgroundsService = secureService(
