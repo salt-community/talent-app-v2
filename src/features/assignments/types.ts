@@ -21,9 +21,9 @@ export type NewAssignment = Omit<Assignment, "id" | "createdAt">;
 
 export type AssignmentScore = {
   id: string;
-  assignmentId: string;
-  identityId: string;
-  score: number;
+  assignmentId: string | null;
+  identityId: string | null;
+  score: number | null;
   comment: string | null;
   createdAt: Date | null;
 };
