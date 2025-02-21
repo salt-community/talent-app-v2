@@ -7,13 +7,8 @@ type Props = {
 };
 
 export async function AverageScore({ identityId }: Props) {
-  const assignmentScores =
-    await assignmentsService.getScoresByIdentityId(identityId);
   const averageScore =
-    assignmentScores.length > 0
-      ? assignmentScores.reduce((sum, score) => sum + score, 0) /
-        assignmentScores.length
-      : 0;
+    await assignmentsService.getAverageScoresByIdentityId(identityId);
 
   return <LevelRectangle percentage={averageScore} />;
 }
