@@ -2,6 +2,7 @@ import { Db } from "@/db";
 import { createAssignmentsRepository } from "./repository";
 import { AssignmentScoreFormData, NewAssignment } from "./types";
 import { CohortIdentity } from "../cohorts";
+import { number } from "zod";
 
 export function createAssignmentsService(
   db: Db,
@@ -38,7 +39,11 @@ export function createAssignmentsService(
     },
 
     async getScoresByIdentityId(identityId: string) {
-      return await repo.getScoresByIdentityId(identityId);
+      const assignmentScores = await repo.getScoresByIdentityId(identityId);
+      const validScores = assignmentScores
+        .map((assignmentScore) => assignmentScore.score)
+        .filter((score): score is number => score !== null);
+      return validScores;
     },
 
     async deleteAllAssignments() {

@@ -3,17 +3,20 @@
 import React from "react";
 import { LevelRectangle } from "./level-rectangle";
 import { Assignment } from "../types";
+import { assignmentsService } from "../instance";
 
 type Props = {
-  assignments: Assignment[];
+  identityId: string;
 };
 
-export function AverageScore({ assignments }: Props) {
-  // const { assignments } = useAssignments();
-  // const scores = assignments.map((a) => a.score ?? 0);
-  // const averageScore = calculateAverageCategoryScore(assignments, "");
-
-  const averageScore = 0;
+export async function AverageScore({ identityId }: Props) {
+  const assignmentScores =
+    await assignmentsService.getScoresByIdentityId(identityId);
+  const averageScore =
+    assignmentScores.length > 0
+      ? assignmentScores.reduce((sum, score) => sum + score, 0) /
+        assignmentScores.length
+      : 0;
 
   return <LevelRectangle percentage={averageScore} />;
 }
