@@ -5,6 +5,7 @@ import {
   DialogTrigger,
   DialogContent,
   DialogTitle,
+  Button,
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AddDeveloperForm } from "./add-developer-form";
@@ -22,9 +23,12 @@ export default function AddDeveloperButton({ cohortId, developer }: Props) {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <button className="" onClick={() => setOpen(true)}>
-            <span>+</span> New Developer
-          </button>
+          <Button
+            className="bg-zinc-900 text-white rounded-md h-10 px-4 hover:bg-zinc-800 my-2"
+            onClick={() => setOpen(true)}
+          >
+            <span>+</span> New developer
+          </Button>
         </DialogTrigger>
         <VisuallyHidden>
           <DialogTitle>New Developer</DialogTitle>
