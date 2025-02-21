@@ -6,7 +6,7 @@ export async function InstructorsDashboard() {
   const cohorts = await instructorService.getAllCohorts();
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto">
       <h1 className="text-center text-3xl py-6 font-bold">
         Instructor Dashboard
       </h1>
