@@ -1,8 +1,7 @@
 import { Db } from "@/db";
 import { createAssignmentsRepository } from "./repository";
-import { Assignment, AssignmentScoreFormData, NewAssignment } from "./types";
+import { AssignmentScoreFormData, NewAssignment } from "./types";
 import { CohortIdentity } from "../cohorts";
-import { number } from "zod";
 import { averageScore, averageScoresByCategory } from "./logic";
 
 export function createAssignmentsService(
