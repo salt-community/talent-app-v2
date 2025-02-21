@@ -73,9 +73,9 @@ export default function ProjectForm({ developerProfileId }: Props) {
         <Button
           type="submit"
           variant="outline"
-          className="cursor-pointer flex gap-1 justify-center items-center mt-2 mb-4"
+          className="cursor-pointer flex gap-1 justify-center items-center mt-2 mb-4 border-black hover:bg-zinc-100"
         >
-          <Plus className="text-primary font-semibold" size={18} />
+          <Plus color="black" size={18} />
           <p className="font-semibold">Add project</p>
         </Button>
       </DialogTrigger>

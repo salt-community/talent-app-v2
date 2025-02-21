@@ -24,7 +24,7 @@ export async function Projects({
 
   if (projects.length === 0) {
     return (
-      <div>
+      <div className="mt-4">
         <H2>Projects</H2>
         {hasProfileAccess && (
           <>
