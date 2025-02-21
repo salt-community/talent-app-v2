@@ -36,7 +36,7 @@ export async function AssignmentsDashboard({ name }: Props) {
             >
               <div className="flex items-center gap-4">
                 <Link
-                  href={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.title}`}
+                  href={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.slug}`}
                   className="text-header font-medium hover:underline hover:underline-offset-4"
                 >
                   {assignment.title}
@@ -45,7 +45,7 @@ export async function AssignmentsDashboard({ name }: Props) {
 
               <div className="flex items-center gap-2">
                 <CopyAssignmentButton
-                  link={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.title}`}
+                  link={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.slug}`}
                 />
                 <DeleteAssignmentButton
                   assignmentId={assignment.id}
