@@ -12,7 +12,7 @@ import { AddDeveloperForm } from "./add-developer-form";
 import { Developer } from "../../types";
 
 type Props = {
-  cohortId: string;w
+  cohortId: string;
   developer: Developer;
 };
 

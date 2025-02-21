@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Developer } from "../../types";
 import { Separator } from "@/components";
+import { DeleteDeveloperButton } from "./delete-developer-button";
 
 export default function StudentCard({ developer }: { developer: Developer }) {
   return (
@@ -43,7 +44,7 @@ export default function StudentCard({ developer }: { developer: Developer }) {
                   </div>
                 </div>
               </div>
-
+              <DeleteDeveloperButton identityId={dev.identityId} />
               {/* Add something more after talk with Marcus */}
             </div>
           ))}
