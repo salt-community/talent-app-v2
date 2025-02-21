@@ -1,17 +1,18 @@
 "use server";
 
 import { errorHandler } from "@/lib";
-import { backgroundsService } from "../../backgrounds/instance";
 import { CreateProfileButton } from "./create-profile-button";
 import { DeveloperProfileCard } from "./developer-profile-card";
 import { notFound } from "next/navigation";
+import { developerProfilesService } from "../instance";
 
 type Props = {
   slug: string;
 };
 
 export async function CreateDeveloperProfileCard({ slug }: Props) {
-  const developerProfile = await backgroundsService.getAllDeveloperProfile();
+  developerProfilesService.getAll();
+  const developerProfile = await developerProfilesService.getAll();
 
   const developerProfileId = developerProfile.find(
     (profile) => profile.slug === slug
@@ -27,7 +28,7 @@ export async function CreateDeveloperProfileCard({ slug }: Props) {
 
   try {
     developerProfileIds =
-      await backgroundsService.getAllDeveloperProfilesById(developerProfileId);
+      await developerProfilesService.getAllById(developerProfileId);
   } catch (error) {
     errorHandler(error);
   }
