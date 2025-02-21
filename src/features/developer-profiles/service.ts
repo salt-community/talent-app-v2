@@ -1,10 +1,10 @@
 import { Db } from "@/db";
+import { GetCurrentUser } from "@/features";
 import { auth } from "@clerk/nextjs/server";
 import { developerProfilesService } from "./instance";
 import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import { DeveloperProfileInsert, SessionClaims } from "./types";
-import { GetCurrentUser } from "@/features";
 
 export function createDeveloperProfilesService(
   db: Db,
@@ -110,12 +110,15 @@ export function createDeveloperProfilesService(
 function generateSlug(title: string) {
   return title
     .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[åä]/g, "a")
+    .replace(/ö/g, "o")
     .replace(/\s+/g, "-")
     .replace(/[^\w-]+/g, "")
     .replace(/-+/g, "-")
     .trim();
 }
-
 export type DeveloperProfilesService = ReturnType<
   typeof createDeveloperProfilesService
 >;
