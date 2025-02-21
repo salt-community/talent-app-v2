@@ -1,8 +1,5 @@
-"use client";
-
 import React from "react";
 import { LevelRectangle } from "./level-rectangle";
-import { Assignment } from "../types";
 import { assignmentsService } from "../instance";
 
 type Props = {
