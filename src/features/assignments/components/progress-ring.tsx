@@ -15,7 +15,6 @@ export function ProgressRing({ percentage }: Props) {
     return "#808080";
   };
 
-
   const strokeColor = getStrokeColor(percentage);
   return (
     <div className="relative flex justify-center items-center h-7 w-7 p-4">
@@ -50,7 +49,7 @@ export function ProgressRing({ percentage }: Props) {
         />
       </svg>
       <div className="absolute text-[0.55rem] font-bold">
-        {`${percentage === 0 ? "NA" : percentage + "%"}`}
+        {`${percentage === 0 ? "NA" : percentage.toFixed(0) + "%"}`}
       </div>
     </div>
   );
