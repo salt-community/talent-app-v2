@@ -62,7 +62,7 @@ export async function addIdentitiesToCohortAction(
     console.error(error);
   }
 }
-export function deleteIdentityFromCohortAction(identityId: string) {
+export async function deleteIdentityFromCohortAction(identityId: string) {
   try {
     instructorService.deleteIdentityFromCohort(identityId);
     revalidatePath("/admin/instructors/cohorts");
