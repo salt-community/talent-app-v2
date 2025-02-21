@@ -44,7 +44,7 @@ export default function StudentCard({ developer }: { developer: Developer }) {
                   </div>
                 </div>
               </div>
-              <DeleteDeveloperButton identityId={dev.identityId} />
+              <DeleteDeveloperButton identityId={dev.identityId} name={dev.name} />
               {/* Add something more after talk with Marcus */}
             </div>
           ))}
