@@ -4,13 +4,9 @@ import { assignmentsService } from "@/features";
 
 type ScoreBoardProps = {
   identityId: string;
-  hasProfileAccess: boolean;
 };
 
-export async function ScoreBoard({
-  identityId,
-  hasProfileAccess,
-}: ScoreBoardProps) {
+export async function ScoreBoard({ identityId }: ScoreBoardProps) {
   const getCohortIdentity =
     await assignmentsService.getCohortIdentity(identityId);
   const assignments = await assignmentsService.getAssignmentsByCohortId(

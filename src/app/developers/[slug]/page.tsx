@@ -37,10 +37,7 @@ export default async function DeveloperDetailPage({ params }: Params) {
         hasProfileAccess={hasProfileAccess}
       />
       {hasProfileAccess && (
-        <ScoreBoard
-          identityId={developerProfile.identityId}
-          hasProfileAccess={hasProfileAccess}
-        />
+        <ScoreBoard identityId={developerProfile.identityId} />
       )}{" "}
       <Projects
         developerProfileId={developerProfile.id}
