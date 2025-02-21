@@ -57,7 +57,7 @@ export async function addIdentitiesToCohortAction(
 ) {
   try {
     instructorService.addIdentitiesToCohort({ cohortId, identityIds });
-    revalidatePath("/admin/instructors/cohorts");
+    revalidatePath("/instructors/cohorts");
   } catch (error) {
     console.error(error);
   }
@@ -65,7 +65,15 @@ export async function addIdentitiesToCohortAction(
 export async function deleteIdentityFromCohortAction(identityId: string) {
   try {
     instructorService.deleteIdentityFromCohort(identityId);
-    revalidatePath("/admin/instructors/cohorts");
+    revalidatePath("/instructors/cohorts");
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function deleteCohortAndCohortIdentityAction(cohortId: string) {
+  try {
+    instructorService.deleteCohortAndCohortIdentity(cohortId);
+    revalidatePath("/");
   } catch (error) {
     console.error(error);
   }
