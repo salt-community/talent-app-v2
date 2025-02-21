@@ -1,4 +1,4 @@
-import { developerProfilesService } from "@/features";
+import { developerProfilesService } from "../instance";
 import { HighlightedDevelopers } from "./highlighted-developers";
 
 export async function HighlightPage() {
