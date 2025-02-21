@@ -13,5 +13,6 @@ export const instructorService = createInstructorService(
   assignmentsService.createAssignment,
   cohortsService.getCohortStudents,
   developerProfilesService.getAll,
-  cohortsService.addDevelopersToCohort
+  cohortsService.addDevelopersToCohort,
+  cohortsService.deleteIdentityFromCohort
 );
