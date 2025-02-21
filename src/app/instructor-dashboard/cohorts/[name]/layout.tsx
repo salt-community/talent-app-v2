@@ -44,7 +44,7 @@ export default function InstructorDashboardLayout({
   const activeTab = getActiveTab();
 
   return (
-    <div className="w-full p-24">
+    <div className="w-full px-24 py-8">
       <h1 className="text-2xl font-bold mb-4">{name.toUpperCase()}</h1>
       <div className="flex border-b">
         {tabs.map((tab) => (
@@ -52,7 +52,7 @@ export default function InstructorDashboardLayout({
             key={tab.name}
             href={tab.href}
             className={`px-4 py-2 flex items-center gap-2 cursor-pointer ${
-              activeTab === tab.name ? "border-b-2 border-red-500" : ""
+              activeTab === tab.name ? "border-b-2 border-zinc-400" : ""
             }`}
           >
             {tab.icon}
