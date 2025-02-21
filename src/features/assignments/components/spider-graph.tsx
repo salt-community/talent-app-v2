@@ -13,8 +13,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { categoryTags } from "../categories";
-import { capitalizeFirstLetter } from "@/lib/utils";
+
 import { CategoryAverage } from "../types";
 
 const chartConfig = {
