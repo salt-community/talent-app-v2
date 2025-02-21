@@ -8,13 +8,15 @@ type ScoreBoardProps = {
 };
 
 export async function ScoreBoard({ identityId }: ScoreBoardProps) {
+  const AverageScoresByCategory =
+    await assignmentsService.getAllAverageScoresByIdentityId(identityId);
   return (
     <section className="min-w-72">
       <Separator className="my-4" />
       <H2>Salt Scoring</H2>
 
       <AverageScore identityId={identityId} />
-      <SpiderGraph identityId={identityId} />
+      <SpiderGraph AverageScoresByCategory={AverageScoresByCategory} />
     </section>
   );
 }

@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/chart";
 import { categoryTags } from "../categories";
 import { capitalizeFirstLetter } from "@/lib/utils";
-// import { useAssignments } from "../assignments-context";
+import { CategoryAverage } from "../types";
 
 const chartConfig = {
   desktop: {
@@ -24,13 +24,11 @@ const chartConfig = {
   },
 };
 
-// type Props = {
-//   assignments: Assignment[];
-// };
+type Props = {
+  AverageScoresByCategory: CategoryAverage[];
+};
 
-export function SpiderGraph() {
-  // const { assignments } = useAssignments();
-
+export function SpiderGraph({ AverageScoresByCategory }: Props) {
   const chartData = categoryTags.map((tag) => ({
     category: capitalizeFirstLetter(tag),
   }));
@@ -38,7 +36,7 @@ export function SpiderGraph() {
   return (
     <CardContent>
       <ChartContainer config={chartConfig} className="mx-auto max-h-[250px]">
-        <RadarChart data={chartData} outerRadius="80%">
+        <RadarChart data={AverageScoresByCategory} outerRadius="80%">
           <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           <PolarGrid stroke="#d3d3d3" />
           <PolarAngleAxis
