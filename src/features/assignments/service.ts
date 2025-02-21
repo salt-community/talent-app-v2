@@ -4,10 +4,7 @@ import { averageScore, averageScoresByCategory } from "./logic";
 import { createAssignmentsRepository } from "./repository";
 import { AssignmentScoreFormData, NewAssignment } from "./types";
 
-export function createAssignmentsService(
-  db: Db,
-  getCohortIdentityByIdentityId: (IdentityId: string) => Promise<CohortIdentity>
-) {
+export function createAssignmentsService(db: Db) {
   const repo = createAssignmentsRepository(db);
 
   return {
