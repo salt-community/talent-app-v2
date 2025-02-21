@@ -1,4 +1,4 @@
-import { AssignmentScore } from "./types";
+import { AssignmentScore, CategoryScore } from "./types";
 
 export function averageScore(assignmentScores: number[]) {
   const averageScore =
@@ -9,7 +9,7 @@ export function averageScore(assignmentScores: number[]) {
   return averageScore;
 }
 
-export function averageScoresByCategory(assignmentScores: AssignmentScore[]) {
+export function averageScoresByCategory(assignmentScores: CategoryScore[]) {
   const averageScores = {
     frontend: 0,
     backend: 0,

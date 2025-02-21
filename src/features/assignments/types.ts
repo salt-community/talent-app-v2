@@ -46,6 +46,11 @@ export type AssignmentScoreFormData = {
   createdAt: Date | null;
 };
 
+export type CategoryScore = {
+  score: number | null;
+  categories: string[] | null;
+};
+
 export type NewAssignmentScore = Omit<AssignmentScore, "id" | "createdAt">;
 
 export type AssignmentsService = ReturnType<typeof createAssignmentsService>;
