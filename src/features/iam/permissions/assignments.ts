@@ -1,5 +1,6 @@
 import { AssignmentsService } from "@/features";
 import { PermissionsSchema } from "../secure-service";
+import { PagePermissionsSchema } from "./types";
 
 export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
   {
@@ -19,3 +20,14 @@ export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
     getAllAverageScoresByIdentityId:
       "assignments.getAllAverageScoresByIdentityId",
   };
+
+type AssignmentViewPermission = "score";
+
+type AssignmentViewPermissions = Record<AssignmentViewPermission, string>;
+
+export const assignmentPermissions: PagePermissionsSchema<
+  "assignment",
+  AssignmentViewPermissions
+> = {
+  score: "assignment.score",
+};

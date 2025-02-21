@@ -1,5 +1,6 @@
 import {
   admins,
+  assignmentPermissions,
   assignments,
   backgrounds,
   cohorts,
@@ -109,11 +110,13 @@ export const rolesViewPermissions = {
     MenuPermissions.instructorsDashboard,
     MenuPermissions.admin,
     MenuPermissions.hamburgerMenu,
+    assignmentPermissions.score,
   ]),
   core: new Set([
     MenuPermissions.admin,
     MenuPermissions.instructorsDashboard,
     MenuPermissions.hamburgerMenu,
+    assignmentPermissions.score,
   ]),
   developer: new Set([
     projectPermissions.edit,
