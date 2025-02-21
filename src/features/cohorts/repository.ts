@@ -22,6 +22,13 @@ export function createCohortsRepository(db: Db) {
         .where(eq(cohorts.id, cohortId));
       return cohort;
     },
+    async getCohortIdByIdentityId(identityId: string) {
+      const [cohort] = await db
+        .select()
+        .from(cohortIdentities)
+        .where(eq(cohortIdentities.identityId, identityId));
+      return cohort;
+    },
 
     async getAllCohorts() {
       return await db.select().from(cohorts);
