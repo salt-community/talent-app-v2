@@ -56,7 +56,7 @@ export async function addDevelopersToCohortAction(
   identityIds: string[]
 ) {
   try {
-    instructorService.addDevelopersToCohort({ cohortId, identityIds });
+    instructorService.addIdentityToCohort({ cohortId, identityIds });
     revalidatePath("/admin/instructors/cohorts");
   } catch (error) {
     console.error(error);

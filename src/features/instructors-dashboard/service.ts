@@ -45,7 +45,7 @@ export function createInstructorService(
     async getAllDevelopers() {
       return await getAllDevelopers();
     },
-    async addDevelopersToCohort(args: {
+    async addIdentityToCohort(args: {
       cohortId: string;
       identityIds: string[];
     }) {
