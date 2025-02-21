@@ -55,7 +55,7 @@ export async function AssignmentsDashboard({ name }: Props) {
                 >
                   <TrashIcon size={18} />
                 </button>
-                {/* all the way here */}
+                {/* all the way here */}  
               </div>
             </div>
           );
