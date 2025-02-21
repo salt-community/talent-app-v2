@@ -1,8 +1,6 @@
 "use server";
-import * as z from "zod";
 import { revalidatePath } from "next/cache";
 import { adminService } from "./instance";
-import { assignmentSchema } from "./validation";
 
 export async function deleteDeveloperProfileAction(id: string) {
   await adminService.deleteDeveloperProfile(id);
@@ -33,44 +31,6 @@ export async function updateMeilisearchSettingsAction(formData: FormData) {
   revalidatePath("/admin/meilisearch-configuration");
 }
 
- //Ali - check if this is needed
-export async function createAssignmentAction(formData: FormData) {
-  const title = formData.get("title") as string;
-  const comment = formData.get("comment") as string;
-  const cohortId = formData.get("cohortId") as string;
-  const categories = (formData.get("categories") as string).split(",");
-
-  try {
-    assignmentSchema.parse({
-      title,
-      comment,
-      cohortId,
-      categories,
-    });
-
-    const newAssignment = {
-      title,
-      score: 0,
-      cohortId,
-      comment,
-      categories,
-    };
-
-    //Ali - check if this is needed
-    await adminService.createAssignment(newAssignment);
-    revalidatePath("/admin/instructors/assignments");
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      console.error("Validation failed:", error.errors);
-      throw new Error(
-        "Validation failed: " + error.errors.map((e) => e.message).join(", ")
-      );
-    } else {
-      console.error("Unexpected error:", error);
-      throw error;
-    }
-  }
-}
 export async function updateRoleAction(id: string, newRole: string) {
   await adminService.updateRole({ id, newRole });
   revalidatePath("/dashboard/identities");

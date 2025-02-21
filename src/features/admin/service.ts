@@ -1,20 +1,10 @@
-import {
-  DeleteDeveloperProfile,
-  UpdateStatus,
-  CreateAssignment,
-  NewAssignment,
-  GetAllCohorts,
-  GetAllAssignments,
-} from "@/features";
-import { Identity, SearchConfigurationClient } from "./types";
+import { DeleteDeveloperProfile, UpdateStatus } from "@/features";
 import { Settings } from "meilisearch";
+import { Identity, SearchConfigurationClient } from "./types";
 
 export function createAdminService(
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
-  createAssignment: CreateAssignment,
-  getAllAssignments: GetAllAssignments,
-  getAllCohorts: GetAllCohorts,
   searchConfigurationClient: SearchConfigurationClient,
   updateRole: (id: string, newRole: string) => Promise<void>,
   getAllIdentities: () => Promise<Identity[]>,
@@ -22,7 +12,6 @@ export function createAdminService(
   deleteDeveloperProfileById: (id: string) => Promise<void>,
   deleteCohortIdentityById: (id: string) => Promise<void>,
   deleteBackgroundById: (id: string) => Promise<void>,
-  deleteAssignmentScoreById: (id: string) => Promise<void>,
   deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>,
   getDeveloperProfileIdById: (id: string) => Promise<{ id: string }[]>
 ) {
@@ -57,18 +46,6 @@ export function createAdminService(
     },
     async updateRole(args: { id: string; newRole: string }) {
       await updateRole(args.id, args.newRole);
-    },
-    //Ali - check if this is needed
-    async getAllAssignments() {
-      return await getAllAssignments();
-    },
-    //Ali - check if this is needed
-    async getAllCohorts() {
-      return await getAllCohorts();
-    },
-    //Ali - check if this is needed
-    async createAssignment(assignment: NewAssignment) {
-      return await createAssignment(assignment);
     },
     async deleteUser(identityId: string) {
       await deleteCohortIdentityById(identityId);

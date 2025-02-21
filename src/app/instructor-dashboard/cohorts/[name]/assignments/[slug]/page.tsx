@@ -1,4 +1,4 @@
-import { Assignment } from "@/features/instructors-dashboard";
+import { AssignmentComponent } from "@/features/instructors-dashboard";
 
 type Params = {
   params: Promise<{ slug: string }>;
@@ -7,9 +7,11 @@ type Params = {
 export default async function Page({ params }: Params) {
   const { slug } = await params;
 
+  console.log({ slug: slug });
+
   return (
     <div>
-      <Assignment slug={slug} />
+      <AssignmentComponent slug={slug} />
     </div>
   );
 }

@@ -34,6 +34,7 @@ export async function addAssignmentAction(formData: FormData) {
       cohortId,
       comment,
       categories,
+      slug: "",
     };
 
     await instructorService.addAssignment(newAssignment);

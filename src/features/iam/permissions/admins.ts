@@ -5,12 +5,9 @@ import { PermissionsSchema } from "../secure-service";
 
 export const admins: PermissionsSchema<"admins", AdminsService> = {
   // unused isSearchHealthOk: "admins.isSearchHealthOk",
-  createAssignment: "admins.createAssignment",
   deleteDeveloperProfile: "admins.deleteDeveloperProfile",
   deleteUser: "admins.deleteUser",
   doesSearchNeedSync: "admins.doesSearchNeedSync",
-  getAllAssignments: "admins.getAllAssignments",
-  getAllCohorts: "admins.getAllCohorts",
   getAllIdentities: "admins.getAllIdentities",
   getSearchSettings: "admins.getSearchSettings",
   repopulateSearch: "admins.repopulateSearch",

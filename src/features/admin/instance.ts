@@ -1,20 +1,16 @@
-import { createAdminService } from "./service";
 import {
   backgroundsService,
+  cohortsService,
   developerProfilesService,
   iamService,
-  assignmentsService,
-  cohortsService,
   projectsService,
   secureService,
 } from "@/features";
+import { createAdminService } from "./service";
 
 export const insecureAdminService = createAdminService(
   developerProfilesService.delete,
   developerProfilesService.updateStatus,
-  assignmentsService.createAssignment,
-  assignmentsService.getAllAssignments,
-  cohortsService.getAll,
   {
     isHealthOk: backgroundsService.isSearchHealthOk,
     repopulate: backgroundsService.repopulateMeiliSearch,
@@ -30,7 +26,6 @@ export const insecureAdminService = createAdminService(
   developerProfilesService.deleteByIdentityId,
   cohortsService.deleteCohortIdentity,
   backgroundsService.deleteBackgroundById,
-  assignmentsService.deleteAssignmentScoreById,
   projectsService.deleteProjectsByDeveloperProfileId,
   developerProfilesService.getAllById
 );
