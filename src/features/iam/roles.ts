@@ -17,6 +17,7 @@ export const rolesPermissions = {
     backgrounds.getAllLanguages,
     backgrounds.getAllEducations,
     projects.getAll,
+    projects.getAllDevelopers,
     developerProfiles.getAll,
     developerProfiles.getHighlightedDeveloperProfileIds,
     developerProfiles.getIdentityIdByDeveloperProfileId,
