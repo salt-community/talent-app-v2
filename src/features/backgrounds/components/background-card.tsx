@@ -1,7 +1,6 @@
 import { Row } from "./row";
 import { backgroundsService } from "../instance";
 import { SkillsBadges } from "./skills-badges";
-import BackgroundSkeleton from "./background-skeleton";
 import { BackgroundBasicInfoCard } from "./basic-info-card";
 
 type Props = { developerProfileId: string; hasProfileAccess: boolean };
@@ -14,10 +13,6 @@ export async function BackgroundCard({
     await backgroundsService.getBackgroundByDeveloperProfileId(
       developerProfileId
     );
-
-  if (!background) {
-    return <BackgroundSkeleton developerProfileId={developerProfileId} />;
-  }
 
   return (
     <div className="space-y-2">

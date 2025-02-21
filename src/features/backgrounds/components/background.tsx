@@ -2,7 +2,6 @@ import { Row } from "./row";
 import { BackgroundBasicInfo } from "./basic-info";
 import { backgroundsService } from "../instance";
 import { SkillsBadges } from "./skills-badges";
-import BackgroundSkeleton from "./background-skeleton";
 
 type Props = { developerProfileId: string; page: string };
 
@@ -12,9 +11,7 @@ export async function Background({ developerProfileId, page }: Props) {
       developerProfileId
     );
 
-  if (!background) {
-    return <BackgroundSkeleton developerProfileId={developerProfileId} />;
-  } else if (page === "highlight") {
+  if (page === "highlight") {
     return (
       <div className="space-y-2 max-w-96">
         <div className="flex justify-between items-start">

@@ -170,26 +170,41 @@ export function createRepository(db: Db) {
     },
     async update(background: BackgroundUpdate) {
       const outboxMessageId = await db.transaction(async (tx) => {
-        const { id: backgroundId, ...rest } = background;
-        await tx
-          .update(backgrounds)
-          .set({ ...rest })
-          .where(eq(backgrounds.id, backgroundId));
-        await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
-        for (const skill of background.skills) {
-          await tx.insert(skills).values({ backgroundId, name: skill });
-        }
-        await tx
-          .delete(languages)
-          .where(eq(languages.backgroundId, backgroundId));
-        for (const language of background.languages) {
-          await tx.insert(languages).values({ backgroundId, name: language });
-        }
-        await tx
-          .delete(educations)
-          .where(eq(educations.backgroundId, backgroundId));
-        for (const education of background.educations) {
-          await tx.insert(educations).values({ backgroundId, name: education });
+        // TODO: Don't use the primary key at all in this function.
+        if (background.id === -1) {
+          await tx.insert(backgrounds).values({
+            developerProfileId: background.developerProfileId,
+            bio: background.bio || "",
+            name: background.name || "",
+            title: background.title || "",
+            avatarUrl: background.avatarUrl || "",
+            links: background.links || [],
+          });
+        } else {
+          const { id: backgroundId, ...rest } = background;
+          await tx
+            .update(backgrounds)
+            .set({ ...rest })
+            .where(eq(backgrounds.id, backgroundId));
+
+          await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
+          for (const skill of background.skills) {
+            await tx.insert(skills).values({ backgroundId, name: skill });
+          }
+          await tx
+            .delete(languages)
+            .where(eq(languages.backgroundId, backgroundId));
+          for (const language of background.languages) {
+            await tx.insert(languages).values({ backgroundId, name: language });
+          }
+          await tx
+            .delete(educations)
+            .where(eq(educations.backgroundId, backgroundId));
+          for (const education of background.educations) {
+            await tx
+              .insert(educations)
+              .values({ backgroundId, name: education });
+          }
         }
 
         return (

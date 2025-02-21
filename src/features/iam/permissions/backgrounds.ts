@@ -3,7 +3,6 @@ import { PermissionsSchema } from "../secure-service";
 
 export const backgrounds: PermissionsSchema<"backgrounds", BackgroundsService> =
   {
-    addDeveloperBackground: "backgrounds.addDeveloperBackground",
     add: "backgrounds.add",
     doesMeilisearchNeedSync: "backgrounds.doesMeilisearchNeedSync",
     getAllEducations: "backgrounds.getAllEducations",

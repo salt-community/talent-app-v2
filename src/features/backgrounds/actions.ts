@@ -43,7 +43,3 @@ export async function updateBackgroundAction(
     revalidatePath("/");
   }
 }
-export async function addBackground(id: string) {
-  const developer = await backgroundsService.addDeveloperBackground(id);
-  return developer;
-}

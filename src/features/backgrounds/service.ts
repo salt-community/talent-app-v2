@@ -5,16 +5,13 @@ import {
   OutboxMessageSelect,
 } from "./types";
 import { MeiliClient } from "./meili";
-import { Developer } from "@/features";
 import { Settings, TaskStatus } from "meilisearch";
-import { backgroundsService } from "./instance";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
   repository: Repository,
   meiliClient: MeiliClient,
-  getPublishedOrHighlightedDeveloperProfileIds: () => Promise<string[]>,
-  getDeveloperById: (id: string) => Promise<Developer>
+  getPublishedOrHighlightedDeveloperProfileIds: () => Promise<string[]>
 ) {
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;
@@ -46,8 +43,27 @@ export function createBackgroundsService(
 
   return {
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
-      const background = await repository.getBackgroundById(developerProfileId);
-      return background[0];
+      const [background] =
+        await repository.getBackgroundById(developerProfileId);
+
+      type T = typeof background;
+
+      if (!background) {
+        return {
+          id: -1,
+          avatarUrl: "",
+          name: "<New Profile>",
+          developerProfileId,
+          title: "",
+          bio: "",
+          links: [],
+          skills: [],
+          languages: [],
+          educations: [],
+        } as T;
+      }
+
+      return background;
     },
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
@@ -132,20 +148,6 @@ export function createBackgroundsService(
     },
     async resetMeilisearchSettings() {
       await meiliClient.resetSettings();
-    },
-    async addDeveloperBackground(id: string) {
-      const developer = await getDeveloperById(id);
-      await backgroundsService.add({
-        name: developer.name,
-        developerProfileId: developer.id,
-        title: "developer",
-        bio: "",
-        links: [],
-        skills: [],
-        languages: [],
-        educations: [],
-      });
-      return developer;
     },
     async deleteBackgroundById(developerProfileId: string) {
       await repository.deleteBackgroundById(developerProfileId);
