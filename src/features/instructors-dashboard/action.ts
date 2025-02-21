@@ -62,3 +62,11 @@ export async function addDevelopersToCohortAction(
     console.error(error);
   }
 }
+export function deleteIdentityFromCohortAction(identityId: string) {
+  try {
+    instructorService.deleteIdentityFromCohort(identityId);
+    revalidatePath("/admin/instructors/cohorts");
+  } catch (error) {
+    console.error(error);
+  }
+}
