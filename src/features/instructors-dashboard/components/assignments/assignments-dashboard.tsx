@@ -2,10 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TrashIcon } from "lucide-react";
-import { instructorService } from "../instance";
-import AddAssignmentButton from "./assignments/add-assignment-button";
+import { instructorService } from "../../instance";
+import AddAssignmentButton from "./add-assignment-button";
 import { Separator } from "@/components";
-import { CopyAssignmentButton } from "./assignments/copy-assignment-button";
+import { CopyAssignmentButton } from "./copy-assignment-button";
 
 type Props = {
   name: string;
