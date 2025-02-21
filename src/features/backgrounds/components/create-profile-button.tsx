@@ -18,7 +18,7 @@ export function CreateProfileButton({ identityId: identityId }: Props) {
       description={"Are you sure you want to create a new profile?"}
       onConfirm={() => addProfile()}
     >
-      <Button>Create New Profile</Button>
+      <Button> <span>+</span> New Profile</Button>
     </AlertDialogDemo>
   );
 }

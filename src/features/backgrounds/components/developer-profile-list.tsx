@@ -13,7 +13,7 @@ export async function DeveloperProfileList() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="mx-auto md:px-4 py-8 max-w-6xl">
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold mb-4">Developer Profiles</h1>
         <div className="mb-6">
