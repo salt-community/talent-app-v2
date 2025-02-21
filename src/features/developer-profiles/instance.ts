@@ -1,12 +1,18 @@
 import { db } from "@/db";
 
 import { createDeveloperProfilesService } from "./service";
-import { secureService } from "@/features";
+import { iamService, secureService } from "@/features";
 
-export const insecureDeveloperProfilesService =
-  createDeveloperProfilesService(db);
+export const insecureDeveloperProfilesService = createDeveloperProfilesService(
+  db,
+  iamService.getCurrentUser
+);
 
 export const developerProfilesService = secureService(
   "developerProfiles",
   insecureDeveloperProfilesService
 );
+
+export function getDeveloperProfilesService() {
+  return developerProfilesService;
+}

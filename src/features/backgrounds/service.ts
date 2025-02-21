@@ -9,8 +9,6 @@ import {
   DeleteDeveloperProfile,
   Developer,
   GetAllDeveloperProfiles,
-  GetCurrentUser,
-  GetDeveloperProfileByIdentityId,
 } from "@/features";
 import { Settings, TaskStatus } from "meilisearch";
 import { backgroundsService } from "./instance";
@@ -25,9 +23,7 @@ export function createBackgroundsService(
   getAllDeveloperProfile: GetAllDeveloperProfiles,
   createDeveloperProfile: CreateDeveloperProfile,
   getAllById: GetAllById,
-  deleteDeveloperProfile: DeleteDeveloperProfile,
-  getAllDeveloperProfilesByIdentityId: GetDeveloperProfileByIdentityId,
-  getCurrentUser: GetCurrentUser
+  deleteDeveloperProfile: DeleteDeveloperProfile
 ) {
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;
@@ -177,21 +173,6 @@ export function createBackgroundsService(
     },
     async deleteBackgroundById(developerProfileId: string) {
       await repository.deleteBackgroundById(developerProfileId);
-    },
-    async GetCurrentUsers() {
-      const currentUser = await getCurrentUser();
-      if (!currentUser) {
-        return;
-      }
-
-      const developerProfile = await getAllDeveloperProfilesByIdentityId(
-        currentUser.id
-      );
-      const user = {
-        ...currentUser,
-        developerProfile,
-      };
-      return user;
     },
   };
 }

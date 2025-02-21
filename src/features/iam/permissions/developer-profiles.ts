@@ -23,4 +23,5 @@ export const developerProfiles: PermissionsSchema<
   updateMissingSlugs: "developerProfiles.updateMissingSlugs",
   getDeveloperProfileByIdentityId:
     "developerProfiles.getDeveloperProfileByIdentityId",
+  getCurrentUsers: "developerProfiles.getCurrentUsers",
 };

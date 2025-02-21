@@ -4,8 +4,12 @@ import { developerProfilesService } from "./instance";
 import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import { DeveloperProfileInsert, SessionClaims } from "./types";
+import { GetCurrentUser } from "@/features";
 
-export function createDeveloperProfilesService(db: Db) {
+export function createDeveloperProfilesService(
+  db: Db,
+  getCurrentUser: GetCurrentUser
+) {
   const repository = createDevelopersRepository(db);
   return {
     async getAll() {
@@ -75,6 +79,21 @@ export function createDeveloperProfilesService(db: Db) {
     },
     async getDeveloperProfileByIdentityId(identityId: string) {
       return await repository.getDeveloperProfileByIdentityId(identityId);
+    },
+    async getCurrentUsers() {
+      const currentUser = await getCurrentUser();
+      if (!currentUser) {
+        return;
+      }
+
+      const developerProfile = await this.getDeveloperProfileByIdentityId(
+        currentUser.id
+      );
+      const user = {
+        ...currentUser,
+        developerProfile,
+      };
+      return user;
     },
     async updateMissingSlugs() {
       const developers = await repository.getAll();

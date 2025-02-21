@@ -1,11 +1,11 @@
 import React from "react";
-import { backgroundsService } from "../../backgrounds/instance";
 import { DeveloperProfileCard } from "./developer-profile-card";
 import { CreateProfileButton } from "./create-profile-button";
 import { notFound } from "next/navigation";
+import { developerProfilesService } from "../instance";
 
 export async function DeveloperProfileList() {
-  const profiles = await backgroundsService.GetCurrentUsers();
+  const profiles = await developerProfilesService.getCurrentUsers();
   const identityId = profiles?.id;
 
   if (!identityId) {
