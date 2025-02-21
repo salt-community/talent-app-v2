@@ -34,7 +34,6 @@ export const rolesPermissions = {
   developer: new Set([
     backgrounds.add,
     backgrounds.addDeveloperBackground,
-    backgrounds.createDeveloperProfile,
     backgrounds.getAllDeveloperProfilesById,
     backgrounds.getAllEducations,
     backgrounds.getAllLanguages,

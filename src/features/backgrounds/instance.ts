@@ -12,7 +12,6 @@ export const insecureBackgroundsService = createBackgroundsService(
   developerProfilesService.getPublishedOrHighlightedDeveloperProfileIds,
   developerProfilesService.getDeveloperById,
   developerProfilesService.getAll,
-  developerProfilesService.createDeveloperProfile,
   developerProfilesService.getAllById
 );
 

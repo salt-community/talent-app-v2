@@ -8,7 +8,7 @@ import { MeiliClient } from "./meili";
 import { Developer, GetAllDeveloperProfiles } from "@/features";
 import { Settings, TaskStatus } from "meilisearch";
 import { backgroundsService } from "./instance";
-import { CreateDeveloperProfile, GetAllById } from "@/features";
+import { GetAllById } from "@/features";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
@@ -17,7 +17,6 @@ export function createBackgroundsService(
   getPublishedOrHighlightedDeveloperProfileIds: () => Promise<string[]>,
   getDeveloperById: (id: string) => Promise<Developer>,
   getAllDeveloperProfile: GetAllDeveloperProfiles,
-  createDeveloperProfile: CreateDeveloperProfile,
   getAllById: GetAllById
 ) {
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
@@ -150,12 +149,6 @@ export function createBackgroundsService(
         educations: [],
       });
       return developer;
-    },
-    async createDeveloperProfile(identityId: string) {
-      const developerProfile = await createDeveloperProfile(identityId);
-      if (developerProfile) {
-        await backgroundsService.addDeveloperBackground(developerProfile.id);
-      }
     },
     async getAllDeveloperProfilesById(identityId: string) {
       return await getAllById(identityId);

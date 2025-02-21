@@ -6,7 +6,6 @@ export const backgrounds: PermissionsSchema<"backgrounds", BackgroundsService> =
     getAllDeveloperProfile: "backgrounds.getAllDeveloperProfile",
     addDeveloperBackground: "backgrounds.addDeveloperBackground",
     add: "backgrounds.add",
-    createDeveloperProfile: "backgrounds.createDeveloperProfile",
     doesMeilisearchNeedSync: "backgrounds.doesMeilisearchNeedSync",
     getAllDeveloperProfilesById: "backgrounds.getAllDeveloperProfilesById",
     getAllEducations: "backgrounds.getAllEducations",

@@ -47,11 +47,3 @@ export async function addBackground(id: string) {
   const developer = await backgroundsService.addDeveloperBackground(id);
   return developer;
 }
-export async function addDeveloperProfileAction(identityId: string) {
-  try {
-    await backgroundsService.createDeveloperProfile(identityId);
-  } catch (error) {
-    errorHandler(error);
-  }
-  revalidatePath("/profile");
-}
