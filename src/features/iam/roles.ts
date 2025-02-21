@@ -35,7 +35,6 @@ export const rolesPermissions = {
     backgrounds.add,
     backgrounds.addDeveloperBackground,
     backgrounds.createDeveloperProfile,
-    backgrounds.deleteDeveloperProfile,
     backgrounds.getAllDeveloperProfilesById,
     backgrounds.getAllEducations,
     backgrounds.getAllLanguages,

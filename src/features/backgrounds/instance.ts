@@ -13,8 +13,7 @@ export const insecureBackgroundsService = createBackgroundsService(
   developerProfilesService.getDeveloperById,
   developerProfilesService.getAll,
   developerProfilesService.createDeveloperProfile,
-  developerProfilesService.getAllById,
-  developerProfilesService.delete
+  developerProfilesService.getAllById
 );
 
 export const backgroundsService = secureService(

@@ -5,11 +5,7 @@ import {
   OutboxMessageSelect,
 } from "./types";
 import { MeiliClient } from "./meili";
-import {
-  DeleteDeveloperProfile,
-  Developer,
-  GetAllDeveloperProfiles,
-} from "@/features";
+import { Developer, GetAllDeveloperProfiles } from "@/features";
 import { Settings, TaskStatus } from "meilisearch";
 import { backgroundsService } from "./instance";
 import { CreateDeveloperProfile, GetAllById } from "@/features";
@@ -22,8 +18,7 @@ export function createBackgroundsService(
   getDeveloperById: (id: string) => Promise<Developer>,
   getAllDeveloperProfile: GetAllDeveloperProfiles,
   createDeveloperProfile: CreateDeveloperProfile,
-  getAllById: GetAllById,
-  deleteDeveloperProfile: DeleteDeveloperProfile
+  getAllById: GetAllById
 ) {
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;
@@ -164,9 +159,6 @@ export function createBackgroundsService(
     },
     async getAllDeveloperProfilesById(identityId: string) {
       return await getAllById(identityId);
-    },
-    async deleteDeveloperProfile(developerProfileId: string) {
-      await deleteDeveloperProfile(developerProfileId);
     },
     async getAllDeveloperProfile() {
       return await getAllDeveloperProfile();
