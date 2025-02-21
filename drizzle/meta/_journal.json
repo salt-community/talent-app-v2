@@ -22,6 +22,13 @@
       "when": 1739866817285,
       "tag": "0002_developer_profiles_nullable_slug",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1740146084645,
+      "tag": "0003_cohort_name_unique",
+      "breakpoints": true
     }
   ]
 }

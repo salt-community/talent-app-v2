@@ -1,0 +1,1 @@
+ALTER TABLE "cohorts" ADD CONSTRAINT "cohorts_name_unique" UNIQUE("name");
