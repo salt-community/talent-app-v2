@@ -1,4 +1,4 @@
-import { AssignmentScore, CategoryScore } from "./types";
+import { AssignmentScore, CategoryAverages, CategoryScore } from "./types";
 
 export function averageScore(assignmentScores: number[]) {
   const averageScore =
@@ -9,14 +9,34 @@ export function averageScore(assignmentScores: number[]) {
   return averageScore;
 }
 
-export function averageScoresByCategory(assignmentScores: CategoryScore[]) {
-  const averageScores = {
-    frontend: 0,
-    backend: 0,
-    conversation: 0,
-    team_collaboration: 0,
-    design: 0,
-    management: 0,
-  };
-  return;
+export function averageScoresByCategory(data: CategoryScore[]) {
+  const allCategories = [
+    "frontend",
+    "backend",
+    "conversation",
+    "team collaboration",
+    "design",
+    "management",
+  ] as const;
+
+  const result = Object.fromEntries(
+    allCategories.map((category) => [category, 0])
+  ) as CategoryAverages;
+
+  allCategories.forEach((category) => {
+    const validScores = data
+      .filter(
+        (item) =>
+          item.score !== null &&
+          item.categories !== null &&
+          item.categories.includes(category)
+      )
+      .map((item) => item.score as number);
+
+    if (validScores.length > 0) {
+      const sum = validScores.reduce((acc, score) => acc + score, 0);
+      result[category] = sum / validScores.length;
+    }
+  });
+  return result;
 }

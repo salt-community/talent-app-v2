@@ -51,6 +51,15 @@ export type CategoryScore = {
   categories: string[] | null;
 };
 
+export type CategoryAverages = {
+  frontend: number;
+  backend: number;
+  conversation: number;
+  "team collaboration": number;
+  design: number;
+  management: number;
+};
+
 export type NewAssignmentScore = Omit<AssignmentScore, "id" | "createdAt">;
 
 export type AssignmentsService = ReturnType<typeof createAssignmentsService>;
