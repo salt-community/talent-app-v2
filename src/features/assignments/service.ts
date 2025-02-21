@@ -1,8 +1,9 @@
 import { Db } from "@/db";
 import { createAssignmentsRepository } from "./repository";
-import { AssignmentScoreFormData, NewAssignment } from "./types";
+import { Assignment, AssignmentScoreFormData, NewAssignment } from "./types";
 import { CohortIdentity } from "../cohorts";
 import { number } from "zod";
+import { averageScore, averageScoresByCategory } from "./logic";
 
 export function createAssignmentsService(
   db: Db,
@@ -38,12 +39,20 @@ export function createAssignmentsService(
       return await repo.getScoresByAssignmentId(assignmentId);
     },
 
-    async getScoresByIdentityId(identityId: string) {
+    async getAverageScoresByIdentityId(identityId: string) {
       const assignmentScores = await repo.getScoresByIdentityId(identityId);
       const validScores = assignmentScores
         .map((assignmentScore) => assignmentScore.score)
-        .filter((score): score is number => score !== null);
-      return validScores;
+        .filter((score): score is number => score !== null || score !== 0);
+
+      return averageScore(validScores);
+    },
+    async getAllAverageScoresByIdentityId(identityId: string) {
+      const assignmentScores = await repo.getScoresByIdentityId(identityId);
+      const validScores = assignmentScores.filter(
+        (assignment) => assignment.score !== null
+      );
+      return averageScoresByCategory(validScores);
     },
 
     async deleteAllAssignments() {

@@ -11,9 +11,11 @@ export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
     getAssignmentsByCohort: "assignments.getAssignmentsByCohort",
     createAssignmentScore: "assignments.createAssignmentScore",
     getScoresByAssignmentId: "assignments.getScoresByAssignmentId",
-    getScoresByIdentityId: "assignments.getScoresByIdentityId",
+    getAverageScoresByIdentityId: "assignments.getAverageScoresByIdentityId",
     updateAssignment: "assignments.updateAssignment",
     getAllAssignments: "assignments.getAllAssignments",
     deleteAssignmentScoreById: "assignments.deleteAssignmentScoreById",
     getCohortIdentity: "assignments.getCohortIdentity",
+    getAllAverageScoresByIdentityId:
+      "assignments.getAllAverageScoresByIdentityId",
   };
