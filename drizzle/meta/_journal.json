@@ -29,6 +29,13 @@
       "when": 1740146084645,
       "tag": "0003_cohort_name_unique",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1740150116073,
+      "tag": "0004_slug_category_assignment",
+      "breakpoints": true
     }
   ]
 }
