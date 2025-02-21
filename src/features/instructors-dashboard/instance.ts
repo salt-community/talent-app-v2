@@ -14,5 +14,6 @@ export const instructorService = createInstructorService(
   cohortsService.getCohortStudents,
   developerProfilesService.getAll,
   cohortsService.addDevelopersToCohort,
-  cohortsService.deleteIdentityFromCohort
+  cohortsService.deleteIdentityFromCohort,
+  cohortsService.deleteCohortAndCohortIdentity
 );
