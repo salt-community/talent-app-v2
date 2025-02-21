@@ -20,7 +20,7 @@ export function CohortCard({ cohorts }: Props) {
           >
             <Card
               key={cohort.id}
-              className="w-full cursor-pointer hover:shadow-lg transition-shadow rounded bg-slate-50"
+              className="w-full cursor-pointer hover:shadow-lg transition-shadow rounded bg-zinc-50"
             >
               <CardHeader className="px-4 pt-4 pb-2">
                 <CardTitle className="scroll-m-20 text-1xl font-semibold tracking-tight">
