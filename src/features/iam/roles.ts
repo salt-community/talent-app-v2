@@ -21,6 +21,7 @@ export const rolesPermissions = {
     developerProfiles.getHighlightedDeveloperProfileIds,
     developerProfiles.getIdentityIdByDeveloperProfileId,
     developerProfiles.getDeveloperProfileByIdentityId,
+    developerProfiles.getDeveloperById,
     assignments.getAssignmentsByCohortId,
   ]),
   admin: new Set([
