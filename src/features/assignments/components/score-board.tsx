@@ -2,19 +2,14 @@ import { Separator, H2 } from "@/components/ui";
 import { assignmentsService } from "../instance";
 
 type ScoreBoardProps = {
-  cohortId: string;
+  identityId: string;
   hasProfileAccess: boolean;
 };
 
 export async function ScoreBoard({
-  cohortId,
+  identityId,
   hasProfileAccess,
 }: ScoreBoardProps) {
-  await assignmentsService.getAssignmentsByCohortId(cohortId);
-
-  if (!hasProfileAccess) {
-    return <></>;
-  }
   return (
     <section className="min-w-72">
       <Separator className="my-4" />
