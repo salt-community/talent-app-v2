@@ -37,7 +37,7 @@ export async function addAssignmentAction(formData: FormData) {
     };
 
     await instructorService.addAssignment(newAssignment);
-    revalidatePath("/admin/instructors/assignments");
+    revalidatePath("/instructors-dashboard");
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Validation failed:", error.errors);
@@ -56,24 +56,24 @@ export async function addIdentitiesToCohortAction(
   identityIds: string[]
 ) {
   try {
-    instructorService.addIdentitiesToCohort({ cohortId, identityIds });
-    revalidatePath("/instructors/cohorts");
+    await instructorService.addIdentitiesToCohort({ cohortId, identityIds });
+    revalidatePath("/instructors-dashboard");
   } catch (error) {
     console.error(error);
   }
 }
 export async function deleteIdentityFromCohortAction(identityId: string) {
   try {
-    instructorService.deleteIdentityFromCohort(identityId);
-    revalidatePath("/instructors/cohorts");
+    await instructorService.deleteIdentityFromCohort(identityId);
+    revalidatePath("/instructors-dashboard");
   } catch (error) {
     console.error(error);
   }
 }
 export async function deleteCohortAndCohortIdentityAction(cohortId: string) {
   try {
-    instructorService.deleteCohortAndCohortIdentity(cohortId);
-    revalidatePath("/");
+    await instructorService.deleteCohortAndCohortIdentity(cohortId);
+    revalidatePath("/instructors-dashboard");
   } catch (error) {
     console.error(error);
   }
