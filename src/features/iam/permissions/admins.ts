@@ -1,6 +1,6 @@
 // TODO: Remove as the admin-dashboard is just an aggregation of the other features.
 
-import { AdminsService } from "@/features/admin/types";
+import { AdminsService } from "@/features/admin-dashboard/types";
 import { PermissionsSchema } from "../secure-service";
 
 export const admins: PermissionsSchema<"admins", AdminsService> = {

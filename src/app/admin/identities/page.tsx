@@ -1,5 +1,4 @@
-import { IdentityDashboard } from "@/features/admin/components/identity-dashboard";
-
+import { IdentityDashboard } from "@/features/admin-dashboard/components/identity-dashboard";
 
 export default function Page() {
   return <IdentityDashboard />;
