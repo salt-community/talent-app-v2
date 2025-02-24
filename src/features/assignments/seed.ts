@@ -44,7 +44,9 @@ export const seedAssignments = async (cohortIds: string[]) => {
       await insecureAssignmentService.createAssignment({
         cohortId: cohortIds[0],
         title:
-          assignmentTitles[Math.floor(Math.random() * assignmentTitles.length)],
+          assignmentTitles[
+            Math.floor(Math.random() * assignmentTitles.length)
+          ] + i,
         comment: `This is a comment for assignment ${i + 1}`,
         categories: getRandomTags(categoryTags, 3),
         slug: generateSlug(assignmentTitles[i]),
