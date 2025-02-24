@@ -27,7 +27,7 @@ export function createBackgroundsService(
           succeeded = true;
           break;
         }
-        const upsertStatus = await backgroundsSearchApi.upsertBackground([
+        const upsertStatus = await backgroundsSearchApi.upsertBackgrounds([
           background[0],
         ]);
         succeeded = OK_STATUSES.includes(upsertStatus);
@@ -91,7 +91,7 @@ export function createBackgroundsService(
       const { outboxMessageId, backgroundId } =
         await repository.add(background);
 
-      const status = await backgroundsSearchApi.upsertBackground([
+      const status = await backgroundsSearchApi.upsertBackgrounds([
         { id: backgroundId, ...background },
       ]);
       if (OK_STATUSES.includes(status)) {
@@ -102,7 +102,7 @@ export function createBackgroundsService(
     async update(background: BackgroundUpdate) {
       const { outboxMessageId } = await repository.update(background);
 
-      const status = await backgroundsSearchApi.upsertBackground([background]);
+      const status = await backgroundsSearchApi.upsertBackgrounds([background]);
       if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
       }
@@ -110,9 +110,10 @@ export function createBackgroundsService(
 
     async repopulateMeiliSearch() {
       await backgroundsSearchApi.deleteAllBackgrounds();
+
       const backgrounds = await repository.getAllBackgrounds();
 
-      await backgroundsSearchApi.upsertBackground(backgrounds);
+      await backgroundsSearchApi.upsertBackgrounds(backgrounds);
     },
     async syncMeilisearch() {
       const outboxMessages = await repository.getAllOutboxMessage();

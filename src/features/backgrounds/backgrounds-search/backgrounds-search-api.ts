@@ -107,9 +107,9 @@ export function createBackgroundsSearchApi() {
       );
     },
 
-    async upsertBackground(background: BackgroundUpdate[]) {
+    async upsertBackgrounds(backgrounds: BackgroundUpdate[]) {
       const index = await ensureBackgroundsIndex();
-      const response = await index.addDocuments(background);
+      const response = await index.addDocuments(backgrounds);
       return response.status;
     },
 
