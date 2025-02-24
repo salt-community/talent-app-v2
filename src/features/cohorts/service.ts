@@ -46,8 +46,11 @@ export function createCohortsService(
       const students = await Promise.all(
         cohortStudents.map((student) => getIdentityById(student.identityId))
       );
+      const validStudents = students.filter((student) => student !== undefined);
       const developerProfiles = await Promise.all(
-        students.map((developer) => getAllDeveloperProfilesById(developer.id))
+        validStudents.map((developer) =>
+          getAllDeveloperProfilesById(developer.id)
+        )
       );
       return developerProfiles.flat();
     },

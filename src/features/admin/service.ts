@@ -48,7 +48,7 @@ export function createAdminService(
       await updateRole(args.id, args.newRole);
     },
     async deleteUser(identityId: string) {
-      await deleteCohortIdentityById(identityId);
+      // await deleteCohortIdentityById(identityId);
       const developerProfiles = await getDeveloperProfileIdById(identityId);
       for (const developerProfile of developerProfiles) {
         await deleteBackgroundById(developerProfile.id);

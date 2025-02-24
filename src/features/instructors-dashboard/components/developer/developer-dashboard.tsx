@@ -17,8 +17,14 @@ export async function DeveloperDashboard({ name }: Props) {
   const developers =
     await instructorService.getCohortStudentsByCohortId(cohortId);
 
+  const validDevelopers = developers.filter(
+    (developer) => developer !== undefined
+  );
   const developerProfiles = await instructorService.getAllDevelopers();
-  const unsignedDevelopers = developerProfiles.filter(
+  const validDeveloperProfiles = developerProfiles.filter(
+    (developerProfile) => developerProfiles !== undefined
+  );
+  const unassignedDevelopers = validDeveloperProfiles.filter(
     (dev: { id: string }) =>
       !developers.find((developer) => developer.id === dev.id)
   );
@@ -26,13 +32,13 @@ export async function DeveloperDashboard({ name }: Props) {
   return (
     <div className="max-w-6xl mx-auto p-4">
       <div className="flex justify-between items-center py-2">
-        <h2 className="text-2xl font-semibold">Developers</h2> 
-          <AddDeveloperButton
-            developer={unsignedDevelopers}
-            cohortId={foundCohort.id}
-          />
+        <h2 className="text-2xl font-semibold">Developers</h2>
+        <AddDeveloperButton
+          developer={unassignedDevelopers}
+          cohortId={foundCohort.id}
+        />
       </div>
-      <StudentCard developer={developers} />
+      <StudentCard developer={validDevelopers} />
     </div>
   );
 }
