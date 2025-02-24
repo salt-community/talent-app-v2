@@ -10,7 +10,7 @@ import { Settings, TaskStatus } from "meilisearch";
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
   repository: Repository,
-  meiliClient: BackgroundsSearchApi
+  backgroundsSearchApi: BackgroundsSearchApi
 ) {
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;
@@ -23,13 +23,13 @@ export function createBackgroundsService(
           succeeded = true;
           break;
         }
-        const upsertStatus = await meiliClient.upsertBackground([
+        const upsertStatus = await backgroundsSearchApi.upsertBackground([
           background[0],
         ]);
         succeeded = OK_STATUSES.includes(upsertStatus);
         break;
       case "delete":
-        const deleteStatus = await meiliClient.deleteBackground(
+        const deleteStatus = await backgroundsSearchApi.deleteBackground(
           outboxMessage.developerProfileId
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
@@ -86,7 +86,7 @@ export function createBackgroundsService(
       const { outboxMessageId, backgroundId } =
         await repository.add(background);
 
-      const status = await meiliClient.upsertBackground([
+      const status = await backgroundsSearchApi.upsertBackground([
         { id: backgroundId, ...background },
       ]);
       if (OK_STATUSES.includes(status)) {
@@ -97,7 +97,7 @@ export function createBackgroundsService(
     async update(background: BackgroundUpdate) {
       const { outboxMessageId } = await repository.update(background);
 
-      const status = await meiliClient.upsertBackground([background]);
+      const status = await backgroundsSearchApi.upsertBackground([background]);
       if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
       }
@@ -108,19 +108,19 @@ export function createBackgroundsService(
       const [searchedDeveloperProfileIds] = await Promise.all([
         !cleanSearch || cleanSearch === ""
           ? await repository.getAllDeveloperProfileIds()
-          : await meiliClient.searchDeveloperProfileIds(search),
+          : await backgroundsSearchApi.searchDeveloperProfileIds(search),
       ]);
 
       return searchedDeveloperProfileIds;
     },
     async isSearchHealthOk() {
-      return await meiliClient.isHealthOk();
+      return await backgroundsSearchApi.isHealthOk();
     },
     async repopulateMeiliSearch() {
-      await meiliClient.deleteAllBackgrounds();
+      await backgroundsSearchApi.deleteAllBackgrounds();
       const backgrounds = await repository.getAllBackgrounds();
 
-      await meiliClient.upsertBackground(backgrounds);
+      await backgroundsSearchApi.upsertBackground(backgrounds);
     },
     async syncMeilisearch() {
       const outboxMessages = await repository.getAllOutboxMessage();
@@ -132,13 +132,13 @@ export function createBackgroundsService(
       return (await repository.getAllOutboxMessage()).length > 0;
     },
     async getMeilisearchSettings() {
-      return await meiliClient.getSettings();
+      return await backgroundsSearchApi.getSettings();
     },
     async updateMeilisearchSettings(settings: Settings) {
-      await meiliClient.updateSettings(settings);
+      await backgroundsSearchApi.updateSettings(settings);
     },
     async resetMeilisearchSettings() {
-      await meiliClient.resetSettings();
+      await backgroundsSearchApi.resetSettings();
     },
     async deleteBackgroundById(developerProfileId: string) {
       await repository.deleteBackgroundById(developerProfileId);
