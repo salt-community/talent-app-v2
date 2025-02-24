@@ -1,26 +1,26 @@
 import { Settings } from "meilisearch";
 import {
-  DeveloperProfileClient,
-  IamClient,
+  DeveloperProfileService,
+  IamService,
   SearchConfigurationClient,
 } from "./types";
 
 export function createAdminService(
-  developerProfileClient: DeveloperProfileClient,
+  developerProfileService: DeveloperProfileService,
   searchConfigurationClient: SearchConfigurationClient,
-  iamClient: IamClient,
+  iamService: IamService,
   deleteBackgroundById: (id: string) => Promise<void>,
   deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>
 ) {
   return {
     async getAllIdentities() {
-      return iamClient.getAllIdentities();
+      return iamService.getAllIdentities();
     },
     async deleteDeveloperProfile(id: string) {
-      await developerProfileClient.delete(id);
+      await developerProfileService.delete(id);
     },
     async updateStatus(args: { id: string; status: string }) {
-      await developerProfileClient.updateStatus({
+      await developerProfileService.updateStatus({
         id: args.id,
         status: args.status,
       });
@@ -45,20 +45,20 @@ export function createAdminService(
       await searchConfigurationClient.updateSettings(settings);
     },
     async updateRole(args: { id: string; newRole: string }) {
-      await iamClient.updateRole(args.id, args.newRole);
+      await iamService.updateRole(args.id, args.newRole);
     },
     async deleteUser(identityId: string) {
       // await deleteCohortIdentityById(identityId);
       const developerProfiles =
-        await developerProfileClient.getDeveloperProfileIdById(identityId);
+        await developerProfileService.getDeveloperProfileIdById(identityId);
       for (const developerProfile of developerProfiles) {
         await deleteBackgroundById(developerProfile.id);
         await deleteProjectsByDeveloperProfileId(developerProfile.id);
       }
-      await developerProfileClient.deleteDeveloperProfileByIdentityId(
+      await developerProfileService.deleteDeveloperProfileByIdentityId(
         identityId
       );
-      await iamClient.deleteIdentity(identityId);
+      await iamService.deleteIdentity(identityId);
     },
   };
 }

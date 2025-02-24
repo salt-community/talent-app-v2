@@ -13,13 +13,13 @@ export type SearchConfigurationClient = {
   resetSettings: BackgroundsService["resetMeilisearchSettings"];
 };
 type iamService = ReturnType<typeof createService>;
-export type IamClient = {
+export type IamService = {
   updateRole: iamService["updateRole"];
   getAllIdentities: iamService["getAllIdentities"];
   deleteIdentity: iamService["deleteIdentity"];
 };
 
-export type DeveloperProfileClient = {
+export type DeveloperProfileService = {
   delete: DevelopersService["delete"];
   updateStatus: DevelopersService["updateStatus"];
   deleteDeveloperProfileByIdentityId: DevelopersService["deleteByIdentityId"];
