@@ -16,9 +16,6 @@ export default function Developers({ developer }: { developer: Developer }) {
           </div>
           <div>
             <div className="font-medium">{developer.name}</div>
-            <div className="text-sm text-gray-500">
-              @{developer.name || developer.name.toLowerCase()}
-            </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
