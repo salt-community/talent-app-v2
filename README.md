@@ -58,3 +58,6 @@ npm run dev
             3. Enter a name for your project and click Create.
     •	Copy the key.
     •	Secure your API key by restricting it to specific IPs or referrers if needed.
+
+## Feature slice connections
+![image](https://github.com/user-attachments/assets/0512bbd5-c9ce-4a8f-ad91-4f7adba53f55)
