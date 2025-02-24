@@ -17,7 +17,6 @@ import { Label } from "@/components/ui/label";
 import { addAssignmentAction } from "../../action";
 
 type Props = {
-  // cohorts: { id: string; name: string }[];
   cohortId: string;
   onSuccess: () => void;
 };
@@ -63,19 +62,6 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
           required
         />
       </div>
-
-      {/* <div>
-        <Label htmlFor="categories">Categories</Label>
-        <Input
-          id="categories"
-          name="categories"
-          placeholder="Enter categories (comma-separated)"
-        />
-        <p className="text-sm text-gray-500 mt-1">
-          Separate multiple categories with commas
-        </p>
-      </div> */}
-
       <div>
         <Label htmlFor="categories">Category</Label>
         <div className="flex">
@@ -110,12 +96,6 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
               </SelectGroup>
             </SelectContent>
           </Select>
-          {/* <input
-          type="hidden"
-          id="categories"
-          name="categories"
-          value={selectedCategory}
-        /> */}
           <Button type="button" onClick={handleAdd} className="ml-2">
             <span>+</span>Add
           </Button>
