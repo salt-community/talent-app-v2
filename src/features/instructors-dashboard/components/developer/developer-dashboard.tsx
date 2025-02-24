@@ -17,14 +17,9 @@ export async function DeveloperDashboard({ name }: Props) {
   const developers =
     await instructorService.getCohortStudentsByCohortId(cohortId);
 
-  const validDevelopers = developers.filter(
-    (developer) => developer !== undefined
-  );
   const developerProfiles = await instructorService.getAllDevelopers();
-  const validDeveloperProfiles = developerProfiles.filter(
-    (developerProfile) => developerProfiles !== undefined
-  );
-  const unassignedDevelopers = validDeveloperProfiles.filter(
+
+  const unassignedDevelopers = developerProfiles.filter(
     (dev: { id: string }) =>
       !developers.find((developer) => developer.id === dev.id)
   );
@@ -38,7 +33,7 @@ export async function DeveloperDashboard({ name }: Props) {
           cohortId={foundCohort.id}
         />
       </div>
-      <StudentCard developer={validDevelopers} />
+      <StudentCard developer={developers} />
     </div>
   );
 }
