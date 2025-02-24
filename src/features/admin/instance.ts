@@ -24,7 +24,6 @@ export const insecureAdminService = createAdminService(
   iamService.getAllIdentities,
   iamService.deleteIdentity,
   developerProfilesService.deleteByIdentityId,
-  cohortsService.deleteCohortIdentity,
   backgroundsService.deleteBackgroundById,
   projectsService.deleteProjectsByDeveloperProfileId,
   developerProfilesService.getAllById

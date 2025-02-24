@@ -10,7 +10,6 @@ export function createAdminService(
   getAllIdentities: () => Promise<Identity[]>,
   deleteIdentity: (id: string) => Promise<void>,
   deleteDeveloperProfileById: (id: string) => Promise<void>,
-  deleteCohortIdentityById: (id: string) => Promise<void>,
   deleteBackgroundById: (id: string) => Promise<void>,
   deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>,
   getDeveloperProfileIdById: (id: string) => Promise<{ id: string }[]>
