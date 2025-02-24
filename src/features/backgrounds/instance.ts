@@ -1,6 +1,6 @@
 import { createRepository } from "./repository";
 import { createBackgroundsService } from "./service";
-import { getDeveloperProfilesService, secureService } from "@/features";
+import { secureService } from "@/features";
 import { createMeiliClient } from "./meili";
 import { db } from "@/db";
 
