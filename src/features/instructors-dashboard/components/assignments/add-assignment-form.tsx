@@ -17,12 +17,13 @@ import { Label } from "@/components/ui/label";
 import { addAssignmentAction } from "../../action";
 
 type Props = {
-  cohorts: { id: string; name: string }[];
+  // cohorts: { id: string; name: string }[];
+  cohortId: string;
   onSuccess: () => void;
 };
 
-export function AddAssignmentForm({ cohorts, onSuccess }: Props) {
-  const [selectedCohort, setSelectedCohort] = useState("");
+export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -30,9 +31,9 @@ export function AddAssignmentForm({ cohorts, onSuccess }: Props) {
     setLoading(true);
 
     const formData = new FormData(event.target as HTMLFormElement);
-    
+
     try {
-      await addAssignmentAction(formData);
+      await addAssignmentAction(formData, cohortId);
       onSuccess();
     } catch (error) {
       console.error("Failed to create assignment:", error);
@@ -53,7 +54,7 @@ export function AddAssignmentForm({ cohorts, onSuccess }: Props) {
         />
       </div>
 
-      <div>
+      {/* <div>
         <Label htmlFor="categories">Categories</Label>
         <Input
           id="categories"
@@ -63,30 +64,44 @@ export function AddAssignmentForm({ cohorts, onSuccess }: Props) {
         <p className="text-sm text-gray-500 mt-1">
           Separate multiple categories with commas
         </p>
-      </div>
+      </div> */}
 
       <div>
-        <Label htmlFor="cohortId">Cohort</Label>
-        <Select value={selectedCohort} onValueChange={setSelectedCohort}>
+        <Label htmlFor="categories">Category</Label>
+        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
           <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a Cohort" />
+            <SelectValue placeholder="Select a Category" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Cohorts</SelectLabel>
-              {cohorts.map((cohort) => (
-                <SelectItem
-                  key={cohort.id}
-                  value={cohort.id}
-                  className="cursor-pointer"
-                >
-                  {cohort.name}
-                </SelectItem>
-              ))}
+              <SelectItem value="frontend" className="cursor-pointer">
+                Frontend
+              </SelectItem>
+              <SelectItem value="backend" className="cursor-pointer">
+                Backend
+              </SelectItem>
+              <SelectItem value="management" className="cursor-pointer">
+                Management
+              </SelectItem>
+              <SelectItem value="conversation" className="cursor-pointer">
+                Conversation
+              </SelectItem>
+              <SelectItem value="team collaboration" className="cursor-pointer">
+                Team collaboration
+              </SelectItem>
+              <SelectItem value="design" className="cursor-pointer">
+                Design
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
-        <input type="hidden" name="cohortId" value={selectedCohort} />
+        <input
+          type="hidden"
+          id="categories"
+          name="categories"
+          value={selectedCategory}
+        />
       </div>
 
       <div>

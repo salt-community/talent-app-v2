@@ -11,10 +11,11 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AddAssignmentForm } from "./add-assignment-form";
 
 type Props = {
-  cohorts: { id: string; name: string }[];
+  // cohorts: { id: string; name: string }[];
+  cohortId: string;
 };
 
-export default function AddAssignmentButton({ cohorts }: Props) {
+export default function AddAssignmentButton({ cohortId }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -33,7 +34,7 @@ export default function AddAssignmentButton({ cohorts }: Props) {
         </VisuallyHidden>
         <DialogContent>
           <AddAssignmentForm
-            cohorts={cohorts}
+            cohortId={cohortId}
             onSuccess={() => setOpen(false)}
           />
         </DialogContent>

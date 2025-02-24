@@ -14,10 +14,12 @@ export async function addCohortAction(cohort: CohortFormData) {
   }
 }
 
-export async function addAssignmentAction(formData: FormData) {
+export async function addAssignmentAction(
+  formData: FormData,
+  cohortId: string
+) {
   const title = formData.get("title") as string;
   const comment = formData.get("comment") as string;
-  const cohortId = formData.get("cohortId") as string;
   const categories = (formData.get("categories") as string).split(",");
 
   try {
