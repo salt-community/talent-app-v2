@@ -4,13 +4,13 @@ import {
   BackgroundUpdate,
   OutboxMessageSelect,
 } from "./types";
-import { MeiliClient } from "./meili";
+import { BackgroundsSearchApi } from "./backgrounds-search";
 import { Settings, TaskStatus } from "meilisearch";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
   repository: Repository,
-  meiliClient: MeiliClient
+  meiliClient: BackgroundsSearchApi
 ) {
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;

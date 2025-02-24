@@ -1,19 +1,20 @@
 import MeiliSearch, { Settings } from "meilisearch";
 import { BackgroundUpdate } from "../types";
-import { createMeiliSearch } from "./meili-search";
 
 const BACKGROUNDS_UID = "backgrounds";
 const PRIMARY_KEY = "developerProfileId";
 
-export function createMeiliClient() {
+export function createBackgroundsSearchApi() {
   let meiliSearch: MeiliSearch | null = null;
 
   async function initializeMeiliSearch() {
     if (!meiliSearch) {
-      meiliSearch = createMeiliSearch();
+      meiliSearch = new MeiliSearch({
+        host: process.env.MEILI_SEARCH_URL!,
+        apiKey: process.env.MEILI_MASTER_KEY,
+      });
 
       const index = meiliSearch.index(BACKGROUNDS_UID);
-
 
       if (!index) {
         console.error("Index does not exist. Creating index now...");
@@ -62,7 +63,6 @@ export function createMeiliClient() {
       return response.status;
     },
 
-
     async deleteAllBackgrounds() {
       const meiliSearch = await initializeMeiliSearch();
       const index = meiliSearch.index(BACKGROUNDS_UID);
@@ -105,4 +105,6 @@ export function createMeiliClient() {
   };
 }
 
-export type MeiliClient = ReturnType<typeof createMeiliClient>;
+export type BackgroundsSearchApi = ReturnType<
+  typeof createBackgroundsSearchApi
+>;
