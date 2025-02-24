@@ -23,8 +23,9 @@ type Props = {
 };
 
 export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [currentSelection, setCurrentSelection] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -33,7 +34,7 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
     const formData = new FormData(event.target as HTMLFormElement);
 
     try {
-      await addAssignmentAction(formData, cohortId);
+      await addAssignmentAction(formData, cohortId, selectedItems);
       onSuccess();
     } catch (error) {
       console.error("Failed to create assignment:", error);
@@ -42,6 +43,15 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
     }
   };
 
+  const handleAdd = () => {
+    if (currentSelection && !selectedItems.includes(currentSelection)) {
+      setSelectedItems([...selectedItems, currentSelection]);
+      setCurrentSelection("");
+    }
+  };
+  const handleRemove = (itemToRemove: string) => {
+    setSelectedItems(selectedItems.filter((item) => item !== itemToRemove));
+  };
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
@@ -68,42 +78,63 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
 
       <div>
         <Label htmlFor="categories">Category</Label>
-        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a Category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Cohorts</SelectLabel>
-              <SelectItem value="frontend" className="cursor-pointer">
-                Frontend
-              </SelectItem>
-              <SelectItem value="backend" className="cursor-pointer">
-                Backend
-              </SelectItem>
-              <SelectItem value="management" className="cursor-pointer">
-                Management
-              </SelectItem>
-              <SelectItem value="conversation" className="cursor-pointer">
-                Conversation
-              </SelectItem>
-              <SelectItem value="team collaboration" className="cursor-pointer">
-                Team collaboration
-              </SelectItem>
-              <SelectItem value="design" className="cursor-pointer">
-                Design
-              </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <input
+        <div className="flex">
+          <Select value={currentSelection} onValueChange={setCurrentSelection}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select a Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Cohorts</SelectLabel>
+                <SelectItem value="frontend" className="cursor-pointer">
+                  Frontend
+                </SelectItem>
+                <SelectItem value="backend" className="cursor-pointer">
+                  Backend
+                </SelectItem>
+                <SelectItem value="management" className="cursor-pointer">
+                  Management
+                </SelectItem>
+                <SelectItem value="conversation" className="cursor-pointer">
+                  Conversation
+                </SelectItem>
+                <SelectItem
+                  value="team collaboration"
+                  className="cursor-pointer"
+                >
+                  Team collaboration
+                </SelectItem>
+                <SelectItem value="design" className="cursor-pointer">
+                  Design
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          {/* <input
           type="hidden"
           id="categories"
           name="categories"
           value={selectedCategory}
-        />
+        /> */}
+          <Button type="button" onClick={handleAdd} className="ml-2">
+            <span>+</span>Add
+          </Button>
+        </div>
       </div>
-
+      <div className="space-y-2">
+        {selectedItems.map((item) => (
+          <div key={item} className="flex items-center gap-2">
+            <span className="text-xs">{item}</span>
+            <button
+              type="button"
+              onClick={() => handleRemove(item)}
+              className="text-red-500 hover:text-red-700"
+            >
+              ✕
+            </button>
+          </div>
+        ))}
+      </div>
       <div>
         <Label htmlFor="comment">Comment</Label>
         <Textarea
