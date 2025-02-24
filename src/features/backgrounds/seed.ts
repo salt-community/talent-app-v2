@@ -3,6 +3,8 @@ import { insecureBackgroundsService } from "./instance";
 import { skills } from "./seed-data";
 
 export async function backgroundsSeed(developerProfileIds: string[]) {
+  console.log("Seeding Backgrounds...");
+
   const backgrounds = developerProfileIds.map((developerProfileId) => {
     return {
       developerProfileId: developerProfileId,
@@ -78,5 +80,5 @@ export async function backgroundsSeed(developerProfileIds: string[]) {
     await insecureBackgroundsService.add(background);
   }
 
-  console.log("Done seeding Backgrounds...");
+  console.log("Done seeding Backgrounds!");
 }

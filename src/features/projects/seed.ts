@@ -1,8 +1,7 @@
-import { developerProfilesService } from "@/features";
 import { seedProjectService } from "./instance";
 
-export async function seedProjects() {
-  const developersProfiles = await developerProfilesService.getAll();
+export async function seedProjects(developersProfileIds: string[]) {
+  console.log("Starting to seed Projects...");
 
   const projects = [
     {
@@ -11,7 +10,7 @@ export async function seedProjects() {
         "KYC360 is a full-stack application designed to streamline the KYC (Know Your Customer) process for bank employees. This system ensures compliance with GDPR by enabling secure and efficient document collection directly from customers.",
       imageUrl: "byggmax.jpg",
       projectWebsite: "",
-      userId: developersProfiles[0].id,
+      userId: developersProfileIds[0],
     },
     {
       repository: "https://github.com/Infinite-Loopers2024/slow-chat-final",
@@ -19,7 +18,7 @@ export async function seedProjects() {
         "This project is a showcase of my skills, experience, and a little about myself.",
       imageUrl: "chat.png",
       projectWebsite: "",
-      userId: developersProfiles[1].id,
+      userId: developersProfileIds[1],
     },
   ];
 
@@ -28,7 +27,7 @@ export async function seedProjects() {
       await seedProjectService.add(project);
     }
 
-    console.log("Seeding of Projects complete!");
+    console.log("Done seeding Projects!");
   } catch (error) {
     console.log("Error seeding Projects", error);
   }

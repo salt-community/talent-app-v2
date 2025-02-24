@@ -7,6 +7,8 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
 };
 
 export const seedAssignments = async (cohortIds: string[]) => {
+  console.log("Seeding assignments...");
+
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",
     "Create a RESTful API with Node.js",
@@ -51,6 +53,8 @@ export const seedAssignments = async (cohortIds: string[]) => {
       console.error("Error while seeding assignments and scores:", error);
     }
   }
+
+  console.log("Done seeding assignments!");
 };
 
 function generateSlug(title: string) {

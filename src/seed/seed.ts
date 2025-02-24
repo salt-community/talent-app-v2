@@ -18,7 +18,7 @@ import {
   const developerProfileIds = await seedDeveloperProfiles(identities);
   await backgroundsSeed(developerProfileIds);
 
-  await seedProjects();
+  await seedProjects(developerProfileIds);
 
   console.log("Done seeding!");
 

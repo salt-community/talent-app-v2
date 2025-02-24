@@ -47,7 +47,7 @@ export async function seedCohorts(identities: IdentitySelect[]) {
     }
   }
 
-  console.log("Seeding cohorts complete!");
+  console.log("Done seeding cohorts!");
 
   return cohortIds;
 }
