@@ -16,6 +16,11 @@ export async function repopulateMeilisearchAction() {
   revalidatePath("/admin/meilisearch-configuration");
 }
 
+export async function ensureSearchIndexesAction() {
+  await adminService.ensureSearchIndexes();
+  revalidatePath("/admin/meilisearch-configuration");
+}
+
 export async function syncMeilisearchAction() {
   await adminService.syncSearch();
   revalidatePath("/admin/meilisearch-configuration");

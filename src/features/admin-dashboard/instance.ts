@@ -3,11 +3,10 @@ import {
   developerProfilesService,
   iamService,
   projectsService,
-  secureService,
 } from "@/features";
 import { createAdminService } from "./service";
 
-export const insecureAdminService = createAdminService(
+export const adminService = createAdminService(
   {
     delete: developerProfilesService.delete,
     updateStatus: developerProfilesService.updateStatus,
@@ -23,6 +22,7 @@ export const insecureAdminService = createAdminService(
     getSettings: backgroundsService.getMeilisearchSettings,
     updateSettings: backgroundsService.updateMeilisearchSettings,
     resetSettings: backgroundsService.resetMeilisearchSettings,
+    ensureSearchIndexes: backgroundsService.ensureSearchIndexes,
   },
   {
     updateRole: iamService.updateRole,
@@ -32,5 +32,3 @@ export const insecureAdminService = createAdminService(
   backgroundsService.deleteBackgroundById,
   projectsService.deleteProjectsByDeveloperProfileId
 );
-
-export const adminService = secureService("admins", insecureAdminService);

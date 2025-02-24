@@ -1,5 +1,4 @@
 import {
-  admins,
   assignmentPermissions,
   assignments,
   backgrounds,
@@ -31,7 +30,6 @@ export const rolesPermissions = {
     ...Object.values(developerProfiles),
     ...Object.values(assignments),
     ...Object.values(cohorts),
-    ...Object.values(admins),
   ]),
   developer: new Set([
     cohorts.getCohortIdByIdentityId,
@@ -66,8 +64,6 @@ export const rolesPermissions = {
     assignments.getAssignmentBySlug,
   ]),
   core: new Set([
-    admins.deleteUser,
-    admins.updateRole,
     backgrounds.getAllEducations,
     backgrounds.getAllLanguages,
     backgrounds.getAllSkills,

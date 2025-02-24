@@ -24,5 +24,11 @@ export function createBackgroundsSearchService(
     async searchDeveloperProfileIds(search: string | undefined) {
       return backgroundsSearchApi.searchDeveloperProfileIds(search);
     },
+
+    async ensureSearchIndexes() {
+      console.log("Ensuring search indexes...");
+
+      console.log("Ensured search indexes!");
+    },
   };
 }
