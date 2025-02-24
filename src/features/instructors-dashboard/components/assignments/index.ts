@@ -1,2 +1,2 @@
 export * from "./assignment";
-export * from "./assignments-dashboard";
+export * from "./assignments";
