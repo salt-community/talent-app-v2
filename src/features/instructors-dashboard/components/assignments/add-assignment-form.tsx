@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import {
   Select,
   SelectTrigger,
@@ -97,18 +98,21 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
             </SelectContent>
           </Select>
           <Button type="button" onClick={handleAdd} className="ml-2">
-            <span>+</span>Add
+            <Plus />
           </Button>
         </div>
       </div>
-      <div className="space-y-2">
+      <div className="flex">
         {selectedItems.map((item) => (
-          <div key={item} className="flex items-center gap-2">
+          <div
+            key={item}
+            className="flex flex-row justify-center items-center bg-gray-100 mx-1 px-2  py-1 rounded-md"
+          >
             <span className="text-xs">{item}</span>
             <button
+              className="ml-1 text-xs"
               type="button"
               onClick={() => handleRemove(item)}
-              className="text-red-500 hover:text-red-700"
             >
               ✕
             </button>
