@@ -1,6 +1,5 @@
 import {
   backgroundsService,
-  cohortsService,
   developerProfilesService,
   iamService,
   projectsService,
