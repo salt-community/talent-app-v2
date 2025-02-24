@@ -5,7 +5,7 @@ import {
   OutboxMessageSelect,
 } from "./types";
 import { BackgroundsSearchApi } from "./backgrounds-search";
-import { Settings, TaskStatus } from "meilisearch";
+import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
@@ -108,10 +108,6 @@ export function createBackgroundsService(
       }
     },
 
-    async searchDeveloperProfileIds(search: string | undefined) {
-      return backgroundsSearchApi.searchDeveloperProfileIds(search);
-    },
-
     async repopulateMeiliSearch() {
       await backgroundsSearchApi.deleteAllBackgrounds();
       const backgrounds = await repository.getAllBackgrounds();
@@ -127,15 +123,7 @@ export function createBackgroundsService(
     async doesMeilisearchNeedSync() {
       return (await repository.getAllOutboxMessage()).length > 0;
     },
-    async getMeilisearchSettings() {
-      return await backgroundsSearchApi.getSettings();
-    },
-    async updateMeilisearchSettings(settings: Settings) {
-      await backgroundsSearchApi.updateSettings(settings);
-    },
-    async resetMeilisearchSettings() {
-      await backgroundsSearchApi.resetSettings();
-    },
+
     async deleteBackgroundById(developerProfileId: string) {
       await repository.deleteBackgroundById(developerProfileId);
     },
