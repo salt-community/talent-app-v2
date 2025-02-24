@@ -1,29 +1,66 @@
-import MeiliSearch, { Settings } from "meilisearch";
+import MeiliSearch, { Index, Settings } from "meilisearch";
 import { BackgroundUpdate } from "../types";
 
-const BACKGROUNDS_UID = "backgrounds";
-const PRIMARY_KEY = "developerProfileId";
+type InitializeMeiliSearchIndexArgs = {
+  meiliSearch: MeiliSearch;
+  indexUid: string;
+  primaryKey: string;
+  displayedAttributes: string[];
+  searchableAttributes: string[];
+};
+
+async function initializeMeiliSearchIndex({
+  meiliSearch,
+  indexUid,
+  primaryKey,
+  displayedAttributes,
+  searchableAttributes,
+}: InitializeMeiliSearchIndexArgs) {
+  const index = meiliSearch.index(indexUid);
+
+  if (!index) {
+    console.log(`Index ${indexUid} not found, creating it...`);
+
+    await meiliSearch.createIndex(indexUid, {
+      primaryKey,
+    });
+
+    console.log(`Index ${indexUid} created!`);
+  }
+
+  // TODO: Move into !index block.
+  await index.updateSettings({
+    displayedAttributes,
+    searchableAttributes,
+  });
+
+  return index;
+}
 
 export function createBackgroundsSearchApi() {
   let meiliSearch: MeiliSearch | null = null;
+  // TODO: Fix the unknown type.
+  let backgroundsIndex: Index<Record<string, unknown>> | null = null;
 
-  async function initializeMeiliSearch() {
+  async function ensureMeiliSearch() {
     if (!meiliSearch) {
       meiliSearch = new MeiliSearch({
         host: process.env.MEILI_SEARCH_URL!,
         apiKey: process.env.MEILI_MASTER_KEY,
       });
+    }
 
-      const index = meiliSearch.index(BACKGROUNDS_UID);
+    return meiliSearch;
+  }
 
-      if (!index) {
-        console.error("Index does not exist. Creating index now...");
-        await meiliSearch.createIndex(BACKGROUNDS_UID, {
-          primaryKey: PRIMARY_KEY,
-        });
-      }
+  async function ensureBackgroundsIndex() {
+    const meiliSearch = await ensureMeiliSearch();
 
-      await index.updateSettings({
+    if (!backgroundsIndex) {
+      backgroundsIndex = await initializeMeiliSearchIndex({
+        meiliSearch,
+        indexUid: "backgrounds",
+        primaryKey: "developerProfileId",
         displayedAttributes: ["developerProfileId"],
         searchableAttributes: [
           "skills",
@@ -35,44 +72,14 @@ export function createBackgroundsSearchApi() {
         ],
       });
     }
-    return meiliSearch;
+
+    return backgroundsIndex;
   }
 
   return {
-    async searchDeveloperProfileIds(search: string | undefined) {
-      const meili = await initializeMeiliSearch();
-      const index = meili.index(BACKGROUNDS_UID);
-      const response = await index.search(search);
-      return response.hits.map((hit) => hit.developerProfileId as string);
-    },
-
-    async upsertBackground(background: BackgroundUpdate[]) {
-      const meili = await initializeMeiliSearch();
-      const index = meili.index(BACKGROUNDS_UID);
-      const response = await index.addDocuments(background, {
-        primaryKey: PRIMARY_KEY,
-      });
-      return response.status;
-    },
-
-    async deleteBackground(developerProfileId: string) {
-      const meili = await initializeMeiliSearch();
-      const index = meili.index(BACKGROUNDS_UID);
-      const response = await index.deleteDocument(developerProfileId);
-      console.log("works", response);
-      return response.status;
-    },
-
-    async deleteAllBackgrounds() {
-      const meiliSearch = await initializeMeiliSearch();
-      const index = meiliSearch.index(BACKGROUNDS_UID);
-      await index.delete();
-      await meiliSearch.createIndex(BACKGROUNDS_UID);
-    },
-
     async isHealthOk() {
       try {
-        const meili = await initializeMeiliSearch();
+        const meili = await ensureMeiliSearch();
         const health = await meili.health();
         return health.status === "available";
       } catch {
@@ -80,24 +87,44 @@ export function createBackgroundsSearchApi() {
       }
     },
 
+    async searchDeveloperProfileIds(search: string | undefined) {
+      const index = await ensureBackgroundsIndex();
+      const response = await index.search(search);
+      return response.hits.map((hit) => hit.developerProfileId as string);
+    },
+
+    async upsertBackground(background: BackgroundUpdate[]) {
+      const index = await ensureBackgroundsIndex();
+      const response = await index.addDocuments(background);
+      return response.status;
+    },
+
+    async deleteBackground(developerProfileId: string) {
+      const index = await ensureBackgroundsIndex();
+      const response = await index.deleteDocument(developerProfileId);
+      return response.status;
+    },
+
+    async deleteAllBackgrounds() {
+      const index = await ensureBackgroundsIndex();
+      await index.delete();
+    },
+
     async getSettings() {
-      const meili = await initializeMeiliSearch();
-      const index = meili.index(BACKGROUNDS_UID);
+      const index = await ensureBackgroundsIndex();
       const settings = await index.getSettings();
       return settings;
     },
 
     async updateSettings(settings: Settings) {
-      const meili = await initializeMeiliSearch();
-      const index = meili.index(BACKGROUNDS_UID);
+      const index = await ensureBackgroundsIndex();
       const task = await index.updateSettings(settings);
       const updateSettingsTask = await index.waitForTask(task.taskUid);
       return updateSettingsTask.status;
     },
 
     async resetSettings() {
-      const meili = await initializeMeiliSearch();
-      const index = meili.index(BACKGROUNDS_UID);
+      const index = await ensureBackgroundsIndex();
       const task = await index.resetSettings();
       const resetSettingsTask = await index.waitForTask(task.taskUid);
       return resetSettingsTask.status;
