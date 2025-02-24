@@ -72,8 +72,8 @@ export function createAssignmentsService(db: Db) {
     }) {
       return await repo.updateAssignment(id, rawData);
     },
-    async getAssignmentsBySlug(slug: string) {
-      return await repo.getAssignmentsBySlug(slug);
+    async getAssignmentBySlug(slug: string) {
+      return await repo.getAssignmentBySlug(slug);
     },
   };
 }

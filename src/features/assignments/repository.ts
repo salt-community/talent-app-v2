@@ -93,7 +93,7 @@ export function createAssignmentsRepository(db: Db) {
         .from(assignments)
         .where(eq(assignments.cohortId, cohortId));
     },
-    async getAssignmentsBySlug(slug: string) {
+    async getAssignmentBySlug(slug: string) {
       return await db
         .select()
         .from(assignments)

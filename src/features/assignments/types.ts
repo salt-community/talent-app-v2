@@ -7,6 +7,7 @@ export type GetAssignmentsByCohortId =
 export type deleteAssignmentScoreById =
   AssignmentsService["deleteAssignmentScoreById"];
 export type DeleteAssignmentById = AssignmentsService["deleteAssignment"];
+export type GetAssignmentBySlug = AssignmentsService["getAssignmentBySlug"];
 
 export type Assignment = {
   id: string;
