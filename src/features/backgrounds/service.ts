@@ -6,12 +6,16 @@ import {
 } from "./types";
 import { BackgroundsSearchApi } from "./backgrounds-search";
 import { Settings, TaskStatus } from "meilisearch";
+import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
   repository: Repository,
   backgroundsSearchApi: BackgroundsSearchApi
 ) {
+  const backgroundsSearchService =
+    createBackgroundsSearchService(backgroundsSearchApi);
+
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;
     switch (outboxMessage.operation) {
@@ -41,6 +45,7 @@ export function createBackgroundsService(
   }
 
   return {
+    ...backgroundsSearchService,
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
       const [background] =
         await repository.getBackgroundById(developerProfileId);
@@ -104,18 +109,9 @@ export function createBackgroundsService(
     },
 
     async searchDeveloperProfileIds(search: string | undefined) {
-      const cleanSearch = search?.trim();
-      const [searchedDeveloperProfileIds] = await Promise.all([
-        !cleanSearch || cleanSearch === ""
-          ? await repository.getAllDeveloperProfileIds()
-          : await backgroundsSearchApi.searchDeveloperProfileIds(search),
-      ]);
+      return backgroundsSearchApi.searchDeveloperProfileIds(search);
+    },
 
-      return searchedDeveloperProfileIds;
-    },
-    async isSearchHealthOk() {
-      return await backgroundsSearchApi.isHealthOk();
-    },
     async repopulateMeiliSearch() {
       await backgroundsSearchApi.deleteAllBackgrounds();
       const backgrounds = await repository.getAllBackgrounds();

@@ -89,8 +89,22 @@ export function createBackgroundsSearchApi() {
 
     async searchDeveloperProfileIds(search: string | undefined) {
       const index = await ensureBackgroundsIndex();
-      const response = await index.search(search);
-      return response.hits.map((hit) => hit.developerProfileId as string);
+
+      const isSearchEmpty = search === undefined || !search.trim();
+
+      let documents: Record<string, unknown>[] | null = null;
+
+      if (isSearchEmpty) {
+        const { results } = await index.getDocuments();
+        documents = results;
+      } else {
+        const { hits } = await index.search(search);
+        documents = hits;
+      }
+
+      return documents.map(
+        ({ developerProfileId }) => developerProfileId as string
+      );
     },
 
     async upsertBackground(background: BackgroundUpdate[]) {
