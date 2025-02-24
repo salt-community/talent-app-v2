@@ -2,7 +2,6 @@ import { Settings } from "meilisearch";
 import {
   DeveloperProfileClient,
   IamClient,
-  Identity,
   SearchConfigurationClient,
 } from "./types";
 
