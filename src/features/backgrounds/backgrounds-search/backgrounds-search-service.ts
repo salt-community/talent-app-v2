@@ -1,8 +1,8 @@
 import { Settings } from "meilisearch";
-import { BackgroundsSearchApi } from "./backgrounds-search-api";
+import { SearchApi } from "./search-api";
 
 export function createBackgroundsSearchService(
-  backgroundsSearchApi: BackgroundsSearchApi
+  backgroundsSearchApi: SearchApi
 ) {
   return {
     async isSearchHealthOk() {
@@ -25,9 +25,9 @@ export function createBackgroundsSearchService(
       return backgroundsSearchApi.searchDeveloperProfileIds(search);
     },
 
-    async ensureSearchIndexes() {
+    async ensureSearchIndex() {
       console.log("Ensuring search indexes...");
-
+      await backgroundsSearchApi.ensureIndex();
       console.log("Ensured search indexes!");
     },
   };

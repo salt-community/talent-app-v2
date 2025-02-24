@@ -32,8 +32,8 @@ export function createAdminService(
     async repopulateSearch() {
       await searchConfigurationClient.repopulate();
     },
-    async ensureSearchIndexes() {
-      await searchConfigurationClient.ensureSearchIndexes();
+    async ensureSearchIndex() {
+      await searchConfigurationClient.ensureSearchIndex();
     },
     async syncSearch() {
       await searchConfigurationClient.sync();

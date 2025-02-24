@@ -1,1 +1,1 @@
-export * from "./backgrounds-search-api";
+export * from "./search-api";

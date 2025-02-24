@@ -2,7 +2,7 @@ import { Separator } from "@/components";
 import Form from "next/form";
 import { MeiliPopulation } from "./search-population";
 import { LoadingButton } from "./loading-button";
-import { ensureSearchIndexesAction } from "../../action";
+import { ensureSearchIndexAction } from "../../action";
 export async function MeiliDashboard() {
   return (
     <div>
@@ -10,7 +10,7 @@ export async function MeiliDashboard() {
         <div className="flex flex-col gap-8">
           <MeiliPopulation />
           <Separator />
-          <Form action={ensureSearchIndexesAction}>
+          <Form action={ensureSearchIndexAction}>
             <LoadingButton
               text="Ensure Indexes"
               loadingText="Ensuring Indexes..."

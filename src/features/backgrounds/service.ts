@@ -4,14 +4,14 @@ import {
   BackgroundUpdate,
   OutboxMessageSelect,
 } from "./types";
-import { BackgroundsSearchApi } from "./backgrounds-search";
+import { SearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
   repository: Repository,
-  backgroundsSearchApi: BackgroundsSearchApi
+  backgroundsSearchApi: SearchApi
 ) {
   const backgroundsSearchService =
     createBackgroundsSearchService(backgroundsSearchApi);
@@ -27,13 +27,13 @@ export function createBackgroundsService(
           succeeded = true;
           break;
         }
-        const upsertStatus = await backgroundsSearchApi.upsertBackgrounds([
+        const upsertStatus = await backgroundsSearchApi.upsertDocuments([
           background[0],
         ]);
         succeeded = OK_STATUSES.includes(upsertStatus);
         break;
       case "delete":
-        const deleteStatus = await backgroundsSearchApi.deleteBackground(
+        const deleteStatus = await backgroundsSearchApi.deleteDocument(
           outboxMessage.developerProfileId
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
@@ -91,7 +91,7 @@ export function createBackgroundsService(
       const { outboxMessageId, backgroundId } =
         await repository.add(background);
 
-      const status = await backgroundsSearchApi.upsertBackgrounds([
+      const status = await backgroundsSearchApi.upsertDocuments([
         { id: backgroundId, ...background },
       ]);
       if (OK_STATUSES.includes(status)) {
@@ -102,18 +102,19 @@ export function createBackgroundsService(
     async update(background: BackgroundUpdate) {
       const { outboxMessageId } = await repository.update(background);
 
-      const status = await backgroundsSearchApi.upsertBackgrounds([background]);
+      const status = await backgroundsSearchApi.upsertDocuments([background]);
       if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
       }
     },
 
     async repopulateMeiliSearch() {
-      await backgroundsSearchApi.deleteAllBackgrounds();
+      await backgroundsSearchApi.deleteIndex();
+      await backgroundsSearchApi.ensureIndex();
 
       const backgrounds = await repository.getAllBackgrounds();
 
-      await backgroundsSearchApi.upsertBackgrounds(backgrounds);
+      await backgroundsSearchApi.upsertDocuments(backgrounds);
     },
     async syncMeilisearch() {
       const outboxMessages = await repository.getAllOutboxMessage();

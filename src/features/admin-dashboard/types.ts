@@ -11,7 +11,7 @@ export type SearchConfigurationClient = {
   getSettings: BackgroundsService["getMeilisearchSettings"];
   updateSettings: BackgroundsService["updateMeilisearchSettings"];
   resetSettings: BackgroundsService["resetMeilisearchSettings"];
-  ensureSearchIndexes: BackgroundsService["ensureSearchIndexes"];
+  ensureSearchIndex: BackgroundsService["ensureSearchIndex"];
 };
 type iamService = ReturnType<typeof createService>;
 export type IamService = {

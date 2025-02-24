@@ -22,7 +22,7 @@ export const adminService = createAdminService(
     getSettings: backgroundsService.getMeilisearchSettings,
     updateSettings: backgroundsService.updateMeilisearchSettings,
     resetSettings: backgroundsService.resetMeilisearchSettings,
-    ensureSearchIndexes: backgroundsService.ensureSearchIndexes,
+    ensureSearchIndex: backgroundsService.ensureSearchIndex,
   },
   {
     updateRole: iamService.updateRole,

@@ -1,12 +1,24 @@
 import { createRepository } from "./repository";
 import { createBackgroundsService } from "./service";
 import { secureService } from "@/features";
-import { createBackgroundsSearchApi } from "./backgrounds-search";
+import { createSearchApi } from "./backgrounds-search";
 import { db } from "@/db";
 
 export const insecureBackgroundsService = createBackgroundsService(
   createRepository(db),
-  createBackgroundsSearchApi()
+  createSearchApi({
+    indexUid: "backgrounds",
+    primaryKey: "developerProfileId",
+    displayedAttributes: ["developerProfileId"],
+    searchableAttributes: [
+      "skills",
+      "educations",
+      "languages",
+      "name",
+      "title",
+      "bio",
+    ],
+  })
 );
 
 export const backgroundsService = secureService(
