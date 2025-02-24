@@ -20,11 +20,3 @@ export type PagePermissionsSchema<
 > = {
   [K in keyof TPermissions]: `${TPageName}.${K extends string ? K : never}`;
 };
-
-export type iamService = ReturnType<typeof createService>;
-
-export type IamClient = {
-  updateRole: iamService["updateRole"];
-  getAllIdentities: iamService["getAllIdentities"];
-  deleteIdentity: iamService["deleteIdentity"];
-};

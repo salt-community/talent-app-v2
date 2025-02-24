@@ -1,4 +1,5 @@
 import { BackgroundsService } from "../backgrounds/types";
+import { iamService } from "../iam/types";
 import { createAdminService } from "./service";
 
 export type SearchConfigurationClient = {
@@ -9,6 +10,12 @@ export type SearchConfigurationClient = {
   getSettings: BackgroundsService["getMeilisearchSettings"];
   updateSettings: BackgroundsService["updateMeilisearchSettings"];
   resetSettings: BackgroundsService["resetMeilisearchSettings"];
+};
+
+export type IamClient = {
+  updateRole: iamService["updateRole"];
+  getAllIdentities: iamService["getAllIdentities"];
+  deleteIdentity: iamService["deleteIdentity"];
 };
 
 export type Synonym = [string, string[]];

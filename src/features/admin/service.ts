@@ -1,7 +1,6 @@
 import { DeleteDeveloperProfile, UpdateStatus } from "@/features";
 import { Settings } from "meilisearch";
-import { Identity, SearchConfigurationClient } from "./types";
-import { IamClient } from "../iam/permissions";
+import { IamClient, Identity, SearchConfigurationClient } from "./types";
 
 export function createAdminService(
   deleteDeveloperProfile: DeleteDeveloperProfile,
