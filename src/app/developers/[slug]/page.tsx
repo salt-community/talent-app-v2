@@ -4,7 +4,6 @@ import {
   developerProfilesService,
   iamService,
   Projects,
-  projectsService,
   ScoreBoard,
 } from "@/features";
 import { notFound } from "next/navigation";
