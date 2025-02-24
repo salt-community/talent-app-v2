@@ -1,7 +1,7 @@
 import { Db } from "@/db";
 import { createRepository } from "./repository";
 import { Api } from "./api";
-import { DeveloperProfile, ProjectData, UpdatedProject } from "./types";
+import { ProjectData, UpdatedProject } from "./types";
 import { extractRepositoryDetails } from "./logic";
 import { ViewPermission } from "../iam/permissions";
 import { ProjectInsert } from "./schema";
@@ -9,15 +9,11 @@ import { ProjectInsert } from "./schema";
 export function createService(
   db: Db,
   api: Api,
-  getAllDeveloperProfiles: DeveloperProfile,
   hasCurrentUserAccess: (id: ViewPermission) => Promise<boolean>
 ) {
   const reps = createRepository(db);
 
   return {
-    async getAllDevelopers() {
-      return await getAllDeveloperProfiles();
-    },
     async getAll(developerProfileId: string) {
       const projects = await reps.getAll(developerProfileId);
       const sortedProjects = projects.sort((a, b) =>

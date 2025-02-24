@@ -9,7 +9,6 @@ export const projects: PermissionsSchema<"projects", ProjectsService> = {
   deleteProjectsByDeveloperProfileId:
     "projects.deleteProjectsByDeveloperProfileId",
   getAll: "projects.getAll",
-  getAllDevelopers: "projects.getAllDevelopers",
   updateDescription: "projects.updateDescription",
   updateProjectData: "projects.updateProjectData",
 };

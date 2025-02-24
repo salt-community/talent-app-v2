@@ -1,7 +1,8 @@
+import { developerProfilesService } from "@/features";
 import { seedProjectService } from "./instance";
 
 export async function seedProjects() {
-  const developersProfiles = await seedProjectService.getAllDevelopers();
+  const developersProfiles = await developerProfilesService.getAll();
 
   const projects = [
     {

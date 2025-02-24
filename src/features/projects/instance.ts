@@ -11,7 +11,6 @@ import { createApi } from "./api";
 export const insecureProjectService = createService(
   db,
   createApi(),
-  developerProfilesService.getAll,
   iamService.hasCurrentUserAccess
 );
 
@@ -28,7 +27,6 @@ export const seedProjectService = createService(
     getTotalOfCommits: async () => "NA",
     testPagePerformance: async () => "NA",
   },
-  insecureDeveloperProfilesService.getAll,
   async function checkUserAccess(): Promise<boolean> {
     return true;
   }

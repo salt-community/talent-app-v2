@@ -1,6 +1,7 @@
 import { DeveloperCard } from "@/components/ui/developer-card";
 import {
   BackgroundCard,
+  developerProfilesService,
   iamService,
   Projects,
   projectsService,
@@ -18,7 +19,7 @@ type Params = {
 export default async function DeveloperDetailPage({ params }: Params) {
   const { slug } = await params;
 
-  const developerProfiles = await projectsService.getAllDevelopers();
+  const developerProfiles = await developerProfilesService.getAll();
   const developerProfile = developerProfiles.find(
     (profile) => profile.slug === slug
   );
