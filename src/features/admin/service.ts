@@ -1,14 +1,13 @@
 import { DeleteDeveloperProfile, UpdateStatus } from "@/features";
 import { Settings } from "meilisearch";
 import { Identity, SearchConfigurationClient } from "./types";
+import { IamClient } from "../iam/permissions";
 
 export function createAdminService(
   deleteDeveloperProfile: DeleteDeveloperProfile,
   updateStatus: UpdateStatus,
   searchConfigurationClient: SearchConfigurationClient,
-  updateRole: (id: string, newRole: string) => Promise<void>,
-  getAllIdentities: () => Promise<Identity[]>,
-  deleteIdentity: (id: string) => Promise<void>,
+  iamClient: IamClient,
   deleteDeveloperProfileById: (id: string) => Promise<void>,
   deleteBackgroundById: (id: string) => Promise<void>,
   deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>,
@@ -16,7 +15,7 @@ export function createAdminService(
 ) {
   return {
     async getAllIdentities() {
-      return getAllIdentities();
+      return iamClient.getAllIdentities();
     },
     async deleteDeveloperProfile(id: string) {
       await deleteDeveloperProfile(id);
@@ -44,7 +43,7 @@ export function createAdminService(
       await searchConfigurationClient.updateSettings(settings);
     },
     async updateRole(args: { id: string; newRole: string }) {
-      await updateRole(args.id, args.newRole);
+      await iamClient.updateRole(args.id, args.newRole);
     },
     async deleteUser(identityId: string) {
       // await deleteCohortIdentityById(identityId);
@@ -54,7 +53,7 @@ export function createAdminService(
         await deleteProjectsByDeveloperProfileId(developerProfile.id);
       }
       await deleteDeveloperProfileById(identityId);
-      await deleteIdentity(identityId);
+      await iamClient.deleteIdentity(identityId);
     },
   };
 }
