@@ -1,6 +1,6 @@
 import { BackgroundsService } from "../backgrounds/types";
 import { DevelopersService } from "../developer-profiles";
-import { iamService } from "../iam/types";
+import { createService } from "../iam/service";
 import { createAdminService } from "./service";
 
 export type SearchConfigurationClient = {
@@ -12,7 +12,7 @@ export type SearchConfigurationClient = {
   updateSettings: BackgroundsService["updateMeilisearchSettings"];
   resetSettings: BackgroundsService["resetMeilisearchSettings"];
 };
-
+type iamService = ReturnType<typeof createService>;
 export type IamClient = {
   updateRole: iamService["updateRole"];
   getAllIdentities: iamService["getAllIdentities"];

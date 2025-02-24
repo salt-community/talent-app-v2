@@ -1,7 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
 import { createService } from "./service";
 
-export type iamService = ReturnType<typeof createService>;
+type iamService = ReturnType<typeof createService>;
 
 export type CheckAccess = iamService["checkAccess"];
 export type ControlUser = iamService["controlUser"];
