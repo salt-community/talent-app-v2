@@ -8,8 +8,13 @@ import {
 import { createAdminService } from "./service";
 
 export const insecureAdminService = createAdminService(
-  developerProfilesService.delete,
-  developerProfilesService.updateStatus,
+  {
+    delete: developerProfilesService.delete,
+    updateStatus: developerProfilesService.updateStatus,
+    deleteDeveloperProfileByIdentityId:
+      developerProfilesService.deleteByIdentityId,
+    getDeveloperProfileIdById: developerProfilesService.getAllById,
+  },
   {
     isHealthOk: backgroundsService.isSearchHealthOk,
     repopulate: backgroundsService.repopulateMeiliSearch,
@@ -24,10 +29,8 @@ export const insecureAdminService = createAdminService(
     getAllIdentities: iamService.getAllIdentities,
     deleteIdentity: iamService.deleteIdentity,
   },
-  developerProfilesService.deleteByIdentityId,
   backgroundsService.deleteBackgroundById,
-  projectsService.deleteProjectsByDeveloperProfileId,
-  developerProfilesService.getAllById
+  projectsService.deleteProjectsByDeveloperProfileId
 );
 
 export const adminService = secureService("admins", insecureAdminService);

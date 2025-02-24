@@ -1,26 +1,31 @@
 import { DeleteDeveloperProfile, UpdateStatus } from "@/features";
 import { Settings } from "meilisearch";
-import { IamClient, Identity, SearchConfigurationClient } from "./types";
+import {
+  DeveloperProfileClient,
+  IamClient,
+  Identity,
+  SearchConfigurationClient,
+} from "./types";
 
 export function createAdminService(
-  deleteDeveloperProfile: DeleteDeveloperProfile,
-  updateStatus: UpdateStatus,
+  developerProfileClient: DeveloperProfileClient,
   searchConfigurationClient: SearchConfigurationClient,
   iamClient: IamClient,
-  deleteDeveloperProfileById: (id: string) => Promise<void>,
   deleteBackgroundById: (id: string) => Promise<void>,
-  deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>,
-  getDeveloperProfileIdById: (id: string) => Promise<{ id: string }[]>
+  deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>
 ) {
   return {
     async getAllIdentities() {
       return iamClient.getAllIdentities();
     },
     async deleteDeveloperProfile(id: string) {
-      await deleteDeveloperProfile(id);
+      await developerProfileClient.delete(id);
     },
     async updateStatus(args: { id: string; status: string }) {
-      await updateStatus({ id: args.id, status: args.status });
+      await developerProfileClient.updateStatus({
+        id: args.id,
+        status: args.status,
+      });
     },
     //unused right now
     // async isSearchHealthOk() {
@@ -46,12 +51,15 @@ export function createAdminService(
     },
     async deleteUser(identityId: string) {
       // await deleteCohortIdentityById(identityId);
-      const developerProfiles = await getDeveloperProfileIdById(identityId);
+      const developerProfiles =
+        await developerProfileClient.getDeveloperProfileIdById(identityId);
       for (const developerProfile of developerProfiles) {
         await deleteBackgroundById(developerProfile.id);
         await deleteProjectsByDeveloperProfileId(developerProfile.id);
       }
-      await deleteDeveloperProfileById(identityId);
+      await developerProfileClient.deleteDeveloperProfileByIdentityId(
+        identityId
+      );
       await iamClient.deleteIdentity(identityId);
     },
   };

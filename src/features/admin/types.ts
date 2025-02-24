@@ -1,4 +1,5 @@
 import { BackgroundsService } from "../backgrounds/types";
+import { DevelopersService } from "../developer-profiles";
 import { iamService } from "../iam/types";
 import { createAdminService } from "./service";
 
@@ -16,6 +17,13 @@ export type IamClient = {
   updateRole: iamService["updateRole"];
   getAllIdentities: iamService["getAllIdentities"];
   deleteIdentity: iamService["deleteIdentity"];
+};
+
+export type DeveloperProfileClient = {
+  delete: DevelopersService["delete"];
+  updateStatus: DevelopersService["updateStatus"];
+  deleteDeveloperProfileByIdentityId: DevelopersService["deleteByIdentityId"];
+  getDeveloperProfileIdById: DevelopersService["getAllById"];
 };
 
 export type Synonym = [string, string[]];
