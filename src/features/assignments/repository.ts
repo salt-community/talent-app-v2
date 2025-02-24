@@ -93,11 +93,13 @@ export function createAssignmentsRepository(db: Db) {
         .from(assignments)
         .where(eq(assignments.cohortId, cohortId));
     },
-    async getAssignmentBySlug(slug: string) {
-      return await db
+    async getAssignmentsBySlug(slug: string) {
+      const [assignment] = await db
         .select()
         .from(assignments)
         .where(eq(assignments.slug, slug));
+
+      return assignment;
     },
   };
 }

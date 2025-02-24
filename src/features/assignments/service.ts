@@ -73,7 +73,7 @@ export function createAssignmentsService(db: Db) {
       return await repo.updateAssignment(id, rawData);
     },
     async getAssignmentBySlug(slug: string) {
-      return await repo.getAssignmentBySlug(slug);
+      return await repo.getAssignmentsBySlug(slug);
     },
   };
 }

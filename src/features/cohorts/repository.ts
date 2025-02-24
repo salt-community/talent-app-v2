@@ -74,6 +74,7 @@ export function createCohortsRepository(db: Db) {
         .where(eq(cohorts.name, name));
       return cohort;
     },
+
     async addDevelopersToCohort(args: {
       cohortId: string;
       identityIds: string[];
