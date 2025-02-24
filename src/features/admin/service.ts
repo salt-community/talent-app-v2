@@ -1,4 +1,3 @@
-import { DeleteDeveloperProfile, UpdateStatus } from "@/features";
 import { Settings } from "meilisearch";
 import {
   DeveloperProfileClient,

@@ -1,5 +1,4 @@
 import { rolesPermissions, rolesViewPermissions } from "../roles";
-import { createService } from "../service";
 
 export type Role = keyof typeof rolesPermissions;
 export type PermissionSets = (typeof rolesPermissions)[Role];
