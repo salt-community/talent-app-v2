@@ -23,7 +23,7 @@ export const rolesPermissions = {
     developerProfiles.getDeveloperProfileByIdentityId,
     developerProfiles.getDeveloperById,
     assignments.getAssignmentsByCohortId,
-    assignments.getAssignmentsBySlug,
+    assignments.getAssignmentBySlug,
   ]),
   admin: new Set([
     ...Object.values(backgrounds),
@@ -63,7 +63,7 @@ export const rolesPermissions = {
     assignments.getAssignmentsByCohortId,
     assignments.getAverageScoresByIdentityId,
     assignments.getAllAverageScoresByIdentityId,
-    assignments.getAssignmentsBySlug,
+    assignments.getAssignmentBySlug,
   ]),
   core: new Set([
     admins.deleteUser,
@@ -96,7 +96,7 @@ export const rolesPermissions = {
     assignments.deleteAssignmentScoreById,
     assignments.getAverageScoresByIdentityId,
     assignments.getAllAverageScoresByIdentityId,
-    assignments.getAssignmentsBySlug,
+    assignments.getAssignmentBySlug,
     cohorts.getAllUnassignedDevelopers,
     cohorts.addDeveloperToCohort,
     cohorts.deleteCohortIdentity,
