@@ -12,5 +12,6 @@ export const instructorService = createInstructorService(
   assignmentsService.getAssignmentsByCohortId,
   assignmentsService.createAssignment,
   assignmentsService.deleteAssignment,
+  assignmentsService.getAssignmentBySlug,
   iamService.getAllIdentities
 );

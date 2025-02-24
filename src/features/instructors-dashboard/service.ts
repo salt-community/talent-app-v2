@@ -8,6 +8,7 @@ import {
   deleteCohortIdentity,
   GetAllCohorts,
   getAllIdentities,
+  GetAssignmentBySlug,
   GetAssignmentsByCohortId,
   GetCohortById,
   GetCohortStudents,
@@ -25,6 +26,7 @@ export function createInstructorService(
   getAssignmentsByCohortId: GetAssignmentsByCohortId,
   addAssignment: CreateAssignment,
   deleteAssignmentById: DeleteAssignmentById,
+  getAssignmentBySlug: GetAssignmentBySlug,
   getAllIdentities: getAllIdentities
 ) {
   return {
@@ -63,6 +65,9 @@ export function createInstructorService(
     },
     async getAllIdentities() {
       return await getAllIdentities();
+    },
+    async getAssignmentBySlug(slug: string) {
+      return await getAssignmentBySlug(slug);
     },
   };
 }
