@@ -8,8 +8,7 @@ const developerProfilesService = getDeveloperProfilesService();
 
 export const insecureBackgroundsService = createBackgroundsService(
   createRepository(db),
-  createMeiliClient(),
-  developerProfilesService.getPublishedOrHighlightedDeveloperProfileIds
+  createMeiliClient()
 );
 
 export const backgroundsService = secureService(

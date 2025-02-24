@@ -10,8 +10,7 @@ import { Settings, TaskStatus } from "meilisearch";
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
   repository: Repository,
-  meiliClient: MeiliClient,
-  getPublishedOrHighlightedDeveloperProfileIds: () => Promise<string[]>
+  meiliClient: MeiliClient
 ) {
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;
@@ -106,21 +105,13 @@ export function createBackgroundsService(
 
     async searchDeveloperProfileIds(search: string | undefined) {
       const cleanSearch = search?.trim();
-      const [
-        searchedDeveloperProfileIds,
-        publishedOrHighlightedDeveloperProfileIds,
-      ] = await Promise.all([
+      const [searchedDeveloperProfileIds] = await Promise.all([
         !cleanSearch || cleanSearch === ""
           ? await repository.getAllDeveloperProfileIds()
           : await meiliClient.searchDeveloperProfileIds(search),
-        await getPublishedOrHighlightedDeveloperProfileIds(),
       ]);
 
-      const filteredDeveloperProfileIds = searchedDeveloperProfileIds.filter(
-        (developerProfileId) =>
-          publishedOrHighlightedDeveloperProfileIds.includes(developerProfileId)
-      );
-      return filteredDeveloperProfileIds;
+      return searchedDeveloperProfileIds;
     },
     async isSearchHealthOk() {
       return await meiliClient.isHealthOk();
