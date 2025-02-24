@@ -7,7 +7,7 @@ import {
   DeleteCohortAndCohortIdentity,
   deleteCohortIdentity,
   GetAllCohorts,
-  GetAllDeveloperProfiles,
+  getAllIdentities,
   GetAssignmentsByCohortId,
   GetCohortById,
   GetCohortStudents,
@@ -18,14 +18,14 @@ export function createInstructorService(
   getAllCohorts: GetAllCohorts,
   getCohortById: GetCohortById,
   addCohort: AddCohort,
-  getAssignmentsByCohortId: GetAssignmentsByCohortId,
-  addAssignment: CreateAssignment,
-  getCohortStudentsByCohortId: GetCohortStudents,
-  getAllDevelopers: GetAllDeveloperProfiles,
   addDevelopersToCohort: AddDevelopersToCohort,
   deleteCohortIdentity: deleteCohortIdentity,
   deleteCohortAndCohortIdentity: DeleteCohortAndCohortIdentity,
-  deleteAssignmentById: DeleteAssignmentById
+  getCohortStudentsByCohortId: GetCohortStudents,
+  getAssignmentsByCohortId: GetAssignmentsByCohortId,
+  addAssignment: CreateAssignment,
+  deleteAssignmentById: DeleteAssignmentById,
+  getAllIdentities: getAllIdentities
 ) {
   return {
     async getAllCohorts() {
@@ -46,9 +46,6 @@ export function createInstructorService(
     async getCohortStudentsByCohortId(cohortId: string) {
       return await getCohortStudentsByCohortId(cohortId);
     },
-    async getAllDevelopers() {
-      return await getAllDevelopers();
-    },
     async addIdentitiesToCohort(args: {
       cohortId: string;
       identityIds: string[];
@@ -63,6 +60,9 @@ export function createInstructorService(
     },
     async deleteAssignmentById(assignmentId: string) {
       return await deleteAssignmentById(assignmentId);
+    },
+    async getAllIdentities() {
+      return await getAllIdentities();
     },
   };
 }

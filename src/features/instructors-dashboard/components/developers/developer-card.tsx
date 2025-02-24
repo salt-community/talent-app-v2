@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Developer } from "../../types";
 import { Separator } from "@/components";
 import { DeleteDeveloperButton } from "./delete-developer-button";
 
-export default function StudentCard({ developer }: { developer: Developer }) {
+export default function StudentCard({ developer }: { developer: Developer[] }) {
   return (
     <>
       <Separator />
@@ -34,17 +33,10 @@ export default function StudentCard({ developer }: { developer: Developer }) {
                 </Avatar>
                 <div className="flex flex-col">
                   {dev.name}
-                  <div className="flex items-center space-x-2 text-muted-foreground text-sm">
-                    <Link
-                      href={`/developers/${dev.slug}`}
-                      className="text-foreground font-medium hover:underline hover:underline-offset-4 hover:text-blue-700"
-                    >
-                      <span>@{dev.slug || dev.name.toLowerCase()}</span>
-                    </Link>
-                  </div>
+                  <div className="flex items-center space-x-2 text-muted-foreground text-sm"></div>
                 </div>
               </div>
-              <DeleteDeveloperButton identityId={dev.identityId} name={dev.name} />
+              <DeleteDeveloperButton identityId={dev.id} name={dev.name} />
               {/* Add something more after talk with Marcus */}
             </div>
           ))}

@@ -1,8 +1,7 @@
 export type Developer = {
-  name: string;
   id: string;
-  identityId: string;
-  slug: string | null;
+  name: string;
+  clerkId: string;
   email: string;
-  status: string;
-}[];
+  role: string;
+};

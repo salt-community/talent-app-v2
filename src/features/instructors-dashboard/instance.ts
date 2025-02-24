@@ -1,20 +1,16 @@
-import {
-  assignmentsService,
-  cohortsService,
-  developerProfilesService,
-} from "@/features";
+import { assignmentsService, cohortsService, iamService } from "@/features";
 import { createInstructorService } from "./service";
 
 export const instructorService = createInstructorService(
   cohortsService.getAll,
   cohortsService.getCohortById,
   cohortsService.addCohort,
-  assignmentsService.getAssignmentsByCohortId,
-  assignmentsService.createAssignment,
-  cohortsService.getCohortStudents,
-  developerProfilesService.getAll,
   cohortsService.addDevelopersToCohort,
   cohortsService.deleteCohortIdentity,
   cohortsService.deleteCohortAndCohortIdentity,
-  assignmentsService.deleteAssignment
+  cohortsService.getCohortStudents,
+  assignmentsService.getAssignmentsByCohortId,
+  assignmentsService.createAssignment,
+  assignmentsService.deleteAssignment,
+  iamService.getAllIdentities
 );

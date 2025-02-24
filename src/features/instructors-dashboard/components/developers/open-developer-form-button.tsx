@@ -13,7 +13,7 @@ import { Developer } from "../../types";
 
 type Props = {
   cohortId: string;
-  developer: Developer;
+  developer: Developer[];
 };
 
 export default function AddDeveloperButton({ cohortId, developer }: Props) {

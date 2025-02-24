@@ -1,3 +1,3 @@
 export * from "./assignments";
-export * from "./developer";
+export * from "./developers";
 export * from "./instructors-dashboard";

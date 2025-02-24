@@ -1,15 +1,3 @@
-import { DeveloperDashboard } from "@/features";
+import { CohortDevelopersPage } from "@/features";
 
-type Params = {
-  params: Promise<{ name: string }>;
-};
-
-export default async function Page({ params }: Params) {
-  const { name } = await params;
-
-  return (
-    <div>
-      <DeveloperDashboard name={name} />
-    </div>
-  );
-}
+export default CohortDevelopersPage;

@@ -2,15 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, X } from "lucide-react";
 import { addIdentitiesToCohortAction } from "../../action";
-
-type Developer = {
-  name: string;
-  id: string;
-  identityId: string;
-  slug: string | null;
-  email: string;
-  status: string;
-};
+import { Developer } from "../../types";
 
 type Props = {
   cohortId: string;
@@ -25,7 +17,7 @@ export const AddDeveloperForm = ({ cohortId, developer, onSuccess }: Props) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSelectDev = (dev: Developer) => {
-    if (!selectedDevs.find((d) => d.identityId === dev.identityId)) {
+    if (!selectedDevs.find((d) => d.id === dev.id)) {
       setSelectedDevs([...selectedDevs, dev]);
     }
     setIsOpen(false);
@@ -33,15 +25,13 @@ export const AddDeveloperForm = ({ cohortId, developer, onSuccess }: Props) => {
   };
 
   const handleRemoveDev = (devIdentityId: string) => {
-    setSelectedDevs(
-      selectedDevs.filter((dev) => dev.identityId !== devIdentityId)
-    );
+    setSelectedDevs(selectedDevs.filter((dev) => dev.id !== devIdentityId));
   };
 
   const filteredDevelopers = developer.filter(
     (dev) =>
       dev.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      !selectedDevs.find((d) => d.identityId === dev.identityId)
+      !selectedDevs.find((d) => d.id === dev.id)
   );
 
   async function handleSubmit() {
@@ -49,7 +39,7 @@ export const AddDeveloperForm = ({ cohortId, developer, onSuccess }: Props) => {
       setLoading(true);
       await addIdentitiesToCohortAction(
         cohortId,
-        selectedDevs.map((dev) => dev.identityId)
+        selectedDevs.map((dev) => dev.id)
       );
       onSuccess();
     } catch (error) {
