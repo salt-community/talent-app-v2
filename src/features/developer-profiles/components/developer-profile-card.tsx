@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components";
 import React from "react";
 import { DeveloperProfileLink } from "./developer-profile-link";
-import { Background } from "@/features/backgrounds";
+import { Background } from "../backgrounds";
 
 type Props = {
   developerProfileId: string;

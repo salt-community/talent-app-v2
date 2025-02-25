@@ -1,7 +1,9 @@
 import { DeveloperCard } from "@/components/ui/developer-card";
 import { ScoreBoard } from "@/features/assignments";
-import { BackgroundCard } from "@/features/backgrounds";
-import { developerProfilesService } from "@/features/developer-profiles";
+import {
+  BackgroundCard,
+  developerProfilesService,
+} from "@/features/developer-profiles";
 import { iamService } from "@/features/iam";
 import { Projects } from "@/features/projects";
 import { notFound } from "next/navigation";
