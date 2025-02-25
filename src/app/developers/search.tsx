@@ -1,11 +1,12 @@
 "use client";
 
 import { Input } from "@/components";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { ChangeEvent } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
 export function Search() {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const search = searchParams.get("search") || "";
 
@@ -16,7 +17,7 @@ export function Search() {
       if (event.target.value) searchParams.set("search", event.target.value);
       else searchParams.delete("search");
 
-      redirect(`/developers/?${searchParams.toString()}`);
+      redirect(`${pathname}/?${searchParams.toString()}`);
     },
     300
   );
