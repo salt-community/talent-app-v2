@@ -5,7 +5,7 @@ import {
   meiliSearchOutbox,
   skills,
 } from "./schema";
-import { createBackgroundsService } from "./service";
+import { createBackgroundsService } from "../background-service";
 
 export type Backgrounds = BackgroundSelect & {
   background_skills: SkillSelect[];

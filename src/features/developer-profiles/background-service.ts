@@ -1,12 +1,12 @@
-import { Repository } from "./repository";
 import {
   BackgroundInsert,
   BackgroundUpdate,
   OutboxMessageSelect,
-} from "./types";
-import { SearchApi } from "./backgrounds-search";
+} from "./backgrounds/types";
+import { SearchApi } from "./backgrounds/backgrounds-search";
 import { TaskStatus } from "meilisearch";
-import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
+import { createBackgroundsSearchService } from "./backgrounds/backgrounds-search/backgrounds-search-service";
+import { Repository } from "./background-repository";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(

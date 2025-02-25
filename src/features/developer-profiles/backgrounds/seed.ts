@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { insecureBackgroundsService } from "./instance";
 import { skills } from "./seed-data";
+import { backgroundsService } from "../instance";
 
 export async function backgroundsSeed(developerProfileIds: string[]) {
   console.log("Seeding Backgrounds...");
@@ -77,7 +77,7 @@ export async function backgroundsSeed(developerProfileIds: string[]) {
   });
 
   for (const background of backgrounds) {
-    await insecureBackgroundsService.add(background);
+    await backgroundsService.add(background);
   }
 
   console.log("Done seeding Backgrounds!");

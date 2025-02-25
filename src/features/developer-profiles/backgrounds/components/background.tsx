@@ -1,6 +1,6 @@
 import { Row } from "./row";
 import { BackgroundBasicInfo } from "./basic-info";
-import { backgroundsService } from "../instance";
+import { backgroundsService } from "../../instance";
 import { SkillsBadges } from "./skills-badges";
 
 type Props = { developerProfileId: string; page: string };

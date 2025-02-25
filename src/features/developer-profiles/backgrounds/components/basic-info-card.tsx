@@ -8,7 +8,7 @@ import {
 } from "../types";
 import { SocialLink } from "./social-link";
 import { DialogForm } from "./dialog-form";
-import { backgroundsService } from "../instance";
+import { backgroundsService } from "../../instance";
 import { errorHandler } from "@/lib";
 
 type Props = {

@@ -1,7 +1,7 @@
 import { Row } from "./row";
-import { backgroundsService } from "../instance";
 import { SkillsBadges } from "./skills-badges";
 import { BackgroundBasicInfoCard } from "./basic-info-card";
+import { backgroundsService } from "../../instance";
 
 type Props = { developerProfileId: string; hasProfileAccess: boolean };
 

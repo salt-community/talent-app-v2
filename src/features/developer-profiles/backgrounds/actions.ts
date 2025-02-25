@@ -3,7 +3,7 @@
 import { errorHandler } from "@/lib";
 import { revalidatePath } from "next/cache";
 import { ZodError } from "zod";
-import { backgroundsService } from "./instance";
+import { backgroundsService } from "../instance";
 import { PreviousState, SocialLink } from "./types";
 import { backgroundUpdate, BackgroundUpdate } from "./validation";
 
