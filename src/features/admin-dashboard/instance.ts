@@ -1,7 +1,8 @@
-import { backgroundsService, projectsService } from "@/features";
+import { backgroundsService } from "@/features";
 import { createAdminService } from "./service";
 import { iamService } from "../iam";
 import { developerProfilesService } from "../developer-profiles";
+import { projectsService } from "../projects";
 
 export const adminService = createAdminService(
   {
