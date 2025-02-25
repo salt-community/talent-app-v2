@@ -15,6 +15,7 @@ type Props = {
     id: string;
     title: string;
     category: string[];
+    comment: string | null;
   };
 };
 

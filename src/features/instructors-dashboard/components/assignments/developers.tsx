@@ -9,6 +9,7 @@ type Props = {
     id: string;
     title: string;
     category: string[] | null;
+    comment: string | null;
   };
 };
 

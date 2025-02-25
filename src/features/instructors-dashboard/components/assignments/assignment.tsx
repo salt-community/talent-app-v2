@@ -39,6 +39,7 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
                 id: assignment.id,
                 title: assignment.title,
                 category: assignment.categories,
+                comment: assignment.comment,
               }}
             />
           ))}
