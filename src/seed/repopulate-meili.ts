@@ -1,3 +1,3 @@
-import { backgroundsService } from "@/features/developer-profiles";
+import { developerProfilesService } from "@/features/developer-profiles";
 
-backgroundsService.repopulateMeiliSearch();
+developerProfilesService.repopulateMeiliSearch();

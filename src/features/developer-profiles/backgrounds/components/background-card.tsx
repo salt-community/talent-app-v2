@@ -1,7 +1,7 @@
 import { Row } from "./row";
 import { SkillsBadges } from "./skills-badges";
 import { BackgroundBasicInfoCard } from "./basic-info-card";
-import { backgroundsService } from "../../instance";
+import { developerProfilesService } from "../../instance";
 
 type Props = { developerProfileId: string; hasProfileAccess: boolean };
 
@@ -10,7 +10,7 @@ export async function BackgroundCard({
   hasProfileAccess,
 }: Props) {
   const background =
-    await backgroundsService.getBackgroundByDeveloperProfileId(
+    await developerProfilesService.getBackgroundByDeveloperProfileId(
       developerProfileId
     );
 

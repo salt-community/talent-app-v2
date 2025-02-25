@@ -3,9 +3,9 @@
 import { errorHandler } from "@/lib";
 import { revalidatePath } from "next/cache";
 import { ZodError } from "zod";
-import { backgroundsService } from "../instance";
 import { PreviousState, SocialLink } from "./types";
 import { backgroundUpdate, BackgroundUpdate } from "./validation";
+import { developerProfilesService } from "../instance";
 
 export async function updateBackgroundAction(
   _: PreviousState,
@@ -20,7 +20,10 @@ export async function updateBackgroundAction(
       { name: "Github", url: validatedUpdate.github || "" },
       { name: "Resume", url: validatedUpdate.cv || "" },
     ];
-    await backgroundsService.update({ ...validatedUpdate, links });
+    await developerProfilesService.updateBackground({
+      ...validatedUpdate,
+      links,
+    });
   } catch (error) {
     if (error instanceof ZodError) {
       const avatarUrlError = error.flatten().fieldErrors.avatarUrl?.[0];

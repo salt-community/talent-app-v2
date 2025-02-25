@@ -1,13 +1,13 @@
 import { Row } from "./row";
 import { BackgroundBasicInfo } from "./basic-info";
-import { backgroundsService } from "../../instance";
 import { SkillsBadges } from "./skills-badges";
+import { developerProfilesService } from "../../instance";
 
 type Props = { developerProfileId: string; page: string };
 
 export async function Background({ developerProfileId, page }: Props) {
   const background =
-    await backgroundsService.getBackgroundByDeveloperProfileId(
+    await developerProfilesService.getBackgroundByDeveloperProfileId(
       developerProfileId
     );
 

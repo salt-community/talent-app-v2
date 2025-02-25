@@ -8,8 +8,8 @@ import {
 } from "../types";
 import { SocialLink } from "./social-link";
 import { DialogForm } from "./dialog-form";
-import { backgroundsService } from "../../instance";
 import { errorHandler } from "@/lib";
+import { developerProfilesService } from "../../instance";
 
 type Props = {
   background: BackgroundInfo;
@@ -28,9 +28,9 @@ export async function BackgroundBasicInfoCard({
   const filteredLinks = background.links.filter((e) => e.name !== "LinkedIn");
 
   try {
-    allSkills = await backgroundsService.getAllSkills();
-    allLanguages = await backgroundsService.getAllLanguages();
-    allEducations = await backgroundsService.getAllEducations();
+    allSkills = await developerProfilesService.getAllSkills();
+    allLanguages = await developerProfilesService.getAllLanguages();
+    allEducations = await developerProfilesService.getAllEducations();
   } catch (error) {
     errorHandler(error);
   }

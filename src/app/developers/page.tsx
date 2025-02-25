@@ -1,6 +1,9 @@
 import { Search } from "./search";
 import { errorHandler } from "@/lib";
-import { backgroundsService, Developers } from "@/features/developer-profiles";
+import {
+  developerProfilesService,
+  Developers,
+} from "@/features/developer-profiles";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 
@@ -9,7 +12,7 @@ export default async function Page({ searchParams }: Props) {
   let developerProfileIds: string[] = [];
   try {
     developerProfileIds =
-      await backgroundsService.searchDeveloperProfileIds(search);
+      await developerProfilesService.searchDeveloperProfileIds(search);
   } catch (error) {
     errorHandler(error);
   }

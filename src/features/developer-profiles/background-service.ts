@@ -87,7 +87,7 @@ export function createBackgroundsService(
           array.findIndex((e) => e.name === education.name) === index
       );
     },
-    async add(background: BackgroundInsert) {
+    async addBackground(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } =
         await repository.add(background);
 
@@ -99,7 +99,7 @@ export function createBackgroundsService(
       }
     },
 
-    async update(background: BackgroundUpdate) {
+    async updateBackground(background: BackgroundUpdate) {
       const { outboxMessageId } = await repository.update(background);
 
       const status = await backgroundsSearchApi.upsertDocuments([background]);

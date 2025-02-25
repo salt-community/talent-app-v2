@@ -1,9 +1,6 @@
 import { createAdminService } from "./service";
 import { iamService } from "../iam";
-import {
-  backgroundsService,
-  developerProfilesService,
-} from "../developer-profiles";
+import { developerProfilesService } from "../developer-profiles";
 import { projectsService } from "../projects";
 
 export const adminService = createAdminService(
@@ -15,20 +12,20 @@ export const adminService = createAdminService(
     getDeveloperProfileIdById: developerProfilesService.getAllById,
   },
   {
-    isHealthOk: backgroundsService.isSearchHealthOk,
-    repopulate: backgroundsService.repopulateMeiliSearch,
-    sync: backgroundsService.syncMeilisearch,
-    doesNeedSync: backgroundsService.doesMeilisearchNeedSync,
-    getSettings: backgroundsService.getMeilisearchSettings,
-    updateSettings: backgroundsService.updateMeilisearchSettings,
-    resetSettings: backgroundsService.resetMeilisearchSettings,
-    ensureSearchIndex: backgroundsService.ensureSearchIndex,
+    isHealthOk: developerProfilesService.isSearchHealthOk,
+    repopulate: developerProfilesService.repopulateMeiliSearch,
+    sync: developerProfilesService.syncMeilisearch,
+    doesNeedSync: developerProfilesService.doesMeilisearchNeedSync,
+    getSettings: developerProfilesService.getMeilisearchSettings,
+    updateSettings: developerProfilesService.updateMeilisearchSettings,
+    resetSettings: developerProfilesService.resetMeilisearchSettings,
+    ensureSearchIndex: developerProfilesService.ensureSearchIndex,
   },
   {
     updateRole: iamService.updateRole,
     getAllIdentities: iamService.getAllIdentities,
     deleteIdentity: iamService.deleteIdentity,
   },
-  backgroundsService.deleteBackgroundById,
+  developerProfilesService.deleteBackgroundById,
   projectsService.deleteProjectsByDeveloperProfileId
 );
