@@ -1,9 +1,9 @@
 "use server";
-import { CohortFormData } from "@/features";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { instructorService } from "./instance";
 import { assignmentSchema } from "./validation";
+import { CohortFormData } from "../cohorts";
 
 export async function addCohortAction(cohort: CohortFormData) {
   try {

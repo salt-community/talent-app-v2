@@ -1,12 +1,10 @@
 import { db } from "@/db";
-import {
-  backgroundsSeed,
-  seedAssignments,
-  seedCohorts,
-  seedDeveloperProfiles,
-  seedIdentities,
-  seedProjects,
-} from "@/features";
+import { seedAssignments } from "@/features/assignments";
+import { backgroundsSeed } from "@/features/backgrounds";
+import { seedCohorts } from "@/features/cohorts";
+import { seedDeveloperProfiles } from "@/features/developer-profiles";
+import { seedIdentities } from "@/features/iam";
+import { seedProjects } from "@/features/projects";
 
 (async () => {
   console.log("Starting to seed...");

@@ -1,4 +1,4 @@
-import { AssignmentsService } from "@/features";
+import { AssignmentsService } from "@/features/assignments";
 import { PermissionsSchema } from "../secure-service";
 import { PagePermissionsSchema } from "./types";
 

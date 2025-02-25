@@ -1,7 +1,7 @@
+import { backgroundsService } from "@/features/backgrounds";
 import { Search } from "./search";
-import { backgroundsService } from "@/features";
-import { Developers } from "@/features";
 import { errorHandler } from "@/lib";
+import { Developers } from "@/features/developer-profiles";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 

@@ -1,3 +1,4 @@
-import { HighlightPage } from "@/features";
+import { HighlightPage } from "@/features/developer-profiles";
+
 
 export default HighlightPage;

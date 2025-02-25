@@ -1,8 +1,8 @@
 import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { HamburgerMenu } from "./ui/hamburger-menu";
-import { developerProfilesService, iamService } from "@/features";
-
+import { iamService } from "@/features/iam";
+import { developerProfilesService } from "@/features/developer-profiles";
 export async function Header() {
   const userIdentity = await iamService.controlUser();
 

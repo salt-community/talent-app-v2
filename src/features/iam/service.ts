@@ -3,11 +3,11 @@ import { createRepository } from "./repository";
 import { IdentityInsert } from "./schema";
 import { Db } from "@/db";
 import { auth } from "@clerk/nextjs/server";
-import { SessionClaims } from "@/features";
 import { validateSessionClaims } from "./logic";
 import { claim } from "./session";
 import { Permission, ViewPermission } from "./permissions";
 import { iamService } from "./instance";
+import { SessionClaims } from "../developer-profiles";
 
 export function createService(db: Db) {
   const repository = createRepository(db);

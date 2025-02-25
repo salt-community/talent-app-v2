@@ -1,11 +1,9 @@
 import { DeveloperCard } from "@/components/ui/developer-card";
-import {
-  BackgroundCard,
-  developerProfilesService,
-  iamService,
-  Projects,
-  ScoreBoard,
-} from "@/features";
+import { ScoreBoard } from "@/features/assignments";
+import { BackgroundCard } from "@/features/backgrounds";
+import { developerProfilesService } from "@/features/developer-profiles";
+import { iamService } from "@/features/iam";
+import { Projects } from "@/features/projects";
 import { notFound } from "next/navigation";
 
 // Maximum timeout duration for the page speed API

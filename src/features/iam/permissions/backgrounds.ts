@@ -1,4 +1,4 @@
-import type { BackgroundsService } from "@/features";
+import { BackgroundsService } from "@/features/backgrounds";
 import { PermissionsSchema } from "../secure-service";
 
 export const backgrounds: PermissionsSchema<"backgrounds", BackgroundsService> =

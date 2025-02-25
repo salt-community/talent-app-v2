@@ -1,4 +1,5 @@
-import { CreateDeveloperProfileCard } from "@/features";
+import { CreateDeveloperProfileCard } from "@/features/developer-profiles";
+
 
 type Params = {
   params: Promise<{ slug: string }>;

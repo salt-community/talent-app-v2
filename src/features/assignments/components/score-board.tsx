@@ -1,7 +1,7 @@
 import { Separator, H2 } from "@/components/ui";
 import { AverageScore } from "./average-score";
-import { assignmentsService } from "@/features";
 import { SpiderGraph } from "./spider-graph";
+import { assignmentsService } from "../instance";
 
 type ScoreBoardProps = {
   identityId: string;

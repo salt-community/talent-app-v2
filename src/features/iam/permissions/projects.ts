@@ -1,4 +1,4 @@
-import type { ProjectsService } from "@/features";
+import { ProjectsService } from "@/features/projects";
 import { PermissionsSchema } from "../secure-service";
 import { PagePermissionsSchema } from "./types";
 

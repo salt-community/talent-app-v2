@@ -1,4 +1,4 @@
-import { AssignmentFormData } from "@/features";
+import { AssignmentFormData } from "@/features/assignments";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
