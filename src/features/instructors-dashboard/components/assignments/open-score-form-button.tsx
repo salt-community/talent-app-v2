@@ -9,17 +9,9 @@ import {
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Scoring } from "./scoring";
+import { Assignment } from "../../types";
 
-type Props = {
-  assignment: {
-    id: string;
-    title: string;
-    category: string[];
-    comment: string | null;
-  };
-};
-
-export default function OpenScoreFormButton({ assignment }: Props) {
+export default function OpenScoreFormButton({ assignment }: Assignment) {
   const [open, setOpen] = useState(false);
 
   return (

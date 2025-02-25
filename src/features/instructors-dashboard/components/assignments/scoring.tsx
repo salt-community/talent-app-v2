@@ -1,16 +1,8 @@
 import React, { useState } from "react";
 import { Button, Input, Label, Textarea } from "@/components";
+import { Assignment } from "../../types";
 
-type Props = {
-  assignment: {
-    id: string;
-    title: string;
-    category: string[] | null;
-    comment: string | null;
-  };
-};
-
-export function Scoring({ assignment }: Props) {
+export function Scoring({ assignment }: Assignment) {
   const [scores, setScores] = useState<Record<string, string>>({});
 
   const handleScoreChange = (category: string, value: string) => {

@@ -1,16 +1,11 @@
 "use client";
 import React from "react";
-import { Developer } from "../../types";
+import { Assignment, Developer } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
 
 type Props = {
   developer: Developer;
-  assignment: {
-    id: string;
-    title: string;
-    category: string[] | null;
-    comment: string | null;
-  };
+  assignment: Assignment;
 };
 
 export default function Developers({ developer, assignment }: Props) {
@@ -27,7 +22,10 @@ export default function Developers({ developer, assignment }: Props) {
         </div>
         <div className="flex items-center gap-2">
           <OpenScoreFormButton
-            assignment={{ ...assignment, category: assignment.category ?? [] }}
+            assignment={{
+              ...assignment.assignment,
+              category: assignment.assignment.category ?? [],
+            }}
           />
         </div>
       </div>

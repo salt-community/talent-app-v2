@@ -8,6 +8,7 @@ export type deleteAssignmentScoreById =
   AssignmentsService["deleteAssignmentScoreById"];
 export type DeleteAssignmentById = AssignmentsService["deleteAssignment"];
 export type GetAssignmentBySlug = AssignmentsService["getAssignmentBySlug"];
+export type CreateAssignmentScore = AssignmentsService["createAssignmentScore"];
 
 export type Assignment = {
   id: string;
@@ -45,7 +46,6 @@ export type AssignmentScoreFormData = {
   identityId: string;
   score: number;
   comment: string | null;
-  createdAt: Date | null;
 };
 
 export type CategoryScore = {

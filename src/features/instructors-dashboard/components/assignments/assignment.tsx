@@ -36,10 +36,13 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
               key={developer.id}
               developer={developer}
               assignment={{
-                id: assignment.id,
-                title: assignment.title,
-                category: assignment.categories,
-                comment: assignment.comment,
+                assignment: {
+                  assignmentId: assignment.id,
+                  identityId: developer.id,
+                  title: assignment.title,
+                  category: assignment.categories,
+                  comment: assignment.comment,
+                },
               }}
             />
           ))}

@@ -1,5 +1,12 @@
 import { GetAllIdentities } from "../iam";
-import { CreateAssignment, DeleteAssignmentById, GetAssignmentBySlug, GetAssignmentsByCohortId, NewAssignment } from "../assignments";
+import {
+  CreateAssignment,
+  CreateAssignmentScore,
+  DeleteAssignmentById,
+  GetAssignmentBySlug,
+  GetAssignmentsByCohortId,
+  NewAssignment,
+} from "../assignments";
 import {
   AddCohort,
   AddDevelopersToCohort,
@@ -10,6 +17,7 @@ import {
   GetCohortStudents,
   deleteCohortIdentity,
 } from "../cohorts";
+import { AssignmentInsert } from "./types";
 
 export function createInstructorService(
   getAllCohorts: GetAllCohorts,
@@ -23,6 +31,7 @@ export function createInstructorService(
   addAssignment: CreateAssignment,
   deleteAssignmentById: DeleteAssignmentById,
   getAssignmentBySlug: GetAssignmentBySlug,
+  addScoreToAssignment: CreateAssignmentScore,
   getAllIdentities: GetAllIdentities
 ) {
   return {
@@ -64,6 +73,9 @@ export function createInstructorService(
     },
     async getAssignmentBySlug(slug: string) {
       return await getAssignmentBySlug(slug);
+    },
+    async addScoreToAssignment({ assignment }: AssignmentInsert) {
+      return await addScoreToAssignment(assignment);
     },
   };
 }

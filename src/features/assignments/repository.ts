@@ -36,11 +36,7 @@ export function createAssignmentsRepository(db: Db) {
     },
 
     async createAssignmentScore(data: AssignmentScoreFormData) {
-      const [score] = await db
-        .insert(assignmentScores)
-        .values(data)
-        .returning();
-      return score;
+      await db.insert(assignmentScores).values(data);
     },
 
     async getScoresByAssignmentId(assignmentId: string) {
