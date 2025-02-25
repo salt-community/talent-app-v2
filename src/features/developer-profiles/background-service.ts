@@ -2,7 +2,7 @@ import {
   BackgroundInsert,
   BackgroundUpdate,
   OutboxMessageSelect,
-} from "./backgrounds/types";
+} from "./types";
 import { SearchApi } from "./backgrounds/backgrounds-search";
 import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds/backgrounds-search/backgrounds-search-service";

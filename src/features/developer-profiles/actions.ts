@@ -3,9 +3,9 @@
 import { errorHandler } from "@/lib";
 import { revalidatePath } from "next/cache";
 import { developerProfilesService } from "./instance";
-import { PreviousState, SocialLink } from "./backgrounds";
 import { BackgroundUpdate, backgroundUpdate } from "./backgrounds/validation";
 import { ZodError } from "zod";
+import { PreviousState, SocialLink } from "./types";
 
 export async function addDeveloperProfileAction(identityId: string) {
   try {

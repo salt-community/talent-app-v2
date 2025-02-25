@@ -6,7 +6,7 @@ import {
   EducationSelect,
   LanguageSelect,
   SkillSelect,
-} from "./backgrounds/types";
+} from "./types";
 import { sql } from "drizzle-orm";
 import {
   backgrounds,
@@ -14,7 +14,7 @@ import {
   languages,
   meiliSearchOutbox,
   skills,
-} from "./backgrounds/schema";
+} from "./backgrounds-db-schema";
 import { Db } from "@/db";
 
 export function createRepository(db: Db) {

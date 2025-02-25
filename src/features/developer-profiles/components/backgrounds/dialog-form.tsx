@@ -18,7 +18,7 @@ import {
   EducationSelect,
   LanguageSelect,
   SkillSelect,
-} from "../../backgrounds/types";
+} from "../../types";
 import { useActionState, useState, useEffect } from "react";
 import { BackgroundAvatar } from "./avatar";
 import { updateBackgroundAction } from "../../actions";

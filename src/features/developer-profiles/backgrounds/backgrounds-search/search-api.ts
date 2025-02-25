@@ -1,5 +1,5 @@
 import MeiliSearch, { Index, Settings } from "meilisearch";
-import { BackgroundUpdate } from "../types";
+import { BackgroundUpdate } from "../../types";
 
 type InitializeMeiliSearchIndexArgs = {
   indexUid: string;
