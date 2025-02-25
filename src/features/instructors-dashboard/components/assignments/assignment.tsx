@@ -32,7 +32,15 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
         </div>
         <div>
           {developers.map((developer) => (
-            <Developer key={developer.id} developer={developer} />
+            <Developer
+              key={developer.id}
+              developer={developer}
+              assignment={{
+                id: assignment.id,
+                title: assignment.title,
+                category: assignment.categories,
+              }}
+            />
           ))}
         </div>
       </div>
