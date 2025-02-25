@@ -1,3 +1,4 @@
-import { CohortDevelopersPage } from "@/features";
+import { CohortDevelopersPage } from "@/features/instructors-dashboard";
+
 
 export default CohortDevelopersPage;
