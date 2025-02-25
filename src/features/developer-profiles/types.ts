@@ -1,4 +1,4 @@
-import { developerProfiles } from "./schema";
+import { developerProfiles } from "./db-schema";
 import { createDeveloperProfilesService } from "./service";
 import { JwtPayload } from "jsonwebtoken";
 
