@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { createService } from "./service";
-import { iamService, secureService } from "@/features";
 import { createApi } from "./api";
+import { iamService, secureService } from "../iam";
 
 export const insecureProjectService = createService(
   db,

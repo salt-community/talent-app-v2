@@ -1,10 +1,10 @@
 import {
   backgroundsService,
   developerProfilesService,
-  iamService,
   projectsService,
 } from "@/features";
 import { createAdminService } from "./service";
+import { iamService } from "../iam";
 
 export const adminService = createAdminService(
   {

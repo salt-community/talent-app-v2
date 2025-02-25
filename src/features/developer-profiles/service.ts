@@ -1,10 +1,10 @@
 import { Db } from "@/db";
-import { GetCurrentUser } from "@/features";
 import { auth } from "@clerk/nextjs/server";
 import { developerProfilesService } from "./instance";
 import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import { DeveloperProfileInsert, SessionClaims } from "./types";
+import { GetCurrentUser } from "../iam";
 
 export function createDeveloperProfilesService(
   db: Db,

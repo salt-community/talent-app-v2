@@ -1,8 +1,8 @@
 import { createRepository } from "./repository";
 import { createBackgroundsService } from "./service";
-import { secureService } from "@/features";
 import { createSearchApi } from "./backgrounds-search";
 import { db } from "@/db";
+import { secureService } from "../iam";
 
 export const insecureBackgroundsService = createBackgroundsService(
   createRepository(db),

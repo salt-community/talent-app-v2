@@ -7,13 +7,13 @@ import {
   DeleteCohortAndCohortIdentity,
   deleteCohortIdentity,
   GetAllCohorts,
-  getAllIdentities,
   GetAssignmentBySlug,
   GetAssignmentsByCohortId,
   GetCohortById,
   GetCohortStudents,
   NewAssignment,
 } from "@/features";
+import { GetAllIdentities } from "../iam";
 
 export function createInstructorService(
   getAllCohorts: GetAllCohorts,
@@ -27,7 +27,7 @@ export function createInstructorService(
   addAssignment: CreateAssignment,
   deleteAssignmentById: DeleteAssignmentById,
   getAssignmentBySlug: GetAssignmentBySlug,
-  getAllIdentities: getAllIdentities
+  getAllIdentities: GetAllIdentities
 ) {
   return {
     async getAllCohorts() {

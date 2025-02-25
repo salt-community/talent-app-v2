@@ -11,7 +11,6 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AddAssignmentForm } from "./add-assignment-form";
 
 type Props = {
-  // cohorts: { id: string; name: string }[];
   cohortId: string;
 };
 
