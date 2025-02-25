@@ -1,12 +1,9 @@
 "use client";
 import React from "react";
 import { Developer } from "../../types";
+import OpenScoreFormButton from "./open-score-form-button";
 
 export default function Developers({ developer }: { developer: Developer }) {
-  async function scoreAssignment() {
-    console.log("score assignment");
-  }
-
   return (
     <div className="border-b border-gray-200 last:border-0">
       <div className="py-3 px-4 flex items-center justify-between">
@@ -19,12 +16,7 @@ export default function Developers({ developer }: { developer: Developer }) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button
-            onClick={scoreAssignment}
-            className="px-3 py-1.5 border border-gray-300 rounded text-sm"
-          >
-            Score
-          </button>
+          <OpenScoreFormButton />
         </div>
       </div>
     </div>
