@@ -1,5 +1,4 @@
 "use client";
-import { updateBackgroundAction } from "../../backgrounds/actions";
 import { Loader2, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +21,7 @@ import {
 } from "../../backgrounds/types";
 import { useActionState, useState, useEffect } from "react";
 import { BackgroundAvatar } from "./avatar";
+import { updateBackgroundAction } from "../../actions";
 
 type Props = {
   background: BackgroundInfo;
