@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Input, Label, Textarea } from "@/components";
 import { Assignment } from "../../types";
 import { addScoreToAssignment } from "../../action";
+import { useToast } from "@/hooks/use-toast";
 type Props = {
   assignment: Assignment;
   onSuccess: () => void;
@@ -10,6 +11,7 @@ type Props = {
 export function Scoring({ assignment, onSuccess }: Props) {
   const [scores, setScores] = useState<Record<string, string>>({});
   const [comment, setComment] = useState<string>("");
+  const { toast } = useToast();
 
   const handleScoreChange = (category: string, value: string) => {
     setScores((prev) => ({
@@ -34,6 +36,10 @@ export function Scoring({ assignment, onSuccess }: Props) {
           },
         });
         onSuccess();
+        toast({
+          title: "Scoring added",
+          description: "Score has been added to the assignment.",
+        });
       }
     );
 
