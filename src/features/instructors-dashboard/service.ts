@@ -2,18 +2,14 @@ import {
   AddCohort,
   AddDevelopersToCohort,
   CohortFormData,
-  CreateAssignment,
-  DeleteAssignmentById,
   DeleteCohortAndCohortIdentity,
   deleteCohortIdentity,
   GetAllCohorts,
-  GetAssignmentBySlug,
-  GetAssignmentsByCohortId,
   GetCohortById,
   GetCohortStudents,
-  NewAssignment,
 } from "@/features";
 import { GetAllIdentities } from "../iam";
+import { CreateAssignment, DeleteAssignmentById, GetAssignmentBySlug, GetAssignmentsByCohortId, NewAssignment } from "../assignments";
 
 export function createInstructorService(
   getAllCohorts: GetAllCohorts,
