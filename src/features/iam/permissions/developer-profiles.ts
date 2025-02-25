@@ -38,6 +38,8 @@ export const developerProfiles: PermissionsSchema<
   repopulateMeiliSearch: "developerProfiles.repopulateMeiliSearch",
   resetMeilisearchSettings: "developerProfiles.resetMeilisearchSettings",
   searchDeveloperProfileIds: "developerProfiles.searchDeveloperProfileIds",
+  searchDeveloperProfileIdsWithLLM:
+    "developerProfiles.searchDeveloperProfileIdsWithLLM",
   syncMeilisearch: "developerProfiles.syncMeilisearch",
   updateBackground: "developerProfiles.updateBackground",
   updateMeilisearchSettings: "developerProfiles.updateMeilisearchSettings",

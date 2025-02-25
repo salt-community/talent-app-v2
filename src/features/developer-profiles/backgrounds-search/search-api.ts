@@ -40,22 +40,27 @@ export function createSearchApi({
       await index.waitForTask(createIndexTask.taskUid);
 
       const updateSettingsTask = await index.updateSettings({
+        displayedAttributes,
+        searchableAttributes,
         embedders: {
           openAiSearch: {
             source: "openAi",
             model: "text-embedding-3-large",
             apiKey: process.env.OPENAI_API_KEY,
             dimensions: 3072,
-            documentTemplate: undefined,
+            documentTemplate: `A Software Developer seeking for a jobb with skills {{doc.skills}}
+            with education {{doc.educations}} and languages {{doc.languages}}.
+             Name: {{doc.name}}. Title: {{doc.title}}. Bio: {{doc.bio}}`,
           },
         },
-        displayedAttributes,
-        searchableAttributes,
       });
       await index.waitForTask(updateSettingsTask.taskUid);
     },
 
-    async searchDeveloperProfileIds(search: string | undefined) {
+    async searchDeveloperProfileIds(
+      search: string | undefined,
+      useLLM: boolean = false,
+    ) {
       const isSearchEmpty = search === undefined || !search.trim();
 
       let documents: Record<string, unknown>[] | null = null;
@@ -64,7 +69,16 @@ export function createSearchApi({
         const { results } = await index.getDocuments();
         documents = results;
       } else {
-        const { hits } = await index.search(search);
+        search = useLLM
+          ? `Looking for a candidate that would fit to job ad ${search}`
+          : search;
+        const searchParams = useLLM
+          ? {
+              hybrid: { embedder: "openAiSearch" },
+            }
+          : undefined;
+
+        const { hits } = await index.search(search, searchParams);
         documents = hits;
       }
 

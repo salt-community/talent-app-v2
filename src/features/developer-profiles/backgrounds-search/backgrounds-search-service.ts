@@ -2,7 +2,7 @@ import { Settings } from "meilisearch";
 import { SearchApi } from "./search-api";
 
 export function createBackgroundsSearchService(
-  backgroundsSearchApi: SearchApi
+  backgroundsSearchApi: SearchApi,
 ) {
   return {
     async isSearchHealthOk() {
@@ -23,6 +23,10 @@ export function createBackgroundsSearchService(
 
     async searchDeveloperProfileIds(search: string | undefined) {
       return backgroundsSearchApi.searchDeveloperProfileIds(search);
+    },
+
+    async searchDeveloperProfileIdsWithLLM(search: string | undefined) {
+      return backgroundsSearchApi.searchDeveloperProfileIds(search, true);
     },
 
     async ensureSearchIndex() {
