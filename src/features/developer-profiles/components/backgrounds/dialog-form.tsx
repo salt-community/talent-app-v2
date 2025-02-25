@@ -1,5 +1,5 @@
 "use client";
-import { updateBackgroundAction } from "../actions";
+import { updateBackgroundAction } from "../../backgrounds/actions";
 import { Loader2, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +19,7 @@ import {
   EducationSelect,
   LanguageSelect,
   SkillSelect,
-} from "../types";
+} from "../../backgrounds/types";
 import { useActionState, useState, useEffect } from "react";
 import { BackgroundAvatar } from "./avatar";
 

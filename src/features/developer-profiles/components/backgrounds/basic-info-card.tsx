@@ -5,7 +5,7 @@ import {
   EducationSelect,
   LanguageSelect,
   SkillSelect,
-} from "../types";
+} from "../../backgrounds/types";
 import { SocialLink } from "./social-link";
 import { DialogForm } from "./dialog-form";
 import { errorHandler } from "@/lib";

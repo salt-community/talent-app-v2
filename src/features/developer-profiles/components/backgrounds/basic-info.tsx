@@ -1,6 +1,6 @@
 import { H2 } from "@/components";
 import { BackgroundAvatar } from "./avatar";
-import { typeBackground } from "../types";
+import { typeBackground } from "../../backgrounds/types";
 type Props = { background: typeBackground };
 
 export function BackgroundBasicInfo({ background }: Props) {

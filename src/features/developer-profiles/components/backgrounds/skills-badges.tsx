@@ -1,6 +1,6 @@
 "use client";
 import { Badge } from "@/components/";
-import { SkillSelect } from "../types";
+import { SkillSelect } from "../../backgrounds/types";
 
 type Props = {
   skills: SkillSelect[];
