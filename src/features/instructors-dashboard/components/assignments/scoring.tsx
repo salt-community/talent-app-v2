@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Button, Input, Label } from "@/components";
+import { Button, Input, Label, Textarea } from "@/components";
 
 type Props = {
   assignment: {
     id: string;
     title: string;
     category: string[] | null;
+    comment: string | null;
   };
 };
 
@@ -47,6 +48,20 @@ export function Scoring({ assignment }: Props) {
             />
           </div>
         ))}
+      </div>
+      <div>
+        <Label
+          htmlFor="comment"
+          className="block mb-2 font-medium text-gray-800"
+        >
+          Comment
+        </Label>
+        <Textarea
+          id="comment"
+          value={assignment.comment || ""}
+          onChange={(e) => console.log(e.target.value)}
+          placeholder="Enter comment"
+        />
       </div>
 
       <div className="pt-4 border-t flex justify-end">
