@@ -36,6 +36,7 @@ export function createDeveloperProfilesService(
     "backgrounds",
     insecureBackgroundsService
   );
+
   return {
     ...backgroundsService,
     async getAll() {
