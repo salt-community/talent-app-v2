@@ -1,7 +1,7 @@
-import { cohortsService } from "@/features";
 import { createInstructorService } from "./service";
 import { iamService } from "../iam";
 import { assignmentsService } from "../assignments";
+import { cohortsService } from "../cohorts";
 
 export const instructorService = createInstructorService(
   cohortsService.getAll,

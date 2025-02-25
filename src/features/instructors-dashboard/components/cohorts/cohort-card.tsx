@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Cohort } from "@/features";
 import Link from "next/link";
 import { DeleteCohortButton } from "./delete-cohort-button";
+import { Cohort } from "../../types";
 
 type Props = {
   cohorts: Cohort[];
