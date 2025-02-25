@@ -40,6 +40,15 @@ export function createSearchApi({
       await index.waitForTask(createIndexTask.taskUid);
 
       const updateSettingsTask = await index.updateSettings({
+        embedders: {
+          openAiSearch: {
+            source: "openAi",
+            model: "text-embedding-3-large",
+            apiKey: process.env.OPENAI_API_KEY,
+            dimensions: 3072,
+            documentTemplate: undefined,
+          },
+        },
         displayedAttributes,
         searchableAttributes,
       });
@@ -60,7 +69,7 @@ export function createSearchApi({
       }
 
       return documents.map(
-        ({ developerProfileId }) => developerProfileId as string
+        ({ developerProfileId }) => developerProfileId as string,
       );
     },
 
