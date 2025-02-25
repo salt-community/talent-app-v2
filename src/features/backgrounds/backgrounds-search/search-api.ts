@@ -37,13 +37,13 @@ export function createSearchApi({
       const createIndexTask = await meiliSearch.createIndex(indexUid, {
         primaryKey,
       });
-      index.waitForTask(createIndexTask.taskUid);
+      await index.waitForTask(createIndexTask.taskUid);
 
       const updateSettingsTask = await index.updateSettings({
         displayedAttributes,
         searchableAttributes,
       });
-      index.waitForTask(updateSettingsTask.taskUid);
+      await index.waitForTask(updateSettingsTask.taskUid);
     },
 
     async searchDeveloperProfileIds(search: string | undefined) {
