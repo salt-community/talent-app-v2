@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Button, Input, Label, Textarea } from "@/components";
 import { Assignment } from "../../types";
+import { addScoreToAssignment } from "../../action";
 
-export function Scoring({ assignment }: Assignment) {
+export function Scoring({ assignment }: { assignment: Assignment }) {
   const [scores, setScores] = useState<Record<string, string>>({});
+  const [comment, setComment] = useState<string>(
+    assignment.assignment.comment || ""
+  );
 
   const handleScoreChange = (category: string, value: string) => {
     setScores((prev) => ({
@@ -12,19 +16,35 @@ export function Scoring({ assignment }: Assignment) {
     }));
   };
 
-  const handleSubmitScoring = () => {
-    console.log("Submitting scores:", scores);
+  const handleSubmitScoring = async () => {
+    const categoryPromises = (assignment.assignment.category || []).map(
+      async (category) => {
+        if (!scores[category]) return;
+
+        await addScoreToAssignment({
+          assignment: {
+            assignmentId: assignment.assignment.assignmentId,
+            identityId: assignment.assignment.identityId,
+            title: assignment.assignment.title,
+            category: category,
+            comment: comment,
+            score: parseInt(scores[category], 10) || 0,
+          },
+        });
+      }
+    );
+
+    await Promise.all(categoryPromises.filter(Boolean));
   };
 
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h2 className="text-2xl font-bold">{assignment.title}</h2>
+        <h2 className="text-2xl font-bold">{assignment.assignment.title}</h2>
         <p className="text-gray-500 mt-1">Score each category</p>
       </div>
-
       <div className="space-y-6">
-        {(assignment.category ?? []).map((category) => (
+        {(assignment.assignment.category ?? []).map((category) => (
           <div key={category}>
             <Label
               htmlFor={`score-${category}`}
@@ -37,6 +57,7 @@ export function Scoring({ assignment }: Assignment) {
               value={scores[category] || ""}
               onChange={(e) => handleScoreChange(category, e.target.value)}
               placeholder="Enter score"
+              type="number"
             />
           </div>
         ))}
@@ -50,12 +71,11 @@ export function Scoring({ assignment }: Assignment) {
         </Label>
         <Textarea
           id="comment"
-          value={assignment.comment || ""}
-          onChange={(e) => console.log(e.target.value)}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
           placeholder="Enter comment"
         />
       </div>
-
       <div className="pt-4 border-t flex justify-end">
         <Button onClick={handleSubmitScoring}>Save</Button>
       </div>

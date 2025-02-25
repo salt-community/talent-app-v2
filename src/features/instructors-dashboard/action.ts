@@ -85,7 +85,7 @@ export async function deleteCohortAndCohortIdentityAction(cohortId: string) {
 export async function deleteAssignmentByIdAction(assignmentId: string) {
   try {
     await instructorService.deleteAssignmentById(assignmentId);
-    revalidatePath("/instructors-dashboard/cohorts");
+    revalidatePath("/instructors-dashboard");
   } catch (error) {
     console.error(error);
   }
@@ -93,7 +93,7 @@ export async function deleteAssignmentByIdAction(assignmentId: string) {
 export async function addScoreToAssignment({ assignment }: AssignmentInsert) {
   try {
     await instructorService.addScoreToAssignment({ assignment });
-    revalidatePath("/instructors-dashboard/cohorts");
+    revalidatePath("/instructors-dashboard");
   } catch (error) {
     console.error(error);
   }

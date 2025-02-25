@@ -30,7 +30,7 @@ export default function OpenScoreFormButton({ assignment }: Assignment) {
           <DialogTitle>Score</DialogTitle>
         </VisuallyHidden>
         <DialogContent>
-          <Scoring assignment={assignment} />
+          <Scoring assignment={{ assignment }} />
         </DialogContent>
       </Dialog>
     </>
