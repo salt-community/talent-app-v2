@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Button, Input, Label, Textarea } from "@/components";
 import { Assignment } from "../../types";
 import { addScoreToAssignment } from "../../action";
+type Props = {
+  assignment: Assignment;
+  onSuccess: () => void;
+};
 
-export function Scoring({ assignment }: { assignment: Assignment }) {
+export function Scoring({ assignment, onSuccess }: Props) {
   const [scores, setScores] = useState<Record<string, string>>({});
-  const [comment, setComment] = useState<string>(
-    assignment.assignment.comment || ""
-  );
+  const [comment, setComment] = useState<string>("");
 
   const handleScoreChange = (category: string, value: string) => {
     setScores((prev) => ({
@@ -31,6 +33,7 @@ export function Scoring({ assignment }: { assignment: Assignment }) {
             score: parseInt(scores[category], 10) || 0,
           },
         });
+        onSuccess();
       }
     );
 
@@ -57,7 +60,6 @@ export function Scoring({ assignment }: { assignment: Assignment }) {
               value={scores[category] || ""}
               onChange={(e) => handleScoreChange(category, e.target.value)}
               placeholder="Enter score"
-              type="number"
             />
           </div>
         ))}
