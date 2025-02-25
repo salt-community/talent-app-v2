@@ -1,4 +1,3 @@
-import { backgroundsService } from "@/features/backgrounds";
-
+import { backgroundsService } from "@/features/developer-profiles";
 
 backgroundsService.repopulateMeiliSearch();

@@ -1,8 +1,10 @@
 import { db } from "@/db";
 import { seedAssignments } from "@/features/assignments";
-import { backgroundsSeed } from "@/features/backgrounds";
 import { seedCohorts } from "@/features/cohorts";
-import { seedDeveloperProfiles } from "@/features/developer-profiles";
+import {
+  backgroundsSeed,
+  seedDeveloperProfiles,
+} from "@/features/developer-profiles";
 import { seedIdentities } from "@/features/iam";
 import { seedProjects } from "@/features/projects";
 

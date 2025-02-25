@@ -1,4 +1,4 @@
-import { BackgroundsService } from "@/features/backgrounds";
+import { BackgroundsService } from "@/features/developer-profiles";
 import { PermissionsSchema } from "../secure-service";
 
 export const backgrounds: PermissionsSchema<"backgrounds", BackgroundsService> =
