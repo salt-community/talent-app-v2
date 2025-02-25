@@ -20,24 +20,24 @@ export function getDeveloperProfilesService() {
   return developerProfilesService;
 }
 
-const insecureBackgroundsService = createBackgroundsService(
-  createRepository(db),
-  createSearchApi({
-    indexUid: "backgrounds",
-    primaryKey: "developerProfileId",
-    displayedAttributes: ["developerProfileId"],
-    searchableAttributes: [
-      "skills",
-      "educations",
-      "languages",
-      "name",
-      "title",
-      "bio",
-    ],
-  })
-);
+// const insecureBackgroundsService = createBackgroundsService(
+//   createRepository(db),
+//   createSearchApi({
+//     indexUid: "backgrounds",
+//     primaryKey: "developerProfileId",
+//     displayedAttributes: ["developerProfileId"],
+//     searchableAttributes: [
+//       "skills",
+//       "educations",
+//       "languages",
+//       "name",
+//       "title",
+//       "bio",
+//     ],
+//   })
+// );
 
-export const backgroundsService = secureService(
-  "backgrounds",
-  insecureBackgroundsService
-);
+// export const backgroundsService = secureService(
+//   "backgrounds",
+//   insecureBackgroundsService
+// );
