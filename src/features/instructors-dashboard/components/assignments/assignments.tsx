@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { instructorService } from "../../instance";
 import AddAssignmentButton from "./add-assignment-button";
 import { Separator } from "@/components";
-import { CopyAssignmentButton } from "./copy-assignment-button";
+import { CopyAssignmentButton } from "./copy-assignment-url-button";
 import { DeleteAssignmentButton } from "./delete-assignment-button";
 
 type Props = {
