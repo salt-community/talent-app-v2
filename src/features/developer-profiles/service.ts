@@ -15,7 +15,7 @@ export function createDeveloperProfilesService(
 ) {
   const repository = createDevelopersRepository(db);
 
-  const insecureBackgroundsService = createBackgroundsService(
+  const backgroundsService = createBackgroundsService(
     createRepository(db),
     createSearchApi({
       indexUid: "backgrounds",
@@ -30,11 +30,6 @@ export function createDeveloperProfilesService(
         "bio",
       ],
     })
-  );
-
-  const backgroundsService = secureService(
-    "backgrounds",
-    insecureBackgroundsService
   );
 
   return {
