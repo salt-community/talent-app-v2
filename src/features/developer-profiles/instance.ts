@@ -2,9 +2,9 @@ import { db } from "@/db";
 
 import { createDeveloperProfilesService } from "./service";
 import { iamService, secureService } from "../iam";
-import { createBackgroundsService } from "./background-service";
-import { createRepository } from "./background-repository";
-import { createSearchApi } from "./backgrounds/backgrounds-search";
+// import { createBackgroundsService } from "./background-service";
+// import { createRepository } from "./background-repository";
+// import { createSearchApi } from "./backgrounds/backgrounds-search";
 
 export const insecureDeveloperProfilesService = createDeveloperProfilesService(
   db,
