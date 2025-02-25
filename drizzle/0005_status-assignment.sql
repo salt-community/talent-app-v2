@@ -1,0 +1,1 @@
+ALTER TABLE "assignment_scores" ADD COLUMN "status" varchar DEFAULT 'unpublished';

@@ -36,6 +36,13 @@
       "when": 1740150116073,
       "tag": "0004_slug_category_assignment",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1740480081469,
+      "tag": "0005_status-assignment",
+      "breakpoints": true
     }
   ]
 }

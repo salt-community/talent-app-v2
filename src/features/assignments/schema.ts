@@ -24,4 +24,5 @@ export const assignmentScores = pgTable("assignment_scores", {
   comment: varchar("comment").default(""),
   category: varchar("category").default(""),
   createdAt: timestamp("created_at").defaultNow(),
+  status: varchar("status").default("unpublished"),
 });
