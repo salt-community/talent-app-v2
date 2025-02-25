@@ -97,5 +97,20 @@ export function createAssignmentsRepository(db: Db) {
 
       return assignment;
     },
+    async getScoreByAssignmentIdAndIdentityId(
+      assignmentId: string,
+      identityId: string
+    ) {
+      const [assignmentScore] = await db
+        .select()
+        .from(assignmentScores)
+        .where(
+          eq(
+            assignmentScores.assignmentId,
+            assignmentId && eq(assignmentScores.identityId, identityId)
+          )
+        );
+      return assignmentScore;
+    },
   };
 }

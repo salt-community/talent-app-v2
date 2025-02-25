@@ -32,6 +32,16 @@ export function createAssignmentsService(db: Db) {
       return await repo.getScoresByAssignmentId(assignmentId);
     },
 
+    async getScoreByAssignmentIdAndIdentityId(
+      assignmentId: string,
+      identityId: string
+    ) {
+      return await repo.getScoreByAssignmentIdAndIdentityId(
+        assignmentId,
+        identityId
+      );
+    },
+
     async getAverageScoresByIdentityId(identityId: string) {
       const assignmentScores = await repo.getScoresByIdentityId(identityId);
       const validScores = assignmentScores
