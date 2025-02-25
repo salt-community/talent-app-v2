@@ -1,6 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { adminService } from "./instance";
+import { exec } from "child_process";
+import { promisify } from "util";
 
 export async function deleteDeveloperProfileAction(id: string) {
   await adminService.deleteDeveloperProfile(id);
@@ -43,4 +45,11 @@ export async function updateRoleAction(id: string, newRole: string) {
 export async function deleteUserAction(id: string) {
   await adminService.deleteUser(id);
   revalidatePath("/admin/identities");
+}
+
+export async function runMigration() {
+  const execPromise = promisify(exec);
+  await execPromise("npm run db:migrate", {
+    cwd: process.cwd(),
+  });
 }
