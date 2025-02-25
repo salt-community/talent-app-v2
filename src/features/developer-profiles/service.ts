@@ -4,14 +4,40 @@ import { developerProfilesService } from "./instance";
 import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import { DeveloperProfileInsert, SessionClaims } from "./types";
-import { GetCurrentUser } from "../iam";
+import { GetCurrentUser, secureService } from "../iam";
+import { createBackgroundsService } from "./background-service";
+import { createRepository } from "./background-repository";
+import { createSearchApi } from "./backgrounds/backgrounds-search";
 
 export function createDeveloperProfilesService(
   db: Db,
   getCurrentUser: GetCurrentUser
 ) {
   const repository = createDevelopersRepository(db);
+
+  const insecureBackgroundsService = createBackgroundsService(
+    createRepository(db),
+    createSearchApi({
+      indexUid: "backgrounds",
+      primaryKey: "developerProfileId",
+      displayedAttributes: ["developerProfileId"],
+      searchableAttributes: [
+        "skills",
+        "educations",
+        "languages",
+        "name",
+        "title",
+        "bio",
+      ],
+    })
+  );
+
+  const backgroundsService = secureService(
+    "backgrounds",
+    insecureBackgroundsService
+  );
   return {
+    ...backgroundsService,
     async getAll() {
       return await repository.getAll();
     },
