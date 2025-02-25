@@ -1,5 +1,4 @@
-import { BackgroundsService } from "../backgrounds/types";
-import { DevelopersService } from "../developer-profiles";
+import { BackgroundsService, DevelopersService } from "../developer-profiles";
 import { createService } from "../iam/service";
 import { createAdminService } from "./service";
 
