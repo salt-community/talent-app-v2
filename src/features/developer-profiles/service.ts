@@ -199,6 +199,12 @@ export function createDeveloperProfilesService(
 
       return background;
     },
+    async getAllSkills() {
+      return (await backgroundRepository.getAllSkills()).filter(
+        (skill, index, array) =>
+          array.findIndex((s) => s.name === skill.name) === index
+      );
+    },
   };
 }
 

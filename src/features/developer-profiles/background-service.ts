@@ -69,12 +69,12 @@ export function createBackgroundsService(
 
     //   return background;
     // },
-    async getAllSkills() {
-      return (await repository.getAllSkills()).filter(
-        (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index
-      );
-    },
+    // async getAllSkills() {
+    //   return (await repository.getAllSkills()).filter(
+    //     (skill, index, array) =>
+    //       array.findIndex((s) => s.name === skill.name) === index
+    //   );
+    // },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
