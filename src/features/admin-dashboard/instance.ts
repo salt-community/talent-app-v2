@@ -10,6 +10,8 @@ export const adminService = createAdminService(
     deleteDeveloperProfileByIdentityId:
       developerProfilesService.deleteByIdentityId,
     getDeveloperProfileIdById: developerProfilesService.getAllById,
+    deleteMeiliSearchDocument:
+      developerProfilesService.deleteMeiliSearchDocument,
   },
   {
     isHealthOk: developerProfilesService.isSearchHealthOk,

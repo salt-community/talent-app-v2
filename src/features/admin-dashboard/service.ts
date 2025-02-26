@@ -57,6 +57,9 @@ export function createAdminService(
       for (const developerProfile of developerProfiles) {
         await deleteBackgroundById(developerProfile.id);
         await deleteProjectsByDeveloperProfileId(developerProfile.id);
+        await developerProfileService.deleteMeiliSearchDocument(
+          developerProfile.id
+        );
       }
       await developerProfileService.deleteDeveloperProfileByIdentityId(
         identityId

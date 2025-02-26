@@ -27,6 +27,7 @@ export type DeveloperProfileService = {
   updateStatus: DevelopersService["updateStatus"];
   deleteDeveloperProfileByIdentityId: DevelopersService["deleteByIdentityId"];
   getDeveloperProfileIdById: DevelopersService["getAllById"];
+  deleteMeiliSearchDocument: DevelopersService["deleteMeiliSearchDocument"];
 };
 
 export type Synonym = [string, string[]];
