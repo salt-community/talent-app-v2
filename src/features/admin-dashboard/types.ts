@@ -1,16 +1,19 @@
-import { BackgroundsService, DevelopersService } from "../developer-profiles";
+import {
+  DeveloperProfilesService,
+  DevelopersService,
+} from "../developer-profiles";
 import { createService } from "../iam/service";
 import { createAdminService } from "./service";
 
 export type SearchConfigurationClient = {
-  isHealthOk: BackgroundsService["isSearchHealthOk"];
-  repopulate: BackgroundsService["repopulateMeiliSearch"];
-  sync: BackgroundsService["syncMeilisearch"];
-  doesNeedSync: BackgroundsService["doesMeilisearchNeedSync"];
-  getSettings: BackgroundsService["getMeilisearchSettings"];
-  updateSettings: BackgroundsService["updateMeilisearchSettings"];
-  resetSettings: BackgroundsService["resetMeilisearchSettings"];
-  ensureSearchIndex: BackgroundsService["ensureSearchIndex"];
+  isHealthOk: DeveloperProfilesService["isSearchHealthOk"];
+  repopulate: DeveloperProfilesService["repopulateMeiliSearch"];
+  sync: DeveloperProfilesService["syncMeilisearch"];
+  doesNeedSync: DevelopersService["doesMeilisearchNeedSync"];
+  getSettings: DeveloperProfilesService["getMeilisearchSettings"];
+  updateSettings: DeveloperProfilesService["updateMeilisearchSettings"];
+  resetSettings: DeveloperProfilesService["resetMeilisearchSettings"];
+  ensureSearchIndex: DeveloperProfilesService["ensureSearchIndex"];
 };
 type iamService = ReturnType<typeof createService>;
 export type IamService = {

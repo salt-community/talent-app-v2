@@ -11,7 +11,6 @@ import {
   SessionClaims,
 } from "./types";
 import { GetCurrentUser } from "../iam";
-import { createBackgroundsService } from "./background-service";
 import { createRepository } from "./background-repository";
 import { createSearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
@@ -39,10 +38,6 @@ export function createDeveloperProfilesService(
     ],
   });
 
-  const backgroundsService = createBackgroundsService(
-    backgroundRepository,
-    backgroundsSearchApi
-  );
   const backgroundsSearchService =
     createBackgroundsSearchService(backgroundsSearchApi);
 
@@ -76,7 +71,6 @@ export function createDeveloperProfilesService(
   }
 
   return {
-    ...backgroundsService,
     ...backgroundsSearchService,
     async getAll() {
       return await repository.getAll();

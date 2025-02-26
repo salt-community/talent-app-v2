@@ -1,7 +1,6 @@
 import {
   assignmentPermissions,
   assignments,
-  backgrounds,
   cohorts,
   developerProfiles,
   projectPermissions,
@@ -25,7 +24,6 @@ export const rolesPermissions = {
     assignments.getAssignmentBySlug,
   ]),
   admin: new Set([
-    ...Object.values(backgrounds),
     ...Object.values(projects),
     ...Object.values(developerProfiles),
     ...Object.values(assignments),
