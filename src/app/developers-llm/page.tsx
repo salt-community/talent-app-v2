@@ -1,5 +1,5 @@
 import { errorHandler } from "@/lib";
-import { backgroundsService, Developers } from "@/features/developer-profiles";
+import { developerProfilesService, Developers } from "@/features/developer-profiles";
 import { Search } from "../developers/search";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
@@ -9,7 +9,7 @@ export default async function Page({ searchParams }: Props) {
   let developerProfileIds: string[] = [];
   try {
     developerProfileIds =
-      await backgroundsService.searchDeveloperProfileIdsWithLLM(search);
+      await developerProfilesService.searchDeveloperProfileIdsWithLLM(search);
   } catch (error) {
     errorHandler(error);
   }
