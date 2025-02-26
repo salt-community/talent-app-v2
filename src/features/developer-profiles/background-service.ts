@@ -116,12 +116,12 @@ export function createBackgroundsService(
 
       await backgroundsSearchApi.upsertDocuments(backgrounds);
     },
-    async syncMeilisearch() {
-      const outboxMessages = await repository.getAllOutboxMessage();
-      for (const outboxMessage of outboxMessages) {
-        updateMeilisearchFor(outboxMessage);
-      }
-    },
+    // async syncMeilisearch() {
+    //   const outboxMessages = await repository.getAllOutboxMessage();
+    //   for (const outboxMessage of outboxMessages) {
+    //     updateMeilisearchFor(outboxMessage);
+    //   }
+    // },
     async doesMeilisearchNeedSync() {
       return (await repository.getAllOutboxMessage()).length > 0;
     },

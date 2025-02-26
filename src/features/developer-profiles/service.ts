@@ -3,34 +3,72 @@ import { auth } from "@clerk/nextjs/server";
 import { developerProfilesService } from "./instance";
 import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
-import { DeveloperProfileInsert, SessionClaims } from "./types";
+import {
+  DeveloperProfileInsert,
+  OutboxMessageSelect,
+  SessionClaims,
+} from "./types";
 import { GetCurrentUser } from "../iam";
 import { createBackgroundsService } from "./background-service";
 import { createRepository } from "./background-repository";
 import { createSearchApi } from "./backgrounds-search";
+import { TaskStatus } from "meilisearch";
+
+const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
 export function createDeveloperProfilesService(
   db: Db,
   getCurrentUser: GetCurrentUser
 ) {
   const repository = createDevelopersRepository(db);
+  const backgroundRepository = createRepository(db);
+  const backgroundsSearchApi = createSearchApi({
+    indexUid: "backgrounds",
+    primaryKey: "developerProfileId",
+    displayedAttributes: ["developerProfileId"],
+    searchableAttributes: [
+      "skills",
+      "educations",
+      "languages",
+      "name",
+      "title",
+      "bio",
+    ],
+  });
 
   const backgroundsService = createBackgroundsService(
-    createRepository(db),
-    createSearchApi({
-      indexUid: "backgrounds",
-      primaryKey: "developerProfileId",
-      displayedAttributes: ["developerProfileId"],
-      searchableAttributes: [
-        "skills",
-        "educations",
-        "languages",
-        "name",
-        "title",
-        "bio",
-      ],
-    })
+    backgroundRepository,
+    backgroundsSearchApi
   );
+
+  async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
+    let succeeded = false;
+    switch (outboxMessage.operation) {
+      case "upsert":
+        const background =
+          await backgroundRepository.getBackgroundByDeveloperProfileId(
+            outboxMessage.developerProfileId
+          );
+        if (!background) {
+          succeeded = true;
+          break;
+        }
+        const upsertStatus = await backgroundsSearchApi.upsertDocuments([
+          background[0],
+        ]);
+        succeeded = OK_STATUSES.includes(upsertStatus);
+        break;
+      case "delete":
+        const deleteStatus = await backgroundsSearchApi.deleteDocument(
+          outboxMessage.developerProfileId
+        );
+        succeeded = OK_STATUSES.includes(deleteStatus);
+        break;
+    }
+    if (succeeded) {
+      await backgroundRepository.removeOutboxMessage(outboxMessage.id);
+    }
+  }
 
   return {
     ...backgroundsService,
@@ -127,8 +165,16 @@ export function createDeveloperProfilesService(
         }
       }
     },
+    //imported service functions from backgrounds
+    async syncMeilisearch() {
+      const outboxMessages = await backgroundRepository.getAllOutboxMessage();
+      for (const outboxMessage of outboxMessages) {
+        updateMeilisearchFor(outboxMessage);
+      }
+    },
   };
 }
+
 function generateSlug(title: string) {
   return title
     .toLowerCase()
