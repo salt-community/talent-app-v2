@@ -1,8 +1,9 @@
-import { languages, meiliSearchOutbox } from "./backgrounds-db-schema";
+import { meiliSearchOutbox } from "./backgrounds-db-schema";
 import {
   backgrounds,
   developerProfiles,
   educations,
+  languages,
   skills,
 } from "./db-schema";
 import { createDeveloperProfilesService } from "./service";

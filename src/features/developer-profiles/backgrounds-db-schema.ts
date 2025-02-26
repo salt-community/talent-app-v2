@@ -28,14 +28,14 @@ import { backgrounds } from "./db-schema";
 //   name: varchar().notNull(),
 // });
 
-export const languages = pgTable("background_languages", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  backgroundId: integer("background_id")
-    .notNull()
-    .references(() => backgrounds.id, { onDelete: "cascade" }),
-  name: varchar().notNull(),
-  level: integer().notNull().default(5),
-});
+// export const languages = pgTable("background_languages", {
+//   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+//   backgroundId: integer("background_id")
+//     .notNull()
+//     .references(() => backgrounds.id, { onDelete: "cascade" }),
+//   name: varchar().notNull(),
+//   level: integer().notNull().default(5),
+// });
 
 export const meiliSearchOutbox = pgTable("meili_search_outbox", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
