@@ -5,6 +5,7 @@ import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import {
   BackgroundInsert,
+  BackgroundUpdate,
   DeveloperProfileInsert,
   OutboxMessageSelect,
   SessionClaims,
@@ -225,6 +226,14 @@ export function createDeveloperProfilesService(
       const status = await backgroundsSearchApi.upsertDocuments([
         { id: backgroundId, ...background },
       ]);
+      if (OK_STATUSES.includes(status)) {
+        await backgroundRepository.removeOutboxMessage(outboxMessageId);
+      }
+    },
+    async updateBackground(background: BackgroundUpdate) {
+      const { outboxMessageId } = await backgroundRepository.update(background);
+
+      const status = await backgroundsSearchApi.upsertDocuments([background]);
       if (OK_STATUSES.includes(status)) {
         await backgroundRepository.removeOutboxMessage(outboxMessageId);
       }

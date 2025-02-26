@@ -94,14 +94,14 @@ export function createBackgroundsService(
     //   }
     // },
 
-    async updateBackground(background: BackgroundUpdate) {
-      const { outboxMessageId } = await repository.update(background);
+    // async updateBackground(background: BackgroundUpdate) {
+    //   const { outboxMessageId } = await repository.update(background);
 
-      const status = await backgroundsSearchApi.upsertDocuments([background]);
-      if (OK_STATUSES.includes(status)) {
-        await repository.removeOutboxMessage(outboxMessageId);
-      }
-    },
+    //   const status = await backgroundsSearchApi.upsertDocuments([background]);
+    //   if (OK_STATUSES.includes(status)) {
+    //     await repository.removeOutboxMessage(outboxMessageId);
+    //   }
+    // },
 
     async repopulateMeiliSearch() {
       await backgroundsSearchApi.deleteIndex();
