@@ -4,7 +4,7 @@ import {
 } from "./instance";
 import { IdentitySelect } from "../iam";
 import { DeveloperProfileInsert } from "./types";
-import { skills } from "./backgrounds/seed-data";
+import { skills } from "./seed-data";
 import { faker } from "@faker-js/faker";
 
 export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
