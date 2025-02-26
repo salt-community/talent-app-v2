@@ -6,6 +6,7 @@ import { SubmitScoresButton } from "./submit-scores-button";
 export async function AssignmentComponent({ slug }: { slug: string }) {
   const assignments = await instructorService.getAssignmentBySlug(slug);
   if (!assignments) return null;
+
   const developers = await instructorService.getCohortStudentsByCohortId(
     assignments.cohortId
   );
