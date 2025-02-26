@@ -75,18 +75,18 @@ export function createBackgroundsService(
     //       array.findIndex((s) => s.name === skill.name) === index
     //   );
     // },
-    async getAllLanguages() {
-      return (await repository.getAllLanguages()).filter(
-        (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index
-      );
-    },
-    async getAllEducations() {
-      return (await repository.getAllEducations()).filter(
-        (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index
-      );
-    },
+    // async getAllLanguages() {
+    //   return (await repository.getAllLanguages()).filter(
+    //     (language, index, array) =>
+    //       array.findIndex((l) => l.name === language.name) === index
+    //   );
+    // },
+    // async getAllEducations() {
+    //   return (await repository.getAllEducations()).filter(
+    //     (education, index, array) =>
+    //       array.findIndex((e) => e.name === education.name) === index
+    //   );
+    // },
     async addBackground(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } =
         await repository.add(background);
