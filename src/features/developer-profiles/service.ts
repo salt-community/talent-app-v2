@@ -37,7 +37,7 @@ export function createDeveloperProfilesService(
       "bio",
     ],
     embedders:
-      process.env.NEXT_PUBLIC_LLM_ENABLED === "ON"
+      process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON"
         ? {
             openAiSearch: {
               source: "openAi",

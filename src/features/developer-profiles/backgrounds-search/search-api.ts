@@ -57,7 +57,7 @@ export function createSearchApi({
 
       let documents: Record<string, unknown>[] | null = null;
 
-      const llmIsEnabled = process.env.NEXT_PUBLIC_LLM_ENABLED === "ON";
+      const llmIsEnabled = process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON";
       if (isSearchEmpty) {
         const { results } = await index.getDocuments();
         documents = results;
