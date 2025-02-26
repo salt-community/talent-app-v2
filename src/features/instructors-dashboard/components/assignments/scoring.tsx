@@ -10,7 +10,9 @@ type Props = {
 
 export function Scoring({ assignment, onSuccess }: Props) {
   const [scores, setScores] = useState<Record<string, string>>({});
-  const [comment, setComment] = useState<string>("");
+  const [comment, setComment] = useState<string>(
+    assignment.assignment.comment || ""
+  );
   const { toast } = useToast();
 
   const handleScoreChange = (category: string, value: string) => {

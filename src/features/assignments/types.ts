@@ -9,6 +9,8 @@ export type deleteAssignmentScoreById =
 export type DeleteAssignmentById = AssignmentsService["deleteAssignment"];
 export type GetAssignmentBySlug = AssignmentsService["getAssignmentBySlug"];
 export type CreateAssignmentScore = AssignmentsService["createAssignmentScore"];
+export type GetScoresByAssignmentId =
+  AssignmentsService["getScoresByAssignmentId"];
 export type GetScoreByAssignmentIdAndIdentityId =
   AssignmentsService["getScoreByAssignmentIdAndIdentityId"];
 

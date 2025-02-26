@@ -79,14 +79,11 @@ export function createInstructorService(
     async addScoreToAssignment({ assignment }: AssignmentInsert) {
       return await addScoreToAssignment(assignment);
     },
-    async getScoreByAssignmentIdAndIdentityId(
-      assignmentId: string,
-      identityId: string
-    ) {
-      return await getScoreByAssignmentIdAndIdentityId(
-        assignmentId,
-        identityId
-      );
+    async getScoreByAssignmentIdAndIdentityId(args: {
+      assignmentId: string;
+      identityId: string;
+    }) {
+      return await getScoreByAssignmentIdAndIdentityId(args);
     },
   };
 }

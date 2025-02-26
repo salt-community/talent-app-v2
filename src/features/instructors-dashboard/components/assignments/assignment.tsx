@@ -4,15 +4,16 @@ import Developer from "./developers";
 import { SubmitScoresButton } from "./submit-scores-button";
 
 export async function AssignmentComponent({ slug }: { slug: string }) {
-  const assignment = await instructorService.getAssignmentBySlug(slug);
-  if (!assignment) return null;
+  const assignments = await instructorService.getAssignmentBySlug(slug);
+  if (!assignments) return null;
   const developers = await instructorService.getCohortStudentsByCohortId(
-    assignment.cohortId
+    assignments.cohortId
   );
   if (!developers) return null;
+
   return (
     <div className="max-w-6xl mx-auto p-4 font-sans">
-      <h1 className="text-3xl font-bold mb-4">{assignment.title}</h1>
+      <h1 className="text-3xl font-bold mb-4">{assignments.title}</h1>
       <hr className="mb-6" />
       <h2 className="text-2xl font-bold mb-4">Assignment Details</h2>
       <div className="grid grid-cols-1 gap-4 mb-6">
@@ -31,21 +32,30 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
           <h3 className="font-medium">Total students</h3>
         </div>
         <div>
-          {developers.map((developer) => (
+          {developers.map(async (developer) => (
             <Developer
               key={developer.id}
               developer={developer}
               assignment={{
                 assignment: {
-                  assignmentId: assignment.id,
+                  assignmentId: assignments.id,
                   identityId: developer.id,
-                  title: assignment.title,
-                  category: assignment.categories,
-                  comment: assignment.comment,
+                  title: assignments.title,
+                  category: assignments.categories,
+                  comment:
+                    (
+                      await instructorService.getScoreByAssignmentIdAndIdentityId(
+                        {
+                          assignmentId: assignments.id,
+                          identityId: developer.id,
+                        }
+                      )
+                    )?.comment ?? null,
                 },
               }}
             />
           ))}
+          {/* Need to be refactor later */}
         </div>
       </div>
     </div>

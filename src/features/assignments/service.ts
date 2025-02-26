@@ -32,14 +32,11 @@ export function createAssignmentsService(db: Db) {
       return await repo.getScoresByAssignmentId(assignmentId);
     },
 
-    async getScoreByAssignmentIdAndIdentityId(
-      assignmentId: string,
-      identityId: string
-    ) {
-      return await repo.getScoreByAssignmentIdAndIdentityId(
-        assignmentId,
-        identityId
-      );
+    async getScoreByAssignmentIdAndIdentityId(args: {
+      assignmentId: string;
+      identityId: string;
+    }) {
+      return await repo.getAssignmentScoreByIdentityIdAndAssignmentId(args);
     },
 
     async getAverageScoresByIdentityId(identityId: string) {
