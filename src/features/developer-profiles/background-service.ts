@@ -44,9 +44,7 @@ export function createBackgroundsService(
     // async getBackgroundByDeveloperProfileId(developerProfileId: string) {
     //   const [background] =
     //     await repository.getBackgroundById(developerProfileId);
-
     //   type T = typeof background;
-
     //   if (!background) {
     //     return {
     //       id: -1,
@@ -61,7 +59,6 @@ export function createBackgroundsService(
     //       educations: [],
     //     } as T;
     //   }
-
     //   return background;
     // },
     // async getAllSkills() {
@@ -85,7 +82,6 @@ export function createBackgroundsService(
     // async addBackground(background: BackgroundInsert) {
     //   const { outboxMessageId, backgroundId } =
     //     await repository.add(background);
-
     //   const status = await backgroundsSearchApi.upsertDocuments([
     //     { id: backgroundId, ...background },
     //   ]);
@@ -93,22 +89,17 @@ export function createBackgroundsService(
     //     await repository.removeOutboxMessage(outboxMessageId);
     //   }
     // },
-
     // async updateBackground(background: BackgroundUpdate) {
     //   const { outboxMessageId } = await repository.update(background);
-
     //   const status = await backgroundsSearchApi.upsertDocuments([background]);
     //   if (OK_STATUSES.includes(status)) {
     //     await repository.removeOutboxMessage(outboxMessageId);
     //   }
     // },
-
     // async repopulateMeiliSearch() {
     //   await backgroundsSearchApi.deleteIndex();
     //   await backgroundsSearchApi.ensureIndex();
-
     //   const backgrounds = await repository.getAllBackgrounds();
-
     //   await backgroundsSearchApi.upsertDocuments(backgrounds);
     // },
     // async syncMeilisearch() {
@@ -117,12 +108,11 @@ export function createBackgroundsService(
     //     updateMeilisearchFor(outboxMessage);
     //   }
     // },
-    async doesMeilisearchNeedSync() {
-      return (await repository.getAllOutboxMessage()).length > 0;
-    },
-
-    async deleteBackgroundById(developerProfileId: string) {
-      await repository.deleteBackgroundById(developerProfileId);
-    },
+    // async doesMeilisearchNeedSync() {
+    //   return (await repository.getAllOutboxMessage()).length > 0;
+    // },
+    // async deleteBackgroundById(developerProfileId: string) {
+    //   await repository.deleteBackgroundById(developerProfileId);
+    // },
   };
 }
