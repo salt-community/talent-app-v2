@@ -1,9 +1,10 @@
+import { languages, meiliSearchOutbox } from "./backgrounds-db-schema";
 import {
+  backgrounds,
+  developerProfiles,
   educations,
-  languages,
-  meiliSearchOutbox,
-} from "./backgrounds-db-schema";
-import { backgrounds, developerProfiles, skills } from "./db-schema";
+  skills,
+} from "./db-schema";
 import { createDeveloperProfilesService } from "./service";
 import { JwtPayload } from "jsonwebtoken";
 

@@ -29,3 +29,10 @@ export const skills = pgTable("background_skills", {
   name: varchar().notNull(),
   level: integer().notNull().default(5),
 });
+export const educations = pgTable("background_educations", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  backgroundId: integer("background_id")
+    .notNull()
+    .references(() => backgrounds.id, { onDelete: "cascade" }),
+  name: varchar().notNull(),
+});
