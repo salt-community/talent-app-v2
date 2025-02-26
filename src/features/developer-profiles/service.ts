@@ -13,6 +13,7 @@ import { createBackgroundsService } from "./background-service";
 import { createRepository } from "./background-repository";
 import { createSearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
+import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
@@ -40,6 +41,8 @@ export function createDeveloperProfilesService(
     backgroundRepository,
     backgroundsSearchApi
   );
+  const backgroundsSearchService =
+    createBackgroundsSearchService(backgroundsSearchApi);
 
   async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
     let succeeded = false;
@@ -72,6 +75,7 @@ export function createDeveloperProfilesService(
 
   return {
     ...backgroundsService,
+    ...backgroundsSearchService,
     async getAll() {
       return await repository.getAll();
     },

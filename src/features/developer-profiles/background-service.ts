@@ -13,39 +13,39 @@ export function createBackgroundsService(
   repository: Repository,
   backgroundsSearchApi: SearchApi
 ) {
-  const backgroundsSearchService =
-    createBackgroundsSearchService(backgroundsSearchApi);
+  // const backgroundsSearchService =
+  //   createBackgroundsSearchService(backgroundsSearchApi);
 
-  async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
-    let succeeded = false;
-    switch (outboxMessage.operation) {
-      case "upsert":
-        const background = await repository.getBackgroundByDeveloperProfileId(
-          outboxMessage.developerProfileId
-        );
-        if (!background) {
-          succeeded = true;
-          break;
-        }
-        const upsertStatus = await backgroundsSearchApi.upsertDocuments([
-          background[0],
-        ]);
-        succeeded = OK_STATUSES.includes(upsertStatus);
-        break;
-      case "delete":
-        const deleteStatus = await backgroundsSearchApi.deleteDocument(
-          outboxMessage.developerProfileId
-        );
-        succeeded = OK_STATUSES.includes(deleteStatus);
-        break;
-    }
-    if (succeeded) {
-      await repository.removeOutboxMessage(outboxMessage.id);
-    }
-  }
+  // async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
+  //   let succeeded = false;
+  //   switch (outboxMessage.operation) {
+  //     case "upsert":
+  //       const background = await repository.getBackgroundByDeveloperProfileId(
+  //         outboxMessage.developerProfileId
+  //       );
+  //       if (!background) {
+  //         succeeded = true;
+  //         break;
+  //       }
+  //       const upsertStatus = await backgroundsSearchApi.upsertDocuments([
+  //         background[0],
+  //       ]);
+  //       succeeded = OK_STATUSES.includes(upsertStatus);
+  //       break;
+  //     case "delete":
+  //       const deleteStatus = await backgroundsSearchApi.deleteDocument(
+  //         outboxMessage.developerProfileId
+  //       );
+  //       succeeded = OK_STATUSES.includes(deleteStatus);
+  //       break;
+  //   }
+  //   if (succeeded) {
+  //     await repository.removeOutboxMessage(outboxMessage.id);
+  //   }
+  // }
 
   return {
-    ...backgroundsSearchService,
+    // ...backgroundsSearchService,
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
       const [background] =
         await repository.getBackgroundById(developerProfileId);
