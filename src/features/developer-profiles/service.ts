@@ -176,6 +176,29 @@ export function createDeveloperProfilesService(
         updateMeilisearchFor(outboxMessage);
       }
     },
+    async getBackgroundByDeveloperProfileId(developerProfileId: string) {
+      const [background] =
+        await backgroundRepository.getBackgroundById(developerProfileId);
+
+      type T = typeof background;
+
+      if (!background) {
+        return {
+          id: -1,
+          avatarUrl: "",
+          name: "<New Profile>",
+          developerProfileId,
+          title: "",
+          bio: "",
+          links: [],
+          skills: [],
+          languages: [],
+          educations: [],
+        } as T;
+      }
+
+      return background;
+    },
   };
 }
 

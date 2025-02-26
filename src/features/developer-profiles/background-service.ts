@@ -46,29 +46,29 @@ export function createBackgroundsService(
 
   return {
     // ...backgroundsSearchService,
-    async getBackgroundByDeveloperProfileId(developerProfileId: string) {
-      const [background] =
-        await repository.getBackgroundById(developerProfileId);
+    // async getBackgroundByDeveloperProfileId(developerProfileId: string) {
+    //   const [background] =
+    //     await repository.getBackgroundById(developerProfileId);
 
-      type T = typeof background;
+    //   type T = typeof background;
 
-      if (!background) {
-        return {
-          id: -1,
-          avatarUrl: "",
-          name: "<New Profile>",
-          developerProfileId,
-          title: "",
-          bio: "",
-          links: [],
-          skills: [],
-          languages: [],
-          educations: [],
-        } as T;
-      }
+    //   if (!background) {
+    //     return {
+    //       id: -1,
+    //       avatarUrl: "",
+    //       name: "<New Profile>",
+    //       developerProfileId,
+    //       title: "",
+    //       bio: "",
+    //       links: [],
+    //       skills: [],
+    //       languages: [],
+    //       educations: [],
+    //     } as T;
+    //   }
 
-      return background;
-    },
+    //   return background;
+    // },
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
