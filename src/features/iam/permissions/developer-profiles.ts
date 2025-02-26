@@ -41,4 +41,5 @@ export const developerProfiles: PermissionsSchema<
   syncMeilisearch: "developerProfiles.syncMeilisearch",
   updateBackground: "developerProfiles.updateBackground",
   updateMeilisearchSettings: "developerProfiles.updateMeilisearchSettings",
+  deleteMeiliSearchDocument: "developerProfiles.deleteMeiliSearchDocument",
 };

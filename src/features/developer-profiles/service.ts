@@ -243,9 +243,11 @@ export function createDeveloperProfilesService(
     async doesMeilisearchNeedSync() {
       return (await backgroundRepository.getAllOutboxMessage()).length > 0;
     },
-
     async deleteBackgroundById(developerProfileId: string) {
       await backgroundRepository.deleteBackgroundById(developerProfileId);
+    },
+    async deleteMeiliSearchDocument(developerProfileId: string) {
+      await backgroundsSearchApi.deleteDocument(developerProfileId);
     },
   };
 }
