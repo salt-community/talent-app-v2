@@ -1,8 +1,9 @@
 "use server";
+import { resolve } from "node:path";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { revalidatePath } from "next/cache";
 import { adminService } from "./instance";
-import { exec } from "child_process";
-import { promisify } from "util";
 
 export async function deleteDeveloperProfileAction(id: string) {
   await adminService.deleteDeveloperProfile(id);
@@ -48,8 +49,7 @@ export async function deleteUserAction(id: string) {
 }
 
 export async function runMigration() {
-  const execPromise = promisify(exec);
-  await execPromise("npm run db:migrate", {
-    cwd: process.cwd(),
-  });
+  const rootDir = process.cwd();
+  const db = drizzle(process.env.DATABASE_URL!);
+  await migrate(db, { migrationsFolder: resolve(rootDir, "./drizzle") });
 }
