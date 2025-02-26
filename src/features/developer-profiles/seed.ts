@@ -1,8 +1,5 @@
 "use server";
-import {
-  developerProfilesService,
-  insecureDeveloperProfilesService,
-} from "./instance";
+import { insecureDeveloperProfilesService } from "./instance";
 import { IdentitySelect } from "../iam";
 import { DeveloperProfileInsert } from "./types";
 import { skills } from "./seed-data";
