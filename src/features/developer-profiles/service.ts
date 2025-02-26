@@ -238,6 +238,14 @@ export function createDeveloperProfilesService(
         await backgroundRepository.removeOutboxMessage(outboxMessageId);
       }
     },
+    async repopulateMeiliSearch() {
+      await backgroundsSearchApi.deleteIndex();
+      await backgroundsSearchApi.ensureIndex();
+
+      const backgrounds = await backgroundRepository.getAllBackgrounds();
+
+      await backgroundsSearchApi.upsertDocuments(backgrounds);
+    },
   };
 }
 

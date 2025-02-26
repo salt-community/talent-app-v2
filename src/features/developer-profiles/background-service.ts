@@ -103,14 +103,14 @@ export function createBackgroundsService(
     //   }
     // },
 
-    async repopulateMeiliSearch() {
-      await backgroundsSearchApi.deleteIndex();
-      await backgroundsSearchApi.ensureIndex();
+    // async repopulateMeiliSearch() {
+    //   await backgroundsSearchApi.deleteIndex();
+    //   await backgroundsSearchApi.ensureIndex();
 
-      const backgrounds = await repository.getAllBackgrounds();
+    //   const backgrounds = await repository.getAllBackgrounds();
 
-      await backgroundsSearchApi.upsertDocuments(backgrounds);
-    },
+    //   await backgroundsSearchApi.upsertDocuments(backgrounds);
+    // },
     // async syncMeilisearch() {
     //   const outboxMessages = await repository.getAllOutboxMessage();
     //   for (const outboxMessage of outboxMessages) {
