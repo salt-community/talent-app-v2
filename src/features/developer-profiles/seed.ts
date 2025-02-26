@@ -1,3 +1,4 @@
+"use server";
 import {
   developerProfilesService,
   insecureDeveloperProfilesService,
@@ -115,8 +116,7 @@ export async function backgroundsSeed(developerProfileIds: string[]) {
   });
 
   for (const background of backgrounds) {
-    // await developerProfilesService.add(background);
-    await developerProfilesService.addBackground(background);
+    await insecureDeveloperProfilesService.addBackground(background);
   }
 
   console.log("Done seeding Backgrounds!");
