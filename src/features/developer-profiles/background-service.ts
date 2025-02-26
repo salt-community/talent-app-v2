@@ -1,12 +1,7 @@
-import {
-  BackgroundInsert,
-  BackgroundUpdate,
-  OutboxMessageSelect,
-} from "./types";
+import { BackgroundInsert, BackgroundUpdate } from "./types";
 import { TaskStatus } from "meilisearch";
 import { Repository } from "./background-repository";
 import { SearchApi } from "./backgrounds-search";
-import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createBackgroundsService(
@@ -87,17 +82,17 @@ export function createBackgroundsService(
     //       array.findIndex((e) => e.name === education.name) === index
     //   );
     // },
-    async addBackground(background: BackgroundInsert) {
-      const { outboxMessageId, backgroundId } =
-        await repository.add(background);
+    // async addBackground(background: BackgroundInsert) {
+    //   const { outboxMessageId, backgroundId } =
+    //     await repository.add(background);
 
-      const status = await backgroundsSearchApi.upsertDocuments([
-        { id: backgroundId, ...background },
-      ]);
-      if (OK_STATUSES.includes(status)) {
-        await repository.removeOutboxMessage(outboxMessageId);
-      }
-    },
+    //   const status = await backgroundsSearchApi.upsertDocuments([
+    //     { id: backgroundId, ...background },
+    //   ]);
+    //   if (OK_STATUSES.includes(status)) {
+    //     await repository.removeOutboxMessage(outboxMessageId);
+    //   }
+    // },
 
     async updateBackground(background: BackgroundUpdate) {
       const { outboxMessageId } = await repository.update(background);
