@@ -7,7 +7,7 @@ import { DeveloperProfileInsert, SessionClaims } from "./types";
 import { GetCurrentUser } from "../iam";
 import { createBackgroundsService } from "./background-service";
 import { createRepository } from "./background-repository";
-import { createSearchApi } from "./backgrounds/backgrounds-search";
+import { createSearchApi } from "./backgrounds-search";
 
 export function createDeveloperProfilesService(
   db: Db,
