@@ -1,4 +1,3 @@
-import { createBackgroundsService } from "./background-service";
 import {
   backgrounds,
   educations,
@@ -88,8 +87,6 @@ export type typeBackground = {
   bio: string;
   links: SocialLink[];
 };
-
-export type BackgroundsService = ReturnType<typeof createBackgroundsService>;
 
 export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;
 export type OutboxMessageSelect = typeof meiliSearchOutbox.$inferSelect;
