@@ -37,8 +37,8 @@ import { backgrounds } from "./db-schema";
 //   level: integer().notNull().default(5),
 // });
 
-export const meiliSearchOutbox = pgTable("meili_search_outbox", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  developerProfileId: uuid("developer_profile_id").notNull(),
-  operation: varchar().notNull(),
-});
+// export const meiliSearchOutbox = pgTable("meili_search_outbox", {
+//   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+//   developerProfileId: uuid("developer_profile_id").notNull(),
+//   operation: varchar().notNull(),
+// });

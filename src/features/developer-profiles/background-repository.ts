@@ -8,9 +8,14 @@ import {
   SkillSelect,
 } from "./types";
 import { sql } from "drizzle-orm";
-import { meiliSearchOutbox } from "./backgrounds-db-schema";
 import { Db } from "@/db";
-import { backgrounds, educations, languages, skills } from "./db-schema";
+import {
+  backgrounds,
+  educations,
+  languages,
+  meiliSearchOutbox,
+  skills,
+} from "./db-schema";
 
 export function createRepository(db: Db) {
   return {

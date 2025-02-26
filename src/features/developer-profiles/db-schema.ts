@@ -44,3 +44,8 @@ export const languages = pgTable("background_languages", {
   name: varchar().notNull(),
   level: integer().notNull().default(5),
 });
+export const meiliSearchOutbox = pgTable("meili_search_outbox", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  developerProfileId: uuid("developer_profile_id").notNull(),
+  operation: varchar().notNull(),
+});
