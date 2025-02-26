@@ -10,8 +10,10 @@ export async function DeveloperProfileLink({
   developerProfileId,
   children,
 }: Props) {
-  const { slug } =
+  const developer =
     await developerProfilesService.getDeveloperById(developerProfileId);
-
-  return <Link href={`/developers/${slug}`}>{children}</Link>;
+  if (developer) {
+    unde;
+    return <Link href={`/developers/${developer.slug}`}>{children}</Link>;
+  }
 }
