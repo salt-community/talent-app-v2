@@ -21,3 +21,11 @@ export const backgrounds = pgTable("backgrounds", {
   bio: varchar().notNull(),
   links: jsonb().$type<SocialLink[]>().notNull(),
 });
+export const skills = pgTable("background_skills", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  backgroundId: integer("background_id")
+    .notNull()
+    .references(() => backgrounds.id, { onDelete: "cascade" }),
+  name: varchar().notNull(),
+  level: integer().notNull().default(5),
+});

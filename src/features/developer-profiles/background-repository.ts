@@ -12,10 +12,9 @@ import {
   educations,
   languages,
   meiliSearchOutbox,
-  skills,
 } from "./backgrounds-db-schema";
 import { Db } from "@/db";
-import { backgrounds } from "./db-schema";
+import { backgrounds, skills } from "./db-schema";
 
 export function createRepository(db: Db) {
   return {
