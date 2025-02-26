@@ -48,9 +48,8 @@ export function createSearchApi({
             model: "text-embedding-3-large",
             apiKey: process.env.OPENAI_API_KEY,
             dimensions: 3072,
-            documentTemplate: `A Software Developer seeking for a jobb with skills {{doc.skills}}
-            with education {{doc.educations}} and languages {{doc.languages}}.
-             Name: {{doc.name}}. Title: {{doc.title}}. Bio: {{doc.bio}}`,
+            documentTemplate: `{{doc.title}} with skills: {{doc.skills}},
+          education: {{doc.educations}}, languages: {{doc.languages}}, bio: {{doc.bio}}`,
           },
         },
       });
@@ -70,11 +69,11 @@ export function createSearchApi({
         documents = results;
       } else {
         search = useLLM
-          ? `Looking for a candidate that would fit to job ad ${search}`
+          ? `Looking for a candidate that would fit to following job ad: ${search}`
           : search;
         const searchParams = useLLM
           ? {
-              hybrid: { embedder: "openAiSearch" },
+              hybrid: { embedder: "openAiSearch", semanticRatio: 0.9 },
             }
           : undefined;
 
