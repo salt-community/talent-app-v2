@@ -13,7 +13,6 @@ export async function DeveloperProfileLink({
   const developer =
     await developerProfilesService.getDeveloperById(developerProfileId);
   if (developer) {
-    unde;
     return <Link href={`/developers/${developer.slug}`}>{children}</Link>;
   }
 }
