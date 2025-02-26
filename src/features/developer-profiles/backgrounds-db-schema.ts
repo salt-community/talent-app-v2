@@ -1,15 +1,15 @@
 import { integer, jsonb, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
-import { SocialLink } from "./types";
+import { backgrounds } from "./db-schema";
 
-export const backgrounds = pgTable("backgrounds", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  developerProfileId: uuid("developer_profile_id").notNull(),
-  avatarUrl: varchar("avatar_url").notNull().default(""),
-  name: varchar().notNull(),
-  title: varchar().notNull(),
-  bio: varchar().notNull(),
-  links: jsonb().$type<SocialLink[]>().notNull(),
-});
+// export const backgrounds = pgTable("backgrounds", {
+//   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+//   developerProfileId: uuid("developer_profile_id").notNull(),
+//   avatarUrl: varchar("avatar_url").notNull().default(""),
+//   name: varchar().notNull(),
+//   title: varchar().notNull(),
+//   bio: varchar().notNull(),
+//   links: jsonb().$type<SocialLink[]>().notNull(),
+// });
 
 export const skills = pgTable("background_skills", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
