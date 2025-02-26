@@ -1,4 +1,4 @@
-import MeiliSearch, { Index, Settings } from "meilisearch";
+import MeiliSearch, { Embedders, Index, Settings } from "meilisearch";
 import { BackgroundUpdate } from "../types";
 
 type InitializeMeiliSearchIndexArgs = {
@@ -6,6 +6,7 @@ type InitializeMeiliSearchIndexArgs = {
   primaryKey: string;
   displayedAttributes: string[];
   searchableAttributes: string[];
+  embedders: Embedders | undefined;
 };
 
 export function createSearchApi({
@@ -13,6 +14,7 @@ export function createSearchApi({
   primaryKey,
   displayedAttributes,
   searchableAttributes,
+  embedders,
 }: InitializeMeiliSearchIndexArgs) {
   const meiliSearch = new MeiliSearch({
     host: process.env.MEILI_SEARCH_URL!,
@@ -42,16 +44,7 @@ export function createSearchApi({
       const updateSettingsTask = await index.updateSettings({
         displayedAttributes,
         searchableAttributes,
-        embedders: {
-          openAiSearch: {
-            source: "openAi",
-            model: "text-embedding-3-large",
-            apiKey: process.env.OPENAI_API_KEY,
-            dimensions: 3072,
-            documentTemplate: `{{doc.title}} with skills: {{doc.skills}},
-          education: {{doc.educations}}, languages: {{doc.languages}}, bio: {{doc.bio}}`,
-          },
-        },
+        embedders,
       });
       await index.waitForTask(updateSettingsTask.taskUid);
     },
@@ -64,18 +57,21 @@ export function createSearchApi({
 
       let documents: Record<string, unknown>[] | null = null;
 
+      const llmIsEnabled = process.env.NEXT_PUBLIC_LLM_ENABLED === "ON";
       if (isSearchEmpty) {
         const { results } = await index.getDocuments();
         documents = results;
       } else {
-        search = useLLM
-          ? `Looking for a candidate that would fit to following job ad: ${search}`
-          : search;
-        const searchParams = useLLM
-          ? {
-              hybrid: { embedder: "openAiSearch", semanticRatio: 0.9 },
-            }
-          : undefined;
+        search =
+          useLLM && llmIsEnabled
+            ? `Looking for a candidate that would fit to following job ad: ${search}`
+            : search;
+        const searchParams =
+          useLLM && llmIsEnabled
+            ? {
+                hybrid: { embedder: "openAiSearch", semanticRatio: 0.9 },
+              }
+            : undefined;
 
         const { hits } = await index.search(search, searchParams);
         documents = hits;
