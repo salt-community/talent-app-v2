@@ -256,7 +256,7 @@ export function createDeveloperProfilesService(
       return (await repository.getAllOutboxMessage()).length > 0;
     },
     async deleteBackgroundById(developerProfileId: string) {
-      await backgroundRepository.deleteBackgroundById(developerProfileId);
+      await repository.deleteBackgroundById(developerProfileId);
     },
     async deleteMeiliSearchDocument(developerProfileId: string) {
       await backgroundsSearchApi.deleteDocument(developerProfileId);

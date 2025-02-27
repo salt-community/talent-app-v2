@@ -45,7 +45,6 @@ export function createRepository(db: Db) {
     //     .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
     //     .groupBy(backgrounds.id);
     // },
-
     // async getBackgroundByDeveloperProfileId(developerProfileId: string) {
     //   return await db
     //     .select({
@@ -131,7 +130,6 @@ export function createRepository(db: Db) {
     //           .values(background)
     //           .returning({ id: backgrounds.id })
     //       )[0].id;
-
     //       await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
     //       for (const skill of background.skills) {
     //         await tx.insert(skills).values({ backgroundId, name: skill });
@@ -144,7 +142,6 @@ export function createRepository(db: Db) {
     //           .insert(educations)
     //           .values({ backgroundId, name: education });
     //       }
-
     //       const outboxMessageId = (
     //         await tx
     //           .insert(meiliSearchOutbox)
@@ -154,7 +151,6 @@ export function createRepository(db: Db) {
     //           })
     //           .returning({ id: meiliSearchOutbox.id })
     //       )[0].id;
-
     //       return { outboxMessageId, backgroundId };
     //     }
     //   );
@@ -178,7 +174,6 @@ export function createRepository(db: Db) {
     //         .update(backgrounds)
     //         .set({ ...rest })
     //         .where(eq(backgrounds.id, backgroundId));
-
     //       await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
     //       for (const skill of background.skills) {
     //         await tx.insert(skills).values({ backgroundId, name: skill });
@@ -198,7 +193,6 @@ export function createRepository(db: Db) {
     //           .values({ backgroundId, name: education });
     //       }
     //     }
-
     //     return (
     //       await tx
     //         .insert(meiliSearchOutbox)
@@ -226,11 +220,11 @@ export function createRepository(db: Db) {
     // async removeOutboxMessage(id: number) {
     //   await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     // },
-    async deleteBackgroundById(developerProfileId: string) {
-      await db
-        .delete(backgrounds)
-        .where(eq(backgrounds.developerProfileId, developerProfileId));
-    },
+    // async deleteBackgroundById(developerProfileId: string) {
+    //   await db
+    //     .delete(backgrounds)
+    //     .where(eq(backgrounds.developerProfileId, developerProfileId));
+    // },
   };
 }
 export type Repository = ReturnType<typeof createRepository>;
