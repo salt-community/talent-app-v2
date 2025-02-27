@@ -78,7 +78,7 @@ export function createDeveloperProfilesService(
         break;
     }
     if (succeeded) {
-      await backgroundRepository.removeOutboxMessage(outboxMessage.id);
+      await repository.removeOutboxMessage(outboxMessage.id);
     }
   }
 
@@ -233,7 +233,7 @@ export function createDeveloperProfilesService(
         { id: backgroundId, ...background },
       ]);
       if (OK_STATUSES.includes(status)) {
-        await backgroundRepository.removeOutboxMessage(outboxMessageId);
+        await repository.removeOutboxMessage(outboxMessageId);
       }
     },
     async updateBackground(background: BackgroundUpdate) {
@@ -241,7 +241,7 @@ export function createDeveloperProfilesService(
 
       const status = await backgroundsSearchApi.upsertDocuments([background]);
       if (OK_STATUSES.includes(status)) {
-        await backgroundRepository.removeOutboxMessage(outboxMessageId);
+        await repository.removeOutboxMessage(outboxMessageId);
       }
     },
     async repopulateMeiliSearch() {

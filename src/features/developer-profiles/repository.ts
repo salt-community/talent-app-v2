@@ -306,5 +306,8 @@ export function createDevelopersRepository(db: Db) {
     async getAllOutboxMessage() {
       return await db.select().from(meiliSearchOutbox);
     },
+    async removeOutboxMessage(id: number) {
+      await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
+    },
   };
 }
