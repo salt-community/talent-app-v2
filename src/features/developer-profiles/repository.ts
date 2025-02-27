@@ -412,5 +412,36 @@ export function createDevelopersRepository(db: Db) {
         links: background.links,
       });
     },
+    async updateTempDeveloperProfile(
+      developerProfile: DeveloperProfileInsert,
+      background: Backgrounds
+    ) {
+      let id: string;
+      if (developerProfile.id) {
+        id = developerProfile.id;
+      } else {
+        id = background.developerProfileId;
+      }
+      await db
+        .update(tempDeveloperProfiles)
+        .set({
+          identityId:
+            developerProfile.identityId || tempDeveloperProfiles.identityId,
+          name: developerProfile.name || tempDeveloperProfiles.name,
+          slug: developerProfile.slug || tempDeveloperProfiles.slug,
+          email: developerProfile.email || tempDeveloperProfiles.email,
+          status: developerProfile.status || tempDeveloperProfiles.status,
+          avatarUrl: background.avatarUrl || tempDeveloperProfiles.avatarUrl,
+          title: background.title || tempDeveloperProfiles.title,
+          bio: background.bio || tempDeveloperProfiles.bio,
+          links: background.links || tempDeveloperProfiles.links,
+        })
+        .where(eq(tempDeveloperProfiles.id, id));
+    },
+    async deleteTempDeveloperProfile(developerProfileId: string) {
+      await db
+        .delete(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.id, developerProfileId));
+    },
   };
 }
