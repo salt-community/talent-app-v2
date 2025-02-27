@@ -1,10 +1,10 @@
 import {
-  backgrounds,
+  developerProfileBackgrounds,
+  developerProfileEducations,
+  developerProfileLanguages,
   developerProfiles,
-  educations,
-  languages,
+  developerProfileSkills,
   meiliSearchOutbox,
-  skills,
 } from "./db-schema";
 import { createDeveloperProfilesService } from "./service";
 import { JwtPayload } from "jsonwebtoken";
@@ -91,20 +91,21 @@ export type typeBackground = {
 export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;
 export type OutboxMessageSelect = typeof meiliSearchOutbox.$inferSelect;
 
-export type BackgroundInsert = typeof backgrounds.$inferInsert & {
-  skills: string[];
-  languages: string[];
-  educations: string[];
-};
+export type BackgroundInsert =
+  typeof developerProfileBackgrounds.$inferInsert & {
+    skills: string[];
+    languages: string[];
+    educations: string[];
+  };
 
-export type BackgroundSelect = typeof backgrounds.$inferSelect;
+export type BackgroundSelect = typeof developerProfileBackgrounds.$inferSelect;
 
-export type SkillInsert = typeof skills.$inferInsert;
-export type SkillSelect = typeof skills.$inferSelect;
-export type LanguageInsert = typeof languages.$inferInsert;
-export type LanguageSelect = typeof languages.$inferSelect;
-export type EducationInsert = typeof educations.$inferInsert;
-export type EducationSelect = typeof educations.$inferSelect;
+export type SkillInsert = typeof developerProfileSkills.$inferInsert;
+export type SkillSelect = typeof developerProfileSkills.$inferSelect;
+export type LanguageInsert = typeof developerProfileLanguages.$inferInsert;
+export type LanguageSelect = typeof developerProfileLanguages.$inferSelect;
+export type EducationInsert = typeof developerProfileEducations.$inferInsert;
+export type EducationSelect = typeof developerProfileEducations.$inferSelect;
 
 export type SocialLink = {
   url: string;
