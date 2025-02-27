@@ -2,13 +2,14 @@ import { errorHandler } from "@/lib";
 import { developerProfilesService } from "@/features/developer-profiles";
 import { Search } from "../developers/search";
 import { DeveloperCard } from "@/features/developer-profiles/components/developer-card";
-import { Card } from "@/components";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import CircularRank from "./circular-rank";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 
@@ -32,11 +33,8 @@ export default async function Page({ searchParams }: Props) {
             {developerProfile.ranking && (
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger
-                    className="absolute top-[-5] right-[-5]
-                  bg-lightGray text-xs text-white rounded-full p-2"
-                  >
-                    {developerProfile.ranking}%
+                  <TooltipTrigger className="absolute top-3 right-3">
+                    <CircularRank percentage={developerProfile.ranking} />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className="text-sm text-center">
