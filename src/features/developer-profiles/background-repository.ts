@@ -223,9 +223,9 @@ export function createRepository(db: Db) {
     // async getAllOutboxMessage() {
     //   return await db.select().from(meiliSearchOutbox);
     // },
-    async removeOutboxMessage(id: number) {
-      await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
-    },
+    // async removeOutboxMessage(id: number) {
+    //   await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
+    // },
     async deleteBackgroundById(developerProfileId: string) {
       await db
         .delete(backgrounds)
