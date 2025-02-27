@@ -97,25 +97,25 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Button type="button" onClick={handleAdd} className="ml-2">
+          <Button variant="outline" onClick={handleAdd} className="ml-2">
             <Plus />
           </Button>
         </div>
       </div>
-      <div className="flex">
+      <div className="flex flex-wrap">
         {selectedItems.map((item) => (
           <div
             key={item}
-            className="flex flex-row justify-center items-center bg-gray-100 mx-1 px-2  py-1 rounded-md"
+            className="flex flex-row justify-center items-center bg-gray-100 mx-1 px-2 rounded-md mb-2"
           >
-            <span className="text-xs">{item}</span>
-            <button
-              className="ml-1 text-xs"
-              type="button"
+            <span className="text-xs capitalize">{item}</span>
+            <Button
+              className="ml-1 text-xs p-1"
+              variant="ghost"
               onClick={() => handleRemove(item)}
             >
               ✕
-            </button>
+            </Button>
           </div>
         ))}
       </div>
