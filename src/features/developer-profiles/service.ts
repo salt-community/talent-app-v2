@@ -20,7 +20,7 @@ const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
 export function createDeveloperProfilesService(
   db: Db,
-  getCurrentUser: GetCurrentUser,
+  getCurrentUser: GetCurrentUser
 ) {
   const repository = createDevelopersRepository(db);
   const backgroundRepository = createRepository(db);
@@ -60,7 +60,7 @@ export function createDeveloperProfilesService(
       case "upsert":
         const background =
           await backgroundRepository.getBackgroundByDeveloperProfileId(
-            outboxMessage.developerProfileId,
+            outboxMessage.developerProfileId
           );
         if (!background) {
           succeeded = true;
@@ -73,7 +73,7 @@ export function createDeveloperProfilesService(
         break;
       case "delete":
         const deleteStatus = await backgroundsSearchApi.deleteDocument(
-          outboxMessage.developerProfileId,
+          outboxMessage.developerProfileId
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
         break;
@@ -135,7 +135,7 @@ export function createDeveloperProfilesService(
     },
     async getIdentityIdByDeveloperProfileId(developerProfileId: string) {
       return await repository.getIdentityIdByDeveloperProfileId(
-        developerProfileId,
+        developerProfileId
       );
     },
     async generateUniqueSlug(name: string) {
@@ -160,7 +160,7 @@ export function createDeveloperProfilesService(
       }
 
       const developerProfile = await this.getDeveloperProfileByIdentityId(
-        currentUser.id,
+        currentUser.id
       );
       const user = {
         ...currentUser,
@@ -211,19 +211,19 @@ export function createDeveloperProfilesService(
     async getAllSkills() {
       return (await backgroundRepository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index,
+          array.findIndex((s) => s.name === skill.name) === index
       );
     },
     async getAllLanguages() {
       return (await backgroundRepository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index,
+          array.findIndex((l) => l.name === language.name) === index
       );
     },
     async getAllEducations() {
       return (await backgroundRepository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index,
+          array.findIndex((e) => e.name === education.name) === index
       );
     },
     async addBackground(background: BackgroundInsert) {
@@ -249,7 +249,7 @@ export function createDeveloperProfilesService(
       await backgroundsSearchApi.deleteIndex();
       await backgroundsSearchApi.ensureIndex();
 
-      const backgrounds = await backgroundRepository.getAllBackgrounds();
+      const backgrounds = await repository.getAllBackgrounds();
 
       await backgroundsSearchApi.upsertDocuments(backgrounds);
     },

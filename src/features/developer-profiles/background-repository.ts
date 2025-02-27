@@ -19,32 +19,32 @@ import {
 
 export function createRepository(db: Db) {
   return {
-    async getAllBackgrounds() {
-      return await db
-        .select({
-          id: backgrounds.id,
-          developerProfileId: backgrounds.developerProfileId,
-          name: backgrounds.name,
-          avatarUrl: backgrounds.avatarUrl,
-          title: backgrounds.title,
-          bio: backgrounds.bio,
-          links: backgrounds.links,
-          skills: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${skills.name})::VARCHAR[]`.as("skills"),
-          languages: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${languages.name})::VARCHAR[]`.as("languages"),
-          educations: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${educations.name})::VARCHAR[]`.as("educations"),
-        })
-        .from(backgrounds)
-        .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
-        .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
-        .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
-        .groupBy(backgrounds.id);
-    },
+    // async getAllBackgrounds() {
+    //   return await db
+    //     .select({
+    //       id: backgrounds.id,
+    //       developerProfileId: backgrounds.developerProfileId,
+    //       name: backgrounds.name,
+    //       avatarUrl: backgrounds.avatarUrl,
+    //       title: backgrounds.title,
+    //       bio: backgrounds.bio,
+    //       links: backgrounds.links,
+    //       skills: sql<
+    //         string[]
+    //       >`ARRAY_AGG(DISTINCT ${skills.name})::VARCHAR[]`.as("skills"),
+    //       languages: sql<
+    //         string[]
+    //       >`ARRAY_AGG(DISTINCT ${languages.name})::VARCHAR[]`.as("languages"),
+    //       educations: sql<
+    //         string[]
+    //       >`ARRAY_AGG(DISTINCT ${educations.name})::VARCHAR[]`.as("educations"),
+    //     })
+    //     .from(backgrounds)
+    //     .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
+    //     .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
+    //     .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
+    //     .groupBy(backgrounds.id);
+    // },
     async getAllDeveloperProfileIds() {
       const developerId = await db
         .select({ developerProfileId: backgrounds.developerProfileId })
