@@ -4,8 +4,8 @@ import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa6";
 
 export const Footer = () => {
   return (
-    <footer className="py-6 px-4 border-t">
-      <div className="max-w-6xl mx-auto">
+    <footer className="py-6 px-4 border-t md:px-14">
+      <div className="mx-auto">
         <div className="flex flex-wrap justify-between">
           <div className="w-full md:w-1/2 mb-8 md:mb-0">
             <Link href="/" className="text-2xl font-bold">

@@ -19,7 +19,6 @@ export function CreateProfileButton({ identityId: identityId }: Props) {
       onConfirm={() => addProfile()}
     >
       <Button>
-        {" "}
         <span>+</span> New Profile
       </Button>
     </AlertDialogDemo>

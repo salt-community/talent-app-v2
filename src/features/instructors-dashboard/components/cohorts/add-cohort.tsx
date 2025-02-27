@@ -75,7 +75,6 @@ export function AddCohortForm() {
         <Button
           type="submit"
           variant="outline"
-          className="cursor-pointer flex gap-1 justify-center items-center mt-2 mb-4 border-black hover:bg-zinc-100"
         >
           <Plus color="black" size={18} />
           <p className="font-semibold">Add cohort</p>
@@ -162,7 +161,7 @@ export function AddCohortForm() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="bg-zinc-900 text-white text-sm rounded-md w-full h-10 hover:bg-zinc-800 mt-2"
+                className="w-full mt-2"
               >
                 {loading ? <Loader2 className="animate-spin" /> : undefined}
                 {loading ? "Submitting, please wait..." : "Submit"}

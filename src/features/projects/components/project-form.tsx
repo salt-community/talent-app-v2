@@ -27,6 +27,7 @@ import { formSchema } from "../validation";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Loader2 } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = {
   developerProfileId: string;
@@ -73,112 +74,116 @@ export default function ProjectForm({ developerProfileId }: Props) {
         <Button
           type="submit"
           variant="outline"
-          className="cursor-pointer flex gap-1 justify-center items-center mt-2 mb-4 border-black hover:bg-zinc-100"
+          className="mt-2 my-4"
         >
           <Plus color="black" size={18} />
           <p className="font-semibold">Add project</p>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add project</DialogTitle>
-          <DialogDescription>
-            Add a new project here. Click submit when you´re done.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-3"
-          >
-            <FormItem>
-              <FormLabel>Repository</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://github.com/devUser42/project-tracker"
-                  type="text"
-                  {...form.register("repository")}
-                />
-              </FormControl>
-              <FormDescription>
-                This is the GitHub repository link that you want to display.
-              </FormDescription>
-              <FormMessage>
-                {form.formState.errors.repository?.message}
-              </FormMessage>
-            </FormItem>
-            <FormItem>
-              <FormLabel>Project Website (Optional)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://example.com"
-                  type="text"
-                  {...form.register("projectWebsite")}
-                />
-              </FormControl>
-              <FormDescription>
-                The live website for your project, if available.
-              </FormDescription>
-              <FormMessage>
-                {form.formState.errors.projectWebsite?.message}
-              </FormMessage>
-            </FormItem>
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://example.com"
-                  type="text"
-                  {...form.register("imageUrl")}
-                />
-              </FormControl>
-              <FormDescription>Link to the image.</FormDescription>
-              <FormMessage>
-                {form.formState.errors.projectWebsite?.message}
-              </FormMessage>
-            </FormItem>
-            <FormItem>
-              <FormLabel>{"Image's alternative text"}</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Screenshot of the [project name] GitHub project"
-                  type="text"
-                  {...form.register("imageAlt")}
-                />
-              </FormControl>
-              <FormDescription>Alternative text for the image.</FormDescription>
-              <FormMessage>
-                {form.formState.errors.projectWebsite?.message}
-              </FormMessage>
-            </FormItem>
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="A comprehensive tool for tracking project milestones and tasks."
-                  className="resize-none"
-                  {...form.register("description")}
-                />
-              </FormControl>
-              <FormDescription>
-                A brief description of your project.
-              </FormDescription>
-              <FormMessage>
-                {form.formState.errors.description?.message}
-              </FormMessage>
-            </FormItem>
-            <DialogFooter>
-              <Button
-                type="submit"
-                disabled={loading}
-                className="bg-zinc-900 text-white text-sm rounded-md w-full h-10 hover:bg-zinc-800"
-              >
-                {loading ? <Loader2 className="animate-spin" /> : undefined}
-                {loading ? "Submitting, please wait..." : "Submit"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+      <DialogContent className="pt-9">
+        <ScrollArea className="h-[600px]">
+          <DialogHeader className="px-4">
+            <DialogTitle>Add project</DialogTitle>
+            <DialogDescription>
+              Add a new project here. Click submit when you´re done.
+            </DialogDescription>
+          </DialogHeader>
+          <Form {...form} >
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-col gap-3 px-4"
+            >
+              <FormItem>
+                <FormLabel>Repository</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="https://github.com/devUser42/project-tracker"
+                    type="text"
+                    {...form.register("repository")}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is the GitHub repository link that you want to display.
+                </FormDescription>
+                <FormMessage>
+                  {form.formState.errors.repository?.message}
+                </FormMessage>
+              </FormItem>
+              <FormItem>
+                <FormLabel>Project Website (Optional)</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="https://example.com"
+                    type="text"
+                    {...form.register("projectWebsite")}
+                  />
+                </FormControl>
+                <FormDescription>
+                  The live website for your project, if available.
+                </FormDescription>
+                <FormMessage>
+                  {form.formState.errors.projectWebsite?.message}
+                </FormMessage>
+              </FormItem>
+              <FormItem>
+                <FormLabel>Image</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="https://example.com"
+                    type="text"
+                    {...form.register("imageUrl")}
+                  />
+                </FormControl>
+                <FormDescription>Link to the image.</FormDescription>
+                <FormMessage>
+                  {form.formState.errors.projectWebsite?.message}
+                </FormMessage>
+              </FormItem>
+              <FormItem>
+                <FormLabel>{"Image's alternative text"}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Screenshot of the [project name] GitHub project"
+                    type="text"
+                    {...form.register("imageAlt")}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Alternative text for the image.
+                </FormDescription>
+                <FormMessage>
+                  {form.formState.errors.projectWebsite?.message}
+                </FormMessage>
+              </FormItem>
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="A comprehensive tool for tracking project milestones and tasks."
+                    className="resize-none"
+                    {...form.register("description")}
+                  />
+                </FormControl>
+                <FormDescription>
+                  A brief description of your project.
+                </FormDescription>
+                <FormMessage>
+                  {form.formState.errors.description?.message}
+                </FormMessage>
+              </FormItem>
+              <DialogFooter>
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full"
+                >
+                  {loading ? <Loader2 className="animate-spin" /> : undefined}
+                  {loading ? "Submitting, please wait..." : "Submit"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

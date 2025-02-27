@@ -16,9 +16,6 @@ export async function DeveloperProfileList() {
     <div className="mx-auto md:px-4 py-8 max-w-6xl">
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold mb-4">Developer Profiles</h1>
-        <div className="mb-6">
-          <CreateProfileButton identityId={identityId} />
-        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -28,6 +25,9 @@ export async function DeveloperProfileList() {
               <DeveloperProfileCard developerProfileId={profile.id} />
             </div>
           ))}
+      </div>
+      <div className="mb-6">
+        <CreateProfileButton identityId={identityId} />
       </div>
     </div>
   );

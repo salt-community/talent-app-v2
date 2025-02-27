@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { TagsInput } from "./tags-input";
-import { Input, Label } from "@/components";
+import { FormItem, Input, Label } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   BackgroundInfo,
@@ -61,16 +61,16 @@ export function DialogForm({
           onClick={() => setIsOpen(true)}
         />
       </DialogTrigger>
-      <DialogContent className="w-screen">
-        <ScrollArea className="h-[600px] ">
-          <DialogHeader>
+      <DialogContent className="w-screen pt-9">
+        <ScrollArea className="h-[600px]">
+          <DialogHeader className="px-4">
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
               Make changes to your profile here. Click save when you´re done.
             </DialogDescription>
           </DialogHeader>
-          <form action={formAction} className="p-2">
-            <div className="space-y-2 py-4">
+          <form action={formAction} className="px-4">
+            <div className="space-y-2">
               <input
                 type="text"
                 name={"id"}
@@ -83,112 +83,125 @@ export function DialogForm({
                 defaultValue={background.developerProfileId}
                 hidden
               />
-              <Label htmlFor="avatarUrl">Profile picture</Label>
-              <div className="flex items-center gap-2">
-                <BackgroundAvatar url={avatarUrl} />
+              <FormItem>
+                <Label htmlFor="avatarUrl">Profile picture</Label>
+                <div className="flex items-center gap-2">
+                  <BackgroundAvatar url={avatarUrl} />
+                  <Input
+                    name="avatarUrl"
+                    id="avatarUrl"
+                    placeholder="Profile picture url..."
+                    defaultValue={
+                      (state?.update.avatarUrl as string) || avatarUrl
+                    }
+                    errorMessage={state?.errorMessages?.avatarUrlError}
+                    onChange={(e) => setAvatarUrl(e.target.value)}
+                  />
+                </div>
+              </FormItem>
+              <FormItem>
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
                 <Input
-                  name="avatarUrl"
-                  id="avatarUrl"
-                  placeholder="Profile picture url..."
+                  name="name"
+                  id="name"
+                  required
                   defaultValue={
-                    (state?.update.avatarUrl as string) || avatarUrl
+                    (state?.update.name as string) === ""
+                      ? ""
+                      : (state?.update.name as string) || background.name
                   }
-                  errorMessage={state?.errorMessages?.avatarUrlError}
-                  onChange={(e) => setAvatarUrl(e.target.value)}
+                  errorMessage={state?.errorMessages?.nameError}
+                  placeholder="Fullname..."
+                  className="col-span-3"
                 />
-              </div>
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input
-                name="name"
-                id="name"
-                required
-                defaultValue={
-                  (state?.update.name as string) === ""
-                    ? ""
-                    : (state?.update.name as string) || background.name
-                }
-                errorMessage={state?.errorMessages?.nameError}
-                placeholder="Fullname..."
-                className="col-span-3"
-              />
-
-              <Label htmlFor="title" className="text-right">
-                Role
-              </Label>
-              <Input
-                placeholder="Role..."
-                name="title"
-                id="title"
-                required
-                defaultValue={
-                  (state?.update.title as string) === ""
-                    ? ""
-                    : (state?.update.title as string) || background.title
-                }
-                errorMessage={state?.errorMessages?.titleError}
-                className="col-span-3"
-              />
-              <Label htmlFor="bio" className="text-right">
-                Headline
-              </Label>
-              <Input
-                defaultValue={background.bio}
-                placeholder="Headline..."
-                name="bio"
-                id="bio"
-                className="col-span-3"
-              />
-
-              <TagsInput
-                userTags={background.languages}
-                inputName={"languages"}
-                inputPlaceholder={"Add a language"}
-                suggestedTags={allLanguages}
-              />
-
-              <TagsInput
-                userTags={background.educations}
-                inputName={"educations"}
-                inputPlaceholder={"Add an education"}
-                suggestedTags={allEducations}
-              />
-
-              <TagsInput
-                userTags={background.skills}
-                inputName={"skills"}
-                inputPlaceholder={"Add a skill"}
-                suggestedTags={allSkills}
-              />
-              <Label htmlFor="github" className="text-right">
-                Github
-              </Label>
-              <Input
-                defaultValue={
-                  background.links.find((e) => e.name === "Github")?.url
-                }
-                placeholder="Github..."
-                name="github"
-                id="github"
-                className="col-span-3"
-              />
-              <Label htmlFor="github" className="text-right">
-                CV link
-              </Label>
-              <Input
-                defaultValue={
-                  background.links.find((e) => e.name === "Resume")?.url
-                }
-                placeholder="CV..."
-                name="cv"
-                id="cv"
-                className="col-span-3"
-              />
+              </FormItem>
+              <FormItem>
+                <Label htmlFor="title" className="text-right">
+                  Role
+                </Label>
+                <Input
+                  placeholder="Role..."
+                  name="title"
+                  id="title"
+                  required
+                  defaultValue={
+                    (state?.update.title as string) === ""
+                      ? ""
+                      : (state?.update.title as string) || background.title
+                  }
+                  errorMessage={state?.errorMessages?.titleError}
+                  className="col-span-3"
+                />
+              </FormItem>
+              <FormItem>
+                <Label htmlFor="bio" className="text-right">
+                  Headline
+                </Label>
+                <Input
+                  defaultValue={background.bio}
+                  placeholder="Headline..."
+                  name="bio"
+                  id="bio"
+                  className="col-span-3"
+                />
+              </FormItem>
+              <FormItem>
+                <TagsInput
+                  userTags={background.languages}
+                  inputName={"languages"}
+                  inputPlaceholder={"Add a language"}
+                  suggestedTags={allLanguages}
+                />
+              </FormItem>
+              <FormItem>
+                <TagsInput
+                  userTags={background.educations}
+                  inputName={"educations"}
+                  inputPlaceholder={"Add an education"}
+                  suggestedTags={allEducations}
+                />
+              </FormItem>
+              <FormItem>
+                <TagsInput
+                  userTags={background.skills}
+                  inputName={"skills"}
+                  inputPlaceholder={"Add a skill"}
+                  suggestedTags={allSkills}
+                />
+              </FormItem>
+              <FormItem>
+                <Label htmlFor="github" className="text-right">
+                  Github
+                </Label>
+                <Input
+                  defaultValue={
+                    background.links.find((e) => e.name === "Github")?.url
+                  }
+                  placeholder="Github..."
+                  name="github"
+                  id="github"
+                  className="col-span-3"
+                />
+              </FormItem>
+              <FormItem>
+                <Label htmlFor="github" className="text-right">
+                  CV link
+                </Label>
+                <Input
+                  defaultValue={
+                    background.links.find((e) => e.name === "Resume")?.url
+                  }
+                  placeholder="CV..."
+                  name="cv"
+                  id="cv"
+                  className="col-span-3"
+                />
+              </FormItem>
             </div>
 
             <DialogFooter className="w-full flex items-start border-gray-800">
-              <div className="flex-grow" />
               <Button className="w-full" type="submit" disabled={isPending}>
                 {isPending ? (
                   <>
@@ -199,7 +212,6 @@ export function DialogForm({
                   "Save changes"
                 )}
               </Button>
-              <div className="flex-grow" />
             </DialogFooter>
             {state?.errorMessages ? (
               <p className="text-red-600 font-bold h-6">

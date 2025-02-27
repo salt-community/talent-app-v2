@@ -24,7 +24,6 @@ export default function AddDeveloperButton({ cohortId, developer }: Props) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button
-            className="bg-zinc-900 text-white rounded-md h-10 px-4 hover:bg-zinc-800 my-2"
             onClick={() => setOpen(true)}
           >
             <span>+</span> New developer
