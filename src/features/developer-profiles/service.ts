@@ -58,10 +58,9 @@ export function createDeveloperProfilesService(
     let succeeded = false;
     switch (outboxMessage.operation) {
       case "upsert":
-        const background =
-          await backgroundRepository.getBackgroundByDeveloperProfileId(
-            outboxMessage.developerProfileId
-          );
+        const background = await repository.getBackgroundByDeveloperProfileId(
+          outboxMessage.developerProfileId
+        );
         if (!background) {
           succeeded = true;
           break;

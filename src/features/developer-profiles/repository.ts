@@ -121,5 +121,37 @@ export function createDevelopersRepository(db: Db) {
         .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
         .groupBy(backgrounds.id);
     },
+    async getBackgroundByDeveloperProfileId(developerProfileId: string) {
+      return await db
+        .select({
+          id: backgrounds.id,
+          developerProfileId: backgrounds.developerProfileId,
+          name: backgrounds.name,
+          avatarUrl: backgrounds.avatarUrl,
+          title: backgrounds.title,
+          bio: backgrounds.bio,
+          links: backgrounds.links,
+          skills: sql<
+            string[]
+          >`ARRAY_AGG(DISTINCT ${skills.name})::VARCHAR[]`.as("skills"),
+          languages: sql<
+            string[]
+          >`ARRAY_AGG(DISTINCT ${languages.name})::VARCHAR[]`.as("languages"),
+          educations: sql<
+            string[]
+          >`ARRAY_AGG(DISTINCT ${educations.name})::VARCHAR[]`.as("educations"),
+        })
+        .from(backgrounds)
+        .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
+        .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
+        .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
+        .where(
+          eq(
+            backgrounds.developerProfileId,
+            sql.raw(`'${developerProfileId}'::uuid`)
+          )
+        )
+        .groupBy(backgrounds.id);
+    },
   };
 }
