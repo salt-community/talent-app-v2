@@ -3,6 +3,7 @@ import { Button, Input, Label, Textarea } from "@/components";
 import { Assignment } from "../../types";
 import { addScoreToAssignment } from "../../action";
 import { useToast } from "@/hooks/use-toast";
+
 type Props = {
   assignment: Assignment;
   onSuccess: () => void;
@@ -10,13 +11,18 @@ type Props = {
 
 export function Scoring({ assignment, onSuccess }: Props) {
   const [scores, setScores] = useState<Record<string, string>>({});
-  const [comment, setComment] = useState<string>(
-    assignment.assignment.comment || ""
-  );
+  const [comments, setComments] = useState<Record<string, string>>({});
   const { toast } = useToast();
 
   const handleScoreChange = (category: string, value: string) => {
     setScores((prev) => ({
+      ...prev,
+      [category]: value,
+    }));
+  };
+
+  const handleCommentChange = (category: string, value: string) => {
+    setComments((prev) => ({
       ...prev,
       [category]: value,
     }));
@@ -33,19 +39,20 @@ export function Scoring({ assignment, onSuccess }: Props) {
             identityId: assignment.assignment.identityId,
             title: assignment.assignment.title,
             category: category,
-            comment: comment,
+            comment: comments[category] || "",
             score: parseInt(scores[category], 10) || 0,
           },
-        });
-        onSuccess();
-        toast({
-          title: "Scoring added",
-          description: "Score has been added to the assignment.",
         });
       }
     );
 
     await Promise.all(categoryPromises.filter(Boolean));
+
+    onSuccess();
+    toast({
+      title: "Scoring added",
+      description: "Score has been added to the assignment.",
+    });
   };
 
   return (
@@ -56,7 +63,7 @@ export function Scoring({ assignment, onSuccess }: Props) {
       </div>
       <div className="space-y-6">
         {(assignment.assignment.category ?? []).map((category) => (
-          <div key={category}>
+          <div key={category} className="border p-4 rounded-md">
             <Label
               htmlFor={`score-${category}`}
               className="block mb-2 font-medium text-gray-800"
@@ -68,23 +75,23 @@ export function Scoring({ assignment, onSuccess }: Props) {
               value={scores[category] || ""}
               onChange={(e) => handleScoreChange(category, e.target.value)}
               placeholder="Enter score"
+              className="mb-3"
+            />
+
+            <Label
+              htmlFor={`comment-${category}`}
+              className="block mb-2 font-medium text-gray-800"
+            >
+              Comment for {category}
+            </Label>
+            <Textarea
+              id={`comment-${category}`}
+              value={comments[category] || ""}
+              onChange={(e) => handleCommentChange(category, e.target.value)}
+              placeholder={`Enter comment for ${category}`}
             />
           </div>
         ))}
-      </div>
-      <div>
-        <Label
-          htmlFor="comment"
-          className="block mb-2 font-medium text-gray-800"
-        >
-          Comment
-        </Label>
-        <Textarea
-          id="comment"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="Enter comment"
-        />
       </div>
       <div className="pt-4 border-t flex justify-end">
         <Button onClick={handleSubmitScoring}>Save</Button>
