@@ -19,8 +19,6 @@ export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
     getAllAverageScoresByIdentityId:
       "assignments.getAllAverageScoresByIdentityId",
     getAssignmentBySlug: "assignments.getAssignmentBySlug",
-    getScoreByAssignmentIdAndIdentityId:
-      "assignments.getScoreByAssignmentIdAndIdentityId",
   };
 
 type AssignmentViewPermission = "score";
