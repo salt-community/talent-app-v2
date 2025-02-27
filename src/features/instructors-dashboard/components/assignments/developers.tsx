@@ -2,13 +2,15 @@
 import React from "react";
 import { Assignment, Developer } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
+import { Check } from "lucide-react";
 
 type Props = {
   developer: Developer;
   assignment: Assignment;
+  scored: boolean;
 };
 
-export default function Developers({ developer, assignment }: Props) {
+export default function Developers({ developer, assignment, scored }: Props) {
   return (
     <div className="border-b border-gray-200 last:border-0">
       <div className="py-3 px-4 flex items-center justify-between">
@@ -17,7 +19,12 @@ export default function Developers({ developer, assignment }: Props) {
             {developer.name.substring(0, 2)}
           </div>
           <div>
-            <div className="font-medium">{developer.name}</div>
+            <div className="flex flex-row gap-2 font-medium">
+              {developer.name}
+              <div className="text-green-500">
+                <Check size={24} />
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
