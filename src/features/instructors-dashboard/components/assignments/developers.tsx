@@ -7,10 +7,11 @@ import { Check } from "lucide-react";
 type Props = {
   developer: Developer;
   assignment: Assignment;
-  scored: boolean;
+  scored?: boolean;
 };
 
 export default function Developers({ developer, assignment, scored }: Props) {
+  const isScored = scored ?? false;
   return (
     <div className="border-b border-gray-200 last:border-0">
       <div className="py-3 px-4 flex items-center justify-between">
@@ -21,7 +22,7 @@ export default function Developers({ developer, assignment, scored }: Props) {
           <div>
             <div className="flex flex-row gap-2 font-medium">
               {developer.name}
-              {scored && <Check size={20} color="green" />}
+              {isScored && <Check size={20} color="green" />}
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import {
   DeleteAssignmentById,
   GetAssignmentBySlug,
   GetAssignmentsByCohortId,
+  GetScoresByAssignmentId,
   NewAssignment,
 } from "../assignments";
 import {
@@ -32,6 +33,7 @@ export function createInstructorService(
   deleteAssignmentById: DeleteAssignmentById,
   getAssignmentBySlug: GetAssignmentBySlug,
   addScoreToAssignment: CreateAssignmentScore,
+  getScoresByAssignmentId: GetScoresByAssignmentId,
   getAllIdentities: GetAllIdentities
 ) {
   return {
@@ -76,6 +78,9 @@ export function createInstructorService(
     },
     async addScoreToAssignment({ assignment }: AssignmentInsert) {
       return await addScoreToAssignment(assignment);
+    },
+    async getScoresByAssignmentId(assignmentId: string) {
+      return await getScoresByAssignmentId(assignmentId);
     },
   };
 }

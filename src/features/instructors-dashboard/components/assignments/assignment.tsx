@@ -7,12 +7,18 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
   const assignments = await instructorService.getAssignmentBySlug(slug);
   if (!assignments) return null;
 
-  console.log({ assignments:  assignments });
-
   const developers = await instructorService.getCohortStudentsByCohortId(
     assignments.assignments.cohortId
   );
   if (!developers) return null;
+
+  const assignmentScores = await instructorService.getScoresByAssignmentId(
+    assignments.assignments.id
+  );
+
+  const scoredStudentIds = new Set(
+    assignmentScores?.map((score) => score.identityId) || []
+  );
 
   return (
     <div className="max-w-6xl mx-auto p-4 font-sans">
@@ -37,7 +43,7 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
           <h3 className="font-medium">Total students</h3>
         </div>
         <div>
-          {developers.map(async (developer) => (
+          {developers.map((developer) => (
             <Developer
               key={developer.id}
               developer={developer}
@@ -50,9 +56,9 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
                   comment: assignments.assignment_scores?.comment ?? "",
                 },
               }}
+              scored={scoredStudentIds.has(developer.id)}
             />
           ))}
-          {/* Need to be refactor later */}
         </div>
       </div>
     </div>
