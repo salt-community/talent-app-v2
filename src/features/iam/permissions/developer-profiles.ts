@@ -5,7 +5,7 @@ export const developerProfiles: PermissionsSchema<
   "developerProfiles",
   DeveloperProfilesService
 > = {
-  add: "developerProfiles.add",
+  addDeveloperProfile: "developerProfiles.addDeveloperProfile",
   delete: "developerProfiles.delete",
   createDeveloperProfile: "developerProfiles.createDeveloperProfile",
   getAll: "developerProfiles.getAll",

@@ -92,7 +92,7 @@ export function createDeveloperProfilesService(
     async getAllById(identityId: string) {
       return await repository.getAllById(identityId);
     },
-    async add(developerProfile: DeveloperProfileInsert) {
+    async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
       return await repository.addDeveloperProfile(developerProfile);
     },
     async delete(id: string) {
@@ -120,7 +120,7 @@ export function createDeveloperProfilesService(
       const { name, email } = claim(claims);
       const slug = await this.generateUniqueSlug(name);
       if (!email) return;
-      const developer = await developerProfilesService.add({
+      const developer = await developerProfilesService.addDeveloperProfile({
         name,
         slug,
         email,
