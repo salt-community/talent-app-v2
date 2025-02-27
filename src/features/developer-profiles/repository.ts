@@ -294,5 +294,17 @@ export function createDevelopersRepository(db: Db) {
       });
       return { outboxMessageId };
     },
+    async getAllSkills() {
+      return await db.select().from(skills);
+    },
+    async getAllLanguages() {
+      return await db.select().from(languages);
+    },
+    async getAllEducations() {
+      return await db.select().from(educations);
+    },
+    async getAllOutboxMessage() {
+      return await db.select().from(meiliSearchOutbox);
+    },
   };
 }

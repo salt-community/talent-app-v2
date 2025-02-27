@@ -211,18 +211,18 @@ export function createRepository(db: Db) {
     //   });
     //   return { outboxMessageId };
     // },
-    async getAllSkills() {
-      return await db.select().from(skills);
-    },
-    async getAllLanguages() {
-      return await db.select().from(languages);
-    },
-    async getAllEducations() {
-      return await db.select().from(educations);
-    },
-    async getAllOutboxMessage() {
-      return await db.select().from(meiliSearchOutbox);
-    },
+    // async getAllSkills() {
+    //   return await db.select().from(skills);
+    // },
+    // async getAllLanguages() {
+    //   return await db.select().from(languages);
+    // },
+    // async getAllEducations() {
+    //   return await db.select().from(educations);
+    // },
+    // async getAllOutboxMessage() {
+    //   return await db.select().from(meiliSearchOutbox);
+    // },
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     },
