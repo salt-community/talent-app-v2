@@ -45,15 +45,7 @@ export function createRepository(db: Db) {
     //     .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
     //     .groupBy(backgrounds.id);
     // },
-    async getAllDeveloperProfileIds() {
-      const developerId = await db
-        .select({ developerProfileId: backgrounds.developerProfileId })
-        .from(backgrounds);
 
-      return (await developerId).map(
-        (developerId) => developerId.developerProfileId
-      );
-    },
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
       return await db
         .select({
