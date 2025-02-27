@@ -16,7 +16,7 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
     assignments.assignments.id
   );
 
-  const scoredStudentIds = new Set(
+  const scoredDevelopersId = new Set(
     assignmentScores?.map((score) => score.identityId) || []
   );
 
@@ -56,7 +56,7 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
                   comment: assignments.assignment_scores?.comment ?? "",
                 },
               }}
-              scored={scoredStudentIds.has(developer.id)}
+              scored={scoredDevelopersId.has(developer.id)}
             />
           ))}
         </div>
