@@ -11,7 +11,6 @@ import {
   SessionClaims,
 } from "./types";
 import { GetCurrentUser } from "../iam";
-import { createRepository } from "./background-repository";
 import { createSearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
@@ -23,7 +22,6 @@ export function createDeveloperProfilesService(
   getCurrentUser: GetCurrentUser
 ) {
   const repository = createDevelopersRepository(db);
-  const backgroundRepository = createRepository(db);
   const backgroundsSearchApi = createSearchApi({
     indexUid: "backgrounds",
     primaryKey: "developerProfileId",
