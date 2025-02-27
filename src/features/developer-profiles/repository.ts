@@ -1,6 +1,12 @@
 import { Db } from "@/db";
-import { eq, ne } from "drizzle-orm";
-import { developerProfiles } from "./db-schema";
+import { eq, ne, sql } from "drizzle-orm";
+import {
+  backgrounds,
+  developerProfiles,
+  educations,
+  languages,
+  skills,
+} from "./db-schema";
 import { DeveloperProfileInsert } from "./types";
 
 export function createDevelopersRepository(db: Db) {
@@ -88,6 +94,32 @@ export function createDevelopersRepository(db: Db) {
           slug,
         })
         .where(eq(developerProfiles.id, id));
+    },
+    async getAllBackgrounds() {
+      return await db
+        .select({
+          id: backgrounds.id,
+          developerProfileId: backgrounds.developerProfileId,
+          name: backgrounds.name,
+          avatarUrl: backgrounds.avatarUrl,
+          title: backgrounds.title,
+          bio: backgrounds.bio,
+          links: backgrounds.links,
+          skills: sql<
+            string[]
+          >`ARRAY_AGG(DISTINCT ${skills.name})::VARCHAR[]`.as("skills"),
+          languages: sql<
+            string[]
+          >`ARRAY_AGG(DISTINCT ${languages.name})::VARCHAR[]`.as("languages"),
+          educations: sql<
+            string[]
+          >`ARRAY_AGG(DISTINCT ${educations.name})::VARCHAR[]`.as("educations"),
+        })
+        .from(backgrounds)
+        .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
+        .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
+        .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
+        .groupBy(backgrounds.id);
     },
   };
 }
