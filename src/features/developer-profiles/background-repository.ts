@@ -78,50 +78,50 @@ export function createRepository(db: Db) {
     //     )
     //     .groupBy(backgrounds.id);
     // },
-    async getBackgroundById(developerProfileId: string) {
-      return await db
-        .select({
-          id: backgrounds.id,
-          developerProfileId: backgrounds.developerProfileId,
-          name: backgrounds.name,
-          avatarUrl: backgrounds.avatarUrl,
-          title: backgrounds.title,
-          bio: backgrounds.bio,
-          links: backgrounds.links,
-          skills: sql<SkillSelect[]>`jsonb_agg(distinct jsonb_build_object(
-            'id', ${skills.id},
-            'name', ${skills.name},
-            'backgroundId', ${skills.backgroundId},
-            'level', ${skills.level}
-          ))`.as("skills"),
-          languages: sql<
-            LanguageSelect[]
-          >`jsonb_agg(distinct jsonb_build_object(
-            'id', ${languages.id},
-            'name', ${languages.name},
-            'backgroundId', ${languages.backgroundId},
-            'level', ${languages.level}
-          ))`.as("languages"),
-          educations: sql<
-            EducationSelect[]
-          >`jsonb_agg(distinct jsonb_build_object(
-            'id', ${educations.id},
-            'name', ${educations.name},
-            'backgroundId', ${educations.backgroundId}
-          ))`.as("educations"),
-        })
-        .from(backgrounds)
-        .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
-        .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
-        .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
-        .where(
-          eq(
-            backgrounds.developerProfileId,
-            sql.raw(`'${developerProfileId}'::uuid`)
-          )
-        )
-        .groupBy(backgrounds.id);
-    },
+    // async getBackgroundById(developerProfileId: string) {
+    //   return await db
+    //     .select({
+    //       id: backgrounds.id,
+    //       developerProfileId: backgrounds.developerProfileId,
+    //       name: backgrounds.name,
+    //       avatarUrl: backgrounds.avatarUrl,
+    //       title: backgrounds.title,
+    //       bio: backgrounds.bio,
+    //       links: backgrounds.links,
+    //       skills: sql<SkillSelect[]>`jsonb_agg(distinct jsonb_build_object(
+    //         'id', ${skills.id},
+    //         'name', ${skills.name},
+    //         'backgroundId', ${skills.backgroundId},
+    //         'level', ${skills.level}
+    //       ))`.as("skills"),
+    //       languages: sql<
+    //         LanguageSelect[]
+    //       >`jsonb_agg(distinct jsonb_build_object(
+    //         'id', ${languages.id},
+    //         'name', ${languages.name},
+    //         'backgroundId', ${languages.backgroundId},
+    //         'level', ${languages.level}
+    //       ))`.as("languages"),
+    //       educations: sql<
+    //         EducationSelect[]
+    //       >`jsonb_agg(distinct jsonb_build_object(
+    //         'id', ${educations.id},
+    //         'name', ${educations.name},
+    //         'backgroundId', ${educations.backgroundId}
+    //       ))`.as("educations"),
+    //     })
+    //     .from(backgrounds)
+    //     .leftJoin(skills, eq(skills.backgroundId, backgrounds.id))
+    //     .leftJoin(languages, eq(languages.backgroundId, backgrounds.id))
+    //     .leftJoin(educations, eq(educations.backgroundId, backgrounds.id))
+    //     .where(
+    //       eq(
+    //         backgrounds.developerProfileId,
+    //         sql.raw(`'${developerProfileId}'::uuid`)
+    //       )
+    //     )
+    //     .groupBy(backgrounds.id);
+    // },
     async add(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } = await db.transaction(
         async (tx) => {
