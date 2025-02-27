@@ -227,7 +227,7 @@ export function createDeveloperProfilesService(
     },
     async addBackground(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } =
-        await backgroundRepository.add(background);
+        await repository.addBackground(background);
 
       const status = await backgroundsSearchApi.upsertDocuments([
         { id: backgroundId, ...background },
