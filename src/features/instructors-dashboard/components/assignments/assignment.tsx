@@ -7,14 +7,18 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
   const assignments = await instructorService.getAssignmentBySlug(slug);
   if (!assignments) return null;
 
+  console.log({ assignments:  assignments });
+
   const developers = await instructorService.getCohortStudentsByCohortId(
-    assignments.cohortId
+    assignments.assignments.cohortId
   );
   if (!developers) return null;
 
   return (
     <div className="max-w-6xl mx-auto p-4 font-sans">
-      <h1 className="text-3xl font-bold mb-4">{assignments.title}</h1>
+      <h1 className="text-3xl font-bold mb-4">
+        {assignments.assignments.title}
+      </h1>
       <hr className="mb-6" />
       <h2 className="text-2xl font-bold mb-4">Assignment Details</h2>
       <div className="grid grid-cols-1 gap-4 mb-6">
@@ -39,19 +43,11 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
               developer={developer}
               assignment={{
                 assignment: {
-                  assignmentId: assignments.id,
+                  assignmentId: assignments.assignments.id,
                   identityId: developer.id,
-                  title: assignments.title,
-                  category: assignments.categories,
-                  comment:
-                    (
-                      await instructorService.getScoreByAssignmentIdAndIdentityId(
-                        {
-                          assignmentId: assignments.id,
-                          identityId: developer.id,
-                        }
-                      )
-                    )?.comment ?? null,
+                  title: assignments.assignments.title,
+                  category: assignments.assignments.categories,
+                  comment: assignments.assignment_scores?.comment ?? "",
                 },
               }}
             />
