@@ -42,7 +42,7 @@ export function createDevelopersRepository(db: Db) {
         .from(developerProfiles)
         .where(eq(developerProfiles.identityId, identityId));
     },
-    async add(developerProfile: DeveloperProfileInsert) {
+    async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
       const developerProfileId = await db
         .insert(developerProfiles)
         .values(developerProfile)

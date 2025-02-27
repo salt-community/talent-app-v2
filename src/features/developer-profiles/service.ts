@@ -93,7 +93,7 @@ export function createDeveloperProfilesService(
       return await repository.getAllById(identityId);
     },
     async add(developerProfile: DeveloperProfileInsert) {
-      return await repository.add(developerProfile);
+      return await repository.addDeveloperProfile(developerProfile);
     },
     async delete(id: string) {
       await repository.delete(id);
