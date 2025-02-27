@@ -21,9 +21,7 @@ export default function Developers({ developer, assignment, scored }: Props) {
           <div>
             <div className="flex flex-row gap-2 font-medium">
               {developer.name}
-              <div className="text-green-500">
-                <Check size={24} />
-              </div>
+              {scored && <Check size={20} color="green" />}
             </div>
           </div>
         </div>
