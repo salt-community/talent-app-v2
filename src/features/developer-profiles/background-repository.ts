@@ -122,44 +122,44 @@ export function createRepository(db: Db) {
     //     )
     //     .groupBy(backgrounds.id);
     // },
-    async add(background: BackgroundInsert) {
-      const { outboxMessageId, backgroundId } = await db.transaction(
-        async (tx) => {
-          const backgroundId = (
-            await tx
-              .insert(backgrounds)
-              .values(background)
-              .returning({ id: backgrounds.id })
-          )[0].id;
+    // async addBackground(background: BackgroundInsert) {
+    //   const { outboxMessageId, backgroundId } = await db.transaction(
+    //     async (tx) => {
+    //       const backgroundId = (
+    //         await tx
+    //           .insert(backgrounds)
+    //           .values(background)
+    //           .returning({ id: backgrounds.id })
+    //       )[0].id;
 
-          await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
-          for (const skill of background.skills) {
-            await tx.insert(skills).values({ backgroundId, name: skill });
-          }
-          for (const language of background.languages) {
-            await tx.insert(languages).values({ backgroundId, name: language });
-          }
-          for (const education of background.educations) {
-            await tx
-              .insert(educations)
-              .values({ backgroundId, name: education });
-          }
+    //       await tx.delete(skills).where(eq(skills.backgroundId, backgroundId));
+    //       for (const skill of background.skills) {
+    //         await tx.insert(skills).values({ backgroundId, name: skill });
+    //       }
+    //       for (const language of background.languages) {
+    //         await tx.insert(languages).values({ backgroundId, name: language });
+    //       }
+    //       for (const education of background.educations) {
+    //         await tx
+    //           .insert(educations)
+    //           .values({ backgroundId, name: education });
+    //       }
 
-          const outboxMessageId = (
-            await tx
-              .insert(meiliSearchOutbox)
-              .values({
-                developerProfileId: background.developerProfileId,
-                operation: "upsert",
-              })
-              .returning({ id: meiliSearchOutbox.id })
-          )[0].id;
+    //       const outboxMessageId = (
+    //         await tx
+    //           .insert(meiliSearchOutbox)
+    //           .values({
+    //             developerProfileId: background.developerProfileId,
+    //             operation: "upsert",
+    //           })
+    //           .returning({ id: meiliSearchOutbox.id })
+    //       )[0].id;
 
-          return { outboxMessageId, backgroundId };
-        }
-      );
-      return { outboxMessageId, backgroundId };
-    },
+    //       return { outboxMessageId, backgroundId };
+    //     }
+    //   );
+    //   return { outboxMessageId, backgroundId };
+    // },
     async update(background: BackgroundUpdate) {
       const outboxMessageId = await db.transaction(async (tx) => {
         // TODO: Don't use the primary key at all in this function.
