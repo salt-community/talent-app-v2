@@ -179,7 +179,7 @@ export function createDeveloperProfilesService(
     },
     //imported service functions from backgrounds
     async syncMeilisearch() {
-      const outboxMessages = await backgroundRepository.getAllOutboxMessage();
+      const outboxMessages = await repository.getAllOutboxMessage();
       for (const outboxMessage of outboxMessages) {
         updateMeilisearchFor(outboxMessage);
       }
@@ -208,19 +208,19 @@ export function createDeveloperProfilesService(
       return background;
     },
     async getAllSkills() {
-      return (await backgroundRepository.getAllSkills()).filter(
+      return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
           array.findIndex((s) => s.name === skill.name) === index
       );
     },
     async getAllLanguages() {
-      return (await backgroundRepository.getAllLanguages()).filter(
+      return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
           array.findIndex((l) => l.name === language.name) === index
       );
     },
     async getAllEducations() {
-      return (await backgroundRepository.getAllEducations()).filter(
+      return (await repository.getAllEducations()).filter(
         (education, index, array) =>
           array.findIndex((e) => e.name === education.name) === index
       );
@@ -253,7 +253,7 @@ export function createDeveloperProfilesService(
       await backgroundsSearchApi.upsertDocuments(backgrounds);
     },
     async doesMeilisearchNeedSync() {
-      return (await backgroundRepository.getAllOutboxMessage()).length > 0;
+      return (await repository.getAllOutboxMessage()).length > 0;
     },
     async deleteBackgroundById(developerProfileId: string) {
       await backgroundRepository.deleteBackgroundById(developerProfileId);
