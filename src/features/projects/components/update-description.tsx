@@ -1,4 +1,5 @@
 import {
+  Button,
   DialogFooter,
   Form,
   FormControl,
@@ -69,13 +70,13 @@ export default function UpdateDescription({ onSubmit, placeholder }: Props) {
           </FormMessage>
         </FormItem>
         <DialogFooter>
-          <button
+          <Button
             type="submit"
-            className="bg-zinc-900 text-white text-sm rounded-md w-full h-10 hover:bg-zinc-800"
+            className="w-full"
             disabled={form.formState.isSubmitting}
           >
             Save changes
-          </button>
+          </Button>
         </DialogFooter>
       </form>
     </Form>
