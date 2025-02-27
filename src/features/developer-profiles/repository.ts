@@ -309,5 +309,10 @@ export function createDevelopersRepository(db: Db) {
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     },
+    async deleteBackgroundById(developerProfileId: string) {
+      await db
+        .delete(backgrounds)
+        .where(eq(backgrounds.developerProfileId, developerProfileId));
+    },
   };
 }
