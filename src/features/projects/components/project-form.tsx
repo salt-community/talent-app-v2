@@ -74,7 +74,7 @@ export default function ProjectForm({ developerProfileId }: Props) {
         <Button
           type="submit"
           variant="outline"
-          className="cursor-pointer flex gap-1 justify-center items-center mt-2 mb-4 border-black hover:bg-zinc-100"
+          className="mt-2 my-4"
         >
           <Plus color="black" size={18} />
           <p className="font-semibold">Add project</p>
@@ -175,7 +175,7 @@ export default function ProjectForm({ developerProfileId }: Props) {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="bg-zinc-900 text-white text-sm rounded-md w-full h-10 hover:bg-zinc-800"
+                  className="w-full"
                 >
                   {loading ? <Loader2 className="animate-spin" /> : undefined}
                   {loading ? "Submitting, please wait..." : "Submit"}
