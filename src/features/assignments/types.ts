@@ -11,8 +11,6 @@ export type GetAssignmentBySlug = AssignmentsService["getAssignmentBySlug"];
 export type CreateAssignmentScore = AssignmentsService["createAssignmentScore"];
 export type GetScoresByAssignmentId =
   AssignmentsService["getScoresByAssignmentId"];
-export type GetScoreByAssignmentIdAndIdentityId =
-  AssignmentsService["getScoreByAssignmentIdAndIdentityId"];
 
 export type Assignment = {
   id: string;
