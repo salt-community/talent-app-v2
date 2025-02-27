@@ -49,37 +49,32 @@ export function createSearchApi({
       await index.waitForTask(updateSettingsTask.taskUid);
     },
 
-    async searchDeveloperProfileIds(
-      search: string | undefined,
-      useLLM: boolean = false,
-    ) {
+    async searchDeveloperProfileIds(search: string | undefined) {
       const isSearchEmpty = search === undefined || !search.trim();
 
-      let documents: Record<string, unknown>[] | null = null;
+      const documents: Record<string, unknown>[] = isSearchEmpty
+        ? (await index.getDocuments()).results
+        : (await index.search(search)).hits;
+
+      return documents.map((doc) => doc.developerProfileId as string);
+    },
+
+    async searchDeveloperProfiles(search: string | undefined) {
+      const isSearchEmpty = search === undefined || !search.trim();
 
       const llmIsEnabled = process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON";
-      if (isSearchEmpty) {
-        const { results } = await index.getDocuments();
-        documents = results;
-      } else {
-        search =
-          useLLM && llmIsEnabled
-            ? `Looking for a candidate that would fit to following job ad: ${search}`
-            : search;
-        const searchParams =
-          useLLM && llmIsEnabled
-            ? {
-                hybrid: { embedder: "openAiSearch", semanticRatio: 0.9 },
-              }
-            : undefined;
+      if (isSearchEmpty) return (await index.getDocuments()).results;
 
-        const { hits } = await index.search(search, searchParams);
-        documents = hits;
-      }
-
-      return documents.map(
-        ({ developerProfileId }) => developerProfileId as string,
-      );
+      search = llmIsEnabled
+        ? `Looking for a candidate that would fit to following job ad: ${search}`
+        : search;
+      const searchParams = llmIsEnabled
+        ? {
+            showRankingScore: true,
+            hybrid: { embedder: "openAiSearch", semanticRatio: 0.9 },
+          }
+        : undefined;
+      return (await index.search(search, searchParams)).hits;
     },
 
     async upsertDocuments(backgrounds: BackgroundUpdate[]) {
