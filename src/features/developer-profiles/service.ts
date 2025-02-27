@@ -186,7 +186,7 @@ export function createDeveloperProfilesService(
     },
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
       const [background] =
-        await backgroundRepository.getBackgroundById(developerProfileId);
+        await repository.getBackgroundById(developerProfileId);
 
       type T = typeof background;
 
