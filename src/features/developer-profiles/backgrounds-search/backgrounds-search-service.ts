@@ -26,7 +26,19 @@ export function createBackgroundsSearchService(
     },
 
     async searchDeveloperProfileIdsWithLLM(search: string | undefined) {
-      return backgroundsSearchApi.searchDeveloperProfileIds(search, true);
+      return (await backgroundsSearchApi.searchDeveloperProfiles(search)).map(
+        (doc) => {
+          const rawRankingScore = doc._rankingScore as number | undefined;
+          const rankingScore =
+            rawRankingScore !== undefined
+              ? Math.round((rawRankingScore as number) * 100)
+              : undefined;
+          return {
+            id: doc.developerProfileId as string,
+            ranking: rankingScore,
+          };
+        },
+      );
     },
 
     async ensureSearchIndex() {
