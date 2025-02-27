@@ -7,9 +7,11 @@ import {
   developerProfiles,
   developerProfileSkills,
   meiliSearchOutbox,
+  tempDeveloperProfiles,
 } from "./db-schema";
 import {
   BackgroundInsert,
+  Backgrounds,
   BackgroundUpdate,
   DeveloperProfileInsert,
   EducationSelect,
@@ -393,6 +395,22 @@ export function createDevelopersRepository(db: Db) {
         .where(
           eq(developerProfileBackgrounds.developerProfileId, developerProfileId)
         );
+    },
+    async addTempDeveloperProfile(
+      developerProfile: DeveloperProfileInsert,
+      background: Backgrounds
+    ) {
+      await db.insert(tempDeveloperProfiles).values({
+        identityId: developerProfile.identityId,
+        name: developerProfile.name,
+        slug: developerProfile.slug,
+        email: developerProfile.email,
+        status: developerProfile.status,
+        avatarUrl: background.avatarUrl,
+        title: background.title,
+        bio: background.bio,
+        links: background.links,
+      });
     },
   };
 }

@@ -5,6 +5,7 @@ import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import {
   BackgroundInsert,
+  Backgrounds,
   BackgroundUpdate,
   DeveloperProfileInsert,
   OutboxMessageSelect,
@@ -14,6 +15,7 @@ import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
+import { Ropa_Sans } from "next/font/google";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
@@ -258,6 +260,15 @@ export function createDeveloperProfilesService(
     },
     async deleteMeiliSearchDocument(developerProfileId: string) {
       await backgroundsSearchApi.deleteDocument(developerProfileId);
+    },
+    async addTempDeveloperProfile(args: {
+      developerProfile: DeveloperProfileInsert;
+      backgrounds: Backgrounds;
+    }) {
+      await repository.addTempDeveloperProfile(
+        args.developerProfile,
+        args.backgrounds
+      );
     },
   };
 }
