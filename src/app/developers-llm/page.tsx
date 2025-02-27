@@ -1,14 +1,15 @@
 import { errorHandler } from "@/lib";
-import { developerProfilesService, Developers } from "@/features/developer-profiles";
+import { developerProfilesService } from "@/features/developer-profiles";
 import { Search } from "../developers/search";
+import { DeveloperCard } from "@/features/developer-profiles/components/developer-card";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 
 export default async function Page({ searchParams }: Props) {
   const search = (await searchParams).search;
-  let developerProfileIds: string[] = [];
+  let developerProfiles: { id: string; ranking?: number }[] = [];
   try {
-    developerProfileIds =
+    developerProfiles =
       await developerProfilesService.searchDeveloperProfileIdsWithLLM(search);
   } catch (error) {
     errorHandler(error);
@@ -17,7 +18,19 @@ export default async function Page({ searchParams }: Props) {
   return (
     <main className="px-4 pb-6">
       <Search />
-      <Developers developerProfileIds={developerProfileIds} />
+      <ul className="pt-20 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+        {developerProfiles.map((developerProfile, index) => (
+          <li key={index} className="">
+            <div className="place-self-end">
+              Ranking: {developerProfile.ranking}%
+            </div>
+            <DeveloperCard
+              key={index}
+              developerProfileId={developerProfile.id}
+            />
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }
