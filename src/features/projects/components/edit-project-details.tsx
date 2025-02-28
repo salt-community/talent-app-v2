@@ -37,10 +37,10 @@ export default function EditProjectDetails({ project }: Props) {
         project.id,
         project.userId,
         project.repository,
-        project.projectWebsite!,
+        project.projectWebsite!
       );
     } catch (error) {
-      console.log("error updating project:", error);
+      console.error("error updating project:", error);
     }
     setLoading(false);
     revalidate();
@@ -57,7 +57,7 @@ export default function EditProjectDetails({ project }: Props) {
       await updateDescriptionAction(updateDescription);
       setIsDialogOpen(false);
     } catch (error) {
-      console.log("error updating performance:", error);
+      console.error("error updating performance:", error);
     }
     revalidate();
   }
@@ -67,7 +67,7 @@ export default function EditProjectDetails({ project }: Props) {
   const placeholder = {
     description: project.description,
     imageUrl: project.imageUrl,
-    imageAlt: project.imageAlt
+    imageAlt: project.imageAlt,
   };
   return (
     <>
