@@ -192,8 +192,12 @@ export function createDeveloperProfilesService(
       for (const developer of developers) {
         if (!developer.slug) {
           const newSlug = generateSlug(developer.name);
-          console.log(`Updating ${developer.name} with slug: ${newSlug}`);
           await repository.insertSlug(developer.id, newSlug);
+          //double write to tempDeveloperProfiles
+          await repository.updateTempDeveloperProfile(
+            { id: developer.id, slug: newSlug },
+            { developerProfileId: developer.id }
+          );
         }
       }
     },
