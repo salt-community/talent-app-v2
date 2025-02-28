@@ -53,7 +53,7 @@ export function createDevelopersRepository(db: Db) {
         .returning({ id: developerProfiles.id });
       return developerProfileId[0];
     },
-    async delete(id: string) {
+    async deleteDeveloperProfile(id: string) {
       await db.delete(developerProfiles).where(eq(developerProfiles.id, id));
     },
     async deleteByIdentityId(identityId: string) {

@@ -16,7 +16,6 @@ import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
-import { v4 as uuidv4 } from "uuid";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
@@ -110,7 +109,7 @@ export function createDeveloperProfilesService(
       return developerProfileId;
     },
     async delete(id: string) {
-      await repository.delete(id);
+      await repository.deleteDeveloperProfile(id);
     },
     async deleteByIdentityId(identityId: string) {
       await repository.deleteByIdentityId(identityId);
