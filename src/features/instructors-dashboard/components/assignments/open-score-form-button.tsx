@@ -11,6 +11,8 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Scoring } from "./scoring";
 import { Assignment } from "../../types";
 
+
+
 export default function OpenScoreFormButton({ assignment }: Assignment) {
   const [open, setOpen] = useState(false);
 

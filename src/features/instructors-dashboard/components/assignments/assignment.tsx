@@ -8,12 +8,13 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
   if (!assignments) return null;
 
   const developers = await instructorService.getCohortStudentsByCohortId(
-    assignments.assignments.cohortId
+    assignments.cohortId
   );
+
   if (!developers) return null;
 
   const assignmentScores = await instructorService.getScoresByAssignmentId(
-    assignments.assignments.id
+    assignments.id
   );
 
   const scoredDevelopersId = new Set(
@@ -22,9 +23,7 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
 
   return (
     <div className="max-w-6xl mx-auto p-4 font-sans">
-      <h1 className="text-3xl font-bold mb-4">
-        {assignments.assignments.title}
-      </h1>
+      <h1 className="text-3xl font-bold mb-4">{assignments.title}</h1>
       <hr className="mb-6" />
       <h2 className="text-2xl font-bold mb-4">Assignment Details</h2>
       <div className="grid grid-cols-1 gap-4 mb-6">
@@ -49,11 +48,11 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
               developer={developer}
               assignment={{
                 assignment: {
-                  assignmentId: assignments.assignments.id,
+                  assignmentId: assignments.id,
                   identityId: developer.id,
-                  title: assignments.assignments.title,
-                  category: assignments.assignments.categories,
-                  comment: assignments.assignment_scores?.comment ?? "",
+                  title: assignments.title,
+                  category: assignments.categories,
+                  comment: assignments?.comment ?? "",
                 },
               }}
               scored={scoredDevelopersId.has(developer.id)}

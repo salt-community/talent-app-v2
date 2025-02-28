@@ -93,11 +93,7 @@ export function createAssignmentsRepository(db: Db) {
       const [assignment] = await db
         .select()
         .from(assignments)
-        .where(eq(assignments.slug, slug))
-        .leftJoin(
-          assignmentScores,
-          eq(assignmentScores.assignmentId, assignments.id)
-        );
+        .where(eq(assignments.slug, slug));
 
       return assignment;
     },
