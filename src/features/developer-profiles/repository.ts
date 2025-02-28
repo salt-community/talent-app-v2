@@ -425,7 +425,6 @@ export function createDevelopersRepository(db: Db) {
       } else {
         id = background.developerProfileId;
       }
-      console.log("id", id);
       await db
         .update(tempDeveloperProfiles)
         .set({
