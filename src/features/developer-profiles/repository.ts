@@ -446,5 +446,10 @@ export function createDevelopersRepository(db: Db) {
         .delete(tempDeveloperProfiles)
         .where(eq(tempDeveloperProfiles.id, developerProfileId));
     },
+    async deleteTempDeveloperProfileByIdentityId(identityId: string) {
+      await db
+        .delete(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.identityId, identityId));
+    },
   };
 }
