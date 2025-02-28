@@ -16,7 +16,7 @@
     "test:watch": "vitest --watch",
     "db:migrate": "drizzle-kit migrate",
     "db:generate": "drizzle-kit generate",
-    "db:populate-temp-developer-profile": "tsx src/developerProfile_migration.ts"
+    "db:populate-temp-developer-profile": "tsx src/populate_tempDeveloperProfile.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.6.0",

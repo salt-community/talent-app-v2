@@ -1,3 +1,4 @@
+import { ConsoleLogWriter } from "drizzle-orm";
 import { insecureDeveloperProfilesService } from "./features/developer-profiles";
 
 async function populateTempDeveloperProfile() {
