@@ -261,6 +261,8 @@ export function createDeveloperProfilesService(
       }
     },
     async updateBackground(background: BackgroundUpdate) {
+      //double write to temp developerProfiles
+      await repository.updateTempDeveloperProfile({}, background);
       const { outboxMessageId } = await repository.updateBackground(background);
 
       const status = await backgroundsSearchApi.upsertDocuments([background]);
