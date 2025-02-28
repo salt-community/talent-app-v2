@@ -16,7 +16,7 @@ import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
-import { Ropa_Sans } from "next/font/google";
+import { v4 as uuidv4 } from "uuid";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
@@ -97,14 +97,17 @@ export function createDeveloperProfilesService(
     },
     async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
       // double write to tempDeveloperProfile
+      const developerProfileId =
+        await repository.addDeveloperProfile(developerProfile);
       const backgrounds = {
+        developerProfileId: developerProfileId.id,
         avatarUrl: "",
         title: "",
         bio: "",
         links: [],
       };
       await this.addTempDeveloperProfile({ developerProfile, backgrounds });
-      return await repository.addDeveloperProfile(developerProfile);
+      return developerProfileId;
     },
     async delete(id: string) {
       await repository.delete(id);
@@ -113,6 +116,15 @@ export function createDeveloperProfilesService(
       await repository.deleteByIdentityId(identityId);
     },
     async updateStatus(args: { id: string; status: string }) {
+      //double write to tempDeveloperProfile
+      const developerProfile = {
+        id: args.id,
+        status: args.status,
+      };
+
+      await repository.updateTempDeveloperProfile(developerProfile, {
+        developerProfileId: args.id,
+      });
       await repository.updateStatus(args.id, args.status);
     },
     async getPublishedOrHighlightedDeveloperProfileIds() {

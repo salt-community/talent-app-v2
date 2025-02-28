@@ -18,6 +18,7 @@ import {
   EducationSelect,
   LanguageSelect,
   SkillSelect,
+  updateTempDeveloperProfile,
 } from "./types";
 
 export function createDevelopersRepository(db: Db) {
@@ -402,20 +403,21 @@ export function createDevelopersRepository(db: Db) {
       background: BackgroundForDeveloperProfile
     ) {
       await db.insert(tempDeveloperProfiles).values({
+        id: background.developerProfileId,
         identityId: developerProfile.identityId,
         name: developerProfile.name,
         slug: developerProfile.slug,
         email: developerProfile.email,
         status: developerProfile.status,
-        avatarUrl: background.avatarUrl,
-        title: background.title,
-        bio: background.bio,
-        links: background.links,
+        avatarUrl: background.avatarUrl || "",
+        title: background.title || "",
+        bio: background.bio || "",
+        links: background.links || [],
       });
     },
     async updateTempDeveloperProfile(
-      developerProfile: DeveloperProfileInsert,
-      background: Backgrounds
+      developerProfile: updateTempDeveloperProfile,
+      background: BackgroundForDeveloperProfile
     ) {
       let id: string;
       if (developerProfile.id) {
@@ -423,6 +425,7 @@ export function createDevelopersRepository(db: Db) {
       } else {
         id = background.developerProfileId;
       }
+      console.log("id", id);
       await db
         .update(tempDeveloperProfiles)
         .set({
