@@ -4,6 +4,7 @@ import { developerProfilesService } from "./instance";
 import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import {
+  BackgroundForDeveloperProfile,
   BackgroundInsert,
   Backgrounds,
   BackgroundUpdate,
@@ -95,6 +96,14 @@ export function createDeveloperProfilesService(
       return await repository.getAllById(identityId);
     },
     async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
+      // double write to tempDeveloperProfile
+      const backgrounds = {
+        avatarUrl: "",
+        title: "",
+        bio: "",
+        links: [],
+      };
+      await this.addTempDeveloperProfile({ developerProfile, backgrounds });
       return await repository.addDeveloperProfile(developerProfile);
     },
     async delete(id: string) {
@@ -263,7 +272,7 @@ export function createDeveloperProfilesService(
     },
     async addTempDeveloperProfile(args: {
       developerProfile: DeveloperProfileInsert;
-      backgrounds: Backgrounds;
+      backgrounds: BackgroundForDeveloperProfile;
     }) {
       await repository.addTempDeveloperProfile(
         args.developerProfile,

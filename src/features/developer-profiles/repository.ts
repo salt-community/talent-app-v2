@@ -10,6 +10,7 @@ import {
   tempDeveloperProfiles,
 } from "./db-schema";
 import {
+  BackgroundForDeveloperProfile,
   BackgroundInsert,
   Backgrounds,
   BackgroundUpdate,
@@ -398,7 +399,7 @@ export function createDevelopersRepository(db: Db) {
     },
     async addTempDeveloperProfile(
       developerProfile: DeveloperProfileInsert,
-      background: Backgrounds
+      background: BackgroundForDeveloperProfile
     ) {
       await db.insert(tempDeveloperProfiles).values({
         identityId: developerProfile.identityId,
