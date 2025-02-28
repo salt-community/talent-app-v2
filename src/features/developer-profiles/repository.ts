@@ -401,18 +401,35 @@ export function createDevelopersRepository(db: Db) {
       developerProfile: DeveloperProfileInsert,
       background: BackgroundForDeveloperProfile
     ) {
-      await db.insert(tempDeveloperProfiles).values({
-        id: background.developerProfileId,
-        identityId: developerProfile.identityId,
-        name: developerProfile.name,
-        slug: developerProfile.slug,
-        email: developerProfile.email,
-        status: developerProfile.status,
-        avatarUrl: background.avatarUrl || "",
-        title: background.title || "",
-        bio: background.bio || "",
-        links: background.links || [],
-      });
+      await db
+        .insert(tempDeveloperProfiles)
+        .values({
+          id: background.developerProfileId,
+          identityId: developerProfile.identityId,
+          name: developerProfile.name,
+          slug: developerProfile.slug,
+          email: developerProfile.email,
+          status: developerProfile.status,
+          avatarUrl: background.avatarUrl || "",
+          title: background.title || "",
+          bio: background.bio || "",
+          links: background.links || [],
+        })
+        .onConflictDoUpdate({
+          target: tempDeveloperProfiles.id,
+          set: {
+            id: background.developerProfileId,
+            identityId: developerProfile.identityId,
+            name: developerProfile.name,
+            slug: developerProfile.slug,
+            email: developerProfile.email,
+            status: developerProfile.status,
+            avatarUrl: background.avatarUrl || "",
+            title: background.title || "",
+            bio: background.bio || "",
+            links: background.links || [],
+          },
+        });
     },
     async updateTempDeveloperProfile(
       developerProfile: updateTempDeveloperProfile,
