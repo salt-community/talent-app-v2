@@ -37,6 +37,15 @@ export interface SessionClaims extends JwtPayload {
 }
 export type DeveloperProfileSelect = typeof developerProfiles.$inferSelect;
 export type DeveloperProfileInsert = typeof developerProfiles.$inferInsert;
+// double write type
+export type updateTempDeveloperProfile = {
+  name?: string;
+  email?: string;
+  identityId?: string;
+  id?: string | undefined;
+  slug?: string | null | undefined;
+  status?: string | undefined;
+};
 
 export type Backgrounds = BackgroundSelect & {
   background_skills: SkillSelect[];
@@ -86,6 +95,14 @@ export type typeBackground = {
   title: string;
   bio: string;
   links: SocialLink[];
+};
+
+export type BackgroundForDeveloperProfile = {
+  developerProfileId: string;
+  avatarUrl?: string;
+  title?: string;
+  bio?: string;
+  links?: SocialLink[];
 };
 
 export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;

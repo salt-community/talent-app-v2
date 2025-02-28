@@ -22,7 +22,7 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
 
   for (const developer of developers) {
     developerProfileIds.push(
-      (await insecureDeveloperProfilesService.add(developer)).id
+      (await insecureDeveloperProfilesService.addDeveloperProfile(developer)).id
     );
   }
 

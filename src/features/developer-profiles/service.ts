@@ -4,6 +4,7 @@ import { developerProfilesService } from "./instance";
 import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import {
+  BackgroundForDeveloperProfile,
   BackgroundInsert,
   BackgroundUpdate,
   DeveloperProfileInsert,
@@ -92,16 +93,40 @@ export function createDeveloperProfilesService(
     async getAllById(identityId: string) {
       return await repository.getAllById(identityId);
     },
-    async add(developerProfile: DeveloperProfileInsert) {
-      return await repository.add(developerProfile);
+    async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
+      // double write to tempDeveloperProfile
+      const developerProfileId =
+        await repository.addDeveloperProfile(developerProfile);
+      const backgrounds = {
+        developerProfileId: developerProfileId.id,
+        avatarUrl: "",
+        title: "",
+        bio: "",
+        links: [],
+      };
+      await this.addTempDeveloperProfile({ developerProfile, backgrounds });
+      return developerProfileId;
     },
     async delete(id: string) {
-      await repository.delete(id);
+      //double write to tempDeveloperProfile
+      await repository.deleteTempDeveloperProfile(id);
+      await repository.deleteDeveloperProfile(id);
     },
     async deleteByIdentityId(identityId: string) {
+      //double write to tempDeveloperProfile
+      await repository.deleteTempDeveloperProfileByIdentityId(identityId);
       await repository.deleteByIdentityId(identityId);
     },
     async updateStatus(args: { id: string; status: string }) {
+      //double write to tempDeveloperProfile
+      const developerProfile = {
+        id: args.id,
+        status: args.status,
+      };
+
+      await repository.updateTempDeveloperProfile(developerProfile, {
+        developerProfileId: args.id,
+      });
       await repository.updateStatus(args.id, args.status);
     },
     async getPublishedOrHighlightedDeveloperProfileIds() {
@@ -120,7 +145,7 @@ export function createDeveloperProfilesService(
       const { name, email } = claim(claims);
       const slug = await this.generateUniqueSlug(name);
       if (!email) return;
-      const developer = await developerProfilesService.add({
+      const developer = await developerProfilesService.addDeveloperProfile({
         name,
         slug,
         email,
@@ -170,8 +195,12 @@ export function createDeveloperProfilesService(
       for (const developer of developers) {
         if (!developer.slug) {
           const newSlug = generateSlug(developer.name);
-          console.log(`Updating ${developer.name} with slug: ${newSlug}`);
           await repository.insertSlug(developer.id, newSlug);
+          //double write to tempDeveloperProfiles
+          await repository.updateTempDeveloperProfile(
+            { id: developer.id, slug: newSlug },
+            { developerProfileId: developer.id }
+          );
         }
       }
     },
@@ -235,6 +264,8 @@ export function createDeveloperProfilesService(
       }
     },
     async updateBackground(background: BackgroundUpdate) {
+      //double write to temp developerProfiles
+      await repository.updateTempDeveloperProfile({}, background);
       const { outboxMessageId } = await repository.updateBackground(background);
 
       const status = await backgroundsSearchApi.upsertDocuments([background]);
@@ -258,6 +289,15 @@ export function createDeveloperProfilesService(
     },
     async deleteMeiliSearchDocument(developerProfileId: string) {
       await backgroundsSearchApi.deleteDocument(developerProfileId);
+    },
+    async addTempDeveloperProfile(args: {
+      developerProfile: DeveloperProfileInsert;
+      backgrounds: BackgroundForDeveloperProfile;
+    }) {
+      await repository.addTempDeveloperProfile(
+        args.developerProfile,
+        args.backgrounds
+      );
     },
   };
 }

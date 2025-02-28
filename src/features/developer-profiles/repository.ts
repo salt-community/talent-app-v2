@@ -7,14 +7,17 @@ import {
   developerProfiles,
   developerProfileSkills,
   meiliSearchOutbox,
+  tempDeveloperProfiles,
 } from "./db-schema";
 import {
+  BackgroundForDeveloperProfile,
   BackgroundInsert,
   BackgroundUpdate,
   DeveloperProfileInsert,
   EducationSelect,
   LanguageSelect,
   SkillSelect,
+  updateTempDeveloperProfile,
 } from "./types";
 
 export function createDevelopersRepository(db: Db) {
@@ -42,14 +45,14 @@ export function createDevelopersRepository(db: Db) {
         .from(developerProfiles)
         .where(eq(developerProfiles.identityId, identityId));
     },
-    async add(developerProfile: DeveloperProfileInsert) {
+    async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
       const developerProfileId = await db
         .insert(developerProfiles)
         .values(developerProfile)
         .returning({ id: developerProfiles.id });
       return developerProfileId[0];
     },
-    async delete(id: string) {
+    async deleteDeveloperProfile(id: string) {
       await db.delete(developerProfiles).where(eq(developerProfiles.id, id));
     },
     async deleteByIdentityId(identityId: string) {
@@ -393,6 +396,76 @@ export function createDevelopersRepository(db: Db) {
         .where(
           eq(developerProfileBackgrounds.developerProfileId, developerProfileId)
         );
+    },
+    async addTempDeveloperProfile(
+      developerProfile: DeveloperProfileInsert,
+      background: BackgroundForDeveloperProfile
+    ) {
+      await db
+        .insert(tempDeveloperProfiles)
+        .values({
+          id: background.developerProfileId,
+          identityId: developerProfile.identityId,
+          name: developerProfile.name,
+          slug: developerProfile.slug,
+          email: developerProfile.email,
+          status: developerProfile.status,
+          avatarUrl: background.avatarUrl || "",
+          title: background.title || "",
+          bio: background.bio || "",
+          links: background.links || [],
+        })
+        .onConflictDoUpdate({
+          target: tempDeveloperProfiles.id,
+          set: {
+            id: background.developerProfileId,
+            identityId: developerProfile.identityId,
+            name: developerProfile.name,
+            slug: developerProfile.slug,
+            email: developerProfile.email,
+            status: developerProfile.status,
+            avatarUrl: background.avatarUrl || "",
+            title: background.title || "",
+            bio: background.bio || "",
+            links: background.links || [],
+          },
+        });
+    },
+    async updateTempDeveloperProfile(
+      developerProfile: updateTempDeveloperProfile,
+      background: BackgroundForDeveloperProfile
+    ) {
+      let id: string;
+      if (developerProfile.id) {
+        id = developerProfile.id;
+      } else {
+        id = background.developerProfileId;
+      }
+      await db
+        .update(tempDeveloperProfiles)
+        .set({
+          identityId:
+            developerProfile.identityId || tempDeveloperProfiles.identityId,
+          name: developerProfile.name || tempDeveloperProfiles.name,
+          slug: developerProfile.slug || tempDeveloperProfiles.slug,
+          email: developerProfile.email || tempDeveloperProfiles.email,
+          status: developerProfile.status || tempDeveloperProfiles.status,
+          avatarUrl: background.avatarUrl || tempDeveloperProfiles.avatarUrl,
+          title: background.title || tempDeveloperProfiles.title,
+          bio: background.bio || tempDeveloperProfiles.bio,
+          links: background.links || tempDeveloperProfiles.links,
+        })
+        .where(eq(tempDeveloperProfiles.id, id));
+    },
+    async deleteTempDeveloperProfile(developerProfileId: string) {
+      await db
+        .delete(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.id, developerProfileId));
+    },
+    async deleteTempDeveloperProfileByIdentityId(identityId: string) {
+      await db
+        .delete(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.identityId, identityId));
     },
   };
 }
