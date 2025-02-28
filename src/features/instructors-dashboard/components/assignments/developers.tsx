@@ -2,17 +2,21 @@
 import React from "react";
 import { Assignment, Developer } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
-import { AlertCircleIcon, Check } from "lucide-react";
+import { AlertCircle, Check, CheckCheck } from "lucide-react";
 
 type Props = {
   developer: Developer;
   assignment: Assignment;
   scored?: boolean;
+  published?: boolean;
 };
 
-export default function Developers({ developer, assignment, scored }: Props) {
-  const isScored = scored ?? false;
-  // const scorePublished = scored ?? false;
+export default function Developers({
+  developer,
+  assignment,
+  scored = false,
+  published = false,
+}: Props) {
   return (
     <div className="border-b border-gray-200 last:border-0">
       <div className="py-3 px-4 flex items-center justify-between">
@@ -23,12 +27,20 @@ export default function Developers({ developer, assignment, scored }: Props) {
           <div>
             <div className="flex flex-row gap-2 font-medium">
               {developer.name}
-              <div title="Scored">
-                {isScored && <Check size={20} color="green" />}
-              </div>
-              <div title="Not Scored">
-                {!isScored && <AlertCircleIcon size={20} color="red" />}
-              </div>
+
+              {published ? (
+                <div title="Score published">
+                  <CheckCheck size={20} color="green" />
+                </div>
+              ) : scored ? (
+                <div title="Assignment scored">
+                  <Check size={20} color="green" />
+                </div>
+              ) : (
+                <div title="Not scored">
+                  <AlertCircle size={20} color="red" />
+                </div>
+              )}
             </div>
           </div>
         </div>

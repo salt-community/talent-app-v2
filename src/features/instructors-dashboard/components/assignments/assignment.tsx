@@ -21,6 +21,10 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
     assignmentScores?.map((score) => score.identityId) || []
   );
 
+  const scoredDevelopersStatus = new Set(
+    assignmentScores?.map((score) => score.status) || []
+  );
+
   return (
     <div className="max-w-6xl mx-auto p-4 font-sans">
       <h1 className="text-3xl font-bold mb-4">{assignments.title}</h1>
@@ -56,6 +60,10 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
                 },
               }}
               scored={scoredDevelopersId.has(developer.id)}
+              published={
+                scoredDevelopersId.has(developer.id) &&
+                scoredDevelopersStatus.has("published")
+              }
             />
           ))}
         </div>
