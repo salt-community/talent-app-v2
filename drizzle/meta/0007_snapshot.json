@@ -1,5 +1,5 @@
 {
-  "id": "b8335302-3bb7-4fa5-b345-bae9da89a988",
+  "id": "2410ffb7-aa15-4bac-8c7f-f732ae8abeab",
   "prevId": "2ddccf1c-c3ee-411a-9e6a-42ff7a599947",
   "version": "7",
   "dialect": "postgresql",
@@ -681,31 +681,6 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'unpublished'"
-        },
-        "avatar_url": {
-          "name": "avatar_url",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "''"
-        },
-        "title": {
-          "name": "title",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "bio": {
-          "name": "bio",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "links": {
-          "name": "links",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
         }
       },
       "indexes": {},
@@ -762,6 +737,90 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.temp_developer_profiles": {
+      "name": "temp_developer_profiles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "identity_id": {
+          "name": "identity_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'unpublished'"
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bio": {
+          "name": "bio",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "links": {
+          "name": "links",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "temp_developer_profiles_slug_unique": {
+          "name": "temp_developer_profiles_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
