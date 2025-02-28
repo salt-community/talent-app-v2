@@ -12,7 +12,6 @@ import {
 import {
   BackgroundForDeveloperProfile,
   BackgroundInsert,
-  Backgrounds,
   BackgroundUpdate,
   DeveloperProfileInsert,
   EducationSelect,

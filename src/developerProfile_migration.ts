@@ -1,7 +1,4 @@
-import {
-  Background,
-  insecureDeveloperProfilesService,
-} from "./features/developer-profiles";
+import { insecureDeveloperProfilesService } from "./features/developer-profiles";
 
 async function populateTempDeveloperProfile() {
   const developerProfiles = await insecureDeveloperProfilesService.getAll();

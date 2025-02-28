@@ -6,7 +6,6 @@ import { claim } from "./session";
 import {
   BackgroundForDeveloperProfile,
   BackgroundInsert,
-  Backgrounds,
   BackgroundUpdate,
   DeveloperProfileInsert,
   OutboxMessageSelect,
