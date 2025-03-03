@@ -19,9 +19,11 @@ export type Assignment = {
     identityId: string;
     title: string;
     category: string[] | null;
-    comment: string | null;
+    comment: string[] | null;
+    score: number[] | null;
   };
 };
+
 export type AssignmentInsert = {
   assignment: {
     assignmentId: string;
@@ -31,4 +33,13 @@ export type AssignmentInsert = {
     comment: string | null;
     score: number;
   };
+};
+
+export type ScoreAssignment = {
+  id: string;
+  assignmentId: string | null;
+  identityId: string | null;
+  category: string | null;
+  comment: string | null;
+  score: number | null;
 };

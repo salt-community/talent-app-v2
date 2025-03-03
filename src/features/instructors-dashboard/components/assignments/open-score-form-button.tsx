@@ -9,11 +9,13 @@ import {
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Scoring } from "./scoring";
-import { Assignment } from "../../types";
+import { ScoreAssignment } from "../../types";
 
+type Props = {
+  scores: ScoreAssignment[];
+};
 
-
-export default function OpenScoreFormButton({ assignment }: Assignment) {
+export default function OpenScoreFormButton({ scores }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -32,10 +34,7 @@ export default function OpenScoreFormButton({ assignment }: Assignment) {
           <DialogTitle>Score</DialogTitle>
         </VisuallyHidden>
         <DialogContent>
-          <Scoring
-            assignment={{ assignment }}
-            onSuccess={() => setOpen(false)}
-          />
+          <Scoring scores={scores} onSuccess={() => setOpen(false)} />
         </DialogContent>
       </Dialog>
     </>

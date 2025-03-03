@@ -1,19 +1,19 @@
 "use client";
 import React from "react";
-import { Assignment, Developer } from "../../types";
+import { Developer, ScoreAssignment } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
 import { AlertCircle, Check, CheckCheck } from "lucide-react";
 
 type Props = {
   developer: Developer;
-  assignment: Assignment;
+  scores: ScoreAssignment[];
   scored?: boolean;
   published?: boolean;
 };
 
 export default function Developers({
   developer,
-  assignment,
+  scores,
   scored = false,
   published = false,
 }: Props) {
@@ -45,12 +45,7 @@ export default function Developers({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <OpenScoreFormButton
-            assignment={{
-              ...assignment.assignment,
-              category: assignment.assignment.category ?? [],
-            }}
-          />
+          <OpenScoreFormButton scores={scores} />
         </div>
       </div>
     </div>

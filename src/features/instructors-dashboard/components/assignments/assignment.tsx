@@ -42,15 +42,9 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
             <Developer
               key={developer.id}
               developer={developer}
-              assignment={{
-                assignment: {
-                  assignmentId: assignments.id,
-                  identityId: developer.id,
-                  title: assignments.title,
-                  category: assignments.categories,
-                  comment: assignments?.comment ?? "",
-                },
-              }}
+              scores={assignmentScores.filter(
+                (score) => score.identityId === developer.id
+              )}
               scored={assignmentScores.some(
                 (score) => score.identityId === developer.id
               )}

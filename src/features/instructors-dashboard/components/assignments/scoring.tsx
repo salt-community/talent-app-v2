@@ -1,53 +1,39 @@
 import React, { useState } from "react";
 import { Button, Input, Label, Textarea } from "@/components";
-import { Assignment } from "../../types";
-import { addScoreToAssignment } from "../../action";
 import { useToast } from "@/hooks/use-toast";
+import { ScoreAssignment } from "../../types";
 
 type Props = {
-  assignment: Assignment;
+  scores: ScoreAssignment[];
   onSuccess: () => void;
 };
 
-export function Scoring({ assignment, onSuccess }: Props) {
-  const [scores, setScores] = useState<Record<string, string>>({});
-  const [comments, setComments] = useState<Record<string, string>>({});
+export function Scoring({ scores, onSuccess }: Props) {
+  const [score, setScore] = useState<ScoreAssignment[]>(scores);
+
   const { toast } = useToast();
 
-  const handleScoreChange = (category: string, value: string) => {
-    setScores((prev) => ({
-      ...prev,
-      [category]: value,
-    }));
+  const handleScoreChange = (id: string, value: string) => {
+    setScore(
+      (prev) =>
+        prev?.map((score) =>
+          score.assignmentId === id
+            ? { ...score, score: parseInt(value) }
+            : score
+        ) || []
+    );
   };
 
-  const handleCommentChange = (category: string, value: string) => {
-    setComments((prev) => ({
-      ...prev,
-      [category]: value,
-    }));
+  const handleCommentChange = (id: string, value: string) => {
+    setScore(
+      (prev) =>
+        prev?.map((score) =>
+          score.assignmentId === id ? { ...score, comment: value } : score
+        ) || []
+    );
   };
 
   const handleSubmitScoring = async () => {
-    const categoryPromises = (assignment.assignment.category || []).map(
-      async (category) => {
-        if (!scores[category]) return;
-
-        await addScoreToAssignment({
-          assignment: {
-            assignmentId: assignment.assignment.assignmentId,
-            identityId: assignment.assignment.identityId,
-            title: assignment.assignment.title,
-            category: category,
-            comment: comments[category] || "",
-            score: parseInt(scores[category], 10) || 0,
-          },
-        });
-      }
-    );
-
-    await Promise.all(categoryPromises.filter(Boolean));
-
     onSuccess();
     toast({
       title: "Scoring added",
@@ -58,37 +44,37 @@ export function Scoring({ assignment, onSuccess }: Props) {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h2 className="text-2xl font-bold">{assignment.assignment.title}</h2>
+        <h2 className="text-2xl font-bold">{"assignment"}</h2>
         <p className="text-gray-500 mt-1">Score each category</p>
       </div>
       <div className="space-y-6">
-        {(assignment.assignment.category ?? []).map((category) => (
-          <div key={category} className="border p-4 rounded-md">
+        {score.map((score) => (
+          <div key={score.id} className="border p-4 rounded-md">
             <Label
-              htmlFor={`score-${category}`}
+              htmlFor={`score-${score}`}
               className="block mb-2 font-medium text-gray-800"
             >
-              {category}
+              {score.category}
             </Label>
             <Input
-              id={`score-${category}`}
-              value={scores[category] || ""}
-              onChange={(e) => handleScoreChange(category, e.target.value)}
+              id={`score-${score.assignmentId}`}
+              value={score.score || ""}
+              onChange={(e) => handleScoreChange(score.id, e.target.value)}
               placeholder="Enter score"
               className="mb-3"
             />
 
             <Label
-              htmlFor={`comment-${category}`}
+              htmlFor={`comment-${score}`}
               className="block mb-2 font-medium text-gray-800"
             >
-              Comment for {category}
+              Comment for {score.category}
             </Label>
             <Textarea
-              id={`comment-${category}`}
-              value={comments[category] || ""}
-              onChange={(e) => handleCommentChange(category, e.target.value)}
-              placeholder={`Enter comment for ${category}`}
+              id={`comment-${score.assignmentId}`}
+              value={score.comment || ""}
+              onChange={(e) => handleCommentChange(score.id, e.target.value)}
+              placeholder={`Enter comment for ${score}`}
             />
           </div>
         ))}
