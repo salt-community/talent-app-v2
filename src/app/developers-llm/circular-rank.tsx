@@ -14,6 +14,15 @@ export default function CircularRank({ percentage }: Props) {
       </div>
       <svg className="w-full h-full" viewBox="0 0 100 100">
         <circle
+          className="stroke-slate-100"
+          cx="50"
+          cy="50"
+          r={radius}
+          strokeWidth="10"
+          transform="rotate(-90 50 50)"
+          fill="none"
+        />
+        <circle
           className="text-lightGray stroke-current"
           cx="50"
           cy="50"
