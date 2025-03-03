@@ -303,6 +303,7 @@ export function createDeveloperProfilesService(
     async getAllBackgrounds() {
       return await repository.getAllBackgrounds();
     },
+    //can be removed after merge is completed
     async updateForeignKey(args: {
       backgroundId: number;
       developerProfileId: string;
