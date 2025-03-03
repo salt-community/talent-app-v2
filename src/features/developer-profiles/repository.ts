@@ -35,7 +35,7 @@ export function createDevelopersRepository(db: Db) {
           email: tempDeveloperProfiles.email,
           status: tempDeveloperProfiles.status,
         })
-        .from(developerProfiles)
+        .from(tempDeveloperProfiles)
         .where(eq(tempDeveloperProfiles.id, id));
       return developerId[0];
     },
