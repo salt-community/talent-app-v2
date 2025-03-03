@@ -25,8 +25,8 @@ export function createDeveloperProfilesService(
   const repository = createDevelopersRepository(db);
   const backgroundsSearchApi = createSearchApi({
     indexUid: "backgrounds",
-    primaryKey: "developerProfileId",
-    displayedAttributes: ["developerProfileId"],
+    primaryKey: "id",
+    displayedAttributes: ["id"],
     searchableAttributes: [
       "skills",
       "educations",
@@ -34,6 +34,7 @@ export function createDeveloperProfilesService(
       "name",
       "title",
       "bio",
+      "status",
     ],
     embedders:
       process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON"
@@ -205,10 +206,10 @@ export function createDeveloperProfilesService(
 
       if (!background) {
         return {
-          id: -1,
+          id: "",
           avatarUrl: "",
           name: "<New Profile>",
-          developerProfileId,
+          identityId: "",
           title: "",
           bio: "",
           links: [],
@@ -239,11 +240,17 @@ export function createDeveloperProfilesService(
       );
     },
     async addBackground(background: BackgroundInsert) {
-      const { outboxMessageId, backgroundId } =
-        await repository.addBackground(background);
-
+      const { outboxMessageId } = await repository.addBackground(background);
+      const developerProfileId = await repository.updateTempDeveloperProfile(
+        {},
+        background
+      );
+      const developerProfile =
+        await repository.getBackgroundByDeveloperProfileId(
+          developerProfileId[0].id
+        );
       const status = await backgroundsSearchApi.upsertDocuments([
-        { id: backgroundId, ...background },
+        developerProfile[0],
       ]);
       if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
@@ -251,10 +258,19 @@ export function createDeveloperProfilesService(
     },
     async updateBackground(background: BackgroundUpdate) {
       //double write to temp developerProfiles
-      await repository.updateTempDeveloperProfile({}, background);
+      const developerProfileId = await repository.updateTempDeveloperProfile(
+        {},
+        background
+      );
+      const developerProfile =
+        await repository.getBackgroundByDeveloperProfileId(
+          developerProfileId[0].id
+        );
       const { outboxMessageId } = await repository.updateBackground(background);
 
-      const status = await backgroundsSearchApi.upsertDocuments([background]);
+      const status = await backgroundsSearchApi.upsertDocuments([
+        developerProfile[0],
+      ]);
       if (OK_STATUSES.includes(status)) {
         await repository.removeOutboxMessage(outboxMessageId);
       }
@@ -298,6 +314,12 @@ export function createDeveloperProfilesService(
         args.backgroundId,
         args.developerProfileId
       );
+    },
+    async getHighlightedDeveloperProfileIds() {
+      const highlighted = await repository.getAll();
+      return highlighted
+        .filter((dev) => dev.status === "highlighted")
+        .map((dev) => dev.id);
     },
   };
 }

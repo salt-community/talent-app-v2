@@ -5,6 +5,7 @@ import {
   developerProfiles,
   developerProfileSkills,
   meiliSearchOutbox,
+  tempDeveloperProfiles,
 } from "./db-schema";
 import { createDeveloperProfilesService } from "./service";
 import { JwtPayload } from "jsonwebtoken";
@@ -37,6 +38,8 @@ export interface SessionClaims extends JwtPayload {
 }
 export type DeveloperProfileSelect = typeof developerProfiles.$inferSelect;
 export type DeveloperProfileInsert = typeof developerProfiles.$inferInsert;
+export type TempDeveloperProfileInsert =
+  typeof tempDeveloperProfiles.$inferInsert;
 // double write type
 export type updateTempDeveloperProfile = {
   name?: string;
@@ -73,12 +76,13 @@ export type BackgroundUpdate = Partial<BackgroundSelect> &
     languages: string[];
     educations: string[];
   };
-export type developerProfileUpdate = Partial<DeveloperProfileSelect> &
-  Required<Pick<DeveloperProfileSelect, "id">> & {
+export type developerProfileUpdate = Partial<TempDeveloperProfileInsert> &
+  Required<Pick<TempDeveloperProfileInsert, "id" | "identityId">> & {
     name: string;
     skills: string[];
     languages: string[];
     educations: string[];
+    status: string;
   };
 
 export type PreviousState =
@@ -97,6 +101,15 @@ export type PreviousState =
 export type typeBackground = {
   id: number;
   developerProfileId: string;
+  name: string;
+  avatarUrl: string;
+  title: string;
+  bio: string;
+  links: SocialLink[];
+};
+export type typeDeveloperProfile = {
+  id: string;
+  identityId: string;
   name: string;
   avatarUrl: string;
   title: string;

@@ -55,8 +55,7 @@ export function createSearchApi({
       const documents: Record<string, unknown>[] = isSearchEmpty
         ? (await index.getDocuments()).results
         : (await index.search(search)).hits;
-
-      return documents.map((doc) => doc.developerProfileId as string);
+      return documents.map((doc) => doc.id as string);
     },
 
     async searchDeveloperProfiles(search: string | undefined) {
@@ -77,9 +76,7 @@ export function createSearchApi({
       return (await index.search(search, searchParams)).hits;
     },
 
-    async upsertDocuments(
-      backgrounds: developerProfileUpdate[] | BackgroundUpdate[]
-    ) {
+    async upsertDocuments(backgrounds: developerProfileUpdate[]) {
       const response = await index.addDocuments(backgrounds);
       return response.status;
     },
