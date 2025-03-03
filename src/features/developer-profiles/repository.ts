@@ -72,14 +72,6 @@ export function createDevelopersRepository(db: Db) {
         })
         .where(eq(developerProfiles.id, id));
     },
-    async getIdentityIdByDeveloperProfileId(developerProfileId: string) {
-      const [developerProfile] = await db
-        .select()
-        .from(tempDeveloperProfiles)
-        .where(eq(tempDeveloperProfiles.id, developerProfileId));
-
-      return developerProfile?.identityId;
-    },
     async getDeveloperProfileByIdentityId(identityId: string) {
       return await db
         .select()
