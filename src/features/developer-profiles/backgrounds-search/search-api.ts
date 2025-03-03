@@ -1,5 +1,5 @@
 import MeiliSearch, { Embedders, Index, Settings } from "meilisearch";
-import { BackgroundUpdate } from "../types";
+import { BackgroundUpdate, developerProfileUpdate } from "../types";
 
 type InitializeMeiliSearchIndexArgs = {
   indexUid: string;
@@ -77,7 +77,9 @@ export function createSearchApi({
       return (await index.search(search, searchParams)).hits;
     },
 
-    async upsertDocuments(backgrounds: BackgroundUpdate[]) {
+    async upsertDocuments(
+      backgrounds: developerProfileUpdate[] | BackgroundUpdate[]
+    ) {
       const response = await index.addDocuments(backgrounds);
       return response.status;
     },

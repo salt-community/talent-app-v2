@@ -73,6 +73,13 @@ export type BackgroundUpdate = Partial<BackgroundSelect> &
     languages: string[];
     educations: string[];
   };
+export type developerProfileUpdate = Partial<DeveloperProfileSelect> &
+  Required<Pick<DeveloperProfileSelect, "id">> & {
+    name: string;
+    skills: string[];
+    languages: string[];
+    educations: string[];
+  };
 
 export type PreviousState =
   | {

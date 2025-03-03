@@ -98,13 +98,13 @@ export function createDevelopersRepository(db: Db) {
     async getAllBackgrounds() {
       return await db
         .select({
-          id: developerProfileBackgrounds.id,
-          developerProfileId: developerProfileBackgrounds.developerProfileId,
-          name: developerProfileBackgrounds.name,
-          avatarUrl: developerProfileBackgrounds.avatarUrl,
-          title: developerProfileBackgrounds.title,
-          bio: developerProfileBackgrounds.bio,
-          links: developerProfileBackgrounds.links,
+          id: tempDeveloperProfiles.id,
+          developerProfileId: tempDeveloperProfiles.id,
+          name: tempDeveloperProfiles.name,
+          avatarUrl: tempDeveloperProfiles.avatarUrl,
+          title: tempDeveloperProfiles.title,
+          bio: tempDeveloperProfiles.bio,
+          links: tempDeveloperProfiles.links,
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfileSkills.name})::VARCHAR[]`.as(
@@ -121,29 +121,29 @@ export function createDevelopersRepository(db: Db) {
             "educations"
           ),
         })
-        .from(developerProfileBackgrounds)
+        .from(tempDeveloperProfiles)
         .leftJoin(
           developerProfileSkills,
           eq(
-            developerProfileSkills.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileSkills.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
         .leftJoin(
           developerProfileLanguages,
           eq(
-            developerProfileLanguages.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileSkills.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
         .leftJoin(
           developerProfileEducations,
           eq(
-            developerProfileEducations.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileSkills.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
-        .groupBy(developerProfileBackgrounds.id);
+        .groupBy(tempDeveloperProfiles.id);
     },
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
       return await db
