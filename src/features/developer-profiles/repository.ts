@@ -123,14 +123,6 @@ export function createDevelopersRepository(db: Db) {
           ),
         })
         .from(tempDeveloperProfiles)
-        //remove this left join after the merge is completed
-        .leftJoin(
-          developerProfileBackgrounds,
-          eq(
-            developerProfileBackgrounds.developerProfileId,
-            tempDeveloperProfiles.id
-          )
-        )
         .leftJoin(
           developerProfileSkills,
           eq(
@@ -141,14 +133,14 @@ export function createDevelopersRepository(db: Db) {
         .leftJoin(
           developerProfileLanguages,
           eq(
-            developerProfileSkills.developerProfileId,
+            developerProfileLanguages.developerProfileId,
             tempDeveloperProfiles.id
           )
         )
         .leftJoin(
           developerProfileEducations,
           eq(
-            developerProfileSkills.developerProfileId,
+            developerProfileEducations.developerProfileId,
             tempDeveloperProfiles.id
           )
         )
@@ -182,13 +174,6 @@ export function createDevelopersRepository(db: Db) {
           ),
         })
         .from(tempDeveloperProfiles)
-        .leftJoin(
-          developerProfileBackgrounds,
-          eq(
-            developerProfileBackgrounds.developerProfileId,
-            tempDeveloperProfiles.id
-          )
-        )
         .leftJoin(
           developerProfileSkills,
           eq(
@@ -247,13 +232,6 @@ export function createDevelopersRepository(db: Db) {
         })
         .from(tempDeveloperProfiles)
         .leftJoin(
-          developerProfileBackgrounds,
-          eq(
-            developerProfileBackgrounds.developerProfileId,
-            tempDeveloperProfiles.id
-          )
-        )
-        .leftJoin(
           developerProfileSkills,
           eq(
             developerProfileSkills.developerProfileId,
@@ -263,14 +241,14 @@ export function createDevelopersRepository(db: Db) {
         .leftJoin(
           developerProfileLanguages,
           eq(
-            developerProfileSkills.developerProfileId,
+            developerProfileLanguages.developerProfileId,
             tempDeveloperProfiles.id
           )
         )
         .leftJoin(
           developerProfileEducations,
           eq(
-            developerProfileSkills.developerProfileId,
+            developerProfileEducations.developerProfileId,
             tempDeveloperProfiles.id
           )
         )
