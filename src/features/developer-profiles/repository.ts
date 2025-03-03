@@ -64,6 +64,7 @@ export function createDevelopersRepository(db: Db) {
         .delete(developerProfiles)
         .where(eq(developerProfiles.identityId, identityId));
     },
+    //can be removed after merge is completed
     async updateStatus(id: string, status: string) {
       await db
         .update(developerProfiles)
@@ -75,24 +76,24 @@ export function createDevelopersRepository(db: Db) {
     async getDeveloperProfileByIdentityId(identityId: string) {
       return await db
         .select()
-        .from(developerProfiles)
-        .where(eq(developerProfiles.identityId, identityId));
+        .from(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.identityId, identityId));
     },
     async existsBySlug(slug: string) {
       const [developerProfile] = await db
         .select()
-        .from(developerProfiles)
-        .where(eq(developerProfiles.slug, slug));
+        .from(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.slug, slug));
 
       return !!developerProfile;
     },
     async insertSlug(id: string, slug: string) {
       await db
-        .update(developerProfiles)
+        .update(tempDeveloperProfiles)
         .set({
           slug,
         })
-        .where(eq(developerProfiles.id, id));
+        .where(eq(tempDeveloperProfiles.id, id));
     },
     async getAllBackgrounds() {
       return await db
