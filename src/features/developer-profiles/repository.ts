@@ -469,5 +469,21 @@ export function createDevelopersRepository(db: Db) {
         .delete(tempDeveloperProfiles)
         .where(eq(tempDeveloperProfiles.identityId, identityId));
     },
+    async updateForeignKey(backgroundId: number, developerProfileId: string) {
+      await db.transaction(async (tx) => {
+        await tx
+          .update(developerProfileSkills)
+          .set({ developerProfileId: developerProfileId })
+          .where(eq(developerProfileSkills.backgroundId, backgroundId));
+        await tx
+          .update(developerProfileLanguages)
+          .set({ developerProfileId: developerProfileId })
+          .where(eq(developerProfileLanguages.backgroundId, backgroundId));
+        await tx
+          .update(developerProfileEducations)
+          .set({ developerProfileId: developerProfileId })
+          .where(eq(developerProfileEducations.backgroundId, backgroundId));
+      });
+    },
   };
 }

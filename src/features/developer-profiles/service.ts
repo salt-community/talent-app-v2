@@ -299,6 +299,19 @@ export function createDeveloperProfilesService(
         args.backgrounds
       );
     },
+    //can be removed after merge is completed
+    async getAllBackgrounds() {
+      return await repository.getAllBackgrounds();
+    },
+    async updateForeignKey(args: {
+      backgroundId: number;
+      developerProfileId: string;
+    }) {
+      await repository.updateForeignKey(
+        args.backgroundId,
+        args.developerProfileId
+      );
+    },
   };
 }
 
