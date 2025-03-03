@@ -28,7 +28,6 @@ export type AssignmentInsert = {
   assignment: {
     assignmentId: string;
     identityId: string;
-    title: string;
     category: string;
     comment: string | null;
     score: number;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Input, Label, Textarea } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import { ScoreAssignment } from "../../types";
+import { addScoreToAssignment } from "../../action";
 
 type Props = {
   scores: ScoreAssignment[];
@@ -10,16 +11,13 @@ type Props = {
 
 export function Scoring({ scores, onSuccess }: Props) {
   const [score, setScore] = useState<ScoreAssignment[]>(scores);
-
   const { toast } = useToast();
 
   const handleScoreChange = (id: string, value: string) => {
     setScore(
       (prev) =>
-        prev?.map((score) =>
-          score.assignmentId === id
-            ? { ...score, score: parseInt(value) }
-            : score
+        prev?.map((s) =>
+          s.id === id ? { ...s, score: parseInt(value) || 0 } : s
         ) || []
     );
   };
@@ -27,13 +25,26 @@ export function Scoring({ scores, onSuccess }: Props) {
   const handleCommentChange = (id: string, value: string) => {
     setScore(
       (prev) =>
-        prev?.map((score) =>
-          score.assignmentId === id ? { ...score, comment: value } : score
-        ) || []
+        prev?.map((s) => (s.id === id ? { ...s, comment: value } : s)) || []
     );
   };
 
   const handleSubmitScoring = async () => {
+    const assignment = score.filter(
+      (s) => s.score && s.comment && s.assignmentId && s.identityId
+    );
+
+    assignment.forEach((s) => {
+      addScoreToAssignment({
+        assignment: {
+          assignmentId: s.assignmentId!,
+          identityId: s.identityId!,
+          category: s.category!,
+          comment: s.comment,
+          score: s.score!,
+        },
+      });
+    });
     onSuccess();
     toast({
       title: "Scoring added",
@@ -48,33 +59,33 @@ export function Scoring({ scores, onSuccess }: Props) {
         <p className="text-gray-500 mt-1">Score each category</p>
       </div>
       <div className="space-y-6">
-        {score.map((score) => (
-          <div key={score.id} className="border p-4 rounded-md">
+        {score.map((s) => (
+          <div key={s.id} className="border p-4 rounded-md">
             <Label
-              htmlFor={`score-${score}`}
+              htmlFor={`score-${s.id}`}
               className="block mb-2 font-medium text-gray-800"
             >
-              {score.category}
+              {s.category}
             </Label>
             <Input
-              id={`score-${score.assignmentId}`}
-              value={score.score || ""}
-              onChange={(e) => handleScoreChange(score.id, e.target.value)}
+              id={`score-${s.id}`}
+              value={s.score?.toString() || ""}
+              onChange={(e) => handleScoreChange(s.id, e.target.value)}
               placeholder="Enter score"
               className="mb-3"
+              type="number"
             />
-
             <Label
-              htmlFor={`comment-${score}`}
+              htmlFor={`comment-${s.id}`}
               className="block mb-2 font-medium text-gray-800"
             >
-              Comment for {score.category}
+              Comment for {s.category}
             </Label>
             <Textarea
-              id={`comment-${score.assignmentId}`}
-              value={score.comment || ""}
-              onChange={(e) => handleCommentChange(score.id, e.target.value)}
-              placeholder={`Enter comment for ${score}`}
+              id={`comment-${s.id}`}
+              value={s.comment || ""}
+              onChange={(e) => handleCommentChange(s.id, e.target.value)}
+              placeholder={`Enter comment for ${s.category}`}
             />
           </div>
         ))}

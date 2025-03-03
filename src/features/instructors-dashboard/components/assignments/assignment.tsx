@@ -42,9 +42,26 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
             <Developer
               key={developer.id}
               developer={developer}
-              scores={assignmentScores.filter(
-                (score) => score.identityId === developer.id
-              )}
+              scores={
+                assignments.categories?.map((category) => ({
+                  id: `${developer.id}-${category}`,
+                  assignmentId: assignments.id,
+                  identityId: developer.id,
+                  category,
+                  comment:
+                    assignmentScores.find(
+                      (score) =>
+                        score.identityId === developer.id &&
+                        score.category === category
+                    )?.comment || "",
+                  score:
+                    assignmentScores.find(
+                      (score) =>
+                        score.identityId === developer.id &&
+                        score.category === category
+                    )?.score || 0,
+                })) || []
+              }
               scored={assignmentScores.some(
                 (score) => score.identityId === developer.id
               )}
