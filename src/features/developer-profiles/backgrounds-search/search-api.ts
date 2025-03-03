@@ -1,5 +1,5 @@
 import MeiliSearch, { Embedders, Index, Settings } from "meilisearch";
-import { BackgroundUpdate, developerProfileUpdate } from "../types";
+import { developerProfileUpdate } from "../types";
 
 type InitializeMeiliSearchIndexArgs = {
   indexUid: string;

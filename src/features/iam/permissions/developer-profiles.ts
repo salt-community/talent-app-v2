@@ -41,4 +41,7 @@ export const developerProfiles: PermissionsSchema<
   addTempDeveloperProfile: "developerProfiles.addTempDeveloperProfile",
   getAllBackgrounds: "developerProfiles.getAllBackgrounds",
   updateForeignKey: "developerProfiles.updateForeignKey",
+  getHighlightedDeveloperProfileIds:
+    "developerProfiles.getHighlightedDeveloperProfileIds",
+  getBackgroundById: "developerProfiles.getBackgroundById",
 };

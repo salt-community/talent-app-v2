@@ -57,8 +57,8 @@ export type Backgrounds = BackgroundSelect & {
 };
 
 export type BackgroundInfo = {
-  id: number;
-  developerProfileId: string;
+  id: string;
+  identityId: string;
   name: string;
   avatarUrl: string;
   title: string;

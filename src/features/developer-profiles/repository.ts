@@ -465,5 +465,22 @@ export function createDevelopersRepository(db: Db) {
           .where(eq(developerProfileEducations.backgroundId, backgroundId));
       });
     },
+    //can be removed after completed merge
+    async getBackground(id: string) {
+      const background = await db
+        .select()
+        .from(developerProfileBackgrounds)
+        .where(eq(developerProfileBackgrounds.developerProfileId, id));
+      return background[0];
+    },
+    //can be removed after completed merge
+    async getAllBackgroundIds() {
+      return await db
+        .select({
+          id: developerProfileBackgrounds.id,
+          developerProfileId: developerProfileBackgrounds.developerProfileId,
+        })
+        .from(developerProfileBackgrounds);
+    },
   };
 }

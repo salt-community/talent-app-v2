@@ -80,7 +80,7 @@ export function DialogForm({
               <input
                 type="text"
                 name={"developerProfileId"}
-                defaultValue={background.developerProfileId}
+                defaultValue={background.id}
                 hidden
               />
               <FormItem>
