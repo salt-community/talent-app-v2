@@ -41,9 +41,9 @@ export function createDevelopersRepository(db: Db) {
     },
     async getAllById(id: string) {
       const developerId = await db
-        .select({ id: developerProfiles.id })
-        .from(developerProfiles)
-        .where(eq(developerProfiles.identityId, id));
+        .select({ id: tempDeveloperProfiles.id })
+        .from(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.identityId, id));
       return developerId;
     },
     async getByIdentityId(identityId: string) {
