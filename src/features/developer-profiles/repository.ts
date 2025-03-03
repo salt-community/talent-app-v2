@@ -46,7 +46,7 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(tempDeveloperProfiles.identityId, id));
       return developerId;
     },
-
+    //can be removed after table merge if completed
     async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
       const developerProfileId = await db
         .insert(developerProfiles)
@@ -54,21 +54,15 @@ export function createDevelopersRepository(db: Db) {
         .returning({ id: developerProfiles.id });
       return developerProfileId[0];
     },
+    //can be removed after table merge if completed
     async deleteDeveloperProfile(id: string) {
       await db.delete(developerProfiles).where(eq(developerProfiles.id, id));
     },
+    //can be removed after table merge if completed
     async deleteByIdentityId(identityId: string) {
       await db
         .delete(developerProfiles)
         .where(eq(developerProfiles.identityId, identityId));
-    },
-    async getPublishedOrHighlightedDeveloperProfileIds() {
-      return (
-        await db
-          .select({ devId: developerProfiles.id })
-          .from(developerProfiles)
-          .where(ne(developerProfiles.status, "unpublished"))
-      ).map((row) => row.devId);
     },
     async updateStatus(id: string, status: string) {
       await db

@@ -129,15 +129,6 @@ export function createDeveloperProfilesService(
       });
       await repository.updateStatus(args.id, args.status);
     },
-    async getPublishedOrHighlightedDeveloperProfileIds() {
-      return await repository.getPublishedOrHighlightedDeveloperProfileIds();
-    },
-    async getHighlightedDeveloperProfileIds() {
-      const highlighted = await repository.getAll();
-      return highlighted
-        .filter((dev) => dev.status === "highlighted")
-        .map((dev) => dev.id);
-    },
     async createDeveloperProfile(id: string) {
       const { sessionClaims } = await auth();
       const claims = sessionClaims as SessionClaims;
