@@ -18,7 +18,7 @@ export function SubmitScoresButton() {
             className="bg-zinc-900 text-white rounded-md h-10 hover:bg-zinc-800 my-2"
             onClick={() => setOpen(true)}
           >
-            Submit Scores
+            Publish Scores
           </Button>
         </DialogTrigger>
         <VisuallyHidden>
