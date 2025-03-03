@@ -146,11 +146,6 @@ export function createDeveloperProfilesService(
         id: developer.id,
       };
     },
-    async getIdentityIdByDeveloperProfileId(developerProfileId: string) {
-      return await repository.getIdentityIdByDeveloperProfileId(
-        developerProfileId
-      );
-    },
     async generateUniqueSlug(name: string) {
       const slug = generateSlug(name);
       let uniqueSlug = slug;
