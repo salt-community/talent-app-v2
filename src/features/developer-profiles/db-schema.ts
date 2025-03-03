@@ -26,9 +26,9 @@ export const developerProfileBackgrounds = pgTable(
 );
 export const developerProfileSkills = pgTable("developer_profiles_skills", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  backgroundId: integer("background_id")
+  developerProfileId: integer("developerProfile_id")
     .notNull()
-    .references(() => developerProfileBackgrounds.id, { onDelete: "cascade" }),
+    .references(() => tempDeveloperProfiles.id, { onDelete: "cascade" }),
   name: varchar().notNull(),
   level: integer().notNull().default(5),
 });
@@ -36,9 +36,9 @@ export const developerProfileEducations = pgTable(
   "developer_profiles_educations",
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    backgroundId: integer("background_id")
+    developerProfileId: integer("developerProfile_id")
       .notNull()
-      .references(() => developerProfileBackgrounds.id, {
+      .references(() => tempDeveloperProfiles.id, {
         onDelete: "cascade",
       }),
     name: varchar().notNull(),
@@ -48,9 +48,9 @@ export const developerProfileLanguages = pgTable(
   "developer_profiles_languages",
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    backgroundId: integer("background_id")
+    developerProfileId: integer("developerProfile_id")
       .notNull()
-      .references(() => developerProfileBackgrounds.id, {
+      .references(() => tempDeveloperProfiles.id, {
         onDelete: "cascade",
       }),
     name: varchar().notNull(),
