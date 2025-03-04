@@ -50,6 +50,7 @@ export function createDeveloperProfilesService(
             },
           }
         : undefined,
+    filterableAttributes: ["status"],
   });
 
   const backgroundsSearchService =
@@ -147,7 +148,7 @@ export function createDeveloperProfilesService(
         email,
         slug,
       };
-
+      //can be removed after merge if completed
       const developer =
         await developerProfilesService.addDeveloperProfile(developerProfile);
       await this.addTempDeveloperProfile({

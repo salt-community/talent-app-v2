@@ -7,6 +7,7 @@ type InitializeMeiliSearchIndexArgs = {
   displayedAttributes: string[];
   searchableAttributes: string[];
   embedders: Embedders | undefined;
+  filterableAttributes: string[];
 };
 
 export function createSearchApi({
@@ -15,6 +16,7 @@ export function createSearchApi({
   displayedAttributes,
   searchableAttributes,
   embedders,
+  filterableAttributes,
 }: InitializeMeiliSearchIndexArgs) {
   const meiliSearch = new MeiliSearch({
     host: process.env.MEILI_SEARCH_URL!,
@@ -45,6 +47,7 @@ export function createSearchApi({
         displayedAttributes,
         searchableAttributes,
         embedders,
+        filterableAttributes,
       });
       await index.waitForTask(updateSettingsTask.taskUid);
     },
@@ -52,27 +55,33 @@ export function createSearchApi({
     async searchDeveloperProfileIds(search: string | undefined) {
       const isSearchEmpty = search === undefined || !search.trim();
 
+      const searchParams: Record<string, any> = {
+        filter: `status = "published" OR status="highlighted"`,
+      };
+
       const documents: Record<string, unknown>[] = isSearchEmpty
-        ? (await index.getDocuments()).results
-        : (await index.search(search)).hits;
+        ? (await index.search("", searchParams)).hits
+        : (await index.search(search, searchParams)).hits;
       return documents.map((doc) => doc.id as string);
     },
 
     async searchDeveloperProfiles(search: string | undefined) {
       const isSearchEmpty = search === undefined || !search.trim();
-
       const llmIsEnabled = process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON";
-      if (isSearchEmpty) return (await index.getDocuments()).results;
 
-      search = llmIsEnabled
-        ? `Looking for a candidate that would fit to following job ad: ${search}`
-        : search;
-      const searchParams = llmIsEnabled
-        ? {
-            showRankingScore: true,
-            hybrid: { embedder: "openAiSearch", semanticRatio: 0.9 },
-          }
-        : undefined;
+      const searchParams: Record<string, any> = {
+        filter: `status = "published" OR status="highlighted"`,
+      };
+
+      if (llmIsEnabled) {
+        searchParams.showRankingScore = true;
+        searchParams.hybrid = { embedder: "openAiSearch", semanticRatio: 0.9 };
+      }
+
+      if (isSearchEmpty) {
+        return (await index.search("", searchParams)).hits;
+      }
+
       return (await index.search(search, searchParams)).hits;
     },
 
