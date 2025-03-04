@@ -20,6 +20,9 @@ export default function Developers({
   scored = false,
   published = false,
 }: Props) {
+  const publish = async () => {
+    console.log("Publishing scores");
+  };
   return (
     <div className="border-b border-gray-200 last:border-0">
       <div className="py-3 px-4 flex items-center justify-between">
@@ -50,7 +53,7 @@ export default function Developers({
 
         <div className="flex items-center gap-2">
           <div className="flex items-center space-x-2">
-            <Switch id="publish-mode" />
+            <Switch id="publish-mode" onToggle={publish} />
             <Label htmlFor="publish-mode">Publish</Label>
           </div>
           <OpenScoreFormButton scores={scores} />

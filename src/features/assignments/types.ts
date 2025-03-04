@@ -12,6 +12,7 @@ export type CreateAssignmentScore = AssignmentsService["createAssignmentScore"];
 export type UpsertAssignmentScore = AssignmentsService["upsertAssignmentScore"];
 export type GetScoresByAssignmentId =
   AssignmentsService["getScoresByAssignmentId"];
+export type updateScoreStatus = AssignmentsService["updateScoreStatus"];
 
 export type Assignment = {
   id: string;
