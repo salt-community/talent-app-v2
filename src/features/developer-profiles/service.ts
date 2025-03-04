@@ -121,7 +121,6 @@ export function createDeveloperProfilesService(
       await repository.deleteByIdentityId(identityId);
     },
     async updateStatus(args: { id: string; status: string }) {
-      //double write to tempDeveloperProfile
       const developerProfile = {
         id: args.id,
         status: args.status,
@@ -130,7 +129,6 @@ export function createDeveloperProfilesService(
       await repository.updateTempDeveloperProfile(developerProfile, {
         developerProfileId: args.id,
       });
-      await repository.updateStatus(args.id, args.status);
     },
     async createDeveloperProfile(identityId: string) {
       const { sessionClaims } = await auth();
