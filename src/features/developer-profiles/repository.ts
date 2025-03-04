@@ -24,7 +24,7 @@ import {
 export function createDevelopersRepository(db: Db) {
   return {
     async getAll() {
-      return await db.select().from(developerProfiles);
+      return await db.select().from(tempDeveloperProfiles);
     },
     async getDeveloperById(id: string) {
       const developerId = await db
