@@ -8,13 +8,13 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
   if (!assignments) return null;
 
   const developers = await instructorService.getCohortStudentsByCohortId(
-    assignments.cohortId,
+    assignments.cohortId
   );
 
   if (!developers) return null;
 
   const assignmentScores = await instructorService.getScoresByAssignmentId(
-    assignments.id,
+    assignments.id
   );
 
   return (
@@ -29,7 +29,10 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
             <span className="text-gray-600">Students</span>
           </div>
           <div>
-            <SubmitScoresButton />
+            <SubmitScoresButton
+              assignmentId={assignments.id}
+              status={"published"}
+            />
           </div>
         </div>
       </div>
@@ -47,7 +50,7 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
                   const score = assignmentScores.find(
                     (score) =>
                       score.identityId === developer.id &&
-                      score.category === category,
+                      score.category === category
                   );
                   return {
                     id: score?.id,
@@ -61,12 +64,12 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
                 }) || []
               }
               scored={assignmentScores.some(
-                (score) => score.identityId === developer.id,
+                (score) => score.identityId === developer.id
               )}
               published={assignmentScores.some(
                 (score) =>
                   score.identityId === developer.id &&
-                  score.status === "published",
+                  score.status === "published"
               )}
             />
           ))}

@@ -8,8 +8,20 @@ import {
   Button,
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-export function SubmitScoresButton() {
+
+type Props = {
+  assignmentId: string;
+  status: string;
+};
+
+export function SubmitScoresButton({ assignmentId, status }: Props) {
   const [open, setOpen] = useState(false);
+
+  const publishScores = async () => {
+    //update status of the assignment
+    console.log(assignmentId, status);
+    setOpen(false);
+  };
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -24,7 +36,25 @@ export function SubmitScoresButton() {
         <VisuallyHidden>
           <DialogTitle>Submit Scores</DialogTitle>
         </VisuallyHidden>
-        <DialogContent>{/* Coming later */}</DialogContent>
+        <DialogContent>
+          <div className="flex flex-col space-y-4">
+            <p>Are you sure you want to publish the scores?</p>
+            <div className="flex justify-end space-x-4">
+              <Button
+                className="bg-zinc-900 text-white rounded-md h-10 hover:bg-zinc-800"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="bg-zinc-900 text-white rounded-md h-10 hover:bg-zinc-800"
+                onClick={publishScores}
+              >
+                Publish
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
       </Dialog>
     </>
   );
