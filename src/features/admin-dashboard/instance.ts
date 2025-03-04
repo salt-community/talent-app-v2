@@ -28,6 +28,5 @@ export const adminService = createAdminService(
     getAllIdentities: iamService.getAllIdentities,
     deleteIdentity: iamService.deleteIdentity,
   },
-  developerProfilesService.deleteBackgroundById,
   projectsService.deleteProjectsByDeveloperProfileId
 );

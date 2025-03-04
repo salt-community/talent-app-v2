@@ -311,7 +311,6 @@ export function createDeveloperProfilesService(
         args.backgrounds
       );
     },
-
     async getHighlightedDeveloperProfileIds() {
       const highlighted = await repository.getAll();
       return highlighted

@@ -9,7 +9,6 @@ export function createAdminService(
   developerProfileService: DeveloperProfileService,
   searchConfigurationClient: SearchConfigurationClient,
   iamService: IamService,
-  deleteBackgroundById: (id: string) => Promise<void>,
   deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>
 ) {
   return {
@@ -55,7 +54,6 @@ export function createAdminService(
       const developerProfiles =
         await developerProfileService.getDeveloperProfileIdById(identityId);
       for (const developerProfile of developerProfiles) {
-        await deleteBackgroundById(developerProfile.id);
         await deleteProjectsByDeveloperProfileId(developerProfile.id);
         await developerProfileService.deleteMeiliSearchDocument(
           developerProfile.id
