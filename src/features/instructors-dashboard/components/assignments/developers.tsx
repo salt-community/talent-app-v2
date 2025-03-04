@@ -4,7 +4,7 @@ import { Developer } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
 import { AlertCircle, Check, CheckCheck } from "lucide-react";
 import { AssignmentScore } from "@/features/assignments";
-  import { Switch } from "@/components/ui/switch";
+import { Switch } from "@/components/ui/switch";
 import { updateScoreStatusAction } from "../../action";
 import {
   Tooltip,
@@ -29,24 +29,20 @@ export default function Developers({
   const [isPublished, setIsPublished] = useState(published);
 
   const togglePublishStatus = async () => {
+    if (!scored) return;
+
     const newStatus = isPublished ? "unpublished" : "published";
+    setIsPublished(!isPublished);
 
-    try {
-      setIsPublished(!isPublished);
-
-      await Promise.all(
-        scores.map((score) => {
-          return updateScoreStatusAction(
-            score.assignmentId,
-            score.identityId,
-            newStatus
-          );
-        })
-      );
-    } catch (error) {
-      setIsPublished(isPublished);
-      console.error("Failed to update score status:", error);
-    }
+    await Promise.all(
+      scores.map((score) => {
+        return updateScoreStatusAction(
+          score.assignmentId,
+          score.identityId,
+          newStatus
+        );
+      })
+    );
   };
 
   return (
