@@ -55,7 +55,7 @@ export function createSearchApi({
     async searchDeveloperProfileIds(search: string | undefined) {
       const isSearchEmpty = search === undefined || !search.trim();
 
-      const searchParams: Record<string, any> = {
+      const searchParams = {
         filter: `status = "published" OR status="highlighted"`,
       };
 
@@ -69,7 +69,10 @@ export function createSearchApi({
       const isSearchEmpty = search === undefined || !search.trim();
       const llmIsEnabled = process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON";
 
-      const searchParams: Record<string, any> = {
+      const searchParams: Record<
+        string,
+        boolean | { embedder: string; semanticRatio: number } | string
+      > = {
         filter: `status = "published" OR status="highlighted"`,
       };
 

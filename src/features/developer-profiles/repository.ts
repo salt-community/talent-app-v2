@@ -46,6 +46,30 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(tempDeveloperProfiles.identityId, id));
       return developerId;
     },
+    // async addDeveloperProfileDetails(background: BackgroundInfo) {
+    //   await db.transaction(async (tx) => {
+    //     await tx
+    //       .delete(developerProfileSkills)
+    //       .where(
+    //         eq(developerProfileSkills.developerProfileId, background.id)
+    //       );
+    //     for (const skill of background.skills) {
+    //       await tx
+    //         .insert(developerProfileSkills)
+    //         .values({ developerProfile.id, name: skill });
+    //     }
+    //     for (const language of background.languages) {
+    //       await tx
+    //         .insert(developerProfileLanguages)
+    //         .values({ background.id, name: language });
+    //     }
+    //     for (const education of background.educations) {
+    //       await tx
+    //         .insert(developerProfileEducations)
+    //         .values({ backgroundId, name: education });
+    //     }
+    //   });
+    // },
     //can be removed after table merge if completed
     async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
       const developerProfileId = await db

@@ -18,8 +18,8 @@ import { seedProjects } from "@/features/projects";
   const developerProfileIds = await seedDeveloperProfiles(identities);
   await backgroundsSeed(developerProfileIds);
 
+  // const developerProfileIds = await seedTempDeveloperProfiles(identities);
   await seedProjects(developerProfileIds);
-
   console.log("Done seeding!");
 
   await db.$client.end();
