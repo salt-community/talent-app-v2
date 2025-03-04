@@ -15,6 +15,7 @@ import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
+import { v4 as uuidv4 } from "uuid";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
@@ -130,23 +131,33 @@ export function createDeveloperProfilesService(
       });
       await repository.updateStatus(args.id, args.status);
     },
-    async createDeveloperProfile(id: string) {
+    async createDeveloperProfile(identityId: string) {
       const { sessionClaims } = await auth();
       const claims = sessionClaims as SessionClaims;
 
       const { name, email } = claim(claims);
-      const slug = await this.generateUniqueSlug(name);
       if (!email) return;
-      const developer = await developerProfilesService.addDeveloperProfile({
+
+      const slug = await this.generateUniqueSlug(name);
+      const developerProfileId = uuidv4();
+      const developerProfile = {
+        id: developerProfileId,
+        identityId,
         name,
-        slug,
         email,
-        identityId: id,
-      });
-      return {
-        id: developer.id,
+        slug,
       };
+
+      const developer =
+        await developerProfilesService.addDeveloperProfile(developerProfile);
+      await this.addTempDeveloperProfile({
+        developerProfile,
+        backgrounds: { developerProfileId },
+      });
+
+      return { id: developer.id };
     },
+
     async generateUniqueSlug(name: string) {
       const slug = generateSlug(name);
       let uniqueSlug = slug;

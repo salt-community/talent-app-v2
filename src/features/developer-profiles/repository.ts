@@ -255,6 +255,7 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(tempDeveloperProfiles.id, developerProfileId))
         .groupBy(tempDeveloperProfiles.id);
     },
+    //can be removed after the merge is completed
     async addBackground(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } = await db.transaction(
         async (tx) => {
@@ -299,6 +300,7 @@ export function createDevelopersRepository(db: Db) {
       );
       return { outboxMessageId, backgroundId };
     },
+    //can be removed after the merge is completed
     async updateBackground(background: BackgroundUpdate) {
       const outboxMessageId = await db.transaction(async (tx) => {
         // TODO: Don't use the primary key at all in this function.
@@ -371,6 +373,7 @@ export function createDevelopersRepository(db: Db) {
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     },
+    //can be removed after the merge is completed
     async deleteBackgroundById(developerProfileId: string) {
       await db
         .delete(developerProfileBackgrounds)
