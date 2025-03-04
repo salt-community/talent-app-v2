@@ -4,6 +4,8 @@ import { Developer } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
 import { AlertCircle, Check, CheckCheck } from "lucide-react";
 import { AssignmentScore } from "@/features/assignments";
+import { Label } from "@/components";
+import { Switch } from "@/components/ui/switch";
 
 type Props = {
   developer: Developer;
@@ -45,7 +47,12 @@ export default function Developers({
             </div>
           </div>
         </div>
+
         <div className="flex items-center gap-2">
+          <div className="flex items-center space-x-2">
+            <Switch id="publish-mode" />
+            <Label htmlFor="publish-mode">Publish</Label>
+          </div>
           <OpenScoreFormButton scores={scores} />
         </div>
       </div>
