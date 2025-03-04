@@ -80,16 +80,6 @@ export function createDevelopersRepository(db: Db) {
         .returning({ id: developerProfiles.id });
       return developerProfileId[0];
     },
-    //can be removed after table merge if completed
-    async deleteDeveloperProfile(id: string) {
-      await db.delete(developerProfiles).where(eq(developerProfiles.id, id));
-    },
-    //can be removed after table merge if completed
-    async deleteByIdentityId(identityId: string) {
-      await db
-        .delete(developerProfiles)
-        .where(eq(developerProfiles.identityId, identityId));
-    },
     //can be removed after merge is completed
     async updateStatus(id: string, status: string) {
       await db
