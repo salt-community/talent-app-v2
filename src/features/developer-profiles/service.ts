@@ -311,11 +311,6 @@ export function createDeveloperProfilesService(
         args.backgrounds
       );
     },
-
-    //can be removed after merge is completed
-    async getBackgroundById(id: string) {
-      return await repository.getBackground(id);
-    },
     //can be removed after merge is completed
     async updateForeignKey(args: {
       backgroundId: number;
