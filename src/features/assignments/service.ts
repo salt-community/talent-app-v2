@@ -31,12 +31,12 @@ export function createAssignmentsService(db: Db) {
     async createAssignmentScore(data: AssignmentScoreFormData) {
       return await repo.createAssignmentScore(data);
     },
-    async updateScoreStatus(
-      assignmentId: string,
-      identityId: string,
-      status: string
-    ) {
-      return await repo.updateScoreStatus(assignmentId, identityId, status);
+    async updateScoreStatus(args: {
+      assignmentId: string;
+      identityId: string;
+      status: string;
+    }) {
+      await repo.updateScoreStatus(args);
     },
     async upsertAssignmentScore(score: AssignmentScore) {
       return await repo.upsertAssignmentScore(score);

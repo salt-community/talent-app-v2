@@ -2,7 +2,6 @@ import { GetAllIdentities } from "../iam";
 import {
   AssignmentScore,
   CreateAssignment,
-  CreateAssignmentScore,
   DeleteAssignmentById,
   GetAssignmentBySlug,
   GetAssignmentsByCohortId,
@@ -81,10 +80,16 @@ export function createInstructorService(
     },
     async addScoreToAssignment(assignment: AssignmentScore) {
       return await upsertAssignmentScore(assignment);
-      //return await addScoreToAssignment(assignment);
     },
     async getScoresByAssignmentId(assignmentId: string) {
       return await getScoresByAssignmentId(assignmentId);
+    },
+    async updateScoreStatus(args: {
+      assignmentId: string;
+      identityId: string;
+      status: string;
+    }) {
+      await updateScoreStatus(args);
     },
   };
 }

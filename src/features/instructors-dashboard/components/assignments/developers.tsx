@@ -6,6 +6,7 @@ import { AlertCircle, Check, CheckCheck } from "lucide-react";
 import { AssignmentScore } from "@/features/assignments";
 import { Label } from "@/components";
 import { Switch } from "@/components/ui/switch";
+import { updateScoreStatusAction } from "../../action";
 
 type Props = {
   developer: Developer;
@@ -21,7 +22,13 @@ export default function Developers({
   published = false,
 }: Props) {
   const publish = async () => {
-    console.log("Publishing scores");
+    scores.map((score) => {
+      updateScoreStatusAction(
+        score.assignmentId,
+        score.identityId,
+        "published"
+      );
+    });
   };
   return (
     <div className="border-b border-gray-200 last:border-0">
@@ -53,7 +60,7 @@ export default function Developers({
 
         <div className="flex items-center gap-2">
           <div className="flex items-center space-x-2">
-            <Switch id="publish-mode" onToggle={publish} />
+            <Switch id="publish-mode" onClick={publish} />
             <Label htmlFor="publish-mode">Publish</Label>
           </div>
           <OpenScoreFormButton scores={scores} />
