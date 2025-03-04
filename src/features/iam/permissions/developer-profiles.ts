@@ -39,7 +39,6 @@ export const developerProfiles: PermissionsSchema<
   updateMeilisearchSettings: "developerProfiles.updateMeilisearchSettings",
   deleteMeiliSearchDocument: "developerProfiles.deleteMeiliSearchDocument",
   addTempDeveloperProfile: "developerProfiles.addTempDeveloperProfile",
-  getAllBackgrounds: "developerProfiles.getAllBackgrounds",
   updateForeignKey: "developerProfiles.updateForeignKey",
   getHighlightedDeveloperProfileIds:
     "developerProfiles.getHighlightedDeveloperProfileIds",

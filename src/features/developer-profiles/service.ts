@@ -311,10 +311,7 @@ export function createDeveloperProfilesService(
         args.backgrounds
       );
     },
-    //can be removed after merge is completed
-    async getAllBackgrounds() {
-      return await repository.getAllBackgroundIds();
-    },
+
     //can be removed after merge is completed
     async getBackgroundById(id: string) {
       return await repository.getBackground(id);
