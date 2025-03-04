@@ -8,6 +8,7 @@ import {
   GetAssignmentsByCohortId,
   GetScoresByAssignmentId,
   NewAssignment,
+  updateScoreStatus,
   UpsertAssignmentScore,
 } from "../assignments";
 import {
@@ -33,10 +34,10 @@ export function createInstructorService(
   addAssignment: CreateAssignment,
   deleteAssignmentById: DeleteAssignmentById,
   getAssignmentBySlug: GetAssignmentBySlug,
-  addScoreToAssignment: CreateAssignmentScore,
   upsertAssignmentScore: UpsertAssignmentScore,
   getScoresByAssignmentId: GetScoresByAssignmentId,
-  getAllIdentities: GetAllIdentities,
+  updateScoreStatus: updateScoreStatus,
+  getAllIdentities: GetAllIdentities
 ) {
   return {
     async getAllCohorts() {
