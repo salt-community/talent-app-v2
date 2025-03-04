@@ -18,7 +18,7 @@ export async function addCohortAction(cohort: CohortFormData) {
 export async function addAssignmentAction(
   formData: FormData,
   cohortId: string,
-  categories: string[]
+  categories: string[],
 ) {
   const title = formData.get("title") as string;
   const comment = formData.get("comment") as string;
@@ -46,7 +46,7 @@ export async function addAssignmentAction(
     if (error instanceof z.ZodError) {
       console.error("Validation failed:", error.errors);
       throw new Error(
-        "Validation failed: " + error.errors.map((e) => e.message).join(", ")
+        "Validation failed: " + error.errors.map((e) => e.message).join(", "),
       );
     } else {
       console.error("Unexpected error:", error);
@@ -57,7 +57,7 @@ export async function addAssignmentAction(
 
 export async function addIdentitiesToCohortAction(
   cohortId: string,
-  identityIds: string[]
+  identityIds: string[],
 ) {
   try {
     await instructorService.addIdentitiesToCohort({ cohortId, identityIds });

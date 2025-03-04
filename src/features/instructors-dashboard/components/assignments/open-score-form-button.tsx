@@ -34,7 +34,7 @@ export default function OpenScoreFormButton({ scores }: Props) {
           <DialogTitle>Score</DialogTitle>
         </VisuallyHidden>
         <DialogContent>
-          <Scoring scores={scores} onSuccess={() => setOpen(false)} />
+          <Scoring assignmentScores={scores} onSuccess={() => setOpen(false)} />
         </DialogContent>
       </Dialog>
     </>
