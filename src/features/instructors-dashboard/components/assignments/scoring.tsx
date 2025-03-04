@@ -43,12 +43,13 @@ export function Scoring({ assignmentScores, onSuccess }: Props) {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 flex flex-col gap-y-6">
       <div>
         <h2 className="text-2xl font-bold">{"assignment"}</h2>
         <p className="text-gray-500 mt-1">Score each category</p>
       </div>
-      <div className="space-y-6">
+
+      <div className="space-y-4 flex-1 overflow-visible">
         {scores.map((score) => (
           <div key={score.category} className="border p-4 rounded-md">
             <Label
@@ -84,7 +85,7 @@ export function Scoring({ assignmentScores, onSuccess }: Props) {
           </div>
         ))}
       </div>
-      <div className="pt-4 border-t flex justify-end">
+      <div className="pt-4 flex justify-end sticky bottom-0 bg-white">
         <Button onClick={handleSubmitScoring}>Save</Button>
       </div>
     </div>
