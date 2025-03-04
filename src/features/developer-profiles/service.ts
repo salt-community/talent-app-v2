@@ -97,9 +97,6 @@ export function createDeveloperProfilesService(
       return await repository.getAllById(identityId);
     },
     async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
-      // double write to tempDeveloperProfile
-      // const developerProfileId =
-      //   await repository.addDeveloperProfile(developerProfile);
       const id = uuidv4();
       const backgrounds = {
         developerProfileId: id,
