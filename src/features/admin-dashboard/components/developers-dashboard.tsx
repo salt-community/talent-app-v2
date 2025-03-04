@@ -10,13 +10,13 @@ type Props = {
 export function DeveloperDashboard({ developers }: Props) {
   return (
     <div>
-      {developers.map((dev) => (
+      {developers.map((developer) => (
         <DeveloperProfileList
-          id={dev.id}
-          key={dev.id}
-          name={dev.name}
-          email={dev.email}
-          status={dev.status}
+          id={developer.id}
+          key={developer.id}
+          name={developer.name}
+          email={developer.email}
+          status={developer.status}
         />
       ))}
     </div>
