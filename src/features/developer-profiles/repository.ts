@@ -11,7 +11,6 @@ import {
 } from "./db-schema";
 import {
   BackgroundForDeveloperProfile,
-  BackgroundInfo,
   BackgroundInsert,
   BackgroundUpdate,
   DeveloperProfileInsert,
