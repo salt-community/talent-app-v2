@@ -113,7 +113,6 @@ export function createDeveloperProfilesService(
     async delete(id: string) {
       //double write to tempDeveloperProfile
       await repository.deleteTempDeveloperProfile(id);
-      await repository.deleteDeveloperProfile(id);
     },
     async deleteByIdentityId(identityId: string) {
       await repository.deleteTempDeveloperProfileByIdentityId(identityId);
