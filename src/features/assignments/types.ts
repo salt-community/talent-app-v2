@@ -9,6 +9,7 @@ export type deleteAssignmentScoreById =
 export type DeleteAssignmentById = AssignmentsService["deleteAssignment"];
 export type GetAssignmentBySlug = AssignmentsService["getAssignmentBySlug"];
 export type CreateAssignmentScore = AssignmentsService["createAssignmentScore"];
+export type UpsertAssignmentScore = AssignmentsService["upsertAssignmentScore"];
 export type GetScoresByAssignmentId =
   AssignmentsService["getScoresByAssignmentId"];
 
@@ -25,11 +26,12 @@ export type Assignment = {
 export type NewAssignment = Omit<Assignment, "id" | "createdAt">;
 
 export type AssignmentScore = {
-  id: string;
-  assignmentId: string | null;
-  identityId: string | null;
-  score: number | null;
-  comment: string | null;
+  id?: string;
+  assignmentId: string;
+  identityId: string;
+  category: string;
+  comment: string;
+  score: number;
   createdAt: Date | null;
 };
 
@@ -59,7 +61,5 @@ export type CategoryAverage = {
   category: string;
   score: number;
 };
-
-export type NewAssignmentScore = Omit<AssignmentScore, "id" | "createdAt">;
 
 export type AssignmentsService = ReturnType<typeof createAssignmentsService>;

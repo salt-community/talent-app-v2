@@ -1,5 +1,6 @@
 import { GetAllIdentities } from "../iam";
 import {
+  AssignmentScore,
   CreateAssignment,
   CreateAssignmentScore,
   DeleteAssignmentById,
@@ -7,6 +8,7 @@ import {
   GetAssignmentsByCohortId,
   GetScoresByAssignmentId,
   NewAssignment,
+  UpsertAssignmentScore,
 } from "../assignments";
 import {
   AddCohort,
@@ -18,7 +20,6 @@ import {
   GetCohortStudents,
   deleteCohortIdentity,
 } from "../cohorts";
-import { AssignmentInsert } from "./types";
 
 export function createInstructorService(
   getAllCohorts: GetAllCohorts,
@@ -33,8 +34,9 @@ export function createInstructorService(
   deleteAssignmentById: DeleteAssignmentById,
   getAssignmentBySlug: GetAssignmentBySlug,
   addScoreToAssignment: CreateAssignmentScore,
+  upsertAssignmentScore: UpsertAssignmentScore,
   getScoresByAssignmentId: GetScoresByAssignmentId,
-  getAllIdentities: GetAllIdentities
+  getAllIdentities: GetAllIdentities,
 ) {
   return {
     async getAllCohorts() {
@@ -76,8 +78,9 @@ export function createInstructorService(
     async getAssignmentBySlug(slug: string) {
       return await getAssignmentBySlug(slug);
     },
-    async addScoreToAssignment({ assignment }: AssignmentInsert) {
-      return await addScoreToAssignment(assignment);
+    async addScoreToAssignment(assignment: AssignmentScore) {
+      return await upsertAssignmentScore(assignment);
+      //return await addScoreToAssignment(assignment);
     },
     async getScoresByAssignmentId(assignmentId: string) {
       return await getScoresByAssignmentId(assignmentId);

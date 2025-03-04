@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
-import { Developer, ScoreAssignment } from "../../types";
+import { Developer } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
 import { AlertCircle, Check, CheckCheck } from "lucide-react";
+import { AssignmentScore } from "@/features/assignments";
 
 type Props = {
   developer: Developer;
-  scores: ScoreAssignment[];
+  scores: AssignmentScore[];
   scored?: boolean;
   published?: boolean;
 };

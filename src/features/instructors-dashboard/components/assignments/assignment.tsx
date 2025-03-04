@@ -8,13 +8,13 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
   if (!assignments) return null;
 
   const developers = await instructorService.getCohortStudentsByCohortId(
-    assignments.cohortId
+    assignments.cohortId,
   );
 
   if (!developers) return null;
 
   const assignmentScores = await instructorService.getScoresByAssignmentId(
-    assignments.id
+    assignments.id,
   );
 
   return (
@@ -43,32 +43,30 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
               key={developer.id}
               developer={developer}
               scores={
-                assignments.categories?.map((category) => ({
-                  id: `${developer.id}-${category}`,
-                  assignmentId: assignments.id,
-                  identityId: developer.id,
-                  category,
-                  comment:
-                    assignmentScores.find(
-                      (score) =>
-                        score.identityId === developer.id &&
-                        score.category === category
-                    )?.comment || "",
-                  score:
-                    assignmentScores.find(
-                      (score) =>
-                        score.identityId === developer.id &&
-                        score.category === category
-                    )?.score || 0,
-                })) || []
+                assignments.categories?.map((category) => {
+                  const score = assignmentScores.find(
+                    (score) =>
+                      score.identityId === developer.id &&
+                      score.category === category,
+                  );
+                  return {
+                    id: score?.id,
+                    assignmentId: assignments.id,
+                    identityId: developer.id,
+                    category,
+                    comment: score?.comment || "",
+                    score: score?.score || 0,
+                    createdAt: score?.createdAt || null,
+                  };
+                }) || []
               }
               scored={assignmentScores.some(
-                (score) => score.identityId === developer.id
+                (score) => score.identityId === developer.id,
               )}
               published={assignmentScores.some(
                 (score) =>
                   score.identityId === developer.id &&
-                  score.status === "published"
+                  score.status === "published",
               )}
             />
           ))}

@@ -9,10 +9,11 @@ import {
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Scoring } from "./scoring";
-import { ScoreAssignment } from "../../types";
+import { AssignmentScore } from "@/features/assignments";
+
 
 type Props = {
-  scores: ScoreAssignment[];
+  scores: AssignmentScore[];
 };
 
 export default function OpenScoreFormButton({ scores }: Props) {

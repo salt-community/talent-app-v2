@@ -4,7 +4,7 @@ import { z } from "zod";
 import { instructorService } from "./instance";
 import { assignmentSchema } from "./validation";
 import { CohortFormData } from "../cohorts";
-import { AssignmentInsert } from "./types";
+import { AssignmentScore } from "../assignments";
 
 export async function addCohortAction(cohort: CohortFormData) {
   try {
@@ -90,9 +90,9 @@ export async function deleteAssignmentByIdAction(assignmentId: string) {
     console.error(error);
   }
 }
-export async function addScoreToAssignment({ assignment }: AssignmentInsert) {
+export async function addScoreToAssignment(score: AssignmentScore) {
   try {
-    await instructorService.addScoreToAssignment({ assignment });
+    await instructorService.addScoreToAssignment(score);
     revalidatePath("/instructors-dashboard");
   } catch (error) {
     console.error(error);

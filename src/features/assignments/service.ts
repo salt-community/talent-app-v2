@@ -1,7 +1,7 @@
 import { Db } from "@/db";
 import { averageScore, averageScoresByCategory } from "./logic";
 import { createAssignmentsRepository } from "./repository";
-import { AssignmentScoreFormData, NewAssignment } from "./types";
+import { AssignmentScore, AssignmentScoreFormData, NewAssignment } from "./types";
 
 export function createAssignmentsService(db: Db) {
   const repo = createAssignmentsRepository(db);
@@ -28,6 +28,10 @@ export function createAssignmentsService(db: Db) {
       return await repo.createAssignmentScore(data);
     },
 
+    async upsertAssignmentScore(score: AssignmentScore) {
+      return await repo.upsertAssignmentScore(score);
+    },
+
     async getScoresByAssignmentId(assignmentId: string) {
       return await repo.getScoresByAssignmentId(assignmentId);
     },
@@ -43,7 +47,7 @@ export function createAssignmentsService(db: Db) {
     async getAllAverageScoresByIdentityId(identityId: string) {
       const assignmentScores = await repo.getScoresByIdentityId(identityId);
       const validScores = assignmentScores.filter(
-        (assignment) => assignment.score !== null
+        (assignment) => assignment.score !== null,
       );
       return averageScoresByCategory(validScores);
     },

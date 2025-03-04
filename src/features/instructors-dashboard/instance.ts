@@ -16,6 +16,7 @@ export const instructorService = createInstructorService(
   assignmentsService.deleteAssignment,
   assignmentsService.getAssignmentBySlug,
   assignmentsService.createAssignmentScore,
+  assignmentsService.upsertAssignmentScore,
   assignmentsService.getScoresByAssignmentId,
-  iamService.getAllIdentities
+  iamService.getAllIdentities,
 );
