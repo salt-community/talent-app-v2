@@ -1,10 +1,7 @@
 import { db } from "@/db";
 import { seedAssignments } from "@/features/assignments";
 import { seedCohorts } from "@/features/cohorts";
-import {
-  backgroundsSeed,
-  seedDeveloperProfiles,
-} from "@/features/developer-profiles";
+import { seedTempDeveloperProfiles } from "@/features/developer-profiles";
 import { seedIdentities } from "@/features/iam";
 import { seedProjects } from "@/features/projects";
 
@@ -15,10 +12,10 @@ import { seedProjects } from "@/features/projects";
   const cohorts = await seedCohorts(identities);
   await seedAssignments(cohorts);
 
-  const developerProfileIds = await seedDeveloperProfiles(identities);
-  await backgroundsSeed(developerProfileIds);
+  // const developerProfileIds = await seedDeveloperProfiles(identities);
+  // await backgroundsSeed(developerProfileIds);
 
-  // const developerProfileIds = await seedTempDeveloperProfiles(identities);
+  const developerProfileIds = await seedTempDeveloperProfiles(identities);
   await seedProjects(developerProfileIds);
   console.log("Done seeding!");
 

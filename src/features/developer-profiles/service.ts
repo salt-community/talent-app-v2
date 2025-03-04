@@ -251,9 +251,9 @@ export function createDeveloperProfilesService(
           array.findIndex((e) => e.name === education.name) === index
       );
     },
-    // async addDeveloperProfileDetails() {
-    //   await repository.addDeveloperProfileDetails();
-    // },
+    async addDeveloperProfileDetails(background: BackgroundInsert) {
+      await repository.addDeveloperProfileDetails(background);
+    },
     async addBackground(background: BackgroundInsert) {
       const { outboxMessageId } = await repository.addBackground(background);
       const developerProfileId = await repository.updateTempDeveloperProfile(
