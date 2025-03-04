@@ -44,4 +44,5 @@ export const developerProfiles: PermissionsSchema<
   getHighlightedDeveloperProfileIds:
     "developerProfiles.getHighlightedDeveloperProfileIds",
   getBackgroundById: "developerProfiles.getBackgroundById",
+  addDeveloperProfileDetails: "developerProfiles.addDeveloperProfileDetails",
 };
