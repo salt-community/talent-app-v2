@@ -98,20 +98,20 @@ export function createDeveloperProfilesService(
     },
     async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
       // double write to tempDeveloperProfile
-      const developerProfileId =
-        await repository.addDeveloperProfile(developerProfile);
+      // const developerProfileId =
+      //   await repository.addDeveloperProfile(developerProfile);
+      const id = uuidv4();
       const backgrounds = {
-        developerProfileId: developerProfileId.id,
+        developerProfileId: id,
         avatarUrl: "",
         title: "",
         bio: "",
         links: [],
       };
       await this.addTempDeveloperProfile({ developerProfile, backgrounds });
-      return developerProfileId;
+      return id;
     },
     async delete(id: string) {
-      //double write to tempDeveloperProfile
       await repository.deleteTempDeveloperProfile(id);
     },
     async deleteByIdentityId(identityId: string) {
@@ -144,14 +144,14 @@ export function createDeveloperProfilesService(
         slug,
       };
       //can be removed after merge if completed
-      const developer =
+      const developerId =
         await developerProfilesService.addDeveloperProfile(developerProfile);
       await this.addTempDeveloperProfile({
         developerProfile,
         backgrounds: { developerProfileId },
       });
 
-      return { id: developer.id };
+      return { id: developerId };
     },
 
     async generateUniqueSlug(name: string) {
