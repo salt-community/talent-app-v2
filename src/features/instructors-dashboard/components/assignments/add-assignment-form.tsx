@@ -82,15 +82,17 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Cohorts</SelectLabel>
-                {categoryOptions.map((category) => (
-                  <SelectItem
-                    key={category.key}
-                    value={category.key}
-                    className="cursor-pointer"
-                  >
-                    {category.value}
-                  </SelectItem>
-                ))}
+                {categoryOptions
+                  .filter((category) => !selectedItems.includes(category.key))
+                  .map((category) => (
+                    <SelectItem
+                      key={category.key}
+                      value={category.key}
+                      className="cursor-pointer"
+                    >
+                      {category.value}
+                    </SelectItem>
+                  ))}
               </SelectGroup>
             </SelectContent>
           </Select>
