@@ -97,7 +97,12 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Button variant="outline" onClick={handleAdd} className="ml-2">
+          <Button
+            variant="outline"
+            onClick={handleAdd}
+            className="ml-2"
+            type="button"
+          >
             <Plus />
           </Button>
         </div>
