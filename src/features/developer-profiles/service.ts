@@ -311,16 +311,7 @@ export function createDeveloperProfilesService(
         args.backgrounds
       );
     },
-    //can be removed after merge is completed
-    async updateForeignKey(args: {
-      backgroundId: number;
-      developerProfileId: string;
-    }) {
-      await repository.updateForeignKey(
-        args.backgroundId,
-        args.developerProfileId
-      );
-    },
+
     async getHighlightedDeveloperProfileIds() {
       const highlighted = await repository.getAll();
       return highlighted
