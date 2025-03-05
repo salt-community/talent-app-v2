@@ -168,9 +168,6 @@ export function createDeveloperProfilesService(
     async deleteByIdentityId(identityId: string) {
       await repository.deleteTempDeveloperProfileByIdentityId(identityId);
     },
-    async deleteBackgroundById(developerProfileId: string) {
-      await repository.deleteBackgroundById(developerProfileId);
-    },
     async deleteMeiliSearchDocument(developerProfileId: string) {
       await backgroundsSearchApi.deleteDocument(developerProfileId);
     },

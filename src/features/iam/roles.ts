@@ -66,7 +66,6 @@ export const rolesPermissions = {
     developerProfiles.updateDeveloperProfile,
     developerProfiles.searchDeveloperProfileIds,
     developerProfiles.searchDeveloperProfileIdsWithLLM,
-    developerProfiles.deleteBackgroundById,
     developerProfiles.addTempDeveloperProfile,
     developerProfiles.getHighlightedDeveloperProfileIds,
     projects.updateDescription,
