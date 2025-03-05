@@ -77,7 +77,7 @@ export function createSearchApi({
       };
 
       if (llmIsEnabled) {
-        searchParams.showRankingScore = true;
+        searchParams.showRankingScore = !isSearchEmpty;
         searchParams.hybrid = { embedder: "openAiSearch", semanticRatio: 0.9 };
       }
 
