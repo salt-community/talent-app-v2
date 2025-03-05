@@ -299,9 +299,7 @@ export function createDevelopersRepository(db: Db) {
           },
         });
     },
-    async updateTempDeveloperProfile(
-      developerProfile: updateTempDeveloperProfile
-    ) {
+    async updateDeveloperProfile(developerProfile: updateTempDeveloperProfile) {
       const outboxMessageId = await db.transaction(async (tx) => {
         await tx
           .update(tempDeveloperProfiles)

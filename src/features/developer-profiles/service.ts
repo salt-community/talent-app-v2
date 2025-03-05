@@ -171,14 +171,14 @@ export function createDeveloperProfilesService(
         id: args.id,
         status: args.status,
       };
-      await repository.updateTempDeveloperProfile(developerProfile);
+      await repository.updateDeveloperProfile(developerProfile);
     },
     async updateMissingSlugs() {
       const developers = await repository.getAll();
       for (const developer of developers) {
         if (!developer.slug) {
           const newSlug = generateSlug(developer.name);
-          await repository.updateTempDeveloperProfile({
+          await repository.updateDeveloperProfile({
             id: developer.id,
             slug: newSlug,
           });
@@ -188,7 +188,7 @@ export function createDeveloperProfilesService(
     async updateDeveloperProfile(
       developerProfileUpdates: updateTempDeveloperProfile
     ) {
-      const { outboxMessageId } = await repository.updateTempDeveloperProfile(
+      const { outboxMessageId } = await repository.updateDeveloperProfile(
         developerProfileUpdates
       );
       console.log("updates:", developerProfileUpdates);
