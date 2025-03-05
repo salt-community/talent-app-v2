@@ -5,10 +5,7 @@ import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import {
   AddDeveloperProfile,
-  BackgroundForDeveloperProfile,
   BackgroundInsert,
-  BackgroundUpdate,
-  DeveloperProfileInsert,
   OutboxMessageSelect,
   SessionClaims,
   updateTempDeveloperProfile,
@@ -63,7 +60,7 @@ export function createDeveloperProfilesService(
     let succeeded = false;
     switch (outboxMessage.operation) {
       case "upsert":
-        const background = await repository.getBackgroundByDeveloperProfileId(
+        const background = await repository.getDeveloperProfileById(
           outboxMessage.developerProfileId
         );
         if (!background) {
@@ -198,10 +195,9 @@ export function createDeveloperProfilesService(
         developerProfileUpdates
       );
       console.log("updates:", developerProfileUpdates);
-      const developerProfile =
-        await repository.getBackgroundByDeveloperProfileId(
-          developerProfileUpdates.id
-        );
+      const developerProfile = await repository.getDeveloperProfileById(
+        developerProfileUpdates.id
+      );
 
       const status = await backgroundsSearchApi.upsertDocuments([
         developerProfile[0],

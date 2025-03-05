@@ -105,7 +105,7 @@ export function createDevelopersRepository(db: Db) {
         )
         .groupBy(tempDeveloperProfiles.id);
     },
-    async getBackgroundByDeveloperProfileId(developerProfileId: string) {
+    async getDeveloperProfileById(developerProfileId: string) {
       return await db
         .select({
           id: tempDeveloperProfiles.id,
