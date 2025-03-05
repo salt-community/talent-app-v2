@@ -225,6 +225,25 @@ export function createDevelopersRepository(db: Db) {
     async getAllOutboxMessage() {
       return await db.select().from(meiliSearchOutbox);
     },
+    async existsBySlug(slug: string) {
+      const [developerProfile] = await db
+        .select()
+        .from(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.slug, slug));
+
+      return !!developerProfile;
+    },
+    async insertSlug(id: string, slug: string) {
+      await db
+        .update(tempDeveloperProfiles)
+        .set({
+          slug,
+        })
+        .where(eq(tempDeveloperProfiles.id, id));
+    },
+    async removeOutboxMessage(id: number) {
+      await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
+    },
     async addDeveloperProfileDetails(background: BackgroundInsert) {
       await db.transaction(async (tx) => {
         for (const skill of background.skills) {
@@ -249,25 +268,6 @@ export function createDevelopersRepository(db: Db) {
           });
         }
       });
-    },
-    async existsBySlug(slug: string) {
-      const [developerProfile] = await db
-        .select()
-        .from(tempDeveloperProfiles)
-        .where(eq(tempDeveloperProfiles.slug, slug));
-
-      return !!developerProfile;
-    },
-    async insertSlug(id: string, slug: string) {
-      await db
-        .update(tempDeveloperProfiles)
-        .set({
-          slug,
-        })
-        .where(eq(tempDeveloperProfiles.id, id));
-    },
-    async removeOutboxMessage(id: number) {
-      await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     },
     async addTempDeveloperProfile(
       developerProfile: DeveloperProfileInsert,
@@ -398,39 +398,6 @@ export function createDevelopersRepository(db: Db) {
       await db
         .delete(tempDeveloperProfiles)
         .where(eq(tempDeveloperProfiles.identityId, identityId));
-    },
-    async updateForeignKey(backgroundId: number, developerProfileId: string) {
-      await db.transaction(async (tx) => {
-        await tx
-          .update(developerProfileSkills)
-          .set({ developerProfileId: developerProfileId })
-          .where(eq(developerProfileSkills.backgroundId, backgroundId));
-        await tx
-          .update(developerProfileLanguages)
-          .set({ developerProfileId: developerProfileId })
-          .where(eq(developerProfileLanguages.backgroundId, backgroundId));
-        await tx
-          .update(developerProfileEducations)
-          .set({ developerProfileId: developerProfileId })
-          .where(eq(developerProfileEducations.backgroundId, backgroundId));
-      });
-    },
-    //can be removed after completed merge
-    async getBackground(id: string) {
-      const background = await db
-        .select()
-        .from(developerProfileBackgrounds)
-        .where(eq(developerProfileBackgrounds.developerProfileId, id));
-      return background[0];
-    },
-    //can be removed after completed merge
-    async getAllBackgroundIds() {
-      return await db
-        .select({
-          id: developerProfileBackgrounds.id,
-          developerProfileId: developerProfileBackgrounds.developerProfileId,
-        })
-        .from(developerProfileBackgrounds);
     },
   };
 }
