@@ -7,7 +7,7 @@ import {
   GetAssignmentsByCohortId,
   GetScoresByAssignmentId,
   NewAssignment,
-  updateScoreStatus,
+  UpdateScoreStatuses,
   UpsertAssignmentScore,
 } from "../assignments";
 import {
@@ -20,6 +20,7 @@ import {
   GetCohortStudents,
   deleteCohortIdentity,
 } from "../cohorts";
+import { ScoreStatus } from "./types";
 
 export function createInstructorService(
   getAllCohorts: GetAllCohorts,
@@ -35,7 +36,7 @@ export function createInstructorService(
   getAssignmentBySlug: GetAssignmentBySlug,
   upsertAssignmentScore: UpsertAssignmentScore,
   getScoresByAssignmentId: GetScoresByAssignmentId,
-  updateScoreStatus: updateScoreStatus,
+  updateScoreStatuses: UpdateScoreStatuses,
   getAllIdentities: GetAllIdentities,
 ) {
   return {
@@ -84,12 +85,8 @@ export function createInstructorService(
     async getScoresByAssignmentId(assignmentId: string) {
       return await getScoresByAssignmentId(assignmentId);
     },
-    async updateScoreStatus(
-      assignmentId: string,
-      identityId: string,
-      status: string,
-    ) {
-      await updateScoreStatus(assignmentId, identityId, status);
+    async updateScoreStatuses(scoreStatuses: ScoreStatus[]) {
+      await updateScoreStatuses(scoreStatuses);
     },
 
     async getAssigmentDataBySlug(slug: string) {

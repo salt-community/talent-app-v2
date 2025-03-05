@@ -20,7 +20,7 @@ export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
       "assignments.getAllAverageScoresByIdentityId",
     getAssignmentBySlug: "assignments.getAssignmentBySlug",
     upsertAssignmentScore: "assignments.upsertAssignmentScore",
-    updateScoreStatus: "assignments.updateScoreStatus",
+    updateScoreStatuses: "assignments.updateScoreStatus",
   };
 
 type AssignmentViewPermission = "score";

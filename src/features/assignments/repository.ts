@@ -6,6 +6,7 @@ import {
   AssignmentScoreFormData,
   NewAssignment,
 } from "./types";
+import { ScoreStatus } from "../instructors-dashboard/types";
 
 export function createAssignmentsRepository(db: Db) {
   return {
@@ -55,21 +56,22 @@ export function createAssignmentsRepository(db: Db) {
           },
         });
     },
-    async updateScoreStatus(
-      assignmentId: string,
-      identityId: string,
-      status: string,
-    ) {
-      await db
-        .update(assignmentScores)
-        .set({ status: status })
-        .where(
-          and(
-            eq(assignmentScores.assignmentId, assignmentId),
-            eq(assignmentScores.identityId, identityId),
-          ),
-        )
-        .returning();
+    async updateScoreStatuses(scoreStatuses: ScoreStatus[]) {
+      await db.transaction(async (tx) => {
+        await Promise.all(
+          scoreStatuses.map(async ({ assignmentId, identityId, status }) => {
+            await tx
+              .update(assignmentScores)
+              .set({ status: status })
+              .where(
+                and(
+                  eq(assignmentScores.assignmentId, assignmentId),
+                  eq(assignmentScores.identityId, identityId),
+                ),
+              );
+          }),
+        );
+      });
     },
 
     async getScoresByAssignmentId(assignmentId: string) {

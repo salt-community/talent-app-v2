@@ -5,6 +5,7 @@ import { instructorService } from "./instance";
 import { assignmentSchema } from "./validation";
 import { CohortFormData } from "../cohorts";
 import { AssignmentScore } from "../assignments";
+import { ScoreStatus } from "./types";
 
 export async function addCohortAction(cohort: CohortFormData) {
   try {
@@ -99,13 +100,9 @@ export async function addScoreToAssignment(score: AssignmentScore) {
   }
 }
 
-export async function updateScoreStatusAction(
-  assignmentId: string,
-  identityId: string,
-  status: string,
-) {
+export async function updateScoreStatusesAction(scoreStatuses: ScoreStatus[]) {
   try {
-    await instructorService.updateScoreStatus(assignmentId, identityId, status);
+    await instructorService.updateScoreStatuses(scoreStatuses);
     revalidatePath("/instructors-dashboard");
   } catch (error) {
     console.error(error);

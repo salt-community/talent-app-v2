@@ -34,3 +34,8 @@ export type AssignmentInsert = {
   };
 };
 
+export type ScoreStatus = {
+  assignmentId: string;
+  identityId: string;
+  status: string;
+};

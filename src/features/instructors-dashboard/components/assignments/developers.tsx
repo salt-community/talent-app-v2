@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { Developer } from "../../types";
+import { Developer, ScoreStatus } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
 import { AlertCircle, Check, CheckCheck } from "lucide-react";
 import { AssignmentScore } from "@/features/assignments";
 import { Switch } from "@/components/ui/switch";
-import { updateScoreStatusAction } from "../../action";
+import { updateScoreStatusesAction } from "../../action";
 import {
   Tooltip,
   TooltipContent,
@@ -34,15 +34,13 @@ export default function Developers({
     const newStatus = isPublished ? "unpublished" : "published";
     setIsPublished(!isPublished);
 
-    await Promise.all(
-      scores.map((score) => {
-        return updateScoreStatusAction(
-          score.assignmentId,
-          score.identityId,
-          newStatus
-        );
-      })
-    );
+    const scoreStatuses: ScoreStatus[] = scores.map((score) => ({
+      assignmentId: score.assignmentId,
+      identityId: score.identityId,
+      status: newStatus,
+    }));
+
+    await updateScoreStatusesAction(scoreStatuses);
   };
 
   return (

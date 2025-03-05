@@ -6,6 +6,7 @@ import {
   AssignmentScoreFormData,
   NewAssignment,
 } from "./types";
+import { ScoreStatus } from "../instructors-dashboard/types";
 
 export function createAssignmentsService(db: Db) {
   const repo = createAssignmentsRepository(db);
@@ -31,12 +32,8 @@ export function createAssignmentsService(db: Db) {
     async createAssignmentScore(data: AssignmentScoreFormData) {
       return await repo.createAssignmentScore(data);
     },
-    async updateScoreStatus(
-      assignmentId: string,
-      identityId: string,
-      status: string,
-    ) {
-      await repo.updateScoreStatus(assignmentId, identityId, status);
+    async updateScoreStatuses(scoresStatuses: ScoreStatus[]) {
+      await repo.updateScoreStatuses(scoresStatuses);
     },
     async upsertAssignmentScore(score: AssignmentScore) {
       return await repo.upsertAssignmentScore(score);
