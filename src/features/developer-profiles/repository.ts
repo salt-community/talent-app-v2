@@ -1,21 +1,15 @@
 import { Db } from "@/db";
 import { eq, sql } from "drizzle-orm";
 import {
-  developerProfileBackgrounds,
   developerProfileEducations,
   developerProfileLanguages,
-  developerProfiles,
   developerProfileSkills,
   meiliSearchOutbox,
   tempDeveloperProfiles,
 } from "./db-schema";
 import {
   AddDeveloperProfile,
-  BackgroundForDeveloperProfile,
-  BackgroundInsert,
-  BackgroundUpdate,
   developerProfileDetails,
-  DeveloperProfileInsert,
   EducationSelect,
   LanguageSelect,
   SkillSelect,
@@ -172,6 +166,7 @@ export function createDevelopersRepository(db: Db) {
                 'id', ${developerProfileSkills.id},
                 'name', ${developerProfileSkills.name},
                 'backgroundId', ${developerProfileSkills.backgroundId},
+                'developerProfileId', ${developerProfileSkills.developerProfileId},
                 'level', ${developerProfileSkills.level}
               ))`.as("skills"),
           languages: sql<
@@ -180,6 +175,7 @@ export function createDevelopersRepository(db: Db) {
                 'id', ${developerProfileLanguages.id},
                 'name', ${developerProfileLanguages.name},
                 'backgroundId', ${developerProfileLanguages.backgroundId},
+                'developerProfileId', ${developerProfileSkills.developerProfileId},
                 'level', ${developerProfileLanguages.level}
               ))`.as("languages"),
           educations: sql<
@@ -188,6 +184,7 @@ export function createDevelopersRepository(db: Db) {
                 'id', ${developerProfileEducations.id},
                 'name', ${developerProfileEducations.name},
                 'backgroundId', ${developerProfileEducations.backgroundId}
+                'developerProfileId', ${developerProfileSkills.developerProfileId},
               ))`.as("educations"),
         })
         .from(tempDeveloperProfiles)
