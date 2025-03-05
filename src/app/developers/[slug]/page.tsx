@@ -34,7 +34,10 @@ export default async function DeveloperDetailPage({ params }: Params) {
   //   await iamService.hasCurrentUserAccess("assignment.score");
 
   return process.env.FF_DEVELOPER_CV === "ON" ? (
-    <CvContainer>hi</CvContainer>
+    <CvContainer
+      developerProfileId={developerProfile.id}
+      hasProfileAccess={hasProfileAccess}
+    />
   ) : (
     <DeveloperCard>
       <BackgroundCard
