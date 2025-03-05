@@ -274,6 +274,7 @@ export function createDevelopersRepository(db: Db) {
       await db
         .insert(tempDeveloperProfiles)
         .values({
+          id: developerProfile.id,
           identityId: developerProfile.identityId,
           name: developerProfile.name,
           slug: developerProfile.slug,

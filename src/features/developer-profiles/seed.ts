@@ -102,7 +102,8 @@ export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
       developers[i].name
     );
     await insecureDeveloperProfilesService.addTempDeveloperProfile({
-      developerProfile: { ...developers[i], slug },
+      ...developers[i],
+      slug,
     });
     await insecureDeveloperProfilesService.addDeveloperProfileDetails(
       backgrounds[i]

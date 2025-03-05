@@ -57,6 +57,7 @@ export type updateTempDeveloperProfile = {
   languages?: string[];
 };
 export type AddDeveloperProfile = {
+  id?: string;
   name: string;
   email: string;
   identityId: string;

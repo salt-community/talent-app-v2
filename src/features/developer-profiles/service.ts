@@ -259,10 +259,8 @@ export function createDeveloperProfilesService(
     async addDeveloperProfileDetails(background: BackgroundInsert) {
       await repository.addDeveloperProfileDetails(background);
     },
-    async addTempDeveloperProfile(args: {
-      developerProfile: AddDeveloperProfile;
-    }) {
-      await repository.addTempDeveloperProfile(args.developerProfile);
+    async addTempDeveloperProfile(developerProfile: AddDeveloperProfile) {
+      await repository.addTempDeveloperProfile(developerProfile);
     },
   };
 }
