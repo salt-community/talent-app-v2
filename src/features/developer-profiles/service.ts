@@ -247,7 +247,7 @@ export function createDeveloperProfilesService(
         status: "unpublished",
       };
 
-      await repository.addTempDeveloperProfile(developerProfile);
+      await repository.addDeveloperProfile(developerProfile);
     },
     async addDeveloperProfileDetails(
       developerProfileDetails: developerProfileDetails
@@ -255,7 +255,7 @@ export function createDeveloperProfilesService(
       await repository.addDeveloperProfileDetails(developerProfileDetails);
     },
     async addTempDeveloperProfile(developerProfile: AddDeveloperProfile) {
-      await repository.addTempDeveloperProfile(developerProfile);
+      await repository.addDeveloperProfile(developerProfile);
     },
   };
 }

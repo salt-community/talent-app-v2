@@ -15,7 +15,6 @@ import {
   SkillSelect,
   updateTempDeveloperProfile,
 } from "./types";
-import { DeveloperProfileValidation } from "./validation";
 
 export function createDevelopersRepository(db: Db) {
   return {
@@ -270,7 +269,7 @@ export function createDevelopersRepository(db: Db) {
         }
       });
     },
-    async addTempDeveloperProfile(developerProfile: AddDeveloperProfile) {
+    async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
       await db
         .insert(tempDeveloperProfiles)
         .values({
