@@ -61,15 +61,15 @@ export function createDeveloperProfilesService(
     let succeeded = false;
     switch (outboxMessage.operation) {
       case "upsert":
-        const background = await repository.getDeveloperProfileById(
+        const developerProfile = await repository.getDeveloperProfileById(
           outboxMessage.developerProfileId
         );
-        if (!background) {
+        if (!developerProfile) {
           succeeded = true;
           break;
         }
         const upsertStatus = await backgroundsSearchApi.upsertDocuments([
-          background[0],
+          developerProfile[0],
         ]);
         succeeded = OK_STATUSES.includes(upsertStatus);
         break;
