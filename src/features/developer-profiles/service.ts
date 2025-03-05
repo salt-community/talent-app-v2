@@ -179,7 +179,6 @@ export function createDeveloperProfilesService(
         }
       }
     },
-    //imported service functions from backgrounds
     async syncMeilisearch() {
       const outboxMessages = await repository.getAllOutboxMessage();
       for (const outboxMessage of outboxMessages) {
