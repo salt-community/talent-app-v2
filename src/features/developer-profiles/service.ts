@@ -229,23 +229,6 @@ export function createDeveloperProfilesService(
     async addDeveloperProfileDetails(background: BackgroundInsert) {
       await repository.addDeveloperProfileDetails(background);
     },
-    async addBackground(background: BackgroundInsert) {
-      const { outboxMessageId } = await repository.addBackground(background);
-      const developerProfileId = await repository.updateTempDeveloperProfile(
-        {},
-        background
-      );
-      const developerProfile =
-        await repository.getBackgroundByDeveloperProfileId(
-          developerProfileId[0].id
-        );
-      const status = await backgroundsSearchApi.upsertDocuments([
-        developerProfile[0],
-      ]);
-      if (OK_STATUSES.includes(status)) {
-        await repository.removeOutboxMessage(outboxMessageId);
-      }
-    },
     async updateBackground(background: BackgroundUpdate) {
       const developerProfileId = await repository.updateTempDeveloperProfile(
         {},

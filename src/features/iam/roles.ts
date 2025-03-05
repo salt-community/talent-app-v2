@@ -30,7 +30,6 @@ export const rolesPermissions = {
   ]),
   developer: new Set([
     cohorts.getCohortIdByIdentityId,
-    developerProfiles.addBackground,
     developerProfiles.getAllEducations,
     developerProfiles.getAllLanguages,
     developerProfiles.getAllSkills,

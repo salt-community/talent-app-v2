@@ -17,7 +17,6 @@ export const developerProfiles: PermissionsSchema<
   getDeveloperProfileByIdentityId:
     "developerProfiles.getDeveloperProfileByIdentityId",
   getCurrentUsers: "developerProfiles.getCurrentUsers",
-  addBackground: "developerProfiles.addBackground",
   deleteBackgroundById: "developerProfiles.deleteBackgroundById",
   doesMeilisearchNeedSync: "developerProfiles.doesMeilisearchNeedSync",
   ensureSearchIndex: "developerProfiles.ensureSearchIndex",
