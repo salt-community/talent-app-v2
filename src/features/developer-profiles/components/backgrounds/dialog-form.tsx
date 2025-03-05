@@ -79,8 +79,8 @@ export function DialogForm({
               />
               <input
                 type="text"
-                name={"developerProfileId"}
-                defaultValue={background.id}
+                name={"identityId"}
+                defaultValue={background.identityId}
                 hidden
               />
               <FormItem>
@@ -119,10 +119,10 @@ export function DialogForm({
               </FormItem>
               <FormItem>
                 <Label htmlFor="title" className="text-right">
-                  Role
+                  Title
                 </Label>
                 <Input
-                  placeholder="Role..."
+                  placeholder="Title"
                   name="title"
                   id="title"
                   required

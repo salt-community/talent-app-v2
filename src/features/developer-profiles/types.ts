@@ -42,12 +42,19 @@ export type TempDeveloperProfileInsert =
   typeof tempDeveloperProfiles.$inferInsert;
 // double write type
 export type updateTempDeveloperProfile = {
+  id: string;
   name?: string;
   email?: string;
   identityId?: string;
-  id?: string | undefined;
   slug?: string | null | undefined;
   status?: string | undefined;
+  avatarUrl?: string;
+  title?: string;
+  bio?: string;
+  links?: SocialLink[];
+  skills?: string[];
+  educations?: string[];
+  languages?: string[];
 };
 
 export type Backgrounds = BackgroundSelect & {

@@ -3,7 +3,12 @@
 import { errorHandler } from "@/lib";
 import { revalidatePath } from "next/cache";
 import { developerProfilesService } from "./instance";
-import { BackgroundUpdate, backgroundUpdate } from "./validation";
+import {
+  BackgroundUpdate,
+  backgroundUpdate,
+  developerProfileUpdate,
+  DeveloperProfileValidation,
+} from "./validation";
 import { ZodError } from "zod";
 import { PreviousState, SocialLink } from "./types";
 
@@ -21,15 +26,16 @@ export async function updateBackgroundAction(
   formData: FormData
 ) {
   const update = Object.fromEntries(formData.entries());
-  let validatedUpdate: BackgroundUpdate | undefined;
+  let validatedUpdate: DeveloperProfileValidation | undefined;
 
   try {
-    validatedUpdate = backgroundUpdate.parse(update);
+    validatedUpdate = developerProfileUpdate.parse(update);
+    console.log("update:", validatedUpdate);
     const links: SocialLink[] = [
       { name: "Github", url: validatedUpdate.github || "" },
       { name: "Resume", url: validatedUpdate.cv || "" },
     ];
-    await developerProfilesService.updateBackground({
+    await developerProfilesService.updateDeveloperProfile({
       ...validatedUpdate,
       links,
     });

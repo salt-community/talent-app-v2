@@ -10,12 +10,14 @@ import {
   DeveloperProfileInsert,
   OutboxMessageSelect,
   SessionClaims,
+  updateTempDeveloperProfile,
 } from "./types";
 import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
 import { v4 as uuidv4 } from "uuid";
+import { DeveloperProfileValidation } from "./validation";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
@@ -107,10 +109,7 @@ export function createDeveloperProfilesService(
         id: args.id,
         status: args.status,
       };
-
-      await repository.updateTempDeveloperProfile(developerProfile, {
-        developerProfileId: args.id,
-      });
+      await repository.updateTempDeveloperProfile(developerProfile);
     },
     async createDeveloperProfile(identityId: string) {
       const { sessionClaims } = await auth();
@@ -172,10 +171,10 @@ export function createDeveloperProfilesService(
       for (const developer of developers) {
         if (!developer.slug) {
           const newSlug = generateSlug(developer.name);
-          await repository.updateTempDeveloperProfile(
-            { id: developer.id, slug: newSlug },
-            { developerProfileId: developer.id }
-          );
+          await repository.updateTempDeveloperProfile({
+            id: developer.id,
+            slug: newSlug,
+          });
         }
       }
     },
@@ -229,16 +228,17 @@ export function createDeveloperProfilesService(
     async addDeveloperProfileDetails(background: BackgroundInsert) {
       await repository.addDeveloperProfileDetails(background);
     },
-    async updateDeveloperProfile(background: BackgroundUpdate) {
-      const developerProfileId = await repository.updateTempDeveloperProfile(
-        {},
-        background
+    async updateDeveloperProfile(
+      developerProfileUpdates: updateTempDeveloperProfile
+    ) {
+      const { outboxMessageId } = await repository.updateTempDeveloperProfile(
+        developerProfileUpdates
       );
+      console.log("updates:", developerProfileUpdates);
       const developerProfile =
         await repository.getBackgroundByDeveloperProfileId(
-          developerProfileId[0].id
+          developerProfileUpdates.id
         );
-      const { outboxMessageId } = await repository.updateBackground(background);
 
       const status = await backgroundsSearchApi.upsertDocuments([
         developerProfile[0],
