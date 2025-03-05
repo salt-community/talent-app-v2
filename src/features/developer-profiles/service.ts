@@ -1,11 +1,9 @@
 import { Db } from "@/db";
 import { auth } from "@clerk/nextjs/server";
-import { developerProfilesService } from "./instance";
 import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import {
   AddDeveloperProfile,
-  BackgroundInsert,
   developerProfileDetails,
   OutboxMessageSelect,
   SessionClaims,
@@ -15,8 +13,6 @@ import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
-import { v4 as uuidv4 } from "uuid";
-import { DeveloperProfileValidation } from "./validation";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
