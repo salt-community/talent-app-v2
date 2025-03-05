@@ -2,6 +2,7 @@ import { DeveloperCard } from "@/components/ui/developer-card";
 // import { ScoreBoard } from "@/features/assignments";
 import {
   BackgroundCard,
+  CvContainer,
   developerProfilesService,
 } from "@/features/developer-profiles";
 import { iamService } from "@/features/iam";
@@ -33,10 +34,8 @@ export default async function DeveloperDetailPage({ params }: Params) {
   //   await iamService.hasCurrentUserAccess("assignment.score");
 
   return process.env.FF_DEVELOPER_CV === "ON" ? (
-    <h1>Hi</h1>
-  )
-  
-  : (
+    <CvContainer>hi</CvContainer>
+  ) : (
     <DeveloperCard>
       <BackgroundCard
         developerProfileId={developerProfile.id}
