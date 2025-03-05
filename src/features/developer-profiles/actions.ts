@@ -4,8 +4,6 @@ import { errorHandler } from "@/lib";
 import { revalidatePath } from "next/cache";
 import { developerProfilesService } from "./instance";
 import {
-  BackgroundUpdate,
-  backgroundUpdate,
   developerProfileUpdate,
   DeveloperProfileValidation,
 } from "./validation";
