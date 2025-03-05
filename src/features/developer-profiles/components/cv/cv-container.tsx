@@ -16,7 +16,7 @@ export async function CvContainer({
     );
 
   return (
-    <section className="border-red-800 border-2">
+    <section className="border-red-800 border-2 py-8">
       <CvHeader
         name={background.name}
         introduction={background.bio}
