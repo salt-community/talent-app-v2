@@ -1,5 +1,5 @@
 import { DeveloperCard } from "@/components/ui/developer-card";
-import { ScoreBoard } from "@/features/assignments";
+// import { ScoreBoard } from "@/features/assignments";
 import {
   BackgroundCard,
   developerProfilesService,
@@ -29,8 +29,8 @@ export default async function DeveloperDetailPage({ params }: Params) {
   const hasProfileAccess = await iamService.hasProfileAccess(
     developerProfile.identityId
   );
-  const hasUserAccess =
-    await iamService.hasCurrentUserAccess("assignment.score");
+  // const hasUserAccess =
+  //   await iamService.hasCurrentUserAccess("assignment.score");
 
   return (
     <DeveloperCard>
@@ -38,9 +38,9 @@ export default async function DeveloperDetailPage({ params }: Params) {
         developerProfileId={developerProfile.id}
         hasProfileAccess={hasProfileAccess}
       />
-      {(hasProfileAccess || hasUserAccess) && (
+      {/* {(hasProfileAccess || hasUserAccess) && (
         <ScoreBoard identityId={developerProfile.identityId} />
-      )}
+      )} */}
       <Projects
         developerProfileId={developerProfile.id}
         hasProfileAccess={hasProfileAccess}
