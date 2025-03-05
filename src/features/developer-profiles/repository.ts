@@ -377,7 +377,7 @@ export function createDevelopersRepository(db: Db) {
       });
       return { outboxMessageId };
     },
-    async deleteTempDeveloperProfile(developerProfileId: string) {
+    async deleteDeveloperProfile(developerProfileId: string) {
       await db
         .delete(tempDeveloperProfiles)
         .where(eq(tempDeveloperProfiles.id, developerProfileId));
