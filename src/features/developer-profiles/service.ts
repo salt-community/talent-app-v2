@@ -121,7 +121,7 @@ export function createDeveloperProfilesService(
       };
       return user;
     },
-    async getBackgroundByDeveloperProfileId(developerProfileId: string) {
+    async getDeveloperProfileById(developerProfileId: string) {
       const [developerProfile] =
         await repository.getDeveloperProfile(developerProfileId);
 

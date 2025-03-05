@@ -22,8 +22,7 @@ export const developerProfiles: PermissionsSchema<
   getAllEducations: "developerProfiles.getAllEducations",
   getAllLanguages: "developerProfiles.getAllLanguages",
   getAllSkills: "developerProfiles.getAllSkills",
-  getBackgroundByDeveloperProfileId:
-    "developerProfiles.getBackgroundByDeveloperProfileId",
+  getDeveloperProfileById: "developerProfiles.getDeveloperProfileById",
   getMeilisearchSettings: "developerProfiles.getMeilisearchSettings",
   isSearchHealthOk: "developerProfiles.isSearchHealthOk",
   repopulateMeiliSearch: "developerProfiles.repopulateMeiliSearch",

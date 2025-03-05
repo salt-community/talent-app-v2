@@ -10,9 +10,7 @@ export async function BackgroundCard({
   hasProfileAccess,
 }: Props) {
   const background =
-    await developerProfilesService.getBackgroundByDeveloperProfileId(
-      developerProfileId
-    );
+    await developerProfilesService.getDeveloperProfileById(developerProfileId);
 
   return (
     <div className="space-y-2">

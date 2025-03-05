@@ -10,7 +10,7 @@ import { MenuPermissions } from "./permissions/menu";
 
 export const rolesPermissions = {
   guest: new Set([
-    developerProfiles.getBackgroundByDeveloperProfileId,
+    developerProfiles.getDeveloperProfileById,
     developerProfiles.getAllSkills,
     developerProfiles.getAllLanguages,
     developerProfiles.getAllEducations,
@@ -33,7 +33,7 @@ export const rolesPermissions = {
     developerProfiles.getAllEducations,
     developerProfiles.getAllLanguages,
     developerProfiles.getAllSkills,
-    developerProfiles.getBackgroundByDeveloperProfileId,
+    developerProfiles.getDeveloperProfileById,
     developerProfiles.updateDeveloperProfile,
     developerProfiles.searchDeveloperProfileIds,
     developerProfiles.searchDeveloperProfileIdsWithLLM,
@@ -62,7 +62,7 @@ export const rolesPermissions = {
     developerProfiles.getAllEducations,
     developerProfiles.getAllLanguages,
     developerProfiles.getAllSkills,
-    developerProfiles.getBackgroundByDeveloperProfileId,
+    developerProfiles.getDeveloperProfileById,
     developerProfiles.updateDeveloperProfile,
     developerProfiles.searchDeveloperProfileIds,
     developerProfiles.searchDeveloperProfileIdsWithLLM,
