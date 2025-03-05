@@ -4,7 +4,7 @@ import Developer from "./developers";
 import { SubmitScoresButton } from "./submit-scores-button";
 
 export async function AssignmentComponent({ slug }: { slug: string }) {
-  const data = await instructorService.getAssigmentDataBySlug(slug);
+  const data = await instructorService.getAssignmentDataBySlug(slug);
   if (!data) return null;
 
   const { assignment, developersWithScores } = data;
@@ -47,7 +47,7 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
                 scored={scored}
                 published={published}
               />
-            ),
+            )
           )}
         </div>
       </div>
