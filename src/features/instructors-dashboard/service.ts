@@ -36,7 +36,7 @@ export function createInstructorService(
   upsertAssignmentScore: UpsertAssignmentScore,
   getScoresByAssignmentId: GetScoresByAssignmentId,
   updateScoreStatus: updateScoreStatus,
-  getAllIdentities: GetAllIdentities
+  getAllIdentities: GetAllIdentities,
 ) {
   return {
     async getAllCohorts() {
@@ -90,6 +90,52 @@ export function createInstructorService(
       status: string;
     }) {
       await updateScoreStatus(args);
+    },
+
+    async getAssigmentDataBySlug(slug: string) {
+      const assignment = await getAssignmentBySlug(slug);
+      if (!assignment) return null;
+
+      const developers = await getCohortStudentsByCohortId(assignment.cohortId);
+      if (!developers) return null;
+
+      const assignmentScores = await getScoresByAssignmentId(assignment.id);
+
+      const developersWithScores = developers.map((developer) => {
+        const scores =
+          assignment.categories?.map((category) => {
+            const score = assignmentScores.find(
+              (score) =>
+                score.identityId === developer.id &&
+                score.category === category,
+            );
+            return {
+              id: score?.id,
+              assignmentId: assignment.id,
+              identityId: developer.id,
+              category,
+              comment: score?.comment || "",
+              score: score?.score || 0,
+              createdAt: score?.createdAt || null,
+            };
+          }) || [];
+
+        const scored = assignmentScores.some(
+          (s) => s.identityId === developer.id,
+        );
+        const published = assignmentScores.some(
+          (s) => s.identityId === developer.id && s.status === "published",
+        );
+
+        return {
+          developer,
+          scores,
+          scored,
+          published,
+        };
+      });
+
+      return { assignment, developersWithScores };
     },
   };
 }
