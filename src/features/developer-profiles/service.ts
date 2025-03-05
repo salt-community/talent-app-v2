@@ -6,6 +6,7 @@ import { claim } from "./session";
 import {
   AddDeveloperProfile,
   BackgroundInsert,
+  developerProfileDetails,
   OutboxMessageSelect,
   SessionClaims,
   updateTempDeveloperProfile,
@@ -227,8 +228,8 @@ export function createDeveloperProfilesService(
     async repopulateMeiliSearch() {
       await backgroundsSearchApi.deleteIndex();
       await backgroundsSearchApi.ensureIndex();
-      const backgrounds = await repository.getAllBackgrounds();
-      await backgroundsSearchApi.upsertDocuments(backgrounds);
+      const developerProfiles = await repository.getAllDeveloperProfiles();
+      await backgroundsSearchApi.upsertDocuments(developerProfiles);
     },
     async doesMeilisearchNeedSync() {
       return (await repository.getAllOutboxMessage()).length > 0;
@@ -252,8 +253,10 @@ export function createDeveloperProfilesService(
 
       await repository.addTempDeveloperProfile(developerProfile);
     },
-    async addDeveloperProfileDetails(background: BackgroundInsert) {
-      await repository.addDeveloperProfileDetails(background);
+    async addDeveloperProfileDetails(
+      developerProfileDetails: developerProfileDetails
+    ) {
+      await repository.addDeveloperProfileDetails(developerProfileDetails);
     },
     async addTempDeveloperProfile(developerProfile: AddDeveloperProfile) {
       await repository.addTempDeveloperProfile(developerProfile);

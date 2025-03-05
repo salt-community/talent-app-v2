@@ -157,6 +157,13 @@ export type BackgroundInsert =
     educations: string[];
   };
 
+export type developerProfileDetails = {
+  developerProfileId: string;
+  skills: string[];
+  languages: string[];
+  educations: string[];
+};
+
 export type BackgroundSelect = typeof developerProfileBackgrounds.$inferSelect;
 
 export type SkillInsert = typeof developerProfileSkills.$inferInsert;

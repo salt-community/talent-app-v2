@@ -14,6 +14,7 @@ import {
   BackgroundForDeveloperProfile,
   BackgroundInsert,
   BackgroundUpdate,
+  developerProfileDetails,
   DeveloperProfileInsert,
   EducationSelect,
   LanguageSelect,
@@ -54,7 +55,7 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(tempDeveloperProfiles.id, id));
       return developerId[0];
     },
-    async getAllBackgrounds() {
+    async getAllDeveloperProfiles() {
       return await db
         .select({
           id: tempDeveloperProfiles.id,
@@ -245,26 +246,28 @@ export function createDevelopersRepository(db: Db) {
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     },
-    async addDeveloperProfileDetails(background: BackgroundInsert) {
+    async addDeveloperProfileDetails(
+      developerProfileDetails: developerProfileDetails
+    ) {
       await db.transaction(async (tx) => {
-        for (const skill of background.skills) {
+        for (const skill of developerProfileDetails.skills) {
           await tx.insert(developerProfileSkills).values({
             backgroundId: 1,
-            developerProfileId: background.developerProfileId,
+            developerProfileId: developerProfileDetails.developerProfileId,
             name: skill,
           });
         }
-        for (const language of background.languages) {
+        for (const language of developerProfileDetails.languages) {
           await tx.insert(developerProfileLanguages).values({
             backgroundId: 1,
-            developerProfileId: background.developerProfileId,
+            developerProfileId: developerProfileDetails.developerProfileId,
             name: language,
           });
         }
-        for (const education of background.educations) {
+        for (const education of developerProfileDetails.educations) {
           await tx.insert(developerProfileEducations).values({
             backgroundId: 1,
-            developerProfileId: background.developerProfileId,
+            developerProfileId: developerProfileDetails.developerProfileId,
             name: education,
           });
         }
