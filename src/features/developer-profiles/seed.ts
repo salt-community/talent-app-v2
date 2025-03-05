@@ -5,6 +5,7 @@ import { BackgroundInsert, DeveloperProfileInsert } from "./types";
 import { skills } from "./seed-data";
 import { faker } from "@faker-js/faker";
 import { v4 as uuidv4 } from "uuid";
+import { developerProfileBackgrounds } from "./db-schema";
 
 export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
   console.log("Seeding developer profiles...");
@@ -97,9 +98,11 @@ export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
   const developerId: string[] = [];
   for (let i = 0; i < developers.length; i++) {
     developerId.push(developers[i].id!);
+    const slug = await insecureDeveloperProfilesService.generateUniqueSlug(
+      developers[i].name
+    );
     await insecureDeveloperProfilesService.addTempDeveloperProfile({
-      developerProfile: developers[i],
-      backgrounds: backgrounds[i],
+      developerProfile: { ...developers[i], slug },
     });
     await insecureDeveloperProfilesService.addDeveloperProfileDetails(
       backgrounds[i]

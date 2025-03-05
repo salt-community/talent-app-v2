@@ -10,6 +10,7 @@ import {
   tempDeveloperProfiles,
 } from "./db-schema";
 import {
+  AddDeveloperProfile,
   BackgroundForDeveloperProfile,
   BackgroundInsert,
   BackgroundUpdate,
@@ -269,43 +270,32 @@ export function createDevelopersRepository(db: Db) {
         }
       });
     },
-    async addTempDeveloperProfile(
-      developerProfile: DeveloperProfileInsert,
-      background: BackgroundForDeveloperProfile
-    ) {
-      let id: string;
-      if (developerProfile.id) {
-        id = developerProfile.id;
-      } else {
-        id = background.developerProfileId;
-      }
+    async addTempDeveloperProfile(developerProfile: AddDeveloperProfile) {
       await db
         .insert(tempDeveloperProfiles)
         .values({
-          id: id,
           identityId: developerProfile.identityId,
           name: developerProfile.name,
           slug: developerProfile.slug,
           email: developerProfile.email,
-          status: developerProfile.status,
-          avatarUrl: background.avatarUrl || "",
-          title: background.title || "",
-          bio: background.bio || "",
-          links: background.links || [],
+          status: developerProfile.status || "",
+          avatarUrl: developerProfile.avatarUrl || "",
+          title: developerProfile.title || "",
+          bio: developerProfile.bio || "",
+          links: developerProfile.links || [],
         })
         .onConflictDoUpdate({
           target: tempDeveloperProfiles.id,
           set: {
-            id: id,
             identityId: developerProfile.identityId,
             name: developerProfile.name,
             slug: developerProfile.slug,
             email: developerProfile.email,
-            status: developerProfile.status,
-            avatarUrl: background.avatarUrl || "",
-            title: background.title || "",
-            bio: background.bio || "",
-            links: background.links || [],
+            status: developerProfile.status || "",
+            avatarUrl: developerProfile.avatarUrl || "",
+            title: developerProfile.title || "",
+            bio: developerProfile.bio || "",
+            links: developerProfile.links || [],
           },
         });
     },

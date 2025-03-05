@@ -56,6 +56,20 @@ export type updateTempDeveloperProfile = {
   educations?: string[];
   languages?: string[];
 };
+export type AddDeveloperProfile = {
+  name: string;
+  email: string;
+  identityId: string;
+  slug: string | null | undefined;
+  status?: string | undefined;
+  avatarUrl?: string;
+  title?: string;
+  bio?: string;
+  links?: SocialLink[];
+  skills?: string[];
+  educations?: string[];
+  languages?: string[];
+};
 
 export type Backgrounds = BackgroundSelect & {
   background_skills: SkillSelect[];

@@ -4,6 +4,7 @@ import { developerProfilesService } from "./instance";
 import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import {
+  AddDeveloperProfile,
   BackgroundForDeveloperProfile,
   BackgroundInsert,
   BackgroundUpdate,
@@ -244,33 +245,24 @@ export function createDeveloperProfilesService(
       if (!email) return;
 
       const slug = await this.generateUniqueSlug(name);
-      const developerProfileId = uuidv4();
+
       const developerProfile = {
-        id: developerProfileId,
         identityId,
         name,
         email,
         slug,
+        status: "unpublished",
       };
 
-      await this.addTempDeveloperProfile({
-        developerProfile,
-        backgrounds: { developerProfileId },
-      });
-
-      return { id: developerProfileId };
+      await repository.addTempDeveloperProfile(developerProfile);
     },
     async addDeveloperProfileDetails(background: BackgroundInsert) {
       await repository.addDeveloperProfileDetails(background);
     },
     async addTempDeveloperProfile(args: {
-      developerProfile: DeveloperProfileInsert;
-      backgrounds: BackgroundForDeveloperProfile;
+      developerProfile: AddDeveloperProfile;
     }) {
-      await repository.addTempDeveloperProfile(
-        args.developerProfile,
-        args.backgrounds
-      );
+      await repository.addTempDeveloperProfile(args.developerProfile);
     },
   };
 }
