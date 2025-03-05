@@ -229,7 +229,7 @@ export function createDeveloperProfilesService(
     async addDeveloperProfileDetails(background: BackgroundInsert) {
       await repository.addDeveloperProfileDetails(background);
     },
-    async updateBackground(background: BackgroundUpdate) {
+    async updateDeveloperProfile(background: BackgroundUpdate) {
       const developerProfileId = await repository.updateTempDeveloperProfile(
         {},
         background
