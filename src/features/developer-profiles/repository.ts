@@ -165,7 +165,6 @@ export function createDevelopersRepository(db: Db) {
                 'id', ${developerProfileSkills.id},
                 'name', ${developerProfileSkills.name},
                 'backgroundId', ${developerProfileSkills.backgroundId},
-                'developerProfileId', ${developerProfileSkills.developerProfileId},
                 'level', ${developerProfileSkills.level}
               ))`.as("skills"),
           languages: sql<
@@ -174,7 +173,6 @@ export function createDevelopersRepository(db: Db) {
                 'id', ${developerProfileLanguages.id},
                 'name', ${developerProfileLanguages.name},
                 'backgroundId', ${developerProfileLanguages.backgroundId},
-                'developerProfileId', ${developerProfileSkills.developerProfileId},
                 'level', ${developerProfileLanguages.level}
               ))`.as("languages"),
           educations: sql<
@@ -183,7 +181,6 @@ export function createDevelopersRepository(db: Db) {
                 'id', ${developerProfileEducations.id},
                 'name', ${developerProfileEducations.name},
                 'backgroundId', ${developerProfileEducations.backgroundId}
-                'developerProfileId', ${developerProfileSkills.developerProfileId},
               ))`.as("educations"),
         })
         .from(tempDeveloperProfiles)
