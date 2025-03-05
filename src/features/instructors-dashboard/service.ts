@@ -7,7 +7,7 @@ import {
   GetAssignmentsByCohortId,
   GetScoresByAssignmentId,
   NewAssignment,
-  updateScoreStatus,
+  UpdateScoreStatuses,
   UpsertAssignmentScore,
 } from "../assignments";
 import {
@@ -20,6 +20,7 @@ import {
   GetCohortStudents,
   deleteCohortIdentity,
 } from "../cohorts";
+import { ScoreStatus } from "./types";
 
 export function createInstructorService(
   getAllCohorts: GetAllCohorts,
@@ -35,8 +36,8 @@ export function createInstructorService(
   getAssignmentBySlug: GetAssignmentBySlug,
   upsertAssignmentScore: UpsertAssignmentScore,
   getScoresByAssignmentId: GetScoresByAssignmentId,
-  updateScoreStatus: updateScoreStatus,
-  getAllIdentities: GetAllIdentities
+  updateScoreStatuses: UpdateScoreStatuses,
+  getAllIdentities: GetAllIdentities,
 ) {
   return {
     async getAllCohorts() {
@@ -84,12 +85,54 @@ export function createInstructorService(
     async getScoresByAssignmentId(assignmentId: string) {
       return await getScoresByAssignmentId(assignmentId);
     },
-    async updateScoreStatus(args: {
-      assignmentId: string;
-      identityId: string;
-      status: string;
-    }) {
-      await updateScoreStatus(args);
+    async updateScoreStatuses(scoreStatuses: ScoreStatus[]) {
+      await updateScoreStatuses(scoreStatuses);
+    },
+
+    async getAssigmentDataBySlug(slug: string) {
+      const assignment = await getAssignmentBySlug(slug);
+      if (!assignment) return null;
+
+      const developers = await getCohortStudentsByCohortId(assignment.cohortId);
+      if (!developers) return null;
+
+      const assignmentScores = await getScoresByAssignmentId(assignment.id);
+
+      const developersWithScores = developers.map((developer) => {
+        const scores =
+          assignment.categories?.map((category) => {
+            const score = assignmentScores.find(
+              (score) =>
+                score.identityId === developer.id &&
+                score.category === category,
+            );
+            return {
+              id: score?.id,
+              assignmentId: assignment.id,
+              identityId: developer.id,
+              category,
+              comment: score?.comment || "",
+              score: score?.score || 0,
+              createdAt: score?.createdAt || null,
+            };
+          }) || [];
+
+        const scored = assignmentScores.some(
+          (s) => s.identityId === developer.id,
+        );
+        const published = assignmentScores.some(
+          (s) => s.identityId === developer.id && s.status === "published",
+        );
+
+        return {
+          developer,
+          scores,
+          scored,
+          published,
+        };
+      });
+
+      return { assignment, developersWithScores };
     },
   };
 }

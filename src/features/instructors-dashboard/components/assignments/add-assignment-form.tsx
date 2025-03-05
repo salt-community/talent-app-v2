@@ -22,7 +22,7 @@ type Props = {
   onSuccess: () => void;
 };
 
-const categoryOptions = [
+const CATEGORY_OPTIONS = [
   { key: "frontend", value: "Frontend" },
   { key: "backend", value: "Backend" },
   { key: "management", value: "Management" },
@@ -82,17 +82,17 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Cohorts</SelectLabel>
-                {categoryOptions
-                  .filter((category) => !selectedItems.includes(category.key))
-                  .map((category) => (
-                    <SelectItem
-                      key={category.key}
-                      value={category.key}
-                      className="cursor-pointer"
-                    >
-                      {category.value}
-                    </SelectItem>
-                  ))}
+                {CATEGORY_OPTIONS.filter(
+                  (category) => !selectedItems.includes(category.key),
+                ).map((category) => (
+                  <SelectItem
+                    key={category.key}
+                    value={category.key}
+                    className="cursor-pointer"
+                  >
+                    {category.value}
+                  </SelectItem>
+                ))}
               </SelectGroup>
             </SelectContent>
           </Select>

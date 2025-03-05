@@ -8,19 +8,20 @@ import {
   Button,
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { ScoreStatus } from "../../types";
+import { updateScoreStatusesAction } from "../../action";
 
 type Props = {
-  assignmentId: string;
-  status: string;
+  scoreStatuses: ScoreStatus[];
 };
 
-export function SubmitScoresButton({ assignmentId, status }: Props) {
+export function SubmitScoresButton({ scoreStatuses }: Props) {
   const [open, setOpen] = useState(false);
 
   const publishScores = async () => {
-    //update status of the assignment
-    console.log(assignmentId, status);
+    await updateScoreStatusesAction(scoreStatuses);
     setOpen(false);
+    window.location.reload();
   };
   return (
     <>

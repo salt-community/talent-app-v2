@@ -5,6 +5,7 @@ import { instructorService } from "./instance";
 import { assignmentSchema } from "./validation";
 import { CohortFormData } from "../cohorts";
 import { AssignmentScore } from "../assignments";
+import { ScoreStatus } from "./types";
 
 export async function addCohortAction(cohort: CohortFormData) {
   try {
@@ -18,7 +19,7 @@ export async function addCohortAction(cohort: CohortFormData) {
 export async function addAssignmentAction(
   formData: FormData,
   cohortId: string,
-  categories: string[]
+  categories: string[],
 ) {
   const title = formData.get("title") as string;
   const comment = formData.get("comment") as string;
@@ -46,7 +47,7 @@ export async function addAssignmentAction(
     if (error instanceof z.ZodError) {
       console.error("Validation failed:", error.errors);
       throw new Error(
-        "Validation failed: " + error.errors.map((e) => e.message).join(", ")
+        "Validation failed: " + error.errors.map((e) => e.message).join(", "),
       );
     } else {
       console.error("Unexpected error:", error);
@@ -57,7 +58,7 @@ export async function addAssignmentAction(
 
 export async function addIdentitiesToCohortAction(
   cohortId: string,
-  identityIds: string[]
+  identityIds: string[],
 ) {
   try {
     await instructorService.addIdentitiesToCohort({ cohortId, identityIds });
@@ -99,18 +100,9 @@ export async function addScoreToAssignment(score: AssignmentScore) {
   }
 }
 
-export async function updateScoreStatusAction(
-  assignmentId: string,
-  identityId: string,
-  status: string
-) {
-  const args = {
-    assignmentId,
-    identityId, 
-    status,
-  };
+export async function updateScoreStatusesAction(scoreStatuses: ScoreStatus[]) {
   try {
-    await instructorService.updateScoreStatus(args);
+    await instructorService.updateScoreStatuses(scoreStatuses);
     revalidatePath("/instructors-dashboard");
   } catch (error) {
     console.error(error);
