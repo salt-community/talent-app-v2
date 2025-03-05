@@ -1,7 +1,28 @@
+import { developerProfilesService } from "../../instance";
+import { CvHeader } from "./cv-header";
+
 type Props = {
-  children: React.ReactNode;
+  developerProfileId: string;
+  hasProfileAccess: boolean;
 };
 
-export function CvContainer({ children }: Props) {
-  return <section className="border-red-800 border-2">{children}</section>;
+export async function CvContainer({
+  developerProfileId,
+  hasProfileAccess,
+}: Props) {
+  const background =
+    await developerProfilesService.getBackgroundByDeveloperProfileId(
+      developerProfileId
+    );
+
+  return (
+    <section className="border-red-800 border-2">
+      <CvHeader
+        name={background.name}
+        introduction={background.bio}
+        avatarUrl={background.avatarUrl}
+        hasProfileAccess={hasProfileAccess}
+      />
+    </section>
+  );
 }
