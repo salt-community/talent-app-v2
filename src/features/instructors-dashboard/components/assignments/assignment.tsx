@@ -24,8 +24,11 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
           </div>
           <div>
             <SubmitScoresButton
-              assignmentId={assignment.id}
-              status={"published"}
+              scoreStatuses={developersWithScores.map((d) => ({
+                assignmentId: assignment.id,
+                identityId: d.developer.id,
+                status: "published",
+              }))}
             />
           </div>
         </div>
