@@ -254,7 +254,7 @@ export function createDeveloperProfilesService(
     ) {
       await repository.addDeveloperProfileDetails(developerProfileDetails);
     },
-    async addTempDeveloperProfile(developerProfile: AddDeveloperProfile) {
+    async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
       await repository.addDeveloperProfile(developerProfile);
     },
   };

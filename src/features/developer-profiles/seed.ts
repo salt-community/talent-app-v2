@@ -101,7 +101,7 @@ export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
     const slug = await insecureDeveloperProfilesService.generateUniqueSlug(
       developers[i].name
     );
-    await insecureDeveloperProfilesService.addTempDeveloperProfile({
+    await insecureDeveloperProfilesService.addDeveloperProfile({
       ...developers[i],
       slug,
     });
