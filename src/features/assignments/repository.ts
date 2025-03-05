@@ -55,19 +55,19 @@ export function createAssignmentsRepository(db: Db) {
           },
         });
     },
-    async updateScoreStatus(args: {
-      assignmentId: string;
-      identityId: string;
-      status: string;
-    }) {
+    async updateScoreStatus(
+      assignmentId: string,
+      identityId: string,
+      status: string,
+    ) {
       await db
         .update(assignmentScores)
-        .set({ status: args.status })
+        .set({ status: status })
         .where(
           and(
-            eq(assignmentScores.assignmentId, args.assignmentId),
-            eq(assignmentScores.identityId, args.identityId)
-          )
+            eq(assignmentScores.assignmentId, assignmentId),
+            eq(assignmentScores.identityId, identityId),
+          ),
         )
         .returning();
     },

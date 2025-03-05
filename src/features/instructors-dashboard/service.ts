@@ -84,12 +84,12 @@ export function createInstructorService(
     async getScoresByAssignmentId(assignmentId: string) {
       return await getScoresByAssignmentId(assignmentId);
     },
-    async updateScoreStatus(args: {
-      assignmentId: string;
-      identityId: string;
-      status: string;
-    }) {
-      await updateScoreStatus(args);
+    async updateScoreStatus(
+      assignmentId: string,
+      identityId: string,
+      status: string,
+    ) {
+      await updateScoreStatus(assignmentId, identityId, status);
     },
 
     async getAssigmentDataBySlug(slug: string) {

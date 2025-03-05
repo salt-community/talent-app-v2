@@ -31,12 +31,12 @@ export function createAssignmentsService(db: Db) {
     async createAssignmentScore(data: AssignmentScoreFormData) {
       return await repo.createAssignmentScore(data);
     },
-    async updateScoreStatus(args: {
-      assignmentId: string;
-      identityId: string;
-      status: string;
-    }) {
-      await repo.updateScoreStatus(args);
+    async updateScoreStatus(
+      assignmentId: string,
+      identityId: string,
+      status: string,
+    ) {
+      await repo.updateScoreStatus(assignmentId, identityId, status);
     },
     async upsertAssignmentScore(score: AssignmentScore) {
       return await repo.upsertAssignmentScore(score);
@@ -57,7 +57,7 @@ export function createAssignmentsService(db: Db) {
     async getAllAverageScoresByIdentityId(identityId: string) {
       const assignmentScores = await repo.getScoresByIdentityId(identityId);
       const validScores = assignmentScores.filter(
-        (assignment) => assignment.score !== null
+        (assignment) => assignment.score !== null,
       );
       return averageScoresByCategory(validScores);
     },
