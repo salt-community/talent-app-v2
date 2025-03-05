@@ -122,12 +122,12 @@ export function createDeveloperProfilesService(
       return user;
     },
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
-      const [background] =
-        await repository.getBackgroundById(developerProfileId);
+      const [developerProfile] =
+        await repository.getDeveloperProfile(developerProfileId);
 
-      type T = typeof background;
+      type T = typeof developerProfile;
 
-      if (!background) {
+      if (!developerProfile) {
         return {
           id: "",
           avatarUrl: "",
@@ -141,7 +141,7 @@ export function createDeveloperProfilesService(
           educations: [],
         } as T;
       }
-      return background;
+      return developerProfile;
     },
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(

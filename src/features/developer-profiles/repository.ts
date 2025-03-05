@@ -158,7 +158,7 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(tempDeveloperProfiles.id, developerProfileId))
         .groupBy(tempDeveloperProfiles.id);
     },
-    async getBackgroundById(developerProfileId: string) {
+    async getDeveloperProfile(developerProfileId: string) {
       return await db
         .select({
           id: tempDeveloperProfiles.id,
