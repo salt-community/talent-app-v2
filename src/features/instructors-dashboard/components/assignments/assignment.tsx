@@ -29,7 +29,10 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
             <span className="text-gray-600">Students</span>
           </div>
           <div>
-            <SubmitScoresButton />
+            <SubmitScoresButton
+              assignmentId={assignments.id}
+              status={"published"}
+            />
           </div>
         </div>
       </div>
@@ -43,24 +46,22 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
               key={developer.id}
               developer={developer}
               scores={
-                assignments.categories?.map((category) => ({
-                  id: `${developer.id}-${category}`,
-                  assignmentId: assignments.id,
-                  identityId: developer.id,
-                  category,
-                  comment:
-                    assignmentScores.find(
-                      (score) =>
-                        score.identityId === developer.id &&
-                        score.category === category
-                    )?.comment || "",
-                  score:
-                    assignmentScores.find(
-                      (score) =>
-                        score.identityId === developer.id &&
-                        score.category === category
-                    )?.score || 0,
-                })) || []
+                assignments.categories?.map((category) => {
+                  const score = assignmentScores.find(
+                    (score) =>
+                      score.identityId === developer.id &&
+                      score.category === category
+                  );
+                  return {
+                    id: score?.id,
+                    assignmentId: assignments.id,
+                    identityId: developer.id,
+                    category,
+                    comment: score?.comment || "",
+                    score: score?.score || 0,
+                    createdAt: score?.createdAt || null,
+                  };
+                }) || []
               }
               scored={assignmentScores.some(
                 (score) => score.identityId === developer.id

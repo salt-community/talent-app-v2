@@ -1,5 +1,5 @@
 import { Db } from "@/db";
-import { eq, ne, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import {
   developerProfileBackgrounds,
   developerProfileEducations,
@@ -23,28 +23,55 @@ import {
 export function createDevelopersRepository(db: Db) {
   return {
     async getAll() {
-      return await db.select().from(developerProfiles);
+      return await db.select().from(tempDeveloperProfiles);
     },
     async getDeveloperById(id: string) {
       const developerId = await db
-        .select()
-        .from(developerProfiles)
-        .where(eq(developerProfiles.id, id));
+        .select({
+          name: tempDeveloperProfiles.name,
+          id: tempDeveloperProfiles.id,
+          identityId: tempDeveloperProfiles.identityId,
+          slug: tempDeveloperProfiles.slug,
+          email: tempDeveloperProfiles.email,
+          status: tempDeveloperProfiles.status,
+        })
+        .from(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.id, id));
       return developerId[0];
     },
     async getAllById(id: string) {
       const developerId = await db
-        .select({ id: developerProfiles.id })
-        .from(developerProfiles)
-        .where(eq(developerProfiles.identityId, id));
+        .select({ id: tempDeveloperProfiles.id })
+        .from(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.identityId, id));
       return developerId;
     },
-    async getByIdentityId(identityId: string) {
-      return await db
-        .select()
-        .from(developerProfiles)
-        .where(eq(developerProfiles.identityId, identityId));
+    async addDeveloperProfileDetails(background: BackgroundInsert) {
+      await db.transaction(async (tx) => {
+        for (const skill of background.skills) {
+          await tx.insert(developerProfileSkills).values({
+            backgroundId: 1,
+            developerProfileId: background.developerProfileId,
+            name: skill,
+          });
+        }
+        for (const language of background.languages) {
+          await tx.insert(developerProfileLanguages).values({
+            backgroundId: 1,
+            developerProfileId: background.developerProfileId,
+            name: language,
+          });
+        }
+        for (const education of background.educations) {
+          await tx.insert(developerProfileEducations).values({
+            backgroundId: 1,
+            developerProfileId: background.developerProfileId,
+            name: education,
+          });
+        }
+      });
     },
+    // can be removed after table merge if completed
     async addDeveloperProfile(developerProfile: DeveloperProfileInsert) {
       const developerProfileId = await db
         .insert(developerProfiles)
@@ -52,22 +79,7 @@ export function createDevelopersRepository(db: Db) {
         .returning({ id: developerProfiles.id });
       return developerProfileId[0];
     },
-    async deleteDeveloperProfile(id: string) {
-      await db.delete(developerProfiles).where(eq(developerProfiles.id, id));
-    },
-    async deleteByIdentityId(identityId: string) {
-      await db
-        .delete(developerProfiles)
-        .where(eq(developerProfiles.identityId, identityId));
-    },
-    async getPublishedOrHighlightedDeveloperProfileIds() {
-      return (
-        await db
-          .select({ devId: developerProfiles.id })
-          .from(developerProfiles)
-          .where(ne(developerProfiles.status, "unpublished"))
-      ).map((row) => row.devId);
-    },
+    //can be removed after merge is completed
     async updateStatus(id: string, status: string) {
       await db
         .update(developerProfiles)
@@ -76,46 +88,39 @@ export function createDevelopersRepository(db: Db) {
         })
         .where(eq(developerProfiles.id, id));
     },
-    async getIdentityIdByDeveloperProfileId(developerProfileId: string) {
-      const [developerProfile] = await db
-        .select()
-        .from(developerProfiles)
-        .where(eq(developerProfiles.id, developerProfileId));
-
-      return developerProfile?.identityId;
-    },
     async getDeveloperProfileByIdentityId(identityId: string) {
       return await db
         .select()
-        .from(developerProfiles)
-        .where(eq(developerProfiles.identityId, identityId));
+        .from(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.identityId, identityId));
     },
     async existsBySlug(slug: string) {
       const [developerProfile] = await db
         .select()
-        .from(developerProfiles)
-        .where(eq(developerProfiles.slug, slug));
+        .from(tempDeveloperProfiles)
+        .where(eq(tempDeveloperProfiles.slug, slug));
 
       return !!developerProfile;
     },
     async insertSlug(id: string, slug: string) {
       await db
-        .update(developerProfiles)
+        .update(tempDeveloperProfiles)
         .set({
           slug,
         })
-        .where(eq(developerProfiles.id, id));
+        .where(eq(tempDeveloperProfiles.id, id));
     },
     async getAllBackgrounds() {
       return await db
         .select({
-          id: developerProfileBackgrounds.id,
-          developerProfileId: developerProfileBackgrounds.developerProfileId,
-          name: developerProfileBackgrounds.name,
-          avatarUrl: developerProfileBackgrounds.avatarUrl,
-          title: developerProfileBackgrounds.title,
-          bio: developerProfileBackgrounds.bio,
-          links: developerProfileBackgrounds.links,
+          id: tempDeveloperProfiles.id,
+          identityId: tempDeveloperProfiles.identityId,
+          name: tempDeveloperProfiles.name,
+          avatarUrl: tempDeveloperProfiles.avatarUrl,
+          title: tempDeveloperProfiles.title,
+          bio: tempDeveloperProfiles.bio,
+          links: tempDeveloperProfiles.links,
+          status: tempDeveloperProfiles.status,
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfileSkills.name})::VARCHAR[]`.as(
@@ -132,96 +137,92 @@ export function createDevelopersRepository(db: Db) {
             "educations"
           ),
         })
-        .from(developerProfileBackgrounds)
+        .from(tempDeveloperProfiles)
         .leftJoin(
           developerProfileSkills,
           eq(
-            developerProfileSkills.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileSkills.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
         .leftJoin(
           developerProfileLanguages,
           eq(
-            developerProfileLanguages.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileLanguages.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
         .leftJoin(
           developerProfileEducations,
           eq(
-            developerProfileEducations.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileEducations.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
-        .groupBy(developerProfileBackgrounds.id);
+        .groupBy(tempDeveloperProfiles.id);
     },
     async getBackgroundByDeveloperProfileId(developerProfileId: string) {
       return await db
         .select({
-          id: developerProfileBackgrounds.id,
-          developerProfileId: developerProfileBackgrounds.developerProfileId,
-          name: developerProfileBackgrounds.name,
-          avatarUrl: developerProfileBackgrounds.avatarUrl,
-          title: developerProfileBackgrounds.title,
-          bio: developerProfileBackgrounds.bio,
-          links: developerProfileBackgrounds.links,
+          id: tempDeveloperProfiles.id,
+          identityId: tempDeveloperProfiles.identityId,
+          name: tempDeveloperProfiles.name,
+          avatarUrl: tempDeveloperProfiles.avatarUrl,
+          title: tempDeveloperProfiles.title,
+          bio: tempDeveloperProfiles.bio,
+          links: tempDeveloperProfiles.links,
+          status: tempDeveloperProfiles.status,
           skills: sql<
             string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfileSkills.name})::VARCHAR[]`.as(
+          >`ARRAY_AGG(DISTINCT ${tempDeveloperProfiles.name})::VARCHAR[]`.as(
             "skills"
           ),
           languages: sql<
             string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfileLanguages.name})::VARCHAR[]`.as(
+          >`ARRAY_AGG(DISTINCT ${tempDeveloperProfiles.name})::VARCHAR[]`.as(
             "languages"
           ),
           educations: sql<
             string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfileEducations.name})::VARCHAR[]`.as(
+          >`ARRAY_AGG(DISTINCT ${tempDeveloperProfiles.name})::VARCHAR[]`.as(
             "educations"
           ),
         })
-        .from(developerProfileBackgrounds)
+        .from(tempDeveloperProfiles)
         .leftJoin(
           developerProfileSkills,
           eq(
-            developerProfileSkills.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileSkills.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
         .leftJoin(
           developerProfileLanguages,
           eq(
-            developerProfileLanguages.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileLanguages.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
         .leftJoin(
           developerProfileEducations,
           eq(
-            developerProfileEducations.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileEducations.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
-        .where(
-          eq(
-            developerProfileBackgrounds.developerProfileId,
-            sql.raw(`'${developerProfileId}'::uuid`)
-          )
-        )
-        .groupBy(developerProfileBackgrounds.id);
+        .where(eq(tempDeveloperProfiles.id, developerProfileId))
+        .groupBy(tempDeveloperProfiles.id);
     },
     async getBackgroundById(developerProfileId: string) {
       return await db
         .select({
-          id: developerProfileBackgrounds.id,
-          developerProfileId: developerProfileBackgrounds.developerProfileId,
-          name: developerProfileBackgrounds.name,
-          avatarUrl: developerProfileBackgrounds.avatarUrl,
-          title: developerProfileBackgrounds.title,
-          bio: developerProfileBackgrounds.bio,
-          links: developerProfileBackgrounds.links,
+          id: tempDeveloperProfiles.id,
+          identityId: tempDeveloperProfiles.identityId,
+          name: tempDeveloperProfiles.name,
+          avatarUrl: tempDeveloperProfiles.avatarUrl,
+          title: tempDeveloperProfiles.title,
+          bio: tempDeveloperProfiles.bio,
+          links: tempDeveloperProfiles.links,
           skills: sql<SkillSelect[]>`jsonb_agg(distinct jsonb_build_object(
                 'id', ${developerProfileSkills.id},
                 'name', ${developerProfileSkills.name},
@@ -244,36 +245,32 @@ export function createDevelopersRepository(db: Db) {
                 'backgroundId', ${developerProfileEducations.backgroundId}
               ))`.as("educations"),
         })
-        .from(developerProfileBackgrounds)
+        .from(tempDeveloperProfiles)
         .leftJoin(
           developerProfileSkills,
           eq(
-            developerProfileSkills.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileSkills.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
         .leftJoin(
           developerProfileLanguages,
           eq(
-            developerProfileLanguages.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileLanguages.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
         .leftJoin(
           developerProfileEducations,
           eq(
-            developerProfileEducations.backgroundId,
-            developerProfileBackgrounds.id
+            developerProfileEducations.developerProfileId,
+            tempDeveloperProfiles.id
           )
         )
-        .where(
-          eq(
-            developerProfileBackgrounds.developerProfileId,
-            sql.raw(`'${developerProfileId}'::uuid`)
-          )
-        )
-        .groupBy(developerProfileBackgrounds.id);
+        .where(eq(tempDeveloperProfiles.id, developerProfileId))
+        .groupBy(tempDeveloperProfiles.id);
     },
+    //can be removed after the merge is completed
     async addBackground(background: BackgroundInsert) {
       const { outboxMessageId, backgroundId } = await db.transaction(
         async (tx) => {
@@ -318,6 +315,7 @@ export function createDevelopersRepository(db: Db) {
       );
       return { outboxMessageId, backgroundId };
     },
+    //can be removed after the merge is completed
     async updateBackground(background: BackgroundUpdate) {
       const outboxMessageId = await db.transaction(async (tx) => {
         // TODO: Don't use the primary key at all in this function.
@@ -390,6 +388,7 @@ export function createDevelopersRepository(db: Db) {
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     },
+    //can be removed after the merge is completed
     async deleteBackgroundById(developerProfileId: string) {
       await db
         .delete(developerProfileBackgrounds)
@@ -401,10 +400,16 @@ export function createDevelopersRepository(db: Db) {
       developerProfile: DeveloperProfileInsert,
       background: BackgroundForDeveloperProfile
     ) {
+      let id: string;
+      if (developerProfile.id) {
+        id = developerProfile.id;
+      } else {
+        id = background.developerProfileId;
+      }
       await db
         .insert(tempDeveloperProfiles)
         .values({
-          id: background.developerProfileId,
+          id: id,
           identityId: developerProfile.identityId,
           name: developerProfile.name,
           slug: developerProfile.slug,
@@ -418,7 +423,7 @@ export function createDevelopersRepository(db: Db) {
         .onConflictDoUpdate({
           target: tempDeveloperProfiles.id,
           set: {
-            id: background.developerProfileId,
+            id: id,
             identityId: developerProfile.identityId,
             name: developerProfile.name,
             slug: developerProfile.slug,
@@ -441,7 +446,7 @@ export function createDevelopersRepository(db: Db) {
       } else {
         id = background.developerProfileId;
       }
-      await db
+      return await db
         .update(tempDeveloperProfiles)
         .set({
           identityId:
@@ -455,7 +460,8 @@ export function createDevelopersRepository(db: Db) {
           bio: background.bio || tempDeveloperProfiles.bio,
           links: background.links || tempDeveloperProfiles.links,
         })
-        .where(eq(tempDeveloperProfiles.id, id));
+        .where(eq(tempDeveloperProfiles.id, id))
+        .returning({ id: tempDeveloperProfiles.id });
     },
     async deleteTempDeveloperProfile(developerProfileId: string) {
       await db
@@ -466,6 +472,39 @@ export function createDevelopersRepository(db: Db) {
       await db
         .delete(tempDeveloperProfiles)
         .where(eq(tempDeveloperProfiles.identityId, identityId));
+    },
+    async updateForeignKey(backgroundId: number, developerProfileId: string) {
+      await db.transaction(async (tx) => {
+        await tx
+          .update(developerProfileSkills)
+          .set({ developerProfileId: developerProfileId })
+          .where(eq(developerProfileSkills.backgroundId, backgroundId));
+        await tx
+          .update(developerProfileLanguages)
+          .set({ developerProfileId: developerProfileId })
+          .where(eq(developerProfileLanguages.backgroundId, backgroundId));
+        await tx
+          .update(developerProfileEducations)
+          .set({ developerProfileId: developerProfileId })
+          .where(eq(developerProfileEducations.backgroundId, backgroundId));
+      });
+    },
+    //can be removed after completed merge
+    async getBackground(id: string) {
+      const background = await db
+        .select()
+        .from(developerProfileBackgrounds)
+        .where(eq(developerProfileBackgrounds.developerProfileId, id));
+      return background[0];
+    },
+    //can be removed after completed merge
+    async getAllBackgroundIds() {
+      return await db
+        .select({
+          id: developerProfileBackgrounds.id,
+          developerProfileId: developerProfileBackgrounds.developerProfileId,
+        })
+        .from(developerProfileBackgrounds);
     },
   };
 }

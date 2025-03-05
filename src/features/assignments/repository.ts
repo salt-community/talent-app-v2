@@ -1,7 +1,11 @@
 import { Db } from "@/db";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { assignments, assignmentScores } from "./schema";
-import { AssignmentScoreFormData, NewAssignment } from "./types";
+import {
+  AssignmentScore,
+  AssignmentScoreFormData,
+  NewAssignment,
+} from "./types";
 
 export function createAssignmentsRepository(db: Db) {
   return {
@@ -37,6 +41,35 @@ export function createAssignmentsRepository(db: Db) {
 
     async createAssignmentScore(data: AssignmentScoreFormData) {
       await db.insert(assignmentScores).values(data);
+    },
+
+    async upsertAssignmentScore(score: AssignmentScore) {
+      await db
+        .insert(assignmentScores)
+        .values(score)
+        .onConflictDoUpdate({
+          target: assignmentScores.id,
+          set: {
+            score: score.score,
+            comment: score.comment,
+          },
+        });
+    },
+    async updateScoreStatus(args: {
+      assignmentId: string;
+      identityId: string;
+      status: string;
+    }) {
+      await db
+        .update(assignmentScores)
+        .set({ status: args.status })
+        .where(
+          and(
+            eq(assignmentScores.assignmentId, args.assignmentId),
+            eq(assignmentScores.identityId, args.identityId)
+          )
+        )
+        .returning();
     },
 
     async getScoresByAssignmentId(assignmentId: string) {

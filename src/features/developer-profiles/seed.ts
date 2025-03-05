@@ -1,52 +1,34 @@
 "use server";
 import { insecureDeveloperProfilesService } from "./instance";
 import { IdentitySelect } from "../iam";
-import { DeveloperProfileInsert } from "./types";
+import { BackgroundInsert, DeveloperProfileInsert } from "./types";
 import { skills } from "./seed-data";
 import { faker } from "@faker-js/faker";
+import { v4 as uuidv4 } from "uuid";
 
-export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
+export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
   console.log("Seeding developer profiles...");
 
   const developers: DeveloperProfileInsert[] = [];
+  const backgrounds: BackgroundInsert[] = [];
   for (const identity of identities) {
+    const randomNumber = Math.random() * 10;
+    const status =
+      randomNumber < 5 ? ("highlighted" as const) : ("published" as const);
+    const id = uuidv4();
     developers.push({
+      id: id,
       identityId: identity.id,
       slug: identity.name.toLowerCase().replace(" ", "-"),
       name: identity.name,
       email: identity.email,
+      status,
     });
-  }
-
-  const developerProfileIds: string[] = [];
-
-  for (const developer of developers) {
-    developerProfileIds.push(
-      (await insecureDeveloperProfilesService.addDeveloperProfile(developer)).id
-    );
-  }
-
-  for (let i = 0; i < developerProfileIds.length; i++) {
-    const id = developerProfileIds[i];
-    const status = i < 5 ? ("highlighted" as const) : ("published" as const);
-
-    await insecureDeveloperProfilesService.updateStatus({ id, status });
-  }
-
-  console.log("Done seeding developer profiles!");
-
-  return developerProfileIds;
-}
-
-export async function backgroundsSeed(developerProfileIds: string[]) {
-  console.log("Seeding Backgrounds...");
-
-  const backgrounds = developerProfileIds.map((developerProfileId) => {
-    return {
-      developerProfileId: developerProfileId,
-      name: faker.person.fullName(),
-      title: faker.person.jobType(),
-      bio: faker.person.bio(),
+    backgrounds.push({
+      name: "",
+      developerProfileId: id,
+      title: "",
+      bio: "",
       avatarUrl: faker.image.avatar(),
       languages: faker.helpers.arrayElements(
         [
@@ -109,12 +91,21 @@ export async function backgroundsSeed(developerProfileIds: string[]) {
           { min: 1, max: 3 }
         )
         .sort((a, b) => a.name.localeCompare(b.name)),
-    };
-  });
-
-  for (const background of backgrounds) {
-    await insecureDeveloperProfilesService.addBackground(background);
+    });
   }
 
-  console.log("Done seeding Backgrounds!");
+  const developerId: string[] = [];
+  for (let i = 0; i < developers.length; i++) {
+    developerId.push(developers[i].id!);
+    await insecureDeveloperProfilesService.addTempDeveloperProfile({
+      developerProfile: developers[i],
+      backgrounds: backgrounds[i],
+    });
+    await insecureDeveloperProfilesService.addDeveloperProfileDetails(
+      backgrounds[i]
+    );
+  }
+
+  console.log("Done seeding developer profiles!");
+  return developerId;
 }

@@ -22,6 +22,15 @@ type Props = {
   onSuccess: () => void;
 };
 
+const categoryOptions = [
+  { key: "frontend", value: "Frontend" },
+  { key: "backend", value: "Backend" },
+  { key: "management", value: "Management" },
+  { key: "conversation", value: "Conversation" },
+  { key: "team collaboration", value: "Team Collaboration" },
+  { key: "design", value: "Design" },
+];
+
 export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
   const [loading, setLoading] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -73,31 +82,26 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Cohorts</SelectLabel>
-                <SelectItem value="frontend" className="cursor-pointer">
-                  Frontend
-                </SelectItem>
-                <SelectItem value="backend" className="cursor-pointer">
-                  Backend
-                </SelectItem>
-                <SelectItem value="management" className="cursor-pointer">
-                  Management
-                </SelectItem>
-                <SelectItem value="conversation" className="cursor-pointer">
-                  Conversation
-                </SelectItem>
-                <SelectItem
-                  value="team collaboration"
-                  className="cursor-pointer"
-                >
-                  Team collaboration
-                </SelectItem>
-                <SelectItem value="design" className="cursor-pointer">
-                  Design
-                </SelectItem>
+                {categoryOptions
+                  .filter((category) => !selectedItems.includes(category.key))
+                  .map((category) => (
+                    <SelectItem
+                      key={category.key}
+                      value={category.key}
+                      className="cursor-pointer"
+                    >
+                      {category.value}
+                    </SelectItem>
+                  ))}
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Button variant="outline" onClick={handleAdd} className="ml-2">
+          <Button
+            variant="outline"
+            onClick={handleAdd}
+            className="ml-2"
+            type="button"
+          >
             <Plus />
           </Button>
         </div>

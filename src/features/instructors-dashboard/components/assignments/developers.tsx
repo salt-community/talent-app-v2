@@ -1,12 +1,21 @@
 "use client";
-import React from "react";
-import { Developer, ScoreAssignment } from "../../types";
+import React, { useState } from "react";
+import { Developer } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
 import { AlertCircle, Check, CheckCheck } from "lucide-react";
+import { AssignmentScore } from "@/features/assignments";
+import { Switch } from "@/components/ui/switch";
+import { updateScoreStatusAction } from "../../action";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type Props = {
   developer: Developer;
-  scores: ScoreAssignment[];
+  scores: AssignmentScore[];
   scored?: boolean;
   published?: boolean;
 };
@@ -17,6 +26,25 @@ export default function Developers({
   scored = false,
   published = false,
 }: Props) {
+  const [isPublished, setIsPublished] = useState(published);
+
+  const togglePublishStatus = async () => {
+    if (!scored) return;
+
+    const newStatus = isPublished ? "unpublished" : "published";
+    setIsPublished(!isPublished);
+
+    await Promise.all(
+      scores.map((score) => {
+        return updateScoreStatusAction(
+          score.assignmentId,
+          score.identityId,
+          newStatus
+        );
+      })
+    );
+  };
+
   return (
     <div className="border-b border-gray-200 last:border-0">
       <div className="py-3 px-4 flex items-center justify-between">
@@ -27,8 +55,7 @@ export default function Developers({
           <div>
             <div className="flex flex-row gap-2 font-medium">
               {developer.name}
-
-              {published ? (
+              {isPublished ? (
                 <div title="Score published">
                   <CheckCheck size={20} color="green" />
                 </div>
@@ -45,6 +72,27 @@ export default function Developers({
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <div className="flex items-center space-x-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div>
+                    <Switch
+                      id={`publish-mode-${developer.id}`}
+                      onCheckedChange={togglePublishStatus}
+                      checked={isPublished}
+                      disabled={!scored}
+                    />
+                  </div>
+                </TooltipTrigger>
+                {!scored && (
+                  <TooltipContent>
+                    <p>Cannot publish until assignment is scored</p>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            </TooltipProvider>
+          </div>
           <OpenScoreFormButton scores={scores} />
         </div>
       </div>

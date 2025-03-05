@@ -11,13 +11,7 @@ export const developerProfiles: PermissionsSchema<
   getAll: "developerProfiles.getAll",
   getAllById: "developerProfiles.getAllById",
   getDeveloperById: "developerProfiles.getDeveloperById",
-  getHighlightedDeveloperProfileIds:
-    "developerProfiles.getHighlightedDeveloperProfileIds",
-  getPublishedOrHighlightedDeveloperProfileIds:
-    "developerProfiles.getPublishedOrHighlightedDeveloperProfileIds",
   updateStatus: "developerProfiles.updateStatus",
-  getIdentityIdByDeveloperProfileId:
-    "developerProfiles.getIdentityIdByDeveloperProfileId",
   generateUniqueSlug: "developerProfiles.generateUniqueSlug",
   deleteByIdentityId: "developerProfiles.deleteByIdentityId",
   updateMissingSlugs: "developerProfiles.updateMissingSlugs",
@@ -45,4 +39,9 @@ export const developerProfiles: PermissionsSchema<
   updateMeilisearchSettings: "developerProfiles.updateMeilisearchSettings",
   deleteMeiliSearchDocument: "developerProfiles.deleteMeiliSearchDocument",
   addTempDeveloperProfile: "developerProfiles.addTempDeveloperProfile",
+  updateForeignKey: "developerProfiles.updateForeignKey",
+  getHighlightedDeveloperProfileIds:
+    "developerProfiles.getHighlightedDeveloperProfileIds",
+  getBackgroundById: "developerProfiles.getBackgroundById",
+  addDeveloperProfileDetails: "developerProfiles.addDeveloperProfileDetails",
 };

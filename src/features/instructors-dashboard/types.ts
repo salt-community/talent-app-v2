@@ -34,11 +34,3 @@ export type AssignmentInsert = {
   };
 };
 
-export type ScoreAssignment = {
-  id: string;
-  assignmentId: string | null;
-  identityId: string | null;
-  category: string | null;
-  comment: string | null;
-  score: number | null;
-};
