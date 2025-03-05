@@ -9,10 +9,10 @@ type Props = {
 export function CvHeader({ name, introduction, avatarUrl } : Props) {
   return (
     <article className="flex flex-col items-center md:items-start justify-center gap-4 md:gap-0 md:grid md:grid-cols-[1fr 2fr]">
-      <div className="md:col-start-1 md:col-end-2 px-4 h-full">
+      <div className="md:col-start-1 md:col-end-2 px-4 h-full md:bg-zinc-100">
         <BackgroundAvatar url={avatarUrl} size="lg" />
       </div>
-      <div className="flex flex-col items-center gap-4 px-3 md:items-start md:col-start-2 md:col-end-3">
+      <div className="flex flex-col items-center gap-4 px-3 md:items-start md:col-start-2 md:col-end-3 md:pt-4">
         <h1 className="text-3xl font-bold capitalize">{name}</h1>
         <p className="font-light text-paragraph text-center md:text-left">
           {introduction +
