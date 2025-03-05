@@ -34,7 +34,7 @@ export function createBackgroundsSearchService(
               ? Math.round((rawRankingScore as number) * 100)
               : undefined;
           return {
-            id: doc.developerProfileId as string,
+            id: doc.id as string,
             ranking: rankingScore,
           };
         },
