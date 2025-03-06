@@ -16,6 +16,16 @@ export function createAssignmentsService(db: Db) {
       return await repo.getAllAssignments();
     },
 
+    async getScoredAssignmentsByCohortIdAndIdentityId(args: {
+      cohortId: string;
+      identityId: string;
+    }) {
+      return await repo.getAssignmentsByCohortIdAndIdentityId(
+        args.cohortId,
+        args.identityId,
+      );
+    },
+
     async createAssignment(data: NewAssignment) {
       const slug = generateSlug(data.title);
       return await repo.createAssignment({ ...data, slug });

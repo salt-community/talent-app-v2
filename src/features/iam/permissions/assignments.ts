@@ -21,6 +21,8 @@ export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
     getAssignmentBySlug: "assignments.getAssignmentBySlug",
     upsertAssignmentScore: "assignments.upsertAssignmentScore",
     updateScoreStatuses: "assignments.updateScoreStatuses",
+    getScoredAssignmentsByCohortIdAndIdentityId:
+      "assignments.getScoredAssignmentsByCohortIdAndIdentityId",
   };
 
 type AssignmentViewPermission = "score";

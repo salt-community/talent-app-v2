@@ -24,10 +24,10 @@ export function createCohortsRepository(db: Db) {
     },
     async getCohortIdByIdentityId(identityId: string) {
       const [cohort] = await db
-        .select()
+        .select({ cohortId: cohortIdentities.cohortId })
         .from(cohortIdentities)
         .where(eq(cohortIdentities.identityId, identityId));
-      return cohort;
+      return cohort?.cohortId;
     },
 
     async getAllCohorts() {
@@ -83,7 +83,7 @@ export function createCohortsRepository(db: Db) {
         args.identityIds.map((identityId) => ({
           cohortId: args.cohortId,
           identityId,
-        }))
+        })),
       );
     },
   };

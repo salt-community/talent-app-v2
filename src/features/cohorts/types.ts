@@ -4,7 +4,8 @@ export type CohortsService = ReturnType<typeof createCohortsService>;
 
 export type GetAllCohorts = CohortsService["getAll"];
 export type GetCohortById = CohortsService["getCohortById"];
-export type deleteCohortIdentity = CohortsService["deleteCohortIdentity"];
+export type GetCohortIdByIdentityId = CohortsService["getCohortIdByIdentityId"];
+export type DeleteCohortIdentity = CohortsService["deleteCohortIdentity"];
 export type UpdateCohortStatus = CohortsService["updateCohortStatus"];
 export type AddCohort = CohortsService["addCohort"];
 export type GetCohortStudents = CohortsService["getCohortStudents"];

@@ -25,6 +25,24 @@ export function createAssignmentsRepository(db: Db) {
       return await db.select().from(assignments);
     },
 
+    async getAssignmentsByCohortIdAndIdentityId(
+      cohortId: string,
+      identityId: string,
+    ) {
+      return await db
+        .select()
+        .from(assignments)
+        .leftJoin(
+          assignmentScores,
+          and(
+            eq(assignments.id, assignmentScores.assignmentId),
+            eq(assignmentScores.identityId, identityId),
+            eq(assignmentScores.status, "published"),
+          ),
+        )
+        .where(and(eq(assignments.cohortId, cohortId)));
+    },
+
     async getAssignmentById(id: string) {
       const [assignment] = await db
         .select()

@@ -4,7 +4,7 @@ export type CreateAssignment = AssignmentsService["createAssignment"];
 export type GetAllAssignments = AssignmentsService["getAllAssignments"];
 export type GetAssignmentsByCohortId =
   AssignmentsService["getAssignmentsByCohortId"];
-export type deleteAssignmentScoreById =
+export type DeleteAssignmentScoreById =
   AssignmentsService["deleteAssignmentScoreById"];
 export type DeleteAssignmentById = AssignmentsService["deleteAssignment"];
 export type GetAssignmentBySlug = AssignmentsService["getAssignmentBySlug"];
@@ -13,6 +13,8 @@ export type UpsertAssignmentScore = AssignmentsService["upsertAssignmentScore"];
 export type GetScoresByAssignmentId =
   AssignmentsService["getScoresByAssignmentId"];
 export type UpdateScoreStatuses = AssignmentsService["updateScoreStatuses"];
+export type GetScoredAssignmentsByCohortIdAndIdentityId =
+  AssignmentsService["getScoredAssignmentsByCohortIdAndIdentityId"];
 
 export type Assignment = {
   id: string;
