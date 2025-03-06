@@ -85,6 +85,13 @@
       "when": 1741256909040,
       "tag": "0011_unique_screwball",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1741263523785,
+      "tag": "0012_unknown_radioactive_man",
+      "breakpoints": true
     }
   ]
 }
