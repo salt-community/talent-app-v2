@@ -12,7 +12,7 @@ type Props = {
 export function CvHeader({ name, bio, avatarUrl, id, identityId }: Props) {
   return (
     <>
-      <article className="flex flex-col items-center md:items-start justify-center gap-4 md:gap-0 md:grid md:grid-cols-[1fr 2fr]">
+      <article className="flex flex-col items-center md:items-start justify-center gap-4 md:gap-0 md:grid md:grid-cols-[15rem_2fr] pb-8 md:pb-0">
         <div className="md:col-start-1 md:col-end-2 px-4 h-full md:bg-zinc-100">
           <BackgroundAvatar url={avatarUrl} size="lg" />
         </div>
