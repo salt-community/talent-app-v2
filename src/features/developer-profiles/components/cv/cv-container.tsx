@@ -20,9 +20,11 @@ export async function CvContainer({
       </div>
       <CvHeader
         name={background.name}
-        introduction={background.bio}
+        bio={background.bio}
         avatarUrl={background.avatarUrl}
         hasProfileAccess={hasProfileAccess}
+        id={background.id}
+        identityId={background.identityId}
       />
     </section>
   );
