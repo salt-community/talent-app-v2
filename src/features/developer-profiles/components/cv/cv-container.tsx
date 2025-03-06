@@ -1,4 +1,5 @@
 import { developerProfilesService } from "../../instance";
+import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
 
 type Props = {
@@ -26,6 +27,17 @@ export async function CvContainer({
         id={background.id}
         identityId={background.identityId}
       />
+      <div className="md:grid md:grid-cols-[15rem_2fr]">
+        <CvAside
+          skills={background.skills}
+          languages={background.languages}
+          links={background.links}
+        />
+      <div className="md:col-start-2 md:col-end-3 px-3 py-6">
+        <h2 className="text-xl font-bold">Education</h2>
+        <h2 className="text-xl font-bold">Work Experience</h2>
+      </div>
+      </div>
     </section>
   );
 }
