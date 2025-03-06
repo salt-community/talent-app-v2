@@ -10,7 +10,7 @@ import { ScoreStatus } from "./types";
 export async function addCohortAction(cohort: CohortFormData) {
   try {
     await instructorService.createCohort(cohort);
-    revalidatePath("/instructors-dashboard");
+    revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     console.error(error);
   }
@@ -19,7 +19,7 @@ export async function addCohortAction(cohort: CohortFormData) {
 export async function addAssignmentAction(
   formData: FormData,
   cohortId: string,
-  categories: string[],
+  categories: string[]
 ) {
   const title = formData.get("title") as string;
   const comment = formData.get("comment") as string;
@@ -42,12 +42,12 @@ export async function addAssignmentAction(
     };
 
     await instructorService.addAssignment(newAssignment);
-    revalidatePath("/instructors-dashboard");
+    revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Validation failed:", error.errors);
       throw new Error(
-        "Validation failed: " + error.errors.map((e) => e.message).join(", "),
+        "Validation failed: " + error.errors.map((e) => e.message).join(", ")
       );
     } else {
       console.error("Unexpected error:", error);
@@ -58,11 +58,11 @@ export async function addAssignmentAction(
 
 export async function addIdentitiesToCohortAction(
   cohortId: string,
-  identityIds: string[],
+  identityIds: string[]
 ) {
   try {
     await instructorService.addIdentitiesToCohort({ cohortId, identityIds });
-    revalidatePath("/instructors-dashboard");
+    revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     console.error(error);
   }
@@ -70,7 +70,7 @@ export async function addIdentitiesToCohortAction(
 export async function deleteIdentityFromCohortAction(identityId: string) {
   try {
     await instructorService.deleteIdentityFromCohort(identityId);
-    revalidatePath("/instructors-dashboard");
+    revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     console.error(error);
   }
@@ -78,7 +78,7 @@ export async function deleteIdentityFromCohortAction(identityId: string) {
 export async function deleteCohortAndCohortIdentityAction(cohortId: string) {
   try {
     await instructorService.deleteCohortAndCohortIdentity(cohortId);
-    revalidatePath("/instructors-dashboard");
+    revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     console.error(error);
   }
@@ -86,7 +86,7 @@ export async function deleteCohortAndCohortIdentityAction(cohortId: string) {
 export async function deleteAssignmentByIdAction(assignmentId: string) {
   try {
     await instructorService.deleteAssignmentById(assignmentId);
-    revalidatePath("/instructors-dashboard");
+    revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     console.error(error);
   }
@@ -94,7 +94,7 @@ export async function deleteAssignmentByIdAction(assignmentId: string) {
 export async function addScoreToAssignment(score: AssignmentScore) {
   try {
     await instructorService.addScoreToAssignment(score);
-    revalidatePath("/instructors-dashboard");
+    revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     console.error(error);
   }
@@ -103,7 +103,7 @@ export async function addScoreToAssignment(score: AssignmentScore) {
 export async function updateScoreStatusesAction(scoreStatuses: ScoreStatus[]) {
   try {
     await instructorService.updateScoreStatuses(scoreStatuses);
-    revalidatePath("/instructors-dashboard");
+    revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     console.error(error);
   }
