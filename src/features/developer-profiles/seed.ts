@@ -1,10 +1,7 @@
 "use server";
 import { insecureDeveloperProfilesService } from "./instance";
 import { IdentitySelect } from "../iam";
-import {
-  AddDeveloperProfile,
-  BackgroundInsert,
-} from "./types";
+import { AddDeveloperProfile, developerProfileDetails } from "./types";
 import { skills } from "./seed-data";
 import { faker } from "@faker-js/faker";
 import { v4 as uuidv4 } from "uuid";
@@ -13,7 +10,7 @@ export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
   console.log("Seeding developer profiles...");
 
   const developers: AddDeveloperProfile[] = [];
-  const backgrounds: BackgroundInsert[] = [];
+  const backgrounds: developerProfileDetails[] = [];
   for (const identity of identities) {
     const randomNumber = Math.random() * 10;
     const status =
@@ -29,10 +26,7 @@ export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
       status,
     });
     backgrounds.push({
-      name: "",
       developerProfileId: id,
-      title: "",
-      bio: "",
 
       languages: faker.helpers.arrayElements(
         [
