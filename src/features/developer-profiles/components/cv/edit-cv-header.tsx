@@ -13,6 +13,7 @@ import {
   Input,
   Label,
   ScrollArea,
+  Textarea,
 } from "@/components";
 import { Loader2, Pencil } from "lucide-react";
 import { BackgroundAvatar } from "../backgrounds/avatar";
@@ -55,14 +56,14 @@ export function EditCvHeader({ name, bio, avatarUrl, id, identityId}: Props) {
         />
       </DialogTrigger>
       <DialogContent className="w-screen pt-9">
-        <ScrollArea className="h-[600px]">
-          <DialogHeader className="px-4">
+        <ScrollArea>
+          <DialogHeader className="md:px-4">
             <DialogTitle>Edit CV header</DialogTitle>
             <DialogDescription>
               Make changes to your CV header here. Click save when you´re done.
             </DialogDescription>
           </DialogHeader>
-          <form action={formAction} className="px-4">
+          <form action={formAction} className="md:px-4 pt-4">
             <div className="space-y-2">
               <input
                 type="text"
@@ -114,7 +115,7 @@ export function EditCvHeader({ name, bio, avatarUrl, id, identityId}: Props) {
                 <Label htmlFor="bio" className="text-right">
                   Introduction
                 </Label>
-                <Input
+                <Textarea
                   defaultValue={bio}
                   placeholder="Introduction..."
                   name="bio"
@@ -125,7 +126,7 @@ export function EditCvHeader({ name, bio, avatarUrl, id, identityId}: Props) {
             </div>
 
             <DialogFooter className="w-full flex items-start border-gray-800">
-              <Button className="w-full" type="submit" disabled={isPending}>
+              <Button className="w-full mt-6" type="submit" disabled={isPending}>
                 {isPending ? (
                   <>
                     <Loader2 className="animate-spin" />
