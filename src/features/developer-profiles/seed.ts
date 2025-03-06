@@ -1,7 +1,11 @@
 "use server";
 import { insecureDeveloperProfilesService } from "./instance";
 import { IdentitySelect } from "../iam";
-import { BackgroundInsert, DeveloperProfileInsert } from "./types";
+import {
+  AddDeveloperProfile,
+  BackgroundInsert,
+  DeveloperProfileInsert,
+} from "./types";
 import { skills } from "./seed-data";
 import { faker } from "@faker-js/faker";
 import { v4 as uuidv4 } from "uuid";
@@ -9,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
   console.log("Seeding developer profiles...");
 
-  const developers: DeveloperProfileInsert[] = [];
+  const developers: AddDeveloperProfile[] = [];
   const backgrounds: BackgroundInsert[] = [];
   for (const identity of identities) {
     const randomNumber = Math.random() * 10;
@@ -22,6 +26,7 @@ export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
       slug: identity.name.toLowerCase().replace(" ", "-"),
       name: identity.name,
       email: identity.email,
+      avatarUrl: faker.image.avatar(),
       status,
     });
     backgrounds.push({
@@ -29,7 +34,7 @@ export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
       developerProfileId: id,
       title: "",
       bio: "",
-      avatarUrl: faker.image.avatar(),
+
       languages: faker.helpers.arrayElements(
         [
           "English",
