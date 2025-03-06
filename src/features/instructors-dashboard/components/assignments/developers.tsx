@@ -1,5 +1,4 @@
 "use client";
-import React, { useState } from "react";
 import { Developer, ScoreStatus } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
 import { AlertCircle, Check, CheckCheck } from "lucide-react";
@@ -26,13 +25,10 @@ export default function Developers({
   scored = false,
   published = false,
 }: Props) {
-  const [isPublished, setIsPublished] = useState(published);
-
   const togglePublishStatus = async () => {
     if (!scored) return;
 
-    const newStatus = isPublished ? "unpublished" : "published";
-    setIsPublished(!isPublished);
+    const newStatus = published ? "unpublished" : "published";
 
     const scoreStatuses: ScoreStatus[] = scores.map((score) => ({
       assignmentId: score.assignmentId,
@@ -53,7 +49,7 @@ export default function Developers({
           <div>
             <div className="flex flex-row gap-2 font-medium">
               {developer.name}
-              {isPublished ? (
+              {published ? (
                 <div title="Score published">
                   <CheckCheck size={20} color="green" />
                 </div>
@@ -78,7 +74,7 @@ export default function Developers({
                     <Switch
                       id={`publish-mode-${developer.id}`}
                       onCheckedChange={togglePublishStatus}
-                      checked={isPublished}
+                      checked={published}
                       disabled={!scored}
                     />
                   </div>

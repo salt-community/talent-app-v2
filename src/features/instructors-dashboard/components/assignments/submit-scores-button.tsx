@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import {
   Dialog,
@@ -20,9 +21,10 @@ export function SubmitScoresButton({ scoreStatuses }: Props) {
 
   const publishScores = async () => {
     await updateScoreStatusesAction(scoreStatuses);
+
     setOpen(false);
-    window.location.reload();
   };
+
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>

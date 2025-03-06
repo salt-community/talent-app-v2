@@ -1,8 +1,6 @@
 import {
-  developerProfileBackgrounds,
   developerProfileEducations,
   developerProfileLanguages,
-  developerProfiles,
   developerProfileSkills,
   meiliSearchOutbox,
   tempDeveloperProfiles,
@@ -30,18 +28,14 @@ export type Developer = {
   email: string;
   status: string;
 };
-
 export interface SessionClaims extends JwtPayload {
   first_name?: string;
   last_name?: string;
   email?: string | undefined;
 }
-export type DeveloperProfileSelect = typeof developerProfiles.$inferSelect;
-export type DeveloperProfileInsert = typeof developerProfiles.$inferInsert;
-export type TempDeveloperProfileInsert =
-  typeof tempDeveloperProfiles.$inferInsert;
-// double write type
-export type updateTempDeveloperProfile = {
+export type DeveloperProfileInsert = typeof tempDeveloperProfiles.$inferInsert;
+
+export type updateDeveloperProfile = {
   id: string;
   name?: string;
   email?: string;
@@ -56,6 +50,7 @@ export type updateTempDeveloperProfile = {
   educations?: string[];
   languages?: string[];
 };
+
 export type AddDeveloperProfile = {
   id?: string;
   name: string;
@@ -72,12 +67,6 @@ export type AddDeveloperProfile = {
   languages?: string[];
 };
 
-export type Backgrounds = BackgroundSelect & {
-  background_skills: SkillSelect[];
-  background_languages: LanguageSelect[];
-  background_educations: EducationSelect[];
-};
-
 export type BackgroundInfo = {
   id: string;
   identityId: string;
@@ -91,15 +80,8 @@ export type BackgroundInfo = {
   educations: EducationSelect[];
 };
 
-export type BackgroundUpdate = Partial<BackgroundSelect> &
-  Required<Pick<BackgroundSelect, "id" | "developerProfileId">> & {
-    name: string;
-    skills: string[];
-    languages: string[];
-    educations: string[];
-  };
-export type developerProfileUpdate = Partial<TempDeveloperProfileInsert> &
-  Required<Pick<TempDeveloperProfileInsert, "id" | "identityId">> & {
+export type developerProfileUpdate = Partial<DeveloperProfileInsert> &
+  Required<Pick<DeveloperProfileInsert, "id" | "identityId">> & {
     name: string;
     skills: string[];
     languages: string[];
@@ -129,6 +111,7 @@ export type typeBackground = {
   bio: string;
   links: SocialLink[];
 };
+
 export type typeDeveloperProfile = {
   id: string;
   identityId: string;
@@ -150,21 +133,13 @@ export type BackgroundForDeveloperProfile = {
 export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;
 export type OutboxMessageSelect = typeof meiliSearchOutbox.$inferSelect;
 
-export type BackgroundInsert =
-  typeof developerProfileBackgrounds.$inferInsert & {
-    skills: string[];
-    languages: string[];
-    educations: string[];
-  };
-
 export type developerProfileDetails = {
   developerProfileId: string;
   skills: string[];
   languages: string[];
   educations: string[];
+  links?: SocialLink[];
 };
-
-export type BackgroundSelect = typeof developerProfileBackgrounds.$inferSelect;
 
 export type SkillInsert = typeof developerProfileSkills.$inferInsert;
 export type SkillSelect = typeof developerProfileSkills.$inferSelect;

@@ -37,7 +37,7 @@ export function createInstructorService(
   upsertAssignmentScore: UpsertAssignmentScore,
   getScoresByAssignmentId: GetScoresByAssignmentId,
   updateScoreStatuses: UpdateScoreStatuses,
-  getAllIdentities: GetAllIdentities,
+  getAllIdentities: GetAllIdentities
 ) {
   return {
     async getAllCohorts() {
@@ -89,7 +89,7 @@ export function createInstructorService(
       await updateScoreStatuses(scoreStatuses);
     },
 
-    async getAssigmentDataBySlug(slug: string) {
+    async getAssignmentDataBySlug(slug: string) {
       const assignment = await getAssignmentBySlug(slug);
       if (!assignment) return null;
 
@@ -103,8 +103,7 @@ export function createInstructorService(
           assignment.categories?.map((category) => {
             const score = assignmentScores.find(
               (score) =>
-                score.identityId === developer.id &&
-                score.category === category,
+                score.identityId === developer.id && score.category === category
             );
             return {
               id: score?.id,
@@ -118,10 +117,10 @@ export function createInstructorService(
           }) || [];
 
         const scored = assignmentScores.some(
-          (s) => s.identityId === developer.id,
+          (s) => s.identityId === developer.id
         );
         const published = assignmentScores.some(
-          (s) => s.identityId === developer.id && s.status === "published",
+          (s) => s.identityId === developer.id && s.status === "published"
         );
 
         return {

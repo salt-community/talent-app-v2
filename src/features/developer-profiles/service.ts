@@ -7,12 +7,13 @@ import {
   developerProfileDetails,
   OutboxMessageSelect,
   SessionClaims,
-  updateTempDeveloperProfile,
+  updateDeveloperProfile,
 } from "./types";
 import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./backgrounds-search";
 import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
+import { generateSlug } from "./logic";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
@@ -186,7 +187,7 @@ export function createDeveloperProfilesService(
       }
     },
     async updateDeveloperProfile(
-      developerProfileUpdates: updateTempDeveloperProfile
+      developerProfileUpdates: updateDeveloperProfile
     ) {
       const { outboxMessageId } = await repository.updateDeveloperProfile(
         developerProfileUpdates
@@ -260,18 +261,6 @@ export function createDeveloperProfilesService(
   };
 }
 
-function generateSlug(title: string) {
-  return title
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[åä]/g, "a")
-    .replace(/ö/g, "o")
-    .replace(/\s+/g, "-")
-    .replace(/[^\w-]+/g, "")
-    .replace(/-+/g, "-")
-    .trim();
-}
 export type DeveloperProfilesService = ReturnType<
   typeof createDeveloperProfilesService
 >;
