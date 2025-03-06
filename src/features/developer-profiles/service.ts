@@ -15,7 +15,10 @@ import { TaskStatus } from "meilisearch";
 import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
 import { generateSlug } from "./logic";
 import { GetCohortIdByIdentityId } from "../cohorts";
-import { GetScoredAssignmentsByCohortIdAndIdentityId } from "../assignments";
+import {
+  GetAssignmentBySlug,
+  GetScoredAssignmentsByCohortIdAndIdentityId,
+} from "../assignments";
 
 const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 
@@ -23,7 +26,8 @@ export function createDeveloperProfilesService(
   db: Db,
   getCurrentUser: GetCurrentUser,
   getCohortIdByIdentityId: GetCohortIdByIdentityId,
-  getScoredAssignmentsByCohortIdAndIdentityId: GetScoredAssignmentsByCohortIdAndIdentityId
+  getScoredAssignmentsByCohortIdAndIdentityId: GetScoredAssignmentsByCohortIdAndIdentityId,
+  getAssignmentBySlug: GetAssignmentBySlug
 ) {
   const repository = createDevelopersRepository(db);
   const backgroundsSearchApi = createSearchApi({
@@ -287,6 +291,9 @@ export function createDeveloperProfilesService(
       const result = Array.from(assignmentMap.values());
 
       return result;
+    },
+    async getAssignmentBySlug(slug: string) {
+      return await getAssignmentBySlug(slug);
     },
   };
 }

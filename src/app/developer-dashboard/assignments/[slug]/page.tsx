@@ -1,9 +1,14 @@
+import { DeveloperAssignment } from "@/features/developer-profiles";
 import React from "react";
+type Params = {
+  params: Promise<{ slug: string }>;
+};
 
-export default function Page() {
+export default async function Page({ params }: Params) {
+  const { slug } = await params;
   return (
     <div>
-      <h1>Welcome</h1>
+      <DeveloperAssignment slug={slug} />
     </div>
   );
 }

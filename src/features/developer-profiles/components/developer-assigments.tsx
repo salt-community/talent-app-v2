@@ -25,7 +25,7 @@ export async function DeveloperAssignments({ identityId }: Props) {
             >
               <div className="flex items-center gap-4">
                 <Link
-                  href={`/}`}
+                  href={`/developer-dashboard/assignments/${assignment.slug}`}
                   className="text-header font-medium hover:underline hover:underline-offset-4"
                 >
                   {assignment.title}

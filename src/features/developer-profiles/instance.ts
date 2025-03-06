@@ -10,11 +10,12 @@ export const insecureDeveloperProfilesService = createDeveloperProfilesService(
   iamService.getCurrentUser,
   cohortsService.getCohortIdByIdentityId,
   assignmentsService.getScoredAssignmentsByCohortIdAndIdentityId,
+  assignmentsService.getAssignmentBySlug
 );
 
 export const developerProfilesService = secureService(
   "developerProfiles",
-  insecureDeveloperProfilesService,
+  insecureDeveloperProfilesService
 );
 
 export function getDeveloperProfilesService() {
