@@ -58,7 +58,7 @@ export const tempDeveloperProfiles = pgTable("temp_developer_profiles", {
   bio: varchar().notNull(),
   links: jsonb().$type<SocialLink[]>().notNull(),
 });
-export const DeveloperProfiles = pgTable("developer_profiles", {
+export const developerProfiles = pgTable("developer_profiles", {
   id: uuid()
     .primaryKey()
     .default(sql`gen_random_uuid()`),
