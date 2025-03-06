@@ -63,7 +63,7 @@ export function HamburgerMenu({ user, permissions }: Props) {
                   : "border-white"
               } hover:border-primary`}
             >
-              <Link href={`/profile/my-profiles`}>My profiles</Link>
+              <Link href={`/developer-dashboard`}>Dashboard</Link>
             </li>
           )}
           {permissions.hasInstructorsDashboardAccess && (
