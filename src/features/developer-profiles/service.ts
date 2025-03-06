@@ -121,7 +121,6 @@ export function createDeveloperProfilesService(
     async getDeveloperProfileById(developerProfileId: string) {
       const [developerProfile] =
         await repository.getDeveloperProfile(developerProfileId);
-
       type T = typeof developerProfile;
 
       if (!developerProfile) {
@@ -192,7 +191,6 @@ export function createDeveloperProfilesService(
       const { outboxMessageId } = await repository.updateDeveloperProfile(
         developerProfileUpdates
       );
-      console.log("updates:", developerProfileUpdates);
       const developerProfile = await repository.getDeveloperProfileById(
         developerProfileUpdates.id
       );

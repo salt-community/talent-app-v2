@@ -161,27 +161,32 @@ export function createDevelopersRepository(db: Db) {
           title: tempDeveloperProfiles.title,
           bio: tempDeveloperProfiles.bio,
           links: tempDeveloperProfiles.links,
-          skills: sql<SkillSelect[]>`jsonb_agg(distinct jsonb_build_object(
+          skills: sql<
+            SkillSelect[]
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
                 'id', ${developerProfileSkills.id},
                 'name', ${developerProfileSkills.name},
-                'backgroundId', null,
                 'level', ${developerProfileSkills.level}
-              ))`.as("skills"),
+              )) FILTER (WHERE ${developerProfileSkills.id} IS NOT NULL), '[]'::jsonb)`.as(
+            "skills"
+          ),
           languages: sql<
             LanguageSelect[]
-          >`jsonb_agg(distinct jsonb_build_object(
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
                 'id', ${developerProfileLanguages.id},
-                'name', ${developerProfileLanguages.name},
-                'backgroundId', null,
+                'name', ${developerProfileLanguages.name}, 
                 'level', ${developerProfileLanguages.level}
-              ))`.as("languages"),
+              )) FILTER (WHERE ${developerProfileLanguages.id} IS NOT NULL), '[]'::jsonb)`.as(
+            "languages"
+          ),
           educations: sql<
             EducationSelect[]
-          >`jsonb_agg(distinct jsonb_build_object(
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
                 'id', ${developerProfileEducations.id},
-                'name', ${developerProfileEducations.name},
-                'backgroundId',null
-              ))`.as("educations"),
+                'name', ${developerProfileEducations.name}
+              )) FILTER (WHERE ${developerProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
+            "educations"
+          ),
         })
         .from(tempDeveloperProfiles)
         .leftJoin(
@@ -245,21 +250,18 @@ export function createDevelopersRepository(db: Db) {
       await db.transaction(async (tx) => {
         for (const skill of developerProfileDetails.skills) {
           await tx.insert(developerProfileSkills).values({
-            backgroundId: 1,
             developerProfileId: developerProfileDetails.developerProfileId,
             name: skill,
           });
         }
         for (const language of developerProfileDetails.languages) {
           await tx.insert(developerProfileLanguages).values({
-            backgroundId: 1,
             developerProfileId: developerProfileDetails.developerProfileId,
             name: language,
           });
         }
         for (const education of developerProfileDetails.educations) {
           await tx.insert(developerProfileEducations).values({
-            backgroundId: 1,
             developerProfileId: developerProfileDetails.developerProfileId,
             name: education,
           });
@@ -322,7 +324,6 @@ export function createDevelopersRepository(db: Db) {
             );
           for (const skill of developerProfile.skills) {
             await tx.insert(developerProfileSkills).values({
-              backgroundId: 1,
               developerProfileId: developerProfile.id,
               name: skill,
             });
@@ -339,7 +340,6 @@ export function createDevelopersRepository(db: Db) {
             );
           for (const language of developerProfile.languages) {
             await tx.insert(developerProfileLanguages).values({
-              backgroundId: 1,
               developerProfileId: developerProfile.id,
               name: language,
             });
@@ -356,7 +356,6 @@ export function createDevelopersRepository(db: Db) {
             );
           for (const education of developerProfile.educations) {
             await tx.insert(developerProfileEducations).values({
-              backgroundId: 1,
               developerProfileId: developerProfile.id,
               name: education,
             });
