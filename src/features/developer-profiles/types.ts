@@ -28,16 +28,14 @@ export type Developer = {
   email: string;
   status: string;
 };
-
 export interface SessionClaims extends JwtPayload {
   first_name?: string;
   last_name?: string;
   email?: string | undefined;
 }
-export type TempDeveloperProfileInsert =
-  typeof tempDeveloperProfiles.$inferInsert;
-// double write type
-export type updateTempDeveloperProfile = {
+export type DeveloperProfileInsert = typeof tempDeveloperProfiles.$inferInsert;
+
+export type updateDeveloperProfile = {
   id: string;
   name?: string;
   email?: string;
@@ -52,6 +50,7 @@ export type updateTempDeveloperProfile = {
   educations?: string[];
   languages?: string[];
 };
+
 export type AddDeveloperProfile = {
   id?: string;
   name: string;
@@ -81,8 +80,8 @@ export type BackgroundInfo = {
   educations: EducationSelect[];
 };
 
-export type developerProfileUpdate = Partial<TempDeveloperProfileInsert> &
-  Required<Pick<TempDeveloperProfileInsert, "id" | "identityId">> & {
+export type developerProfileUpdate = Partial<DeveloperProfileInsert> &
+  Required<Pick<DeveloperProfileInsert, "id" | "identityId">> & {
     name: string;
     skills: string[];
     languages: string[];
@@ -112,6 +111,7 @@ export type typeBackground = {
   bio: string;
   links: SocialLink[];
 };
+
 export type typeDeveloperProfile = {
   id: string;
   identityId: string;

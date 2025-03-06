@@ -13,7 +13,7 @@ import {
   EducationSelect,
   LanguageSelect,
   SkillSelect,
-  updateTempDeveloperProfile,
+  updateDeveloperProfile,
 } from "./types";
 
 export function createDevelopersRepository(db: Db) {
@@ -296,7 +296,7 @@ export function createDevelopersRepository(db: Db) {
           },
         });
     },
-    async updateDeveloperProfile(developerProfile: updateTempDeveloperProfile) {
+    async updateDeveloperProfile(developerProfile: updateDeveloperProfile) {
       const outboxMessageId = await db.transaction(async (tx) => {
         await tx
           .update(tempDeveloperProfiles)

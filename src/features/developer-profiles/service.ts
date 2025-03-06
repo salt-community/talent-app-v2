@@ -7,7 +7,7 @@ import {
   developerProfileDetails,
   OutboxMessageSelect,
   SessionClaims,
-  updateTempDeveloperProfile,
+  updateDeveloperProfile,
 } from "./types";
 import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./backgrounds-search";
@@ -187,7 +187,7 @@ export function createDeveloperProfilesService(
       }
     },
     async updateDeveloperProfile(
-      developerProfileUpdates: updateTempDeveloperProfile
+      developerProfileUpdates: updateDeveloperProfile
     ) {
       const { outboxMessageId } = await repository.updateDeveloperProfile(
         developerProfileUpdates
