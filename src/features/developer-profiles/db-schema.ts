@@ -58,3 +58,17 @@ export const tempDeveloperProfiles = pgTable("temp_developer_profiles", {
   bio: varchar().notNull(),
   links: jsonb().$type<SocialLink[]>().notNull(),
 });
+export const DeveloperProfiles = pgTable("developer_profiles", {
+  id: uuid()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  identityId: varchar("identity_id").notNull(),
+  name: varchar().notNull(),
+  slug: varchar().unique(),
+  email: varchar().notNull(),
+  status: varchar("status").notNull().default("unpublished"),
+  avatarUrl: varchar("avatar_url").notNull().default(""),
+  title: varchar().notNull(),
+  bio: varchar().notNull(),
+  links: jsonb().$type<SocialLink[]>().notNull(),
+});
