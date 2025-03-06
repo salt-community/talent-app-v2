@@ -280,23 +280,12 @@ export function createDevelopersRepository(db: Db) {
       });
     },
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
-      await await db
-        .insert(tempDeveloperProfiles)
-        .values({
-          id: developerProfile.id,
-          identityId: developerProfile.identityId,
-          name: developerProfile.name,
-          slug: developerProfile.slug,
-          email: developerProfile.email,
-          status: developerProfile.status || "",
-          avatarUrl: developerProfile.avatarUrl || "",
-          title: developerProfile.title || "",
-          bio: developerProfile.bio || "",
-          links: developerProfile.links || [],
-        })
-        .onConflictDoUpdate({
-          target: tempDeveloperProfiles.id,
-          set: {
+      await db.transaction(async (tx) => {
+        //remove after rename if done
+        await tx
+          .insert(tempDeveloperProfiles)
+          .values({
+            id: developerProfile.id,
             identityId: developerProfile.identityId,
             name: developerProfile.name,
             slug: developerProfile.slug,
@@ -306,11 +295,55 @@ export function createDevelopersRepository(db: Db) {
             title: developerProfile.title || "",
             bio: developerProfile.bio || "",
             links: developerProfile.links || [],
-          },
-        });
+          })
+          .onConflictDoUpdate({
+            target: tempDeveloperProfiles.id,
+            set: {
+              identityId: developerProfile.identityId,
+              name: developerProfile.name,
+              slug: developerProfile.slug,
+              email: developerProfile.email,
+              status: developerProfile.status || "",
+              avatarUrl: developerProfile.avatarUrl || "",
+              title: developerProfile.title || "",
+              bio: developerProfile.bio || "",
+              links: developerProfile.links || [],
+            },
+          });
+
+        await tx
+          .insert(developerProfiles)
+          .values({
+            id: developerProfile.id,
+            identityId: developerProfile.identityId,
+            name: developerProfile.name,
+            slug: developerProfile.slug,
+            email: developerProfile.email,
+            status: developerProfile.status || "",
+            avatarUrl: developerProfile.avatarUrl || "",
+            title: developerProfile.title || "",
+            bio: developerProfile.bio || "",
+            links: developerProfile.links || [],
+          })
+          .onConflictDoUpdate({
+            target: developerProfiles.id,
+            set: {
+              identityId: developerProfile.identityId,
+              name: developerProfile.name,
+              slug: developerProfile.slug,
+              email: developerProfile.email,
+              status: developerProfile.status || "",
+              avatarUrl: developerProfile.avatarUrl || "",
+              title: developerProfile.title || "",
+              bio: developerProfile.bio || "",
+              links: developerProfile.links || [],
+            },
+          });
+      });
     },
     async updateDeveloperProfile(developerProfile: updateDeveloperProfile) {
       const outboxMessageId = await db.transaction(async (tx) => {
+        //remove after rename is done
         await tx
           .update(tempDeveloperProfiles)
           .set({
@@ -327,6 +360,24 @@ export function createDevelopersRepository(db: Db) {
             links: developerProfile.links || tempDeveloperProfiles.links,
           })
           .where(eq(tempDeveloperProfiles.id, developerProfile.id));
+
+        await tx
+          .update(developerProfiles)
+          .set({
+            identityId:
+              developerProfile.identityId || tempDeveloperProfiles.identityId,
+            name: developerProfile.name || tempDeveloperProfiles.name,
+            slug: developerProfile.slug || tempDeveloperProfiles.slug,
+            email: developerProfile.email || tempDeveloperProfiles.email,
+            status: developerProfile.status || tempDeveloperProfiles.status,
+            avatarUrl:
+              developerProfile.avatarUrl || tempDeveloperProfiles.avatarUrl,
+            title: developerProfile.title || tempDeveloperProfiles.title,
+            bio: developerProfile.bio || tempDeveloperProfiles.bio,
+            links: developerProfile.links || tempDeveloperProfiles.links,
+          })
+          .where(eq(tempDeveloperProfiles.id, developerProfile.id));
+
         if (developerProfile.skills) {
           await tx
             .delete(developerProfileSkills)
@@ -385,14 +436,26 @@ export function createDevelopersRepository(db: Db) {
       return { outboxMessageId };
     },
     async deleteDeveloperProfile(developerProfileId: string) {
-      await db
-        .delete(tempDeveloperProfiles)
-        .where(eq(tempDeveloperProfiles.id, developerProfileId));
+      await db.transaction(async (tx) => {
+        //remove after rename is done
+        await tx
+          .delete(tempDeveloperProfiles)
+          .where(eq(tempDeveloperProfiles.id, developerProfileId));
+
+        await tx
+          .delete(developerProfiles)
+          .where(eq(tempDeveloperProfiles.id, developerProfileId));
+      });
     },
     async deleteDeveloperProfileByIdentityId(identityId: string) {
-      await db
-        .delete(tempDeveloperProfiles)
-        .where(eq(tempDeveloperProfiles.identityId, identityId));
+      await db.transaction(async (tx) => {
+        await tx
+          .delete(tempDeveloperProfiles)
+          .where(eq(tempDeveloperProfiles.identityId, identityId));
+        await tx
+          .delete(developerProfiles)
+          .where(eq(tempDeveloperProfiles.identityId, identityId));
+      });
     },
   };
 }
