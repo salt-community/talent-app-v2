@@ -3,7 +3,6 @@ import {
   SkillSelect,
   SocialLink as SocialLinkType,
 } from "../../types";
-import { Row } from "../backgrounds/row";
 import { SkillsBadges } from "../backgrounds/skills-badges";
 import { SocialLink } from "../backgrounds/social-link";
 
