@@ -4,7 +4,6 @@ import { IdentitySelect } from "../iam";
 import {
   AddDeveloperProfile,
   BackgroundInsert,
-  DeveloperProfileInsert,
 } from "./types";
 import { skills } from "./seed-data";
 import { faker } from "@faker-js/faker";
