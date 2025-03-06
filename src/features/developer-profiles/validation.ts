@@ -33,4 +33,13 @@ export const developerProfileUpdate = z.object({
     .pipe(z.array(z.string())),
 });
 
+export const CVHeaderUpdate = z.object({
+  id: z.string().nonempty(),
+  identityId: z.string().nonempty(),
+  name: z.string().nonempty("Name must contain at least 1 character(s)"),
+  avatarUrl: z.string().url().optional().or(z.literal("")),
+  bio: z.string().optional(),
+});
+
 export type DeveloperProfileValidation = z.infer<typeof developerProfileUpdate>;
+export type CVHeaderValidation = z.infer<typeof CVHeaderUpdate>;
