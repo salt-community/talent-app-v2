@@ -8,3 +8,16 @@ export function validateSessionClaims(claims: SessionClaims): boolean {
       typeof claims.email === "string"
   );
 }
+
+export function generateSlug(title: string) {
+  return title
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[åä]/g, "a")
+    .replace(/ö/g, "o")
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/-+/g, "-")
+    .trim();
+}
