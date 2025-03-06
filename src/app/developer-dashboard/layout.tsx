@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { usePathname } from "next/navigation";
 import { Star, Users } from "lucide-react";
@@ -8,13 +9,9 @@ type LayoutProps = {
   params: Promise<{ name: string }>;
 };
 
-export default function InstructorDashboardLayout({
-  children,
-  params,
-}: LayoutProps) {
+export default function DeveloperDashboardLayout({ children }: LayoutProps) {
   const pathname = usePathname();
-  const resolvedParams = React.use(params);
-  const name = resolvedParams.name;
+  const name = "Developer Dashboard";
 
   const normalizePath = (path: string) => path.replace(/\/$/, "");
 
@@ -22,20 +19,19 @@ export default function InstructorDashboardLayout({
     {
       name: "Assignments",
       icon: <Star className="w-5 h-5" />,
-      href: `/instructor-dashboard/cohorts/${name}`,
+      href: `/developer-dashboard/assignments`,
     },
     {
-      name: "Developers",
+      name: "Profiles",
       icon: <Users className="w-5 h-5" />,
-      href: `/instructor-dashboard/cohorts/${name}/developers`,
+      href: `/developer-dashboard/profiles`,
     },
   ];
-
   const getActiveTab = () => {
     const normalizedPath = normalizePath(pathname);
 
-    if (normalizedPath.endsWith("/developers")) return "Developers";
-    if (normalizedPath === `/instructor-dashboard/cohorts/${name}`)
+    if (normalizedPath.endsWith("/profiles")) return "Profiles";
+    if (normalizedPath === `/developer-dashboard/assignments`)
       return "Assignments";
 
     return "";
