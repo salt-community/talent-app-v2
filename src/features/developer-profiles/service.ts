@@ -23,7 +23,7 @@ export function createDeveloperProfilesService(
   db: Db,
   getCurrentUser: GetCurrentUser,
   getCohortIdByIdentityId: GetCohortIdByIdentityId,
-  getScoredAssignmentsByCohortIdAndIdentityId: GetScoredAssignmentsByCohortIdAndIdentityId,
+  getScoredAssignmentsByCohortIdAndIdentityId: GetScoredAssignmentsByCohortIdAndIdentityId
 ) {
   const repository = createDevelopersRepository(db);
   const backgroundsSearchApi = createSearchApi({
@@ -63,7 +63,7 @@ export function createDeveloperProfilesService(
     switch (outboxMessage.operation) {
       case "upsert":
         const developerProfile = await repository.getDeveloperProfileById(
-          outboxMessage.developerProfileId,
+          outboxMessage.developerProfileId
         );
         if (!developerProfile) {
           succeeded = true;
@@ -76,7 +76,7 @@ export function createDeveloperProfilesService(
         break;
       case "delete":
         const deleteStatus = await backgroundsSearchApi.deleteDocument(
-          outboxMessage.developerProfileId,
+          outboxMessage.developerProfileId
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
         break;
@@ -114,7 +114,7 @@ export function createDeveloperProfilesService(
       }
 
       const developerProfile = await this.getDeveloperProfileByIdentityId(
-        currentUser.id,
+        currentUser.id
       );
       const user = {
         ...currentUser,
@@ -146,19 +146,19 @@ export function createDeveloperProfilesService(
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index,
+          array.findIndex((s) => s.name === skill.name) === index
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index,
+          array.findIndex((l) => l.name === language.name) === index
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index,
+          array.findIndex((e) => e.name === education.name) === index
       );
     },
     async delete(id: string) {
@@ -190,13 +190,13 @@ export function createDeveloperProfilesService(
       }
     },
     async updateDeveloperProfile(
-      developerProfileUpdates: updateDeveloperProfile,
+      developerProfileUpdates: updateDeveloperProfile
     ) {
       const { outboxMessageId } = await repository.updateDeveloperProfile(
-        developerProfileUpdates,
+        developerProfileUpdates
       );
       const developerProfile = await repository.getDeveloperProfileById(
-        developerProfileUpdates.id,
+        developerProfileUpdates.id
       );
 
       const status = await backgroundsSearchApi.upsertDocuments([
@@ -253,7 +253,7 @@ export function createDeveloperProfilesService(
       await repository.addDeveloperProfile(developerProfile);
     },
     async addDeveloperProfileDetails(
-      developerProfileDetails: developerProfileDetails,
+      developerProfileDetails: developerProfileDetails
     ) {
       await repository.addDeveloperProfileDetails(developerProfileDetails);
     },
@@ -262,19 +262,31 @@ export function createDeveloperProfilesService(
     },
     async getScoredAssignmentsByIdentityId(identityId: string) {
       const cohortId = await getCohortIdByIdentityId(identityId);
-      console.log("cohortId", cohortId);
-      console.log("identityId", identityId);
+
       const assignments = cohortId
-        ? await getScoredAssignmentsByCohortIdAndIdentityId(
-            {cohortId,
-            identityId,}
-          )
+        ? await getScoredAssignmentsByCohortIdAndIdentityId({
+            cohortId,
+            identityId,
+          })
         : [];
-      console.log("assignments", assignments);
-      return assignments.map(({ assignments, assignment_scores }) => ({
-        ...assignments,
-        scores: assignment_scores,
-      }));
+
+      // Group scores by assignment ID
+      const assignmentMap = new Map();
+
+      assignments.forEach(({ assignments, assignment_scores }) => {
+        if (!assignmentMap.has(assignments.id)) {
+          assignmentMap.set(assignments.id, {
+            ...assignments,
+            scores: [],
+          });
+        }
+
+        assignmentMap.get(assignments.id).scores.push(assignment_scores);
+      });
+
+      const result = Array.from(assignmentMap.values());
+
+      return result;
     },
   };
 }

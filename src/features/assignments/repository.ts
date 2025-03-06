@@ -27,7 +27,7 @@ export function createAssignmentsRepository(db: Db) {
 
     async getAssignmentsByCohortIdAndIdentityId(
       cohortId: string,
-      identityId: string,
+      identityId: string
     ) {
       return await db
         .select()
@@ -36,11 +36,15 @@ export function createAssignmentsRepository(db: Db) {
           assignmentScores,
           and(
             eq(assignments.id, assignmentScores.assignmentId),
-            eq(assignmentScores.identityId, identityId),
-            eq(assignmentScores.status, "published"),
-          ),
+            eq(assignmentScores.identityId, identityId)
+          )
         )
-        .where(and(eq(assignments.cohortId, cohortId)));
+        .where(
+          and(
+            eq(assignments.cohortId, cohortId),
+            eq(assignmentScores.status, "published")
+          )
+        );
     },
 
     async getAssignmentById(id: string) {
@@ -84,10 +88,10 @@ export function createAssignmentsRepository(db: Db) {
               .where(
                 and(
                   eq(assignmentScores.assignmentId, assignmentId),
-                  eq(assignmentScores.identityId, identityId),
-                ),
+                  eq(assignmentScores.identityId, identityId)
+                )
               );
-          }),
+          })
         );
       });
     },
