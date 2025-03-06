@@ -164,7 +164,7 @@ export function createDevelopersRepository(db: Db) {
           skills: sql<SkillSelect[]>`jsonb_agg(distinct jsonb_build_object(
                 'id', ${developerProfileSkills.id},
                 'name', ${developerProfileSkills.name},
-                'backgroundId', ${developerProfileSkills.backgroundId},
+                'backgroundId', null,
                 'level', ${developerProfileSkills.level}
               ))`.as("skills"),
           languages: sql<
@@ -172,7 +172,7 @@ export function createDevelopersRepository(db: Db) {
           >`jsonb_agg(distinct jsonb_build_object(
                 'id', ${developerProfileLanguages.id},
                 'name', ${developerProfileLanguages.name},
-                'backgroundId', ${developerProfileLanguages.backgroundId},
+                'backgroundId', null,
                 'level', ${developerProfileLanguages.level}
               ))`.as("languages"),
           educations: sql<
@@ -180,7 +180,7 @@ export function createDevelopersRepository(db: Db) {
           >`jsonb_agg(distinct jsonb_build_object(
                 'id', ${developerProfileEducations.id},
                 'name', ${developerProfileEducations.name},
-                'backgroundId', ${developerProfileEducations.backgroundId}
+                'backgroundId',null
               ))`.as("educations"),
         })
         .from(tempDeveloperProfiles)
