@@ -4,6 +4,8 @@ import { errorHandler } from "@/lib";
 import { revalidatePath } from "next/cache";
 import { developerProfilesService } from "./instance";
 import {
+  CVHeaderUpdate,
+  CVHeaderValidation,
   developerProfileUpdate,
   DeveloperProfileValidation,
 } from "./validation";
@@ -48,6 +50,39 @@ export async function updateBackgroundAction(
           avatarUrlError,
           nameError,
           titleError,
+        },
+        update,
+      };
+    }
+    errorHandler(error);
+  }
+
+  if (validatedUpdate) {
+    revalidatePath("/");
+  }
+}
+
+export async function updateCvHeaderAction(
+  _: PreviousState,
+  formData: FormData
+) {
+  const update = Object.fromEntries(formData.entries());
+  let validatedUpdate: CVHeaderValidation | undefined;
+
+  try {
+    validatedUpdate = CVHeaderUpdate.parse(update);
+    await developerProfilesService.updateDeveloperProfile({
+      ...validatedUpdate,
+    });
+  } catch (error) {
+    if (error instanceof ZodError) {
+      const avatarError = error.flatten().fieldErrors.avatar?.[0];
+      const nameError = error.flatten().fieldErrors.name?.[0];
+
+      return {
+        errorMessages: {
+          avatarError,
+          nameError,
         },
         update,
       };
