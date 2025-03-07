@@ -69,13 +69,20 @@ export async function addIdentitiesToCohortAction(
 }
 
 export async function deleteIdentityFromCohortAction(identityId: string) {
-  const result = await instructorService.deleteIdentityFromCohort(identityId);
-
-  if (!result || result.length === 0) {
-    return { success: false, error: "Failed to remove developer" };
-  } else {
-    revalidatePath("/instructor-dashboard", "layout");
-    return { success: true };
+  try {
+    const result = await instructorService.deleteIdentityFromCohort(identityId);
+    if (!result || result.length === 0) {
+      return { success: false, error: "Failed to remove developer" };
+    } else {
+      revalidatePath("/instructor-dashboard", "layout");
+      return { success: true };
+    }
+  } catch (error) {
+    console.error("Error in deleteIdentityFromCohortAction:", error);
+    return {
+      success: false,
+      error: "Failed to remove developer",
+    };
   }
 }
 
