@@ -6,6 +6,7 @@ import AddAssignmentButton from "./add-assignment-button";
 import { Separator } from "@/components";
 import { CopyAssignmentButton } from "./copy-assignment-url-button";
 import { DeleteAssignmentButton } from "./delete-assignment-button";
+import { Edit } from "lucide-react";
 
 type Props = {
   name: string;
@@ -37,7 +38,7 @@ export async function AssignmentsDashboard({ name }: Props) {
               <div className="flex items-center gap-4">
                 <Link
                   href={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.slug}`}
-                  className="text-header font-medium hover:underline hover:underline-offset-4"
+                  className="text-header font-medium text-sm md:text-base p-2 md:p-0 hover:underline hover:underline-offset-4"
                 >
                   {assignment.title}
                 </Link>
@@ -47,6 +48,7 @@ export async function AssignmentsDashboard({ name }: Props) {
                 <CopyAssignmentButton
                   link={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.slug}`}
                 />
+                <Edit size={18}></Edit>
                 <DeleteAssignmentButton
                   assignmentId={assignment.id}
                   name={assignment.title}
