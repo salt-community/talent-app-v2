@@ -127,12 +127,10 @@ export function createAssignmentsRepository(db: Db) {
     },
 
     async updateAssignment(id: string, data: Partial<NewAssignment>) {
+      console.log("Updating assignment:", id, data);
       const [updatedAssignment] = await db
         .update(assignments)
-        .set({
-          ...data,
-          cohortId: data.cohortId ?? "",
-        })
+        .set(data)
         .where(eq(assignments.id, id))
         .returning();
       return updatedAssignment;

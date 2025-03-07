@@ -2,6 +2,7 @@ import { assignments } from "./schema";
 import { createAssignmentsService } from "./service";
 
 export type CreateAssignment = AssignmentsService["createAssignment"];
+export type UpdateAssignment = AssignmentsService["updateAssignment"];
 export type GetAllAssignments = AssignmentsService["getAllAssignments"];
 export type GetAssignmentsByCohortId =
   AssignmentsService["getAssignmentsByCohortId"];

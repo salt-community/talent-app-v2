@@ -6,13 +6,26 @@ export const addCohortFormSchema = z.object({
   status: z.enum(["planned", "ongoing", "finished"]),
 });
 
-export const assignmentSchema = z.object({
+export const newAssignmentSchema = z.object({
   title: z.string().nonempty("Title is required"),
   comment: z.string(),
   cohortId: z.string().nonempty("Cohort ID is required"),
-  date: z.date(),
+  createdAt: z.date(),
   categories: z
     .array(z.string().nonempty("Each category should be a non-empty string"))
     .nonempty("At least one category is required"),
-  score: z.number().min(0, "Score must be at least 0"),
+  score: z.number().min(0, "Score must be at least 0").optional(),
+});
+
+export const assignmentSchema = z.object({
+  id: z.string().nonempty("ID is required"),
+  title: z.string().nonempty("Title is required"),
+  comment: z.string(),
+  cohortId: z.string().nonempty("Cohort ID is required"),
+  createdAt: z.date(),
+  slug: z.string(),
+  categories: z
+    .array(z.string().nonempty("Each category should be a non-empty string"))
+    .nonempty("At least one category is required"),
+  score: z.number().min(0, "Score must be at least 0").optional(),
 });

@@ -2,6 +2,7 @@ import { Db } from "@/db";
 import { averageScore, averageScoresByCategory } from "./logic";
 import { createAssignmentsRepository } from "./repository";
 import {
+  Assignment,
   AssignmentScore,
   AssignmentScoreFormData,
   NewAssignment,
@@ -29,6 +30,12 @@ export function createAssignmentsService(db: Db) {
     async createAssignment(assignemnt: NewAssignment) {
       const slug = generateSlug(assignemnt.title);
       return await repo.createAssignment({ ...assignemnt, slug });
+    },
+
+    async updateAssignment(assigment: Assignment) {
+      console.log("Updating assignment....:", assigment);
+      const slug = generateSlug(assigment.title);
+      return await repo.updateAssignment(assigment.id, assigment);
     },
 
     async getAssignmentById(assignmentId: string) {
@@ -82,16 +89,6 @@ export function createAssignmentsService(db: Db) {
 
     async getAssignmentsByCohort(cohortId: string) {
       return await repo.getAssignmentsByCohort(cohortId);
-    },
-
-    async updateAssignment({
-      id,
-      rawData,
-    }: {
-      id: string;
-      rawData: Partial<NewAssignment>;
-    }) {
-      return await repo.updateAssignment(id, rawData);
     },
     async getAssignmentBySlug(slug: string) {
       return await repo.getAssignmentsBySlug(slug);

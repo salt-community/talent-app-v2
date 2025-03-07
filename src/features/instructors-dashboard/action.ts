@@ -2,9 +2,9 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { instructorService } from "./instance";
-import { assignmentSchema } from "./validation";
+import { assignmentSchema, newAssignmentSchema } from "./validation";
 import { CohortFormData } from "../cohorts";
-import { AssignmentScore } from "../assignments";
+import { Assignment, AssignmentScore } from "../assignments";
 import { ScoreStatus } from "./types";
 
 export async function addCohortAction(cohort: CohortFormData) {
@@ -23,7 +23,7 @@ export async function addAssignmentAction(
   categories: string[],
 ) {
   try {
-    const assignment = assignmentSchema.parse({
+    const assignment = newAssignmentSchema.parse({
       title,
       comment,
       cohortId,
@@ -33,6 +33,25 @@ export async function addAssignmentAction(
     });
 
     await instructorService.addAssignment(assignment);
+    revalidatePath("/instructor-dashboard", "layout");
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error("Validation failed:", error.errors);
+      throw new Error(
+        "Validation failed: " + error.errors.map((e) => e.message).join(", "),
+      );
+    } else {
+      console.error("Unexpected error:", error);
+      throw error;
+    }
+  }
+}
+
+export async function updateAssignmentAction(assigment: Assignment) {
+  try {
+    const assignment = assignmentSchema.parse({ ...assigment, score: 0 });
+    console.log("Parsed assignment:", assignment);
+    await instructorService.updateAssignment(assignment);
     revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     if (error instanceof z.ZodError) {

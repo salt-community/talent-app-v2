@@ -9,12 +9,15 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AddAssignmentForm } from "./add-assignment-form";
 import { Edit } from "lucide-react";
+import { Assignment } from "@/features/assignments";
+
 
 type Props = {
   cohortId: string;
+  assignment: Assignment;
 };
 
-export default function EditAssignmentButton({ cohortId }: Props) {
+export default function EditAssignmentButton({ cohortId, assignment }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -34,6 +37,7 @@ export default function EditAssignmentButton({ cohortId }: Props) {
         <DialogContent>
           <AddAssignmentForm
             cohortId={cohortId}
+            assignemnt={assignment}
             onSuccess={() => setOpen(false)}
           />
         </DialogContent>
