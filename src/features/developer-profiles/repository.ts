@@ -303,27 +303,6 @@ export function createDevelopersRepository(db: Db) {
       updatedDeveloperProfile: updateDeveloperProfile
     ) {
       const outboxMessageId = await db.transaction(async (tx) => {
-        //remove after rename is done
-        await tx
-          .update(tempDeveloperProfiles)
-          .set({
-            identityId:
-              updatedDeveloperProfile.identityId ||
-              tempDeveloperProfiles.identityId,
-            name: updatedDeveloperProfile.name || tempDeveloperProfiles.name,
-            slug: updatedDeveloperProfile.slug || tempDeveloperProfiles.slug,
-            email: updatedDeveloperProfile.email || tempDeveloperProfiles.email,
-            status:
-              updatedDeveloperProfile.status || tempDeveloperProfiles.status,
-            avatarUrl:
-              updatedDeveloperProfile.avatarUrl ||
-              tempDeveloperProfiles.avatarUrl,
-            title: updatedDeveloperProfile.title || tempDeveloperProfiles.title,
-            bio: updatedDeveloperProfile.bio || tempDeveloperProfiles.bio,
-            links: updatedDeveloperProfile.links || tempDeveloperProfiles.links,
-          })
-          .where(eq(tempDeveloperProfiles.id, updatedDeveloperProfile.id));
-
         await tx
           .update(developerProfiles)
           .set({
