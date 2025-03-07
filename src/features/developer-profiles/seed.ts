@@ -20,9 +20,7 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
     () => {
       return Promise.resolve([]);
     },
-    (
-      slug: string
-    ): Promise<{
+    (): Promise<{
       id: string;
       createdAt: Date | null;
       title: string;

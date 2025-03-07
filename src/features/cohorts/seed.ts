@@ -9,7 +9,7 @@ export async function seedCohorts(identities: IdentitySelect[]) {
 
   const cohortsService = createCohortsService(
     db,
-    async (id: string) => {
+    async () => {
       return Promise.resolve({
         id: "",
         name: "",
