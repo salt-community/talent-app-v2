@@ -6,7 +6,7 @@ import { skills } from "./seed-data";
 import { faker } from "@faker-js/faker";
 import { v4 as uuidv4 } from "uuid";
 
-export async function seedTempDeveloperProfiles(identities: IdentitySelect[]) {
+export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
   console.log("Seeding developer profiles...");
 
   const developers: AddDeveloperProfile[] = [];
