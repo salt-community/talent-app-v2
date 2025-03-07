@@ -5,7 +5,7 @@ import { iamService, secureService } from "../iam";
 import { cohortsService } from "../cohorts";
 import { assignmentsService } from "../assignments";
 
-export const insecureDeveloperProfilesService = createDeveloperProfilesService(
+const insecureDeveloperProfilesService = createDeveloperProfilesService(
   db,
   iamService.getCurrentUser,
   cohortsService.getCohortIdByIdentityId,

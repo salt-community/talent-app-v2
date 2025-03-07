@@ -3,7 +3,7 @@ import { createService } from "./service";
 import { createApi } from "./api";
 import { iamService, secureService } from "../iam";
 
-export const insecureProjectService = createService(
+const insecureProjectService = createService(
   db,
   createApi(),
   iamService.hasCurrentUserAccess
