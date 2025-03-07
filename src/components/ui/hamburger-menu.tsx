@@ -64,7 +64,7 @@ export function HamburgerMenu({ user, permissions }: Props) {
               } hover:border-primary`}
             >
               <Link href={`/developer-dashboard/assignments`}>
-                Dashboard Dashboard
+                Developer Dashboard
               </Link>
             </li>
           )}
