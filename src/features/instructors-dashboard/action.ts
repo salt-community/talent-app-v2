@@ -97,10 +97,31 @@ export async function deleteCohortAndCohortIdentityAction(cohortId: string) {
 
 export async function deleteAssignmentByIdAction(assignmentId: string) {
   try {
-    await instructorService.deleteAssignmentById(assignmentId);
-    revalidatePath("/instructor-dashboard", "layout");
+    const result = await instructorService.deleteAssignmentById(assignmentId);
+    if (!result || result.length === 0) {
+      return { success: false, error: "Failed to remove assignment" };
+    } else {
+      revalidatePath("/instructor-dashboard", "layout");
+      return { success: true };
+    }
   } catch (error) {
-    console.error(error);
+    console.error("Error in deleteAssignmentByIdAction:", error);
+
+    if (
+      error instanceof Error &&
+      error.message.includes("violates foreign key constraint") &&
+      error.message.includes("assignment_scores")
+    ) {
+      return {
+        success: false,
+        error: "All scores must be deleted before removing this assignment.",
+      };
+    }
+
+    return {
+      success: false,
+      error: "Failed to remove assignment",
+    };
   }
 }
 

@@ -120,7 +120,8 @@ export function createAssignmentsRepository(db: Db) {
     async deleteAssignment(assignmentId: string) {
       return await db
         .delete(assignments)
-        .where(eq(assignments.id, assignmentId));
+        .where(eq(assignments.id, assignmentId))
+        .returning();
     },
     async deleteAssignmentScoreById(identityId: string) {
       await db

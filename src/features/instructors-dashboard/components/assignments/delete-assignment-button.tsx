@@ -14,15 +14,23 @@ export function DeleteAssignmentButton({ assignmentId, name }: Props) {
   const { toast } = useToast();
 
   async function handleDelete() {
-    await deleteAssignmentByIdAction(assignmentId);
-    toast({
-      title: "Assignment deleted",
-      description: (
-        <>
-          The assignment <strong>{name}</strong> has been deleted
-        </>
-      ),
-    });
+    const result = await deleteAssignmentByIdAction(assignmentId);
+
+    if (result.success) {
+      toast({
+        title: "Assignment deleted",
+        description: (
+          <>
+            The assignment <strong>{name}</strong> has been deleted
+          </>
+        ),
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: ` ${result.error || "Unknown error"}`,
+      });
+    }
   }
 
   return (
@@ -33,7 +41,7 @@ export function DeleteAssignmentButton({ assignmentId, name }: Props) {
         onConfirm={handleDelete}
       >
         <Button
-        variant="ghost"
+          variant="ghost"
           className="hover:text-destructive"
           aria-label="Delete"
         >
