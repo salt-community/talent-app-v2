@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import { usePathname } from "next/navigation";
 import { Database, Search, UserCog, UserRound } from "lucide-react";
+import Loading from "../loading";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -41,7 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="w-full p-4 md:px-32">
-      <h1 className="text-2xl font-bold mb-4">ADMIN</h1>
+      <h1 className="text-2xl font-bold mb-4">ADMIN DASHBOARD</h1>
       <div className="flex border-b mb-4">
         {tabs.map((tab) => (
           <a
@@ -56,7 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </a>
         ))}
       </div>
-      {children}
+      <Suspense fallback={<Loading />}>{children}</Suspense>
     </div>
   );
 }

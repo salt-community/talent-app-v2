@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import { usePathname } from "next/navigation";
 import { Star, Users } from "lucide-react";
+import Loading from "@/app/loading";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -60,7 +61,7 @@ export default function InstructorDashboardLayout({
           </a>
         ))}
       </div>
-      {children}
+      <Suspense fallback={<Loading />}>{children}</Suspense>
     </div>
   );
 }
