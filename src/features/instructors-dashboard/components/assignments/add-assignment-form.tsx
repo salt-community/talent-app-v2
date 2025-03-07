@@ -1,17 +1,8 @@
 "use client";
 
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectGroup,
-  SelectLabel,
-  SelectItem,
-} from "@/components/ui/select";
-import { useState } from "react";
+import { ChevronDown, X, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -22,28 +13,95 @@ type Props = {
   onSuccess: () => void;
 };
 
-const CATEGORY_OPTIONS = [
-  { key: "frontend", value: "Frontend" },
-  { key: "backend", value: "Backend" },
-  { key: "management", value: "Management" },
-  { key: "conversation", value: "Conversation" },
-  { key: "team collaboration", value: "Team Collaboration" },
-  { key: "design", value: "Design" },
+const DEFAULT_CATEGORIES = [
+  { id: "frontend", name: "Frontend" },
+  { id: "backend", name: "Backend" },
+  { id: "management", name: "Management" },
+  { id: "conversation", name: "Conversation" },
+  { id: "team collaboration", name: "Team Collaboration" },
+  { id: "design", name: "Design" },
 ];
 
 export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
   const [loading, setLoading] = useState(false);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [currentSelection, setCurrentSelection] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<
+    { id: string; name: string }[]
+  >([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [title, setTitle] = useState("");
+  const [comment, setComment] = useState("");
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSelectCategory = (category: { id: string; name: string }) => {
+    if (!selectedCategories.find((c) => c.id === category.id)) {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+    setIsOpen(false);
+    setSearchTerm("");
+  };
+
+  const handleAddCustomCategory = () => {
+    if (!searchTerm.trim()) return;
+
+    const customId = searchTerm.toLowerCase().replace(/\s+/g, "-");
+
+    if (!selectedCategories.find((c) => c.id === customId)) {
+      const newCategory = { id: customId, name: searchTerm.trim() };
+      setSelectedCategories([...selectedCategories, newCategory]);
+    }
+
+    setIsOpen(false);
+    setSearchTerm("");
+  };
+
+  const handleRemoveCategory = (categoryId: string) => {
+    setSelectedCategories(
+      selectedCategories.filter((cat) => cat.id !== categoryId)
+    );
+  };
+
+  const filteredCategories = DEFAULT_CATEGORIES.filter(
+    (category) =>
+      category.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      !selectedCategories.find((c) => c.id === category.id)
+  );
+
+  const showAddCustomOption =
+    searchTerm.trim() !== "" &&
+    !filteredCategories.some(
+      (cat) => cat.name.toLowerCase() === searchTerm.toLowerCase()
+    ) &&
+    !selectedCategories.some(
+      (cat) => cat.name.toLowerCase() === searchTerm.toLowerCase()
+    );
+
+  const handleSubmit = async () => {
     setLoading(true);
 
-    const formData = new FormData(event.target as HTMLFormElement);
-
     try {
-      await addAssignmentAction(formData, cohortId, selectedItems);
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("comment", comment);
+
+      await addAssignmentAction(
+        formData,
+        cohortId,
+        selectedCategories.map((cat) => cat.id)
+      );
       onSuccess();
     } catch (error) {
       console.error("Failed to create assignment:", error);
@@ -52,90 +110,129 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
     }
   };
 
-  const handleAdd = () => {
-    if (currentSelection && !selectedItems.includes(currentSelection)) {
-      setSelectedItems([...selectedItems, currentSelection]);
-      setCurrentSelection("");
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && searchTerm) {
+      e.preventDefault();
+      handleAddCustomCategory();
     }
   };
-  const handleRemove = (itemToRemove: string) => {
-    setSelectedItems(selectedItems.filter((item) => item !== itemToRemove));
-  };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="space-y-6 p-4">
       <div>
         <Label htmlFor="title">Title</Label>
         <Input
           id="title"
-          name="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           placeholder="Enter assignment title"
           required
         />
       </div>
+
       <div>
-        <Label htmlFor="categories">Category</Label>
-        <div className="flex">
-          <Select value={currentSelection} onValueChange={setCurrentSelection}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a Category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Cohorts</SelectLabel>
-                {CATEGORY_OPTIONS.filter(
-                  (category) => !selectedItems.includes(category.key),
-                ).map((category) => (
-                  <SelectItem
-                    key={category.key}
-                    value={category.key}
-                    className="cursor-pointer"
-                  >
-                    {category.value}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Button
-            variant="outline"
-            onClick={handleAdd}
-            className="ml-2"
-            type="button"
+        <Label htmlFor="categories">Categories</Label>
+        <div className="relative" ref={dropdownRef}>
+          <div
+            className="border rounded-md p-2 flex items-center justify-between cursor-pointer"
+            onClick={() => setIsOpen(!isOpen)}
           >
-            <Plus />
-          </Button>
+            <input
+              type="text"
+              placeholder="Select or create categories..."
+              className="outline-none w-full cursor-pointer"
+              value={searchTerm}
+              onChange={(e) => {
+                e.stopPropagation();
+                setSearchTerm(e.target.value);
+                setIsOpen(true);
+              }}
+              onClick={(e) => e.stopPropagation()}
+              onKeyDown={handleKeyDown}
+            />
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${isOpen ? "transform rotate-180" : ""}`}
+            />
+          </div>
+          {isOpen && (
+            <div className="absolute w-full mt-1 bg-white border rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
+              {filteredCategories.length > 0 && (
+                <>
+                  {filteredCategories.map((category) => (
+                    <div
+                      key={category.id}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleSelectCategory(category)}
+                    >
+                      {category.name}
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {showAddCustomOption && (
+                <div
+                  className="p-2 hover:bg-blue-50 cursor-pointer border-t flex items-center"
+                  onClick={handleAddCustomCategory}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add &quot;{searchTerm}&quot; as new category
+                </div>
+              )}
+
+              {filteredCategories.length === 0 && !showAddCustomOption && (
+                <div className="p-2 text-gray-500">
+                  {searchTerm
+                    ? "Type to add a custom category"
+                    : "No categories found"}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
-      <div className="flex flex-wrap">
-        {selectedItems.map((item) => (
-          <div
-            key={item}
-            className="flex flex-row justify-center items-center bg-gray-100 mx-1 px-2 rounded-md mb-2"
-          >
-            <span className="text-xs capitalize">{item}</span>
-            <Button
-              className="ml-1 text-xs p-1"
-              variant="ghost"
-              onClick={() => handleRemove(item)}
-            >
-              ✕
-            </Button>
+
+      {selectedCategories.length > 0 && (
+        <div className="space-y-2">
+          <div className="text-sm font-medium">Selected Categories:</div>
+          <div className="flex flex-wrap gap-2">
+            {selectedCategories.map((category) => (
+              <div
+                key={category.id}
+                className="flex items-center bg-gray-100 px-3 py-1 rounded-md"
+              >
+                <span className="text-sm">{category.name}</span>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveCategory(category.id)}
+                  className="ml-2 text-gray-500 hover:text-gray-700"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+
       <div>
         <Label htmlFor="comment">Comment</Label>
         <Textarea
           id="comment"
-          name="comment"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
           placeholder="Add any additional comments or instructions"
           className="min-h-[100px]"
         />
       </div>
 
-      <Button type="submit" className="w-full" disabled={loading}>
+      <Button
+        onClick={handleSubmit}
+        className="w-full"
+        disabled={!title || selectedCategories.length === 0 || loading}
+      >
         {loading ? "Submitting..." : "Submit"}
       </Button>
-    </form>
+    </div>
   );
 }
