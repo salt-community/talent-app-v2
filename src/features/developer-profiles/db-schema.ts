@@ -5,7 +5,7 @@ import { SocialLink } from "./types";
 export const developerProfileSkills = pgTable("developer_profiles_skills", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   developerProfileId: uuid("developerProfile_id").references(
-    () => tempDeveloperProfiles.id,
+    () => developerProfiles.id,
     { onDelete: "cascade" }
   ),
   name: varchar().notNull(),
@@ -16,7 +16,7 @@ export const developerProfileEducations = pgTable(
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     developerProfileId: uuid("developerProfile_id").references(
-      () => tempDeveloperProfiles.id,
+      () => developerProfiles.id,
       {
         onDelete: "cascade",
       }
@@ -29,7 +29,7 @@ export const developerProfileLanguages = pgTable(
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     developerProfileId: uuid("developerProfile_id").references(
-      () => tempDeveloperProfiles.id,
+      () => developerProfiles.id,
       {
         onDelete: "cascade",
       }
