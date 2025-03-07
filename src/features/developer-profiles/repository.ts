@@ -270,12 +270,23 @@ export function createDevelopersRepository(db: Db) {
       });
     },
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
-      await db.transaction(async (tx) => {
-        //remove after rename if done
-        await tx
-          .insert(tempDeveloperProfiles)
-          .values({
-            id: developerProfile.id,
+      await db
+        .insert(developerProfiles)
+        .values({
+          id: developerProfile.id,
+          identityId: developerProfile.identityId,
+          name: developerProfile.name,
+          slug: developerProfile.slug,
+          email: developerProfile.email,
+          status: developerProfile.status || "",
+          avatarUrl: developerProfile.avatarUrl || "",
+          title: developerProfile.title || "",
+          bio: developerProfile.bio || "",
+          links: developerProfile.links || [],
+        })
+        .onConflictDoUpdate({
+          target: developerProfiles.id,
+          set: {
             identityId: developerProfile.identityId,
             name: developerProfile.name,
             slug: developerProfile.slug,
@@ -285,51 +296,8 @@ export function createDevelopersRepository(db: Db) {
             title: developerProfile.title || "",
             bio: developerProfile.bio || "",
             links: developerProfile.links || [],
-          })
-          .onConflictDoUpdate({
-            target: tempDeveloperProfiles.id,
-            set: {
-              identityId: developerProfile.identityId,
-              name: developerProfile.name,
-              slug: developerProfile.slug,
-              email: developerProfile.email,
-              status: developerProfile.status || "",
-              avatarUrl: developerProfile.avatarUrl || "",
-              title: developerProfile.title || "",
-              bio: developerProfile.bio || "",
-              links: developerProfile.links || [],
-            },
-          });
-
-        await tx
-          .insert(developerProfiles)
-          .values({
-            id: developerProfile.id,
-            identityId: developerProfile.identityId,
-            name: developerProfile.name,
-            slug: developerProfile.slug,
-            email: developerProfile.email,
-            status: developerProfile.status || "",
-            avatarUrl: developerProfile.avatarUrl || "",
-            title: developerProfile.title || "",
-            bio: developerProfile.bio || "",
-            links: developerProfile.links || [],
-          })
-          .onConflictDoUpdate({
-            target: developerProfiles.id,
-            set: {
-              identityId: developerProfile.identityId,
-              name: developerProfile.name,
-              slug: developerProfile.slug,
-              email: developerProfile.email,
-              status: developerProfile.status || "",
-              avatarUrl: developerProfile.avatarUrl || "",
-              title: developerProfile.title || "",
-              bio: developerProfile.bio || "",
-              links: developerProfile.links || [],
-            },
-          });
-      });
+          },
+        });
     },
     async updateDeveloperProfile(
       updatedDeveloperProfile: updateDeveloperProfile
