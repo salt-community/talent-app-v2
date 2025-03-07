@@ -36,7 +36,10 @@ export default function StudentCard({ developer }: { developer: Developer[] }) {
                   <div className="flex items-center space-x-2 text-muted-foreground text-sm"></div>
                 </div>
               </div>
-              <DeleteDeveloperButton identityId={dev.id} name={dev.name} />
+              <DeleteDeveloperButton
+                identityId={"e75b7461-8489-4fe0-9a83-45706602c8c4"}
+                name={dev.name}
+              />
               {/* Add something more after talk with Marcus */}
             </div>
           ))}

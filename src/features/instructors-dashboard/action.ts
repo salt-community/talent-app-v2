@@ -69,11 +69,13 @@ export async function addIdentitiesToCohortAction(
 }
 
 export async function deleteIdentityFromCohortAction(identityId: string) {
-  try {
-    await instructorService.deleteIdentityFromCohort(identityId);
+  const result = await instructorService.deleteIdentityFromCohort(identityId);
+
+  if (!result || result.length === 0) {
+    return { success: false, error: "Failed to remove developer" };
+  } else {
     revalidatePath("/instructor-dashboard", "layout");
-  } catch (error) {
-    console.error(error);
+    return { success: true };
   }
 }
 

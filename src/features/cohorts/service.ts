@@ -25,7 +25,7 @@ export function createCohortsService(
       return await repository.getCohortIdByIdentityId(identityId);
     },
     async deleteIdentityFromCohort(identityId: string) {
-      await repository.deleteIdentityFromCohort(identityId);
+      return await repository.deleteIdentityFromCohort(identityId);
     },
     async deleteCohortAndCohortIdentity(cohortId: string) {
       await repository.deleteCohortAndCohortIdentity(cohortId);

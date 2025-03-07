@@ -12,16 +12,29 @@ type Props = {
 export function DeleteDeveloperButton({ identityId, name }: Props) {
   const { toast } = useToast();
   async function handleDelete() {
-    await deleteIdentityFromCohortAction(identityId);
-    toast({
-      title: "Developer deleted",
-      description: (
-        <>
-          <strong>{name}</strong> has been removed from the cohort
-        </>
-      ),
-    });
-    
+    try {
+      const result = await deleteIdentityFromCohortAction(identityId);
+      if (result.success) {
+        toast({
+          title: "Developer deleted",
+          description: (
+            <>
+              <strong>{name}</strong> has been removed from the cohort
+            </>
+          ),
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: ` ${result.error || "Unknown error"}`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: ` ${error || "Unknown error"}`,
+      });
+    }
   }
 
   return (

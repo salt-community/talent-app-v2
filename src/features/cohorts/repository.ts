@@ -43,9 +43,10 @@ export function createCohortsRepository(db: Db) {
       return await db.delete(cohorts).where(eq(cohorts.id, cohortId));
     },
     async deleteIdentityFromCohort(identityId: string) {
-      await db
+      return await db
         .delete(cohortIdentities)
-        .where(eq(cohortIdentities.identityId, identityId));
+        .where(eq(cohortIdentities.identityId, identityId))
+        .returning();
     },
     async deleteCohortAndCohortIdentity(cohortId: string) {
       await db.delete(cohorts).where(eq(cohorts.id, cohortId));
@@ -83,7 +84,7 @@ export function createCohortsRepository(db: Db) {
         args.identityIds.map((identityId) => ({
           cohortId: args.cohortId,
           identityId,
-        })),
+        }))
       );
     },
   };
