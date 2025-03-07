@@ -249,7 +249,7 @@ export function createDevelopersRepository(db: Db) {
           .set({
             slug,
           })
-          .where(eq(tempDeveloperProfiles.id, id));
+          .where(eq(developerProfiles.id, id));
       });
     },
     async removeOutboxMessage(id: number) {
@@ -341,84 +341,93 @@ export function createDevelopersRepository(db: Db) {
           });
       });
     },
-    async updateDeveloperProfile(developerProfile: updateDeveloperProfile) {
+    async updateDeveloperProfile(
+      updatedDeveloperProfile: updateDeveloperProfile
+    ) {
       const outboxMessageId = await db.transaction(async (tx) => {
         //remove after rename is done
         await tx
           .update(tempDeveloperProfiles)
           .set({
             identityId:
-              developerProfile.identityId || tempDeveloperProfiles.identityId,
-            name: developerProfile.name || tempDeveloperProfiles.name,
-            slug: developerProfile.slug || tempDeveloperProfiles.slug,
-            email: developerProfile.email || tempDeveloperProfiles.email,
-            status: developerProfile.status || tempDeveloperProfiles.status,
+              updatedDeveloperProfile.identityId ||
+              tempDeveloperProfiles.identityId,
+            name: updatedDeveloperProfile.name || tempDeveloperProfiles.name,
+            slug: updatedDeveloperProfile.slug || tempDeveloperProfiles.slug,
+            email: updatedDeveloperProfile.email || tempDeveloperProfiles.email,
+            status:
+              updatedDeveloperProfile.status || tempDeveloperProfiles.status,
             avatarUrl:
-              developerProfile.avatarUrl || tempDeveloperProfiles.avatarUrl,
-            title: developerProfile.title || tempDeveloperProfiles.title,
-            bio: developerProfile.bio || tempDeveloperProfiles.bio,
-            links: developerProfile.links || tempDeveloperProfiles.links,
+              updatedDeveloperProfile.avatarUrl ||
+              tempDeveloperProfiles.avatarUrl,
+            title: updatedDeveloperProfile.title || tempDeveloperProfiles.title,
+            bio: updatedDeveloperProfile.bio || tempDeveloperProfiles.bio,
+            links: updatedDeveloperProfile.links || tempDeveloperProfiles.links,
           })
-          .where(eq(tempDeveloperProfiles.id, developerProfile.id));
+          .where(eq(tempDeveloperProfiles.id, updatedDeveloperProfile.id));
 
         await tx
           .update(developerProfiles)
           .set({
             identityId:
-              developerProfile.identityId || tempDeveloperProfiles.identityId,
-            name: developerProfile.name || tempDeveloperProfiles.name,
-            slug: developerProfile.slug || tempDeveloperProfiles.slug,
-            email: developerProfile.email || tempDeveloperProfiles.email,
-            status: developerProfile.status || tempDeveloperProfiles.status,
+              updatedDeveloperProfile.identityId ||
+              developerProfiles.identityId,
+            name: updatedDeveloperProfile.name || developerProfiles.name,
+            slug: updatedDeveloperProfile.slug || developerProfiles.slug,
+            email: updatedDeveloperProfile.email || developerProfiles.email,
+            status: updatedDeveloperProfile.status || developerProfiles.status,
             avatarUrl:
-              developerProfile.avatarUrl || tempDeveloperProfiles.avatarUrl,
-            title: developerProfile.title || tempDeveloperProfiles.title,
-            bio: developerProfile.bio || tempDeveloperProfiles.bio,
-            links: developerProfile.links || tempDeveloperProfiles.links,
+              updatedDeveloperProfile.avatarUrl || developerProfiles.avatarUrl,
+            title: updatedDeveloperProfile.title || developerProfiles.title,
+            bio: updatedDeveloperProfile.bio || developerProfiles.bio,
+            links: updatedDeveloperProfile.links || developerProfiles.links,
           })
-          .where(eq(tempDeveloperProfiles.id, developerProfile.id));
+          .where(eq(developerProfiles.id, updatedDeveloperProfile.id));
 
-        if (developerProfile.skills) {
+        if (updatedDeveloperProfile.skills) {
           await tx
             .delete(developerProfileSkills)
             .where(
-              eq(developerProfileSkills.developerProfileId, developerProfile.id)
+              eq(
+                developerProfileSkills.developerProfileId,
+                updatedDeveloperProfile.id
+              )
             );
-          for (const skill of developerProfile.skills) {
+          for (const skill of updatedDeveloperProfile.skills) {
             await tx.insert(developerProfileSkills).values({
-              developerProfileId: developerProfile.id,
+              developerProfileId: updatedDeveloperProfile.id,
               name: skill,
             });
           }
         }
-        if (developerProfile.languages) {
+        if (updatedDeveloperProfile.languages) {
           await tx
             .delete(developerProfileLanguages)
             .where(
               eq(
                 developerProfileLanguages.developerProfileId,
-                developerProfile.id
+                updatedDeveloperProfile.id
               )
             );
-          for (const language of developerProfile.languages) {
+          for (const language of updatedDeveloperProfile.languages) {
             await tx.insert(developerProfileLanguages).values({
-              developerProfileId: developerProfile.id,
+              developerProfileId: updatedDeveloperProfile.id,
               name: language,
             });
           }
         }
-        if (developerProfile.educations) {
+        if (updatedDeveloperProfile.educations) {
           await tx
             .delete(developerProfileEducations)
             .where(
               eq(
                 developerProfileEducations.developerProfileId,
-                developerProfile.id
+                updatedDeveloperProfile.id
               )
             );
-          for (const education of developerProfile.educations) {
+          for (const education of updatedDeveloperProfile.educations) {
             await tx.insert(developerProfileEducations).values({
-              developerProfileId: developerProfile.id,
+              developerProfileId: updatedDeveloperProfile.id,
               name: education,
             });
           }
@@ -427,7 +436,7 @@ export function createDevelopersRepository(db: Db) {
           await tx
             .insert(meiliSearchOutbox)
             .values({
-              developerProfileId: developerProfile.id,
+              developerProfileId: updatedDeveloperProfile.id,
               operation: "upsert",
             })
             .returning({ id: meiliSearchOutbox.id })
@@ -444,17 +453,18 @@ export function createDevelopersRepository(db: Db) {
 
         await tx
           .delete(developerProfiles)
-          .where(eq(tempDeveloperProfiles.id, developerProfileId));
+          .where(eq(developerProfiles.id, developerProfileId));
       });
     },
     async deleteDeveloperProfileByIdentityId(identityId: string) {
       await db.transaction(async (tx) => {
+        //remove after rename is done
         await tx
           .delete(tempDeveloperProfiles)
           .where(eq(tempDeveloperProfiles.identityId, identityId));
         await tx
           .delete(developerProfiles)
-          .where(eq(tempDeveloperProfiles.identityId, identityId));
+          .where(eq(developerProfiles.identityId, identityId));
       });
     },
   };
