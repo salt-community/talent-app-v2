@@ -38,6 +38,9 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
         categories: [""],
         slug: "",
       });
+    },
+    () => {
+      return Promise.resolve(0);
     }
   );
   const developers: AddDeveloperProfile[] = [];
