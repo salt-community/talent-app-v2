@@ -6,7 +6,6 @@ type Params = {
 
 export default async function Page({ params }: Params) {
   const { slug } = await params;
-  console.log({ slug: slug });
   return (
     <div>
       <DeveloperAssignment slug={slug} />
