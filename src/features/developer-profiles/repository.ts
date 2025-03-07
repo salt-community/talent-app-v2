@@ -229,8 +229,8 @@ export function createDevelopersRepository(db: Db) {
     async existsBySlug(slug: string) {
       const [developerProfile] = await db
         .select()
-        .from(tempDeveloperProfiles)
-        .where(eq(tempDeveloperProfiles.slug, slug));
+        .from(developerProfiles)
+        .where(eq(developerProfiles.slug, slug));
 
       return !!developerProfile;
     },
