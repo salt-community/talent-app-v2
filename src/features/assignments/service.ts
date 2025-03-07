@@ -26,9 +26,9 @@ export function createAssignmentsService(db: Db) {
       );
     },
 
-    async createAssignment(data: NewAssignment) {
-      const slug = generateSlug(data.title);
-      return await repo.createAssignment({ ...data, slug });
+    async createAssignment(assignemnt: NewAssignment) {
+      const slug = generateSlug(assignemnt.title);
+      return await repo.createAssignment({ ...assignemnt, slug });
     },
 
     async getAssignmentById(assignmentId: string) {

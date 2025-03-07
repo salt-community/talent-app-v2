@@ -17,37 +17,28 @@ export async function addCohortAction(cohort: CohortFormData) {
 }
 
 export async function addAssignmentAction(
-  formData: FormData,
   cohortId: string,
-  categories: string[]
+  title: string,
+  comment: string,
+  categories: string[],
 ) {
-  const title = formData.get("title") as string;
-  const comment = formData.get("comment") as string;
-
   try {
-    assignmentSchema.parse({
+    const assignment = assignmentSchema.parse({
       title,
       comment,
       cohortId,
       categories,
+      date: new Date(),
+      score: 0,
     });
 
-    const newAssignment = {
-      title,
-      score: 0,
-      cohortId,
-      comment,
-      categories,
-      slug: "",
-    };
-
-    await instructorService.addAssignment(newAssignment);
+    await instructorService.addAssignment(assignment);
     revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Validation failed:", error.errors);
       throw new Error(
-        "Validation failed: " + error.errors.map((e) => e.message).join(", ")
+        "Validation failed: " + error.errors.map((e) => e.message).join(", "),
       );
     } else {
       console.error("Unexpected error:", error);
@@ -58,7 +49,7 @@ export async function addAssignmentAction(
 
 export async function addIdentitiesToCohortAction(
   cohortId: string,
-  identityIds: string[]
+  identityIds: string[],
 ) {
   try {
     await instructorService.addIdentitiesToCohort({ cohortId, identityIds });

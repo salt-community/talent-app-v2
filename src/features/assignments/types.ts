@@ -1,3 +1,4 @@
+import { assignments } from "./schema";
 import { createAssignmentsService } from "./service";
 
 export type CreateAssignment = AssignmentsService["createAssignment"];
@@ -18,17 +19,8 @@ export type GetScoredAssignmentsByCohortIdAndIdentityId =
 export type GetAverageScoresByIdentityId =
   AssignmentsService["getAverageScoresByIdentityId"];
 
-export type Assignment = {
-  id: string;
-  title: string;
-  cohortId: string | null;
-  comment: string | null;
-  categories: string[] | null;
-  createdAt: Date | null;
-  slug: string;
-};
-
-export type NewAssignment = Omit<Assignment, "id" | "createdAt">;
+export type Assignment = typeof assignments.$inferSelect;
+export type NewAssignment = typeof assignments.$inferInsert;
 
 export type AssignmentScore = {
   id?: string;
