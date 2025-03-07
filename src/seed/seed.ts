@@ -8,7 +8,6 @@ import { seedProjects } from "@/features/projects";
 (async () => {
   console.log("Starting to seed...");
   const identities = await seedIdentities();
-
   const cohorts = await seedCohorts(identities);
   await seedAssignments(cohorts);
 

@@ -1,5 +1,6 @@
+import { db } from "@/db";
 import { categoryTags } from "./categories";
-import { insecureAssignmentService } from "./instance";
+import { createAssignmentsService } from "./service";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
@@ -8,7 +9,7 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
 
 export const seedAssignments = async (cohortIds: string[]) => {
   console.log("Seeding assignments...");
-
+  const insecureAssignmentService = createAssignmentsService(db);
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",
     "Create a RESTful API with Node.js",
