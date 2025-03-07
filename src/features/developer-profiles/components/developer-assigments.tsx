@@ -9,6 +9,10 @@ type Props = {
 export async function DeveloperAssignments({ identityId }: Props) {
   const assignments =
     await developerProfilesService.getScoredAssignmentsByIdentityId(identityId);
+  const averageScore =
+    await developerProfilesService.getAverageScoresByIdentityId(identityId);
+
+  console.log({ avg: averageScore });
 
   return (
     <div className="max-w-6xl mx-auto p-4">

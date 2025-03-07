@@ -15,6 +15,8 @@ export type GetScoresByAssignmentId =
 export type UpdateScoreStatuses = AssignmentsService["updateScoreStatuses"];
 export type GetScoredAssignmentsByCohortIdAndIdentityId =
   AssignmentsService["getScoredAssignmentsByCohortIdAndIdentityId"];
+export type GetAverageScoresByIdentityId =
+  AssignmentsService["getAverageScoresByIdentityId"];
 
 export type Assignment = {
   id: string;

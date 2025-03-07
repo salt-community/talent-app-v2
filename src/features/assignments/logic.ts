@@ -6,7 +6,8 @@ export function averageScore(assignmentScores: number[]) {
       ? assignmentScores.reduce((sum, score) => sum + score, 0) /
         assignmentScores.length
       : 0;
-  return averageScore;
+
+  return Math.round(averageScore * 100) / 100;
 }
 
 export function averageScoresByCategory(
@@ -33,8 +34,10 @@ export function averageScoresByCategory(
 
     const averageScore =
       validScores.length > 0
-        ? validScores.reduce((acc, score) => acc + score, 0) /
-          validScores.length
+        ? Math.round(
+            validScores.reduce((acc, score) => acc + score, 0) /
+              validScores.length
+          )
         : 0;
 
     return {

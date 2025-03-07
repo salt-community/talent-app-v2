@@ -17,6 +17,7 @@ import { generateSlug } from "./logic";
 import { GetCohortIdByIdentityId } from "../cohorts";
 import {
   GetAssignmentBySlug,
+  GetAverageScoresByIdentityId,
   GetScoredAssignmentsByCohortIdAndIdentityId,
 } from "../assignments";
 
@@ -27,7 +28,8 @@ export function createDeveloperProfilesService(
   getCurrentUser: GetCurrentUser,
   getCohortIdByIdentityId: GetCohortIdByIdentityId,
   getScoredAssignmentsByCohortIdAndIdentityId: GetScoredAssignmentsByCohortIdAndIdentityId,
-  getAssignmentBySlug: GetAssignmentBySlug
+  getAssignmentBySlug: GetAssignmentBySlug,
+  getAverageScoresByIdentityId: GetAverageScoresByIdentityId
 ) {
   const repository = createDevelopersRepository(db);
   const backgroundsSearchApi = createSearchApi({
@@ -292,8 +294,13 @@ export function createDeveloperProfilesService(
 
       return result;
     },
+
     async getAssignmentBySlug(slug: string) {
       return await getAssignmentBySlug(slug);
+    },
+
+    async getAverageScoresByIdentityId(identityId: string) {
+      return await getAverageScoresByIdentityId(identityId);
     },
   };
 }

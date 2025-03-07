@@ -41,4 +41,6 @@ export const developerProfiles: PermissionsSchema<
   getScoredAssignmentsByIdentityId:
     "developerProfiles.getScoredAssignmentsByIdentityId",
   getAssignmentBySlug: "developerProfiles.getAssignmentBySlug",
+  getAverageScoresByIdentityId:
+    "developerProfiles.getAverageScoresByIdentityId",
 };
