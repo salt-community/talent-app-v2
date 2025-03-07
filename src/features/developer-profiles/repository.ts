@@ -382,27 +382,14 @@ export function createDevelopersRepository(db: Db) {
       return { outboxMessageId };
     },
     async deleteDeveloperProfile(developerProfileId: string) {
-      await db.transaction(async (tx) => {
-        //remove after rename is done
-        await tx
-          .delete(tempDeveloperProfiles)
-          .where(eq(tempDeveloperProfiles.id, developerProfileId));
-
-        await tx
-          .delete(developerProfiles)
-          .where(eq(developerProfiles.id, developerProfileId));
-      });
+      await db
+        .delete(developerProfiles)
+        .where(eq(developerProfiles.id, developerProfileId));
     },
     async deleteDeveloperProfileByIdentityId(identityId: string) {
-      await db.transaction(async (tx) => {
-        //remove after rename is done
-        await tx
-          .delete(tempDeveloperProfiles)
-          .where(eq(tempDeveloperProfiles.identityId, identityId));
-        await tx
-          .delete(developerProfiles)
-          .where(eq(developerProfiles.identityId, identityId));
-      });
+      await db
+        .delete(developerProfiles)
+        .where(eq(developerProfiles.identityId, identityId));
     },
   };
 }
