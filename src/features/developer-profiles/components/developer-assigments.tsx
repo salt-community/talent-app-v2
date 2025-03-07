@@ -12,7 +12,15 @@ export async function DeveloperAssignments({ identityId }: Props) {
   const averageScore =
     await developerProfilesService.getAverageScoresByIdentityId(identityId);
 
-  console.log({ avg: averageScore });
+  const getScoreColorClass = (score: number) => {
+    if (score <= 50) {
+      return "text-red-600 font-extrabold"; // Red for score <= 50
+    } else if (score >= 51 && score <= 94) {
+      return "text-orange-500"; // Orange for score 51-94
+    } else {
+      return "text-green-500"; // Green for score >= 95
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-4">
@@ -34,6 +42,13 @@ export async function DeveloperAssignments({ identityId }: Props) {
                 >
                   {assignment.title}
                 </Link>
+              </div>
+              <div className="flex items-center gap-2 mr-2">
+                <div
+                  className={`text-sm font-bold ${getScoreColorClass(averageScore)}`}
+                >
+                  {averageScore}
+                </div>
               </div>
             </div>
           );
