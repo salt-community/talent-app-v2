@@ -10,7 +10,6 @@ import { seedProjects } from "@/features/projects";
   const identities = await seedIdentities();
   const cohorts = await seedCohorts(identities);
   await seedAssignments(cohorts);
-
   const developerProfileIds = await seedDeveloperProfiles(identities);
   await seedProjects(developerProfileIds);
   console.log("Done seeding!");

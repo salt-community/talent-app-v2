@@ -1,14 +1,47 @@
 "use server";
-import { insecureDeveloperProfilesService } from "./instance";
 import { IdentitySelect } from "../iam";
 import { AddDeveloperProfile, developerProfileDetails } from "./types";
 import { skills } from "./seed-data";
 import { faker } from "@faker-js/faker";
 import { v4 as uuidv4 } from "uuid";
+import { createDeveloperProfilesService } from "./service";
+import { db } from "@/db";
 
 export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
   console.log("Seeding developer profiles...");
-
+  const developerProfilesService = createDeveloperProfilesService(
+    db,
+    (): Promise<{ id: string; role: string } | null> => {
+      return Promise.resolve({ id: "", role: "" });
+    },
+    (): Promise<string> => {
+      return Promise.resolve("");
+    },
+    () => {
+      return Promise.resolve([]);
+    },
+    (
+      slug: string
+    ): Promise<{
+      id: string;
+      createdAt: Date | null;
+      title: string;
+      cohortId: string;
+      comment: string | null;
+      categories: string[] | null;
+      slug: string | null;
+    }> => {
+      return Promise.resolve({
+        id: "",
+        createdAt: null,
+        title: "",
+        cohortId: "",
+        comment: "",
+        categories: [""],
+        slug: "",
+      });
+    }
+  );
   const developers: AddDeveloperProfile[] = [];
   const backgrounds: developerProfileDetails[] = [];
   for (const identity of identities) {
@@ -95,16 +128,14 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
   const developerId: string[] = [];
   for (let i = 0; i < developers.length; i++) {
     developerId.push(developers[i].id!);
-    const slug = await insecureDeveloperProfilesService.generateUniqueSlug(
+    const slug = await developerProfilesService.generateUniqueSlug(
       developers[i].name
     );
-    await insecureDeveloperProfilesService.addDeveloperProfile({
+    await developerProfilesService.addDeveloperProfile({
       ...developers[i],
       slug,
     });
-    await insecureDeveloperProfilesService.addDeveloperProfileDetails(
-      backgrounds[i]
-    );
+    await developerProfilesService.addDeveloperProfileDetails(backgrounds[i]);
   }
 
   console.log("Done seeding developer profiles!");
