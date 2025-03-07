@@ -18,7 +18,7 @@ import {
   GetAllCohorts,
   GetCohortById,
   GetCohortStudents,
-  DeleteCohortIdentity,
+  DeleteIdentityFromCohort,
 } from "../cohorts";
 import { ScoreStatus } from "./types";
 
@@ -27,7 +27,7 @@ export function createInstructorService(
   getCohortById: GetCohortById,
   addCohort: AddCohort,
   addDevelopersToCohort: AddDevelopersToCohort,
-  deleteCohortIdentity: DeleteCohortIdentity,
+  deleteIdentityFromCohort: DeleteIdentityFromCohort,
   deleteCohortAndCohortIdentity: DeleteCohortAndCohortIdentity,
   getCohortStudentsByCohortId: GetCohortStudents,
   getAssignmentsByCohortId: GetAssignmentsByCohortId,
@@ -37,7 +37,7 @@ export function createInstructorService(
   upsertAssignmentScore: UpsertAssignmentScore,
   getScoresByAssignmentId: GetScoresByAssignmentId,
   updateScoreStatuses: UpdateScoreStatuses,
-  getAllIdentities: GetAllIdentities,
+  getAllIdentities: GetAllIdentities
 ) {
   return {
     async getAllCohorts() {
@@ -65,7 +65,7 @@ export function createInstructorService(
       return await addDevelopersToCohort(args);
     },
     async deleteIdentityFromCohort(identityId: string) {
-      return await deleteCohortIdentity(identityId);
+      return await deleteIdentityFromCohort(identityId);
     },
     async deleteCohortAndCohortIdentity(cohortId: string) {
       return await deleteCohortAndCohortIdentity(cohortId);
@@ -103,8 +103,7 @@ export function createInstructorService(
           assignment.categories?.map((category) => {
             const score = assignmentScores.find(
               (score) =>
-                score.identityId === developer.id &&
-                score.category === category,
+                score.identityId === developer.id && score.category === category
             );
             return {
               id: score?.id,
@@ -118,10 +117,10 @@ export function createInstructorService(
           }) || [];
 
         const scored = assignmentScores.some(
-          (s) => s.identityId === developer.id,
+          (s) => s.identityId === developer.id
         );
         const published = assignmentScores.some(
-          (s) => s.identityId === developer.id && s.status === "published",
+          (s) => s.identityId === developer.id && s.status === "published"
         );
 
         return {

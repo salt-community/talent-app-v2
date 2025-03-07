@@ -9,7 +9,6 @@ export const cohorts: PermissionsSchema<"cohorts", CohortsService> = {
   getCohortStudents: "cohorts.getCohortStudents",
   getAllUnassignedDevelopers: "cohorts.getAllUnassignedDevelopers",
   addDeveloperToCohort: "cohorts.addDeveloperToCohort",
-  deleteCohortIdentity: "cohorts.deleteCohortIdentity",
   addDevelopersToCohort: "cohorts.addDevelopersToCohort",
   deleteCohortAndCohortIdentity: "cohorts.deleteCohortAndCohortIdentity",
   getCohortIdByIdentityId: "cohorts.getCohortIdByIdentityId",

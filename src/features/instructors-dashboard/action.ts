@@ -67,6 +67,7 @@ export async function addIdentitiesToCohortAction(
     console.error(error);
   }
 }
+
 export async function deleteIdentityFromCohortAction(identityId: string) {
   try {
     await instructorService.deleteIdentityFromCohort(identityId);
@@ -75,6 +76,7 @@ export async function deleteIdentityFromCohortAction(identityId: string) {
     console.error(error);
   }
 }
+
 export async function deleteCohortAndCohortIdentityAction(cohortId: string) {
   try {
     await instructorService.deleteCohortAndCohortIdentity(cohortId);
@@ -83,6 +85,7 @@ export async function deleteCohortAndCohortIdentityAction(cohortId: string) {
     console.error(error);
   }
 }
+
 export async function deleteAssignmentByIdAction(assignmentId: string) {
   try {
     await instructorService.deleteAssignmentById(assignmentId);
@@ -91,6 +94,7 @@ export async function deleteAssignmentByIdAction(assignmentId: string) {
     console.error(error);
   }
 }
+
 export async function addScoreToAssignment(score: AssignmentScore) {
   try {
     await instructorService.addScoreToAssignment(score);

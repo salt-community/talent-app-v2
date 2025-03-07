@@ -89,7 +89,7 @@ export const rolesPermissions = {
     assignments.getAssignmentBySlug,
     cohorts.getAllUnassignedDevelopers,
     cohorts.addDeveloperToCohort,
-    cohorts.deleteCohortIdentity,
+    cohorts.deleteIdentityFromCohort,
   ]),
 } as const;
 

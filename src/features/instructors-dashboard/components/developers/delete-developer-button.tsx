@@ -21,6 +21,7 @@ export function DeleteDeveloperButton({ identityId, name }: Props) {
         </>
       ),
     });
+    
   }
 
   return (

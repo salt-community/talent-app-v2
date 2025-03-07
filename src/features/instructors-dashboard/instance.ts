@@ -8,7 +8,7 @@ export const instructorService = createInstructorService(
   cohortsService.getCohortById,
   cohortsService.addCohort,
   cohortsService.addDevelopersToCohort,
-  cohortsService.deleteCohortIdentity,
+  cohortsService.deleteIdentityFromCohort,
   cohortsService.deleteCohortAndCohortIdentity,
   cohortsService.getCohortStudents,
   assignmentsService.getAssignmentsByCohortId,
@@ -18,5 +18,5 @@ export const instructorService = createInstructorService(
   assignmentsService.upsertAssignmentScore,
   assignmentsService.getScoresByAssignmentId,
   assignmentsService.updateScoreStatuses,
-  iamService.getAllIdentities,
+  iamService.getAllIdentities
 );

@@ -24,11 +24,8 @@ export function createCohortsService(
     async getCohortIdByIdentityId(identityId: string) {
       return await repository.getCohortIdByIdentityId(identityId);
     },
-    async deleteIdentityFromCohort(cohortId: string) {
-      return await repository.deleteIdentityFromCohort(cohortId);
-    },
-    async deleteCohortIdentity(identityId: string) {
-      await repository.deleteCohort(identityId);
+    async deleteIdentityFromCohort(identityId: string) {
+      await repository.deleteIdentityFromCohort(identityId);
     },
     async deleteCohortAndCohortIdentity(cohortId: string) {
       await repository.deleteCohortAndCohortIdentity(cohortId);
