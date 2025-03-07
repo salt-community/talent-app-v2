@@ -235,22 +235,12 @@ export function createDevelopersRepository(db: Db) {
       return !!developerProfile;
     },
     async insertSlug(id: string, slug: string) {
-      await db.transaction(async (tx) => {
-        //remove after rename is done
-        await tx
-          .update(tempDeveloperProfiles)
-          .set({
-            slug,
-          })
-          .where(eq(tempDeveloperProfiles.id, id));
-
-        await tx
-          .update(developerProfiles)
-          .set({
-            slug,
-          })
-          .where(eq(developerProfiles.id, id));
-      });
+      await db
+        .update(developerProfiles)
+        .set({
+          slug,
+        })
+        .where(eq(developerProfiles.id, id));
     },
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
