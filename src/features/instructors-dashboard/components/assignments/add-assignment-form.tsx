@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, X, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -31,20 +31,6 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const handleSelectCategory = (category: { id: string; name: string }) => {
     if (!selectedCategories.find((c) => c.id === category.id)) {
@@ -114,7 +100,15 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
     if (e.key === "Enter" && searchTerm) {
       e.preventDefault();
       handleAddCustomCategory();
+    } else if (e.key === "Escape") {
+      setIsOpen(false);
     }
+  };
+
+  const handleInputBlur = () => {
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 150);
   };
 
   return (
@@ -132,7 +126,7 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
 
       <div>
         <Label htmlFor="categories">Categories</Label>
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative">
           <div
             className="border rounded-md p-2 flex items-center justify-between cursor-pointer"
             onClick={() => setIsOpen(!isOpen)}
@@ -147,8 +141,12 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
                 setSearchTerm(e.target.value);
                 setIsOpen(true);
               }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(true);
+              }}
               onKeyDown={handleKeyDown}
+              onBlur={handleInputBlur}
             />
             <ChevronDown
               className={`w-4 h-4 transition-transform ${isOpen ? "transform rotate-180" : ""}`}
@@ -162,7 +160,10 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
                     <div
                       key={category.id}
                       className="p-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => handleSelectCategory(category)}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        handleSelectCategory(category);
+                      }}
                     >
                       {category.name}
                     </div>
@@ -173,7 +174,10 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
               {showAddCustomOption && (
                 <div
                   className="p-2 hover:bg-blue-50 cursor-pointer border-t flex items-center"
-                  onClick={handleAddCustomCategory}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    handleAddCustomCategory();
+                  }}
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add &quot;{searchTerm}&quot; as new category
