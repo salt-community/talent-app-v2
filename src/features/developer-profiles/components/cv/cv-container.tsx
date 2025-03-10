@@ -16,24 +16,25 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
   const [isEditable, setIsEditable] = useState(false);
   const [backgroundInfo, setBackgroundInfo] = useState(background);
   const handleOnSave = async (background: BackgroundInfo) => {
-    await updateCvAction(background)
+    await updateCvAction(background);
     setIsEditable(false);
   };
 
   return (
     <section className="border-red-800 border-2 py-6 md:py-0 md:mx-auto md:min-h-[1122px] md:max-h-[1122px]  md:min-w-[795px] md:max-w-[795px]">
-      <div className="hidden md:block text-end py-3 pr-4 bg-zinc-100 font-bold">
-        {"</salt>"}
+      <div className="flex items-center justify-between py-3 font-bold mx-2">
+        <p className="hidden md:block text-start">{"</salt>"}</p>
+        {isEditable ? (
+          <Check onClick={() => handleOnSave(backgroundInfo)} />
+        ) : (
+          <Pencil
+            size={20}
+            className="cursor-pointer"
+            onClick={() => setIsEditable(true)}
+          />
+        )}
       </div>
-      {isEditable ? (
-        <Check onClick={() => handleOnSave(backgroundInfo)} />
-      ) : (
-        <Pencil
-          size={20}
-          className="cursor-pointer"
-          onClick={() => setIsEditable(true)}
-        />
-      )}
+
       <CvHeader
         name={backgroundInfo.name}
         bio={backgroundInfo.bio}
