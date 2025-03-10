@@ -33,15 +33,13 @@ export function CvHeader({
           <BackgroundAvatar url={avatarUrl} size="lg" />
         </div>
         <div className="flex flex-col items-center gap-4 px-3 md:items-start md:col-start-2 md:col-end-3 md:pt-4">
-          <div className="flex w-full justify-center md:justify-between gap-4 items-center pr-4">
-            <EditableField
-              value={name}
-              isEditable={isEditable}
-              onChange={(name) => {
-                onChange({ name, bio, avatarUrl });
-              }}
-            />
-          </div>
+          <EditableField
+            value={name}
+            isEditable={isEditable}
+            onChange={(name) => {
+              onChange({ name, bio, avatarUrl });
+            }}
+          />
           <EditableField
             value={bio}
             isEditable={isEditable}
