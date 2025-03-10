@@ -9,3 +9,24 @@ const insecureCohortService = createCohortsService(
 );
 
 export const cohortsService = secureService("cohorts", insecureCohortService);
+
+export const cohortsSeedingService = createCohortsService(
+  db,
+  async () => {
+    return Promise.resolve({
+      id: "",
+      name: "",
+      clerkId: "",
+      email: "",
+      role: "",
+    });
+  },
+  (): Promise<
+    {
+      id: string;
+      name: string;
+    }[]
+  > => {
+    return Promise.resolve([]);
+  }
+);

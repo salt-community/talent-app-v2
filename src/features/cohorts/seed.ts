@@ -3,30 +3,10 @@ import { db } from "@/db";
 import { IdentitySelect } from "../iam";
 import { CohortFormData } from "./types";
 import { createCohortsService } from "./service";
+import { cohortsSeedingService } from "./instance";
 
 export async function seedCohorts(identities: IdentitySelect[]) {
   console.log("Seeding cohorts...");
-
-  const cohortsService = createCohortsService(
-    db,
-    async () => {
-      return Promise.resolve({
-        id: "",
-        name: "",
-        clerkId: "",
-        email: "",
-        role: "",
-      });
-    },
-    (): Promise<
-      {
-        id: string;
-        name: string;
-      }[]
-    > => {
-      return Promise.resolve([]);
-    }
-  );
 
   const cohorts: CohortFormData[] = [
     {
@@ -49,7 +29,7 @@ export async function seedCohorts(identities: IdentitySelect[]) {
   const cohortIds: string[] = [];
 
   for (const cohort of cohorts) {
-    const cohortId = (await cohortsService.addCohort(cohort)).id;
+    const cohortId = (await cohortsSeedingService.addCohort(cohort)).id;
     cohortIds.push(cohortId);
   }
 
@@ -62,7 +42,7 @@ export async function seedCohorts(identities: IdentitySelect[]) {
       const identity = identities[j];
 
       if (j % modulusLimit === i) {
-        await cohortsService.addDeveloperToCohort({
+        await cohortsSeedingService.addDeveloperToCohort({
           cohortId,
           identityId: identity.id,
         });
