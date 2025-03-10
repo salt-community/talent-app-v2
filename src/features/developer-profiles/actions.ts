@@ -4,13 +4,15 @@ import { errorHandler } from "@/lib";
 import { revalidatePath } from "next/cache";
 import { developerProfilesService } from "./instance";
 import {
-  CVHeaderUpdate,
-  CVHeaderValidation,
   developerProfileUpdate,
   DeveloperProfileValidation,
 } from "./validation";
 import { ZodError } from "zod";
-import { PreviousState, SocialLink } from "./types";
+import {
+  BackgroundInfo,
+  PreviousState,
+  SocialLink,
+} from "./types";
 
 export async function addDeveloperProfileAction(identityId: string) {
   try {
@@ -62,35 +64,12 @@ export async function updateBackgroundAction(
   }
 }
 
-export async function updateCvHeaderAction(
-  _: PreviousState,
-  formData: FormData
-) {
-  const update = Object.fromEntries(formData.entries());
-  let validatedUpdate: CVHeaderValidation | undefined;
-
-  try {
-    validatedUpdate = CVHeaderUpdate.parse(update);
-    await developerProfilesService.updateDeveloperProfile({
-      ...validatedUpdate,
-    });
-  } catch (error) {
-    if (error instanceof ZodError) {
-      const avatarError = error.flatten().fieldErrors.avatar?.[0];
-      const nameError = error.flatten().fieldErrors.name?.[0];
-
-      return {
-        errorMessages: {
-          avatarError,
-          nameError,
-        },
-        update,
-      };
-    }
-    errorHandler(error);
-  }
-
-  if (validatedUpdate) {
-    revalidatePath("/");
-  }
+export async function updateCvAction(backgrounds: BackgroundInfo) {
+  const background = {
+    id: backgrounds.id,
+    name: backgrounds.name,
+    bio: backgrounds.bio,
+    avatarUrl: backgrounds.avatarUrl,
+  };
+  await developerProfilesService.updateDeveloperProfile(background);
 }
