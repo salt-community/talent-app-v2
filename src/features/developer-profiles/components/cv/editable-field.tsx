@@ -17,17 +17,17 @@ export function EditableField({
   const textStyle = { fontSize: `${fontSize}px` };
 
   return (
-    <div className="flex items-center gap-2 w-full px-10" style={textStyle}>
+    <div className="flex items-center w-full" style={textStyle}>
       {isEditable ? (
         <AutosizeTextarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1 resize-none"
+          className="border border-gray-300 rounded p-0 resize-none"
           style={textStyle}
           minHeight={fontSize}
         />
       ) : (
-        <div style={textStyle}>{value}</div>
+        <p style={textStyle} className="whitespace-pre-wrap">{value}</p>
       )}
     </div>
   );
