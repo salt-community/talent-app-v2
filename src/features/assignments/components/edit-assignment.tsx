@@ -60,7 +60,7 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
               type="text"
               defaultValue={assignment.title}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-xs"
             />
           </div>
 
@@ -75,7 +75,7 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
               min={0}
               max={100}
               // defaultValue={assignment.score?.toString() ?? "0"}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-xs"
             />
           </div>
 

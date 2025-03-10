@@ -15,7 +15,7 @@ export function Hero() {
           <h1 className=" md:text-xl  text-md uppercase">
             School of Applied Technology
           </h1>
-          <h2 className=" text-transparent bg-clip-text bg-gradient-to-l from-[#f6806b] to-[#458cc6] md:text-6xl text-5xl md:px-40 font-bold">
+          <h2 className=" text-transparent bg-clip-text bg-linear-to-l from-[#f6806b] to-[#458cc6] md:text-6xl text-5xl md:px-40 font-bold">
             {"Tomorrow's Developers"}
           </h2>
           <h2 className=" md:text-5xl text-2xl pb-4 md:px-40 px-8 font-[600] text-paragraph">

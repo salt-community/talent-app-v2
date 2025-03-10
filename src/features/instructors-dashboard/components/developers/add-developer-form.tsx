@@ -59,7 +59,7 @@ export const AddDeveloperForm = ({ cohortId, developer, onSuccess }: Props) => {
           <input
             type="text"
             placeholder="Select developers..."
-            className="outline-none w-full cursor-pointer"
+            className="outline-hidden w-full cursor-pointer"
             value={searchTerm}
             onChange={(e) => {
               e.stopPropagation();

@@ -16,7 +16,7 @@ export function CategoryCheckbox({ tag, checked, handleChangeTag }: Props) {
         name={toCamelCase(tag)}
         value={toCamelCase(tag)}
         id={toCamelCase(tag)}
-        className="focus:ring focus:ring-gray-200"
+        className="focus:ring-3 focus:ring-gray-200"
         onChange={(e) => {
           if (handleChangeTag) handleChangeTag(e.target.checked, tag);
         }}

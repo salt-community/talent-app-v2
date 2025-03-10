@@ -143,7 +143,7 @@ export function AddAssignmentForm({
             <input
               type="text"
               placeholder="Select or create categories..."
-              className="outline-none w-full cursor-pointer"
+              className="outline-hidden w-full cursor-pointer"
               value={searchTerm}
               onChange={(e) => {
                 e.stopPropagation();
