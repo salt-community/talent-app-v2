@@ -33,9 +33,8 @@ export function createAssignmentsService(db: Db) {
     },
 
     async updateAssignment(assigment: Assignment) {
-      console.log("Updating assignment....:", assigment);
       const slug = generateSlug(assigment.title);
-      return await repo.updateAssignment(assigment.id, assigment);
+      return await repo.updateAssignment(assigment.id, { ...assigment, slug });
     },
 
     async getAssignmentById(assignmentId: string) {
