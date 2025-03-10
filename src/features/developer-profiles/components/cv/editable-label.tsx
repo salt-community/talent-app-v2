@@ -2,9 +2,8 @@ type Props = {
   label: string;
   isEditable: boolean;
   onChange: (label: string) => void;
-  onBlur: () => void;
 };
-export function EditableLabel({ label, isEditable, onChange, onBlur }: Props) {
+export function EditableLabel({ label, isEditable, onChange }: Props) {
   return (
     <div className="flex items-center gap-2">
       {isEditable ? (
@@ -12,7 +11,6 @@ export function EditableLabel({ label, isEditable, onChange, onBlur }: Props) {
           type="text"
           value={label}
           onChange={(e) => onChange(e.target.value)}
-          onBlur={onBlur}
           className="border border-gray-300 rounded px-2 py-1"
         />
       ) : (
