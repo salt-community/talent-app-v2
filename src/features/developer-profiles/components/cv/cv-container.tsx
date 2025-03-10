@@ -13,6 +13,11 @@ type Props = {
 
 export function CvContainer({ background, hasProfileAccess }: Props) {
   const [isEditable, setIsEditable] = useState(false);
+  const [backgroundInfo, setBackgroundInfo] = useState(background);
+  const handleOnSave = async (background: BackgroundInfo) => {
+    console.log(background)
+    setIsEditable(false)
+  }
 
   return (
     <section className="border-red-800 border-2 py-6 md:py-0 md:mx-auto md:min-h-[1122px] md:max-h-[1122px]  md:min-w-[795px] md:max-w-[795px]">
@@ -20,22 +25,25 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
         {"</salt>"}
       </div>
       {isEditable ? (
-        <Check onClick={() => setIsEditable(!isEditable)} />
+        <Check onClick={() => handleOnSave(backgroundInfo)} />
       ) : (
         <Pencil
           size={20}
           className="cursor-pointer"
-          onClick={() => setIsEditable(!isEditable)}
+          onClick={() => setIsEditable(true)}
         />
       )}
       <CvHeader
-        name={background.name}
-        bio={background.bio}
-        avatarUrl={background.avatarUrl}
+        name={backgroundInfo.name}
+        bio={backgroundInfo.bio}
+        avatarUrl={backgroundInfo.avatarUrl}
         hasProfileAccess={hasProfileAccess}
-        id={background.id}
-        identityId={background.identityId}
+        id={backgroundInfo.id}
+        identityId={backgroundInfo.identityId}
         isEditable={isEditable}
+        onChange={({ name, bio, avatarUrl }) =>
+          setBackgroundInfo((prev) => ({ ...prev, name, bio, avatarUrl }))
+        }
       />
       <div className="md:grid md:grid-cols-[15rem_2fr]">
         <CvAside
