@@ -18,7 +18,3 @@ export const developerProfilesService = secureService(
   "developerProfiles",
   insecureDeveloperProfilesService
 );
-
-export function getDeveloperProfilesService() {
-  return developerProfilesService;
-}
