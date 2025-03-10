@@ -18,3 +18,38 @@ export const developerProfilesService = secureService(
   "developerProfiles",
   insecureDeveloperProfilesService
 );
+
+export const developerProfilesSeedingService = createDeveloperProfilesService(
+  db,
+  (): Promise<{ id: string; role: string } | null> => {
+    return Promise.resolve({ id: "", role: "" });
+  },
+  (): Promise<string> => {
+    return Promise.resolve("");
+  },
+  () => {
+    return Promise.resolve([]);
+  },
+  (): Promise<{
+    id: string;
+    createdAt: Date | null;
+    title: string;
+    cohortId: string;
+    comment: string | null;
+    categories: string[] | null;
+    slug: string | null;
+  }> => {
+    return Promise.resolve({
+      id: "",
+      createdAt: null,
+      title: "",
+      cohortId: "",
+      comment: "",
+      categories: [""],
+      slug: "",
+    });
+  },
+  () => {
+    return Promise.resolve(0);
+  }
+);
