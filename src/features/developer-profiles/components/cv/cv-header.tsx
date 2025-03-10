@@ -1,5 +1,4 @@
 import { BackgroundAvatar } from "../backgrounds/avatar";
-import { EditCvHeader } from "./edit-cv-header";
 import { EditableLabel } from "./editable-label";
 
 type Props = {
@@ -10,15 +9,17 @@ type Props = {
   identityId: string;
   hasProfileAccess: boolean;
   isEditable: boolean;
+  onChange: ({
+    name,
+    bio,
+    avatarUrl,
+  }: {
+    name: string;
+    bio: string;
+    avatarUrl: string;
+  }) => void;
 };
-export function CvHeader({
-  name,
-  bio,
-  avatarUrl,
-  id,
-  identityId,
-  isEditable,
-}: Props) {
+export function CvHeader({ name, bio, avatarUrl, isEditable, onChange }: Props) {
   return (
     <>
       <article className="flex flex-col items-center md:items-start justify-center gap-4 md:gap-0 md:grid md:grid-cols-[15rem_2fr] pb-8 md:pb-0">
@@ -30,20 +31,9 @@ export function CvHeader({
             <EditableLabel
               label={name}
               isEditable={isEditable}
-              onChange={(label) => {
-                console.log(label);
+              onChange={(name) => {
+                onChange({ name, bio, avatarUrl });
               }}
-              onBlur={() => {
-                console.log("blur");
-              }}
-            />
-
-            <EditCvHeader
-              avatarUrl={avatarUrl}
-              name={name}
-              bio={bio}
-              id={id}
-              identityId={identityId}
             />
           </div>
           <p className="font-light text-paragraph text-center md:text-left">
