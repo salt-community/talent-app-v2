@@ -1,8 +1,6 @@
 "use server";
-import { db } from "@/db";
 import { IdentitySelect } from "../iam";
 import { CohortFormData } from "./types";
-import { createCohortsService } from "./service";
 import { cohortsSeedingService } from "./instance";
 
 export async function seedCohorts(identities: IdentitySelect[]) {

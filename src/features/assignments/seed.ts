@@ -1,6 +1,4 @@
-import { db } from "@/db";
 import { categoryTags } from "./categories";
-import { createAssignmentsService } from "./service";
 import { assignmentsSeedingService } from "./instance";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
