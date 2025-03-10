@@ -19,7 +19,13 @@ type Props = {
     avatarUrl: string;
   }) => void;
 };
-export function CvHeader({ name, bio, avatarUrl, isEditable, onChange }: Props) {
+export function CvHeader({
+  name,
+  bio,
+  avatarUrl,
+  isEditable,
+  onChange,
+}: Props) {
   return (
     <>
       <article className="flex flex-col items-center md:items-start justify-center gap-4 md:gap-0 md:grid md:grid-cols-[15rem_2fr] pb-8 md:pb-0">
@@ -36,9 +42,13 @@ export function CvHeader({ name, bio, avatarUrl, isEditable, onChange }: Props) 
               }}
             />
           </div>
-          <p className="font-light text-paragraph text-center md:text-left">
-            {bio}
-          </p>
+          <EditableLabel
+            label={bio}
+            isEditable={isEditable}
+            onChange={(bio) => {
+              onChange({ name, bio, avatarUrl });
+            }}
+          />
         </div>
       </article>
     </>
