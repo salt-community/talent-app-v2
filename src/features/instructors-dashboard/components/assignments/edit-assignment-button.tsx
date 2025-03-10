@@ -5,12 +5,12 @@ import {
   DialogTrigger,
   DialogContent,
   DialogTitle,
+  Button,
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AddAssignmentForm } from "./add-assignment-form";
 import { Edit } from "lucide-react";
 import { Assignment } from "@/features/assignments";
-
 
 type Props = {
   cohortId: string;
@@ -24,12 +24,13 @@ export default function EditAssignmentButton({ cohortId, assignment }: Props) {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Edit
-            className="hover:text-blue-500 cursor-pointer"
+          <Button
+            variant="ghost"
+            className="hover:text-green-600"
             aria-label="Edit"
-            size={18}
-            onClick={() => setOpen(true)}
-          />
+          >
+            <Edit size={18} />
+          </Button>
         </DialogTrigger>
         <VisuallyHidden>
           <DialogTitle>Edit Assignment</DialogTitle>
