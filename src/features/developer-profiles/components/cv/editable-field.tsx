@@ -22,12 +22,17 @@ export function EditableField({
         <AutosizeTextarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="border border-gray-300 rounded p-0 resize-none"
+          className="border border-gray-300 rounded py-2 resize-none leading-none w-full h-full"
           style={textStyle}
           minHeight={fontSize}
         />
       ) : (
-        <p style={textStyle} className="whitespace-pre-wrap">{value}</p>
+        <div
+          style={textStyle}
+          className="whitespace-pre-wrap border rounded py-2 border-transparent leading-none w-full h-full"
+        >
+          {value}
+        </div>
       )}
     </div>
   );
