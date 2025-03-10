@@ -2,9 +2,9 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { instructorService } from "./instance";
-import { assignmentSchema } from "./validation";
+import { assignmentSchema, newAssignmentSchema } from "./validation";
 import { CohortFormData } from "../cohorts";
-import { AssignmentScore } from "../assignments";
+import { Assignment, AssignmentScore } from "../assignments";
 import { ScoreStatus } from "./types";
 
 export async function addCohortAction(cohort: CohortFormData) {
@@ -17,37 +17,47 @@ export async function addCohortAction(cohort: CohortFormData) {
 }
 
 export async function addAssignmentAction(
-  formData: FormData,
   cohortId: string,
-  categories: string[]
+  title: string,
+  comment: string,
+  categories: string[],
 ) {
-  const title = formData.get("title") as string;
-  const comment = formData.get("comment") as string;
-
   try {
-    assignmentSchema.parse({
+    const assignment = newAssignmentSchema.parse({
       title,
       comment,
       cohortId,
       categories,
+      createdAt: new Date(),
+      score: 0,
     });
 
-    const newAssignment = {
-      title,
-      score: 0,
-      cohortId,
-      comment,
-      categories,
-      slug: "",
-    };
-
-    await instructorService.addAssignment(newAssignment);
+    await instructorService.addAssignment(assignment);
     revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Validation failed:", error.errors);
       throw new Error(
-        "Validation failed: " + error.errors.map((e) => e.message).join(", ")
+        "Validation failed: " + error.errors.map((e) => e.message).join(", "),
+      );
+    } else {
+      console.error("Unexpected error:", error);
+      throw error;
+    }
+  }
+}
+
+export async function updateAssignmentAction(assigment: Assignment) {
+  try {
+    const assignment = assignmentSchema.parse({ ...assigment, score: 0 });
+    console.log("Parsed assignment:", assignment);
+    await instructorService.updateAssignment(assignment);
+    revalidatePath("/instructor-dashboard", "layout");
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error("Validation failed:", error.errors);
+      throw new Error(
+        "Validation failed: " + error.errors.map((e) => e.message).join(", "),
       );
     } else {
       console.error("Unexpected error:", error);
@@ -58,7 +68,7 @@ export async function addAssignmentAction(
 
 export async function addIdentitiesToCohortAction(
   cohortId: string,
-  identityIds: string[]
+  identityIds: string[],
 ) {
   try {
     await instructorService.addIdentitiesToCohort({ cohortId, identityIds });

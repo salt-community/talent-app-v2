@@ -1,5 +1,6 @@
 import { GetAllIdentities } from "../iam";
 import {
+  Assignment,
   AssignmentScore,
   CreateAssignment,
   DeleteAssignmentById,
@@ -32,12 +33,13 @@ export function createInstructorService(
   getCohortStudentsByCohortId: GetCohortStudents,
   getAssignmentsByCohortId: GetAssignmentsByCohortId,
   addAssignment: CreateAssignment,
+  uppdateAssignment: CreateAssignment,
   deleteAssignmentById: DeleteAssignmentById,
   getAssignmentBySlug: GetAssignmentBySlug,
   upsertAssignmentScore: UpsertAssignmentScore,
   getScoresByAssignmentId: GetScoresByAssignmentId,
   updateScoreStatuses: UpdateScoreStatuses,
-  getAllIdentities: GetAllIdentities
+  getAllIdentities: GetAllIdentities,
 ) {
   return {
     async getAllCohorts() {
@@ -54,6 +56,9 @@ export function createInstructorService(
     },
     async addAssignment(assignment: NewAssignment) {
       return await addAssignment(assignment);
+    },
+    async updateAssignment(assignment: Assignment) {
+      return await uppdateAssignment(assignment);
     },
     async getCohortStudentsByCohortId(cohortId: string) {
       return await getCohortStudentsByCohortId(cohortId);
@@ -103,7 +108,8 @@ export function createInstructorService(
           assignment.categories?.map((category) => {
             const score = assignmentScores.find(
               (score) =>
-                score.identityId === developer.id && score.category === category
+                score.identityId === developer.id &&
+                score.category === category,
             );
             return {
               id: score?.id,
@@ -117,10 +123,10 @@ export function createInstructorService(
           }) || [];
 
         const scored = assignmentScores.some(
-          (s) => s.identityId === developer.id
+          (s) => s.identityId === developer.id,
         );
         const published = assignmentScores.some(
-          (s) => s.identityId === developer.id && s.status === "published"
+          (s) => s.identityId === developer.id && s.status === "published",
         );
 
         return {

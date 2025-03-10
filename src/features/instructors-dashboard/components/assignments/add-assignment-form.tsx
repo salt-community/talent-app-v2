@@ -6,12 +6,8 @@ import { ChevronDown, X, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { addAssignmentAction } from "../../action";
-
-type Props = {
-  cohortId: string;
-  onSuccess: () => void;
-};
+import { addAssignmentAction, updateAssignmentAction } from "../../action";
+import { Assignment } from "@/features/assignments";
 
 const DEFAULT_CATEGORIES = [
   { id: "frontend", name: "Frontend" },
@@ -22,15 +18,28 @@ const DEFAULT_CATEGORIES = [
   { id: "design", name: "Design" },
 ];
 
-export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
+type Props = {
+  cohortId: string;
+  assignemnt?: Assignment;
+  onSuccess: () => void;
+};
+
+export function AddAssignmentForm({
+  cohortId,
+  assignemnt = undefined,
+  onSuccess,
+}: Props) {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState<
-    { id: string; name: string }[]
-  >([]);
+  const [selectedCategories, setSelectedCategories] = useState(
+    assignemnt?.categories?.map((category) => ({
+      id: category,
+      name: category,
+    })) || [],
+  );
   const [searchTerm, setSearchTerm] = useState("");
-  const [title, setTitle] = useState("");
-  const [comment, setComment] = useState("");
+  const [title, setTitle] = useState(assignemnt?.title || "");
+  const [comment, setComment] = useState(assignemnt?.comment || "");
 
   const handleSelectCategory = (category: { id: string; name: string }) => {
     if (!selectedCategories.find((c) => c.id === category.id)) {
@@ -56,38 +65,38 @@ export function AddAssignmentForm({ cohortId, onSuccess }: Props) {
 
   const handleRemoveCategory = (categoryId: string) => {
     setSelectedCategories(
-      selectedCategories.filter((cat) => cat.id !== categoryId)
+      selectedCategories.filter((cat) => cat.id !== categoryId),
     );
   };
 
   const filteredCategories = DEFAULT_CATEGORIES.filter(
     (category) =>
       category.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      !selectedCategories.find((c) => c.id === category.id)
+      !selectedCategories.find((c) => c.id === category.id),
   );
 
   const showAddCustomOption =
     searchTerm.trim() !== "" &&
     !filteredCategories.some(
-      (cat) => cat.name.toLowerCase() === searchTerm.toLowerCase()
+      (cat) => cat.name.toLowerCase() === searchTerm.toLowerCase(),
     ) &&
     !selectedCategories.some(
-      (cat) => cat.name.toLowerCase() === searchTerm.toLowerCase()
+      (cat) => cat.name.toLowerCase() === searchTerm.toLowerCase(),
     );
 
   const handleSubmit = async () => {
     setLoading(true);
 
     try {
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("comment", comment);
-
-      await addAssignmentAction(
-        formData,
-        cohortId,
-        selectedCategories.map((cat) => cat.id)
-      );
+      const categories = selectedCategories.map((cat) => cat.id);
+      if (assignemnt) {
+        await updateAssignmentAction({
+          ...assignemnt,
+          title,
+          comment,
+          categories,
+        });
+      } else await addAssignmentAction(cohortId, title, comment, categories);
       onSuccess();
     } catch (error) {
       console.error("Failed to create assignment:", error);
