@@ -14,7 +14,7 @@ import {
   EducationSelect,
   LanguageSelect,
   SkillSelect,
-  UpdateDeveloperProfile,
+  updateDeveloperProfile,
 } from "./types";
 
 export function createDevelopersRepository(db: Db) {
@@ -342,7 +342,7 @@ export function createDevelopersRepository(db: Db) {
       });
     },
     async updateDeveloperProfile(
-      updatedDeveloperProfile: UpdateDeveloperProfile
+      updatedDeveloperProfile: updateDeveloperProfile
     ) {
       const outboxMessageId = await db.transaction(async (tx) => {
         //remove after rename is done
