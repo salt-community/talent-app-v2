@@ -61,7 +61,7 @@
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.4",
     "uuid": "^11.0.5",
-    "zod": "^3.23.8"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
