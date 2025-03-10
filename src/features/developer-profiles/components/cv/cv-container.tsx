@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
 import { BackgroundInfo } from "../../types";
-import { Pencil } from "lucide-react";
+import { Check, Pencil } from "lucide-react";
 
 type Props = {
   background: BackgroundInfo;
@@ -19,13 +19,15 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
       <div className="hidden md:block text-end py-3 pr-4 bg-zinc-100 font-bold">
         {"</salt>"}
       </div>
-      <Pencil
-        type="button"
-        size={20}
-        strokeWidth={2.5}
-        className="cursor-pointer"
-        onClick={() => setIsEditable(!isEditable)}
-      />
+      {isEditable ? (
+        <Check onClick={() => setIsEditable(!isEditable)} />
+      ) : (
+        <Pencil
+          size={20}
+          className="cursor-pointer"
+          onClick={() => setIsEditable(!isEditable)}
+        />
+      )}
       <CvHeader
         name={background.name}
         bio={background.bio}
