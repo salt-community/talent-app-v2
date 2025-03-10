@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { categoryTags } from "./categories";
 import { createAssignmentsService } from "./service";
+import { assignmentsSeedingService } from "./instance";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
@@ -9,7 +10,6 @@ const getRandomTags = (allTags: string[], maxTags: number): string[] => {
 
 export const seedAssignments = async (cohortIds: string[]) => {
   console.log("Seeding assignments...");
-  const insecureAssignmentService = createAssignmentsService(db);
   const assignmentTitles = [
     "Build a Responsive Portfolio Website",
     "Create a RESTful API with Node.js",
@@ -38,11 +38,11 @@ export const seedAssignments = async (cohortIds: string[]) => {
     "Design an Accessibility-First Web App",
   ];
 
-  await insecureAssignmentService.deleteAllAssignments();
+  await assignmentsSeedingService.deleteAllAssignments();
 
   for (let i = 0; i < 5; i++) {
     try {
-      await insecureAssignmentService.createAssignment({
+      await assignmentsSeedingService.createAssignment({
         cohortId: cohortIds[0],
         title:
           assignmentTitles[

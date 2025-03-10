@@ -8,3 +8,4 @@ export const assignmentsService = secureService(
   "assignments",
   insecureAssignmentService
 );
+export const assignmentsSeedingService = createAssignmentsService(db);
