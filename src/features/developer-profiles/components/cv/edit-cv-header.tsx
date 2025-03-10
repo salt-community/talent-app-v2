@@ -15,7 +15,7 @@ import {
   ScrollArea,
   Textarea,
 } from "@/components";
-import { Loader2, Pencil } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { BackgroundAvatar } from "../backgrounds/avatar";
 import { useActionState, useEffect, useState } from "react";
 import { updateCvHeaderAction } from "../../actions";
@@ -28,33 +28,23 @@ type Props = {
   identityId: string;
 };
 
-export function EditCvHeader({ name, bio, avatarUrl, id, identityId}: Props) {
-
- const [state, formAction, isPending] = useActionState(
-     updateCvHeaderAction,
-     undefined
-   );
+export function EditCvHeader({ name, bio, avatarUrl, id, identityId }: Props) {
+  const [state, formAction, isPending] = useActionState(
+    updateCvHeaderAction,
+    undefined,
+  );
   const [avatar, setAvatar] = useState(avatarUrl);
   const [isOpen, setIsOpen] = useState(false);
 
-   useEffect(() => {
-      if (!isPending && state?.errorMessages === undefined) {
-        setIsOpen(false);
-      }
-    }, [isPending, state]);
-  
+  useEffect(() => {
+    if (!isPending && state?.errorMessages === undefined) {
+      setIsOpen(false);
+    }
+  }, [isPending, state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Pencil
-          type="button"
-          size={20}
-          strokeWidth={2.5}
-          className="cursor-pointer"
-          onClick={() => setIsOpen(true)}
-        />
-      </DialogTrigger>
+      <DialogTrigger asChild></DialogTrigger>
       <DialogContent className="w-screen pt-9">
         <ScrollArea>
           <DialogHeader className="md:px-4">
@@ -65,12 +55,7 @@ export function EditCvHeader({ name, bio, avatarUrl, id, identityId}: Props) {
           </DialogHeader>
           <form action={formAction} className="md:px-4 pt-4">
             <div className="space-y-2">
-              <input
-                type="text"
-                name={"id"}
-                defaultValue={id}
-                hidden
-              />
+              <input type="text" name={"id"} defaultValue={id} hidden />
               <input
                 type="text"
                 name={"identityId"}
@@ -85,9 +70,7 @@ export function EditCvHeader({ name, bio, avatarUrl, id, identityId}: Props) {
                     name="avatarUrl"
                     id="avatarUrl"
                     placeholder="Profile picture url..."
-                    defaultValue={
-                      (state?.update.avatar as string) || avatar
-                    }
+                    defaultValue={(state?.update.avatar as string) || avatar}
                     errorMessage={state?.errorMessages?.avatarError}
                     onChange={(e) => setAvatar(e.target.value)}
                   />
@@ -126,7 +109,11 @@ export function EditCvHeader({ name, bio, avatarUrl, id, identityId}: Props) {
             </div>
 
             <DialogFooter className="w-full flex items-start border-gray-800">
-              <Button className="w-full mt-6" type="submit" disabled={isPending}>
+              <Button
+                className="w-full mt-6"
+                type="submit"
+                disabled={isPending}
+              >
                 {isPending ? (
                   <>
                     <Loader2 className="animate-spin" />
