@@ -1,5 +1,5 @@
 import { BackgroundAvatar } from "../backgrounds/avatar";
-import { EditableLabel } from "./editable-label";
+import { EditableField } from "./editable-field";
 
 type Props = {
   name: string;
@@ -34,16 +34,16 @@ export function CvHeader({
         </div>
         <div className="flex flex-col items-center gap-4 px-3 md:items-start md:col-start-2 md:col-end-3 md:pt-4">
           <div className="flex w-full justify-center md:justify-between gap-4 items-center pr-4">
-            <EditableLabel
-              label={name}
+            <EditableField
+              value={name}
               isEditable={isEditable}
               onChange={(name) => {
                 onChange({ name, bio, avatarUrl });
               }}
             />
           </div>
-          <EditableLabel
-            label={bio}
+          <EditableField
+            value={bio}
             isEditable={isEditable}
             onChange={(bio) => {
               onChange({ name, bio, avatarUrl });
