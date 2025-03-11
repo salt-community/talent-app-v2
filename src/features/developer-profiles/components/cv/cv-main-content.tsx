@@ -71,6 +71,7 @@ export function CvMainContent({ isEditable }: Props) {
                 prev.filter((e) => e.id !== education.id)
               );
             }}
+            onChange={(education) => setEducations((prev) => prev.map((e) => e.id === education.id ? education : e))}
           />
         ))}
       </div>
@@ -104,6 +105,8 @@ export function CvMainContent({ isEditable }: Props) {
             onDelete={() => {
               setJobs((prev) => prev.filter((e) => e.id !== job.id));
             }}
+            onChange={(job) => setEducations((prev) => prev.map((e) => e.id === job.id ? job : e))}
+
           />
         ))}
       </div>
