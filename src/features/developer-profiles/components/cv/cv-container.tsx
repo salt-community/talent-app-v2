@@ -55,10 +55,6 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
           languages={background.languages}
           links={background.links}
         />
-        <div className="md:col-start-2 md:col-end-3 px-3 py-6">
-          <h2 className="text-xl font-bold">Education</h2>
-          <h2 className="text-xl font-bold">Work Experience</h2>
-        </div>
       </div>
     </section>
   );
