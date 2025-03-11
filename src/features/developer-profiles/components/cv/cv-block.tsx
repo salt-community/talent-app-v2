@@ -7,26 +7,24 @@ type Props = {
   experience: Experience;
   isEditable: boolean;
   onDelete: () => void;
+  onChange: (experience: Experience) => void;
 };
 
-export function CvBlock({ experience, isEditable, onDelete }: Props) {
+export function CvBlock({ experience, isEditable, onDelete, onChange }: Props) {
   return (
     <div>
       <div className="flex items-center gap-2">
         <EditableField
           value={experience.role}
           isEditable={isEditable}
-          onChange={(value) => {
-            console.log(value);
-          }}
+          onChange={(role) => onChange({...experience, role})}
         />
         |
         <EditableField
           value={experience.organization}
           isEditable={isEditable}
-          onChange={(value) => {
-            console.log(value);
-          }}
+          onChange={(organization) => onChange({...experience, organization})}
+
         />
         {isEditable && (
           <Button variant="link" size="icon" onClick={onDelete}>
@@ -37,16 +35,14 @@ export function CvBlock({ experience, isEditable, onDelete }: Props) {
       <EditableField
         value={experience.date}
         isEditable={isEditable}
-        onChange={(value) => {
-          console.log(value);
-        }}
+        onChange={(date) => onChange({...experience, date})}
+
       />
       <EditableField
         value={experience.description}
         isEditable={isEditable}
-        onChange={(value) => {
-          console.log(value);
-        }}
+        onChange={(description) => onChange({...experience, description})}
+
       />
     </div>
   );
