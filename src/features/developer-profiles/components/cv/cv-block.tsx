@@ -1,29 +1,20 @@
-import { Edit, X } from "lucide-react";
+import { X } from "lucide-react";
 import { EditableField } from "./editable-field";
 import { Button } from "@/components";
+import { Experience } from "./cv-main-content";
 
 type Props = {
-  school: string;
-  date: string;
-  title: string;
-  description: string;
+  experience: Experience;
   isEditable: boolean;
   onDelete: () => void;
 };
 
-export function CvBlock({
-  school,
-  date,
-  title,
-  description,
-  isEditable,
-  onDelete,
-}: Props) {
+export function CvBlock({ experience, isEditable, onDelete }: Props) {
   return (
     <div>
       <div className="flex items-center gap-2">
         <EditableField
-          value={title}
+          value={experience.role}
           isEditable={isEditable}
           onChange={(value) => {
             console.log(value);
@@ -31,7 +22,7 @@ export function CvBlock({
         />
         |
         <EditableField
-          value={school}
+          value={experience.organization}
           isEditable={isEditable}
           onChange={(value) => {
             console.log(value);
@@ -44,14 +35,14 @@ export function CvBlock({
         )}
       </div>
       <EditableField
-        value={date}
+        value={experience.date}
         isEditable={isEditable}
         onChange={(value) => {
           console.log(value);
         }}
       />
       <EditableField
-        value={description}
+        value={experience.description}
         isEditable={isEditable}
         onChange={(value) => {
           console.log(value);
