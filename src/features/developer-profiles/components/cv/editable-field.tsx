@@ -1,5 +1,5 @@
 import { AutosizeTextarea } from "@/components/ui/autosize-textarea";
-import React from "react";
+import React, { useState } from "react";
 
 type Props = {
   value: string;
@@ -15,21 +15,28 @@ export function EditableField({
   fontSize = 16,
 }: Props) {
   const textStyle = { fontSize: `${fontSize}px` };
+  const [focus, setFocus] = useState(false);
 
   return (
-    <div className="flex items-center w-full" style={textStyle}>
+    <div
+      className={`w-full p-2 border rounded-md border-gray-500 ${
+        isEditable ? `${focus ? "ring" : ""}` : "border-transparent"
+      }`}
+    >
       {isEditable ? (
         <AutosizeTextarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="border border-gray-300 rounded py-2 resize-none leading-none w-full h-full"
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
+          className="border border-transparent p-0 resize-none leading-none w-full"
           style={textStyle}
-          minHeight={fontSize}
+          minHeight={0}
         />
       ) : (
         <div
           style={textStyle}
-          className="whitespace-pre-wrap border rounded py-2 border-transparent leading-none w-full h-full"
+          className="whitespace-pre-wrap p-0 border border-transparent leading-none w-full"
         >
           {value}
         </div>
