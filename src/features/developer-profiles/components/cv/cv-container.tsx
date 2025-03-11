@@ -6,6 +6,7 @@ import { CvHeader } from "./cv-header";
 import { BackgroundInfo } from "../../types";
 import { Check, Pencil } from "lucide-react";
 import { updateCvAction } from "../../actions";
+import { CvMainContent } from "./cv-main-content";
 
 type Props = {
   background: BackgroundInfo;
@@ -47,6 +48,7 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
           setBackgroundInfo((prev) => ({ ...prev, name, bio, avatarUrl }))
         }
       />
+      <CvMainContent isEditable={isEditable} />
       <div className="md:grid md:grid-cols-[15rem_2fr]">
         <CvAside
           skills={background.skills}
