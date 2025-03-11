@@ -6,23 +6,32 @@ import { useState } from "react";
 type Props = {
   isEditable: boolean;
 };
+
+export type Experience = {
+  id: number;
+  organization: string;
+  date: string;
+  role: string;
+  description: string;
+};
+
 export function CvMainContent({ isEditable }: Props) {
   const [educations, setEducations] = useState([
     {
       id: 1,
-      school: "University of Technology",
+      organization: "University of Technology",
       date: "2020 - 2024",
-      title: "Bachelor of Science in Computer Science",
+      role: "Bachelor of Science in Computer Science",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
   ]);
-  const [workExperiences, setWorkExperiences] = useState([
+  const [jobs, setJobs] = useState([
     {
       id: 1,
-      company: "Tech Company",
+      organization: "Tech Company",
       date: "2022 - Present",
-      title: "Software Engineer",
+      role: "Software Engineer",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
@@ -32,35 +41,34 @@ export function CvMainContent({ isEditable }: Props) {
     <div>
       <div className="flex justify-between">
         <H2>Education and training</H2>
-        <Button
-          onClick={() => {
-            setEducations((prev) => [
-              ...prev,
-              {
-                id: prev.length + 1,
-                school: "School name",
-                date: "xxxx - xxxx",
-                title: "Education title",
-                description: "Education description",
-              },
-            ]);
-          }}
-        >
-          <Plus />
-        </Button>
+        {isEditable && (
+          <Button
+            onClick={() => {
+              setEducations((prev) => [
+                ...prev,
+                {
+                  id: prev.length + 1,
+                  organization: "School name",
+                  date: "xxxx - xxxx",
+                  role: "Education title",
+                  description: "Education description",
+                },
+              ]);
+            }}
+          >
+            <Plus />
+          </Button>
+        )}
       </div>
       <div className="flex flex-col gap-4">
         {educations.map((education) => (
           <CvBlock
             key={education.id}
-            school={education.school}
-            date={education.date}
-            title={education.title}
-            description={education.description}
+            experience={education}
             isEditable={isEditable}
             onDelete={() => {
               setEducations((prev) =>
-                prev.filter((e) => e.id !== education.id),
+                prev.filter((e) => e.id !== education.id)
               );
             }}
           />
@@ -68,36 +76,33 @@ export function CvMainContent({ isEditable }: Props) {
       </div>
       <div className="flex justify-between">
         <H2>Work experience</H2>
-        <Button
-          onClick={() => {
-            setWorkExperiences((prev) => [
-              ...prev,
-              {
-                id: prev.length + 1,
-                company: "Company name",
-                date: "xxxx - xxxx",
-                title: "Job title",
-                description: "Job description",
-              },
-            ]);
-          }}
-        >
-          <Plus />
-        </Button>
+        {isEditable && (
+          <Button
+            onClick={() => {
+              setJobs((prev) => [
+                ...prev,
+                {
+                  id: prev.length + 1,
+                  organization: "Company name",
+                  date: "xxxx - xxxx",
+                  role: "Job title",
+                  description: "Job description",
+                },
+              ]);
+            }}
+          >
+            <Plus />
+          </Button>
+        )}
       </div>
       <div className="flex flex-col gap-4">
-        {workExperiences.map((experience) => (
+        {jobs.map((job) => (
           <CvBlock
-            key={experience.id}
-            school={experience.company}
-            date={experience.date}
-            title={experience.title}
-            description={experience.description}
+            key={job.id}
+            experience={job}
             isEditable={isEditable}
             onDelete={() => {
-              setWorkExperiences((prev) =>
-                prev.filter((e) => e.id !== experience.id),
-              );
+              setJobs((prev) => prev.filter((e) => e.id !== job.id));
             }}
           />
         ))}
