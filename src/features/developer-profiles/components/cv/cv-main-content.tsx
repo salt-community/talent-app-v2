@@ -40,7 +40,7 @@ export function CvMainContent({ isEditable }: Props) {
   return (
     <div>
       <div className="flex justify-between">
-        <H2>Education and training</H2>
+        <H2 textColor="text-paragraph">Education and training</H2>
         {isEditable && (
           <Button
             onClick={() => {
@@ -76,7 +76,7 @@ export function CvMainContent({ isEditable }: Props) {
         ))}
       </div>
       <div className="flex justify-between">
-        <H2>Work experience</H2>
+        <H2 textColor="text-paragraph">Work experience</H2>
         {isEditable && (
           <Button
             onClick={() => {

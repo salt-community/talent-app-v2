@@ -19,9 +19,9 @@ export function EditableField({
   const textSize = fontSize === "sm" ? 16 : fontSize === "md" ? 24 : 36;
   const textClass =
     fontSize === "sm"
-      ? "text-base text-paragraph"
+      ? "text-base text-paragraph-light"
       : fontSize === "md"
-        ? "text-xl font-bold"
+        ? "text-xl font-bold text-paragraph-light"
         : "text-4xl font-extrabold";
 
   return (
@@ -39,19 +39,18 @@ export function EditableField({
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             className={cn(
-              "border border-transparent p-0 resize-none leading-none w-full overflow-hidden",
+              "border border-transparent p-0 resize-none leading-none w-full ",
               textClass
             )}
-            maxHeight={textSize + 10}
             minHeight={textSize + 10}
           />
         </div>
       ) : (
-        <div className="whitespace-pre-wrap w-full border rounded-md p-1 border-transparent">
+        <div className="whitespace-pre-wrap w-full border rounded-md p-1 border-transparent text">
           <p
-            style={{ maxHeight: textSize + 10, minHeight: textSize + 10 }}
+            style={{ minHeight: textSize + 10 }}
             className={cn(
-              "flex outline-none text-sm border border-transparent p-0 resize-none leading-none w-full overflow-hidden",
+              "flex outline-none text-sm border border-transparent p-0 resize-none leading-none w-full",
               textClass
             )}
           >
