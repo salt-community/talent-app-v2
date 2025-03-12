@@ -27,8 +27,6 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
     setErrorMessage(null);
 
     try {
-      //const formData = new FormData(event.currentTarget);
-      //await updateAssignment(assignment.id, formData);
       setIsDialogOpen(false);
     } catch (error) {
       setErrorMessage("Failed to update assignment (score or other fields).");
