@@ -36,12 +36,14 @@ export function CvHeader({
           <EditableField
             value={name}
             isEditable={isEditable}
+            fontSize="lg"
             onChange={(name) => {
               onChange({ name, bio, avatarUrl });
             }}
           />
           <EditableField
             value={bio}
+            fontSize="sm"
             isEditable={isEditable}
             onChange={(bio) => {
               onChange({ name, bio, avatarUrl });
