@@ -47,7 +47,7 @@ export function EditableField({
           />
         </div>
       ) : (
-        <div className="whitespace-pre-wrap w-full border rounded-md border-red-500 p-1">
+        <div className="whitespace-pre-wrap w-full border rounded-md border-transparent p-1">
           <p
             style={{ maxHeight: textSize + 5 }}
             className={cn(
