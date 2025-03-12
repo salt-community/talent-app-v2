@@ -53,7 +53,7 @@ export async function BackgroundBasicInfoCard({
         <ul className="flex flex-col gap-2 justify-end items-top h-full">
           {hasProfileAccess && (
             <DialogForm
-              background={developerProfile}
+              developerProfile={developerProfile}
               allSkills={allSkills}
               allLanguages={allLanguages}
               allEducations={allEducations}

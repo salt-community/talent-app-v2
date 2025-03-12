@@ -24,14 +24,14 @@ import { BackgroundAvatar } from "./avatar";
 import { updateBackgroundAction } from "../../actions";
 
 type Props = {
-  background: BackgroundInfo;
+  developerProfile: BackgroundInfo;
   allSkills: SkillSelect[];
   allLanguages: LanguageSelect[];
   allEducations: EducationSelect[];
 };
 
 export function DialogForm({
-  background,
+  developerProfile,
   allSkills,
   allLanguages,
   allEducations,
@@ -41,7 +41,7 @@ export function DialogForm({
     undefined
   );
 
-  const [avatarUrl, setAvatarUrl] = useState(background.avatarUrl);
+  const [avatarUrl, setAvatarUrl] = useState(developerProfile.avatarUrl);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -74,13 +74,13 @@ export function DialogForm({
               <input
                 type="text"
                 name={"id"}
-                defaultValue={background.id}
+                defaultValue={developerProfile.id}
                 hidden
               />
               <input
                 type="text"
                 name={"identityId"}
-                defaultValue={background.identityId}
+                defaultValue={developerProfile.identityId}
                 hidden
               />
               <FormItem>
@@ -110,7 +110,7 @@ export function DialogForm({
                   defaultValue={
                     (state?.update.name as string) === ""
                       ? ""
-                      : (state?.update.name as string) || background.name
+                      : (state?.update.name as string) || developerProfile.name
                   }
                   errorMessage={state?.errorMessages?.nameError}
                   placeholder="Fullname..."
@@ -129,7 +129,8 @@ export function DialogForm({
                   defaultValue={
                     (state?.update.title as string) === ""
                       ? ""
-                      : (state?.update.title as string) || background.title
+                      : (state?.update.title as string) ||
+                        developerProfile.title
                   }
                   errorMessage={state?.errorMessages?.titleError}
                   className="col-span-3"
@@ -140,7 +141,7 @@ export function DialogForm({
                   Headline
                 </Label>
                 <Input
-                  defaultValue={background.bio}
+                  defaultValue={developerProfile.bio}
                   placeholder="Headline..."
                   name="bio"
                   id="bio"
@@ -149,7 +150,7 @@ export function DialogForm({
               </FormItem>
               <FormItem>
                 <TagsInput
-                  userTags={background.languages}
+                  userTags={developerProfile.languages}
                   inputName={"languages"}
                   inputPlaceholder={"Add a language"}
                   suggestedTags={allLanguages}
@@ -157,7 +158,7 @@ export function DialogForm({
               </FormItem>
               <FormItem>
                 <TagsInput
-                  userTags={background.educations}
+                  userTags={developerProfile.educations}
                   inputName={"educations"}
                   inputPlaceholder={"Add an education"}
                   suggestedTags={allEducations}
@@ -165,7 +166,7 @@ export function DialogForm({
               </FormItem>
               <FormItem>
                 <TagsInput
-                  userTags={background.skills}
+                  userTags={developerProfile.skills}
                   inputName={"skills"}
                   inputPlaceholder={"Add a skill"}
                   suggestedTags={allSkills}
@@ -177,7 +178,7 @@ export function DialogForm({
                 </Label>
                 <Input
                   defaultValue={
-                    background.links.find((e) => e.name === "Github")?.url
+                    developerProfile.links.find((e) => e.name === "Github")?.url
                   }
                   placeholder="Github..."
                   name="github"
@@ -191,7 +192,7 @@ export function DialogForm({
                 </Label>
                 <Input
                   defaultValue={
-                    background.links.find((e) => e.name === "Resume")?.url
+                    developerProfile.links.find((e) => e.name === "Resume")?.url
                   }
                   placeholder="CV..."
                   name="cv"
