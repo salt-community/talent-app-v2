@@ -20,46 +20,46 @@ import {
 export function createDevelopersRepository(db: Db) {
   return {
     async getAll() {
-      return await db.select().from(tempDeveloperProfiles);
+      return await db.select().from(developerProfiles);
     },
     async getAllById(id: string) {
       const developerId = await db
-        .select({ id: tempDeveloperProfiles.id })
-        .from(tempDeveloperProfiles)
-        .where(eq(tempDeveloperProfiles.identityId, id));
+        .select({ id: developerProfiles.id })
+        .from(developerProfiles)
+        .where(eq(developerProfiles.identityId, id));
       return developerId;
     },
     async getDeveloperProfileByIdentityId(identityId: string) {
       return await db
         .select()
-        .from(tempDeveloperProfiles)
-        .where(eq(tempDeveloperProfiles.identityId, identityId));
+        .from(developerProfiles)
+        .where(eq(developerProfiles.identityId, identityId));
     },
     async getDeveloperById(id: string) {
       const developerId = await db
         .select({
-          name: tempDeveloperProfiles.name,
-          id: tempDeveloperProfiles.id,
-          identityId: tempDeveloperProfiles.identityId,
-          slug: tempDeveloperProfiles.slug,
-          email: tempDeveloperProfiles.email,
-          status: tempDeveloperProfiles.status,
+          name: developerProfiles.name,
+          id: developerProfiles.id,
+          identityId: developerProfiles.identityId,
+          slug: developerProfiles.slug,
+          email: developerProfiles.email,
+          status: developerProfiles.status,
         })
-        .from(tempDeveloperProfiles)
-        .where(eq(tempDeveloperProfiles.id, id));
+        .from(developerProfiles)
+        .where(eq(developerProfiles.id, id));
       return developerId[0];
     },
     async getAllDeveloperProfiles() {
       return await db
         .select({
-          id: tempDeveloperProfiles.id,
-          identityId: tempDeveloperProfiles.identityId,
-          name: tempDeveloperProfiles.name,
-          avatarUrl: tempDeveloperProfiles.avatarUrl,
-          title: tempDeveloperProfiles.title,
-          bio: tempDeveloperProfiles.bio,
-          links: tempDeveloperProfiles.links,
-          status: tempDeveloperProfiles.status,
+          id: developerProfiles.id,
+          identityId: developerProfiles.identityId,
+          name: developerProfiles.name,
+          avatarUrl: developerProfiles.avatarUrl,
+          title: developerProfiles.title,
+          bio: developerProfiles.bio,
+          links: developerProfiles.links,
+          status: developerProfiles.status,
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfileSkills.name})::VARCHAR[]`.as(
@@ -76,92 +76,80 @@ export function createDevelopersRepository(db: Db) {
             "educations"
           ),
         })
-        .from(tempDeveloperProfiles)
+        .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(
-            developerProfileSkills.developerProfileId,
-            tempDeveloperProfiles.id
-          )
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(
-            developerProfileLanguages.developerProfileId,
-            tempDeveloperProfiles.id
-          )
+          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           developerProfileEducations,
           eq(
             developerProfileEducations.developerProfileId,
-            tempDeveloperProfiles.id
+            developerProfiles.id
           )
         )
-        .groupBy(tempDeveloperProfiles.id);
+        .groupBy(developerProfiles.id);
     },
     async getDeveloperProfileById(developerProfileId: string) {
       return await db
         .select({
-          id: tempDeveloperProfiles.id,
-          identityId: tempDeveloperProfiles.identityId,
-          name: tempDeveloperProfiles.name,
-          avatarUrl: tempDeveloperProfiles.avatarUrl,
-          title: tempDeveloperProfiles.title,
-          bio: tempDeveloperProfiles.bio,
-          links: tempDeveloperProfiles.links,
-          status: tempDeveloperProfiles.status,
+          id: developerProfiles.id,
+          identityId: developerProfiles.identityId,
+          name: developerProfiles.name,
+          avatarUrl: developerProfiles.avatarUrl,
+          title: developerProfiles.title,
+          bio: developerProfiles.bio,
+          links: developerProfiles.links,
+          status: developerProfiles.status,
           skills: sql<
             string[]
-          >`ARRAY_AGG(DISTINCT ${tempDeveloperProfiles.name})::VARCHAR[]`.as(
+          >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
             "skills"
           ),
           languages: sql<
             string[]
-          >`ARRAY_AGG(DISTINCT ${tempDeveloperProfiles.name})::VARCHAR[]`.as(
+          >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
             "languages"
           ),
           educations: sql<
             string[]
-          >`ARRAY_AGG(DISTINCT ${tempDeveloperProfiles.name})::VARCHAR[]`.as(
+          >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
             "educations"
           ),
         })
-        .from(tempDeveloperProfiles)
+        .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(
-            developerProfileSkills.developerProfileId,
-            tempDeveloperProfiles.id
-          )
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(
-            developerProfileLanguages.developerProfileId,
-            tempDeveloperProfiles.id
-          )
+          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           developerProfileEducations,
           eq(
             developerProfileEducations.developerProfileId,
-            tempDeveloperProfiles.id
+            developerProfiles.id
           )
         )
-        .where(eq(tempDeveloperProfiles.id, developerProfileId))
-        .groupBy(tempDeveloperProfiles.id);
+        .where(eq(developerProfiles.id, developerProfileId))
+        .groupBy(developerProfiles.id);
     },
     async getDeveloperProfile(developerProfileId: string) {
       return await db
         .select({
-          id: tempDeveloperProfiles.id,
-          identityId: tempDeveloperProfiles.identityId,
-          name: tempDeveloperProfiles.name,
-          avatarUrl: tempDeveloperProfiles.avatarUrl,
-          title: tempDeveloperProfiles.title,
-          bio: tempDeveloperProfiles.bio,
-          links: tempDeveloperProfiles.links,
+          id: developerProfiles.id,
+          identityId: developerProfiles.identityId,
+          name: developerProfiles.name,
+          avatarUrl: developerProfiles.avatarUrl,
+          title: developerProfiles.title,
+          bio: developerProfiles.bio,
+          links: developerProfiles.links,
           skills: sql<
             SkillSelect[]
           >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
@@ -189,30 +177,24 @@ export function createDevelopersRepository(db: Db) {
             "educations"
           ),
         })
-        .from(tempDeveloperProfiles)
+        .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(
-            developerProfileSkills.developerProfileId,
-            tempDeveloperProfiles.id
-          )
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(
-            developerProfileLanguages.developerProfileId,
-            tempDeveloperProfiles.id
-          )
+          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           developerProfileEducations,
           eq(
             developerProfileEducations.developerProfileId,
-            tempDeveloperProfiles.id
+            developerProfiles.id
           )
         )
-        .where(eq(tempDeveloperProfiles.id, developerProfileId))
-        .groupBy(tempDeveloperProfiles.id);
+        .where(eq(developerProfiles.id, developerProfileId))
+        .groupBy(developerProfiles.id);
     },
     async getAllSkills() {
       return await db.select().from(developerProfileSkills);
@@ -229,8 +211,8 @@ export function createDevelopersRepository(db: Db) {
     async existsBySlug(slug: string) {
       const [developerProfile] = await db
         .select()
-        .from(tempDeveloperProfiles)
-        .where(eq(tempDeveloperProfiles.slug, slug));
+        .from(developerProfiles)
+        .where(eq(developerProfiles.slug, slug));
 
       return !!developerProfile;
     },
