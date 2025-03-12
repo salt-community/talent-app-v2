@@ -19,22 +19,3 @@ export async function getAllAssignmentsAction(
   }
   revalidatePath("/assignments");
 }
-
-export async function deleteAssignmentAction(
-  formData: FormData
-): Promise<void> {
-  try {
-    const assignmentId = formData.get("assignmentId") as string;
-    if (!assignmentId) {
-      throw new Error("Missing required field: assignmentId");
-    }
-    await assignmentsService.deleteAssignment(assignmentId);
-  } catch (error) {
-    if (error instanceof ZodError) {
-      throw new Error("Fields are not valid");
-    }
-    errorHandler(error);
-  }
-
-  revalidatePath("/assignments");
-}
