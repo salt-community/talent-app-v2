@@ -38,15 +38,3 @@ export async function deleteAssignmentAction(
 
   revalidatePath("/assignments");
 }
-
-export async function deleteAllAssignmentsAction(): Promise<void> {
-  try {
-    await assignmentsService.deleteAllAssignments();
-  } catch (error) {
-    if (error instanceof ZodError) {
-      throw new Error("Fields are not valid");
-    }
-    errorHandler(error);
-  }
-  revalidatePath("/assignments");
-}
