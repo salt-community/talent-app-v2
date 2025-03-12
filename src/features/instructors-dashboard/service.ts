@@ -131,6 +131,7 @@ export function createInstructorService(
 
       return { assignment, developersWithScores };
     },
+
     async getCohortDevelopersDataByName(cohortName: string) {
       const cohorts = await getAllCohorts();
       const foundCohort = cohorts.find((cohort) => cohort.name === cohortName);
