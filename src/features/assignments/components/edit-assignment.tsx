@@ -62,7 +62,6 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
             />
           </div>
 
-          {/* Score */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Score (0–100)
@@ -72,7 +71,6 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
               type="number"
               min={0}
               max={100}
-              // defaultValue={assignment.score?.toString() ?? "0"}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-xs"
             />
           </div>
@@ -84,7 +82,6 @@ export function EditAssignmentForm({ assignment }: EditAssignmentFormProps) {
             <input
               name="tags"
               type="text"
-              //defaultValue={assignment.tags.join(", ")}
               className="mt-1 block w-full rounded-md"
             />
           </div>
