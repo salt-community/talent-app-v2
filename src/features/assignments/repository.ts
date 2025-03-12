@@ -10,10 +10,10 @@ import { ScoreStatus } from "../instructors-dashboard/types";
 
 export function createAssignmentsRepository(db: Db) {
   return {
-    async createAssignment(assigment: NewAssignment) {
+    async createAssignment(assignment: NewAssignment) {
       const [insertedAssignment] = await db
         .insert(assignments)
-        .values(assigment)
+        .values(assignment)
         .returning();
       return insertedAssignment;
     },
@@ -24,7 +24,7 @@ export function createAssignmentsRepository(db: Db) {
 
     async getAssignmentsByCohortIdAndIdentityId(
       cohortId: string,
-      identityId: string,
+      identityId: string
     ) {
       return await db
         .select()
@@ -33,14 +33,14 @@ export function createAssignmentsRepository(db: Db) {
           assignmentScores,
           and(
             eq(assignments.id, assignmentScores.assignmentId),
-            eq(assignmentScores.identityId, identityId),
-          ),
+            eq(assignmentScores.identityId, identityId)
+          )
         )
         .where(
           and(
             eq(assignments.cohortId, cohortId),
-            eq(assignmentScores.status, "published"),
-          ),
+            eq(assignmentScores.status, "published")
+          )
         );
     },
 
@@ -85,10 +85,10 @@ export function createAssignmentsRepository(db: Db) {
               .where(
                 and(
                   eq(assignmentScores.assignmentId, assignmentId),
-                  eq(assignmentScores.identityId, identityId),
-                ),
+                  eq(assignmentScores.identityId, identityId)
+                )
               );
-          }),
+          })
         );
       });
     },
