@@ -20,7 +20,7 @@ export async function addAssignmentAction(
   cohortId: string,
   title: string,
   comment: string,
-  categories: string[],
+  categories: string[]
 ) {
   try {
     const assignment = newAssignmentSchema.parse({
@@ -38,7 +38,7 @@ export async function addAssignmentAction(
     if (error instanceof z.ZodError) {
       console.error("Validation failed:", error.errors);
       throw new Error(
-        "Validation failed: " + error.errors.map((e) => e.message).join(", "),
+        "Validation failed: " + error.errors.map((e) => e.message).join(", ")
       );
     } else {
       console.error("Unexpected error:", error);
@@ -57,7 +57,7 @@ export async function updateAssignmentAction(assigment: Assignment) {
     if (error instanceof z.ZodError) {
       console.error("Validation failed:", error.errors);
       throw new Error(
-        "Validation failed: " + error.errors.map((e) => e.message).join(", "),
+        "Validation failed: " + error.errors.map((e) => e.message).join(", ")
       );
     } else {
       console.error("Unexpected error:", error);
@@ -68,7 +68,7 @@ export async function updateAssignmentAction(assigment: Assignment) {
 
 export async function addIdentitiesToCohortAction(
   cohortId: string,
-  identityIds: string[],
+  identityIds: string[]
 ) {
   try {
     await instructorService.addIdentitiesToCohort({ cohortId, identityIds });

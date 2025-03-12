@@ -5,7 +5,6 @@ import { cohortsService } from "../cohorts";
 
 export const instructorService = createInstructorService(
   cohortsService.getAll,
-  cohortsService.getCohortById,
   cohortsService.addCohort,
   cohortsService.addDevelopersToCohort,
   cohortsService.deleteIdentityFromCohort,

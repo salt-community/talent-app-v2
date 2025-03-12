@@ -17,7 +17,6 @@ import {
   CohortFormData,
   DeleteCohortAndCohortIdentity,
   GetAllCohorts,
-  GetCohortById,
   GetCohortStudents,
   DeleteIdentityFromCohort,
 } from "../cohorts";
@@ -25,7 +24,6 @@ import { ScoreStatus } from "./types";
 
 export function createInstructorService(
   getAllCohorts: GetAllCohorts,
-  getCohortById: GetCohortById,
   addCohort: AddCohort,
   addDevelopersToCohort: AddDevelopersToCohort,
   deleteIdentityFromCohort: DeleteIdentityFromCohort,
@@ -33,7 +31,7 @@ export function createInstructorService(
   getCohortStudentsByCohortId: GetCohortStudents,
   getAssignmentsByCohortId: GetAssignmentsByCohortId,
   addAssignment: CreateAssignment,
-  uppdateAssignment: CreateAssignment,
+  updateAssignment: CreateAssignment,
   deleteAssignmentById: DeleteAssignmentById,
   getAssignmentBySlug: GetAssignmentBySlug,
   upsertAssignmentScore: UpsertAssignmentScore,
@@ -45,51 +43,46 @@ export function createInstructorService(
     async getAllCohorts() {
       return await getAllCohorts();
     },
-    async getCohortById(cohortId: string) {
-      return await getCohortById(cohortId);
-    },
+
     async createCohort(cohort: CohortFormData) {
       return await addCohort(cohort);
     },
+
     async getAssignmentsByCohortId(cohortId: string) {
       return await getAssignmentsByCohortId(cohortId);
     },
+
     async addAssignment(assignment: NewAssignment) {
       return await addAssignment(assignment);
     },
+
     async updateAssignment(assignment: Assignment) {
-      return await uppdateAssignment(assignment);
+      return await updateAssignment(assignment);
     },
-    async getCohortStudentsByCohortId(cohortId: string) {
-      return await getCohortStudentsByCohortId(cohortId);
-    },
+
     async addIdentitiesToCohort(args: {
       cohortId: string;
       identityIds: string[];
     }) {
       return await addDevelopersToCohort(args);
     },
+
     async deleteIdentityFromCohort(identityId: string) {
       return await deleteIdentityFromCohort(identityId);
     },
+
     async deleteCohortAndCohortIdentity(cohortId: string) {
       return await deleteCohortAndCohortIdentity(cohortId);
     },
+
     async deleteAssignmentById(assignmentId: string) {
       return await deleteAssignmentById(assignmentId);
     },
-    async getAllIdentities() {
-      return await getAllIdentities();
-    },
-    async getAssignmentBySlug(slug: string) {
-      return await getAssignmentBySlug(slug);
-    },
+
     async addScoreToAssignment(assignment: AssignmentScore) {
       return await upsertAssignmentScore(assignment);
     },
-    async getScoresByAssignmentId(assignmentId: string) {
-      return await getScoresByAssignmentId(assignmentId);
-    },
+
     async updateScoreStatuses(scoreStatuses: ScoreStatus[]) {
       await updateScoreStatuses(scoreStatuses);
     },
