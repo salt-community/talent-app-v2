@@ -9,15 +9,14 @@ export async function BackgroundCard({
   developerProfileId,
   hasProfileAccess,
 }: Props) {
-  const background =
+  const developerProfile =
     await developerProfilesService.getDeveloperProfileById(developerProfileId);
 
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-start w-full">
         <BackgroundBasicInfoCard
-          background={background}
-          developerProfileId={developerProfileId}
+          developerProfile={developerProfile}
           hasProfileAccess={hasProfileAccess}
         />
       </div>
@@ -25,19 +24,19 @@ export async function BackgroundCard({
       <div>
         <Row
           title="Languages"
-          content={background.languages.map((language) => ({
+          content={developerProfile.languages.map((language) => ({
             id: language.id,
             name: language.name,
           }))}
         />
         <Row
           title="Education"
-          content={background.educations.map((education) => ({
+          content={developerProfile.educations.map((education) => ({
             id: education.id,
             name: education.name,
           }))}
         />
-        <SkillsBadges skills={background.skills} />
+        <SkillsBadges skills={developerProfile.skills} />
       </div>
     </div>
   );

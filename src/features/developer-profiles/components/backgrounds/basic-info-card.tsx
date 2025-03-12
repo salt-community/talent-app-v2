@@ -12,20 +12,21 @@ import { errorHandler } from "@/lib";
 import { developerProfilesService } from "../../instance";
 
 type Props = {
-  background: BackgroundInfo;
-  developerProfileId: string;
+  developerProfile: BackgroundInfo;
   hasProfileAccess: boolean;
 };
 
 export async function BackgroundBasicInfoCard({
-  background,
+  developerProfile,
   hasProfileAccess,
 }: Props) {
   let allSkills: SkillSelect[] = [];
   let allLanguages: LanguageSelect[] = [];
   let allEducations: EducationSelect[] = [];
 
-  const filteredLinks = background.links.filter((e) => e.name !== "LinkedIn");
+  const filteredLinks = developerProfile.links.filter(
+    (e) => e.name !== "LinkedIn"
+  );
 
   try {
     allSkills = await developerProfilesService.getAllSkills();
@@ -39,20 +40,20 @@ export async function BackgroundBasicInfoCard({
     <>
       <section className="flex justify-between w-full">
         <div className="flex gap-6 items-center justify-between">
-          <BackgroundAvatar url={background.avatarUrl} />
+          <BackgroundAvatar url={developerProfile.avatarUrl} />
           <div>
             <p className="uppercase text-sm font-semibold">
-              {background.title}
+              {developerProfile.title}
             </p>
 
-            <H2>{background.name}</H2>
-            <p className="font-light text-slate-600">{background.bio}</p>
+            <H2>{developerProfile.name}</H2>
+            <p className="font-light text-slate-600">{developerProfile.bio}</p>
           </div>
         </div>
         <ul className="flex flex-col gap-2 justify-end items-top h-full">
           {hasProfileAccess && (
             <DialogForm
-              background={background}
+              background={developerProfile}
               allSkills={allSkills}
               allLanguages={allLanguages}
               allEducations={allEducations}
