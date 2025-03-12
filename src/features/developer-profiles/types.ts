@@ -12,15 +12,6 @@ export type DevelopersService = ReturnType<
   typeof createDeveloperProfilesService
 >;
 
-export type GetAllDeveloperProfiles = DevelopersService["getAll"];
-export type DeleteDeveloperProfile = DevelopersService["delete"];
-export type UpdateStatus = DevelopersService["updateStatus"];
-export type GetAllById = DevelopersService["getAllById"];
-export type CreateDeveloperProfile =
-  DevelopersService["createDeveloperProfile"];
-export type GetDeveloperProfileByIdentityId =
-  DevelopersService["getDeveloperProfileByIdentityId"];
-
 export type Developer = {
   name: string;
   id: string;
