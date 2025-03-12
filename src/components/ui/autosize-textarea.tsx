@@ -1,7 +1,12 @@
 "use client";
-import * as React from "react";
 import { cn } from "@/lib/utils";
-import { useImperativeHandle } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 interface UseAutosizeTextAreaProps {
   textAreaRef: React.MutableRefObject<HTMLTextAreaElement | null>;
@@ -16,8 +21,8 @@ export const useAutosizeTextArea = ({
   maxHeight = Number.MAX_SAFE_INTEGER,
   minHeight = 0,
 }: UseAutosizeTextAreaProps) => {
-  const [init, setInit] = React.useState(true);
-  React.useEffect(() => {
+  const [init, setInit] = useState(true);
+  useEffect(() => {
     // We need to reset the height momentarily to get the correct scrollHeight for the textarea
     const offsetBorder = 0;
     const textAreaElement = textAreaRef.current;
@@ -39,7 +44,7 @@ export const useAutosizeTextArea = ({
         textAreaElement.style.height = `${scrollHeight + offsetBorder}px`;
       }
     }
-  }, [textAreaRef.current, triggerAutoSize]);
+  }, [init, maxHeight, minHeight, triggerAutoSize, textAreaRef]);
 };
 
 export type AutosizeTextAreaRef = {
@@ -53,10 +58,7 @@ type AutosizeTextAreaProps = {
   minHeight?: number;
 } & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-export const AutosizeTextarea = React.forwardRef<
-  AutosizeTextAreaRef,
-  AutosizeTextAreaProps
->(
+export const AutosizeTextarea = forwardRef<AutosizeTextAreaRef, AutosizeTextAreaProps>(
   (
     {
       maxHeight = Number.MAX_SAFE_INTEGER,
@@ -66,10 +68,10 @@ export const AutosizeTextarea = React.forwardRef<
       value,
       ...props
     }: AutosizeTextAreaProps,
-    ref: React.Ref<AutosizeTextAreaRef>,
+    ref: React.Ref<AutosizeTextAreaRef>
   ) => {
-    const textAreaRef = React.useRef<HTMLTextAreaElement | null>(null);
-    const [triggerAutoSize, setTriggerAutoSize] = React.useState("");
+    const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+    const [triggerAutoSize, setTriggerAutoSize] = useState("");
 
     useAutosizeTextArea({
       textAreaRef,
@@ -85,7 +87,7 @@ export const AutosizeTextarea = React.forwardRef<
       minHeight,
     }));
 
-    React.useEffect(() => {
+    useEffect(() => {
       setTriggerAutoSize(value as string);
     }, [props?.defaultValue, value]);
 
@@ -96,7 +98,7 @@ export const AutosizeTextarea = React.forwardRef<
         ref={textAreaRef}
         className={cn(
           "flex w-full outline-none text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
-          className,
+          className
         )}
         onChange={(e) => {
           setTriggerAutoSize(e.target.value);
@@ -104,6 +106,6 @@ export const AutosizeTextarea = React.forwardRef<
         }}
       />
     );
-  },
+  }
 );
 AutosizeTextarea.displayName = "AutosizeTextarea";
