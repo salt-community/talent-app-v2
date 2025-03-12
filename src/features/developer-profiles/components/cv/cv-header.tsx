@@ -32,7 +32,7 @@ export function CvHeader({
         <div className="md:col-start-1 md:col-end-2 px-4 h-full md:bg-zinc-100">
           <BackgroundAvatar url={avatarUrl} size="lg" />
         </div>
-        <div className="flex flex-col items-center gap-4 px-3 md:items-start md:col-start-2 md:col-end-3 md:pt-4">
+        <div className="flex flex-col items-center gap-2 px-3 md:items-start md:col-start-2 md:col-end-3 md:pt-4">
           <EditableField
             value={name}
             isEditable={isEditable}
