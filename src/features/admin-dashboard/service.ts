@@ -50,7 +50,6 @@ export function createAdminService(
       await iamService.updateRole(args.id, args.newRole);
     },
     async deleteUser(identityId: string) {
-      // await deleteCohortIdentityById(identityId);
       const developerProfiles =
         await developerProfileService.getDeveloperProfileIdById(identityId);
       for (const developerProfile of developerProfiles) {
