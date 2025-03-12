@@ -23,13 +23,13 @@ export function createAssignmentsService(db: Db) {
     }) {
       return await repo.getAssignmentsByCohortIdAndIdentityId(
         args.cohortId,
-        args.identityId,
+        args.identityId
       );
     },
 
-    async createAssignment(assignemnt: NewAssignment) {
-      const slug = generateSlug(assignemnt.title);
-      return await repo.createAssignment({ ...assignemnt, slug });
+    async createAssignment(assignment: NewAssignment) {
+      const slug = generateSlug(assignment.title);
+      return await repo.createAssignment({ ...assignment, slug });
     },
 
     async updateAssignment(assigment: Assignment) {
@@ -70,7 +70,7 @@ export function createAssignmentsService(db: Db) {
     async getAllAverageScoresByIdentityId(identityId: string) {
       const assignmentScores = await repo.getScoresByIdentityId(identityId);
       const validScores = assignmentScores.filter(
-        (assignment) => assignment.score !== null,
+        (assignment) => assignment.score !== null
       );
       return averageScoresByCategory(validScores);
     },
