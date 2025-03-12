@@ -3,14 +3,14 @@ import Link from "next/link";
 import { HamburgerMenu } from "./ui/hamburger-menu";
 import { iamService } from "@/features/iam";
 import { developerProfilesService } from "@/features/developer-profiles";
+
 export async function Header() {
   const userIdentity = await iamService.controlUser();
-
-  // if (userIdentity?.role === "guest") return null;
 
   const users = await developerProfilesService.getDeveloperProfileByIdentityId(
     userIdentity.id
   );
+
   const hasMenuAccess =
     await iamService.hasCurrentUserAccess("menu.hamburgerMenu");
   const hasDeveloperAccess =
@@ -20,6 +20,7 @@ export async function Header() {
   const hasInstructorsDashboardAccess = await iamService.hasCurrentUserAccess(
     "menu.instructorsDashboard"
   );
+
   const permissions = {
     hasAdminDashboardAccess,
     hasDeveloperAccess,
@@ -39,8 +40,15 @@ export async function Header() {
       </Link>
       <div className="flex items-center gap-4 md:gap-6">
         <SignedOut>
-          <div className="border-b border-white hover:border-primary text-sm">
-            <SignInButton />
+          <div className="flex items-center">
+            <div className="border-b border-white hover:border-primary text-sm cursor-pointer">
+              <SignInButton>
+                <span>Sign in</span>
+              </SignInButton>
+            </div>
+            <div className="ml-2 text-sm text-gray-500">
+              <span>SALT members only</span>
+            </div>
           </div>
         </SignedOut>
         <SignedIn>
