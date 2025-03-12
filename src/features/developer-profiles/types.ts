@@ -1,9 +1,9 @@
 import {
   developerProfileEducations,
   developerProfileLanguages,
+  developerProfiles,
   developerProfileSkills,
   meiliSearchOutbox,
-  tempDeveloperProfiles,
 } from "./db-schema";
 import { createDeveloperProfilesService } from "./service";
 import { JwtPayload } from "jsonwebtoken";
@@ -107,7 +107,7 @@ export type SocialLink = {
   name: string;
 };
 
-export type DeveloperProfileInsert = typeof tempDeveloperProfiles.$inferInsert;
+export type DeveloperProfileInsert = typeof developerProfiles.$inferInsert;
 export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;
 export type OutboxMessageSelect = typeof meiliSearchOutbox.$inferSelect;
 
