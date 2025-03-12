@@ -19,23 +19,24 @@ export const useAutosizeTextArea = ({
   const [init, setInit] = React.useState(true);
   React.useEffect(() => {
     // We need to reset the height momentarily to get the correct scrollHeight for the textarea
+    const offsetBorder = 0;
     const textAreaElement = textAreaRef.current;
     if (textAreaElement) {
       if (init) {
-        textAreaElement.style.minHeight = `${minHeight}px`;
+        textAreaElement.style.minHeight = `${minHeight + offsetBorder}px`;
         if (maxHeight > minHeight) {
           textAreaElement.style.maxHeight = `${maxHeight}px`;
         }
         setInit(false);
       }
-      textAreaElement.style.height = `${minHeight}px`;
+      textAreaElement.style.height = `${minHeight + offsetBorder}px`;
       const scrollHeight = textAreaElement.scrollHeight;
       // We then set the height directly, outside of the render loop
       // Trying to set this with state or a ref will product an incorrect value.
       if (scrollHeight > maxHeight) {
         textAreaElement.style.height = `${maxHeight}px`;
       } else {
-        textAreaElement.style.height = `${scrollHeight}px`;
+        textAreaElement.style.height = `${scrollHeight + offsetBorder}px`;
       }
     }
   }, [textAreaRef.current, triggerAutoSize]);
