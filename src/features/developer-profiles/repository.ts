@@ -6,7 +6,6 @@ import {
   developerProfiles,
   developerProfileSkills,
   meiliSearchOutbox,
-  tempDeveloperProfiles,
 } from "./db-schema";
 import {
   AddDeveloperProfile,
@@ -217,22 +216,12 @@ export function createDevelopersRepository(db: Db) {
       return !!developerProfile;
     },
     async insertSlug(id: string, slug: string) {
-      await db.transaction(async (tx) => {
-        //remove after rename is done
-        await tx
-          .update(tempDeveloperProfiles)
-          .set({
-            slug,
-          })
-          .where(eq(tempDeveloperProfiles.id, id));
-
-        await tx
-          .update(developerProfiles)
-          .set({
-            slug,
-          })
-          .where(eq(developerProfiles.id, id));
-      });
+      await db
+        .update(developerProfiles)
+        .set({
+          slug,
+        })
+        .where(eq(developerProfiles.id, id));
     },
     async removeOutboxMessage(id: number) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
@@ -262,12 +251,23 @@ export function createDevelopersRepository(db: Db) {
       });
     },
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
-      await db.transaction(async (tx) => {
-        //remove after rename if done
-        await tx
-          .insert(tempDeveloperProfiles)
-          .values({
-            id: developerProfile.id,
+      await db
+        .insert(developerProfiles)
+        .values({
+          id: developerProfile.id,
+          identityId: developerProfile.identityId,
+          name: developerProfile.name,
+          slug: developerProfile.slug,
+          email: developerProfile.email,
+          status: developerProfile.status || "",
+          avatarUrl: developerProfile.avatarUrl || "",
+          title: developerProfile.title || "",
+          bio: developerProfile.bio || "",
+          links: developerProfile.links || [],
+        })
+        .onConflictDoUpdate({
+          target: developerProfiles.id,
+          set: {
             identityId: developerProfile.identityId,
             name: developerProfile.name,
             slug: developerProfile.slug,
@@ -277,77 +277,13 @@ export function createDevelopersRepository(db: Db) {
             title: developerProfile.title || "",
             bio: developerProfile.bio || "",
             links: developerProfile.links || [],
-          })
-          .onConflictDoUpdate({
-            target: tempDeveloperProfiles.id,
-            set: {
-              identityId: developerProfile.identityId,
-              name: developerProfile.name,
-              slug: developerProfile.slug,
-              email: developerProfile.email,
-              status: developerProfile.status || "",
-              avatarUrl: developerProfile.avatarUrl || "",
-              title: developerProfile.title || "",
-              bio: developerProfile.bio || "",
-              links: developerProfile.links || [],
-            },
-          });
-
-        await tx
-          .insert(developerProfiles)
-          .values({
-            id: developerProfile.id,
-            identityId: developerProfile.identityId,
-            name: developerProfile.name,
-            slug: developerProfile.slug,
-            email: developerProfile.email,
-            status: developerProfile.status || "",
-            avatarUrl: developerProfile.avatarUrl || "",
-            title: developerProfile.title || "",
-            bio: developerProfile.bio || "",
-            links: developerProfile.links || [],
-          })
-          .onConflictDoUpdate({
-            target: developerProfiles.id,
-            set: {
-              identityId: developerProfile.identityId,
-              name: developerProfile.name,
-              slug: developerProfile.slug,
-              email: developerProfile.email,
-              status: developerProfile.status || "",
-              avatarUrl: developerProfile.avatarUrl || "",
-              title: developerProfile.title || "",
-              bio: developerProfile.bio || "",
-              links: developerProfile.links || [],
-            },
-          });
-      });
+          },
+        });
     },
     async updateDeveloperProfile(
       updatedDeveloperProfile: updateDeveloperProfile
     ) {
       const outboxMessageId = await db.transaction(async (tx) => {
-        //remove after rename is done
-        await tx
-          .update(tempDeveloperProfiles)
-          .set({
-            identityId:
-              updatedDeveloperProfile.identityId ||
-              tempDeveloperProfiles.identityId,
-            name: updatedDeveloperProfile.name || tempDeveloperProfiles.name,
-            slug: updatedDeveloperProfile.slug || tempDeveloperProfiles.slug,
-            email: updatedDeveloperProfile.email || tempDeveloperProfiles.email,
-            status:
-              updatedDeveloperProfile.status || tempDeveloperProfiles.status,
-            avatarUrl:
-              updatedDeveloperProfile.avatarUrl ||
-              tempDeveloperProfiles.avatarUrl,
-            title: updatedDeveloperProfile.title || tempDeveloperProfiles.title,
-            bio: updatedDeveloperProfile.bio || tempDeveloperProfiles.bio,
-            links: updatedDeveloperProfile.links || tempDeveloperProfiles.links,
-          })
-          .where(eq(tempDeveloperProfiles.id, updatedDeveloperProfile.id));
-
         await tx
           .update(developerProfiles)
           .set({
@@ -427,27 +363,14 @@ export function createDevelopersRepository(db: Db) {
       return { outboxMessageId };
     },
     async deleteDeveloperProfile(developerProfileId: string) {
-      await db.transaction(async (tx) => {
-        //remove after rename is done
-        await tx
-          .delete(tempDeveloperProfiles)
-          .where(eq(tempDeveloperProfiles.id, developerProfileId));
-
-        await tx
-          .delete(developerProfiles)
-          .where(eq(developerProfiles.id, developerProfileId));
-      });
+      await db
+        .delete(developerProfiles)
+        .where(eq(developerProfiles.id, developerProfileId));
     },
     async deleteDeveloperProfileByIdentityId(identityId: string) {
-      await db.transaction(async (tx) => {
-        //remove after rename is done
-        await tx
-          .delete(tempDeveloperProfiles)
-          .where(eq(tempDeveloperProfiles.identityId, identityId));
-        await tx
-          .delete(developerProfiles)
-          .where(eq(developerProfiles.identityId, identityId));
-      });
+      await db
+        .delete(developerProfiles)
+        .where(eq(developerProfiles.identityId, identityId));
     },
   };
 }
