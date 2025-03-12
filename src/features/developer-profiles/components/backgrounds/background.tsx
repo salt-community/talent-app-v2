@@ -6,31 +6,31 @@ import { developerProfilesService } from "../../instance";
 type Props = { developerProfileId: string };
 
 export async function Background({ developerProfileId }: Props) {
-  const background =
+  const developerProfile =
     await developerProfilesService.getDeveloperProfileById(developerProfileId);
 
   return (
     <div className="space-y-2 max-w-96">
       <div className="flex justify-between items-start">
-        <BackgroundBasicInfo background={background} />
+        <BackgroundBasicInfo developerProfile={developerProfile} />
       </div>
 
       <div>
         <Row
           title="Languages"
-          content={background.languages.map((language) => ({
+          content={developerProfile.languages.map((language) => ({
             id: language.id,
             name: language.name,
           }))}
         />
         <Row
           title="Education"
-          content={background.educations.map((education) => ({
+          content={developerProfile.educations.map((education) => ({
             id: education.id,
             name: education.name,
           }))}
         />
-        <SkillsBadges skills={background.skills} />
+        <SkillsBadges skills={developerProfile.skills} />
       </div>
     </div>
   );

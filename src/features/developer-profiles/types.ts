@@ -84,7 +84,7 @@ export type PreviousState =
     }
   | undefined;
 
-export type typeDeveloperProfile = {
+export type DeveloperProfile = {
   id: string;
   identityId: string;
   name: string;
