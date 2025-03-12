@@ -95,7 +95,7 @@ export type typeDeveloperProfile = {
 };
 
 export type developerProfileDetails = {
-  developerProfileId: string;
+  id: string;
   skills: string[];
   languages: string[];
   educations: string[];

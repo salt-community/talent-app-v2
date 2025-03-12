@@ -25,7 +25,7 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
       status,
     });
     backgrounds.push({
-      developerProfileId: id,
+      id: id,
 
       languages: faker.helpers.arrayElements(
         [

@@ -261,19 +261,19 @@ export function createDevelopersRepository(db: Db) {
       await db.transaction(async (tx) => {
         for (const skill of developerProfileDetails.skills) {
           await tx.insert(developerProfileSkills).values({
-            developerProfileId: developerProfileDetails.developerProfileId,
+            developerProfileId: developerProfileDetails.id,
             name: skill,
           });
         }
         for (const language of developerProfileDetails.languages) {
           await tx.insert(developerProfileLanguages).values({
-            developerProfileId: developerProfileDetails.developerProfileId,
+            developerProfileId: developerProfileDetails.id,
             name: language,
           });
         }
         for (const education of developerProfileDetails.educations) {
           await tx.insert(developerProfileEducations).values({
-            developerProfileId: developerProfileDetails.developerProfileId,
+            developerProfileId: developerProfileDetails.id,
             name: education,
           });
         }
