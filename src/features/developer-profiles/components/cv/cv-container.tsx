@@ -48,13 +48,14 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
           setBackgroundInfo((prev) => ({ ...prev, name, bio, avatarUrl }))
         }
       />
-      <CvMainContent isEditable={isEditable} />
       <div className="md:grid md:grid-cols-[15rem_2fr]">
         <CvAside
           skills={background.skills}
           languages={background.languages}
           links={background.links}
+          isEditable={isEditable}
         />
+      <CvMainContent isEditable={isEditable} />
       </div>
     </section>
   );
