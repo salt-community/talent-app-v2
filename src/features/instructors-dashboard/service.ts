@@ -39,7 +39,7 @@ export function createInstructorService(
   upsertAssignmentScore: UpsertAssignmentScore,
   getScoresByAssignmentId: GetScoresByAssignmentId,
   updateScoreStatuses: UpdateScoreStatuses,
-  getAllIdentities: GetAllIdentities,
+  getAllIdentities: GetAllIdentities
 ) {
   return {
     async getAllCohorts() {
@@ -108,8 +108,7 @@ export function createInstructorService(
           assignment.categories?.map((category) => {
             const score = assignmentScores.find(
               (score) =>
-                score.identityId === developer.id &&
-                score.category === category,
+                score.identityId === developer.id && score.category === category
             );
             return {
               id: score?.id,
@@ -123,10 +122,10 @@ export function createInstructorService(
           }) || [];
 
         const scored = assignmentScores.some(
-          (s) => s.identityId === developer.id,
+          (s) => s.identityId === developer.id
         );
         const published = assignmentScores.some(
-          (s) => s.identityId === developer.id && s.status === "published",
+          (s) => s.identityId === developer.id && s.status === "published"
         );
 
         return {
@@ -138,6 +137,33 @@ export function createInstructorService(
       });
 
       return { assignment, developersWithScores };
+    },
+    async getCohortDevelopersDataByName(cohortName: string) {
+      const cohorts = await getAllCohorts();
+      const foundCohort = cohorts.find((cohort) => cohort.name === cohortName);
+
+      if (!foundCohort) {
+        return null;
+      }
+
+      const cohortId = foundCohort.id;
+      const developers = await getCohortStudentsByCohortId(cohortId);
+
+      if (!developers) {
+        return null;
+      }
+
+      const allDeveloperProfiles = await getAllIdentities();
+      const unsignedDevelopers = allDeveloperProfiles.filter(
+        (profile) =>
+          !developers.find((developer) => developer.id === profile.id)
+      );
+
+      return {
+        cohort: foundCohort,
+        developers,
+        unsignedDevelopers,
+      };
     },
   };
 }

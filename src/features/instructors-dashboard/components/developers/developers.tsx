@@ -9,21 +9,12 @@ type Props = {
 };
 
 export async function Developers({ name }: Props) {
-  const cohorts = await instructorService.getAllCohorts();
-  const foundCohort = cohorts.find((cohort) => cohort.name === name);
-  if (!foundCohort) notFound();
+  const cohortData =
+    await instructorService.getCohortDevelopersDataByName(name);
 
-  const cohortId = foundCohort.id;
-  const developers =
-    await instructorService.getCohortStudentsByCohortId(cohortId);
-  if (!developers) return null;
+  if (!cohortData) notFound();
 
-  const developerProfiles = await instructorService.getAllIdentities();
-
-  const unsignedDevelopers = developerProfiles.filter(
-    (profile) => !developers.find((developer) => developer.id === profile.id)
-  );
-  if (!unsignedDevelopers) return null;
+  const { cohort, developers, unsignedDevelopers } = cohortData;
 
   return (
     <div className="max-w-6xl mx-auto p-4">
@@ -31,7 +22,7 @@ export async function Developers({ name }: Props) {
         <h2 className="text-2xl font-semibold">Developers</h2>
         <AddDeveloperButton
           developer={unsignedDevelopers}
-          cohortId={foundCohort.id}
+          cohortId={cohort.id}
         />
       </div>
       <StudentCard developer={developers} />
