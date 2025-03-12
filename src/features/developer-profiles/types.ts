@@ -94,14 +94,6 @@ export type typeDeveloperProfile = {
   links: SocialLink[];
 };
 
-export type BackgroundForDeveloperProfile = {
-  developerProfileId: string;
-  avatarUrl?: string;
-  title?: string;
-  bio?: string;
-  links?: SocialLink[];
-};
-
 export type developerProfileDetails = {
   developerProfileId: string;
   skills: string[];
