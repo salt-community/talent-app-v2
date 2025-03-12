@@ -16,13 +16,13 @@ export function EditableField({
   onChange,
 }: Props) {
   const [focus, setFocus] = useState(false);
-  const textSize = fontSize === "sm" ? 18 : fontSize === "md" ? 22 : 24;
+  const textSize = fontSize === "sm" ? 16 : fontSize === "md" ? 24 : 36;
   const textClass =
     fontSize === "sm"
       ? "text-base text-paragraph"
       : fontSize === "md"
         ? "text-xl font-bold"
-        : "text-2xl font-extrabold";
+        : "text-4xl font-extrabold";
 
   return (
     <>
@@ -42,14 +42,14 @@ export function EditableField({
               "border border-transparent p-0 resize-none leading-none w-full overflow-hidden",
               textClass
             )}
-            maxHeight={textSize + 5}
-            minHeight={textSize + 5}
+            maxHeight={textSize + 10}
+            minHeight={textSize + 10}
           />
         </div>
       ) : (
-        <div className="whitespace-pre-wrap w-full border rounded-md border-transparent p-1">
+        <div className="whitespace-pre-wrap w-full border rounded-md p-1 border-transparent">
           <p
-            style={{ maxHeight: textSize + 5 }}
+            style={{ maxHeight: textSize + 10, minHeight: textSize + 10 }}
             className={cn(
               "flex outline-none text-sm border border-transparent p-0 resize-none leading-none w-full overflow-hidden",
               textClass
