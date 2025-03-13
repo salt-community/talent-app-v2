@@ -41,22 +41,26 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const activeTab = getActiveTab();
 
   return (
-    <div className="w-full p-4 md:px-32">
-      <h1 className="text-2xl font-bold mb-4">ADMIN DASHBOARD</h1>
-      <div className="flex border-b mb-4">
+    <div className="w-full p-3 sm:p-4 md:px-8 lg:px-16 xl:px-32">
+      <h1 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">
+        ADMIN DASHBOARD
+      </h1>
+
+      <div className="flex overflow-x-auto border-b mb-4 pb-1">
         {tabs.map((tab) => (
           <a
             key={tab.href}
             href={tab.href}
-            className={`px-4 py-2 flex items-center gap-2 cursor-pointer hover:cursor-pointer ${
+            className={`px-3 sm:px-4 py-2 flex items-center gap-1 sm:gap-2 text-sm md:text-base whitespace-nowrap cursor-pointer hover:bg-gray-50 ${
               activeTab === tab.name ? "border-b-2 border-zinc-400" : ""
             }`}
           >
             {tab.icon}
-            {tab.name}
+            <span>{tab.name}</span>
           </a>
         ))}
       </div>
+
       <Suspense fallback={<Loading />}>{children}</Suspense>
     </div>
   );
