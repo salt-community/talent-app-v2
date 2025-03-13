@@ -35,7 +35,7 @@ export function CvAside({
           <h2 className="text-xl font-bold">Skills</h2>
           {isEditable && (
             <CvPopover
-              placeholder={""}
+              placeholder={"Write your skill"}
               onAdd={(skill) => {
                 onChange([...skills, { name: skill }], languages, links);
               }}
