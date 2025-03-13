@@ -32,7 +32,17 @@ export function CvAside({
     <aside className="px-3 space-y-4 py-8 bg-zinc-100 md:col-start-1 md:col-end-2 z-10">
       <section className="flex flex-col">
         <h2 className="text-xl font-bold">Skills</h2>
-        <SkillsBadges skills={skills} />
+        <SkillsBadges
+          skills={skills}
+          isEditable={isEditable}
+          onDelete={(skill) => {
+            onChange(
+              skills.filter((s) => s.name !== skill.name),
+              languages,
+              links,
+            );
+          }}
+        />
         {isEditable && (
           <CvPopover
             placeholder={"Write your skill"}
