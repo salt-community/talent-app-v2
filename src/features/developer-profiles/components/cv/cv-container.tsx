@@ -26,7 +26,10 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
       <div className="flex items-center justify-between py-3 font-bold mx-2">
         <p className="hidden md:block text-start">{"</salt>"}</p>
         {isEditable ? (
-          <Check onClick={() => handleOnSave(backgroundInfo)} className="cursor-pointer"/>
+          <Check
+            onClick={() => handleOnSave(backgroundInfo)}
+            className="cursor-pointer"
+          />
         ) : (
           <Pencil
             size={20}

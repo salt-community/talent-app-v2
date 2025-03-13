@@ -1,4 +1,3 @@
-import { Button } from "@/components";
 import {
   LanguageInsert,
   LanguageSelect,
@@ -8,9 +7,7 @@ import {
 } from "../../types";
 import { SkillsBadges } from "../backgrounds/skills-badges";
 import { SocialLink } from "../backgrounds/social-link";
-import { Plus } from "lucide-react";
 import { CvDialog } from "./cv-dialog";
-import { useState } from "react";
 
 type Props = {
   skills: SkillSelect[];
@@ -19,7 +16,7 @@ type Props = {
   onChange: (
     skills: SkillInsert[],
     languages: LanguageInsert[],
-    links: SocialLinkType[],
+    links: SocialLinkType[]
   ) => void;
   isEditable: boolean;
 };
@@ -32,7 +29,6 @@ export function CvAside({
   onChange,
 }: Props) {
   const filteredLinks = links.filter((e) => e.name !== "Resume");
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <aside className="px-3 space-y-4 py-8 bg-zinc-100 md:col-start-1 md:col-end-2 z-10">
