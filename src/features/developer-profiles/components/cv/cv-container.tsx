@@ -57,12 +57,10 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           skills={cvInfo.skills}
           languages={cvInfo.languages}
           links={cvInfo.links}
-          onChange={(skills, languages, links) => {
+          onChange={(data) => {
             setCvInfo((prev) => ({
               ...prev,
-              skills,
-              languages,
-              links,
+              ...data,
             }));
           }}
           isEditable={isEditable}

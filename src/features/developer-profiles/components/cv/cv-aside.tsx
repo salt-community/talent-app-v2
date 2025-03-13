@@ -7,18 +7,17 @@ import {
 import { SkillsBadges } from "../backgrounds/skills-badges";
 import { SocialLink } from "../backgrounds/social-link";
 import { CvPopover } from "./cv-popover";
-import { on } from "events";
 import { X } from "lucide-react";
 
 type Props = {
   skills: SkillInsert[];
   languages: LanguageInsert[];
   links: SocialLinkType[];
-  onChange: (
-    skills: SkillInsert[],
-    languages: LanguageInsert[],
-    links: SocialLinkType[],
-  ) => void;
+  onChange: (data: {
+    skills: SkillInsert[];
+    languages: LanguageInsert[];
+    links: SocialLinkType[];
+  }) => void;
   isEditable: boolean;
 };
 
@@ -39,18 +38,22 @@ export function CvAside({
           skills={skills}
           isEditable={isEditable}
           onDelete={(skill) => {
-            onChange(
-              skills.filter((s) => s.name !== skill.name),
+            onChange({
+              skills: skills.filter((s) => s.name !== skill.name),
               languages,
               links,
-            );
+            });
           }}
         />
         {isEditable && (
           <CvPopover
             placeholder={"Write your skill"}
             onAdd={(skill) => {
-              onChange([...skills, { name: skill }], languages, links);
+              onChange({
+                skills: [...skills, { name: skill }],
+                languages,
+                links,
+              });
             }}
           />
         )}
@@ -67,11 +70,13 @@ export function CvAside({
                   size="icon"
                   className="h-4 w-4 ml-1"
                   onClick={() =>
-                    onChange(
+                    onChange({
                       skills,
-                      languages.filter((l) => l.name !== language.name),
+                      languages: languages.filter(
+                        (l) => l.name !== language.name,
+                      ),
                       links,
-                    )
+                    })
                   }
                 >
                   <X size={12} />
@@ -83,7 +88,11 @@ export function CvAside({
             <CvPopover
               placeholder={"Write your language"}
               onAdd={(language) => {
-                onChange(skills, [...languages, { name: language }], links);
+                onChange({
+                  skills,
+                  languages: [...languages, { name: language }],
+                  links,
+                });
               }}
             />
           )}
