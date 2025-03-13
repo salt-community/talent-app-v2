@@ -1,3 +1,4 @@
+import { Button } from "@/components";
 import {
   LanguageInsert,
   SkillInsert,
@@ -6,6 +7,8 @@ import {
 import { SkillsBadges } from "../backgrounds/skills-badges";
 import { SocialLink } from "../backgrounds/social-link";
 import { CvPopover } from "./cv-popover";
+import { on } from "events";
+import { X } from "lucide-react";
 
 type Props = {
   skills: SkillInsert[];
@@ -57,9 +60,33 @@ export function CvAside({
         <ul>
           {languages.map((language) => (
             <li key={language.name} className="text-paragraph">
-              {language.name}
+              {language.name}{" "}
+              {isEditable && (
+                <Button
+                  variant="link"
+                  size="icon"
+                  className="h-4 w-4 ml-1"
+                  onClick={() =>
+                    onChange(
+                      skills,
+                      languages.filter((l) => l.name !== language.name),
+                      links,
+                    )
+                  }
+                >
+                  <X size={12} />
+                </Button>
+              )}
             </li>
           ))}
+          {isEditable && (
+            <CvPopover
+              placeholder={"Write your language"}
+              onAdd={(language) => {
+                onChange(skills, [...languages, { name: language }], links);
+              }}
+            />
+          )}
         </ul>
       </section>
       {filteredLinks.length > 0 && (
