@@ -20,20 +20,24 @@ export function CvPopover({ placeholder, onAdd }: Props) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="link" size="icon">
-          <Plus size={24} className="cursor-pointer" />
+        <Button variant="outline" size="sm" className="w-full h-7 mt-2">
+          <Plus size={24} className="cursor-pointer" /> Add
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-54" align="end">
-        <div className="flex flex-col gap-2">
+      <PopoverContent
+        className="w-54 p-1 flex items-center justify-center"
+        align="end"
+      >
+        <div className="flex items-center justify-center w-full gap-1">
           <input
-            type="text"
             placeholder={placeholder}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="border p-1 rounded"
+            className="p-1 rounded h-7 flex-grow text-sm focus:ring-slate-500"
           />
-          <Button onClick={handleOnAdd}>Add</Button>
+          <Button variant="link" size="sm" onClick={handleOnAdd}>
+            <Plus size={12} className="cursor-pointer" />
+          </Button>
         </div>
       </PopoverContent>
     </Popover>

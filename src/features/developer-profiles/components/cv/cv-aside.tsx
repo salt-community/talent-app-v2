@@ -30,19 +30,17 @@ export function CvAside({
 
   return (
     <aside className="px-3 space-y-4 py-8 bg-zinc-100 md:col-start-1 md:col-end-2 z-10">
-      <section>
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold">Skills</h2>
-          {isEditable && (
-            <CvPopover
-              placeholder={"Write your skill"}
-              onAdd={(skill) => {
-                onChange([...skills, { name: skill }], languages, links);
-              }}
-            />
-          )}
-        </div>
+      <section className="flex flex-col">
+        <h2 className="text-xl font-bold">Skills</h2>
         <SkillsBadges skills={skills} />
+        {isEditable && (
+          <CvPopover
+            placeholder={"Write your skill"}
+            onAdd={(skill) => {
+              onChange([...skills, { name: skill }], languages, links);
+            }}
+          />
+        )}
       </section>
       <section>
         <h2 className="text-xl font-bold pb-1">Languages</h2>
