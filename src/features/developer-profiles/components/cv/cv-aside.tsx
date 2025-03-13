@@ -7,7 +7,7 @@ import {
 import { SkillsBadges } from "../backgrounds/skills-badges";
 import { SocialLink } from "../backgrounds/social-link";
 import { CvPopover } from "./cv-popover";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 
 type Props = {
   skills: SkillInsert[];
@@ -55,7 +55,11 @@ export function CvAside({
                 links,
               });
             }}
-          />
+          >
+            <Button variant="outline" size="sm" className="w-full h-7 mt-2">
+              <Plus size={24} className="cursor-pointer" /> Add
+            </Button>
+          </CvPopover>
         )}
       </section>
       <section>
@@ -94,7 +98,11 @@ export function CvAside({
                   links,
                 });
               }}
-            />
+            >
+              <Button variant="outline" size="sm" className="w-full h-7 mt-2">
+                <Plus size={24} className="cursor-pointer" /> Add
+              </Button>
+            </CvPopover>
           )}
         </ul>
       </section>

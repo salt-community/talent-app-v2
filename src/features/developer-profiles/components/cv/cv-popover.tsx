@@ -4,10 +4,11 @@ import { useState } from "react";
 
 type Props = {
   placeholder: string;
+  children: React.ReactNode;
   onAdd: (value: string) => void;
 };
 
-export function CvPopover({ placeholder, onAdd }: Props) {
+export function CvPopover({ placeholder, children, onAdd }: Props) {
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -19,11 +20,7 @@ export function CvPopover({ placeholder, onAdd }: Props) {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="w-full h-7 mt-2">
-          <Plus size={24} className="cursor-pointer" /> Add
-        </Button>
-      </PopoverTrigger>
+      <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent
         className="w-54 p-1 flex items-center justify-center"
         align="end"
