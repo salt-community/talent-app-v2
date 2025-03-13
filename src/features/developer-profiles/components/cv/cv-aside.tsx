@@ -5,7 +5,7 @@ import {
 } from "../../types";
 import { SkillsBadges } from "../backgrounds/skills-badges";
 import { SocialLink } from "../backgrounds/social-link";
-import { CvDialog } from "./cv-dialog";
+import { CvPopover } from "./cv-popover";
 
 type Props = {
   skills: SkillInsert[];
@@ -34,7 +34,7 @@ export function CvAside({
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold">Skills</h2>
           {isEditable && (
-            <CvDialog
+            <CvPopover
               placeholder={""}
               onAdd={(skill) => {
                 onChange([...skills, { name: skill }], languages, links);

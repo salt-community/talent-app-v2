@@ -7,7 +7,7 @@ type Props = {
   onAdd: (value: string) => void;
 };
 
-export function CvDialog({ placeholder, onAdd }: Props) {
+export function CvPopover({ placeholder, onAdd }: Props) {
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
 
