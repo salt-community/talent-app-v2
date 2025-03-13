@@ -34,6 +34,9 @@ export function CvPopover({ placeholder, onAdd }: Props) {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             className="p-1 rounded h-7 flex-grow text-sm focus:ring-slate-500"
+            onKeyDown={(event) => {
+              if (event.key === "Enter") handleOnAdd();
+            }}
           />
           <Button variant="link" size="sm" onClick={handleOnAdd}>
             <Plus size={12} className="cursor-pointer" />
