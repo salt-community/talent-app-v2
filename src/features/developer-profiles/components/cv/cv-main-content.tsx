@@ -19,22 +19,23 @@ export function CvMainContent({ isEditable }: Props) {
   const [educations, setEducations] = useState([
     {
       id: 1,
-      organization: "University of Technology",
-      date: "2020 - 2024",
-      role: "Bachelor of Science in Computer Science",
+      organization: "Salt",
+      date: "Jan 2025 - Apr 2025",
+      role: "Fullstack JavaScript Developer",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "Accelerated fullstack program covering JavaScript, TypeScript, React, Next.js, Node.js, and PostgreSQL. Hands-on experience with Agile, TDD, Mob Programming, and CI/CD. Developed technical and soft skills through collaborative projects and leadership training.",
     },
   ]);
   const [jobs, setJobs] = useState([
     {
       id: 1,
-      organization: "Tech Company",
-      date: "2022 - Present",
-      role: "Software Engineer",
+      organization: "Salt",
+      date: "2025 - Present",
+      role: "Fullstack Developer",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
+        "Hands-on development in the Talent App, a platform designed to connect developers with job opportunities. Involves building and optimizing fullstack features using JavaScript, TypeScript, React, Next.js, Node.js, and PostgreSQL. Collaboration is key, with daily Agile practices, Mob Programming sessions, code reviews, and CI/CD workflows. Responsibilities include implementing authentication with Clerk, managing database schemas with Drizzle ORM, and improving search functionality with MeiliSearch. A focus on performance, accessibility, and developer experience ensures continuous improvement in a flexible, remote-friendly environment."
+    }
+    ,
   ]);
 
   return (
