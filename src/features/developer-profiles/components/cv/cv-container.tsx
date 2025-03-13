@@ -30,7 +30,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
 
   return (
     <section className="border-red-800 border-2 py-6 md:py-0 md:mx-auto md:min-h-[1122px] md:max-h-[1122px]  md:min-w-[795px] md:max-w-[795px]">
-      <div className="flex items-center justify-between py-3 font-bold mx-2">
+      <div className="flex items-center justify-between py-2 px-2">
         <p className="hidden md:block text-start">{"</salt>"}</p>
         {isEditable ? (
           <div className="flex gap-1">
