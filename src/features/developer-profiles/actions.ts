@@ -8,11 +8,7 @@ import {
   DeveloperProfileValidation,
 } from "./validation";
 import { ZodError } from "zod";
-import {
-  BackgroundInfo,
-  PreviousState,
-  SocialLink,
-} from "./types";
+import { CvInfo, PreviousState, SocialLink } from "./types";
 
 export async function addDeveloperProfileAction(identityId: string) {
   try {
@@ -64,12 +60,17 @@ export async function updateBackgroundAction(
   }
 }
 
-export async function updateCvAction(backgrounds: BackgroundInfo) {
+export async function updateCvAction(backgrounds: CvInfo) {
   const background = {
     id: backgrounds.id,
     name: backgrounds.name,
     bio: backgrounds.bio,
     avatarUrl: backgrounds.avatarUrl,
+    skills: backgrounds.skills.map((skill) => skill.name),
+    languages: backgrounds.languages.map((language) => language.name),
+    links: backgrounds.links,
   };
+
   await developerProfilesService.updateDeveloperProfile(background);
+  revalidatePath("/developers");
 }

@@ -204,7 +204,7 @@ export function createDeveloperProfilesService(
       const developerProfile = await repository.getDeveloperProfileById(
         developerProfileUpdates.id
       );
-
+      
       const status = await backgroundsSearchApi.upsertDocuments([
         developerProfile[0],
       ]);

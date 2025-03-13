@@ -1,8 +1,6 @@
 import {
   LanguageInsert,
-  LanguageSelect,
   SkillInsert,
-  SkillSelect,
   SocialLink as SocialLinkType,
 } from "../../types";
 import { SkillsBadges } from "../backgrounds/skills-badges";
@@ -10,8 +8,8 @@ import { SocialLink } from "../backgrounds/social-link";
 import { CvDialog } from "./cv-dialog";
 
 type Props = {
-  skills: SkillSelect[];
-  languages: LanguageSelect[];
+  skills: SkillInsert[];
+  languages: LanguageInsert[];
   links: SocialLinkType[];
   onChange: (
     skills: SkillInsert[],
@@ -19,6 +17,7 @@ type Props = {
     links: SocialLinkType[]
   ) => void;
   isEditable: boolean;
+  
 };
 
 export function CvAside({
@@ -38,7 +37,6 @@ export function CvAside({
           {isEditable && (
             <CvDialog
               placeholder={""}
-              isOpen={false}
               onAdd={(skill) => {
                 onChange([...skills, { name: skill }], languages, links);
               }}
@@ -51,7 +49,7 @@ export function CvAside({
         <h2 className="text-xl font-bold pb-1">Languages</h2>
         <ul>
           {languages.map((language) => (
-            <li key={language.id} className="text-paragraph">
+            <li key={language.name} className="text-paragraph">
               {language.name}
             </li>
           ))}

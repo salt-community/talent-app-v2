@@ -62,6 +62,19 @@ export type BackgroundInfo = {
   educations: EducationSelect[];
 };
 
+export type CvInfo = {
+  id: string;
+  identityId: string;
+  name: string;
+  avatarUrl: string;
+  title: string;
+  bio: string;
+  links: SocialLink[];
+  skills: SkillInsert[];
+  languages: LanguageInsert[];
+  educations: EducationSelect[];
+};
+
 export type developerProfileUpdate = Partial<DeveloperProfileInsert> &
   Required<Pick<DeveloperProfileInsert, "id" | "identityId">> & {
     name: string;

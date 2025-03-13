@@ -3,20 +3,21 @@
 import { useState } from "react";
 import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
-import { BackgroundInfo } from "../../types";
+import { CvInfo } from "../../types";
 import { Check, Pencil } from "lucide-react";
 import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 
 type Props = {
-  background: BackgroundInfo;
+  background: CvInfo;
   hasProfileAccess: boolean;
 };
 
 export function CvContainer({ background, hasProfileAccess }: Props) {
   const [isEditable, setIsEditable] = useState(false);
   const [backgroundInfo, setBackgroundInfo] = useState(background);
-  const handleOnSave = async (background: BackgroundInfo) => {
+
+  const handleOnSave = async (background: CvInfo) => {
     await updateCvAction(background);
     setIsEditable(false);
   };
@@ -53,11 +54,16 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
       />
       <div className="md:grid md:grid-cols-[15rem_2fr]">
         <CvAside
-          skills={background.skills}
-          languages={background.languages}
-          links={background.links}
+          skills={backgroundInfo.skills}
+          languages={backgroundInfo.languages}
+          links={backgroundInfo.links}
           onChange={(skills, languages, links) => {
-            // fix this
+            setBackgroundInfo((prev) => ({
+              ...prev,
+              skills,
+              languages,
+              links,
+            }));
           }}
           isEditable={isEditable}
         />
