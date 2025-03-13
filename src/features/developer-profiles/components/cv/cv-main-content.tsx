@@ -40,8 +40,8 @@ export function CvMainContent({ isEditable }: Props) {
 
   return (
     <div>
-      <div className="flex justify-between">
-        <H2 textColor="text-paragraph">Education and training</H2>
+      <div className="flex justify-between px-2">
+        <H2 textColor="text-paragraph px-1 border border-transparent">Education and training</H2>
         {isEditable && (
           <Button
             onClick={() => {
@@ -61,7 +61,7 @@ export function CvMainContent({ isEditable }: Props) {
           </Button>
         )}
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2 px-2">
         {educations.map((education) => (
           <CvBlock
             key={education.id}
@@ -76,8 +76,8 @@ export function CvMainContent({ isEditable }: Props) {
           />
         ))}
       </div>
-      <div className="flex justify-between">
-        <H2 textColor="text-paragraph">Work experience</H2>
+      <div className="flex justify-between px-2">
+        <H2 textColor="text-paragraph px-1 border border-transparent">Work experience</H2>
         {isEditable && (
           <Button
             onClick={() => {
@@ -97,7 +97,7 @@ export function CvMainContent({ isEditable }: Props) {
           </Button>
         )}
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 px-2">
         {jobs.map((job) => (
           <CvBlock
             key={job.id}
