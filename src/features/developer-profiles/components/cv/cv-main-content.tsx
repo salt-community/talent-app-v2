@@ -105,7 +105,7 @@ export function CvMainContent({ isEditable }: Props) {
             onDelete={() => {
               setJobs((prev) => prev.filter((e) => e.id !== job.id));
             }}
-            onChange={(job) => setEducations((prev) => prev.map((e) => e.id === job.id ? job : e))}
+            onChange={(job) => setJobs((prev) => prev.map((e) => e.id === job.id ? job : e))}
 
           />
         ))}
