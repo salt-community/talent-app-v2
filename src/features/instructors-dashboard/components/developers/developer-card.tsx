@@ -3,13 +3,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Developer } from "../../types";
-import { Separator } from "@/components";
 import { DeleteDeveloperButton } from "./delete-developer-button";
 
 export default function StudentCard({ developer }: { developer: Developer[] }) {
   return (
     <>
-      <Separator />
       <Card className="border-none shadow-none">
         <CardContent className="space-y-6">
           {developer.map((dev) => (
