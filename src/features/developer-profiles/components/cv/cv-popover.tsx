@@ -1,14 +1,14 @@
 import { Button, Popover, PopoverContent, PopoverTrigger } from "@/components";
-import { Plus } from "lucide-react";
 import { useState } from "react";
 
 type Props = {
   placeholder: string;
   children: React.ReactNode;
+  icon: React.ComponentType<{ size?: number | string; className?: string }>;
   onAdd: (value: string) => void;
 };
 
-export function CvPopover({ placeholder, children, onAdd }: Props) {
+export function CvPopover({ placeholder, children, icon: Icon, onAdd }: Props) {
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -36,7 +36,7 @@ export function CvPopover({ placeholder, children, onAdd }: Props) {
             }}
           />
           <Button variant="link" size="sm" onClick={handleOnAdd}>
-            <Plus size={12} className="cursor-pointer" />
+            <Icon size={16} />
           </Button>
         </div>
       </PopoverContent>

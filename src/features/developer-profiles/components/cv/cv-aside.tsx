@@ -48,6 +48,7 @@ export function CvAside({
         {isEditable && (
           <CvPopover
             placeholder={"Write your skill"}
+            icon={Plus}
             onAdd={(skill) => {
               onChange({
                 skills: [...skills, { name: skill }],
@@ -91,6 +92,7 @@ export function CvAside({
           {isEditable && (
             <CvPopover
               placeholder={"Write your language"}
+              icon={Plus}
               onAdd={(language) => {
                 onChange({
                   skills,
