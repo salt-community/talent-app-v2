@@ -4,9 +4,10 @@ import { useState } from "react";
 import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
 import { CvInfo } from "../../types";
-import { Check, Pencil } from "lucide-react";
+import { CheckCircle, Edit3, Pencil } from "lucide-react";
 import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
+import { Button } from "@/components";
 
 type Props = {
   defaultCvInfo: CvInfo;
@@ -22,21 +23,45 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     setIsEditable(false);
   };
 
+  const handleOnDiscard = () => {
+    setCvInfo(defaultCvInfo);
+    setIsEditable(false);
+  };
+
   return (
     <section className="border-red-800 border-2 py-6 md:py-0 md:mx-auto md:min-h-[1122px] md:max-h-[1122px]  md:min-w-[795px] md:max-w-[795px]">
       <div className="flex items-center justify-between py-3 font-bold mx-2">
         <p className="hidden md:block text-start">{"</salt>"}</p>
         {isEditable ? (
-          <Check
-            onClick={() => handleOnSave(cvInfo)}
-            className="cursor-pointer"
-          />
+          <div className="flex gap-1">
+            <Button
+              onClick={handleOnDiscard}
+              variant="ghost"
+              size="sm"
+              className="flex hover:bg-destructive/30"
+            >
+              Discard changes
+            </Button>
+            <Button
+              onClick={() => handleOnSave(cvInfo)}
+              variant="secondary"
+              size="sm"
+              className="flex hover:bg-green-200"
+            >
+              <CheckCircle size={20} />
+              Save
+            </Button>
+          </div>
         ) : (
-          <Pencil
-            size={20}
-            className="cursor-pointer"
+          <Button
             onClick={() => setIsEditable(true)}
-          />
+            variant="ghost"
+            size="sm"
+            className="flex"
+          >
+            <Pencil size={20} />
+            Edit
+          </Button>
         )}
       </div>
 
