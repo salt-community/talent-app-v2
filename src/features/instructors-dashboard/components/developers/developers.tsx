@@ -3,7 +3,7 @@ import StudentCard from "./developer-card";
 import AddDeveloperButton from "./open-developer-form-button";
 import { instructorService } from "../../instance";
 import { notFound } from "next/navigation";
-import { ScrollArea, Separator } from "@/components";
+import { Separator } from "@/components";
 
 type Props = {
   name: string;
@@ -27,10 +27,7 @@ export async function Developers({ name }: Props) {
         />
       </div>
       <Separator />
-
-      <ScrollArea className="h-[calc(100vh-4rem)]">
-        <StudentCard developer={developers} />
-      </ScrollArea>
+      <StudentCard developer={developers} />
     </div>
   );
 }
