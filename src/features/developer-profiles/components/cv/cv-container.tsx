@@ -53,9 +53,12 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
           skills={background.skills}
           languages={background.languages}
           links={background.links}
+          onChange={(skills, languages, links) => {
+            // fix this
+          }}
           isEditable={isEditable}
         />
-      <CvMainContent isEditable={isEditable} />
+        <CvMainContent isEditable={isEditable} />
       </div>
     </section>
   );

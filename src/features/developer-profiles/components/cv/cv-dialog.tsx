@@ -1,30 +1,38 @@
-import {
-  Command,
-  CommandEmpty,
-  CommandInput,
-  CommandList,
-} from "@/components/ui/command";
-import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
+import { Button, Popover, PopoverContent, PopoverTrigger } from "@/components";
+import { Plus } from "lucide-react";
+import { useState } from "react";
 
 type Props = {
-  hiddenTitle: string;
   placeholder: string;
   isOpen: boolean;
-  onClose: () => void;
+  onAdd: (value: string) => void;
 };
 
-export function CvDialog({ hiddenTitle, placeholder, isOpen, onClose }: Props) {
+export function CvDialog({ placeholder, isOpen, onAdd }: Props) {
+  const [value, setValue] = useState("");
+
+  const handleOnAdd = () => {
+    onAdd(value);
+    setValue("");
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
-        <DialogTitle hidden>{hiddenTitle}</DialogTitle>
-        <Command className="rounded-lg border shadow-md">
-          <CommandInput placeholder={placeholder} />
-          <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-          </CommandList>
-        </Command>
-      </DialogContent>
-    </Dialog>
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="link" size="icon">
+          <Plus size={24} className="cursor-pointer" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-54" align="end">
+        <div className="flex flex-col gap-2">
+          <input
+            type="text"
+            placeholder={placeholder}
+            className="border p-1 rounded"
+          />
+          <Button onClick={handleOnAdd}>Add</Button>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 }

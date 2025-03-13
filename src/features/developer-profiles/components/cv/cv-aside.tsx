@@ -1,6 +1,8 @@
 import { Button } from "@/components";
 import {
+  LanguageInsert,
   LanguageSelect,
+  SkillInsert,
   SkillSelect,
   SocialLink as SocialLinkType,
 } from "../../types";
@@ -14,10 +16,21 @@ type Props = {
   skills: SkillSelect[];
   languages: LanguageSelect[];
   links: SocialLinkType[];
+  onChange: (
+    skills: SkillInsert[],
+    languages: LanguageInsert[],
+    links: SocialLinkType[],
+  ) => void;
   isEditable: boolean;
 };
 
-export function CvAside({ skills, languages, links, isEditable }: Props) {
+export function CvAside({
+  skills,
+  languages,
+  links,
+  isEditable,
+  onChange,
+}: Props) {
   const filteredLinks = links.filter((e) => e.name !== "Resume");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -27,24 +40,16 @@ export function CvAside({ skills, languages, links, isEditable }: Props) {
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold">Skills</h2>
           {isEditable && (
-            <Button
-              variant="link"
-              size="icon"
-              onClick={() => setIsDialogOpen(!isDialogOpen)}
-            >
-              <Plus size={24} className="cursor-pointer" />
-            </Button>
+            <CvDialog
+              placeholder={""}
+              isOpen={false}
+              onAdd={(skill) => {
+                onChange([...skills, { name: skill }], languages, links);
+              }}
+            />
           )}
         </div>
         <SkillsBadges skills={skills} />
-        {isDialogOpen && (
-          <CvDialog
-            hiddenTitle="Add Skill"
-            placeholder="Search for skills..."
-            isOpen={isDialogOpen}
-            onClose={() => setIsDialogOpen(false)}
-          />
-        )}
       </section>
       <section>
         <h2 className="text-xl font-bold pb-1">Languages</h2>

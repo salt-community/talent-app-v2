@@ -16,3 +16,4 @@ export * from "./toaster";
 export * from "./header";
 export * from "./dropdown-menu";
 export * from "./scroll-area";
+export * from "./popover"
