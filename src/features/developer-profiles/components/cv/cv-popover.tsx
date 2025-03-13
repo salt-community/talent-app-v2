@@ -18,12 +18,7 @@ export function CvPopover({ placeholder, onAdd }: Props) {
   };
 
   return (
-    <Popover
-      open={open}
-      onOpenChange={(opened) => {
-        setOpen(opened);
-      }}
-    >
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="link" size="icon">
           <Plus size={24} className="cursor-pointer" />
