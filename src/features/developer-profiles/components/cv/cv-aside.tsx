@@ -14,10 +14,9 @@ type Props = {
   onChange: (
     skills: SkillInsert[],
     languages: LanguageInsert[],
-    links: SocialLinkType[]
+    links: SocialLinkType[],
   ) => void;
   isEditable: boolean;
-  
 };
 
 export function CvAside({

@@ -11,6 +11,9 @@ export async function CV({ developerProfileId, hasProfileAccess }: Props) {
     await developerProfilesService.getDeveloperProfileById(developerProfileId);
 
   return (
-    <CvContainer background={background} hasProfileAccess={hasProfileAccess} />
+    <CvContainer
+      defaultCvInfo={background}
+      hasProfileAccess={hasProfileAccess}
+    />
   );
 }

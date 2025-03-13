@@ -9,16 +9,16 @@ import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 
 type Props = {
-  background: CvInfo;
+  defaultCvInfo: CvInfo;
   hasProfileAccess: boolean;
 };
 
-export function CvContainer({ background, hasProfileAccess }: Props) {
+export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   const [isEditable, setIsEditable] = useState(false);
-  const [backgroundInfo, setBackgroundInfo] = useState(background);
+  const [cvInfo, setCvInfo] = useState(defaultCvInfo);
 
-  const handleOnSave = async (background: CvInfo) => {
-    await updateCvAction(background);
+  const handleOnSave = async (cvInfo: CvInfo) => {
+    await updateCvAction(cvInfo);
     setIsEditable(false);
   };
 
@@ -28,7 +28,7 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
         <p className="hidden md:block text-start">{"</salt>"}</p>
         {isEditable ? (
           <Check
-            onClick={() => handleOnSave(backgroundInfo)}
+            onClick={() => handleOnSave(cvInfo)}
             className="cursor-pointer"
           />
         ) : (
@@ -41,24 +41,24 @@ export function CvContainer({ background, hasProfileAccess }: Props) {
       </div>
 
       <CvHeader
-        name={backgroundInfo.name}
-        bio={backgroundInfo.bio}
-        avatarUrl={backgroundInfo.avatarUrl}
+        name={cvInfo.name}
+        bio={cvInfo.bio}
+        avatarUrl={cvInfo.avatarUrl}
         hasProfileAccess={hasProfileAccess}
-        id={backgroundInfo.id}
-        identityId={backgroundInfo.identityId}
+        id={cvInfo.id}
+        identityId={cvInfo.identityId}
         isEditable={isEditable}
         onChange={({ name, bio, avatarUrl }) =>
-          setBackgroundInfo((prev) => ({ ...prev, name, bio, avatarUrl }))
+          setCvInfo((prev) => ({ ...prev, name, bio, avatarUrl }))
         }
       />
       <div className="md:grid md:grid-cols-[15rem_2fr]">
         <CvAside
-          skills={backgroundInfo.skills}
-          languages={backgroundInfo.languages}
-          links={backgroundInfo.links}
+          skills={cvInfo.skills}
+          languages={cvInfo.languages}
+          links={cvInfo.links}
           onChange={(skills, languages, links) => {
-            setBackgroundInfo((prev) => ({
+            setCvInfo((prev) => ({
               ...prev,
               skills,
               languages,
