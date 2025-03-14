@@ -12,7 +12,7 @@ type Props = {
 
 export function CvBlock({ experience, isEditable, onDelete, onChange }: Props) {
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       <div className="flex items-center text-paragraph-light font-semibold">
         <EditableField
           placeholder="Role"
@@ -34,6 +34,7 @@ export function CvBlock({ experience, isEditable, onDelete, onChange }: Props) {
           </Button>
         )}
       </div>
+
       <EditableField
         placeholder="Date"
         value={experience.date}
