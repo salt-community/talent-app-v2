@@ -39,14 +39,14 @@ export function EditableField({
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             className={cn(
-              "border border-transparent py-0 px-1 resize-none leading-none w-full",
+              "border border-transparent py-0 px-1 resize-none leading-none",
               textClass
             )}
             minHeight={textSize + 10}
           />
         </div>
       ) : (
-        <div className="whitespace-pre-wrap w-full border rounded-md py-0 px-1 border-transparent text">
+        <div className="whitespace-pre-wrap border rounded-md py-0 px-1 border-transparent text">
           <p
             style={{ minHeight: textSize + 10 }}
             className={cn(
