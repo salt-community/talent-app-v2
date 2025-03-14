@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: "Created by Salt",
 };
 
-const roboto = Roboto();
+const roboto = Roboto({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
