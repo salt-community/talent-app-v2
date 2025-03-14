@@ -32,7 +32,7 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
   return (
     <div className="pb-8">
       <div className="flex items-center justify-between px-2">
-        <H2 textColor="text-paragraph px-1 border border-transparent">
+        <H2 textColor="text-paragraph px-1 py-1 border border-transparent">
           Education and training
         </H2>
         {isEditable && (
@@ -77,7 +77,7 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
         ))}
       </div>
       <div className="flex justify-between items-center px-2">
-        <H2 textColor="text-paragraph px-1 border border-transparent">
+        <H2 textColor="text-paragraph px-1 py-1 border border-transparent">
           Work experience
         </H2>
         {isEditable && (
