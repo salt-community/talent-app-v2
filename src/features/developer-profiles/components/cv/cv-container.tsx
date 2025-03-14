@@ -8,6 +8,7 @@ import { CheckCircle, Pencil } from "lucide-react";
 import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   defaultCvInfo: CvInfo;
@@ -15,10 +16,28 @@ type Props = {
 };
 
 export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
+  const { toast } = useToast();
+
   const [isEditable, setIsEditable] = useState(false);
   const [cvInfo, setCvInfo] = useState(defaultCvInfo);
 
   const handleOnSave = async (cvInfo: CvInfo) => {
+    const hasEmptyFields = cvInfo.jobs.some((job) => {
+      return (
+        job.organization === "" ||
+        job.date === "" ||
+        job.role === "" ||
+        job.description === ""
+      );
+    });
+    if(hasEmptyFields) {
+      toast({
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive"
+      });
+      return;
+    }
     await updateCvAction(cvInfo);
     setIsEditable(false);
   };
