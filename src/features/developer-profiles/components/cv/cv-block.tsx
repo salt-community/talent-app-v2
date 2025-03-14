@@ -13,7 +13,7 @@ type Props = {
 export function CvBlock({ experience, isEditable, onDelete, onChange }: Props) {
   return (
     <div>
-      <div className="flex items-center gap-2 text-paragraph-light font-semibold">
+      <div className="flex items-center text-paragraph-light font-semibold">
         <EditableField
           value={experience.role}
           isEditable={isEditable}
