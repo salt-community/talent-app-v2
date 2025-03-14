@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { addAssignmentAction, updateAssignmentAction } from "../../action";
 import { Assignment } from "@/features/assignments";
 import { Title } from "@radix-ui/react-dialog";
+import { DialogTitle } from "@/components/ui/dialog";
 
 const DEFAULT_CATEGORIES = [
   { id: "frontend", name: "Frontend" },
@@ -123,7 +124,7 @@ export function AddAssignmentForm({
 
   return (
     <div className="space-y-6 p-4">
-      <Title className="font-bold text-lg">Add assignment</Title>
+      <DialogTitle>Add assignment</DialogTitle>
       <div>
         <Label htmlFor="title">Title</Label>
         <Input
