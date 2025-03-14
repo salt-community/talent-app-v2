@@ -38,7 +38,7 @@ export default function EditAssignmentButton({ cohortId, assignment }: Props) {
         <DialogContent>
           <AddAssignmentForm
             cohortId={cohortId}
-            assignemnt={assignment}
+            assignment={assignment}
             onSuccess={() => setOpen(false)}
           />
         </DialogContent>

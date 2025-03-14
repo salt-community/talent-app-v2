@@ -1,7 +1,6 @@
 "use client";
 import { Developer, ScoreStatus } from "../../types";
 import OpenScoreFormButton from "./open-score-form-button";
-import { AlertCircle, Check, CheckCheck } from "lucide-react";
 import { AssignmentScore } from "@/features/assignments";
 import { Switch } from "@/components/ui/switch";
 import { updateScoreStatusesAction } from "../../action";
