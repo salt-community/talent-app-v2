@@ -41,9 +41,13 @@ export function CvMainContent({ isEditable }: Props) {
   return (
     <div>
       <div className="flex justify-between px-2">
-        <H2 textColor="text-paragraph px-1 border border-transparent">Education and training</H2>
+        <H2 textColor="text-paragraph px-1 border border-transparent">
+          Education and training
+        </H2>
         {isEditable && (
           <Button
+            variant="ghost"
+            size="sm"
             onClick={() => {
               setEducations((prev) => [
                 ...prev,
@@ -72,14 +76,23 @@ export function CvMainContent({ isEditable }: Props) {
                 prev.filter((e) => e.id !== education.id)
               );
             }}
-            onChange={(education) => setEducations((prev) => prev.map((e) => e.id === education.id ? education : e))}
+            onChange={(education) =>
+              setEducations((prev) =>
+                prev.map((e) => (e.id === education.id ? education : e))
+              )
+            }
           />
         ))}
       </div>
       <div className="flex justify-between px-2">
-        <H2 textColor="text-paragraph px-1 border border-transparent">Work experience</H2>
+        <H2 textColor="text-paragraph px-1 border border-transparent">
+          Work experience
+        </H2>
         {isEditable && (
           <Button
+            variant="default"
+            size="icon"
+            className="h-5 w-5 rounded-full"
             onClick={() => {
               setJobs((prev) => [
                 ...prev,
@@ -97,7 +110,7 @@ export function CvMainContent({ isEditable }: Props) {
           </Button>
         )}
       </div>
-      <div className="flex flex-col gap-4 px-2">
+      <div className="flex flex-col gap-4 px-2 ">
         {jobs.map((job) => (
           <CvBlock
             key={job.id}
@@ -106,8 +119,9 @@ export function CvMainContent({ isEditable }: Props) {
             onDelete={() => {
               setJobs((prev) => prev.filter((e) => e.id !== job.id));
             }}
-            onChange={(job) => setJobs((prev) => prev.map((e) => e.id === job.id ? job : e))}
-
+            onChange={(job) =>
+              setJobs((prev) => prev.map((e) => (e.id === job.id ? job : e)))
+            }
           />
         ))}
       </div>
