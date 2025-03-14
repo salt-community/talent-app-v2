@@ -18,26 +18,21 @@ export default function AddAssignmentButton({ cohortId }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button
-            className="my-2"
-            onClick={() => setOpen(true)}
-          >
-            <span>+</span> New assignment
-          </Button>
-        </DialogTrigger>
-        <VisuallyHidden>
-          <DialogTitle>New Assignment</DialogTitle>
-        </VisuallyHidden>
-        <DialogContent>
-          <AddAssignmentForm
-            cohortId={cohortId}
-            onSuccess={() => setOpen(false)}
-          />
-        </DialogContent>
-      </Dialog>
-    </>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="my-2" onClick={() => setOpen(true)}>
+          <span>+</span> New assignment
+        </Button>
+      </DialogTrigger>
+      <VisuallyHidden>
+        <DialogTitle>New Assignment</DialogTitle>
+      </VisuallyHidden>
+      <DialogContent>
+        <AddAssignmentForm
+          cohortId={cohortId}
+          onSuccess={() => setOpen(false)}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }
