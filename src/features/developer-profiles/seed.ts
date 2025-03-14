@@ -105,7 +105,7 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
       backgrounds[i]
     );
   }
-
+  await developerProfilesSeedingService.repopulateMeiliSearch();
   console.log("Done seeding developer profiles!");
   return developerId;
 }
