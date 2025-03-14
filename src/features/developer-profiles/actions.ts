@@ -69,6 +69,7 @@ export async function updateCvAction(backgrounds: CvInfo) {
     skills: backgrounds.skills.map((skill) => skill.name),
     languages: backgrounds.languages.map((language) => language.name),
     links: backgrounds.links,
+    jobs: backgrounds.jobs,
   };
 
   await developerProfilesService.updateDeveloperProfile(background);

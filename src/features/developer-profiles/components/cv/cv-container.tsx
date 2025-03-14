@@ -90,7 +90,16 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           }}
           isEditable={isEditable}
         />
-        <CvMainContent isEditable={isEditable} />
+        <CvMainContent
+          isEditable={isEditable}
+          jobs={cvInfo.jobs}
+          onChange={(jobs) => {
+            setCvInfo((prev) => ({
+              ...prev,
+              jobs,
+            }));
+          }}
+        />
       </div>
     </section>
   );
