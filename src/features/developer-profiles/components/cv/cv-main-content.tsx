@@ -39,7 +39,7 @@ export function CvMainContent({ isEditable }: Props) {
   ]);
 
   return (
-    <div>
+    <div className="pb-8">
       <div className="flex justify-between px-2">
         <H2 textColor="text-paragraph px-1 border border-transparent">
           Education and training
