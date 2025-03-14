@@ -113,6 +113,13 @@
       "when": 1741788897736,
       "tag": "0015_drop_table_tempDeveloperProfiles",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1741945228001,
+      "tag": "0016_vengeful_stranger",
+      "breakpoints": true
     }
   ]
 }

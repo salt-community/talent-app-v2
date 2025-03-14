@@ -64,7 +64,7 @@ export async function updateCvAction(backgrounds: CvInfo) {
   const background = {
     id: backgrounds.id,
     name: backgrounds.name,
-    bio: backgrounds.bio,
+    headline: backgrounds.headline,
     avatarUrl: backgrounds.avatarUrl,
     skills: backgrounds.skills.map((skill) => skill.name),
     languages: backgrounds.languages.map((language) => language.name),

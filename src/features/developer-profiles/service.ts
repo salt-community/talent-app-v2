@@ -7,7 +7,7 @@ import {
   developerProfileDetails,
   OutboxMessageSelect,
   SessionClaims,
-  updateDeveloperProfile,
+  UpdateDeveloperProfile,
 } from "./types";
 import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./backgrounds-search";
@@ -42,7 +42,7 @@ export function createDeveloperProfilesService(
       "languages",
       "name",
       "title",
-      "bio",
+      "headline",
       "status",
     ],
     embedders:
@@ -54,7 +54,7 @@ export function createDeveloperProfilesService(
               apiKey: process.env.OPENAI_API_KEY,
               dimensions: 3072,
               documentTemplate: `{{doc.title}} with skills: {{doc.skills}},
-          education: {{doc.educations}}, languages: {{doc.languages}}, bio: {{doc.bio}}`,
+          education: {{doc.educations}}, languages: {{doc.languages}}, headline: {{doc.headline}}`,
             },
           }
         : undefined,
@@ -140,7 +140,7 @@ export function createDeveloperProfilesService(
           name: "<New Profile>",
           identityId: "",
           title: "",
-          bio: "",
+          headline: "",
           links: [],
           skills: [],
           languages: [],
@@ -196,7 +196,7 @@ export function createDeveloperProfilesService(
       }
     },
     async updateDeveloperProfile(
-      developerProfileUpdates: updateDeveloperProfile
+      developerProfileUpdates: UpdateDeveloperProfile
     ) {
       const { outboxMessageId } = await repository.updateDeveloperProfile(
         developerProfileUpdates
@@ -204,7 +204,7 @@ export function createDeveloperProfilesService(
       const developerProfile = await repository.getDeveloperProfileById(
         developerProfileUpdates.id
       );
-      
+
       const status = await backgroundsSearchApi.upsertDocuments([
         developerProfile[0],
       ]);

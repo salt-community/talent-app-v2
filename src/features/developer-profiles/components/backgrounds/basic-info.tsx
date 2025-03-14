@@ -15,7 +15,9 @@ export function BackgroundBasicInfo({ developerProfile }: Props) {
 
           <H2>{developerProfile.name}</H2>
 
-          <p className="font-light text-slate-600">{developerProfile.bio}</p>
+          <p className="font-light text-slate-600">
+            {developerProfile.headline}
+          </p>
         </div>
       </div>
     </section>

@@ -6,7 +6,7 @@ import { CvPopover } from "./cv-popover";
 
 type Props = {
   name: string;
-  bio: string;
+  headline: string;
   avatarUrl: string;
   id: string;
   identityId: string;
@@ -14,17 +14,17 @@ type Props = {
   isEditable: boolean;
   onChange: ({
     name,
-    bio,
+    headline,
     avatarUrl,
   }: {
     name: string;
-    bio: string;
+    headline: string;
     avatarUrl: string;
   }) => void;
 };
 export function CvHeader({
   name,
-  bio,
+  headline,
   avatarUrl,
   isEditable,
   onChange,
@@ -39,7 +39,7 @@ export function CvHeader({
               placeholder={"Set your avatar URL"}
               icon={Check}
               onAdd={(avatarUrl) => {
-                onChange({ name, bio, avatarUrl });
+                onChange({ name, headline, avatarUrl });
               }}
             >
               <Button className="absolute bottom-4 right-8 z-20 rounded-full p-0 h-8 w-8">
@@ -54,15 +54,15 @@ export function CvHeader({
             isEditable={isEditable}
             fontSize="lg"
             onChange={(name) => {
-              onChange({ name, bio, avatarUrl });
+              onChange({ name, headline, avatarUrl });
             }}
           />
           <EditableField
-            value={bio}
+            value={headline}
             fontSize="sm"
             isEditable={isEditable}
-            onChange={(bio) => {
-              onChange({ name, bio, avatarUrl });
+            onChange={(headline) => {
+              onChange({ name, headline, avatarUrl });
             }}
           />
         </div>

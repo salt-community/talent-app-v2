@@ -9,7 +9,7 @@ export const developerProfileUpdate = z.object({
     .string()
     .nonempty("Role must contain at least 1 character(s)")
     .optional(),
-  bio: z.string().optional(),
+  headline: z.string().optional(),
   github: z.string().optional(),
   cv: z.string().optional(),
   skills: z
@@ -38,7 +38,7 @@ export const CVHeaderUpdate = z.object({
   identityId: z.string().nonempty(),
   name: z.string().nonempty("Name must contain at least 1 character(s)"),
   avatarUrl: z.string().url().optional().or(z.literal("")),
-  bio: z.string().optional(),
+  headline: z.string().optional(),
 });
 
 export type DeveloperProfileValidation = z.infer<typeof developerProfileUpdate>;

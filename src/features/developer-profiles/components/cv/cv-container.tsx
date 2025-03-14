@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
 import { CvInfo } from "../../types";
-import { CheckCircle, Pencil } from "lucide-react";
+import { Ban, CheckCircle, Pencil } from "lucide-react";
 import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
@@ -67,14 +67,14 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
 
       <CvHeader
         name={cvInfo.name}
-        bio={cvInfo.bio}
+        headline={cvInfo.headline}
         avatarUrl={cvInfo.avatarUrl}
         hasProfileAccess={hasProfileAccess}
         id={cvInfo.id}
         identityId={cvInfo.identityId}
         isEditable={isEditable}
-        onChange={({ name, bio, avatarUrl }) =>
-          setCvInfo((prev) => ({ ...prev, name, bio, avatarUrl }))
+        onChange={({ name, headline, avatarUrl }) =>
+          setCvInfo((prev) => ({ ...prev, name, headline, avatarUrl }))
         }
       />
       <div className="md:grid md:grid-cols-[15rem_2fr]">

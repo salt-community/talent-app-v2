@@ -13,7 +13,7 @@ import {
   EducationSelect,
   LanguageSelect,
   SkillSelect,
-  updateDeveloperProfile,
+  UpdateDeveloperProfile,
 } from "./types";
 
 export function createDevelopersRepository(db: Db) {
@@ -56,7 +56,7 @@ export function createDevelopersRepository(db: Db) {
           name: developerProfiles.name,
           avatarUrl: developerProfiles.avatarUrl,
           title: developerProfiles.title,
-          bio: developerProfiles.bio,
+          headline: developerProfiles.headline,
           links: developerProfiles.links,
           status: developerProfiles.status,
           skills: sql<
@@ -101,7 +101,7 @@ export function createDevelopersRepository(db: Db) {
           name: developerProfiles.name,
           avatarUrl: developerProfiles.avatarUrl,
           title: developerProfiles.title,
-          bio: developerProfiles.bio,
+          headline: developerProfiles.headline,
           links: developerProfiles.links,
           status: developerProfiles.status,
           skills: sql<
@@ -147,7 +147,7 @@ export function createDevelopersRepository(db: Db) {
           name: developerProfiles.name,
           avatarUrl: developerProfiles.avatarUrl,
           title: developerProfiles.title,
-          bio: developerProfiles.bio,
+          headline: developerProfiles.headline,
           links: developerProfiles.links,
           skills: sql<
             SkillSelect[]
@@ -262,7 +262,7 @@ export function createDevelopersRepository(db: Db) {
           status: developerProfile.status || "",
           avatarUrl: developerProfile.avatarUrl || "",
           title: developerProfile.title || "",
-          bio: developerProfile.bio || "",
+          headline: developerProfile.headline || "",
           links: developerProfile.links || [],
         })
         .onConflictDoUpdate({
@@ -275,13 +275,13 @@ export function createDevelopersRepository(db: Db) {
             status: developerProfile.status || "",
             avatarUrl: developerProfile.avatarUrl || "",
             title: developerProfile.title || "",
-            bio: developerProfile.bio || "",
+            headline: developerProfile.headline || "",
             links: developerProfile.links || [],
           },
         });
     },
     async updateDeveloperProfile(
-      updatedDeveloperProfile: updateDeveloperProfile
+      updatedDeveloperProfile: UpdateDeveloperProfile
     ) {
       const outboxMessageId = await db.transaction(async (tx) => {
         await tx
@@ -297,7 +297,8 @@ export function createDevelopersRepository(db: Db) {
             avatarUrl:
               updatedDeveloperProfile.avatarUrl || developerProfiles.avatarUrl,
             title: updatedDeveloperProfile.title || developerProfiles.title,
-            bio: updatedDeveloperProfile.bio || developerProfiles.bio,
+            headline:
+              updatedDeveloperProfile.headline || developerProfiles.headline,
             links: updatedDeveloperProfile.links || developerProfiles.links,
           })
           .where(eq(developerProfiles.id, updatedDeveloperProfile.id));
@@ -360,7 +361,6 @@ export function createDevelopersRepository(db: Db) {
             .returning({ id: meiliSearchOutbox.id })
         )[0].id;
       });
-      console.log({ developerProfileSkills: updatedDeveloperProfile.skills });
       return { outboxMessageId };
     },
     async deleteDeveloperProfile(developerProfileId: string) {

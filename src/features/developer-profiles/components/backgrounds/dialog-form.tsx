@@ -137,14 +137,14 @@ export function DialogForm({
                 />
               </FormItem>
               <FormItem>
-                <Label htmlFor="bio" className="text-right">
+                <Label htmlFor="headline" className="text-right">
                   Headline
                 </Label>
                 <Input
-                  defaultValue={developerProfile.bio}
+                  defaultValue={developerProfile.headline}
                   placeholder="Headline..."
-                  name="bio"
-                  id="bio"
+                  name="headline"
+                  id="headline"
                   className="col-span-3"
                 />
               </FormItem>
