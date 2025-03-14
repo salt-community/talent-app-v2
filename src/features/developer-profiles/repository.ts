@@ -15,6 +15,7 @@ import {
   SkillSelect,
   updateDeveloperProfile,
 } from "./types";
+import { Experience } from "./components/cv/cv-main-content";
 
 export function createDevelopersRepository(db: Db) {
   return {
@@ -78,34 +79,37 @@ export function createDevelopersRepository(db: Db) {
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfileSkills.name})::VARCHAR[]`.as(
-            "skills"
+            "skills",
           ),
           languages: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfileLanguages.name})::VARCHAR[]`.as(
-            "languages"
+            "languages",
           ),
           educations: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfileEducations.name})::VARCHAR[]`.as(
-            "educations"
+            "educations",
           ),
         })
         .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id),
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
+          eq(
+            developerProfileLanguages.developerProfileId,
+            developerProfiles.id,
+          ),
         )
         .leftJoin(
           developerProfileEducations,
           eq(
             developerProfileEducations.developerProfileId,
-            developerProfiles.id
-          )
+            developerProfiles.id,
+          ),
         )
         .groupBy(developerProfiles.id);
     },
@@ -123,40 +127,43 @@ export function createDevelopersRepository(db: Db) {
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "skills"
+            "skills",
           ),
           languages: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "languages"
+            "languages",
           ),
           educations: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "educations"
+            "educations",
           ),
         })
         .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id),
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
+          eq(
+            developerProfileLanguages.developerProfileId,
+            developerProfiles.id,
+          ),
         )
         .leftJoin(
           developerProfileEducations,
           eq(
             developerProfileEducations.developerProfileId,
-            developerProfiles.id
-          )
+            developerProfiles.id,
+          ),
         )
         .where(eq(developerProfiles.id, developerProfileId))
         .groupBy(developerProfiles.id);
     },
     async getDeveloperProfile(developerProfileId: string) {
-      return await db
+      const result = await db
         .select({
           id: developerProfiles.id,
           identityId: developerProfiles.identityId,
@@ -172,16 +179,16 @@ export function createDevelopersRepository(db: Db) {
                 'name', ${developerProfileSkills.name},
                 'level', ${developerProfileSkills.level}
               )) FILTER (WHERE ${developerProfileSkills.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "skills"
+            "skills",
           ),
           languages: sql<
             LanguageSelect[]
           >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
                 'id', ${developerProfileLanguages.id},
-                'name', ${developerProfileLanguages.name}, 
+                'name', ${developerProfileLanguages.name},
                 'level', ${developerProfileLanguages.level}
               )) FILTER (WHERE ${developerProfileLanguages.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "languages"
+            "languages",
           ),
           educations: sql<
             EducationSelect[]
@@ -189,27 +196,36 @@ export function createDevelopersRepository(db: Db) {
                 'id', ${developerProfileEducations.id},
                 'name', ${developerProfileEducations.name}
               )) FILTER (WHERE ${developerProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "educations"
+            "educations",
           ),
         })
         .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id),
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
+          eq(
+            developerProfileLanguages.developerProfileId,
+            developerProfiles.id,
+          ),
         )
         .leftJoin(
           developerProfileEducations,
           eq(
             developerProfileEducations.developerProfileId,
-            developerProfiles.id
-          )
+            developerProfiles.id,
+          ),
         )
         .where(eq(developerProfiles.id, developerProfileId))
         .groupBy(developerProfiles.id);
+
+      // Add jobs to the result after the query
+      return result.map((item) => ({
+        ...item,
+        jobs,
+      }));
     },
     async getAllSkills() {
       return await db.select().from(developerProfileSkills);
@@ -243,7 +259,7 @@ export function createDevelopersRepository(db: Db) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     },
     async addDeveloperProfileDetails(
-      developerProfileDetails: developerProfileDetails
+      developerProfileDetails: developerProfileDetails,
     ) {
       await db.transaction(async (tx) => {
         for (const skill of developerProfileDetails.skills) {
@@ -298,8 +314,10 @@ export function createDevelopersRepository(db: Db) {
         });
     },
     async updateDeveloperProfile(
-      updatedDeveloperProfile: updateDeveloperProfile
+      updatedDeveloperProfile: updateDeveloperProfile,
     ) {
+      jobs = updatedDeveloperProfile.jobs || [];
+
       const outboxMessageId = await db.transaction(async (tx) => {
         await tx
           .update(developerProfiles)
@@ -325,8 +343,8 @@ export function createDevelopersRepository(db: Db) {
             .where(
               eq(
                 developerProfileSkills.developerProfileId,
-                updatedDeveloperProfile.id
-              )
+                updatedDeveloperProfile.id,
+              ),
             );
           for (const skill of updatedDeveloperProfile.skills) {
             await tx.insert(developerProfileSkills).values({
@@ -341,8 +359,8 @@ export function createDevelopersRepository(db: Db) {
             .where(
               eq(
                 developerProfileLanguages.developerProfileId,
-                updatedDeveloperProfile.id
-              )
+                updatedDeveloperProfile.id,
+              ),
             );
           for (const language of updatedDeveloperProfile.languages) {
             await tx.insert(developerProfileLanguages).values({
@@ -357,8 +375,8 @@ export function createDevelopersRepository(db: Db) {
             .where(
               eq(
                 developerProfileEducations.developerProfileId,
-                updatedDeveloperProfile.id
-              )
+                updatedDeveloperProfile.id,
+              ),
             );
           for (const education of updatedDeveloperProfile.educations) {
             await tx.insert(developerProfileEducations).values({
@@ -392,3 +410,25 @@ export function createDevelopersRepository(db: Db) {
     },
   };
 }
+
+const educations = [
+  {
+    id: 1,
+    organization: "Salt",
+    date: "Jan 2025 - Apr 2025",
+    role: "Fullstack JavaScript Developer",
+    description:
+      "Accelerated fullstack program covering JavaScript, TypeScript, React, Next.js, Node.js, and PostgreSQL. Hands-on experience with Agile, TDD, Mob Programming, and CI/CD. Developed technical and soft skills through collaborative projects and leadership training.",
+  },
+];
+
+let jobs: Experience[] = [
+  {
+    id: 1,
+    organization: "Salt1",
+    date: "2025 - Present",
+    role: "Fullstack Developer",
+    description:
+      "Hands-on development in the Talent App, a platform designed to connect developers with job opportunities. Involves building and optimizing fullstack features using JavaScript, TypeScript, React, Next.js, Node.js, and PostgreSQL. Collaboration is key, with daily Agile practices, Mob Programming sessions, code reviews, and CI/CD workflows. Responsibilities include implementing authentication with Clerk, managing database schemas with Drizzle ORM, and improving search functionality with MeiliSearch. A focus on performance, accessibility, and developer experience ensures continuous improvement in a flexible, remote-friendly environment.",
+  },
+];

@@ -1,3 +1,4 @@
+import { Experience } from "./components/cv/cv-main-content";
 import {
   developerProfileEducations,
   developerProfileLanguages,
@@ -30,6 +31,7 @@ export type updateDeveloperProfile = {
   links?: SocialLink[];
   skills?: string[];
   educations?: string[];
+  jobs?: Experience[];
   languages?: string[];
 };
 
@@ -74,6 +76,7 @@ export type CvInfo = {
   skills: SkillInsert[];
   languages: LanguageInsert[];
   educations: EducationSelect[];
+  jobs: Experience[];
 };
 
 export type developerProfileUpdate = Partial<DeveloperProfileInsert> &

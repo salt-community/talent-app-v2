@@ -5,6 +5,8 @@ import { useState } from "react";
 
 type Props = {
   isEditable: boolean;
+  jobs: Experience[];
+  onChange: (jobs: Experience[]) => void;
 };
 
 export type Experience = {
@@ -15,7 +17,7 @@ export type Experience = {
   description: string;
 };
 
-export function CvMainContent({ isEditable }: Props) {
+export function CvMainContent({ isEditable, jobs, onChange }: Props) {
   const [educations, setEducations] = useState([
     {
       id: 1,
@@ -25,17 +27,6 @@ export function CvMainContent({ isEditable }: Props) {
       description:
         "Accelerated fullstack program covering JavaScript, TypeScript, React, Next.js, Node.js, and PostgreSQL. Hands-on experience with Agile, TDD, Mob Programming, and CI/CD. Developed technical and soft skills through collaborative projects and leadership training.",
     },
-  ]);
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      organization: "Salt",
-      date: "2025 - Present",
-      role: "Fullstack Developer",
-      description:
-        "Hands-on development in the Talent App, a platform designed to connect developers with job opportunities. Involves building and optimizing fullstack features using JavaScript, TypeScript, React, Next.js, Node.js, and PostgreSQL. Collaboration is key, with daily Agile practices, Mob Programming sessions, code reviews, and CI/CD workflows. Responsibilities include implementing authentication with Clerk, managing database schemas with Drizzle ORM, and improving search functionality with MeiliSearch. A focus on performance, accessibility, and developer experience ensures continuous improvement in a flexible, remote-friendly environment."
-    }
-    ,
   ]);
 
   return (
@@ -73,12 +64,12 @@ export function CvMainContent({ isEditable }: Props) {
             isEditable={isEditable}
             onDelete={() => {
               setEducations((prev) =>
-                prev.filter((e) => e.id !== education.id)
+                prev.filter((e) => e.id !== education.id),
               );
             }}
             onChange={(education) =>
               setEducations((prev) =>
-                prev.map((e) => (e.id === education.id ? education : e))
+                prev.map((e) => (e.id === education.id ? education : e)),
               )
             }
           />
@@ -94,16 +85,17 @@ export function CvMainContent({ isEditable }: Props) {
             size="icon"
             className="h-5 w-5 rounded-full"
             onClick={() => {
-              setJobs((prev) => [
-                ...prev,
+              const newJobs = [
+                ...jobs,
                 {
-                  id: prev.length + 1,
+                  id: jobs.length + 1,
                   organization: "Company name",
                   date: "xxxx - xxxx",
                   role: "Job title",
                   description: "Job description",
                 },
-              ]);
+              ];
+              onChange(newJobs);
             }}
           >
             <Plus />
@@ -117,10 +109,10 @@ export function CvMainContent({ isEditable }: Props) {
             experience={job}
             isEditable={isEditable}
             onDelete={() => {
-              setJobs((prev) => prev.filter((e) => e.id !== job.id));
+              onChange(jobs.filter((e) => e.id !== job.id));
             }}
             onChange={(job) =>
-              setJobs((prev) => prev.map((e) => (e.id === job.id ? job : e)))
+              onChange(jobs.map((e) => (e.id === job.id ? job : e)))
             }
           />
         ))}
