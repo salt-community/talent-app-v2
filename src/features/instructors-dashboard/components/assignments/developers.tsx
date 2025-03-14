@@ -11,6 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import AssignmentStatus from "./assignment-status";
 
 type Props = {
   developer: Developer;
@@ -49,19 +50,7 @@ export default function Developers({
           <div>
             <div className="flex flex-row gap-2 font-medium">
               {developer.name}
-              {published ? (
-                <div title="Score published">
-                  <CheckCheck size={20} color="green" />
-                </div>
-              ) : scored ? (
-                <div title="Assignment scored">
-                  <Check size={20} color="green" />
-                </div>
-              ) : (
-                <div title="Not scored">
-                  <AlertCircle size={20} color="red" />
-                </div>
-              )}
+              <AssignmentStatus published={published} scored={scored} />
             </div>
           </div>
         </div>
