@@ -14,14 +14,13 @@ export type Cohort = {
   createdAt: Date | null;
 };
 export type Assignment = {
-  assignment: {
-    assignmentId: string;
-    identityId: string;
-    title: string;
-    category: string[] | null;
-    comment: string[] | null;
-    score: number[] | null;
-  };
+  id: string;
+  cohortId: string;
+  title: string;
+  slug: string | null;
+  comment: string | null;
+  categories: string[] | null;
+  createdAt: Date | null;
 };
 
 export type AssignmentInsert = {

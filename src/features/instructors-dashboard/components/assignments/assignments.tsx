@@ -7,6 +7,7 @@ import { Separator } from "@/components";
 import { CopyAssignmentButton } from "./copy-assignment-url-button";
 import { DeleteAssignmentButton } from "./delete-assignment-button";
 import EditAssignmentButton from "./edit-assignment-button";
+import { AssignmentListItem } from "./assignment-list-item";
 
 type Props = {
   name: string;
@@ -29,37 +30,14 @@ export async function AssignmentsDashboard({ name }: Props) {
       </div>
       <Separator className="mb-4" />
       <div className="space-y-4">
-        {assignments.map((assignment) => {
-          return (
-            <div
-              key={assignment.id}
-              className="flex justify-between items-center border-b pb-4"
-            >
-              <div className="flex items-center gap-4">
-                <Link
-                  href={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.slug}`}
-                  className="text-header font-medium text-sm md:text-base p-2 md:p-0 hover:underline hover:underline-offset-4"
-                >
-                  {assignment.title}
-                </Link>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <CopyAssignmentButton
-                  link={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.slug}`}
-                />
-                <EditAssignmentButton
-                  cohortId={cohortId}
-                  assignment={assignment}
-                />
-                <DeleteAssignmentButton
-                  assignmentId={assignment.id}
-                  name={assignment.title}
-                />
-              </div>
-            </div>
-          );
-        })}
+        {assignments.map((assignment) => (
+          <AssignmentListItem
+            assignment={assignment}
+            foundCohort={foundCohort}
+            cohortId={cohortId}
+            key={assignment.id}
+          />
+        ))}
       </div>
     </div>
   );
