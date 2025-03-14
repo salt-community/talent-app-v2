@@ -15,12 +15,14 @@ export function CvBlock({ experience, isEditable, onDelete, onChange }: Props) {
     <div>
       <div className="flex items-center text-paragraph-light font-semibold">
         <EditableField
+          placeholder="Role"
           value={experience.role}
           isEditable={isEditable}
           onChange={(role) => onChange({...experience, role})}
         />
         |
         <EditableField
+          placeholder="Organization"
           value={experience.organization}
           isEditable={isEditable}
           onChange={(organization) => onChange({...experience, organization})}
@@ -33,12 +35,14 @@ export function CvBlock({ experience, isEditable, onDelete, onChange }: Props) {
         )}
       </div>
       <EditableField
+        placeholder="Date"
         value={experience.date}
         isEditable={isEditable}
         onChange={(date) => onChange({...experience, date})}
 
       />
       <EditableField
+        placeholder="Description"
         value={experience.description}
         isEditable={isEditable}
         onChange={(description) => onChange({...experience, description})}

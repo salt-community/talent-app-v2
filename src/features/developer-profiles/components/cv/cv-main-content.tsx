@@ -44,10 +44,10 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
                 ...prev,
                 {
                   id: prev.length + 1,
-                  organization: "School name",
-                  date: "xxxx - xxxx",
-                  role: "Education title",
-                  description: "Education description",
+                  organization: "",
+                  date: "",
+                  role: "",
+                  description: "",
                 },
               ]);
             }}
@@ -89,10 +89,10 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
                 ...jobs,
                 {
                   id: jobs.length + 1,
-                  organization: "Company name",
-                  date: "xxxx - xxxx",
-                  role: "Job title",
-                  description: "Job description",
+                  organization: "",
+                  date: "",
+                  role: "",
+                  description: "",
                 },
               ];
               onChange(newJobs);
