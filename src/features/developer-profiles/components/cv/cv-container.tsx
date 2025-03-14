@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
 import { CvInfo } from "../../types";
-import { CheckCircle, Edit3, Pencil } from "lucide-react";
+import { CheckCircle, Pencil } from "lucide-react";
 import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
