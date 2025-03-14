@@ -42,7 +42,7 @@ export function EditableField({
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             className={cn(
-              "border border-transparent py-0 px-1 resize-none leading-none",
+              "border border-transparent py-0 px-1 resize-none leading-none overflow-hidden",
               textClass,
             )}
             minHeight={textSize + 10}

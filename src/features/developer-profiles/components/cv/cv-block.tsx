@@ -12,43 +12,44 @@ type Props = {
 
 export function CvBlock({ experience, isEditable, onDelete, onChange }: Props) {
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex items-center text-paragraph-light font-semibold">
-        <EditableField
-          placeholder="Role"
-          value={experience.role}
-          isEditable={isEditable}
-          onChange={(role) => onChange({...experience, role})}
-        />
-        |
-        <EditableField
-          placeholder="Organization"
-          value={experience.organization}
-          isEditable={isEditable}
-          onChange={(organization) => onChange({...experience, organization})}
+    <div className="flex items-start justify-start">
+      <div className="flex flex-col gap-1 flex-grow">
+        <div className="flex items-center text-paragraph-light font-semibold">
+          <EditableField
+            placeholder="Role"
+            value={experience.role}
+            isEditable={isEditable}
+            onChange={(role) => onChange({ ...experience, role })}
+          />
+          |
+          <EditableField
+            placeholder="Organization"
+            value={experience.organization}
+            isEditable={isEditable}
+            onChange={(organization) =>
+              onChange({ ...experience, organization })
+            }
+          />
+        </div>
 
+        <EditableField
+          placeholder="Date"
+          value={experience.date}
+          isEditable={isEditable}
+          onChange={(date) => onChange({ ...experience, date })}
         />
-        {isEditable && (
-          <Button variant="link" size="icon" onClick={onDelete}>
-            <X size={24} className="cursor-pointer" />
-          </Button>
-        )}
+        <EditableField
+          placeholder="Description"
+          value={experience.description}
+          isEditable={isEditable}
+          onChange={(description) => onChange({ ...experience, description })}
+        />
       </div>
-
-      <EditableField
-        placeholder="Date"
-        value={experience.date}
-        isEditable={isEditable}
-        onChange={(date) => onChange({...experience, date})}
-
-      />
-      <EditableField
-        placeholder="Description"
-        value={experience.description}
-        isEditable={isEditable}
-        onChange={(description) => onChange({...experience, description})}
-
-      />
+      {isEditable && (
+        <Button variant="link" size="icon" onClick={onDelete} className="h-5 w-5">
+          <X size={56} className="cursor-pointer" />
+        </Button>
+      )}
     </div>
   );
 }
