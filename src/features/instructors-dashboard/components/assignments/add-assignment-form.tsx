@@ -8,7 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { addAssignmentAction, updateAssignmentAction } from "../../action";
 import { Assignment } from "@/features/assignments";
-import { Title } from "@radix-ui/react-dialog";
 import { DialogTitle } from "@/components/ui/dialog";
 
 const DEFAULT_CATEGORIES = [
