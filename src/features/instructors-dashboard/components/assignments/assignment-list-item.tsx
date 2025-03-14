@@ -17,10 +17,7 @@ export async function AssignmentListItem({
   cohortId,
 }: Props) {
   return (
-    <div
-      key={assignment.id}
-      className="flex justify-between items-center border-b pb-4"
-    >
+    <div className="flex justify-between items-center border-b pb-4">
       <div className="flex items-center gap-4">
         <Link
           href={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.slug}`}

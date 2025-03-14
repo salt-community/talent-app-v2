@@ -1,12 +1,8 @@
 import React from "react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { instructorService } from "../../instance";
 import AddAssignmentButton from "./add-assignment-button";
 import { Separator } from "@/components";
-import { CopyAssignmentButton } from "./copy-assignment-url-button";
-import { DeleteAssignmentButton } from "./delete-assignment-button";
-import EditAssignmentButton from "./edit-assignment-button";
 import { AssignmentListItem } from "./assignment-list-item";
 
 type Props = {
