@@ -1,16 +1,26 @@
-import { X } from "lucide-react";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
 import { EditableField } from "./editable-field";
 import { Button } from "@/components";
 import { Experience } from "./cv-main-content";
+import { on } from "events";
 
 type Props = {
   experience: Experience;
   isEditable: boolean;
   onDelete: () => void;
   onChange: (experience: Experience) => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
 };
 
-export function CvBlock({ experience, isEditable, onDelete, onChange }: Props) {
+export function CvBlock({
+  experience,
+  isEditable,
+  onDelete,
+  onChange,
+  onMoveUp,
+  onMoveDown,
+}: Props) {
   return (
     <div className="flex items-start justify-start">
       <div className="flex flex-col gap-1 flex-grow">
@@ -46,9 +56,32 @@ export function CvBlock({ experience, isEditable, onDelete, onChange }: Props) {
         />
       </div>
       {isEditable && (
-        <Button variant="link" size="icon" onClick={onDelete} className="h-5 w-5">
-          <X size={56} className="cursor-pointer" />
-        </Button>
+        <div className="flex flex-col gap-1">
+          <Button
+            variant="link"
+            size="icon"
+            onClick={onDelete}
+            className="h-5 w-5"
+          >
+            <X size={56} className="cursor-pointer" />
+          </Button>
+          <Button
+            variant="link"
+            size="icon"
+            onClick={onMoveUp}
+            className="h-5 w-5"
+          >
+            <ChevronUp size={56} className="cursor-pointer" />
+          </Button>
+          <Button
+            variant="link"
+            size="icon"
+            onClick={onMoveDown}
+            className="h-5 w-5"
+          >
+            <ChevronDown size={56} className="cursor-pointer" />
+          </Button>
+        </div>
       )}
     </div>
   );
