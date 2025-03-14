@@ -20,26 +20,26 @@ const DEFAULT_CATEGORIES = [
 
 type Props = {
   cohortId: string;
-  assignemnt?: Assignment;
+  assignment?: Assignment;
   onSuccess: () => void;
 };
 
 export function AddAssignmentForm({
   cohortId,
-  assignemnt = undefined,
+  assignment = undefined,
   onSuccess,
 }: Props) {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState(
-    assignemnt?.categories?.map((category) => ({
+    assignment?.categories?.map((category) => ({
       id: category,
       name: category,
-    })) || [],
+    })) || []
   );
   const [searchTerm, setSearchTerm] = useState("");
-  const [title, setTitle] = useState(assignemnt?.title || "");
-  const [comment, setComment] = useState(assignemnt?.comment || "");
+  const [title, setTitle] = useState(assignment?.title || "");
+  const [comment, setComment] = useState(assignment?.comment || "");
 
   const handleSelectCategory = (category: { id: string; name: string }) => {
     if (!selectedCategories.find((c) => c.id === category.id)) {
@@ -65,23 +65,23 @@ export function AddAssignmentForm({
 
   const handleRemoveCategory = (categoryId: string) => {
     setSelectedCategories(
-      selectedCategories.filter((cat) => cat.id !== categoryId),
+      selectedCategories.filter((cat) => cat.id !== categoryId)
     );
   };
 
   const filteredCategories = DEFAULT_CATEGORIES.filter(
     (category) =>
       category.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      !selectedCategories.find((c) => c.id === category.id),
+      !selectedCategories.find((c) => c.id === category.id)
   );
 
   const showAddCustomOption =
     searchTerm.trim() !== "" &&
     !filteredCategories.some(
-      (cat) => cat.name.toLowerCase() === searchTerm.toLowerCase(),
+      (cat) => cat.name.toLowerCase() === searchTerm.toLowerCase()
     ) &&
     !selectedCategories.some(
-      (cat) => cat.name.toLowerCase() === searchTerm.toLowerCase(),
+      (cat) => cat.name.toLowerCase() === searchTerm.toLowerCase()
     );
 
   const handleSubmit = async () => {
@@ -89,9 +89,9 @@ export function AddAssignmentForm({
 
     try {
       const categories = selectedCategories.map((cat) => cat.id);
-      if (assignemnt) {
+      if (assignment) {
         await updateAssignmentAction({
-          ...assignemnt,
+          ...assignment,
           title,
           comment,
           categories,
