@@ -36,36 +36,40 @@ export function ExperienceList({ isEditable, experiences, onChange }: Props) {
               >
                 <X size={56} className="cursor-pointer" />
               </Button>
-              <Button
-                variant="link"
-                size="icon"
-                onClick={() => {
-                  const newExperiences = [...experiences];
-                  [newExperiences[index], newExperiences[index - 1]] = [
-                    newExperiences[index - 1],
-                    newExperiences[index],
-                  ];
-                  onChange(newExperiences);
-                }}
-                className="h-5 w-5"
-              >
-                <ChevronUp size={56} className="cursor-pointer" />
-              </Button>
-              <Button
-                variant="link"
-                size="icon"
-                onClick={() => {
-                  const newExperiences = [...experiences];
-                  [newExperiences[index], newExperiences[index + 1]] = [
-                    newExperiences[index + 1],
-                    newExperiences[index],
-                  ];
-                  onChange(newExperiences);
-                }}
-                className="h-5 w-5"
-              >
-                <ChevronDown size={56} className="cursor-pointer" />
-              </Button>
+              {index > 0 && (
+                <Button
+                  variant="link"
+                  size="icon"
+                  onClick={() => {
+                    const newExperiences = [...experiences];
+                    [newExperiences[index], newExperiences[index - 1]] = [
+                      newExperiences[index - 1],
+                      newExperiences[index],
+                    ];
+                    onChange(newExperiences);
+                  }}
+                  className="h-5 w-5"
+                >
+                  <ChevronUp size={56} className="cursor-pointer" />
+                </Button>
+              )}
+              {index < experiences.length - 1 && (
+                <Button
+                  variant="link"
+                  size="icon"
+                  onClick={() => {
+                    const newExperiences = [...experiences];
+                    [newExperiences[index], newExperiences[index + 1]] = [
+                      newExperiences[index + 1],
+                      newExperiences[index],
+                    ];
+                    onChange(newExperiences);
+                  }}
+                  className="h-5 w-5"
+                >
+                  <ChevronDown size={56} className="cursor-pointer" />
+                </Button>
+              )}
             </div>
           )}
         </div>
