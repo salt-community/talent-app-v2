@@ -411,20 +411,10 @@ export function createDevelopersRepository(db: Db) {
   };
 }
 
-const educations = [
-  {
-    id: 1,
-    organization: "Salt",
-    date: "Jan 2025 - Apr 2025",
-    role: "Fullstack JavaScript Developer",
-    description:
-      "Accelerated fullstack program covering JavaScript, TypeScript, React, Next.js, Node.js, and PostgreSQL. Hands-on experience with Agile, TDD, Mob Programming, and CI/CD. Developed technical and soft skills through collaborative projects and leadership training.",
-  },
-];
 
 let jobs: Experience[] = [
   {
-    id: 1,
+    id: "1",
     organization: "Salt1",
     date: "2025 - Present",
     role: "Fullstack Developer",
