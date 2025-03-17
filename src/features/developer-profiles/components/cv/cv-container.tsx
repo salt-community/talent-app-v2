@@ -20,12 +20,14 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
 
   const [isEditable, setIsEditable] = useState(false);
   const [cvInfo, setCvInfo] = useState(defaultCvInfo);
-  
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleOnChange = (data: Partial<CvInfo>) => {
     setCvInfo((prev) => ({ ...prev, ...data }));
   };
 
   const handleOnSave = async (cvInfo: CvInfo) => {
+    setIsLoading(true);
     const hasEmptyFields = cvInfo.jobs.some((job) =>
       [job.role, job.organization, job.date, job.description].some(
         (value) => value.trim() === "",
@@ -36,9 +38,15 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
         title: "Cannot save",
         description: "Please fill in all fields",
       });
+      setIsLoading(false);
       return;
     }
     await updateCvAction(cvInfo);
+    toast({
+      title: "Success",
+      description: "CV updated successfully",
+    });
+    setIsLoading(false);
     setIsEditable(false);
   };
 
@@ -51,9 +59,13 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     <section className="py-6 my-4 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md">
       <div className="flex items-center justify-end py-2 px-2">
         {isEditable ? (
-          <div className="flex gap-1">
+          <div className="flex gap-1 items-center ">
+            {isLoading && (
+              <div className="animate-spin h-5 w-5 border-2 border-t-transparent rounded-full border-blue-500" />
+            )}
             <Button
               onClick={handleOnDiscard}
+              disabled={isLoading}
               variant="ghost"
               size="sm"
               className="flex hover:bg-destructive/30"
@@ -62,6 +74,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
             </Button>
             <Button
               onClick={() => handleOnSave(cvInfo)}
+              disabled={isLoading}
               variant="secondary"
               size="sm"
               className="flex hover:bg-green-200"
@@ -90,7 +103,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
         hasProfileAccess={hasProfileAccess}
         id={cvInfo.id}
         identityId={cvInfo.identityId}
-        isEditable={isEditable}
+        isEditable={isEditable && !isLoading}
         onChange={handleOnChange}
       />
       <div className="md:grid md:grid-cols-[15rem_2fr]">
@@ -99,10 +112,10 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           languages={cvInfo.languages}
           links={cvInfo.links}
           onChange={handleOnChange}
-          isEditable={isEditable}
+          isEditable={isEditable && !isLoading}
         />
         <CvMainContent
-          isEditable={isEditable}
+          isEditable={isEditable && !isLoading}
           jobs={cvInfo.jobs}
           onChange={handleOnChange}
         />
