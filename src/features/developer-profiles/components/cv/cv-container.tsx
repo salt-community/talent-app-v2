@@ -22,19 +22,15 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   const [cvInfo, setCvInfo] = useState(defaultCvInfo);
 
   const handleOnSave = async (cvInfo: CvInfo) => {
-    const hasEmptyFields = cvInfo.jobs.some((job) => {
-      return (
-        job.organization === "" ||
-        job.date === "" ||
-        job.role === "" ||
-        job.description === ""
-      );
-    });
-    if(hasEmptyFields) {
+    const hasEmptyFields = cvInfo.jobs.some((job) =>
+      [job.role, job.organization, job.date, job.description].some(
+        (value) => value.trim() === "",
+      ),
+    );
+    if (hasEmptyFields) {
       toast({
-        title: "Error",
+        title: "Cannot save",
         description: "Please fill in all fields",
-        variant: "destructive"
       });
       return;
     }
