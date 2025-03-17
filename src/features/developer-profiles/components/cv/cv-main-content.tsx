@@ -1,5 +1,4 @@
 import { Button, H2 } from "@/components";
-import { CvBlock } from "./cv-block";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -59,49 +58,11 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
         )}
       </div>
       <div className="flex flex-col gap-2 px-2">
-        {educations.map((education) => (
-          <CvBlock
-            key={education.id}
-            experience={education}
+        <ExperienceList
             isEditable={isEditable}
-            onDelete={() => {
-              setEducations((prev) =>
-                prev.filter((e) => e.id !== education.id)
-              );
-            }}
-            onChange={(education) =>
-              setEducations((prev) =>
-                prev.map((e) => (e.id === education.id ? education : e))
-              )
-            }
-            onMoveUp={() => {
-              const index = educations.findIndex((e) => e.id === education.id);
-              if (index > 0) {
-                const newEducations = [...educations];
-                [newEducations[index - 1], newEducations[index]] = [
-                  newEducations[index],
-                  newEducations[index - 1],
-                ];
-                setEducations(newEducations);
-              } else {
-                return;
-              }
-            }}
-            onMoveDown={() => {
-              const index = educations.findIndex((e) => e.id === education.id);
-              if (index < educations.length - 1) {
-                const newEducations = [...educations];
-                [newEducations[index], newEducations[index + 1]] = [
-                  newEducations[index + 1],
-                  newEducations[index],
-                ];
-                setEducations(newEducations);
-              } else {
-                return;
-              }
-            }}
+          experiences={educations}
+          onChange={setEducations}
           />
-        ))}
       </div>
       <div className="flex justify-between items-center px-2">
         <H2 textColor="text-paragraph px-1 py-1 border border-transparent">
@@ -131,43 +92,11 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
         )}
       </div>
       <div className="flex flex-col gap-4 px-2 ">
-        {jobs.map((job) => (
-          <CvBlock
-            key={job.id}
-            experience={job}
+        <ExperienceList
             isEditable={isEditable}
-            onDelete={() => {
-              onChange(jobs.filter((e) => e.id !== job.id));
-            }}
-            onChange={(job) =>
-              onChange(jobs.map((e) => (e.id === job.id ? job : e)))
-            }
-            onMoveUp={() => {
-              const index = jobs.findIndex((e) => e.id === job.id);
-              if (index > 0) {
-                const newJobs = [...jobs];
-                [newJobs[index - 1], newJobs[index]] = [
-                  newJobs[index],
-                  newJobs[index - 1],
-                ];
-                onChange(newJobs);
-              } else {
-                return;
-              }
-            }}
-            onMoveDown={() => {
-              const index = jobs.findIndex((e) => e.id === job.id);
-              if (index < jobs.length - 1) {
-                const newJobs = [...jobs];
-                [newJobs[index], newJobs[index + 1]] = [
-                  newJobs[index + 1],
-                  newJobs[index],
-                ];
-                onChange(newJobs);
-              }
-            }}
+          experiences={jobs}
+          onChange={onChange}
           />
-        ))}
       </div>
     </div>
   );
