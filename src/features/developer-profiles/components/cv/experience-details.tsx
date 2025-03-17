@@ -7,7 +7,7 @@ type Props = {
   onChange: (experience: Experience) => void;
 };
 
-export function CvBlock({ experience, isEditable, onChange }: Props) {
+export function ExperienceDetails({ experience, isEditable, onChange }: Props) {
   return (
     <div className="flex items-start justify-start w-full">
       <div className="flex flex-col gap-1 flex-grow">

@@ -1,5 +1,5 @@
 import { Button } from "@/components";
-import { CvBlock } from "./cv-block";
+import { ExperienceDetails } from "./experience-details";
 import { Experience } from "./cv-main-content";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 
@@ -29,7 +29,7 @@ export function ExperienceList({ isEditable, experiences, onChange }: Props) {
     <div className="flex flex-col gap-4">
       {experiences.map((experience, index) => (
         <div key={experience.id} className="flex items-start justify-between">
-          <CvBlock
+          <ExperienceDetails
             key={experience.id}
             experience={experience}
             isEditable={isEditable}
