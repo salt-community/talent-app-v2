@@ -7,7 +7,7 @@ import { ExperienceList } from "./experience-list";
 type Props = {
   isEditable: boolean;
   jobs: Experience[];
-  onChange: (jobs: Experience[]) => void;
+  onChange: (data: { jobs: Experience[] }) => void;
 };
 
 export type Experience = {
@@ -73,7 +73,9 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
             variant="default"
             size="icon"
             className="h-5 w-5 rounded-full"
-            onClick={() => onChange([...jobs, createEmptyExperience()])}
+            onClick={() =>
+              onChange({ jobs: [...jobs, createEmptyExperience()] })
+            }
           >
             <Plus />
           </Button>
@@ -83,7 +85,7 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
         <ExperienceList
           isEditable={isEditable}
           experiences={jobs}
-          onChange={onChange}
+          onChange={(jobs) => onChange({ jobs })}
         />
       </div>
     </div>

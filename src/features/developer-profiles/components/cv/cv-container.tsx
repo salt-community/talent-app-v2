@@ -20,6 +20,10 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
 
   const [isEditable, setIsEditable] = useState(false);
   const [cvInfo, setCvInfo] = useState(defaultCvInfo);
+  
+  const handleOnChange = (data: Partial<CvInfo>) => {
+    setCvInfo((prev) => ({ ...prev, ...data }));
+  };
 
   const handleOnSave = async (cvInfo: CvInfo) => {
     const hasEmptyFields = cvInfo.jobs.some((job) =>
@@ -87,32 +91,20 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
         id={cvInfo.id}
         identityId={cvInfo.identityId}
         isEditable={isEditable}
-        onChange={({ name, bio, avatarUrl }) =>
-          setCvInfo((prev) => ({ ...prev, name, bio, avatarUrl }))
-        }
+        onChange={handleOnChange}
       />
       <div className="md:grid md:grid-cols-[15rem_2fr]">
         <CvAside
           skills={cvInfo.skills}
           languages={cvInfo.languages}
           links={cvInfo.links}
-          onChange={(data) => {
-            setCvInfo((prev) => ({
-              ...prev,
-              ...data,
-            }));
-          }}
+          onChange={handleOnChange}
           isEditable={isEditable}
         />
         <CvMainContent
           isEditable={isEditable}
           jobs={cvInfo.jobs}
-          onChange={(jobs) => {
-            setCvInfo((prev) => ({
-              ...prev,
-              jobs,
-            }));
-          }}
+          onChange={handleOnChange}
         />
       </div>
     </section>
