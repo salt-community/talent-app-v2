@@ -64,7 +64,9 @@ export const developerProfiles = pgTable("developer_profiles", {
 export const newDeveloperProfileEducations = pgTable(
   "new_developer_profiles_educations",
   {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    id: uuid()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
     developerProfileId: uuid("developerProfile_id").references(
       () => developerProfiles.id,
       {
@@ -81,7 +83,9 @@ export const newDeveloperProfileEducations = pgTable(
 export const developerProfileJobs = pgTable(
   "developer_profiles_jobs",
   {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    id: uuid()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
     developerProfileId: uuid("developerProfile_id").references(
       () => developerProfiles.id,
       {
