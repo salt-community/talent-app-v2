@@ -139,8 +139,13 @@ export async function addScoreToAssignment(score: AssignmentScore) {
   try {
     await instructorService.addScoreToAssignment(score);
     revalidatePath("/instructor-dashboard", "layout");
+    return { success: true };
   } catch (error) {
     console.error(error);
+    return {
+      success: false,
+      error: "Failed to add score to assignment",
+    };
   }
 }
 

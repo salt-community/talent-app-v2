@@ -18,6 +18,11 @@ type Props = {
 
 export default function OpenScoreFormButton({ scores }: Props) {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLoading = (loading: boolean) => {
+    setIsLoading(loading);
+  };
 
   return (
     <>
@@ -27,6 +32,7 @@ export default function OpenScoreFormButton({ scores }: Props) {
             onClick={() => setOpen(true)}
             className="px-3 py-1.5 border border-gray-300 rounded text-sm"
             variant={"ghost"}
+            disabled={isLoading}
           >
             Score
           </Button>
@@ -39,6 +45,7 @@ export default function OpenScoreFormButton({ scores }: Props) {
             <Scoring
               assignmentScores={scores}
               onSuccess={() => setOpen(false)}
+              onLoading={handleLoading}
             />
           </ScrollArea>
         </DialogContent>

@@ -4,44 +4,62 @@ import { useToast } from "@/hooks/use-toast";
 
 import { addScoreToAssignment } from "../../action";
 import { AssignmentScore } from "@/features/assignments";
+import { on } from "node:events";
 
 type Props = {
   assignmentScores: AssignmentScore[];
   onSuccess: () => void;
+  onLoading?: (isLoading: boolean) => void;
 };
 
-export function Scoring({ assignmentScores, onSuccess }: Props) {
+export function Scoring({ assignmentScores, onSuccess, onLoading }: Props) {
   const [scores, setScores] = useState<AssignmentScore[]>(assignmentScores);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleScoreChange = (category: string, value: string) => {
     setScores((prev) =>
       prev.map((s) =>
-        s.category === category ? { ...s, score: parseInt(value) } : s,
-      ),
+        s.category === category ? { ...s, score: parseInt(value) } : s
+      )
     );
   };
 
   const handleCommentChange = (category: string, value: string) => {
     setScores((prev) =>
-      prev.map((s) => (s.category === category ? { ...s, comment: value } : s)),
+      prev.map((s) => (s.category === category ? { ...s, comment: value } : s))
     );
   };
 
   const handleSubmitScoring = async () => {
-    await Promise.all(
-      scores.map(async (s) => {
-        await addScoreToAssignment(s);
-      }),
+    setIsSubmitting(true);
+
+    onLoading?.(true);
+
+    const results = await Promise.all(
+      scores.map((s) => addScoreToAssignment(s))
     );
 
-    onSuccess();
-    toast({
-      title: "Scoring added",
-      description: "Score has been added to the assignment.",
-    });
-  };
+    const anyFailed = results.some((result) => !result.success);
 
+    if (anyFailed) {
+      toast({
+        title: "Error",
+        description: "Failed to save some or all scores.",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Scoring added",
+        description: "Score has been added to the assignment.",
+      });
+      onSuccess();
+    }
+
+    setIsSubmitting(false);
+
+    onLoading?.(false);
+  };
   return (
     <div className="p-6 flex flex-col gap-y-6">
       <div>
@@ -86,7 +104,10 @@ export function Scoring({ assignmentScores, onSuccess }: Props) {
         ))}
       </div>
       <div className="pt-4 flex justify-end sticky bottom-0 bg-white">
-        <Button onClick={handleSubmitScoring}>Save</Button>
+        <Button onClick={handleSubmitScoring} disabled={isSubmitting}>
+          {" "}
+          {isSubmitting ? "Saving..." : "Save"}
+        </Button>
       </div>
     </div>
   );
