@@ -67,7 +67,7 @@ export function CvAside({
         <h2 className="text-xl font-bold pb-1">Languages</h2>
         <ul>
           {languages.map((language) => (
-            <li key={language.name} className="text-paragraph">
+            <li key={language.name} className="text-paragraph flex items-center">
               {language.name}{" "}
               {isEditable && (
                 <Button
@@ -84,7 +84,7 @@ export function CvAside({
                     })
                   }
                 >
-                  <X size={12} />
+                  <X />
                 </Button>
               )}
             </li>

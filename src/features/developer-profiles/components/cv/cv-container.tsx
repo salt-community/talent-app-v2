@@ -8,6 +8,7 @@ import { CheckCircle, Pencil } from "lucide-react";
 import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   defaultCvInfo: CvInfo;
@@ -15,11 +16,41 @@ type Props = {
 };
 
 export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
+  const { toast } = useToast();
+
   const [isEditable, setIsEditable] = useState(false);
   const [cvInfo, setCvInfo] = useState(defaultCvInfo);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleOnChange = (data: Partial<CvInfo>) => {
+    setCvInfo((prev) => ({ ...prev, ...data }));
+  };
 
   const handleOnSave = async (cvInfo: CvInfo) => {
+    setIsLoading(true);
+    const hasEmptyFields = [...cvInfo.jobs, ...cvInfo.educations].some(
+      (experience) =>
+        [
+          experience.role,
+          experience.organization,
+          experience.date,
+          experience.description,
+        ].some((value) => value.trim() === "")
+    );
+    if (hasEmptyFields) {
+      toast({
+        title: "Could not save",
+        description: "Please fill in all fields",
+      });
+      setIsLoading(false);
+      return;
+    }
     await updateCvAction(cvInfo);
+    toast({
+      title: "Success",
+      description: "CV updated successfully",
+    });
+    setIsLoading(false);
     setIsEditable(false);
   };
 
@@ -29,39 +60,45 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   };
 
   return (
-    <section className="border-red-800 border-2 py-6 md:py-0 md:mx-auto md:min-h-[1122px] md:max-h-[1122px]  md:min-w-[795px] md:max-w-[795px]">
-      <div className="flex items-center justify-between py-2 px-2">
-        <p className="hidden md:block text-start">{"</salt>"}</p>
+    <section className="py-6 my-4 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md">
+      <div className="flex items-center justify-end py-2 px-2 bg-100 bg-zinc-100 min-h-14">
         {isEditable ? (
-          <div className="flex gap-1">
+          <div className="flex gap-1 items-center ">
+            {isLoading && (
+              <div className="animate-spin h-5 w-5 border-2 border-t-transparent rounded-full border-blue-500" />
+            )}
             <Button
               onClick={handleOnDiscard}
+              disabled={isLoading}
               variant="ghost"
               size="sm"
-              className="flex hover:bg-destructive/30"
+              className="flex hover:bg-destructive/30 "
             >
               Discard changes
             </Button>
             <Button
               onClick={() => handleOnSave(cvInfo)}
-              variant="secondary"
+              disabled={isLoading}
+              variant="default"
               size="sm"
-              className="flex hover:bg-green-200"
+              className="flex"
             >
               <CheckCircle size={20} />
               Save
             </Button>
           </div>
         ) : (
-          <Button
-            onClick={() => setIsEditable(true)}
-            variant="ghost"
-            size="sm"
-            className="flex"
-          >
-            <Pencil size={20} />
-            Edit
-          </Button>
+          ( hasProfileAccess && 
+            <Button
+              onClick={() => setIsEditable(true)}
+              variant="ghost"
+              size="sm"
+              className="flex"
+            >
+              <Pencil size={20} />
+              Edit
+            </Button>
+          )
         )}
       </div>
 
@@ -72,25 +109,23 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
         hasProfileAccess={hasProfileAccess}
         id={cvInfo.id}
         identityId={cvInfo.identityId}
-        isEditable={isEditable}
-        onChange={({ name, bio, avatarUrl }) =>
-          setCvInfo((prev) => ({ ...prev, name, bio, avatarUrl }))
-        }
+        isEditable={isEditable && !isLoading}
+        onChange={handleOnChange}
       />
       <div className="md:grid md:grid-cols-[15rem_2fr]">
         <CvAside
           skills={cvInfo.skills}
           languages={cvInfo.languages}
           links={cvInfo.links}
-          onChange={(data) => {
-            setCvInfo((prev) => ({
-              ...prev,
-              ...data,
-            }));
-          }}
-          isEditable={isEditable}
+          onChange={handleOnChange}
+          isEditable={isEditable && !isLoading}
         />
-        <CvMainContent isEditable={isEditable} />
+        <CvMainContent
+          isEditable={isEditable && !isLoading}
+          jobs={cvInfo.jobs}
+          educations={cvInfo.educations}
+          onChange={handleOnChange}
+        />
       </div>
     </section>
   );

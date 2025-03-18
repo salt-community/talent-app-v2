@@ -19,7 +19,7 @@ export async function BackgroundCard({
           developerProfile={developerProfile}
           hasProfileAccess={hasProfileAccess}
         />
-      </div>
+      </div>   
 
       <div>
         <Row
@@ -31,9 +31,9 @@ export async function BackgroundCard({
         />
         <Row
           title="Education"
-          content={developerProfile.educations.map((education) => ({
-            id: education.id,
-            name: education.name,
+          content={developerProfile.educations.map((education, index) => ({
+            id: index,
+            name: education.role,
           }))}
         />
         <SkillsBadges skills={developerProfile.skills} />

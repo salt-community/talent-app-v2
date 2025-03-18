@@ -29,7 +29,7 @@ export function createDeveloperProfilesService(
   getCohortIdByIdentityId: GetCohortIdByIdentityId,
   getScoredAssignmentsByCohortIdAndIdentityId: GetScoredAssignmentsByCohortIdAndIdentityId,
   getAssignmentBySlug: GetAssignmentBySlug,
-  getAverageScoresByIdentityId: GetAverageScoresByIdentityId
+  getAverageScoresByIdentityId: GetAverageScoresByIdentityId,
 ) {
   const repository = createDevelopersRepository(db);
   const backgroundsSearchApi = createSearchApi({
@@ -69,7 +69,7 @@ export function createDeveloperProfilesService(
     switch (outboxMessage.operation) {
       case "upsert":
         const developerProfile = await repository.getDeveloperProfileById(
-          outboxMessage.developerProfileId
+          outboxMessage.developerProfileId,
         );
         if (!developerProfile) {
           succeeded = true;
@@ -82,7 +82,7 @@ export function createDeveloperProfilesService(
         break;
       case "delete":
         const deleteStatus = await backgroundsSearchApi.deleteDocument(
-          outboxMessage.developerProfileId
+          outboxMessage.developerProfileId,
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
         break;
@@ -120,7 +120,7 @@ export function createDeveloperProfilesService(
       }
 
       const developerProfile = await this.getDeveloperProfileByIdentityId(
-        currentUser.id
+        currentUser.id,
       );
       const user = {
         ...currentUser,
@@ -145,6 +145,7 @@ export function createDeveloperProfilesService(
           skills: [],
           languages: [],
           educations: [],
+          jobs: [],
         } as T;
       }
       return developerProfile;
@@ -152,19 +153,19 @@ export function createDeveloperProfilesService(
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index
+          array.findIndex((s) => s.name === skill.name) === index,
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index
+          array.findIndex((l) => l.name === language.name) === index,
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index
+          array.findIndex((e) => e.name === education.name) === index,
       );
     },
     async delete(id: string) {
@@ -196,15 +197,15 @@ export function createDeveloperProfilesService(
       }
     },
     async updateDeveloperProfile(
-      developerProfileUpdates: updateDeveloperProfile
+      developerProfileUpdates: updateDeveloperProfile,
     ) {
       const { outboxMessageId } = await repository.updateDeveloperProfile(
-        developerProfileUpdates
+        developerProfileUpdates,
       );
       const developerProfile = await repository.getDeveloperProfileById(
-        developerProfileUpdates.id
+        developerProfileUpdates.id,
       );
-      
+
       const status = await backgroundsSearchApi.upsertDocuments([
         developerProfile[0],
       ]);
@@ -259,7 +260,7 @@ export function createDeveloperProfilesService(
       await repository.addDeveloperProfile(developerProfile);
     },
     async addDeveloperProfileDetails(
-      developerProfileDetails: developerProfileDetails
+      developerProfileDetails: developerProfileDetails,
     ) {
       await repository.addDeveloperProfileDetails(developerProfileDetails);
     },

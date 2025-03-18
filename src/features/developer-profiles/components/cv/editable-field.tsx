@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 type Props = {
   value: string;
+  placeholder?: string;
   isEditable: boolean;
   fontSize?: "sm" | "md" | "lg";
   onChange: (value: string) => void;
@@ -11,6 +12,7 @@ type Props = {
 
 export function EditableField({
   value,
+  placeholder,
   isEditable,
   fontSize = "sm",
   onChange,
@@ -30,28 +32,29 @@ export function EditableField({
         <div
           className={cn(
             "w-full p-0 border rounded-md border-gray-500",
-            focus && "ring"
+            focus && "ring",
           )}
         >
           <AutosizeTextarea
+            placeholder={placeholder}
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             className={cn(
-              "border border-transparent py-0 px-1 resize-none leading-none w-full",
-              textClass
+              "border border-transparent py-0 px-1 resize-none leading-none overflow-hidden",
+              textClass,
             )}
             minHeight={textSize + 10}
           />
         </div>
       ) : (
-        <div className="whitespace-pre-wrap w-full border rounded-md py-0 px-1 border-transparent text">
+        <div className="whitespace-pre-wrap border rounded-md py-0 px-1 border-transparent text">
           <p
             style={{ minHeight: textSize + 10 }}
             className={cn(
               "flex outline-none text-sm border border-transparent p-0 resize-none leading-none w-full",
-              textClass
+              textClass,
             )}
           >
             {value}

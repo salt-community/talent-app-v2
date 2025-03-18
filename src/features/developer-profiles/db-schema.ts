@@ -59,3 +59,42 @@ export const developerProfiles = pgTable("developer_profiles", {
   links: jsonb().$type<SocialLink[]>().notNull(),
   bio: varchar(),
 });
+
+
+export const newDeveloperProfileEducations = pgTable(
+  "new_developer_profiles_educations",
+  {
+    id: uuid()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+    developerProfileId: uuid("developerProfile_id").references(
+      () => developerProfiles.id,
+      {
+        onDelete: "cascade",
+      }
+    ),
+    organization: varchar().notNull(),
+    date: varchar().notNull(),
+    role: varchar().notNull(),
+    description: varchar().notNull(),
+  }
+);
+
+export const developerProfileJobs = pgTable(
+  "developer_profiles_jobs",
+  {
+    id: uuid()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+    developerProfileId: uuid("developerProfile_id").references(
+      () => developerProfiles.id,
+      {
+        onDelete: "cascade",
+      }
+    ),
+    organization: varchar().notNull(),
+    date: varchar().notNull(),
+    role: varchar().notNull(),
+    description: varchar().notNull(),
+  }
+);

@@ -2,19 +2,21 @@ import { Db } from "@/db";
 import { eq, sql } from "drizzle-orm";
 import {
   developerProfileEducations,
+  developerProfileJobs,
   developerProfileLanguages,
   developerProfiles,
   developerProfileSkills,
   meiliSearchOutbox,
+  newDeveloperProfileEducations,
 } from "./db-schema";
 import {
   AddDeveloperProfile,
   developerProfileDetails,
-  EducationSelect,
   LanguageSelect,
   SkillSelect,
   updateDeveloperProfile,
 } from "./types";
+import { Experience } from "./components/cv/cv-main-content";
 
 export function createDevelopersRepository(db: Db) {
   return {
@@ -156,7 +158,7 @@ export function createDevelopersRepository(db: Db) {
         .groupBy(developerProfiles.id);
     },
     async getDeveloperProfile(developerProfileId: string) {
-      return await db
+      const result = await db
         .select({
           id: developerProfiles.id,
           identityId: developerProfiles.identityId,
@@ -178,18 +180,32 @@ export function createDevelopersRepository(db: Db) {
             LanguageSelect[]
           >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
                 'id', ${developerProfileLanguages.id},
-                'name', ${developerProfileLanguages.name}, 
+                'name', ${developerProfileLanguages.name},
                 'level', ${developerProfileLanguages.level}
               )) FILTER (WHERE ${developerProfileLanguages.id} IS NOT NULL), '[]'::jsonb)`.as(
             "languages"
           ),
           educations: sql<
-            EducationSelect[]
+            Experience[]
           >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
-                'id', ${developerProfileEducations.id},
-                'name', ${developerProfileEducations.name}
-              )) FILTER (WHERE ${developerProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
+                'id', ${newDeveloperProfileEducations.id},
+                'organization', ${newDeveloperProfileEducations.organization},
+                'date', ${newDeveloperProfileEducations.date},
+                'role', ${newDeveloperProfileEducations.role},
+                'description', ${newDeveloperProfileEducations.description}
+              )) FILTER (WHERE ${newDeveloperProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
             "educations"
+          ),
+          jobs: sql<
+            Experience[]
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
+                'id', ${developerProfileJobs.id},
+                'organization', ${developerProfileJobs.organization},
+                'date', ${developerProfileJobs.date},
+                'role', ${developerProfileJobs.role},
+                'description', ${developerProfileJobs.description}
+              )) FILTER (WHERE ${developerProfileJobs.id} IS NOT NULL), '[]'::jsonb)`.as(
+            "jobs"
           ),
         })
         .from(developerProfiles)
@@ -202,14 +218,20 @@ export function createDevelopersRepository(db: Db) {
           eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
-          developerProfileEducations,
+          newDeveloperProfileEducations,
           eq(
-            developerProfileEducations.developerProfileId,
+            newDeveloperProfileEducations.developerProfileId,
             developerProfiles.id
           )
         )
+        .leftJoin(
+          developerProfileJobs,
+          eq(developerProfileJobs.developerProfileId, developerProfiles.id)
+        )
         .where(eq(developerProfiles.id, developerProfileId))
         .groupBy(developerProfiles.id);
+
+      return result
     },
     async getAllSkills() {
       return await db.select().from(developerProfileSkills);
@@ -300,6 +322,7 @@ export function createDevelopersRepository(db: Db) {
     async updateDeveloperProfile(
       updatedDeveloperProfile: updateDeveloperProfile
     ) {
+
       const outboxMessageId = await db.transaction(async (tx) => {
         await tx
           .update(developerProfiles)
@@ -353,17 +376,39 @@ export function createDevelopersRepository(db: Db) {
         }
         if (updatedDeveloperProfile.educations) {
           await tx
-            .delete(developerProfileEducations)
+            .delete(newDeveloperProfileEducations)
             .where(
               eq(
-                developerProfileEducations.developerProfileId,
+                newDeveloperProfileEducations.developerProfileId,
                 updatedDeveloperProfile.id
               )
             );
           for (const education of updatedDeveloperProfile.educations) {
-            await tx.insert(developerProfileEducations).values({
+            await tx.insert(newDeveloperProfileEducations).values({
               developerProfileId: updatedDeveloperProfile.id,
-              name: education,
+              organization: education.organization,
+              date: education.date,
+              role: education.role,
+              description: education.description,
+            });
+          }
+        }
+        if (updatedDeveloperProfile.jobs) {
+          await tx
+            .delete(developerProfileJobs)
+            .where(
+              eq(
+                developerProfileJobs.developerProfileId,
+                updatedDeveloperProfile.id
+              )
+            );
+          for (const job of updatedDeveloperProfile.jobs) {
+            await tx.insert(developerProfileJobs).values({
+              developerProfileId: updatedDeveloperProfile.id,
+              organization: job.organization,
+              date: job.date,
+              role: job.role,
+              description: job.description,
             });
           }
         }
