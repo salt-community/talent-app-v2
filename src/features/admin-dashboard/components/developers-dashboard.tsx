@@ -33,7 +33,10 @@ export function DeveloperDashboard({ developers }: Props) {
   return (
     <div>
       <div className="flex justify-between">
-        <Input placeholder="Type to search" defaultValue={""} />
+        {/* <Input placeholder="Type to search" defaultValue={""} /> */}
+        <div className="w-full bg-white pt-4 pr-4 z-10">
+          <Input placeholder="Type to search" />
+        </div>
         <DevelopersFilter
           filterStatus={filterStatus}
           setFilterStatus={setFilterStatus}
