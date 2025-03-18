@@ -19,7 +19,20 @@ import {
 export function createDevelopersRepository(db: Db) {
   return {
     async getAll() {
-      return await db.select().from(developerProfiles);
+      return await db
+        .select({
+          id: developerProfiles.id,
+          identityId: developerProfiles.identityId,
+          name: developerProfiles.name,
+          slug: developerProfiles.slug,
+          email: developerProfiles.email,
+          status: developerProfiles.status,
+          avatarUrl: developerProfiles.avatarUrl,
+          title: developerProfiles.title,
+          links: developerProfiles.links,
+          bio: developerProfiles.bio,
+        })
+        .from(developerProfiles);
     },
     async getAllById(id: string) {
       const developerId = await db
@@ -30,7 +43,9 @@ export function createDevelopersRepository(db: Db) {
     },
     async getDeveloperProfileByIdentityId(identityId: string) {
       return await db
-        .select()
+        .select({
+          slug: developerProfiles.slug,
+        })
         .from(developerProfiles)
         .where(eq(developerProfiles.identityId, identityId));
     },
