@@ -53,6 +53,7 @@ export function CvHeader({
         <div className="flex flex-col items-center gap-2 px-2 md:items-start md:col-start-2 md:col-end-3 md:pt-2">
           <EditableField
             value={name}
+            placeholder="Name"
             isEditable={isEditable}
             fontSize="lg"
             onChange={(name) => {
@@ -61,6 +62,7 @@ export function CvHeader({
           />
           <EditableField
             value={bio!}
+            placeholder="Bio"
             fontSize="sm"
             isEditable={isEditable}
             onChange={(bio) => {
