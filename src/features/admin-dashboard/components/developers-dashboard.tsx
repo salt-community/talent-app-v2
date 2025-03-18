@@ -4,7 +4,7 @@ import { DeveloperProfileList } from "./developer-profile-list";
 import { Developer } from "../types";
 import DevelopersFilter from "./developer-filter";
 import { Input } from "@/components";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 type Props = {
   developers: Developer[];
@@ -16,9 +16,14 @@ export function DeveloperDashboard({ developers }: Props) {
     published: true,
     unpublished: true,
   });
+  const [searchFilter, setSearchFilter] = useState("");
+
+  function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {
+    setSearchFilter(event.target.value);
+  }
 
   function filterDevelopers(developers: Developer[]) {
-    return developers.filter((developer) => {
+    const developersFilteredByStatus = developers.filter((developer) => {
       if (filterStatus.highlighted && developer.status === "highlighted")
         return true;
       if (filterStatus.published && developer.status === "published")
@@ -27,15 +32,17 @@ export function DeveloperDashboard({ developers }: Props) {
         return true;
       return false;
     });
+    return developersFilteredByStatus.filter((developer) =>
+      developer.name.toLocaleLowerCase().includes(searchFilter)
+    );
   }
   const filteredDevelopers = filterDevelopers(developers);
 
   return (
     <div>
       <div className="flex justify-between">
-        {/* <Input placeholder="Type to search" defaultValue={""} /> */}
         <div className="w-full bg-white pt-4 pr-4 z-10">
-          <Input placeholder="Type to search" />
+          <Input placeholder="Type to search" onChange={handleSearchChange} />
         </div>
         <DevelopersFilter
           filterStatus={filterStatus}
