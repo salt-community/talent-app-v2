@@ -28,8 +28,8 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
 
   const handleOnSave = async (cvInfo: CvInfo) => {
     setIsLoading(true);
-    const hasEmptyFields = cvInfo.jobs.some((job) =>
-      [job.role, job.organization, job.date, job.description].some(
+    const hasEmptyFields = [...cvInfo.jobs, ...cvInfo.educations].some((experience) =>
+      [experience.role, experience.organization, experience.date, experience.description].some(
         (value) => value.trim() === "",
       ),
     );
@@ -117,6 +117,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
         <CvMainContent
           isEditable={isEditable && !isLoading}
           jobs={cvInfo.jobs}
+          educations={cvInfo.educations}
           onChange={handleOnChange}
         />
       </div>
