@@ -43,7 +43,7 @@ export function CvHeader({
                   onChange({ name, bio, avatarUrl });
                 }}
               >
-                <Button className="absolute bottom-4 right-8 z-20 rounded-full p-0 h-8 w-8">
+                <Button className="absolute bottom-4 right-4 z-20 rounded-full p-0 h-8 w-8">
                   <Camera />
                 </Button>
               </CvPopover>
