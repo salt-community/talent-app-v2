@@ -1,5 +1,5 @@
 {
-  "id": "46f65a96-96ad-4156-8c19-4ed642e538d3",
+  "id": "6fb3546a-1ea2-4ed5-8e6b-30daad6487ff",
   "prevId": "0f47b90f-2369-4546-9a97-0e683766396e",
   "version": "7",
   "dialect": "postgresql",
@@ -453,20 +453,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "developer_profiles_jobs_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
+          "default": "gen_random_uuid()"
         },
         "developerProfile_id": {
           "name": "developerProfile_id",
@@ -785,20 +775,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "new_developer_profiles_educations_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
+          "default": "gen_random_uuid()"
         },
         "developerProfile_id": {
           "name": "developerProfile_id",
