@@ -16,12 +16,8 @@ export function SkillsBadges({
 }: Props) {
   return (
     <article className="flex flex-wrap gap-1 mt-3">
-      {skills.map((skill) => (
-        <Badge
-          className="cursor-default"
-          variant={"secondary"}
-          key={skill.name}
-        >
+      {skills.map((skill, index) => (
+        <Badge className="cursor-default" variant={"secondary"} key={index}>
           {skill.name}{" "}
           {isEditable && (
             <Button
