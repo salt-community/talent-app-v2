@@ -15,22 +15,20 @@ export async function AssignmentComponent({ slug }: { slug: string }) {
       <hr className="mb-6" />
       <h2 className="text-2xl font-bold mb-4">Assignment Details</h2>
       <div className="grid grid-cols-1 gap-4 mb-6">
-        <div className="border border-gray-200 rounded-lg p-4 flex justify-between items-center">
+        <div className="md:flex border border-gray-200 rounded-lg p-4 justify-between items-center">
           <div className="flex items-center justify-start gap-2">
             <span className="text-3xl font-bold">
               {developersWithScores.length}
             </span>
             <span className="text-gray-600">Students</span>
           </div>
-          <div>
-            <SubmitScoresButton
-              scoreStatuses={developersWithScores.map((d) => ({
-                assignmentId: assignment.id,
-                identityId: d.developer.id,
-                status: "published",
-              }))}
-            />
-          </div>
+          <SubmitScoresButton
+            scoreStatuses={developersWithScores.map((d) => ({
+              assignmentId: assignment.id,
+              identityId: d.developer.id,
+              status: "published",
+            }))}
+          />
         </div>
       </div>
       <div className="border border-gray-200 rounded-lg overflow-hidden">
