@@ -55,6 +55,7 @@ export const developerProfiles = pgTable("developer_profiles", {
   status: varchar("status").notNull().default("unpublished"),
   avatarUrl: varchar("avatar_url").notNull().default(""),
   title: varchar().notNull(),
-  bio: varchar().notNull(),
+  headline: varchar().notNull(),
   links: jsonb().$type<SocialLink[]>().notNull(),
+  bio:varchar()
 });

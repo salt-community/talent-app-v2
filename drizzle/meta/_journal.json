@@ -113,6 +113,20 @@
       "when": 1741788897736,
       "tag": "0015_drop_table_tempDeveloperProfiles",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1742286901278,
+      "tag": "0016_outgoing_lorna_dane",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1742287713183,
+      "tag": "0017_famous_sentinel",
+      "breakpoints": true
     }
   ]
 }

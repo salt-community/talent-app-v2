@@ -1,0 +1,1 @@
+ALTER TABLE "developer_profiles" RENAME COLUMN "bio" TO "headline";

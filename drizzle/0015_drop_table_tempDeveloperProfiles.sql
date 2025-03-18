@@ -1,1 +1,1 @@
-DROP TABLE "temp_developer_profiles" CASCADE;
+DROP TABLE  IF EXISTS "temp_developer_profiles" CASCADE;
