@@ -9,6 +9,7 @@ import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
 import { useToast } from "@/hooks/use-toast";
+import { hasAccess } from "@/features/iam/check-access";
 
 type Props = {
   defaultCvInfo: CvInfo;
@@ -28,14 +29,18 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
 
   const handleOnSave = async (cvInfo: CvInfo) => {
     setIsLoading(true);
-    const hasEmptyFields = [...cvInfo.jobs, ...cvInfo.educations].some((experience) =>
-      [experience.role, experience.organization, experience.date, experience.description].some(
-        (value) => value.trim() === "",
-      ),
+    const hasEmptyFields = [...cvInfo.jobs, ...cvInfo.educations].some(
+      (experience) =>
+        [
+          experience.role,
+          experience.organization,
+          experience.date,
+          experience.description,
+        ].some((value) => value.trim() === "")
     );
     if (hasEmptyFields) {
       toast({
-        title: "Cannot save",
+        title: "Could not save",
         description: "Please fill in all fields",
       });
       setIsLoading(false);
@@ -57,7 +62,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
 
   return (
     <section className="py-6 my-4 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md">
-      <div className="flex items-center justify-end py-2 px-2">
+      <div className="flex items-center justify-end py-2 px-2 bg-100 bg-zinc-100 min-h-14">
         {isEditable ? (
           <div className="flex gap-1 items-center ">
             {isLoading && (
@@ -68,31 +73,33 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
               disabled={isLoading}
               variant="ghost"
               size="sm"
-              className="flex hover:bg-destructive/30"
+              className="flex hover:bg-destructive/30 "
             >
               Discard changes
             </Button>
             <Button
               onClick={() => handleOnSave(cvInfo)}
               disabled={isLoading}
-              variant="secondary"
+              variant="default"
               size="sm"
-              className="flex hover:bg-green-200"
+              className="flex"
             >
               <CheckCircle size={20} />
               Save
             </Button>
           </div>
         ) : (
-          <Button
-            onClick={() => setIsEditable(true)}
-            variant="ghost"
-            size="sm"
-            className="flex"
-          >
-            <Pencil size={20} />
-            Edit
-          </Button>
+          ( hasProfileAccess && 
+            <Button
+              onClick={() => setIsEditable(true)}
+              variant="ghost"
+              size="sm"
+              className="flex"
+            >
+              <Pencil size={20} />
+              Edit
+            </Button>
+          )
         )}
       </div>
 
