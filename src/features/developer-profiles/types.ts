@@ -47,6 +47,7 @@ export type AddDeveloperProfile = {
   skills?: string[];
   educations?: string[];
   languages?: string[];
+  headline?: string;
 };
 
 export type BackgroundInfo = {

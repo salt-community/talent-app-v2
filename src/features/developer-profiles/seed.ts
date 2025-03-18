@@ -22,6 +22,7 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
       name: identity.name,
       email: identity.email,
       avatarUrl: faker.image.avatar(),
+      headline: faker.person.bio(),
       status,
     });
     backgrounds.push({
