@@ -4,7 +4,6 @@ import { useToast } from "@/hooks/use-toast";
 
 import { addScoreToAssignment } from "../../action";
 import { AssignmentScore } from "@/features/assignments";
-import { on } from "node:events";
 
 type Props = {
   assignmentScores: AssignmentScore[];
