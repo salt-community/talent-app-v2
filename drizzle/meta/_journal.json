@@ -127,6 +127,13 @@
       "when": 1742290533504,
       "tag": "0017_yielding_radioactive_man",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1742293766565,
+      "tag": "0018_fixed_millenium_guard",
+      "breakpoints": true
     }
   ]
 }
