@@ -8,7 +8,24 @@ import {
 import FilterCheckbox from "./filter-checkbox";
 import { ListFilter } from "lucide-react";
 
-export default function DevelopersFilter() {
+type FilterStatus = {
+  highlighted: boolean;
+  published: boolean;
+  unpublished: boolean;
+};
+type Props = {
+  filterStatus: {
+    highlighted: boolean;
+    published: boolean;
+    unpublished: boolean;
+  };
+  setFilterStatus: React.Dispatch<React.SetStateAction<FilterStatus>>;
+};
+
+export default function DevelopersFilter({
+  filterStatus,
+  setFilterStatus,
+}: Props) {
   return (
     <div className="flex items-center gap-4">
       <DropdownMenu>
@@ -19,9 +36,21 @@ export default function DevelopersFilter() {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 ">
-          <FilterCheckbox value="Highlighted" />
-          <FilterCheckbox value="Published" />
-          <FilterCheckbox value="Unpublished" />
+          <FilterCheckbox
+            value="highlighted"
+            filterStatus={filterStatus}
+            setFilterStatus={setFilterStatus}
+          />
+          <FilterCheckbox
+            value="published"
+            filterStatus={filterStatus}
+            setFilterStatus={setFilterStatus}
+          />
+          <FilterCheckbox
+            value="unpublished"
+            filterStatus={filterStatus}
+            setFilterStatus={setFilterStatus}
+          />
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

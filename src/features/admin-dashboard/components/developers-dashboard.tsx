@@ -11,23 +11,45 @@ type Props = {
 };
 
 export function DeveloperDashboard({ developers }: Props) {
-  const [search, handleSearch] = useState("");
+  const [filterStatus, setFilterStatus] = useState({
+    highlighted: false,
+    published: true,
+    unpublished: true,
+  });
+
+  function filterDevelopers(developers: Developer[]) {
+    return developers.filter((developer) => {
+      if (filterStatus.highlighted && developer.status === "highlighted")
+        return true;
+      if (filterStatus.published && developer.status === "published")
+        return true;
+      if (filterStatus.unpublished && developer.status === "unpublished")
+        return true;
+      return false;
+    });
+  }
+  const filteredDevelopers = filterDevelopers(developers);
+
   return (
     <div>
       <div className="flex justify-between">
-        <Input placeholder="Type to search" defaultValue={search} />{" "}
-        <DevelopersFilter />
+        <Input placeholder="Type to search" defaultValue={""} />
+        <DevelopersFilter
+          filterStatus={filterStatus}
+          setFilterStatus={setFilterStatus}
+        />
       </div>
       <div>
-        {developers.map((developer) => (
-          <DeveloperProfileList
-            id={developer.id}
-            key={developer.id}
-            name={developer.name}
-            email={developer.email}
-            status={developer.status}
-          />
-        ))}
+        {filteredDevelopers.length !== 0 &&
+          filteredDevelopers.map((developer) => (
+            <DeveloperProfileList
+              id={developer.id}
+              key={developer.id}
+              name={developer.name}
+              email={developer.email}
+              status={developer.status}
+            />
+          ))}
       </div>
     </div>
   );
