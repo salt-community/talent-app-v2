@@ -30,7 +30,7 @@ export type updateDeveloperProfile = {
   bio?: string | null;
   links?: SocialLink[];
   skills?: string[];
-  educations?: string[];
+  educations?: Experience[];
   jobs?: Experience[];
   languages?: string[];
 };
@@ -75,7 +75,7 @@ export type CvInfo = {
   links: SocialLink[];
   skills: SkillInsert[];
   languages: LanguageInsert[];
-  educations: EducationSelect[];
+  educations: Experience[];
   jobs: Experience[];
 };
 
