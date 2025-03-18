@@ -35,7 +35,7 @@ export default function DevelopersFilter({
             <p className="pl-2 text-gray-500 text-sm pt-1">Filter</p>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 ">
+        <DropdownMenuContent className="w-40 ">
           <FilterCheckbox
             value="highlighted"
             filterStatus={filterStatus}

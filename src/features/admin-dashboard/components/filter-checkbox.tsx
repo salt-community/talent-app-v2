@@ -25,14 +25,14 @@ export default function FilterCheckbox({
     }));
   }
   return (
-    <div className="flex items-start p-2">
-      <Checkbox id={value} checked={isChecked} onCheckedChange={handleChange} />
+    <div className="flex justify-between p-2">
       <label
         htmlFor={value}
         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 pl-2"
       >
         {value}
       </label>
+      <Checkbox id={value} checked={isChecked} onCheckedChange={handleChange} />
     </div>
   );
 }
