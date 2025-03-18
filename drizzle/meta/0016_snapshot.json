@@ -1,5 +1,5 @@
 {
-  "id": "7e6e307f-5055-4977-b7b3-e40826ddee1d",
+  "id": "f026bfea-5e75-4a9e-8221-f6674ec0cf5c",
   "prevId": "b37f3a67-988a-4103-95e1-82627359a804",
   "version": "7",
   "dialect": "postgresql",
@@ -632,7 +632,7 @@
           "name": "headline",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "links": {
           "name": "links",
