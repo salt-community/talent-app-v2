@@ -44,6 +44,7 @@ export function createDevelopersRepository(db: Db) {
     async getDeveloperProfileByIdentityId(identityId: string) {
       return await db
         .select({
+          id: developerProfiles.id,
           slug: developerProfiles.slug,
         })
         .from(developerProfiles)
