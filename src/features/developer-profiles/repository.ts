@@ -264,6 +264,7 @@ export function createDevelopersRepository(db: Db) {
           title: developerProfile.title || "",
           bio: developerProfile.bio || "",
           links: developerProfile.links || [],
+          headline: "",
         })
         .onConflictDoUpdate({
           target: developerProfiles.id,

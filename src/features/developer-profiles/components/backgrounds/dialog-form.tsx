@@ -141,7 +141,9 @@ export function DialogForm({
                   Headline
                 </Label>
                 <Input
-                  defaultValue={developerProfile.bio}
+                  defaultValue={
+                    developerProfile.bio ? developerProfile.bio : undefined
+                  }
                   placeholder="Headline..."
                   name="bio"
                   id="bio"

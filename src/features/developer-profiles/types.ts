@@ -26,7 +26,7 @@ export type updateDeveloperProfile = {
   status?: string | undefined;
   avatarUrl?: string;
   title?: string;
-  bio?: string;
+  bio?: string | null;
   links?: SocialLink[];
   skills?: string[];
   educations?: string[];
@@ -42,7 +42,7 @@ export type AddDeveloperProfile = {
   status?: string | undefined;
   avatarUrl?: string;
   title?: string;
-  bio?: string;
+  bio?: string | null;
   links?: SocialLink[];
   skills?: string[];
   educations?: string[];
@@ -55,7 +55,7 @@ export type BackgroundInfo = {
   name: string;
   avatarUrl: string;
   title: string;
-  bio: string;
+  bio: string | null;
   links: SocialLink[];
   skills: SkillSelect[];
   languages: LanguageSelect[];
@@ -68,7 +68,7 @@ export type CvInfo = {
   name: string;
   avatarUrl: string;
   title: string;
-  bio: string;
+  bio: string | null;
   links: SocialLink[];
   skills: SkillInsert[];
   languages: LanguageInsert[];
@@ -103,7 +103,7 @@ export type DeveloperProfile = {
   name: string;
   avatarUrl: string;
   title: string;
-  bio: string;
+  bio: string | null;
   links: SocialLink[];
 };
 

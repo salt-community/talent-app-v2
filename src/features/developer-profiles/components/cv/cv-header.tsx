@@ -6,7 +6,7 @@ import { CvPopover } from "./cv-popover";
 
 type Props = {
   name: string;
-  bio: string;
+  bio: string | null;
   avatarUrl: string;
   id: string;
   identityId: string;
@@ -18,7 +18,7 @@ type Props = {
     avatarUrl,
   }: {
     name: string;
-    bio: string;
+    bio: string | null;
     avatarUrl: string;
   }) => void;
 };
@@ -58,7 +58,7 @@ export function CvHeader({
             }}
           />
           <EditableField
-            value={bio}
+            value={bio!}
             fontSize="sm"
             isEditable={isEditable}
             onChange={(bio) => {
