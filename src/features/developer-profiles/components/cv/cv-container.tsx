@@ -9,7 +9,6 @@ import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
 import { useToast } from "@/hooks/use-toast";
-import { hasAccess } from "@/features/iam/check-access";
 
 type Props = {
   defaultCvInfo: CvInfo;

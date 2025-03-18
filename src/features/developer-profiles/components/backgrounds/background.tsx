@@ -25,9 +25,9 @@ export async function Background({ developerProfileId }: Props) {
         />
         <Row
           title="Education"
-          content={developerProfile.educations.map((education) => ({
-            id: education.id,
-            name: education.name,
+          content={developerProfile.educations.map((education, index) => ({
+            id: index,
+            name: education.role,
           }))}
         />
         <SkillsBadges skills={developerProfile.skills} />

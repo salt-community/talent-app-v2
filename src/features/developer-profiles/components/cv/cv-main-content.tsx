@@ -1,6 +1,5 @@
 import { Button, H2 } from "@/components";
 import { Plus } from "lucide-react";
-import { useState } from "react";
 import { v4 } from "uuid";
 import { ExperienceList } from "./experience-list";
 

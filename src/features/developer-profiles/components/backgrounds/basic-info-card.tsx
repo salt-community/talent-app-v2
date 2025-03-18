@@ -1,41 +1,17 @@
 import { H2 } from "@/components";
 import { BackgroundAvatar } from "./avatar";
-import {
-  BackgroundInfo,
-  EducationSelect,
-  LanguageSelect,
-  SkillSelect,
-} from "../../types";
+import { CvInfo } from "../../types";
 import { SocialLink } from "./social-link";
-import { DialogForm } from "./dialog-form";
-import { errorHandler } from "@/lib";
-import { developerProfilesService } from "../../instance";
 
 type Props = {
-  developerProfile: BackgroundInfo;
+  developerProfile: CvInfo;
   hasProfileAccess: boolean;
 };
 
-export async function BackgroundBasicInfoCard({
-  developerProfile,
-  hasProfileAccess,
-}: Props) {
-  let allSkills: SkillSelect[] = [];
-  let allLanguages: LanguageSelect[] = [];
-  let allEducations: EducationSelect[] = [];
-
+export async function BackgroundBasicInfoCard({ developerProfile }: Props) {
   const filteredLinks = developerProfile.links.filter(
     (e) => e.name !== "LinkedIn"
   );
-
-  try {
-    allSkills = await developerProfilesService.getAllSkills();
-    allLanguages = await developerProfilesService.getAllLanguages();
-    allEducations = await developerProfilesService.getAllEducations();
-  } catch (error) {
-    errorHandler(error);
-  }
-
   return (
     <>
       <section className="flex justify-between w-full">
@@ -51,14 +27,6 @@ export async function BackgroundBasicInfoCard({
           </div>
         </div>
         <ul className="flex flex-col gap-2 justify-end items-top h-full">
-          {hasProfileAccess && (
-            <DialogForm
-              developerProfile={developerProfile}
-              allSkills={allSkills}
-              allLanguages={allLanguages}
-              allEducations={allEducations}
-            />
-          )}
           {filteredLinks &&
             filteredLinks.map((link) => (
               <li key={link.name} className="h-full flex justify-start">
