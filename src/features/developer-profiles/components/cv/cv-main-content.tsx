@@ -7,7 +7,8 @@ import { ExperienceList } from "./experience-list";
 type Props = {
   isEditable: boolean;
   jobs: Experience[];
-  onChange: (data: { jobs: Experience[] }) => void;
+  educations: Experience[];
+  onChange: (data: { jobs: Experience[]; educations: Experience[] }) => void;
 };
 
 export type Experience = {
@@ -18,18 +19,12 @@ export type Experience = {
   description: string;
 };
 
-export function CvMainContent({ isEditable, jobs, onChange }: Props) {
-  const [educations, setEducations] = useState([
-    {
-      id: "first",
-      organization: "Salt",
-      date: "Jan 2025 - Apr 2025",
-      role: "Fullstack JavaScript Developer",
-      description:
-        "Accelerated fullstack program covering JavaScript, TypeScript, React, Next.js, Node.js, and PostgreSQL. Hands-on experience with Agile, TDD, Mob Programming, and CI/CD. Developed technical and soft skills through collaborative projects and leadership training.",
-    },
-  ]);
-
+export function CvMainContent({
+  isEditable,
+  jobs,
+  educations,
+  onChange,
+}: Props) {
   const createEmptyExperience = () => ({
     id: v4(),
     organization: "",
@@ -50,7 +45,10 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
             size="icon"
             className="h-5 w-5 rounded-full"
             onClick={() =>
-              setEducations((prev) => [...prev, createEmptyExperience()])
+              onChange({
+                educations: [...educations, createEmptyExperience()],
+                jobs,
+              })
             }
           >
             <Plus />
@@ -61,7 +59,7 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
         <ExperienceList
           isEditable={isEditable}
           experiences={educations}
-          onChange={setEducations}
+          onChange={(educations) => onChange({ educations, jobs })}
         />
       </div>
       <div className="flex justify-between items-center px-2">
@@ -74,7 +72,7 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
             size="icon"
             className="h-5 w-5 rounded-full"
             onClick={() =>
-              onChange({ jobs: [...jobs, createEmptyExperience()] })
+              onChange({ jobs: [...jobs, createEmptyExperience()], educations })
             }
           >
             <Plus />
@@ -85,7 +83,7 @@ export function CvMainContent({ isEditable, jobs, onChange }: Props) {
         <ExperienceList
           isEditable={isEditable}
           experiences={jobs}
-          onChange={(jobs) => onChange({ jobs })}
+          onChange={(jobs) => onChange({ jobs, educations })}
         />
       </div>
     </div>
