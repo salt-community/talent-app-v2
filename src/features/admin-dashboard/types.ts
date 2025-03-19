@@ -48,4 +48,15 @@ export type Developer = {
   status: string;
 };
 
+export type FilterStatusDevelopers = {
+  highlighted: boolean;
+  published: boolean;
+  unpublished: boolean;
+};
+export type FilterStatusRole = {
+  developer: boolean;
+  core: boolean;
+  admin: boolean;
+};
+
 export type AdminsService = ReturnType<typeof createAdminService>;

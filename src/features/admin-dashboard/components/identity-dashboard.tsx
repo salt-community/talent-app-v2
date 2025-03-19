@@ -30,7 +30,6 @@ export function IdentityDashboard({ identities }: Props) {
     const search = identitiesFilteredByRole.filter((identity) =>
       identity.name.toLocaleLowerCase().includes(searchFilter)
     );
-    // console.log(search);
     return search;
   }
   const filteredDevelopers = filterDevelopers(identities);

@@ -1,37 +1,32 @@
 import { Checkbox } from "@/components/ui/checkbox";
+import { FilterStatusDevelopers, FilterStatusRole } from "../types";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
-type FilterStatusDevelopers = {
-  developer: boolean;
-  core: boolean;
-  admin: boolean;
-};
-type FilterStatusRole = {
-  developer: boolean;
-  core: boolean;
-  admin: boolean;
-};
-type Props = {
+type FilterStatus = FilterStatusDevelopers | FilterStatusRole;
+
+type Props<T extends FilterStatus> = {
   value: string;
-  filterStatus: FilterStatusDevelopers | FilterStatusRole;
-  setFilterStatus: React.Dispatch<
-    React.SetStateAction<FilterStatusDevelopers | FilterStatusRole>
-  >;
+  filterStatus: T;
+  setFilterStatus: React.Dispatch<React.SetStateAction<T>>;
 };
 
-export default function FilterCheckbox({
+export default function FilterCheckbox<T extends FilterStatus>({
   value,
   filterStatus,
   setFilterStatus,
-}: Props) {
-  type CurrentFilter = typeof filterStatus;
-  const isChecked = filterStatus[value as keyof CurrentFilter];
+}: Props<T>) {
+  const isChecked: CheckedState = !!filterStatus[value as keyof T];
 
-  function handleChange(checked: boolean) {
-    setFilterStatus((prevStatus) => ({
-      ...prevStatus,
-      [value]: checked,
-    }));
+  function handleChange(checked: CheckedState) {
+    setFilterStatus(
+      (prevStatus: T) =>
+        ({
+          ...prevStatus,
+          [value]: !!checked,
+        }) as T
+    );
   }
+
   return (
     <div className="flex justify-between p-2">
       <label

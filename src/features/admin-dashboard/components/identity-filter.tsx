@@ -7,12 +7,8 @@ import {
 } from "@/components/";
 import FilterCheckbox from "./filter-checkbox";
 import { ListFilter } from "lucide-react";
+import { FilterStatusRole } from "../types";
 
-type FilterStatusRole = {
-  developer: boolean;
-  core: boolean;
-  admin: boolean;
-};
 type Props = {
   filterStatus: FilterStatusRole;
   setFilterStatus: React.Dispatch<React.SetStateAction<FilterStatusRole>>;

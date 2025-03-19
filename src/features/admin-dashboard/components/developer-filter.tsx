@@ -7,19 +7,12 @@ import {
 } from "@/components/";
 import FilterCheckbox from "./filter-checkbox";
 import { ListFilter } from "lucide-react";
+import { Filter } from "meilisearch";
+import { FilterStatusDevelopers } from "../types";
 
-type FilterStatus = {
-  highlighted: boolean;
-  published: boolean;
-  unpublished: boolean;
-};
 type Props = {
-  filterStatus: {
-    highlighted: boolean;
-    published: boolean;
-    unpublished: boolean;
-  };
-  setFilterStatus: React.Dispatch<React.SetStateAction<FilterStatus>>;
+  filterStatus: FilterStatusDevelopers;
+  setFilterStatus: React.Dispatch<React.SetStateAction<FilterStatusDevelopers>>;
 };
 
 export default function DevelopersFilter({
