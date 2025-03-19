@@ -1,6 +1,6 @@
 import { H2 } from "@/components";
 import { BackgroundAvatar } from "./avatar";
-import { CvInfo, DeveloperProfile } from "../../types";
+import { DeveloperProfile } from "../../types";
 type Props = { developerProfile: DeveloperProfile };
 
 export function BackgroundBasicInfo({ developerProfile }: Props) {
