@@ -7,7 +7,6 @@ import {
 } from "@/components/";
 import FilterCheckbox from "./filter-checkbox";
 import { ListFilter } from "lucide-react";
-import { Filter } from "meilisearch";
 import { FilterStatusDevelopers } from "../types";
 
 type Props = {
