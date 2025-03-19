@@ -1,6 +1,6 @@
 import { H2 } from "@/components";
 import { BackgroundAvatar } from "./avatar";
-import { DeveloperProfile } from "../../types";
+import { CvInfo, DeveloperProfile } from "../../types";
 type Props = { developerProfile: DeveloperProfile };
 
 export function BackgroundBasicInfo({ developerProfile }: Props) {
@@ -15,7 +15,7 @@ export function BackgroundBasicInfo({ developerProfile }: Props) {
 
           <H2>{developerProfile.name}</H2>
 
-          <p className="font-light text-slate-600">{developerProfile.bio}</p>
+          <p className="font-light text-slate-600">{developerProfile.headline}</p>
         </div>
       </div>
     </section>
