@@ -33,6 +33,7 @@ export function createDevelopersRepository(db: Db) {
           title: developerProfiles.title,
           links: developerProfiles.links,
           bio: developerProfiles.bio,
+          headline: developerProfiles.headline,
         })
         .from(developerProfiles);
     },
@@ -77,6 +78,7 @@ export function createDevelopersRepository(db: Db) {
           bio: developerProfiles.bio,
           links: developerProfiles.links,
           status: developerProfiles.status,
+          headline: developerProfiles.headline,
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfileSkills.name})::VARCHAR[]`.as(
@@ -122,6 +124,7 @@ export function createDevelopersRepository(db: Db) {
           bio: developerProfiles.bio,
           links: developerProfiles.links,
           status: developerProfiles.status,
+          headline: developerProfiles.headline,
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
@@ -167,6 +170,7 @@ export function createDevelopersRepository(db: Db) {
           title: developerProfiles.title,
           bio: developerProfiles.bio,
           links: developerProfiles.links,
+          headline: developerProfiles.headline,
           skills: sql<
             SkillSelect[]
           >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
