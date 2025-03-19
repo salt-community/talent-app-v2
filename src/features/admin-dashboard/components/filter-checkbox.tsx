@@ -1,14 +1,21 @@
 import { Checkbox } from "@/components/ui/checkbox";
 
-type FilterStatus = {
-  highlighted: boolean;
-  published: boolean;
-  unpublished: boolean;
+type FilterStatusDevelopers = {
+  developer: boolean;
+  core: boolean;
+  admin: boolean;
+};
+type FilterStatusRole = {
+  developer: boolean;
+  core: boolean;
+  admin: boolean;
 };
 type Props = {
   value: string;
-  filterStatus: FilterStatus;
-  setFilterStatus: React.Dispatch<React.SetStateAction<FilterStatus>>;
+  filterStatus: FilterStatusDevelopers | FilterStatusRole;
+  setFilterStatus: React.Dispatch<
+    React.SetStateAction<FilterStatusDevelopers | FilterStatusRole>
+  >;
 };
 
 export default function FilterCheckbox({
@@ -16,7 +23,8 @@ export default function FilterCheckbox({
   filterStatus,
   setFilterStatus,
 }: Props) {
-  const isChecked = filterStatus[value as keyof FilterStatus];
+  type CurrentFilter = typeof filterStatus;
+  const isChecked = filterStatus[value as keyof CurrentFilter];
 
   function handleChange(checked: boolean) {
     setFilterStatus((prevStatus) => ({
