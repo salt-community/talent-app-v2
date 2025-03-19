@@ -49,7 +49,7 @@ export type AddDeveloperProfile = {
   skills?: string[];
   educations?: string[];
   languages?: string[];
-  headline?: string;
+  headline?: string | null;
 };
 
 export type BackgroundInfo = {
@@ -77,6 +77,7 @@ export type CvInfo = {
   languages: LanguageInsert[];
   educations: Experience[];
   jobs: Experience[];
+  headline: string | null;
 };
 
 export type developerProfileUpdate = Partial<DeveloperProfileInsert> &
@@ -109,6 +110,7 @@ export type DeveloperProfile = {
   title: string;
   bio: string | null;
   links: SocialLink[];
+  headline: string | null;
 };
 
 export type developerProfileDetails = {
