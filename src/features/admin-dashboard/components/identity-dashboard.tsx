@@ -15,6 +15,20 @@ export function IdentityDashboard({ identities }: Props) {
     admin: true,
   });
 
+  function filterDevelopers(identities: Identity[]) {
+    const identitiesFilteredByRole = identities.filter((identity) => {
+      if (filterStatus.developer && identity.role === "developer") return true;
+      if (filterStatus.core && identity.role === "core") return true;
+      if (filterStatus.admin && identity.role === "admin") return true;
+      return false;
+    });
+    // return developersFilteredByStatus.filter((developer) =>
+    //   developer.name.toLocaleLowerCase().includes(searchFilter)
+    // );
+    return identitiesFilteredByRole;
+  }
+  const filteredDevelopers = filterDevelopers(identities);
+
   return (
     <div>
       <div className="flex justify-between">
@@ -24,7 +38,7 @@ export function IdentityDashboard({ identities }: Props) {
         />
       </div>
       <div className="flex flex-col gap-2">
-        {identities.map((identity) => (
+        {filteredDevelopers.map((identity) => (
           <IdentityProfileList
             id={identity.id}
             key={identity.id}
