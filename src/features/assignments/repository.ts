@@ -1,6 +1,11 @@
 import { Db } from "@/db";
 import { and, eq } from "drizzle-orm";
-import { assignments, assignmentScores } from "./schema";
+import {
+  assignmentFeedback,
+  assignments,
+  assignmentScores,
+  categories,
+} from "./schema";
 import {
   AssignmentScore,
   AssignmentScoreFormData,
@@ -63,18 +68,26 @@ export function createAssignmentsRepository(db: Db) {
       await db.insert(assignmentScores).values(data);
     },
 
-    async upsertAssignmentScore(score: AssignmentScore) {
-      await db
-        .insert(assignmentScores)
-        .values(score)
-        .onConflictDoUpdate({
-          target: assignmentScores.id,
-          set: {
-            score: score.score,
-            comment: score.comment,
-          },
-        });
+    async getScoresByIdentityId(identityId: string) {
+      return await db
+        .select({
+          scoreId: assignmentScores.id,
+          assignmentId: assignmentScores.assignmentId,
+          score: assignmentScores.score,
+          status: assignmentScores.status,
+          comment: assignmentFeedback.comment,
+          categoryId: assignmentFeedback.categoryId,
+          categoryName: categories.name,
+        })
+        .from(assignmentScores)
+        .leftJoin(
+          assignmentFeedback,
+          eq(assignmentFeedback.assignmentScoreId, assignmentScores.id)
+        )
+        .leftJoin(categories, eq(assignmentFeedback.categoryId, categories.id))
+        .where(eq(assignmentScores.identityId, identityId));
     },
+
     async updateScoreStatuses(scoreStatuses: ScoreStatus[]) {
       await db.transaction(async (tx) => {
         await Promise.all(
@@ -100,14 +113,63 @@ export function createAssignmentsRepository(db: Db) {
         .where(eq(assignmentScores.assignmentId, assignmentId));
     },
 
-    async getScoresByIdentityId(identityId: string) {
-      return await db
-        .select({
-          score: assignmentScores.score,
-          category: assignmentScores.category,
-        })
-        .from(assignmentScores)
-        .where(eq(assignmentScores.identityId, identityId));
+    async upsertAssignmentScore(
+      scoreData: AssignmentScore,
+      feedbackData?: { comment?: string; categoryId?: string }
+    ) {
+      return await db.transaction(async (tx) => {
+        const [insertedScore] = await tx
+          .insert(assignmentScores)
+          .values({
+            id: scoreData.id,
+            assignmentId: scoreData.assignmentId,
+            identityId: scoreData.identityId,
+            score: scoreData.score,
+            status: scoreData.status || "unpublished",
+            updatedAt: new Date(),
+          })
+          .onConflictDoUpdate({
+            target: assignmentScores.id,
+            set: {
+              score: scoreData.score,
+              status: scoreData.status || "unpublished",
+              updatedAt: new Date(),
+            },
+          })
+          .returning();
+
+        if (
+          feedbackData &&
+          (feedbackData.comment !== undefined ||
+            feedbackData.categoryId !== undefined)
+        ) {
+          const existingFeedback = await tx
+            .select({ id: assignmentFeedback.id })
+            .from(assignmentFeedback)
+            .where(eq(assignmentFeedback.assignmentScoreId, insertedScore.id))
+            .limit(1);
+
+          if (existingFeedback.length > 0) {
+            await tx
+              .update(assignmentFeedback)
+              .set({
+                comment: feedbackData.comment,
+                categoryId: feedbackData.categoryId,
+                updatedAt: new Date(),
+              })
+              .where(eq(assignmentFeedback.id, existingFeedback[0].id));
+          } else {
+            await tx.insert(assignmentFeedback).values({
+              assignmentScoreId: insertedScore.id,
+              comment: feedbackData.comment || "",
+              categoryId: feedbackData.categoryId,
+              updatedAt: new Date(),
+            });
+          }
+        }
+
+        return insertedScore;
+      });
     },
 
     async deleteAllAssignments() {

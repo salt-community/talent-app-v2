@@ -24,13 +24,17 @@ export type Assignment = typeof assignments.$inferSelect;
 export type NewAssignment = typeof assignments.$inferInsert;
 
 export type AssignmentScore = {
-  id?: string;
+  id: string;
   assignmentId: string;
   identityId: string;
-  category: string;
-  comment: string;
   score: number;
-  createdAt: Date | null;
+  status?: string;
+};
+
+export type AssignmentFeedback = {
+  assignmentScoreId: string;
+  comment?: string;
+  categoryId?: string;
 };
 
 export type AssignmentFormData = {
