@@ -141,6 +141,7 @@ export function createDeveloperProfilesService(
           identityId: "",
           title: "",
           bio: "",
+          headline: "",
           links: [],
           skills: [],
           languages: [],
