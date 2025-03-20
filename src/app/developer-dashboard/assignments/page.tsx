@@ -1,5 +1,5 @@
 import { developerProfilesService } from "@/features/developer-profiles";
-import { DeveloperAssignments } from "@/features/developer-profiles/components/developer-assigments";
+import { DeveloperAssignments } from "@/features/developer-profiles/components/developer-assignments";
 import { notFound } from "next/navigation";
 import React from "react";
 
