@@ -1,15 +1,10 @@
 "use client";
 import React, { Suspense } from "react";
-import { usePathname } from "next/navigation";
 import { Database, Search, UserCog, UserRound } from "lucide-react";
 import Loading from "./loading";
-import Link from "next/link";
 import TabLink from "@/features/admin-dashboard/components/tab-link";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const isActive = (path: string) => pathname === path;
-
   return (
     <div className="w-full p-3 sm:p-4 md:px-8 lg:px-16 xl:px-32">
       <h1 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">
