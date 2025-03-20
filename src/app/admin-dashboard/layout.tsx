@@ -2,7 +2,7 @@
 import React, { Suspense } from "react";
 import { usePathname } from "next/navigation";
 import { Database, Search, UserCog, UserRound } from "lucide-react";
-import Loading from "../loading";
+import Loading from "./loading";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
