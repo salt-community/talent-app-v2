@@ -1,6 +1,5 @@
 import { AutosizeTextarea } from "@/components/ui/autosize-textarea";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
 
 type Props = {
   value: string;
@@ -28,7 +27,9 @@ export function CardEditableField({
       onChange={(e) => onChange(e.target.value)}
       onKeyDown={onKeyDown}
       onClick={(event) => {
-        event.preventDefault();
+        if (isEditable === true) {
+          event.preventDefault();
+        }
       }}
       className={cn(
         "w-full rounded-md px-1 py-0 focus-visible:outline-none resize-none overflow-hidden",
