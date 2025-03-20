@@ -100,6 +100,7 @@ export const rolesViewPermissions = {
     MenuPermissions.instructorsDashboard,
     MenuPermissions.admin,
     MenuPermissions.hamburgerMenu,
+    MenuPermissions.profile,
     assignmentPermissions.score,
   ]),
   core: new Set([
