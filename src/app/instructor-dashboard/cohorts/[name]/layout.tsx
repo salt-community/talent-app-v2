@@ -1,6 +1,5 @@
 "use client";
 import React, { Suspense } from "react";
-import { usePathname } from "next/navigation";
 import { Star } from "lucide-react";
 import TabLink from "@/features/admin-dashboard/components/tab-link";
 import Loading from "@/app/admin-dashboard/loading";
@@ -14,19 +13,8 @@ export default function InstructorDashboardLayout({
   children,
   params,
 }: LayoutProps) {
-  const pathname = usePathname();
   const resolvedParams = React.use(params);
   const name = resolvedParams.name;
-
-  const normalizePath = (path: string) => path.replace(/\/$/, "");
-
-  const getActiveTab = () => {
-    const normalizedPath = normalizePath(pathname);
-    if (normalizedPath.endsWith("/developers")) return "Developers";
-    if (normalizedPath === `/instructor-dashboard/cohorts/${name}`)
-      return "Assignments";
-    return "";
-  };
 
   return (
     <div className="w-full p-3 sm:p-4 md:px-8 lg:px-16 xl:px-32">
