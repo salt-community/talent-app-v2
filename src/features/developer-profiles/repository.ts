@@ -343,6 +343,8 @@ export function createDevelopersRepository(db: Db) {
             title: updatedDeveloperProfile.title || developerProfiles.title,
             bio: updatedDeveloperProfile.bio || developerProfiles.bio,
             links: updatedDeveloperProfile.links || developerProfiles.links,
+            headline:
+              updatedDeveloperProfile.headline || developerProfiles.headline,
           })
           .where(eq(developerProfiles.id, updatedDeveloperProfile.id));
 

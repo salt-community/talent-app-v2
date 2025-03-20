@@ -33,6 +33,7 @@ export type updateDeveloperProfile = {
   educations?: Experience[];
   jobs?: Experience[];
   languages?: string[];
+  headline?: string | null;
 };
 
 export type AddDeveloperProfile = {
