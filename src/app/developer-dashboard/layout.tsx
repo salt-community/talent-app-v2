@@ -1,6 +1,5 @@
 "use client";
 import React, { Suspense } from "react";
-import { usePathname } from "next/navigation";
 import { Star, Users } from "lucide-react";
 import Loading from "./loading";
 import TabLink from "@/features/admin-dashboard/components/tab-link";
