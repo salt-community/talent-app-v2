@@ -1,8 +1,6 @@
 import { Card, CardContent } from "@/components";
-import React from "react";
 import { DeveloperProfileLink } from "./developer-profile-link";
 import { Background } from "./backgrounds";
-import { ArrowBigRight } from "lucide-react";
 import { InlineBackgroundCard } from "./backgrounds/inline-background-card";
 
 type Props = {

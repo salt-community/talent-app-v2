@@ -426,7 +426,6 @@ export function createDevelopersRepository(db: Db) {
             .returning({ id: meiliSearchOutbox.id })
         )[0].id;
       });
-      console.log({ developerProfileSkills: updatedDeveloperProfile.skills });
       return { outboxMessageId };
     },
     async deleteDeveloperProfile(developerProfileId: string) {
