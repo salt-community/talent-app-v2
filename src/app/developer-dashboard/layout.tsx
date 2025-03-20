@@ -39,7 +39,7 @@ export default function DeveloperDashboardLayout({ children }: LayoutProps) {
   const activeTab = getActiveTab();
 
   return (
-    <div className="w-full p-3 sm:p-4 md:px-8 lg:px-16 xl:px-32">
+    <div className="w-full p-3 sm:p-4 md:px-8 lg:px-10 xl:px-32">
       <h1 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">
         {name.toUpperCase()}
       </h1>
