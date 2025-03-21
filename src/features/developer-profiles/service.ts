@@ -184,14 +184,14 @@ export function createDeveloperProfilesService(
         id: args.id,
         status: args.status,
       };
-      await repository.updateDeveloperProfile(developerProfile);
+      await repository.updateDeveloperProfileDetails(developerProfile);
     },
     async updateMissingSlugs() {
       const developers = await repository.getAll();
       for (const developer of developers) {
         if (!developer.slug) {
           const newSlug = generateSlug(developer.name);
-          await repository.updateDeveloperProfile({
+          await repository.updateDeveloperProfileDetails({
             id: developer.id,
             slug: newSlug,
           });
@@ -201,7 +201,7 @@ export function createDeveloperProfilesService(
     async updateDeveloperProfile(
       developerProfileUpdates: DeveloperProfileUpdate,
     ) {
-      const outboxMessage = await repository.updateDeveloperProfile(
+      const outboxMessage = await repository.updateDeveloperProfileDetails(
         developerProfileUpdates,
       );
       await updateMeilisearchFor(outboxMessage);
@@ -250,7 +250,9 @@ export function createDeveloperProfilesService(
         status: "unpublished",
       };
 
-      await repository.addDeveloperProfile(developerProfile);
+      const outboxMessage =
+        await repository.addDeveloperProfile(developerProfile);
+      await updateMeilisearchFor(outboxMessage);
     },
     async addDeveloperProfileDetails(
       developerProfileDetails: developerProfileDetails,
@@ -258,7 +260,9 @@ export function createDeveloperProfilesService(
       await repository.addDeveloperProfileDetails(developerProfileDetails);
     },
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
-      await repository.addDeveloperProfile(developerProfile);
+      const outboxMessage =
+        await repository.addDeveloperProfile(developerProfile);
+      await updateMeilisearchFor(outboxMessage);
     },
     async getScoredAssignmentsByIdentityId(identityId: string) {
       const cohortId = await getCohortIdByIdentityId(identityId);

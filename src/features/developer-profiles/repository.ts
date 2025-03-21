@@ -304,35 +304,52 @@ export function createDevelopersRepository(db: Db) {
       });
     },
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
-      await db
-        .insert(developerProfiles)
-        .values({
-          id: developerProfile.id,
-          identityId: developerProfile.identityId,
-          name: developerProfile.name,
-          slug: developerProfile.slug,
-          email: developerProfile.email,
-          status: developerProfile.status || "",
-          avatarUrl: developerProfile.avatarUrl || "",
-          title: developerProfile.title || "",
-          bio: developerProfile.bio || "",
-          links: developerProfile.links || [],
-          headline: developerProfile.headline || "",
-        })
-        .onConflictDoUpdate({
-          target: developerProfiles.id,
-          set: {
-            identityId: developerProfile.identityId,
-            name: developerProfile.name,
-            slug: developerProfile.slug,
-            email: developerProfile.email,
-            status: developerProfile.status || "",
-            avatarUrl: developerProfile.avatarUrl || "",
-            title: developerProfile.title || "",
-            bio: developerProfile.bio || "",
-            links: developerProfile.links || [],
-          },
-        });
+      const outboxMessage = await db.transaction(async (tx) => {
+        const developerProfileId = (
+          await tx
+            .insert(developerProfiles)
+            .values({
+              id: developerProfile.id,
+              identityId: developerProfile.identityId,
+              name: developerProfile.name,
+              slug: developerProfile.slug,
+              email: developerProfile.email,
+              status: developerProfile.status || "",
+              avatarUrl: developerProfile.avatarUrl || "",
+              title: developerProfile.title || "",
+              bio: developerProfile.bio || "",
+              links: developerProfile.links || [],
+              headline: developerProfile.headline || "",
+            })
+            .onConflictDoUpdate({
+              target: developerProfiles.id,
+              set: {
+                identityId: developerProfile.identityId,
+                name: developerProfile.name,
+                slug: developerProfile.slug,
+                email: developerProfile.email,
+                status: developerProfile.status || "",
+                avatarUrl: developerProfile.avatarUrl || "",
+                title: developerProfile.title || "",
+                bio: developerProfile.bio || "",
+                links: developerProfile.links || [],
+                headline: developerProfile.headline || "",
+              },
+            })
+            .returning({ id: developerProfiles.id })
+        )[0].id;
+
+        return (
+          await tx
+            .insert(meiliSearchOutbox)
+            .values({
+              developerProfileId: developerProfileId,
+              operation: "upsert",
+            })
+            .returning()
+        )[0];
+      });
+      return outboxMessage;
     },
     async updateDeveloperProfileDetails(
       developerProfile: DeveloperProfileDetailsUpdate,
