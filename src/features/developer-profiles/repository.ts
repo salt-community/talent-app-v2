@@ -12,9 +12,9 @@ import {
 import {
   AddDeveloperProfile,
   developerProfileDetails,
+  DeveloperProfileDetailsUpdate,
   LanguageSelect,
   SkillSelect,
-  updateDeveloperProfile,
 } from "./types";
 import { Experience } from "./components/cv/cv-main-content";
 
@@ -178,6 +178,7 @@ export function createDevelopersRepository(db: Db) {
           bio: developerProfiles.bio,
           links: developerProfiles.links,
           headline: developerProfiles.headline,
+          status: developerProfiles.status,
           skills: sql<
             SkillSelect[]
           >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
@@ -334,73 +335,71 @@ export function createDevelopersRepository(db: Db) {
         });
     },
     async updateDeveloperProfile(
-      updatedDeveloperProfile: updateDeveloperProfile,
+      developerProfile: DeveloperProfileDetailsUpdate,
     ) {
       const outboxMessageId = await db.transaction(async (tx) => {
         await tx
           .update(developerProfiles)
           .set({
             identityId:
-              updatedDeveloperProfile.identityId ||
-              developerProfiles.identityId,
-            name: updatedDeveloperProfile.name || developerProfiles.name,
-            slug: updatedDeveloperProfile.slug || developerProfiles.slug,
-            email: updatedDeveloperProfile.email || developerProfiles.email,
-            status: updatedDeveloperProfile.status || developerProfiles.status,
+              developerProfile.identityId || developerProfiles.identityId,
+            name: developerProfile.name || developerProfiles.name,
+            slug: developerProfile.slug || developerProfiles.slug,
+            email: developerProfile.email || developerProfiles.email,
+            status: developerProfile.status || developerProfiles.status,
             avatarUrl:
-              updatedDeveloperProfile.avatarUrl || developerProfiles.avatarUrl,
-            title: updatedDeveloperProfile.title || developerProfiles.title,
-            bio: updatedDeveloperProfile.bio || developerProfiles.bio,
-            links: updatedDeveloperProfile.links || developerProfiles.links,
-            headline:
-              updatedDeveloperProfile.headline || developerProfiles.headline,
+              developerProfile.avatarUrl || developerProfiles.avatarUrl,
+            title: developerProfile.title || developerProfiles.title,
+            bio: developerProfile.bio || developerProfiles.bio,
+            links: developerProfile.links || developerProfiles.links,
+            headline: developerProfile.headline || developerProfiles.headline,
           })
-          .where(eq(developerProfiles.id, updatedDeveloperProfile.id));
+          .where(eq(developerProfiles.id, developerProfile.id));
 
-        if (updatedDeveloperProfile.skills) {
+        if (developerProfile.skills) {
           await tx
             .delete(developerProfileSkills)
             .where(
               eq(
                 developerProfileSkills.developerProfileId,
-                updatedDeveloperProfile.id,
+                developerProfile.id,
               ),
             );
-          for (const skill of updatedDeveloperProfile.skills) {
+          for (const skill of developerProfile.skills) {
             await tx.insert(developerProfileSkills).values({
-              developerProfileId: updatedDeveloperProfile.id,
-              name: skill,
+              developerProfileId: developerProfile.id,
+              name: skill.name,
             });
           }
         }
-        if (updatedDeveloperProfile.languages) {
+        if (developerProfile.languages) {
           await tx
             .delete(developerProfileLanguages)
             .where(
               eq(
                 developerProfileLanguages.developerProfileId,
-                updatedDeveloperProfile.id,
+                developerProfile.id,
               ),
             );
-          for (const language of updatedDeveloperProfile.languages) {
+          for (const language of developerProfile.languages) {
             await tx.insert(developerProfileLanguages).values({
-              developerProfileId: updatedDeveloperProfile.id,
-              name: language,
+              developerProfileId: developerProfile.id,
+              name: language.name,
             });
           }
         }
-        if (updatedDeveloperProfile.educations) {
+        if (developerProfile.educations) {
           await tx
             .delete(newDeveloperProfileEducations)
             .where(
               eq(
                 newDeveloperProfileEducations.developerProfileId,
-                updatedDeveloperProfile.id,
+                developerProfile.id,
               ),
             );
-          for (const education of updatedDeveloperProfile.educations) {
+          for (const education of developerProfile.educations) {
             await tx.insert(newDeveloperProfileEducations).values({
-              developerProfileId: updatedDeveloperProfile.id,
+              developerProfileId: developerProfile.id,
               organization: education.organization,
               date: education.date,
               role: education.role,
@@ -408,18 +407,15 @@ export function createDevelopersRepository(db: Db) {
             });
           }
         }
-        if (updatedDeveloperProfile.jobs) {
+        if (developerProfile.jobs) {
           await tx
             .delete(developerProfileJobs)
             .where(
-              eq(
-                developerProfileJobs.developerProfileId,
-                updatedDeveloperProfile.id,
-              ),
+              eq(developerProfileJobs.developerProfileId, developerProfile.id),
             );
-          for (const job of updatedDeveloperProfile.jobs) {
+          for (const job of developerProfile.jobs) {
             await tx.insert(developerProfileJobs).values({
-              developerProfileId: updatedDeveloperProfile.id,
+              developerProfileId: developerProfile.id,
               organization: job.organization,
               date: job.date,
               role: job.role,
@@ -431,7 +427,7 @@ export function createDevelopersRepository(db: Db) {
           await tx
             .insert(meiliSearchOutbox)
             .values({
-              developerProfileId: updatedDeveloperProfile.id,
+              developerProfileId: developerProfile.id,
               operation: "upsert",
             })
             .returning({ id: meiliSearchOutbox.id })

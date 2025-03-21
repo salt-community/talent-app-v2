@@ -1,10 +1,11 @@
 import { Experience } from "./components/cv/cv-main-content";
 import {
-  developerProfileEducations,
+  developerProfileJobs,
   developerProfileLanguages,
   developerProfiles,
   developerProfileSkills,
   meiliSearchOutbox,
+  newDeveloperProfileEducations,
 } from "./db-schema";
 import { createDeveloperProfilesService } from "./service";
 import { JwtPayload } from "jsonwebtoken";
@@ -53,19 +54,6 @@ export type AddDeveloperProfile = {
   headline?: string | null;
 };
 
-export type BackgroundInfo = {
-  id: string;
-  identityId: string;
-  name: string;
-  avatarUrl: string;
-  title: string;
-  bio: string | null;
-  links: SocialLink[];
-  skills: SkillSelect[];
-  languages: LanguageSelect[];
-  educations: EducationSelect[];
-};
-
 export type CvInfo = {
   id: string;
   identityId: string;
@@ -79,6 +67,7 @@ export type CvInfo = {
   educations: Experience[];
   jobs: Experience[];
   headline: string | null;
+  status: string;
 };
 
 export type developerProfileUpdate = Partial<DeveloperProfileInsert> &
@@ -128,12 +117,31 @@ export type SocialLink = {
 };
 
 export type DeveloperProfileInsert = typeof developerProfiles.$inferInsert;
+export type DeveloperProfileUpdate = Partial<DeveloperProfileInsert> & {
+  id: string;
+};
 export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;
 export type OutboxMessageSelect = typeof meiliSearchOutbox.$inferSelect;
 
 export type SkillInsert = typeof developerProfileSkills.$inferInsert;
 export type SkillSelect = typeof developerProfileSkills.$inferSelect;
+export type SkillUpdate = Partial<SkillInsert> & { name: string };
+
 export type LanguageInsert = typeof developerProfileLanguages.$inferInsert;
 export type LanguageSelect = typeof developerProfileLanguages.$inferSelect;
-export type EducationInsert = typeof developerProfileEducations.$inferInsert;
-export type EducationSelect = typeof developerProfileEducations.$inferSelect;
+export type LanguageUpdate = Partial<LanguageInsert> & { name: string };
+
+export type EducationInsert = typeof newDeveloperProfileEducations.$inferInsert;
+export type EducationSelect = typeof newDeveloperProfileEducations.$inferSelect;
+export type EducationUpdate = EducationInsert;
+
+export type JobsInsert = typeof developerProfileJobs.$inferInsert;
+export type JobsSelect = typeof developerProfileJobs.$inferSelect;
+export type JobsUpdate = JobsInsert
+
+export type DeveloperProfileDetailsUpdate = DeveloperProfileUpdate & {
+  skills?: SkillUpdate[];
+  languages?: LanguageUpdate[];
+  educations?: EducationUpdate[];
+  jobs?: JobsInsert[];
+};
