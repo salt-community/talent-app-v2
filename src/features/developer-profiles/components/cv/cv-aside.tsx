@@ -67,7 +67,10 @@ export function CvAside({
         <h2 className="text-xl font-bold pb-1">Languages</h2>
         <ul>
           {languages.map((language) => (
-            <li key={language.name} className="text-paragraph flex items-center">
+            <li
+              key={language.name}
+              className="text-paragraph flex items-center"
+            >
               {language.name}{" "}
               {isEditable && (
                 <Button
@@ -78,7 +81,7 @@ export function CvAside({
                     onChange({
                       skills,
                       languages: languages.filter(
-                        (l) => l.name !== language.name,
+                        (l) => l.name !== language.name
                       ),
                       links,
                     })
@@ -108,18 +111,49 @@ export function CvAside({
           )}
         </ul>
       </section>
-      {filteredLinks.length > 0 && (
         <section>
           <h2 className="text-xl font-bold">Social</h2>
           <ul>
             {filteredLinks.map((link) => (
               <li key={link.name} className="h-full flex justify-start">
                 <SocialLink name={link.name} url={link.url} />
+                {isEditable && (
+                  <Button
+                    variant="link"
+                    size="icon"
+                    className="h-4 w-4 ml-1"
+                    onClick={() =>
+                      onChange({
+                        skills,
+                        languages,
+                        links: links.filter((l) => l.name !== link.name),
+                      })
+                    }
+                  >
+                    <X />
+                  </Button>
+                )}
               </li>
             ))}
+            {isEditable && (
+              <CvPopover
+                placeholder={"Write your social link"}
+                icon={Plus}
+                onAdd={(social) => {
+                  onChange({
+                    skills,
+                    languages,
+                    links: [...links, { name: "Github", url: social }],
+                  });
+                }}
+              >
+                <Button variant="outline" size="sm" className="w-full h-7 mt-2">
+                  <Plus size={24} className="cursor-pointer" /> Add
+                </Button>
+              </CvPopover>
+            )}
           </ul>
         </section>
-      )}
     </aside>
   );
 }
