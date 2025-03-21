@@ -87,7 +87,7 @@ export function CvAside({
       </section>
       <section className="flex flex-col items-start w-full">
         <h2 className="text-xl font-bold pb-1">Languages</h2>
-        <ul>
+        <ul className="w-full">
           {languages.map((language) => (
             <li
               key={language.name}
@@ -135,9 +135,9 @@ export function CvAside({
           )}
         </ul>
       </section>
-      <section>
+      <section className="w-full">
         <h2 className="text-xl font-bold">Social</h2>
-        <ul>
+        <ul className="w-full">
           {links.map((link) => (
             <li key={link.name} className="h-full flex justify-start">
               <SocialLink name={link.name} url={link.url} />
