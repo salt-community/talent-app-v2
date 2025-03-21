@@ -1,6 +1,5 @@
 "use client";
 
-import { FaGithub } from "react-icons/fa6";
 import type { SocialLink } from "../../types";
 import Link from "next/link";
 
