@@ -34,8 +34,8 @@ export function CvAside({
 }: Props) {
 
   return (
-    <aside className="md:col-start-1 md:col-end-2 md:pt-2 px-4 h-full md:bg-zinc-100 relative">
-      <div className="h-fit bg-zin-100 relative">
+    <aside className="md:col-start-1 md:col-end-2 px-4 h-full items-center bg-zinc-100 relative flex flex-col gap-6 py-6">
+      <section className="h-fit bg-zin-100 relative">
         <BackgroundAvatar url={avatarUrl} size="lg" />
         {isEditable && (
           <CvPopover
@@ -50,10 +50,11 @@ export function CvAside({
             </Button>
           </CvPopover>
         )}
-      </div>
+      </section>
       <section className="flex flex-col">
-        <h2 className="text-xl font-bold">Skills</h2>
+        <h2 className="text-xl font-bold">Technical Skills</h2>
         <SkillsBadges
+        variant="secondary"
           skills={skills}
           isEditable={isEditable}
           onDelete={(skill) => {
@@ -84,13 +85,13 @@ export function CvAside({
           </CvPopover>
         )}
       </section>
-      <section>
+      <section className="flex flex-col items-start w-full">
         <h2 className="text-xl font-bold pb-1">Languages</h2>
         <ul>
           {languages.map((language) => (
             <li
               key={language.name}
-              className="text-paragraph flex items-center"
+              className="text-paragraph text-sm flex items-center"
             >
               {language.name}{" "}
               {isEditable && (
