@@ -6,12 +6,17 @@ import Link from "next/link";
 
 type Props = SocialLink & { size?: number };
 
-export function SocialLink({ url, name, size = 20 }: Props) {
+export function SocialLink({ url, name }: Props) {
   return (
     <>
       {name === "Github" && (
-        <Link href={url} target="_blank" rel="noopener noreferrer">
-          <FaGithub size={size} />
+        <Link
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm truncate overflow-hidden whitespace-nowrap"
+        >
+          <span className="truncate">{url}</span>
         </Link>
       )}
       {name === "Resume" && (
@@ -19,9 +24,9 @@ export function SocialLink({ url, name, size = 20 }: Props) {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-bold text-[16px] leading-none"
+          className="text-sm truncate overflow-hidden whitespace-nowrap"
         >
-          CV{" "}
+          <span className="truncate">{url}</span>
         </Link>
       )}
     </>
