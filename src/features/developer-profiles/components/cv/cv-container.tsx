@@ -111,7 +111,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           onChange={handleOnChange}
           isEditable={isEditable && !isLoading}
         />
-        <section>
+        <section className="py-4">
           <CvHeader
             name={cvInfo.name}
             bio={cvInfo.bio}
