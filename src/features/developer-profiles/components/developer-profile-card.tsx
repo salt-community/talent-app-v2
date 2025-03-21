@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components";
 import { DeveloperProfileLink } from "./developer-profile-link";
-import { Background } from "./backgrounds";
 import { InlineBackgroundCard } from "./backgrounds/inline-background-card";
 
 type Props = {
