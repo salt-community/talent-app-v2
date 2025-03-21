@@ -334,7 +334,7 @@ export function createDevelopersRepository(db: Db) {
           },
         });
     },
-    async updateDeveloperProfile(
+    async updateDeveloperProfileDetails(
       developerProfile: DeveloperProfileDetailsUpdate,
     ) {
       const outboxMessage = await db.transaction(async (tx) => {
