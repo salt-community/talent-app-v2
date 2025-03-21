@@ -88,7 +88,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
             </Button>
           </div>
         ) : (
-          ( hasProfileAccess && 
+          hasProfileAccess && (
             <Button
               onClick={() => setIsEditable(true)}
               variant="ghost"
@@ -102,31 +102,33 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
         )}
       </div>
 
-      <CvHeader
-        name={cvInfo.name}
-        bio={cvInfo.bio}
-        avatarUrl={cvInfo.avatarUrl}
-        hasProfileAccess={hasProfileAccess}
-        id={cvInfo.id}
-        identityId={cvInfo.identityId}
-        isEditable={isEditable && !isLoading}
-        onChange={handleOnChange}
-      />
-      <div className="md:grid md:grid-cols-[15rem_2fr]">
+      <article className="md:grid md:grid-cols-[15rem_2fr]">
         <CvAside
           skills={cvInfo.skills}
           languages={cvInfo.languages}
           links={cvInfo.links}
+          avatarUrl={cvInfo.avatarUrl}
           onChange={handleOnChange}
           isEditable={isEditable && !isLoading}
         />
-        <CvMainContent
-          isEditable={isEditable && !isLoading}
-          jobs={cvInfo.jobs}
-          educations={cvInfo.educations}
-          onChange={handleOnChange}
-        />
-      </div>
+        <section>
+          <CvHeader
+            name={cvInfo.name}
+            bio={cvInfo.bio}
+            hasProfileAccess={hasProfileAccess}
+            id={cvInfo.id}
+            identityId={cvInfo.identityId}
+            isEditable={isEditable && !isLoading}
+            onChange={handleOnChange}
+          />
+          <CvMainContent
+            isEditable={isEditable && !isLoading}
+            jobs={cvInfo.jobs}
+            educations={cvInfo.educations}
+            onChange={handleOnChange}
+          />
+        </section>
+      </article>
     </section>
   );
 }

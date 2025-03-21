@@ -7,13 +7,16 @@ import {
 import { SkillsBadges } from "../backgrounds/skills-badges";
 import { SocialLink } from "../backgrounds/social-link";
 import { CvPopover } from "./cv-popover";
-import { Plus, X } from "lucide-react";
+import { Camera, Check, Plus, X } from "lucide-react";
+import { BackgroundAvatar } from "../backgrounds/avatar";
 
 type Props = {
   skills: SkillInsert[];
   languages: LanguageInsert[];
   links: SocialLinkType[];
+  avatarUrl: string;
   onChange: (data: {
+    avatarUrl: string;
     skills: SkillInsert[];
     languages: LanguageInsert[];
     links: SocialLinkType[];
@@ -25,12 +28,29 @@ export function CvAside({
   skills,
   languages,
   links,
+  avatarUrl,
   isEditable,
   onChange,
 }: Props) {
 
   return (
-    <aside className="px-3 space-y-4 py-8 bg-zinc-100 md:col-start-1 md:col-end-2 z-10">
+    <aside className="md:col-start-1 md:col-end-2 md:pt-2 px-4 h-full md:bg-zinc-100 relative">
+      <div className="h-fit bg-zin-100 relative">
+        <BackgroundAvatar url={avatarUrl} size="lg" />
+        {isEditable && (
+          <CvPopover
+            placeholder={"Set your avatar URL"}
+            icon={Check}
+            onAdd={(avatarUrl) => {
+              onChange({ avatarUrl, skills, languages, links });
+            }}
+          >
+            <Button className="absolute bottom-4 right-4 z-20 rounded-full p-0 h-8 w-8">
+              <Camera />
+            </Button>
+          </CvPopover>
+        )}
+      </div>
       <section className="flex flex-col">
         <h2 className="text-xl font-bold">Skills</h2>
         <SkillsBadges
@@ -41,6 +61,7 @@ export function CvAside({
               skills: skills.filter((s) => s.name !== skill.name),
               languages,
               links,
+              avatarUrl,
             });
           }}
         />
@@ -53,6 +74,7 @@ export function CvAside({
                 skills: [...skills, { name: skill }],
                 languages,
                 links,
+                avatarUrl,
               });
             }}
           >
@@ -83,6 +105,7 @@ export function CvAside({
                         (l) => l.name !== language.name
                       ),
                       links,
+                      avatarUrl,
                     })
                   }
                 >
@@ -100,6 +123,7 @@ export function CvAside({
                   skills,
                   languages: [...languages, { name: language }],
                   links,
+                  avatarUrl,
                 });
               }}
             >
