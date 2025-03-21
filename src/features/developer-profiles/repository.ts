@@ -78,22 +78,47 @@ export function createDevelopersRepository(db: Db) {
           title: developerProfiles.title,
           bio: developerProfiles.bio,
           links: developerProfiles.links,
-          status: developerProfiles.status,
           headline: developerProfiles.headline,
+          status: developerProfiles.status,
           skills: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfileSkills.name})::VARCHAR[]`.as(
+            SkillSelect[]
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
+                'id', ${developerProfileSkills.id},
+                'name', ${developerProfileSkills.name},
+                'level', ${developerProfileSkills.level}
+              )) FILTER (WHERE ${developerProfileSkills.id} IS NOT NULL), '[]'::jsonb)`.as(
             "skills",
           ),
           languages: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfileLanguages.name})::VARCHAR[]`.as(
+            LanguageSelect[]
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
+                'id', ${developerProfileLanguages.id},
+                'name', ${developerProfileLanguages.name},
+                'level', ${developerProfileLanguages.level}
+              )) FILTER (WHERE ${developerProfileLanguages.id} IS NOT NULL), '[]'::jsonb)`.as(
             "languages",
           ),
           educations: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfileEducations.name})::VARCHAR[]`.as(
+            Experience[]
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
+                'id', ${newDeveloperProfileEducations.id},
+                'organization', ${newDeveloperProfileEducations.organization},
+                'date', ${newDeveloperProfileEducations.date},
+                'role', ${newDeveloperProfileEducations.role},
+                'description', ${newDeveloperProfileEducations.description}
+              )) FILTER (WHERE ${newDeveloperProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
             "educations",
+          ),
+          jobs: sql<
+            Experience[]
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
+                'id', ${developerProfileJobs.id},
+                'organization', ${developerProfileJobs.organization},
+                'date', ${developerProfileJobs.date},
+                'role', ${developerProfileJobs.role},
+                'description', ${developerProfileJobs.description}
+              )) FILTER (WHERE ${developerProfileJobs.id} IS NOT NULL), '[]'::jsonb)`.as(
+            "jobs",
           ),
         })
         .from(developerProfiles)
@@ -109,11 +134,15 @@ export function createDevelopersRepository(db: Db) {
           ),
         )
         .leftJoin(
-          developerProfileEducations,
+          newDeveloperProfileEducations,
           eq(
-            developerProfileEducations.developerProfileId,
+            newDeveloperProfileEducations.developerProfileId,
             developerProfiles.id,
           ),
+        )
+        .leftJoin(
+          developerProfileJobs,
+          eq(developerProfileJobs.developerProfileId, developerProfiles.id),
         )
         .groupBy(developerProfiles.id);
     },

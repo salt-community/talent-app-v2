@@ -40,6 +40,8 @@ export function createDeveloperProfilesService(
       "skills",
       "educations",
       "languages",
+      "jobs",
+      "headline",
       "name",
       "title",
       "bio",
@@ -53,8 +55,9 @@ export function createDeveloperProfilesService(
               model: "text-embedding-3-large",
               apiKey: process.env.OPENAI_API_KEY,
               dimensions: 3072,
-              documentTemplate: `{{doc.title}} with skills: {{doc.skills}},
-          education: {{doc.educations}}, languages: {{doc.languages}}, bio: {{doc.bio}}`,
+              documentTemplate: `
+              {{doc.title}}, bio: {{doc.bio}} with skills: {{doc.skills}}, jobs: {{doc.jobs}},
+              education: {{doc.educations}}, who speaks languages: {{doc.languages}}`,
             },
           }
         : undefined,
@@ -68,7 +71,7 @@ export function createDeveloperProfilesService(
     let succeeded = false;
     switch (outboxMessage.operation) {
       case "upsert":
-        const developerProfile = await repository.getDeveloperProfileById(
+        const developerProfile = await repository.getDeveloperProfile(
           outboxMessage.developerProfileId,
         );
         if (!developerProfile) {
