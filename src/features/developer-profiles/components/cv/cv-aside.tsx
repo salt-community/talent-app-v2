@@ -54,7 +54,7 @@ export function CvAside({
       <section className="flex flex-col">
         <h2 className="text-xl font-bold">Technical Skills</h2>
         <SkillsBadges
-        variant="secondary"
+          variant="secondary"
           skills={skills}
           isEditable={isEditable}
           onDelete={(skill) => {
@@ -151,6 +151,7 @@ export function CvAside({
                       skills,
                       languages,
                       links: links.filter((l) => l.name !== link.name),
+                      avatarUrl,
                     })
                   }
                 >
@@ -169,6 +170,7 @@ export function CvAside({
                     skills,
                     languages,
                     links: [...links, { name: "Github", url: social }],
+                    avatarUrl,
                   });
                 }}
               >
@@ -189,6 +191,7 @@ export function CvAside({
                     skills,
                     languages,
                     links: [...links, { name: "Resume", url: social }],
+                    avatarUrl,
                   });
                 }}
               >
@@ -196,7 +199,8 @@ export function CvAside({
                   variant="outline"
                   size="sm"
                   className="w-full h-7 mt-2"
-                  disabled={links.some((link) => link.name === "Resume")}>
+                  disabled={links.some((link) => link.name === "Resume")}
+                >
                   <Plus size={24} className="cursor-pointer" /> Add Portfolio
                 </Button>
               </CvPopover>
