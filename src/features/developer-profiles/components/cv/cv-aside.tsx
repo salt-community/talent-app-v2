@@ -28,7 +28,6 @@ export function CvAside({
   isEditable,
   onChange,
 }: Props) {
-  const filteredLinks = links.filter((e) => e.name !== "Resume");
 
   return (
     <aside className="px-3 space-y-4 py-8 bg-zinc-100 md:col-start-1 md:col-end-2 z-10">
@@ -111,33 +110,34 @@ export function CvAside({
           )}
         </ul>
       </section>
-        <section>
-          <h2 className="text-xl font-bold">Social</h2>
-          <ul>
-            {filteredLinks.map((link) => (
-              <li key={link.name} className="h-full flex justify-start">
-                <SocialLink name={link.name} url={link.url} />
-                {isEditable && (
-                  <Button
-                    variant="link"
-                    size="icon"
-                    className="h-4 w-4 ml-1"
-                    onClick={() =>
-                      onChange({
-                        skills,
-                        languages,
-                        links: links.filter((l) => l.name !== link.name),
-                      })
-                    }
-                  >
-                    <X />
-                  </Button>
-                )}
-              </li>
-            ))}
-            {isEditable && (
+      <section>
+        <h2 className="text-xl font-bold">Social</h2>
+        <ul>
+          {links.map((link) => (
+            <li key={link.name} className="h-full flex justify-start">
+              <SocialLink name={link.name} url={link.url} />
+              {isEditable && (
+                <Button
+                  variant="link"
+                  size="icon"
+                  className="h-4 w-4 ml-1"
+                  onClick={() =>
+                    onChange({
+                      skills,
+                      languages,
+                      links: links.filter((l) => l.name !== link.name),
+                    })
+                  }
+                >
+                  <X />
+                </Button>
+              )}
+            </li>
+          ))}
+          {isEditable && (
+            <>
               <CvPopover
-                placeholder={"Write your social link"}
+                placeholder={"Write your Github link"}
                 icon={Plus}
                 onAdd={(social) => {
                   onChange({
@@ -147,13 +147,38 @@ export function CvAside({
                   });
                 }}
               >
-                <Button variant="outline" size="sm" className="w-full h-7 mt-2">
-                  <Plus size={24} className="cursor-pointer" /> Add
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full h-7 mt-2"
+                  disabled={links.some((link) => link.name === "Github")}
+                >
+                  <Plus size={24} className="cursor-pointer" /> Add Github
                 </Button>
               </CvPopover>
-            )}
-          </ul>
-        </section>
+              <CvPopover
+                placeholder={"Write your Portfolio link"}
+                icon={Plus}
+                onAdd={(social) => {
+                  onChange({
+                    skills,
+                    languages,
+                    links: [...links, { name: "Resume", url: social }],
+                  });
+                }}
+              >
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full h-7 mt-2"
+                  disabled={links.some((link) => link.name === "Resume")}>
+                  <Plus size={24} className="cursor-pointer" /> Add Portfolio
+                </Button>
+              </CvPopover>
+            </>
+          )}
+        </ul>
+      </section>
     </aside>
   );
 }
