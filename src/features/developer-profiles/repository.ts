@@ -337,7 +337,7 @@ export function createDevelopersRepository(db: Db) {
     async updateDeveloperProfile(
       developerProfile: DeveloperProfileDetailsUpdate,
     ) {
-      const outboxMessageId = await db.transaction(async (tx) => {
+      const outboxMessage = await db.transaction(async (tx) => {
         await tx
           .update(developerProfiles)
           .set({
@@ -430,10 +430,10 @@ export function createDevelopersRepository(db: Db) {
               developerProfileId: developerProfile.id,
               operation: "upsert",
             })
-            .returning({ id: meiliSearchOutbox.id })
-        )[0].id;
+            .returning()
+        )[0];
       });
-      return { outboxMessageId };
+      return outboxMessage;
     },
     async deleteDeveloperProfile(developerProfileId: string) {
       await db
