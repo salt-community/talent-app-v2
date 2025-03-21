@@ -201,19 +201,10 @@ export function createDeveloperProfilesService(
     async updateDeveloperProfile(
       developerProfileUpdates: DeveloperProfileUpdate,
     ) {
-      const { outboxMessageId } = await repository.updateDeveloperProfile(
+      const outboxMessage = await repository.updateDeveloperProfile(
         developerProfileUpdates,
       );
-      const developerProfile = await repository.getDeveloperProfileById(
-        developerProfileUpdates.id,
-      );
-
-      const status = await backgroundsSearchApi.upsertDocuments([
-        developerProfile[0],
-      ]);
-      if (OK_STATUSES.includes(status)) {
-        await repository.removeOutboxMessage(outboxMessageId);
-      }
+      await updateMeilisearchFor(outboxMessage);
     },
     async generateUniqueSlug(name: string) {
       const slug = generateSlug(name);
