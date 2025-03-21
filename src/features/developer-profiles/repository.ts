@@ -41,7 +41,8 @@ export function createDevelopersRepository(db: Db) {
       const developerId = await db
         .select({ id: developerProfiles.id })
         .from(developerProfiles)
-        .where(eq(developerProfiles.identityId, id));
+        .where(eq(developerProfiles.identityId, id))
+        .orderBy(developerProfiles.slug);
       return developerId;
     },
     async getDeveloperProfileByIdentityId(identityId: string) {
@@ -82,34 +83,37 @@ export function createDevelopersRepository(db: Db) {
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfileSkills.name})::VARCHAR[]`.as(
-            "skills"
+            "skills",
           ),
           languages: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfileLanguages.name})::VARCHAR[]`.as(
-            "languages"
+            "languages",
           ),
           educations: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfileEducations.name})::VARCHAR[]`.as(
-            "educations"
+            "educations",
           ),
         })
         .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id),
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
+          eq(
+            developerProfileLanguages.developerProfileId,
+            developerProfiles.id,
+          ),
         )
         .leftJoin(
           developerProfileEducations,
           eq(
             developerProfileEducations.developerProfileId,
-            developerProfiles.id
-          )
+            developerProfiles.id,
+          ),
         )
         .groupBy(developerProfiles.id);
     },
@@ -128,34 +132,37 @@ export function createDevelopersRepository(db: Db) {
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "skills"
+            "skills",
           ),
           languages: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "languages"
+            "languages",
           ),
           educations: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "educations"
+            "educations",
           ),
         })
         .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id),
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
+          eq(
+            developerProfileLanguages.developerProfileId,
+            developerProfiles.id,
+          ),
         )
         .leftJoin(
           developerProfileEducations,
           eq(
             developerProfileEducations.developerProfileId,
-            developerProfiles.id
-          )
+            developerProfiles.id,
+          ),
         )
         .where(eq(developerProfiles.id, developerProfileId))
         .groupBy(developerProfiles.id);
@@ -178,7 +185,7 @@ export function createDevelopersRepository(db: Db) {
                 'name', ${developerProfileSkills.name},
                 'level', ${developerProfileSkills.level}
               )) FILTER (WHERE ${developerProfileSkills.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "skills"
+            "skills",
           ),
           languages: sql<
             LanguageSelect[]
@@ -187,7 +194,7 @@ export function createDevelopersRepository(db: Db) {
                 'name', ${developerProfileLanguages.name},
                 'level', ${developerProfileLanguages.level}
               )) FILTER (WHERE ${developerProfileLanguages.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "languages"
+            "languages",
           ),
           educations: sql<
             Experience[]
@@ -198,7 +205,7 @@ export function createDevelopersRepository(db: Db) {
                 'role', ${newDeveloperProfileEducations.role},
                 'description', ${newDeveloperProfileEducations.description}
               )) FILTER (WHERE ${newDeveloperProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "educations"
+            "educations",
           ),
           jobs: sql<
             Experience[]
@@ -209,33 +216,36 @@ export function createDevelopersRepository(db: Db) {
                 'role', ${developerProfileJobs.role},
                 'description', ${developerProfileJobs.description}
               )) FILTER (WHERE ${developerProfileJobs.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "jobs"
+            "jobs",
           ),
         })
         .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id),
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
+          eq(
+            developerProfileLanguages.developerProfileId,
+            developerProfiles.id,
+          ),
         )
         .leftJoin(
           newDeveloperProfileEducations,
           eq(
             newDeveloperProfileEducations.developerProfileId,
-            developerProfiles.id
-          )
+            developerProfiles.id,
+          ),
         )
         .leftJoin(
           developerProfileJobs,
-          eq(developerProfileJobs.developerProfileId, developerProfiles.id)
+          eq(developerProfileJobs.developerProfileId, developerProfiles.id),
         )
         .where(eq(developerProfiles.id, developerProfileId))
         .groupBy(developerProfiles.id);
 
-      return result
+      return result;
     },
     async getAllSkills() {
       return await db.select().from(developerProfileSkills);
@@ -269,7 +279,7 @@ export function createDevelopersRepository(db: Db) {
       await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
     },
     async addDeveloperProfileDetails(
-      developerProfileDetails: developerProfileDetails
+      developerProfileDetails: developerProfileDetails,
     ) {
       await db.transaction(async (tx) => {
         for (const skill of developerProfileDetails.skills) {
@@ -324,9 +334,8 @@ export function createDevelopersRepository(db: Db) {
         });
     },
     async updateDeveloperProfile(
-      updatedDeveloperProfile: updateDeveloperProfile
+      updatedDeveloperProfile: updateDeveloperProfile,
     ) {
-
       const outboxMessageId = await db.transaction(async (tx) => {
         await tx
           .update(developerProfiles)
@@ -354,8 +363,8 @@ export function createDevelopersRepository(db: Db) {
             .where(
               eq(
                 developerProfileSkills.developerProfileId,
-                updatedDeveloperProfile.id
-              )
+                updatedDeveloperProfile.id,
+              ),
             );
           for (const skill of updatedDeveloperProfile.skills) {
             await tx.insert(developerProfileSkills).values({
@@ -370,8 +379,8 @@ export function createDevelopersRepository(db: Db) {
             .where(
               eq(
                 developerProfileLanguages.developerProfileId,
-                updatedDeveloperProfile.id
-              )
+                updatedDeveloperProfile.id,
+              ),
             );
           for (const language of updatedDeveloperProfile.languages) {
             await tx.insert(developerProfileLanguages).values({
@@ -386,8 +395,8 @@ export function createDevelopersRepository(db: Db) {
             .where(
               eq(
                 newDeveloperProfileEducations.developerProfileId,
-                updatedDeveloperProfile.id
-              )
+                updatedDeveloperProfile.id,
+              ),
             );
           for (const education of updatedDeveloperProfile.educations) {
             await tx.insert(newDeveloperProfileEducations).values({
@@ -405,8 +414,8 @@ export function createDevelopersRepository(db: Db) {
             .where(
               eq(
                 developerProfileJobs.developerProfileId,
-                updatedDeveloperProfile.id
-              )
+                updatedDeveloperProfile.id,
+              ),
             );
           for (const job of updatedDeveloperProfile.jobs) {
             await tx.insert(developerProfileJobs).values({
