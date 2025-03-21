@@ -5,9 +5,9 @@ import { claim } from "./session";
 import {
   AddDeveloperProfile,
   developerProfileDetails,
+  DeveloperProfileUpdate,
   OutboxMessageSelect,
   SessionClaims,
-  updateDeveloperProfile,
 } from "./types";
 import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./backgrounds-search";
@@ -147,6 +147,7 @@ export function createDeveloperProfilesService(
           languages: [],
           educations: [],
           jobs: [],
+          status: "unpublished",
         } as T;
       }
       return developerProfile;
@@ -198,7 +199,7 @@ export function createDeveloperProfilesService(
       }
     },
     async updateDeveloperProfile(
-      developerProfileUpdates: updateDeveloperProfile,
+      developerProfileUpdates: DeveloperProfileUpdate,
     ) {
       const { outboxMessageId } = await repository.updateDeveloperProfile(
         developerProfileUpdates,
