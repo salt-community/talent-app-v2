@@ -55,7 +55,7 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
           "Odia",
           "Malayalam",
         ],
-        { min: 1, max: 6 }
+        { min: 1, max: 6 },
       ),
       educations: faker.helpers.arrayElements(
         [
@@ -73,7 +73,7 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
           "Associate Degree",
           "Bachelor's Degree",
         ],
-        { min: 0, max: 4 }
+        { min: 0, max: 4 },
       ),
       skills: faker.helpers.arrayElements(skills, { min: 3, max: 10 }),
       links: faker.helpers
@@ -86,7 +86,7 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
             },
             { url: "https://www.alimohseni.se/", name: "Resume" },
           ],
-          { min: 1, max: 3 }
+          { min: 1, max: 3 },
         )
         .sort((a, b) => a.name.localeCompare(b.name)),
     });
@@ -96,17 +96,17 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
   for (let i = 0; i < developers.length; i++) {
     developerId.push(developers[i].id!);
     const slug = await developerProfilesSeedingService.generateUniqueSlug(
-      developers[i].name
+      developers[i].name,
     );
     await developerProfilesSeedingService.addDeveloperProfile({
       ...developers[i],
       slug,
     });
     await developerProfilesSeedingService.addDeveloperProfileDetails(
-      backgrounds[i]
+      backgrounds[i],
     );
   }
-  await developerProfilesSeedingService.repopulateMeiliSearch();
+  await developerProfilesSeedingService.repopulateSearch();
   console.log("Done seeding developer profiles!");
   return developerId;
 }

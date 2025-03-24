@@ -6,7 +6,7 @@ export const developerProfileSkills = pgTable("developer_profiles_skills", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   developerProfileId: uuid("developerProfile_id").references(
     () => developerProfiles.id,
-    { onDelete: "cascade" }
+    { onDelete: "cascade" },
   ),
   name: varchar().notNull(),
   level: integer().notNull().default(5),
@@ -19,10 +19,10 @@ export const developerProfileEducations = pgTable(
       () => developerProfiles.id,
       {
         onDelete: "cascade",
-      }
+      },
     ),
     name: varchar().notNull(),
-  }
+  },
 );
 export const developerProfileLanguages = pgTable(
   "developer_profiles_languages",
@@ -32,13 +32,13 @@ export const developerProfileLanguages = pgTable(
       () => developerProfiles.id,
       {
         onDelete: "cascade",
-      }
+      },
     ),
     name: varchar().notNull(),
     level: integer().notNull().default(5),
-  }
+  },
 );
-export const meiliSearchOutbox = pgTable("meili_search_outbox", {
+export const searchOutbox = pgTable("meili_search_outbox", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   developerProfileId: uuid("developer_profile_id").notNull(),
   operation: varchar().notNull(),
@@ -60,41 +60,37 @@ export const developerProfiles = pgTable("developer_profiles", {
   bio: varchar(),
 });
 
-
 export const newDeveloperProfileEducations = pgTable(
   "new_developer_profiles_educations",
   {
     id: uuid()
-    .primaryKey()
-    .default(sql`gen_random_uuid()`),
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
     developerProfileId: uuid("developerProfile_id").references(
       () => developerProfiles.id,
       {
         onDelete: "cascade",
-      }
+      },
     ),
     organization: varchar().notNull(),
     date: varchar().notNull(),
     role: varchar().notNull(),
     description: varchar().notNull(),
-  }
+  },
 );
 
-export const developerProfileJobs = pgTable(
-  "developer_profiles_jobs",
-  {
-    id: uuid()
+export const developerProfileJobs = pgTable("developer_profiles_jobs", {
+  id: uuid()
     .primaryKey()
     .default(sql`gen_random_uuid()`),
-    developerProfileId: uuid("developerProfile_id").references(
-      () => developerProfiles.id,
-      {
-        onDelete: "cascade",
-      }
-    ),
-    organization: varchar().notNull(),
-    date: varchar().notNull(),
-    role: varchar().notNull(),
-    description: varchar().notNull(),
-  }
-);
+  developerProfileId: uuid("developerProfile_id").references(
+    () => developerProfiles.id,
+    {
+      onDelete: "cascade",
+    },
+  ),
+  organization: varchar().notNull(),
+  date: varchar().notNull(),
+  role: varchar().notNull(),
+  description: varchar().notNull(),
+});

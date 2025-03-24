@@ -4,7 +4,7 @@ import {
   developerProfileLanguages,
   developerProfiles,
   developerProfileSkills,
-  meiliSearchOutbox,
+  searchOutbox,
   newDeveloperProfileEducations,
 } from "./db-schema";
 import { createDeveloperProfilesService } from "./service";
@@ -120,8 +120,8 @@ export type DeveloperProfileInsert = typeof developerProfiles.$inferInsert;
 export type DeveloperProfileUpdate = Partial<DeveloperProfileInsert> & {
   id: string;
 };
-export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;
-export type OutboxMessageSelect = typeof meiliSearchOutbox.$inferSelect;
+export type OutboxMessageInsert = typeof searchOutbox.$inferInsert;
+export type OutboxMessageSelect = typeof searchOutbox.$inferSelect;
 
 export type SkillInsert = typeof developerProfileSkills.$inferInsert;
 export type SkillSelect = typeof developerProfileSkills.$inferSelect;
@@ -137,7 +137,7 @@ export type EducationUpdate = EducationInsert;
 
 export type JobsInsert = typeof developerProfileJobs.$inferInsert;
 export type JobsSelect = typeof developerProfileJobs.$inferSelect;
-export type JobsUpdate = JobsInsert
+export type JobsUpdate = JobsInsert;
 
 export type DeveloperProfileDetailsUpdate = DeveloperProfileUpdate & {
   skills?: SkillUpdate[];

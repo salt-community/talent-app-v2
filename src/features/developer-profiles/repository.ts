@@ -6,7 +6,7 @@ import {
   developerProfileLanguages,
   developerProfiles,
   developerProfileSkills,
-  meiliSearchOutbox,
+  searchOutbox,
   newDeveloperProfileEducations,
 } from "./db-schema";
 import {
@@ -287,7 +287,7 @@ export function createDevelopersRepository(db: Db) {
       return await db.select().from(developerProfileEducations);
     },
     async getAllOutboxMessage() {
-      return await db.select().from(meiliSearchOutbox);
+      return await db.select().from(searchOutbox);
     },
     async existsBySlug(slug: string) {
       const [developerProfile] = await db
@@ -306,7 +306,7 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(developerProfiles.id, id));
     },
     async removeOutboxMessage(id: number) {
-      await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
+      await db.delete(searchOutbox).where(eq(searchOutbox.id, id));
     },
     async addDeveloperProfileDetails(
       developerProfileDetails: developerProfileDetails,
@@ -370,7 +370,7 @@ export function createDevelopersRepository(db: Db) {
 
         return (
           await tx
-            .insert(meiliSearchOutbox)
+            .insert(searchOutbox)
             .values({
               developerProfileId: developerProfileId,
               operation: "upsert",
@@ -471,7 +471,7 @@ export function createDevelopersRepository(db: Db) {
         }
         return (
           await tx
-            .insert(meiliSearchOutbox)
+            .insert(searchOutbox)
             .values({
               developerProfileId: developerProfile.id,
               operation: "upsert",

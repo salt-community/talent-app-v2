@@ -1,5 +1,5 @@
 import MeiliSearch, { Embedders, Index, Settings } from "meilisearch";
-import { DeveloperProfileDetailsUpdate, developerProfileUpdate } from "../types";
+import { DeveloperProfileDetailsUpdate } from "../types";
 
 type InitializeMeiliSearchIndexArgs = {
   indexUid: string;
@@ -52,8 +52,8 @@ export function createSearchApi({
       await index.waitForTask(updateSettingsTask.taskUid);
     },
 
-    async searchDeveloperProfileIds(search: string | undefined) {
-      const isSearchEmpty = search === undefined || !search.trim();
+    async searchDeveloperProfileIds(query: string | undefined) {
+      const isSearchEmpty = query === undefined || !query.trim();
 
       const searchParams = {
         filter: `status = "published" OR status="highlighted"`,
@@ -61,12 +61,12 @@ export function createSearchApi({
 
       const documents: Record<string, unknown>[] = isSearchEmpty
         ? (await index.search("", searchParams)).hits
-        : (await index.search(search, searchParams)).hits;
+        : (await index.search(query, searchParams)).hits;
       return documents.map((doc) => doc.id as string);
     },
 
-    async searchDeveloperProfiles(search: string | undefined) {
-      const isSearchEmpty = search === undefined || !search.trim();
+    async searchDeveloperProfiles(query: string | undefined) {
+      const isSearchEmpty = query === undefined || !query.trim();
       const llmIsEnabled = process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON";
 
       const searchParams: Record<
@@ -85,11 +85,11 @@ export function createSearchApi({
         return (await index.search("", searchParams)).hits;
       }
 
-      return (await index.search(search, searchParams)).hits;
+      return (await index.search(query, searchParams)).hits;
     },
 
-    async upsertDocuments(backgrounds: DeveloperProfileDetailsUpdate[]) {
-      const response = await index.addDocuments(backgrounds);
+    async upsertDocuments(developerProfiles: DeveloperProfileDetailsUpdate[]) {
+      const response = await index.addDocuments(developerProfiles);
       return response.status;
     },
 

@@ -67,7 +67,9 @@ export function createDeveloperProfilesService(
   const backgroundsSearchService =
     createBackgroundsSearchService(backgroundsSearchApi);
 
-  async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
+  async function syncSearchWithOutboxMessage(
+    outboxMessage: OutboxMessageSelect,
+  ) {
     let succeeded = false;
     switch (outboxMessage.operation) {
       case "upsert":
@@ -179,7 +181,7 @@ export function createDeveloperProfilesService(
     async deleteByIdentityId(identityId: string) {
       await repository.deleteDeveloperProfileByIdentityId(identityId);
     },
-    async deleteMeiliSearchDocument(developerProfileId: string) {
+    async deleteDeveloperProfileFromSearch(developerProfileId: string) {
       await backgroundsSearchApi.deleteDocument(developerProfileId);
     },
     async updateStatus(args: { id: string; status: string }) {
@@ -207,7 +209,7 @@ export function createDeveloperProfilesService(
       const outboxMessage = await repository.updateDeveloperProfileDetails(
         developerProfileUpdates,
       );
-      await updateMeilisearchFor(outboxMessage);
+      await syncSearchWithOutboxMessage(outboxMessage);
     },
     async generateUniqueSlug(name: string) {
       const slug = generateSlug(name);
@@ -221,19 +223,19 @@ export function createDeveloperProfilesService(
 
       return uniqueSlug;
     },
-    async syncMeilisearch() {
+    async syncSearch() {
       const outboxMessages = await repository.getAllOutboxMessage();
       for (const outboxMessage of outboxMessages) {
-        updateMeilisearchFor(outboxMessage);
+        await syncSearchWithOutboxMessage(outboxMessage);
       }
     },
-    async repopulateMeiliSearch() {
+    async repopulateSearch() {
       await backgroundsSearchApi.deleteIndex();
       await backgroundsSearchApi.ensureIndex();
       const developerProfiles = await repository.getAllDeveloperProfiles();
       await backgroundsSearchApi.upsertDocuments(developerProfiles);
     },
-    async doesMeilisearchNeedSync() {
+    async isSearchSyncRequired() {
       return (await repository.getAllOutboxMessage()).length > 0;
     },
     async createDeveloperProfile(identityId: string) {
@@ -255,7 +257,7 @@ export function createDeveloperProfilesService(
 
       const outboxMessage =
         await repository.addDeveloperProfile(developerProfile);
-      await updateMeilisearchFor(outboxMessage);
+      await syncSearchWithOutboxMessage(outboxMessage);
     },
     async addDeveloperProfileDetails(
       developerProfileDetails: developerProfileDetails,
@@ -265,7 +267,7 @@ export function createDeveloperProfilesService(
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
       const outboxMessage =
         await repository.addDeveloperProfile(developerProfile);
-      await updateMeilisearchFor(outboxMessage);
+      await syncSearchWithOutboxMessage(outboxMessage);
     },
     async getScoredAssignmentsByIdentityId(identityId: string) {
       const cohortId = await getCohortIdByIdentityId(identityId);

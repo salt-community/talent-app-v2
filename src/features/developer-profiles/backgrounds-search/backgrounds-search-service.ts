@@ -9,15 +9,15 @@ export function createBackgroundsSearchService(
       return await backgroundsSearchApi.isHealthOk();
     },
 
-    async getMeilisearchSettings() {
+    async geSearchSettings() {
       return await backgroundsSearchApi.getSettings();
     },
 
-    async updateMeilisearchSettings(settings: Settings) {
+    async updateSearchSettings(settings: Settings) {
       await backgroundsSearchApi.updateSettings(settings);
     },
 
-    async resetMeilisearchSettings() {
+    async resetSearchSettings() {
       await backgroundsSearchApi.resetSettings();
     },
 
