@@ -6,15 +6,15 @@ import {
   developerProfileLanguages,
   developerProfiles,
   developerProfileSkills,
-  meiliSearchOutbox,
+  searchOutbox,
   newDeveloperProfileEducations,
 } from "./db-schema";
 import {
   AddDeveloperProfile,
   developerProfileDetails,
+  DeveloperProfileDetailsUpdate,
   LanguageSelect,
   SkillSelect,
-  updateDeveloperProfile,
 } from "./types";
 import { Experience } from "./components/cv/cv-main-content";
 
@@ -78,22 +78,47 @@ export function createDevelopersRepository(db: Db) {
           title: developerProfiles.title,
           bio: developerProfiles.bio,
           links: developerProfiles.links,
-          status: developerProfiles.status,
           headline: developerProfiles.headline,
+          status: developerProfiles.status,
           skills: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfileSkills.name})::VARCHAR[]`.as(
+            SkillSelect[]
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
+                'id', ${developerProfileSkills.id},
+                'name', ${developerProfileSkills.name},
+                'level', ${developerProfileSkills.level}
+              )) FILTER (WHERE ${developerProfileSkills.id} IS NOT NULL), '[]'::jsonb)`.as(
             "skills",
           ),
           languages: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfileLanguages.name})::VARCHAR[]`.as(
+            LanguageSelect[]
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
+                'id', ${developerProfileLanguages.id},
+                'name', ${developerProfileLanguages.name},
+                'level', ${developerProfileLanguages.level}
+              )) FILTER (WHERE ${developerProfileLanguages.id} IS NOT NULL), '[]'::jsonb)`.as(
             "languages",
           ),
           educations: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfileEducations.name})::VARCHAR[]`.as(
+            Experience[]
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
+                'id', ${newDeveloperProfileEducations.id},
+                'organization', ${newDeveloperProfileEducations.organization},
+                'date', ${newDeveloperProfileEducations.date},
+                'role', ${newDeveloperProfileEducations.role},
+                'description', ${newDeveloperProfileEducations.description}
+              )) FILTER (WHERE ${newDeveloperProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
             "educations",
+          ),
+          jobs: sql<
+            Experience[]
+          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
+                'id', ${developerProfileJobs.id},
+                'organization', ${developerProfileJobs.organization},
+                'date', ${developerProfileJobs.date},
+                'role', ${developerProfileJobs.role},
+                'description', ${developerProfileJobs.description}
+              )) FILTER (WHERE ${developerProfileJobs.id} IS NOT NULL), '[]'::jsonb)`.as(
+            "jobs",
           ),
         })
         .from(developerProfiles)
@@ -109,11 +134,15 @@ export function createDevelopersRepository(db: Db) {
           ),
         )
         .leftJoin(
-          developerProfileEducations,
+          newDeveloperProfileEducations,
           eq(
-            developerProfileEducations.developerProfileId,
+            newDeveloperProfileEducations.developerProfileId,
             developerProfiles.id,
           ),
+        )
+        .leftJoin(
+          developerProfileJobs,
+          eq(developerProfileJobs.developerProfileId, developerProfiles.id),
         )
         .groupBy(developerProfiles.id);
     },
@@ -178,6 +207,7 @@ export function createDevelopersRepository(db: Db) {
           bio: developerProfiles.bio,
           links: developerProfiles.links,
           headline: developerProfiles.headline,
+          status: developerProfiles.status,
           skills: sql<
             SkillSelect[]
           >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
@@ -257,7 +287,7 @@ export function createDevelopersRepository(db: Db) {
       return await db.select().from(developerProfileEducations);
     },
     async getAllOutboxMessage() {
-      return await db.select().from(meiliSearchOutbox);
+      return await db.select().from(searchOutbox);
     },
     async existsBySlug(slug: string) {
       const [developerProfile] = await db
@@ -276,7 +306,7 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(developerProfiles.id, id));
     },
     async removeOutboxMessage(id: number) {
-      await db.delete(meiliSearchOutbox).where(eq(meiliSearchOutbox.id, id));
+      await db.delete(searchOutbox).where(eq(searchOutbox.id, id));
     },
     async addDeveloperProfileDetails(
       developerProfileDetails: developerProfileDetails,
@@ -303,104 +333,119 @@ export function createDevelopersRepository(db: Db) {
       });
     },
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
-      await db
-        .insert(developerProfiles)
-        .values({
-          id: developerProfile.id,
-          identityId: developerProfile.identityId,
-          name: developerProfile.name,
-          slug: developerProfile.slug,
-          email: developerProfile.email,
-          status: developerProfile.status || "",
-          avatarUrl: developerProfile.avatarUrl || "",
-          title: developerProfile.title || "",
-          bio: developerProfile.bio || "",
-          links: developerProfile.links || [],
-          headline: developerProfile.headline || "",
-        })
-        .onConflictDoUpdate({
-          target: developerProfiles.id,
-          set: {
-            identityId: developerProfile.identityId,
-            name: developerProfile.name,
-            slug: developerProfile.slug,
-            email: developerProfile.email,
-            status: developerProfile.status || "",
-            avatarUrl: developerProfile.avatarUrl || "",
-            title: developerProfile.title || "",
-            bio: developerProfile.bio || "",
-            links: developerProfile.links || [],
-          },
-        });
+      const outboxMessage = await db.transaction(async (tx) => {
+        const developerProfileId = (
+          await tx
+            .insert(developerProfiles)
+            .values({
+              id: developerProfile.id,
+              identityId: developerProfile.identityId,
+              name: developerProfile.name,
+              slug: developerProfile.slug,
+              email: developerProfile.email,
+              status: developerProfile.status || "",
+              avatarUrl: developerProfile.avatarUrl || "",
+              title: developerProfile.title || "",
+              bio: developerProfile.bio || "",
+              links: developerProfile.links || [],
+              headline: developerProfile.headline || "",
+            })
+            .onConflictDoUpdate({
+              target: developerProfiles.id,
+              set: {
+                identityId: developerProfile.identityId,
+                name: developerProfile.name,
+                slug: developerProfile.slug,
+                email: developerProfile.email,
+                status: developerProfile.status || "",
+                avatarUrl: developerProfile.avatarUrl || "",
+                title: developerProfile.title || "",
+                bio: developerProfile.bio || "",
+                links: developerProfile.links || [],
+                headline: developerProfile.headline || "",
+              },
+            })
+            .returning({ id: developerProfiles.id })
+        )[0].id;
+
+        return (
+          await tx
+            .insert(searchOutbox)
+            .values({
+              developerProfileId: developerProfileId,
+              operation: "upsert",
+            })
+            .returning()
+        )[0];
+      });
+      return outboxMessage;
     },
-    async updateDeveloperProfile(
-      updatedDeveloperProfile: updateDeveloperProfile,
+    async updateDeveloperProfileDetails(
+      developerProfile: DeveloperProfileDetailsUpdate,
     ) {
-      const outboxMessageId = await db.transaction(async (tx) => {
+      const outboxMessage = await db.transaction(async (tx) => {
         await tx
           .update(developerProfiles)
           .set({
             identityId:
-              updatedDeveloperProfile.identityId ||
-              developerProfiles.identityId,
-            name: updatedDeveloperProfile.name || developerProfiles.name,
-            slug: updatedDeveloperProfile.slug || developerProfiles.slug,
-            email: updatedDeveloperProfile.email || developerProfiles.email,
-            status: updatedDeveloperProfile.status || developerProfiles.status,
+              developerProfile.identityId || developerProfiles.identityId,
+            name: developerProfile.name || developerProfiles.name,
+            slug: developerProfile.slug || developerProfiles.slug,
+            email: developerProfile.email || developerProfiles.email,
+            status: developerProfile.status || developerProfiles.status,
             avatarUrl:
-              updatedDeveloperProfile.avatarUrl || developerProfiles.avatarUrl,
-            title: updatedDeveloperProfile.title || developerProfiles.title,
-            bio: updatedDeveloperProfile.bio || developerProfiles.bio,
-            links: updatedDeveloperProfile.links || developerProfiles.links,
-            headline:
-              updatedDeveloperProfile.headline || developerProfiles.headline,
+              developerProfile.avatarUrl || developerProfiles.avatarUrl,
+            title: developerProfile.title || developerProfiles.title,
+            bio: developerProfile.bio || developerProfiles.bio,
+            links: developerProfile.links || developerProfiles.links,
+            headline: developerProfile.headline || developerProfiles.headline,
           })
-          .where(eq(developerProfiles.id, updatedDeveloperProfile.id));
+          .where(eq(developerProfiles.id, developerProfile.id));
 
-        if (updatedDeveloperProfile.skills) {
+        if (developerProfile.skills) {
           await tx
             .delete(developerProfileSkills)
             .where(
               eq(
                 developerProfileSkills.developerProfileId,
-                updatedDeveloperProfile.id,
+                developerProfile.id,
               ),
             );
-          for (const skill of updatedDeveloperProfile.skills) {
+          for (const skill of developerProfile.skills) {
             await tx.insert(developerProfileSkills).values({
-              developerProfileId: updatedDeveloperProfile.id,
-              name: skill,
+              developerProfileId: developerProfile.id,
+              name: skill.name,
             });
           }
         }
-        if (updatedDeveloperProfile.languages) {
+        if (developerProfile.languages) {
           await tx
             .delete(developerProfileLanguages)
             .where(
               eq(
                 developerProfileLanguages.developerProfileId,
-                updatedDeveloperProfile.id,
+                developerProfile.id,
               ),
             );
-          for (const language of updatedDeveloperProfile.languages) {
+          for (const language of developerProfile.languages) {
             await tx.insert(developerProfileLanguages).values({
-              developerProfileId: updatedDeveloperProfile.id,
-              name: language,
+              developerProfileId: developerProfile.id,
+              name: language.name,
             });
           }
         }
-        if (updatedDeveloperProfile.educations) {
+        if (developerProfile.educations) {
           await tx
             .delete(newDeveloperProfileEducations)
             .where(
               eq(
                 newDeveloperProfileEducations.developerProfileId,
-                updatedDeveloperProfile.id,
+                developerProfile.id,
               ),
             );
-          for (const education of updatedDeveloperProfile.educations) {
+          for (const education of developerProfile.educations) {
             await tx.insert(newDeveloperProfileEducations).values({
-              developerProfileId: updatedDeveloperProfile.id,
+              developerProfileId: developerProfile.id,
               organization: education.organization,
               date: education.date,
               role: education.role,
@@ -408,18 +453,15 @@ export function createDevelopersRepository(db: Db) {
             });
           }
         }
-        if (updatedDeveloperProfile.jobs) {
+        if (developerProfile.jobs) {
           await tx
             .delete(developerProfileJobs)
             .where(
-              eq(
-                developerProfileJobs.developerProfileId,
-                updatedDeveloperProfile.id,
-              ),
+              eq(developerProfileJobs.developerProfileId, developerProfile.id),
             );
-          for (const job of updatedDeveloperProfile.jobs) {
+          for (const job of developerProfile.jobs) {
             await tx.insert(developerProfileJobs).values({
-              developerProfileId: updatedDeveloperProfile.id,
+              developerProfileId: developerProfile.id,
               organization: job.organization,
               date: job.date,
               role: job.role,
@@ -429,15 +471,15 @@ export function createDevelopersRepository(db: Db) {
         }
         return (
           await tx
-            .insert(meiliSearchOutbox)
+            .insert(searchOutbox)
             .values({
-              developerProfileId: updatedDeveloperProfile.id,
+              developerProfileId: developerProfile.id,
               operation: "upsert",
             })
-            .returning({ id: meiliSearchOutbox.id })
-        )[0].id;
+            .returning()
+        )[0];
       });
-      return { outboxMessageId };
+      return outboxMessage;
     },
     async deleteDeveloperProfile(developerProfileId: string) {
       await db

@@ -1,3 +1,3 @@
 import { developerProfilesService } from "@/features/developer-profiles";
 
-developerProfilesService.repopulateMeiliSearch();
+developerProfilesService.repopulateSearch();

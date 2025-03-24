@@ -14,21 +14,7 @@ export async function addDeveloperProfileAction(identityId: string) {
   revalidatePath("/profile");
 }
 
-export async function updateCvAction(backgrounds: CvInfo) {
-  const background = {
-    id: backgrounds.id,
-    name: backgrounds.name,
-    bio: backgrounds.bio,
-    avatarUrl: backgrounds.avatarUrl,
-    skills: backgrounds.skills.map((skill) => skill.name),
-    languages: backgrounds.languages.map((language) => language.name),
-    links: backgrounds.links,
-    jobs: backgrounds.jobs,
-    educations: backgrounds.educations,
-    title: backgrounds.title,
-    headline: backgrounds.headline,
-  };
-
+export async function updateCvAction(background: CvInfo) {
   await developerProfilesService.updateDeveloperProfile(background);
   revalidatePath("/developers");
 }

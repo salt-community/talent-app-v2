@@ -5,14 +5,14 @@ import { claim } from "./session";
 import {
   AddDeveloperProfile,
   developerProfileDetails,
+  DeveloperProfileUpdate,
   OutboxMessageSelect,
   SessionClaims,
-  updateDeveloperProfile,
 } from "./types";
 import { GetCurrentUser } from "../iam";
-import { createSearchApi } from "./backgrounds-search";
+import { createSearchApi } from "./search";
 import { TaskStatus } from "meilisearch";
-import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
+import { createSearchService } from "./search/search-service";
 import { generateSlug } from "./logic";
 import { GetCohortIdByIdentityId } from "../cohorts";
 import {
@@ -32,18 +32,23 @@ export function createDeveloperProfilesService(
   getAverageScoresByIdentityId: GetAverageScoresByIdentityId,
 ) {
   const repository = createDevelopersRepository(db);
-  const backgroundsSearchApi = createSearchApi({
+  const searchApi = createSearchApi({
     indexUid: "backgrounds",
     primaryKey: "id",
     displayedAttributes: ["id"],
+    // Meilisearch uses an ordered list to determine which attributes are searchable.
+    // The order in which attributes appear in this list also determines their impact
+    //  on relevancy, from most impactful to least.
+    // https://www.meilisearch.com/docs/learn/relevancy/displayed_searchable_attributes
     searchableAttributes: [
+      "title",
       "skills",
+      "jobs",
       "educations",
+      "bio",
+      "headline",
       "languages",
       "name",
-      "title",
-      "bio",
-      "status",
     ],
     embedders:
       process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON"
@@ -53,35 +58,37 @@ export function createDeveloperProfilesService(
               model: "text-embedding-3-large",
               apiKey: process.env.OPENAI_API_KEY,
               dimensions: 3072,
-              documentTemplate: `{{doc.title}} with skills: {{doc.skills}},
-          education: {{doc.educations}}, languages: {{doc.languages}}, bio: {{doc.bio}}`,
+              documentTemplate: `
+              {{doc.title}}, bio: {{doc.bio}} with skills: {{doc.skills}}, jobs: {{doc.jobs}},
+              education: {{doc.educations}}, who speaks languages: {{doc.languages}}`,
             },
           }
         : undefined,
     filterableAttributes: ["status"],
   });
 
-  const backgroundsSearchService =
-    createBackgroundsSearchService(backgroundsSearchApi);
+  const searchService = createSearchService(searchApi);
 
-  async function updateMeilisearchFor(outboxMessage: OutboxMessageSelect) {
+  async function syncSearchWithOutboxMessage(
+    outboxMessage: OutboxMessageSelect,
+  ) {
     let succeeded = false;
     switch (outboxMessage.operation) {
       case "upsert":
-        const developerProfile = await repository.getDeveloperProfileById(
+        const developerProfile = await repository.getDeveloperProfile(
           outboxMessage.developerProfileId,
         );
         if (!developerProfile) {
           succeeded = true;
           break;
         }
-        const upsertStatus = await backgroundsSearchApi.upsertDocuments([
+        const upsertStatus = await searchApi.upsertDocuments([
           developerProfile[0],
         ]);
         succeeded = OK_STATUSES.includes(upsertStatus);
         break;
       case "delete":
-        const deleteStatus = await backgroundsSearchApi.deleteDocument(
+        const deleteStatus = await searchApi.deleteDocument(
           outboxMessage.developerProfileId,
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
@@ -93,7 +100,7 @@ export function createDeveloperProfilesService(
   }
 
   return {
-    ...backgroundsSearchService,
+    ...searchService,
     async getAll() {
       return await repository.getAll();
     },
@@ -147,6 +154,7 @@ export function createDeveloperProfilesService(
           languages: [],
           educations: [],
           jobs: [],
+          status: "unpublished",
         } as T;
       }
       return developerProfile;
@@ -175,22 +183,15 @@ export function createDeveloperProfilesService(
     async deleteByIdentityId(identityId: string) {
       await repository.deleteDeveloperProfileByIdentityId(identityId);
     },
-    async deleteMeiliSearchDocument(developerProfileId: string) {
-      await backgroundsSearchApi.deleteDocument(developerProfileId);
-    },
-    async updateStatus(args: { id: string; status: string }) {
-      const developerProfile = {
-        id: args.id,
-        status: args.status,
-      };
-      await repository.updateDeveloperProfile(developerProfile);
+    async deleteDeveloperProfileFromSearch(developerProfileId: string) {
+      await searchApi.deleteDocument(developerProfileId);
     },
     async updateMissingSlugs() {
       const developers = await repository.getAll();
       for (const developer of developers) {
         if (!developer.slug) {
           const newSlug = generateSlug(developer.name);
-          await repository.updateDeveloperProfile({
+          await repository.updateDeveloperProfileDetails({
             id: developer.id,
             slug: newSlug,
           });
@@ -198,21 +199,12 @@ export function createDeveloperProfilesService(
       }
     },
     async updateDeveloperProfile(
-      developerProfileUpdates: updateDeveloperProfile,
+      developerProfileUpdates: DeveloperProfileUpdate,
     ) {
-      const { outboxMessageId } = await repository.updateDeveloperProfile(
+      const outboxMessage = await repository.updateDeveloperProfileDetails(
         developerProfileUpdates,
       );
-      const developerProfile = await repository.getDeveloperProfileById(
-        developerProfileUpdates.id,
-      );
-
-      const status = await backgroundsSearchApi.upsertDocuments([
-        developerProfile[0],
-      ]);
-      if (OK_STATUSES.includes(status)) {
-        await repository.removeOutboxMessage(outboxMessageId);
-      }
+      syncSearchWithOutboxMessage(outboxMessage);
     },
     async generateUniqueSlug(name: string) {
       const slug = generateSlug(name);
@@ -226,19 +218,19 @@ export function createDeveloperProfilesService(
 
       return uniqueSlug;
     },
-    async syncMeilisearch() {
+    async syncSearch() {
       const outboxMessages = await repository.getAllOutboxMessage();
       for (const outboxMessage of outboxMessages) {
-        updateMeilisearchFor(outboxMessage);
+        await syncSearchWithOutboxMessage(outboxMessage);
       }
     },
-    async repopulateMeiliSearch() {
-      await backgroundsSearchApi.deleteIndex();
-      await backgroundsSearchApi.ensureIndex();
+    async repopulateSearch() {
+      await searchApi.deleteIndex();
+      await searchApi.ensureIndex();
       const developerProfiles = await repository.getAllDeveloperProfiles();
-      await backgroundsSearchApi.upsertDocuments(developerProfiles);
+      await searchApi.upsertDocuments(developerProfiles);
     },
-    async doesMeilisearchNeedSync() {
+    async isSearchSyncRequired() {
       return (await repository.getAllOutboxMessage()).length > 0;
     },
     async createDeveloperProfile(identityId: string) {
@@ -258,7 +250,9 @@ export function createDeveloperProfilesService(
         status: "unpublished",
       };
 
-      await repository.addDeveloperProfile(developerProfile);
+      const outboxMessage =
+        await repository.addDeveloperProfile(developerProfile);
+      syncSearchWithOutboxMessage(outboxMessage);
     },
     async addDeveloperProfileDetails(
       developerProfileDetails: developerProfileDetails,
@@ -266,7 +260,9 @@ export function createDeveloperProfilesService(
       await repository.addDeveloperProfileDetails(developerProfileDetails);
     },
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
-      await repository.addDeveloperProfile(developerProfile);
+      const outboxMessage =
+        await repository.addDeveloperProfile(developerProfile);
+      syncSearchWithOutboxMessage(outboxMessage);
     },
     async getScoredAssignmentsByIdentityId(identityId: string) {
       const cohortId = await getCohortIdByIdentityId(identityId);
