@@ -36,16 +36,19 @@ export function createDeveloperProfilesService(
     indexUid: "backgrounds",
     primaryKey: "id",
     displayedAttributes: ["id"],
+    // Meilisearch uses an ordered list to determine which attributes are searchable.
+    // The order in which attributes appear in this list also determines their impact
+    //  on relevancy, from most impactful to least.
+    // https://www.meilisearch.com/docs/learn/relevancy/displayed_searchable_attributes
     searchableAttributes: [
-      "skills",
-      "educations",
-      "languages",
-      "jobs",
-      "headline",
-      "name",
       "title",
+      "skills",
+      "jobs",
+      "educations",
       "bio",
-      "status",
+      "headline",
+      "languages",
+      "name",
     ],
     embedders:
       process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON"
