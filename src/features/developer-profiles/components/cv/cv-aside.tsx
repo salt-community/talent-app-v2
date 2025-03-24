@@ -34,7 +34,7 @@ export function CvAside({
 }: Props) {
 
   return (
-    <aside className="md:col-start-1 md:col-end-2 px-4 h-full items-center bg-zinc-100 relative flex flex-col gap-6 py-6">
+    <aside className="md:col-start-1 md:col-end-2 px-4 h-full items-center bg-zinc-100 relative flex flex-col gap-6 py-2">
       <section className="h-fit bg-zin-100 relative">
         <BackgroundAvatar url={avatarUrl} size="lg" />
         {isEditable && (

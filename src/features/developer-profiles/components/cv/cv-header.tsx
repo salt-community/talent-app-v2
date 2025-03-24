@@ -11,7 +11,7 @@ type Props = {
 };
 export function CvHeader({ name, bio, isEditable, onChange }: Props) {
   return (
-    <section className="flex flex-col items-center md:items-start justify-center gap-4 px-2">
+    <section className="flex flex-col items-center md:items-start justify-center gap-1 px-2">
       <EditableField
         value={name}
         placeholder="Name"
