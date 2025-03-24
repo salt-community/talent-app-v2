@@ -10,9 +10,9 @@ import {
   SessionClaims,
 } from "./types";
 import { GetCurrentUser } from "../iam";
-import { createSearchApi } from "./backgrounds-search";
+import { createSearchApi } from "./search";
 import { TaskStatus } from "meilisearch";
-import { createBackgroundsSearchService } from "./backgrounds-search/backgrounds-search-service";
+import { createSearchService } from "./search/search-service";
 import { generateSlug } from "./logic";
 import { GetCohortIdByIdentityId } from "../cohorts";
 import {
@@ -32,7 +32,7 @@ export function createDeveloperProfilesService(
   getAverageScoresByIdentityId: GetAverageScoresByIdentityId,
 ) {
   const repository = createDevelopersRepository(db);
-  const backgroundsSearchApi = createSearchApi({
+  const searchApi = createSearchApi({
     indexUid: "backgrounds",
     primaryKey: "id",
     displayedAttributes: ["id"],
@@ -64,8 +64,7 @@ export function createDeveloperProfilesService(
     filterableAttributes: ["status"],
   });
 
-  const backgroundsSearchService =
-    createBackgroundsSearchService(backgroundsSearchApi);
+  const searchService = createSearchService(searchApi);
 
   async function syncSearchWithOutboxMessage(
     outboxMessage: OutboxMessageSelect,
@@ -80,13 +79,13 @@ export function createDeveloperProfilesService(
           succeeded = true;
           break;
         }
-        const upsertStatus = await backgroundsSearchApi.upsertDocuments([
+        const upsertStatus = await searchApi.upsertDocuments([
           developerProfile[0],
         ]);
         succeeded = OK_STATUSES.includes(upsertStatus);
         break;
       case "delete":
-        const deleteStatus = await backgroundsSearchApi.deleteDocument(
+        const deleteStatus = await searchApi.deleteDocument(
           outboxMessage.developerProfileId,
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
@@ -98,7 +97,7 @@ export function createDeveloperProfilesService(
   }
 
   return {
-    ...backgroundsSearchService,
+    ...searchService,
     async getAll() {
       return await repository.getAll();
     },
@@ -182,7 +181,7 @@ export function createDeveloperProfilesService(
       await repository.deleteDeveloperProfileByIdentityId(identityId);
     },
     async deleteDeveloperProfileFromSearch(developerProfileId: string) {
-      await backgroundsSearchApi.deleteDocument(developerProfileId);
+      await searchApi.deleteDocument(developerProfileId);
     },
     async updateStatus(args: { id: string; status: string }) {
       const developerProfile = {
@@ -230,10 +229,10 @@ export function createDeveloperProfilesService(
       }
     },
     async repopulateSearch() {
-      await backgroundsSearchApi.deleteIndex();
-      await backgroundsSearchApi.ensureIndex();
+      await searchApi.deleteIndex();
+      await searchApi.ensureIndex();
       const developerProfiles = await repository.getAllDeveloperProfiles();
-      await backgroundsSearchApi.upsertDocuments(developerProfiles);
+      await searchApi.upsertDocuments(developerProfiles);
     },
     async isSearchSyncRequired() {
       return (await repository.getAllOutboxMessage()).length > 0;
