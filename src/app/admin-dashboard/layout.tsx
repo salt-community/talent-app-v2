@@ -1,4 +1,3 @@
-"use client";
 import React, { Suspense } from "react";
 import { Database, Search, UserCog, UserRound } from "lucide-react";
 import Loading from "./loading";
