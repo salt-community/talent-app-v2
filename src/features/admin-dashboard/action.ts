@@ -7,7 +7,7 @@ import { adminService } from "./instance";
 
 export async function deleteDeveloperProfileAction(id: string) {
   await adminService.deleteDeveloperProfile(id);
-  revalidatePath("/dashboard");
+  revalidatePath("/admin-dashboard");
 }
 
 export async function updateStatusAction(id: string, status: string) {
@@ -16,17 +16,17 @@ export async function updateStatusAction(id: string, status: string) {
 
 export async function repopulateMeilisearchAction() {
   await adminService.repopulateSearch();
-  revalidatePath("/admin/meilisearch-configuration");
+  revalidatePath("/admin-dashboard/meilisearch-configuration");
 }
 
 export async function ensureSearchIndexAction() {
   await adminService.ensureSearchIndex();
-  revalidatePath("/admin/meilisearch-configuration");
+  revalidatePath("/admin-dashboard/meilisearch-configuration");
 }
 
 export async function syncMeilisearchAction() {
   await adminService.syncSearch();
-  revalidatePath("/admin/meilisearch-configuration");
+  revalidatePath("/admin-dashboard/meilisearch-configuration");
 }
 
 export async function updateMeilisearchSettingsAction(formData: FormData) {
@@ -36,16 +36,16 @@ export async function updateMeilisearchSettingsAction(formData: FormData) {
   const settings = { synonyms: synonyms };
 
   await adminService.updateSearchSettings(settings);
-  revalidatePath("/admin/meilisearch-configuration");
+  revalidatePath("/admin-dashboard/meilisearch-configuration");
 }
 
 export async function updateRoleAction(id: string, newRole: string) {
   await adminService.updateRole({ id, newRole });
-  revalidatePath("/dashboard/identities");
+  revalidatePath("/admin-dashboard/identities");
 }
 export async function deleteUserAction(id: string) {
   await adminService.deleteUser(id);
-  revalidatePath("/admin/identities");
+  revalidatePath("/admin-dashboard/identities");
 }
 
 export async function runMigration() {
