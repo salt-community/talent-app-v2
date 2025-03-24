@@ -19,10 +19,7 @@ export function createAdminService(
       await developerProfileService.delete(id);
     },
     async updateStatus(args: { id: string; status: string }) {
-      await developerProfileService.updateStatus({
-        id: args.id,
-        status: args.status,
-      });
+      await developerProfileService.updateDeveloperProfile({ ...args });
     },
     //unused right now
     // async isSearchHealthOk() {

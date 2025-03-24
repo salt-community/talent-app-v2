@@ -24,7 +24,7 @@ export type IamService = {
 
 export type DeveloperProfileService = {
   delete: DevelopersService["delete"];
-  updateStatus: DevelopersService["updateStatus"];
+  updateDeveloperProfile: DevelopersService["updateDeveloperProfile"];
   deleteDeveloperProfileByIdentityId: DevelopersService["deleteByIdentityId"];
   getDeveloperProfileIdById: DevelopersService["getAllById"];
   deleteDeveloperProfileFromSearch: DevelopersService["deleteDeveloperProfileFromSearch"];

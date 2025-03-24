@@ -6,7 +6,7 @@ import { projectsService } from "../projects";
 export const adminService = createAdminService(
   {
     delete: developerProfilesService.delete,
-    updateStatus: developerProfilesService.updateStatus,
+    updateDeveloperProfile: developerProfilesService.updateDeveloperProfile,
     deleteDeveloperProfileByIdentityId:
       developerProfilesService.deleteByIdentityId,
     getDeveloperProfileIdById: developerProfilesService.getAllById,

@@ -10,7 +10,6 @@ export const developerProfiles: PermissionsSchema<
   getAll: "developerProfiles.getAll",
   getAllById: "developerProfiles.getAllById",
   getDeveloperById: "developerProfiles.getDeveloperById",
-  updateStatus: "developerProfiles.updateStatus",
   generateUniqueSlug: "developerProfiles.generateUniqueSlug",
   deleteByIdentityId: "developerProfiles.deleteByIdentityId",
   updateMissingSlugs: "developerProfiles.updateMissingSlugs",

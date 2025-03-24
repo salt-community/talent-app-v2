@@ -183,13 +183,6 @@ export function createDeveloperProfilesService(
     async deleteDeveloperProfileFromSearch(developerProfileId: string) {
       await searchApi.deleteDocument(developerProfileId);
     },
-    async updateStatus(args: { id: string; status: string }) {
-      const developerProfile = {
-        id: args.id,
-        status: args.status,
-      };
-      await repository.updateDeveloperProfileDetails(developerProfile);
-    },
     async updateMissingSlugs() {
       const developers = await repository.getAll();
       for (const developer of developers) {
