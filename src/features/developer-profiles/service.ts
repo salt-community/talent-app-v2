@@ -204,7 +204,7 @@ export function createDeveloperProfilesService(
       const outboxMessage = await repository.updateDeveloperProfileDetails(
         developerProfileUpdates,
       );
-      await syncSearchWithOutboxMessage(outboxMessage);
+      syncSearchWithOutboxMessage(outboxMessage);
     },
     async generateUniqueSlug(name: string) {
       const slug = generateSlug(name);
@@ -252,7 +252,7 @@ export function createDeveloperProfilesService(
 
       const outboxMessage =
         await repository.addDeveloperProfile(developerProfile);
-      await syncSearchWithOutboxMessage(outboxMessage);
+      syncSearchWithOutboxMessage(outboxMessage);
     },
     async addDeveloperProfileDetails(
       developerProfileDetails: developerProfileDetails,
@@ -262,7 +262,7 @@ export function createDeveloperProfilesService(
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
       const outboxMessage =
         await repository.addDeveloperProfile(developerProfile);
-      await syncSearchWithOutboxMessage(outboxMessage);
+      syncSearchWithOutboxMessage(outboxMessage);
     },
     async getScoredAssignmentsByIdentityId(identityId: string) {
       const cohortId = await getCohortIdByIdentityId(identityId);
