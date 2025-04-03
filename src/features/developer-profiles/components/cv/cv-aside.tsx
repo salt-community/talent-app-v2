@@ -22,6 +22,7 @@ type Props = {
     links: SocialLinkType[];
   }) => void;
   isEditable: boolean;
+  isEnglish: boolean;
 };
 
 export function CvAside({
@@ -31,8 +32,8 @@ export function CvAside({
   avatarUrl,
   isEditable,
   onChange,
+  isEnglish,
 }: Props) {
-
   return (
     <aside className="md:col-start-1 md:col-end-2 px-4 h-full items-center bg-zinc-100 relative flex flex-col gap-6 py-2">
       <section className="h-fit bg-zin-100 relative">
@@ -52,7 +53,9 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold">Technical Skills</h2>
+        <h2 className="text-xl font-bold">
+          {isEnglish ? "Technical Skills" : "Tekniska färdigheter"}
+        </h2>
         <SkillsBadges
           variant="secondary"
           skills={skills}
@@ -86,7 +89,7 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold pb-1">Languages</h2>
+        <h2 className="text-xl font-bold pb-1">{isEnglish ? "Languages" : "Språk"}</h2>
         <ul className="w-full">
           {languages.map((language) => (
             <li
@@ -136,7 +139,7 @@ export function CvAside({
         </ul>
       </section>
       <section className="w-full">
-        <h2 className="text-xl font-bold">Social</h2>
+        <h2 className="text-xl font-bold">{isEnglish ? "Social" : "Social"}</h2>
         <ul className="w-full">
           {links.map((link) => (
             <li key={link.name} className="h-full flex justify-start">
