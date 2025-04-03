@@ -23,8 +23,12 @@ export function EditableField({
     fontSize === "sm"
       ? "text-base text-paragraph-light"
       : fontSize === "md"
-        ? "text-xl font-bold text-paragraph-light w-7/10"
-        : "text-4xl font-extrabold w-full";
+        ? "text-xl font-bold text-paragraph-light"
+        : "text-4xl font-extrabold";
+  const width =
+    placeholder === "Role" || placeholder === "Organization"
+      ? "w-8/10"
+      : "w-full";
 
   return (
     <>
@@ -54,7 +58,8 @@ export function EditableField({
             style={{ minHeight: textSize + 10 }}
             className={cn(
               "flex outline-none text-sm border border-transparent p-0 resize-none leading-none",
-              textClass
+              textClass,
+              width
             )}
           >
             {value}
