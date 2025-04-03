@@ -100,6 +100,10 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
             </Button>
           )
         )}
+        <Button onClick={() => setIsEditable(true)}
+                variant="ghost"
+                size="sm"
+                className="flex">Print</Button>
       </div>
 
       <article className="md:grid md:grid-cols-[15rem_2fr]">
