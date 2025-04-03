@@ -74,7 +74,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
             }}
           >
             <option value="eng">English</option>
-            <option value="swe">Swedish</option>
+            <option value="sve">Svenska</option>
           </select>
         </div>
         {isEditable ? (
