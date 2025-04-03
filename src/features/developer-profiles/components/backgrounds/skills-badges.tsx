@@ -21,7 +21,10 @@ export function SkillsBadges({
     <article className="flex flex-wrap gap-1 mt-3">
       {skills.map((skill, index) => (
         <Badge
-          className={cn("cursor-default", variant === "secondary" && "text-sm")}
+          className={cn(
+            "cursor-default",
+            variant === "secondary" && "text-sm truncate"
+          )}
           variant={"secondary"}
           key={index}
         >
