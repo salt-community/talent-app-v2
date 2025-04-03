@@ -32,7 +32,6 @@ export function CvAside({
   isEditable,
   onChange,
 }: Props) {
-
   return (
     <aside className="md:col-start-1 md:col-end-2 px-4 h-full items-center bg-zinc-100 relative flex flex-col gap-6 py-2">
       <section className="h-fit bg-zin-100 relative">
@@ -52,7 +51,7 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold">Technical Skills</h2>
+        <h2 className="text-xl font-bold w-full">Technical Skills</h2>
         <SkillsBadges
           variant="secondary"
           skills={skills}
