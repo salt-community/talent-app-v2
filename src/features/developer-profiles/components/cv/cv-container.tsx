@@ -124,7 +124,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           )
         )}
         <Button
-          onClick={() => handlePrint(cvInfo.name, printRef)}
+          onClick={() => handlePrint(cvInfo.name + " CV", printRef)}
           variant="ghost"
           size="sm"
           className="flex"
