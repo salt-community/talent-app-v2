@@ -14,6 +14,15 @@ export async function addDeveloperProfileAction(identityId: string) {
   revalidatePath("/profile");
 }
 
+export async function copyDeveloperProfileAction(developerProfileId: string) {
+  try {
+    await developerProfilesService.copyDeveloperProfile(developerProfileId);
+  } catch (error) {
+    errorHandler(error);
+  }
+  revalidatePath("/developer-dashboard/profiles");
+}
+
 export async function updateCvAction(background: CvInfo) {
   await developerProfilesService.updateDeveloperProfile(background);
   revalidatePath("/developers");
