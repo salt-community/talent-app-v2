@@ -6,6 +6,7 @@ import { useState } from "react";
 import { CardEditableField } from "./card-editable-field";
 import { Check, Pen } from "lucide-react";
 import { updateProfileCard } from "../../actions";
+import DeveloperProfileCardDropdown from "../developer-profile-card-dropdown";
 
 type Props = { developerProfile: DeveloperProfile };
 
@@ -89,18 +90,23 @@ export function InlineEditableCard({ developerProfile }: Props) {
           <Check strokeWidth={3} />
         </Button>
       ) : (
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-9 rounded-full"
-          title="Edit"
-          onClick={(event) => {
-            event.preventDefault();
-            setIsEditable(true);
-          }}
-        >
-          <Pen />
-        </Button>
+        <>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-9 rounded-full"
+            title="Edit"
+            onClick={(event) => {
+              event.preventDefault();
+              setIsEditable(true);
+            }}
+          >
+            <Pen />
+          </Button>
+          <DeveloperProfileCardDropdown
+            developerProfileId={developerProfile.id}
+          />
+        </>
       )}
     </section>
   );

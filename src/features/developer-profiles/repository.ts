@@ -11,12 +11,14 @@ import {
 } from "./db-schema";
 import {
   AddDeveloperProfile,
+  CopyDeveloperProfile,
   developerProfileDetails,
   DeveloperProfileDetailsUpdate,
   LanguageSelect,
   SkillSelect,
 } from "./types";
 import { Experience } from "./components/cv/cv-main-content";
+import { v4 as uuidv4 } from "uuid";
 
 export function createDevelopersRepository(db: Db) {
   return {
@@ -87,7 +89,7 @@ export function createDevelopersRepository(db: Db) {
                 'name', ${developerProfileSkills.name},
                 'level', ${developerProfileSkills.level}
               )) FILTER (WHERE ${developerProfileSkills.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "skills",
+            "skills"
           ),
           languages: sql<
             LanguageSelect[]
@@ -96,7 +98,7 @@ export function createDevelopersRepository(db: Db) {
                 'name', ${developerProfileLanguages.name},
                 'level', ${developerProfileLanguages.level}
               )) FILTER (WHERE ${developerProfileLanguages.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "languages",
+            "languages"
           ),
           educations: sql<
             Experience[]
@@ -107,7 +109,7 @@ export function createDevelopersRepository(db: Db) {
                 'role', ${newDeveloperProfileEducations.role},
                 'description', ${newDeveloperProfileEducations.description}
               )) FILTER (WHERE ${newDeveloperProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "educations",
+            "educations"
           ),
           jobs: sql<
             Experience[]
@@ -118,31 +120,28 @@ export function createDevelopersRepository(db: Db) {
                 'role', ${developerProfileJobs.role},
                 'description', ${developerProfileJobs.description}
               )) FILTER (WHERE ${developerProfileJobs.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "jobs",
+            "jobs"
           ),
         })
         .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id),
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(
-            developerProfileLanguages.developerProfileId,
-            developerProfiles.id,
-          ),
+          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           newDeveloperProfileEducations,
           eq(
             newDeveloperProfileEducations.developerProfileId,
-            developerProfiles.id,
-          ),
+            developerProfiles.id
+          )
         )
         .leftJoin(
           developerProfileJobs,
-          eq(developerProfileJobs.developerProfileId, developerProfiles.id),
+          eq(developerProfileJobs.developerProfileId, developerProfiles.id)
         )
         .groupBy(developerProfiles.id);
     },
@@ -152,6 +151,8 @@ export function createDevelopersRepository(db: Db) {
           id: developerProfiles.id,
           identityId: developerProfiles.identityId,
           name: developerProfiles.name,
+          email: developerProfiles.email,
+          slug: developerProfiles.slug,
           avatarUrl: developerProfiles.avatarUrl,
           title: developerProfiles.title,
           bio: developerProfiles.bio,
@@ -161,37 +162,34 @@ export function createDevelopersRepository(db: Db) {
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "skills",
+            "skills"
           ),
           languages: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "languages",
+            "languages"
           ),
           educations: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "educations",
+            "educations"
           ),
         })
         .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id),
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(
-            developerProfileLanguages.developerProfileId,
-            developerProfiles.id,
-          ),
+          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           developerProfileEducations,
           eq(
             developerProfileEducations.developerProfileId,
-            developerProfiles.id,
-          ),
+            developerProfiles.id
+          )
         )
         .where(eq(developerProfiles.id, developerProfileId))
         .groupBy(developerProfiles.id);
@@ -201,6 +199,8 @@ export function createDevelopersRepository(db: Db) {
         .select({
           id: developerProfiles.id,
           identityId: developerProfiles.identityId,
+          email: developerProfiles.email,
+          slug: developerProfiles.slug,
           name: developerProfiles.name,
           avatarUrl: developerProfiles.avatarUrl,
           title: developerProfiles.title,
@@ -215,7 +215,7 @@ export function createDevelopersRepository(db: Db) {
                 'name', ${developerProfileSkills.name},
                 'level', ${developerProfileSkills.level}
               )) FILTER (WHERE ${developerProfileSkills.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "skills",
+            "skills"
           ),
           languages: sql<
             LanguageSelect[]
@@ -224,7 +224,7 @@ export function createDevelopersRepository(db: Db) {
                 'name', ${developerProfileLanguages.name},
                 'level', ${developerProfileLanguages.level}
               )) FILTER (WHERE ${developerProfileLanguages.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "languages",
+            "languages"
           ),
           educations: sql<
             Experience[]
@@ -235,7 +235,7 @@ export function createDevelopersRepository(db: Db) {
                 'role', ${newDeveloperProfileEducations.role},
                 'description', ${newDeveloperProfileEducations.description}
               )) FILTER (WHERE ${newDeveloperProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "educations",
+            "educations"
           ),
           jobs: sql<
             Experience[]
@@ -246,31 +246,28 @@ export function createDevelopersRepository(db: Db) {
                 'role', ${developerProfileJobs.role},
                 'description', ${developerProfileJobs.description}
               )) FILTER (WHERE ${developerProfileJobs.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "jobs",
+            "jobs"
           ),
         })
         .from(developerProfiles)
         .leftJoin(
           developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id),
+          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           developerProfileLanguages,
-          eq(
-            developerProfileLanguages.developerProfileId,
-            developerProfiles.id,
-          ),
+          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
           newDeveloperProfileEducations,
           eq(
             newDeveloperProfileEducations.developerProfileId,
-            developerProfiles.id,
-          ),
+            developerProfiles.id
+          )
         )
         .leftJoin(
           developerProfileJobs,
-          eq(developerProfileJobs.developerProfileId, developerProfiles.id),
+          eq(developerProfileJobs.developerProfileId, developerProfiles.id)
         )
         .where(eq(developerProfiles.id, developerProfileId))
         .groupBy(developerProfiles.id);
@@ -309,7 +306,7 @@ export function createDevelopersRepository(db: Db) {
       await db.delete(searchOutbox).where(eq(searchOutbox.id, id));
     },
     async addDeveloperProfileDetails(
-      developerProfileDetails: developerProfileDetails,
+      developerProfileDetails: developerProfileDetails
     ) {
       await db.transaction(async (tx) => {
         for (const skill of developerProfileDetails.skills) {
@@ -381,7 +378,7 @@ export function createDevelopersRepository(db: Db) {
       return outboxMessage;
     },
     async updateDeveloperProfileDetails(
-      developerProfile: DeveloperProfileDetailsUpdate,
+      developerProfile: DeveloperProfileDetailsUpdate
     ) {
       const outboxMessage = await db.transaction(async (tx) => {
         await tx
@@ -406,10 +403,7 @@ export function createDevelopersRepository(db: Db) {
           await tx
             .delete(developerProfileSkills)
             .where(
-              eq(
-                developerProfileSkills.developerProfileId,
-                developerProfile.id,
-              ),
+              eq(developerProfileSkills.developerProfileId, developerProfile.id)
             );
           for (const skill of developerProfile.skills) {
             await tx.insert(developerProfileSkills).values({
@@ -424,8 +418,8 @@ export function createDevelopersRepository(db: Db) {
             .where(
               eq(
                 developerProfileLanguages.developerProfileId,
-                developerProfile.id,
-              ),
+                developerProfile.id
+              )
             );
           for (const language of developerProfile.languages) {
             await tx.insert(developerProfileLanguages).values({
@@ -440,8 +434,8 @@ export function createDevelopersRepository(db: Db) {
             .where(
               eq(
                 newDeveloperProfileEducations.developerProfileId,
-                developerProfile.id,
-              ),
+                developerProfile.id
+              )
             );
           for (const education of developerProfile.educations) {
             await tx.insert(newDeveloperProfileEducations).values({
@@ -457,7 +451,7 @@ export function createDevelopersRepository(db: Db) {
           await tx
             .delete(developerProfileJobs)
             .where(
-              eq(developerProfileJobs.developerProfileId, developerProfile.id),
+              eq(developerProfileJobs.developerProfileId, developerProfile.id)
             );
           for (const job of developerProfile.jobs) {
             await tx.insert(developerProfileJobs).values({
@@ -474,6 +468,72 @@ export function createDevelopersRepository(db: Db) {
             .insert(searchOutbox)
             .values({
               developerProfileId: developerProfile.id,
+              operation: "upsert",
+            })
+            .returning()
+        )[0];
+      });
+      return outboxMessage;
+    },
+    async copyDeveloperProfile(developerProfile: CopyDeveloperProfile) {
+      const newDeveloperProfileId = uuidv4();
+      const outboxMessage = await db.transaction(async (tx) => {
+        await tx.insert(developerProfiles).values({
+          id: newDeveloperProfileId,
+          identityId: developerProfile.identityId,
+          name: developerProfile.name,
+          slug: developerProfile.slug || "",
+          email: developerProfile.email || "",
+          status: developerProfile.status || "",
+          avatarUrl: developerProfile.avatarUrl || "",
+          title: developerProfile.title || "",
+          bio: developerProfile.bio || "",
+          links: developerProfile.links || [],
+          headline: developerProfile.headline || "",
+        });
+        if (developerProfile.skills) {
+          for (const skill of developerProfile.skills) {
+            await tx.insert(developerProfileSkills).values({
+              developerProfileId: newDeveloperProfileId,
+              name: skill.name,
+            });
+          }
+        }
+        if (developerProfile.languages) {
+          for (const language of developerProfile.languages) {
+            await tx.insert(developerProfileLanguages).values({
+              developerProfileId: newDeveloperProfileId,
+              name: language.name,
+            });
+          }
+        }
+        if (developerProfile.educations) {
+          for (const education of developerProfile.educations) {
+            await tx.insert(newDeveloperProfileEducations).values({
+              developerProfileId: newDeveloperProfileId,
+              organization: education.organization,
+              date: education.date,
+              role: education.role,
+              description: education.description,
+            });
+          }
+        }
+        if (developerProfile.jobs) {
+          for (const job of developerProfile.jobs) {
+            await tx.insert(developerProfileJobs).values({
+              developerProfileId: newDeveloperProfileId,
+              organization: job.organization,
+              date: job.date,
+              role: job.role,
+              description: job.description,
+            });
+          }
+        }
+        return (
+          await tx
+            .insert(searchOutbox)
+            .values({
+              developerProfileId: newDeveloperProfileId,
               operation: "upsert",
             })
             .returning()
