@@ -1,4 +1,6 @@
 import { EditableField } from "./editable-field";
+import { H2 } from "@/components";
+
 
 type Props = {
   name: string;
@@ -12,15 +14,9 @@ type Props = {
 export function CvHeader({ name, bio, isEditable, onChange }: Props) {
   return (
     <section className="flex flex-col items-center md:items-start justify-center gap-1 px-2">
-      <EditableField
-        value={name}
-        placeholder="Name"
-        isEditable={isEditable}
-        fontSize="lg"
-        onChange={(name) => {
-          onChange({ name, bio });
-        }}
-      />
+      <H2 textColor="flex outline-none border border-transparent p-0 resize-none w-full text-4xl font-extrabold">
+        {name}
+      </H2>
       <EditableField
         value={bio!}
         placeholder="Bio"
