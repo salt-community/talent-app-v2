@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import {useRef, useState} from "react";
 import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
 import { CvInfo } from "../../types";
@@ -59,6 +59,8 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     setIsEditable(false);
   };
 
+  const printRef = useRef<HTMLDivElement>(null);
+
   return (
     <section className="py-6 my-4 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md">
       <div className="flex items-center justify-end py-2 px-2 bg-100 bg-zinc-100 min-h-14">
@@ -106,7 +108,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
                 className="flex">Print</Button>
       </div>
 
-      <article className="md:grid md:grid-cols-[15rem_2fr]">
+      <article ref={printRef} className="md:grid md:grid-cols-[15rem_2fr]">
         <CvAside
           skills={cvInfo.skills}
           languages={cvInfo.languages}
