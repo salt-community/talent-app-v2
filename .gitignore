@@ -44,3 +44,5 @@ next-env.d.ts
 
 # Ignore logs folder
 /src/logs/*.txt
+
+.idea

@@ -51,7 +51,7 @@ export function CvAside({
           </CvPopover>
         )}
       </section>
-      <section className="flex flex-col">
+      <section className="flex flex-col items-start w-full">
         <h2 className="text-xl font-bold">Technical Skills</h2>
         <SkillsBadges
           variant="secondary"
