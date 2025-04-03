@@ -9,7 +9,7 @@ import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
 import { useToast } from "@/hooks/use-toast";
-import * as domtoimage from "dom-to-image";
+import DomToImage from "dom-to-image";
 
 type Props = {
   defaultCvInfo: CvInfo;
@@ -154,7 +154,7 @@ const handlePrint = async (
   const element = printRef.current;
   if (element) {
     try {
-      const dataUrl = await domtoimage.toPng(element);
+      const dataUrl = await DomToImage.toPng(element);
 
       const link = document.createElement("a");
       link.href = dataUrl;
