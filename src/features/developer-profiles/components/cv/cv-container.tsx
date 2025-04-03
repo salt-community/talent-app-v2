@@ -1,29 +1,30 @@
 "use client";
 
 import {useRef, useState} from "react";
-import { CvAside } from "./cv-aside";
-import { CvHeader } from "./cv-header";
-import { CvInfo } from "../../types";
-import { CheckCircle, Pencil } from "lucide-react";
-import { updateCvAction } from "../../actions";
-import { CvMainContent } from "./cv-main-content";
-import { Button } from "@/components";
-import { useToast } from "@/hooks/use-toast";
+import {CvAside} from "./cv-aside";
+import {CvHeader} from "./cv-header";
+import {CvInfo} from "../../types";
+import {CheckCircle, Pencil} from "lucide-react";
+import {updateCvAction} from "../../actions";
+import {CvMainContent} from "./cv-main-content";
+import {Button} from "@/components";
+import {useToast} from "@/hooks/use-toast";
+import html2canvas from 'html2canvas-pro';
 
 type Props = {
   defaultCvInfo: CvInfo;
   hasProfileAccess: boolean;
 };
 
-export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
-  const { toast } = useToast();
+export function CvContainer({defaultCvInfo, hasProfileAccess}: Props) {
+  const {toast} = useToast();
 
   const [isEditable, setIsEditable] = useState(false);
   const [cvInfo, setCvInfo] = useState(defaultCvInfo);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleOnChange = (data: Partial<CvInfo>) => {
-    setCvInfo((prev) => ({ ...prev, ...data }));
+    setCvInfo((prev) => ({...prev, ...data}));
   };
 
   const handleOnSave = async (cvInfo: CvInfo) => {
@@ -67,7 +68,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
         {isEditable ? (
           <div className="flex gap-1 items-center ">
             {isLoading && (
-              <div className="animate-spin h-5 w-5 border-2 border-t-transparent rounded-full border-blue-500" />
+              <div className="animate-spin h-5 w-5 border-2 border-t-transparent rounded-full border-blue-500"/>
             )}
             <Button
               onClick={handleOnDiscard}
@@ -85,7 +86,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
               size="sm"
               className="flex"
             >
-              <CheckCircle size={20} />
+              <CheckCircle size={20}/>
               Save
             </Button>
           </div>
@@ -97,18 +98,24 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
               size="sm"
               className="flex"
             >
-              <Pencil size={20} />
+              <Pencil size={20}/>
               Edit
             </Button>
           )
         )}
-        <Button onClick={() => setIsEditable(true)}
+        <Button onClick={() => handlePrint("true", printRef)}
                 variant="ghost"
                 size="sm"
                 className="flex">Print</Button>
       </div>
 
-      <article ref={printRef} className="md:grid md:grid-cols-[15rem_2fr]">
+      <article
+        ref={printRef}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '15rem 2fr',
+        }}
+      >
         <CvAside
           skills={cvInfo.skills}
           languages={cvInfo.languages}
@@ -117,7 +124,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           onChange={handleOnChange}
           isEditable={isEditable && !isLoading}
         />
-        <section className="py-2 flex flex-col gap-2">
+        <section style={{padding: '0.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
           <CvHeader
             name={cvInfo.name}
             bio={cvInfo.bio}
@@ -138,3 +145,26 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     </section>
   );
 }
+
+const handlePrint = async (userName: string, printRef: React.RefObject<HTMLDivElement>) => {
+  const element = printRef!.current;
+  const canvas = await html2canvas(element!, {
+    useCORS: true,
+    scale: 4,
+    backgroundColor: "white"
+  });
+
+  const data = canvas.toDataURL("image/png");
+  const link = document.createElement("a");
+
+  link.href = data;
+  link.download = `${userName}.png`;
+
+  document.body.appendChild(link);
+  const style = document.createElement("style");
+  style.sheet?.insertRule(
+    "body > div:last-child img { display: inline-block; }"
+  );
+  link.click();
+  document.body.removeChild(link);
+};

@@ -44,6 +44,7 @@
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.40.0",
     "emblor": "^1.4.7",
+    "html2canvas-pro": "^1.5.8",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.479.0",
     "meilisearch": "^0.49.0",
