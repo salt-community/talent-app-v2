@@ -66,30 +66,38 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     <section className="py-6 my-4 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md">
       <div className="flex items-center justify-end py-2 px-2 bg-100 bg-zinc-100 min-h-14">
         {isEditable ? (
-          <div className="flex gap-1 items-center ">
-            {isLoading && (
-              <div className="animate-spin h-5 w-5 border-2 border-t-transparent rounded-full border-blue-500" />
-            )}
-            <Button
-              onClick={handleOnDiscard}
-              disabled={isLoading}
-              variant="ghost"
-              size="sm"
-              className="flex hover:bg-destructive/30 "
-            >
-              Discard changes
-            </Button>
-            <Button
-              onClick={() => handleOnSave(cvInfo)}
-              disabled={isLoading}
-              variant="default"
-              size="sm"
-              className="flex"
-            >
-              <CheckCircle size={20} />
-              Save
-            </Button>
-          </div>
+          <>
+            <div className="flex-grow">
+              <select id="language-select" className="w-fit">
+                <option value="eng">English</option>
+                <option value="swe">Swedish</option>
+              </select>
+            </div>
+            <div className="flex gap-1 items-center ">
+              {isLoading && (
+                <div className="animate-spin h-5 w-5 border-2 border-t-transparent rounded-full border-blue-500" />
+              )}
+              <Button
+                onClick={handleOnDiscard}
+                disabled={isLoading}
+                variant="ghost"
+                size="sm"
+                className="flex hover:bg-destructive/30 "
+              >
+                Discard changes
+              </Button>
+              <Button
+                onClick={() => handleOnSave(cvInfo)}
+                disabled={isLoading}
+                variant="default"
+                size="sm"
+                className="flex"
+              >
+                <CheckCircle size={20} />
+                Save
+              </Button>
+            </div>
+          </>
         ) : (
           hasProfileAccess && (
             <Button
