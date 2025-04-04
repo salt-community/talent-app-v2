@@ -14,7 +14,6 @@ export function InlineEditableCard({ developerProfile }: Props) {
   const [isEditable, setIsEditable] = useState(false);
   const [draftDeveloperProfile, setDraftDeveloperProfile] = useState({
     ...developerProfile,
-    headline: developerProfile.headline || "",
     title: developerProfile.title || "",
   });
 
