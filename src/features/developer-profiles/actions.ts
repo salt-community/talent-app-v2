@@ -39,18 +39,15 @@ export async function updateCvAction(background: CvInfo) {
 export async function updateProfileCard({
   id,
   title,
-  headline,
   name,
 }: {
   id: string;
   title: string;
-  headline: string;
   name: string;
 }) {
   const developerProfileData = {
     id,
     title,
-    headline,
     name,
   };
 

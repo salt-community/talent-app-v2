@@ -4,7 +4,7 @@ import { BackgroundAvatar } from "./avatar";
 import { DeveloperProfile } from "../../types";
 import { useState } from "react";
 import { CardEditableField } from "./card-editable-field";
-import { Check, Pen } from "lucide-react";
+import { Check } from "lucide-react";
 import { updateProfileCard } from "../../actions";
 import DeveloperProfileCardDropdown from "../developer-profile-card-dropdown";
 
@@ -14,7 +14,6 @@ export function InlineEditableCard({ developerProfile }: Props) {
   const [isEditable, setIsEditable] = useState(false);
   const [draftDeveloperProfile, setDraftDeveloperProfile] = useState({
     ...developerProfile,
-    headline: developerProfile.headline || "",
     title: developerProfile.title || "",
   });
 
@@ -22,7 +21,6 @@ export function InlineEditableCard({ developerProfile }: Props) {
     await updateProfileCard({
       id: draftDeveloperProfile.id,
       title: draftDeveloperProfile.title,
-      headline: draftDeveloperProfile.headline,
       name: draftDeveloperProfile.name,
     });
     setDraftDeveloperProfile(draftDeveloperProfile);
@@ -55,25 +53,6 @@ export function InlineEditableCard({ developerProfile }: Props) {
           <div className="px-1">
             <H2>{developerProfile.name}</H2>
           </div>
-
-          <CardEditableField
-            value={draftDeveloperProfile.headline}
-            placeholder="Headline"
-            isEditable={isEditable}
-            textStyle="text-md font-light text-slate-600"
-            onChange={(value) => {
-              setDraftDeveloperProfile({
-                ...draftDeveloperProfile,
-                headline: value,
-              });
-            }}
-            onKeyDown={(event) => {
-              if (isEditable && event.key === "Enter") {
-                event.preventDefault();
-                setIsEditable(false);
-              }
-            }}
-          />
         </div>
       </div>
       {isEditable ? (
@@ -91,20 +70,9 @@ export function InlineEditableCard({ developerProfile }: Props) {
         </Button>
       ) : (
         <>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-9 rounded-full"
-            title="Edit"
-            onClick={(event) => {
-              event.preventDefault();
-              setIsEditable(true);
-            }}
-          >
-            <Pen />
-          </Button>
           <DeveloperProfileCardDropdown
             developerProfileId={developerProfile.id}
+            setIsTitleEditable={setIsEditable}
           />
         </>
       )}

@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
 import { CvInfo } from "../../types";
-import { CheckCircle, Pencil } from "lucide-react";
+import { CheckCircle, Pencil, Printer } from "lucide-react";
 import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
@@ -161,14 +161,14 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           size="sm"
           className="flex"
         >
+          <Printer />
           Print
         </Button>
       </div>
 
       <article
-        id="cv-article"
-        className="md:grid md:grid-cols-[15rem_2fr] bg-white"
         ref={printRef}
+        className="md:grid md:grid-cols-[15rem_2fr] bg-white"
       >
         <CvAside
           skills={cvInfo.skills}

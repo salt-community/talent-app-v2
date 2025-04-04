@@ -34,7 +34,6 @@ export type updateDeveloperProfile = {
   educations?: Experience[];
   jobs?: Experience[];
   languages?: string[];
-  headline?: string | null;
 };
 
 export type AddDeveloperProfile = {
@@ -51,7 +50,6 @@ export type AddDeveloperProfile = {
   skills?: string[];
   educations?: string[];
   languages?: string[];
-  headline?: string | null;
 };
 
 export type CvInfo = {
@@ -66,7 +64,6 @@ export type CvInfo = {
   languages: LanguageInsert[];
   educations: Experience[];
   jobs: Experience[];
-  headline: string | null;
   status: string;
 };
 
@@ -100,7 +97,6 @@ export type DeveloperProfile = {
   title: string;
   bio: string | null;
   links: SocialLink[];
-  headline: string | null;
 };
 
 export type developerProfileDetails = {

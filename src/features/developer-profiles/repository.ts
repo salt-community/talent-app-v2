@@ -35,7 +35,6 @@ export function createDevelopersRepository(db: Db) {
           title: developerProfiles.title,
           links: developerProfiles.links,
           bio: developerProfiles.bio,
-          headline: developerProfiles.headline,
         })
         .from(developerProfiles);
     },
@@ -80,7 +79,6 @@ export function createDevelopersRepository(db: Db) {
           title: developerProfiles.title,
           bio: developerProfiles.bio,
           links: developerProfiles.links,
-          headline: developerProfiles.headline,
           status: developerProfiles.status,
           skills: sql<
             SkillSelect[]
@@ -158,7 +156,6 @@ export function createDevelopersRepository(db: Db) {
           bio: developerProfiles.bio,
           links: developerProfiles.links,
           status: developerProfiles.status,
-          headline: developerProfiles.headline,
           skills: sql<
             string[]
           >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
@@ -206,7 +203,6 @@ export function createDevelopersRepository(db: Db) {
           title: developerProfiles.title,
           bio: developerProfiles.bio,
           links: developerProfiles.links,
-          headline: developerProfiles.headline,
           status: developerProfiles.status,
           skills: sql<
             SkillSelect[]
@@ -345,7 +341,6 @@ export function createDevelopersRepository(db: Db) {
               title: developerProfile.title || "",
               bio: developerProfile.bio || "",
               links: developerProfile.links || [],
-              headline: developerProfile.headline || "",
             })
             .onConflictDoUpdate({
               target: developerProfiles.id,
@@ -359,7 +354,6 @@ export function createDevelopersRepository(db: Db) {
                 title: developerProfile.title || "",
                 bio: developerProfile.bio || "",
                 links: developerProfile.links || [],
-                headline: developerProfile.headline || "",
               },
             })
             .returning({ id: developerProfiles.id })
@@ -395,7 +389,6 @@ export function createDevelopersRepository(db: Db) {
             title: developerProfile.title || developerProfiles.title,
             bio: developerProfile.bio || developerProfiles.bio,
             links: developerProfile.links || developerProfiles.links,
-            headline: developerProfile.headline || developerProfiles.headline,
           })
           .where(eq(developerProfiles.id, developerProfile.id));
 
@@ -489,7 +482,6 @@ export function createDevelopersRepository(db: Db) {
           title: developerProfile.title || "",
           bio: developerProfile.bio || "",
           links: developerProfile.links || [],
-          headline: developerProfile.headline || "",
         });
         if (developerProfile.skills) {
           for (const skill of developerProfile.skills) {
