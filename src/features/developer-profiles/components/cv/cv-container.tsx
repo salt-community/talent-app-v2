@@ -99,8 +99,8 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-end py-2 my-2 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100">
+    <div className="flex flex-col items-center">
+      <div className="flex items-center justify-end mt-4 w-full md:w-[750]">
         <div className="flex-grow">
           <select
             className="w-fit"
@@ -164,7 +164,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
       </div>
       <section
         id="cv"
-        className="bg-white py-6 my-2 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md"
+        className="bg-white shadow-md md:w-[750]"
       >
         <div className="py-2 px-2 bg-100 bg-zinc-100 min-h-14"></div>
         <article
@@ -201,6 +201,6 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           </section>
         </article>
       </section>
-    </>
+    </div>
   );
 }
