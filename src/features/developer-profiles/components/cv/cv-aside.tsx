@@ -35,7 +35,7 @@ export function CvAside({
   isEnglish,
 }: Props) {
   return (
-    <aside className="md:col-start-1 md:col-end-2 px-4 h-full items-center bg-zinc-100 relative flex flex-col gap-6 py-2">
+    <aside className="md:col-start-1 md:col-end-2 px-4 h-full items-center bg-cv-darkgray relative flex flex-col gap-6 py-2">
       <section className="h-fit bg-zin-100 relative">
         <BackgroundAvatar url={avatarUrl} size="lg" />
         {isEditable && (
@@ -53,11 +53,11 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold">
+        <h2 className="text-2xl font-bold text-brand-orange">
           {isEnglish ? "Technical Skills" : "Tekniska färdigheter"}
         </h2>
         <SkillsBadges
-          variant="secondary"
+          variant="cv"
           skills={skills}
           isEditable={isEditable}
           onDelete={(skill) => {
@@ -89,14 +89,16 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold pb-1">{isEnglish ? "Languages" : "Språk"}</h2>
+        <h2 className="text-xl font-bold pb-1 text-brand-orange">
+          {isEnglish ? "Languages" : "Språk"}
+        </h2>
         <ul className="w-full">
           {languages.map((language) => (
             <li
               key={language.name}
-              className="text-paragraph text-sm flex items-center"
+              className="text-paragraph text-sm flex items-center text-white"
             >
-              {language.name}{" "}
+              {language.name}
               {isEditable && (
                 <Button
                   variant="link"
@@ -113,7 +115,7 @@ export function CvAside({
                     })
                   }
                 >
-                  <X />
+                   <X className="text-white" />
                 </Button>
               )}
             </li>
@@ -139,11 +141,13 @@ export function CvAside({
         </ul>
       </section>
       <section className="w-full">
-        <h2 className="text-xl font-bold">{isEnglish ? "Social" : "Social"}</h2>
+        <h2 className="text-xl font-bold text-brand-orange">
+          {isEnglish ? "Social" : "Social"}
+        </h2>
         <ul className="w-full">
           {links.map((link) => (
             <li key={link.name} className="h-full flex justify-start">
-              <SocialLink name={link.name} url={link.url} />
+              <SocialLink name={link.name} url={link.url} variant="cv" />
               {isEditable && (
                 <Button
                   variant="link"
@@ -158,7 +162,7 @@ export function CvAside({
                     })
                   }
                 >
-                  <X />
+                   <X className="text-white" />
                 </Button>
               )}
             </li>

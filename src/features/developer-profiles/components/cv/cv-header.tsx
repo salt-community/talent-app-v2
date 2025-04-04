@@ -14,7 +14,7 @@ type Props = {
 export function CvHeader({ name, bio, isEditable, onChange }: Props) {
   return (
     <section className="flex flex-col items-center md:items-start justify-center gap-1 px-2">
-      <H2 textColor="flex outline-none border border-transparent p-0 resize-none w-full text-4xl font-extrabold">
+      <H2 textColor="flex outline-none border border-transparent p-0 resize-none w-full text-4xl font-extrabold text-brand-orange">
         {name}
       </H2>
       <EditableField
