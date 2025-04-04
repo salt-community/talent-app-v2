@@ -22,7 +22,6 @@ export function InlineEditableCard({ developerProfile }: Props) {
     await updateProfileCard({
       id: draftDeveloperProfile.id,
       title: draftDeveloperProfile.title,
-      headline: draftDeveloperProfile.headline,
       name: draftDeveloperProfile.name,
     });
     setDraftDeveloperProfile(draftDeveloperProfile);
@@ -55,25 +54,6 @@ export function InlineEditableCard({ developerProfile }: Props) {
           <div className="px-1">
             <H2>{developerProfile.name}</H2>
           </div>
-
-          <CardEditableField
-            value={draftDeveloperProfile.headline}
-            placeholder="Headline"
-            isEditable={isEditable}
-            textStyle="text-md font-light text-slate-600"
-            onChange={(value) => {
-              setDraftDeveloperProfile({
-                ...draftDeveloperProfile,
-                headline: value,
-              });
-            }}
-            onKeyDown={(event) => {
-              if (isEditable && event.key === "Enter") {
-                event.preventDefault();
-                setIsEditable(false);
-              }
-            }}
-          />
         </div>
       </div>
       {isEditable ? (
