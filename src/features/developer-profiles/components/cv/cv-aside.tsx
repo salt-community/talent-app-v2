@@ -53,7 +53,7 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-2xl font-bold text-white">
+        <h2 className="text-2xl font-bold text-brand-orange">
           {isEnglish ? "Technical Skills" : "Tekniska färdigheter"}
         </h2>
         <SkillsBadges
@@ -115,7 +115,7 @@ export function CvAside({
                     })
                   }
                 >
-                  <X />
+                   <X className="text-white" />
                 </Button>
               )}
             </li>
@@ -141,11 +141,13 @@ export function CvAside({
         </ul>
       </section>
       <section className="w-full">
-        <h2 className="text-xl font-bold text-brand-orange">{isEnglish ? "Social" : "Social"}</h2>
+        <h2 className="text-xl font-bold text-brand-orange">
+          {isEnglish ? "Social" : "Social"}
+        </h2>
         <ul className="w-full">
           {links.map((link) => (
             <li key={link.name} className="h-full flex justify-start">
-              <SocialLink name={link.name} url={link.url} variant="cv"/>
+              <SocialLink name={link.name} url={link.url} variant="cv" />
               {isEditable && (
                 <Button
                   variant="link"
@@ -160,7 +162,7 @@ export function CvAside({
                     })
                   }
                 >
-                  <X />
+                   <X className="text-white" />
                 </Button>
               )}
             </li>
@@ -177,7 +179,6 @@ export function CvAside({
                     links: [...links, { name: "Github", url: social }],
                     avatarUrl,
                   });
-                  
                 }}
               >
                 <Button

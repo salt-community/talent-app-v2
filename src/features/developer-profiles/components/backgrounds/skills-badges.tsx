@@ -24,7 +24,7 @@ export function SkillsBadges({
           className={cn(
             "cursor-default",
             variant === "secondary" && "text-sm truncate",
-            variant === "cv" && "text-white bg-gray-700"
+            variant === "cv" && "text-white bg-zinc-600"
           )}
           variant={"secondary"}
           key={index}
@@ -37,7 +37,7 @@ export function SkillsBadges({
               className="h-4 w-4 ml-1"
               onClick={() => onDelete(skill)}
             >
-              <X size={12} />
+              <X size={12} className={cn(variant === "cv" && "text-white")} />
             </Button>
           )}
         </Badge>
