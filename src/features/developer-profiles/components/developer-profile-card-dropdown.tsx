@@ -23,7 +23,6 @@ export default function DeveloperProfileCardDropdown({
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
-  function handleCopy() {}
   return (
     <div className="relative">
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
