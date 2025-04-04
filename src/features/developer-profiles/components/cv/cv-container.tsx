@@ -163,7 +163,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
         </Button>
       </div>
       <section id="cv" className="bg-white shadow-md md:w-[750]">
-        <div className="py-2 px-2 bg-100 bg-zinc-100 min-h-14 flex items-center justify-end">
+        <div className="py-2 px-2 bg-100 bg-cv-darkgray min-h-14 flex items-center justify-end">
         <img width="100" height="21" src="https://salt.dev/wp-content/uploads/2024/02/salt-logo-light.svg" className="attachment-large size-large wp-image-75" alt=""/>
         </div>
         <article

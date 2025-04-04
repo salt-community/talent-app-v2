@@ -1,10 +1,12 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin 'tailwindcss-animate';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  --color-cv-darkgray: oklch(0.329 0 0);
+
   --color-neutral: hsl(var(--color-neutral));
   --color-low: hsl(var(--color-low));
   --color-moderate: hsl(var(--color-moderate));
