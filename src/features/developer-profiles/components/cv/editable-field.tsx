@@ -26,9 +26,7 @@ export function EditableField({
         ? "text-xl font-bold text-paragraph-light"
         : "text-4xl font-extrabold";
   const width =
-    placeholder === "Role" || placeholder === "Organization"
-      ? "w-8/10"
-      : "w-full";
+    placeholder === "Role" || (placeholder === "Organization" && " truncate");
 
   return (
     <>
