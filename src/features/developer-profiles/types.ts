@@ -58,6 +58,7 @@ export type CvInfo = {
   name: string;
   avatarUrl: string;
   title: string;
+  slug: string | null;
   bio: string | null;
   links: SocialLink[];
   skills: SkillInsert[];
@@ -78,15 +79,15 @@ export type developerProfileUpdate = Partial<DeveloperProfileInsert> &
 
 export type PreviousState =
   | {
-      errorMessages: {
-        avatarUrlError?: string;
-        nameError?: string;
-        titleError?: string;
-      };
-      update: {
-        [k: string]: FormDataEntryValue;
-      };
-    }
+    errorMessages: {
+      avatarUrlError?: string;
+      nameError?: string;
+      titleError?: string;
+    };
+    update: {
+      [k: string]: FormDataEntryValue;
+    };
+  }
   | undefined;
 
 export type DeveloperProfile = {
