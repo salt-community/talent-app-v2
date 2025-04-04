@@ -9,7 +9,10 @@ import {
 } from "@/components/";
 import { Ellipsis } from "lucide-react";
 import { useState } from "react";
-import { copyDeveloperProfileAction } from "../actions";
+import {
+  copyDeveloperProfileAction,
+  deleteDeveloperProfileAction,
+} from "../actions";
 
 type Props = {
   developerProfileId: string;
@@ -19,6 +22,8 @@ export default function DeveloperProfileCardDropdown({
   developerProfileId,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+
+  function handleCopy() {}
   return (
     <div className="relative">
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -50,6 +55,7 @@ export default function DeveloperProfileCardDropdown({
           <DropdownMenuItem
             onClick={(event) => {
               event.preventDefault();
+              deleteDeveloperProfileAction(developerProfileId);
               setIsOpen(false);
             }}
           >
