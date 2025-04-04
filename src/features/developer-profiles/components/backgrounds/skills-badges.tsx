@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 type Props = {
   skills: SkillInsert[];
-  variant?: "default" | "secondary";
+  variant?: "default" | "secondary" | "cv";
   isEditable?: boolean;
   onDelete?: (skill: SkillInsert) => void;
 };
@@ -23,7 +23,8 @@ export function SkillsBadges({
         <Badge
           className={cn(
             "cursor-default",
-            variant === "secondary" && "text-sm truncate"
+            variant === "secondary" && "text-sm truncate",
+            variant === "cv" && "text-white bg-gray-700"
           )}
           variant={"secondary"}
           key={index}

@@ -53,11 +53,11 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold text-white">
+        <h2 className="text-2xl font-bold text-white">
           {isEnglish ? "Technical Skills" : "Tekniska färdigheter"}
         </h2>
         <SkillsBadges
-          variant="secondary"
+          variant="cv"
           skills={skills}
           isEditable={isEditable}
           onDelete={(skill) => {
@@ -96,9 +96,9 @@ export function CvAside({
           {languages.map((language) => (
             <li
               key={language.name}
-              className="text-paragraph text-sm flex items-center"
+              className="text-paragraph text-sm flex items-center text-white"
             >
-              {language.name}{" "}
+              {language.name}
               {isEditable && (
                 <Button
                   variant="link"
@@ -145,7 +145,7 @@ export function CvAside({
         <ul className="w-full">
           {links.map((link) => (
             <li key={link.name} className="h-full flex justify-start">
-              <SocialLink name={link.name} url={link.url} />
+              <SocialLink name={link.name} url={link.url} variant="cv"/>
               {isEditable && (
                 <Button
                   variant="link"
@@ -177,6 +177,7 @@ export function CvAside({
                     links: [...links, { name: "Github", url: social }],
                     avatarUrl,
                   });
+                  
                 }}
               >
                 <Button
