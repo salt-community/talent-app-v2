@@ -58,9 +58,10 @@ export function createSearchApi({
 
       const searchParams: Record<
         string,
-        boolean | { embedder: string; semanticRatio: number } | string
+        boolean | { embedder: string; semanticRatio: number } | string | number
       > = {
         filter: `status = "published" OR status="highlighted"`,
+        limit: 50,
       };
 
       if (llmIsEnabled) {
