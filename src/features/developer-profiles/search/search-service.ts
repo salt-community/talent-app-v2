@@ -21,21 +21,23 @@ export function createSearchService(searchApi: SearchApi) {
     },
 
     async searchDeveloperProfiles(search: string | undefined) {
-      return searchApi.searchDeveloperProfileIds(search);
+      return (await searchApi.searchDeveloperProfiles(search))
+        .map((doc) => doc as CvInfo);
     },
 
     async searchDeveloperProfilesWithLLM(search: string | undefined) {
-      return (await searchApi.searchDeveloperProfiles(search)).map((doc) => {
-        const rawRankingScore = doc._rankingScore as number | undefined;
-        const rankingScore =
-          rawRankingScore !== undefined
-            ? Math.round((rawRankingScore as number) * 100)
-            : undefined;
-        return {
-          ...doc,
-          ranking: rankingScore,
-        } as CvInfo & { ranking: number | undefined };
-      });
+      return (await searchApi.searchDeveloperProfiles(search, { useLLM: true }))
+        .map((doc) => {
+          const rawRankingScore = doc._rankingScore as number | undefined;
+          const rankingScore =
+            rawRankingScore !== undefined
+              ? Math.round((rawRankingScore as number) * 100)
+              : undefined;
+          return {
+            ...doc,
+            ranking: rankingScore,
+          } as CvInfo & { ranking: number | undefined };
+        });
     },
 
     async ensureSearchIndex() {

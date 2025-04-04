@@ -1,5 +1,5 @@
 import MeiliSearch, { Embedders, Index, Settings } from "meilisearch";
-import { CvInfo, DeveloperProfileDetailsUpdate } from "../types";
+import { DeveloperProfileDetailsUpdate } from "../types";
 
 type InitializeMeiliSearchIndexArgs = {
   indexUid: string;
@@ -52,22 +52,9 @@ export function createSearchApi({
       await index.waitForTask(updateSettingsTask.taskUid);
     },
 
-    async searchDeveloperProfileIds(query: string | undefined) {
+    async searchDeveloperProfiles(query: string | undefined, options: { useLLM: boolean } = { useLLM: false }) {
       const isSearchEmpty = query === undefined || !query.trim();
-
-      const searchParams = {
-        filter: `status = "published" OR status="highlighted"`,
-      };
-
-      const documents: Record<string, unknown>[] = isSearchEmpty
-        ? (await index.search("", searchParams)).hits
-        : (await index.search(query, searchParams)).hits;
-      return documents.map((doc) => doc as CvInfo);
-    },
-
-    async searchDeveloperProfiles(query: string | undefined) {
-      const isSearchEmpty = query === undefined || !query.trim();
-      const llmIsEnabled = process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON";
+      const llmIsEnabled = process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON" && options.useLLM;
 
       const searchParams: Record<
         string,
@@ -81,11 +68,8 @@ export function createSearchApi({
         searchParams.hybrid = { embedder: "openAiSearch", semanticRatio: 0.9 };
       }
 
-      if (isSearchEmpty) {
-        return (await index.search("", searchParams)).hits;
-      }
-
-      return (await index.search(query, searchParams)).hits;
+      const response = await index.search(query, searchParams);
+      return response.hits;
     },
 
     async upsertDocuments(developerProfiles: DeveloperProfileDetailsUpdate[]) {
