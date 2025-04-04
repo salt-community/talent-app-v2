@@ -61,6 +61,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     setCvInfo(defaultCvInfo);
     setIsEditable(false);
   };
+
   const handlePrint = async (
     userName: string,
     printRef: React.RefObject<HTMLDivElement>
@@ -68,7 +69,21 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     const element = printRef.current;
     if (element) {
       try {
+        const cvElement = document.getElementById("cv");
+        if (cvElement) cvElement.style.width = "750px";
+        const cvArticleElement = document.getElementById("cv-article");
+        if (cvArticleElement) {
+          cvArticleElement.style.display = "grid";
+          cvArticleElement.style.gridTemplateColumns = "15rem 2fr";
+        }
+
         const dataUrl = await DomToImage.toPng(element);
+
+        if (cvElement) cvElement.style.width = "";
+        if (cvArticleElement) {
+          cvArticleElement.style.display = "";
+          cvArticleElement.style.gridTemplateColumns = "";
+        }
 
         const link = document.createElement("a");
         link.href = dataUrl;
@@ -84,7 +99,10 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   };
 
   return (
-    <section className="py-6 my-4 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md">
+    <section
+      id="cv"
+      className="py-6 my-4 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md"
+    >
       <div className="flex items-center justify-end py-2 px-2 bg-100 bg-zinc-100 min-h-14">
         <div className="flex-grow">
           <select
@@ -148,8 +166,9 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
       </div>
 
       <article
-        ref={printRef}
+        id="cv-article"
         className="md:grid md:grid-cols-[15rem_2fr] bg-white"
+        ref={printRef}
       >
         <CvAside
           skills={cvInfo.skills}
