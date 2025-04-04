@@ -5,7 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-cv-darkgray: oklch(0.329 0 0);
+  --color-cv-darkgray: oklch(0.35 0 0);
+  --color-brand-orange: oklch(0.72 0.18 30);
 
   --color-neutral: hsl(var(--color-neutral));
   --color-low: hsl(var(--color-low));

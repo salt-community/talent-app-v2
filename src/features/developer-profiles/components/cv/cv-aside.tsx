@@ -53,7 +53,7 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold">
+        <h2 className="text-xl font-bold text-white">
           {isEnglish ? "Technical Skills" : "Tekniska färdigheter"}
         </h2>
         <SkillsBadges
@@ -89,7 +89,9 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold pb-1">{isEnglish ? "Languages" : "Språk"}</h2>
+        <h2 className="text-xl font-bold pb-1 text-brand-orange">
+          {isEnglish ? "Languages" : "Språk"}
+        </h2>
         <ul className="w-full">
           {languages.map((language) => (
             <li
@@ -139,7 +141,7 @@ export function CvAside({
         </ul>
       </section>
       <section className="w-full">
-        <h2 className="text-xl font-bold">{isEnglish ? "Social" : "Social"}</h2>
+        <h2 className="text-xl font-bold text-brand-orange">{isEnglish ? "Social" : "Social"}</h2>
         <ul className="w-full">
           {links.map((link) => (
             <li key={link.name} className="h-full flex justify-start">
