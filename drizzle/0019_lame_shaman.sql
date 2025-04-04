@@ -1,0 +1,1 @@
+ALTER TABLE "developer_profiles" DROP COLUMN "headline";
