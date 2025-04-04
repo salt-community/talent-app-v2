@@ -55,9 +55,8 @@ export function EditableField({
           <p
             style={{ minHeight: textSize + 10 }}
             className={cn(
-              "flex outline-none text-sm border border-transparent p-0 resize-none leading-none",
-              textClass,
-              width
+              "flex outline-none text-sm border border-transparent p-0 resize-none leading-none w-full",
+              textClass
             )}
           >
             {value}

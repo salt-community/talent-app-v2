@@ -22,6 +22,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   const [isEditable, setIsEditable] = useState(false);
   const [cvInfo, setCvInfo] = useState(defaultCvInfo);
   const [isLoading, setIsLoading] = useState(false);
+  const [isEnglish, setIsEnglish] = useState(true);
   const printRef = useRef<HTMLDivElement>(null);
 
   const handleOnChange = (data: Partial<CvInfo>) => {
@@ -85,31 +86,44 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   return (
     <section className="py-6 my-4 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md">
       <div className="flex items-center justify-end py-2 px-2 bg-100 bg-zinc-100 min-h-14">
+        <div className="flex-grow">
+          <select
+            className="w-fit"
+            onChange={() => {
+              setIsEnglish(() => !isEnglish);
+            }}
+          >
+            <option value="eng">English</option>
+            <option value="sve">Svenska</option>
+          </select>
+        </div>
         {isEditable ? (
-          <div className="flex gap-1 items-center ">
-            {isLoading && (
-              <div className="animate-spin h-5 w-5 border-2 border-t-transparent rounded-full border-blue-500" />
-            )}
-            <Button
-              onClick={handleOnDiscard}
-              disabled={isLoading}
-              variant="ghost"
-              size="sm"
-              className="flex hover:bg-destructive/30 "
-            >
-              Discard changes
-            </Button>
-            <Button
-              onClick={() => handleOnSave(cvInfo)}
-              disabled={isLoading}
-              variant="default"
-              size="sm"
-              className="flex"
-            >
-              <CheckCircle size={20} />
-              Save
-            </Button>
-          </div>
+          <>
+            <div className="flex gap-1 items-center ">
+              {isLoading && (
+                <div className="animate-spin h-5 w-5 border-2 border-t-transparent rounded-full border-blue-500" />
+              )}
+              <Button
+                onClick={handleOnDiscard}
+                disabled={isLoading}
+                variant="ghost"
+                size="sm"
+                className="flex hover:bg-destructive/30 "
+              >
+                Discard changes
+              </Button>
+              <Button
+                onClick={() => handleOnSave(cvInfo)}
+                disabled={isLoading}
+                variant="default"
+                size="sm"
+                className="flex"
+              >
+                <CheckCircle size={20} />
+                Save
+              </Button>
+            </div>
+          </>
         ) : (
           hasProfileAccess && (
             <Button
@@ -144,6 +158,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           avatarUrl={cvInfo.avatarUrl}
           onChange={handleOnChange}
           isEditable={isEditable && !isLoading}
+          isEnglish={isEnglish}
         />
         <section className="py-2 flex flex-col gap-2">
           <CvHeader
@@ -160,6 +175,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
             jobs={cvInfo.jobs}
             educations={cvInfo.educations}
             onChange={handleOnChange}
+            isEnglish={isEnglish}
           />
         </section>
       </article>
