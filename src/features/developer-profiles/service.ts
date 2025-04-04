@@ -155,6 +155,7 @@ export function createDeveloperProfilesService(
           educations: [],
           jobs: [],
           status: "unpublished",
+          headerLanguage: "english",
         } as T;
       }
       return developerProfile;

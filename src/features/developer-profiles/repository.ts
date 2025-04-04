@@ -204,6 +204,7 @@ export function createDevelopersRepository(db: Db) {
           bio: developerProfiles.bio,
           links: developerProfiles.links,
           status: developerProfiles.status,
+          headerLanguage: developerProfiles.headerLanguage,
           skills: sql<
             SkillSelect[]
           >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
@@ -389,6 +390,9 @@ export function createDevelopersRepository(db: Db) {
             title: developerProfile.title || developerProfiles.title,
             bio: developerProfile.bio || developerProfiles.bio,
             links: developerProfile.links || developerProfiles.links,
+            headerLanguage:
+              developerProfile.headerLanguage ||
+              developerProfiles.headerLanguage,
           })
           .where(eq(developerProfiles.id, developerProfile.id));
 
@@ -482,6 +486,7 @@ export function createDevelopersRepository(db: Db) {
           title: developerProfile.title || "",
           bio: developerProfile.bio || "",
           links: developerProfile.links || [],
+          headerLanguage: developerProfile.headerLanguage,
         });
         if (developerProfile.skills) {
           for (const skill of developerProfile.skills) {

@@ -65,6 +65,7 @@ export type CvInfo = {
   educations: Experience[];
   jobs: Experience[];
   status: string;
+  headerLanguage: string | null;
 };
 
 export type developerProfileUpdate = Partial<DeveloperProfileInsert> &

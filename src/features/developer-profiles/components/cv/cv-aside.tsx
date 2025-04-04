@@ -22,7 +22,7 @@ type Props = {
     links: SocialLinkType[];
   }) => void;
   isEditable: boolean;
-  isEnglish: boolean;
+  headerLanguage: string | null;
 };
 
 export function CvAside({
@@ -32,7 +32,7 @@ export function CvAside({
   avatarUrl,
   isEditable,
   onChange,
-  isEnglish,
+  headerLanguage,
 }: Props) {
   return (
     <aside className="md:col-start-1 md:col-end-2 px-4 h-full items-center bg-cv-darkgray relative flex flex-col gap-6 py-2">
@@ -53,8 +53,10 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-2xl font-bold text-brand-orange">
-          {isEnglish ? "Technical Skills" : "Tekniska färdigheter"}
+        <h2 className="text-xl font-bold">
+          {headerLanguage === "english"
+            ? "Technical Skills"
+            : "Tekniska färdigheter"}
         </h2>
         <SkillsBadges
           variant="cv"
@@ -89,8 +91,8 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold pb-1 text-brand-orange">
-          {isEnglish ? "Languages" : "Språk"}
+        <h2 className="text-xl font-bold pb-1">
+          {headerLanguage === "english" ? "Languages" : "Språk"}
         </h2>
         <ul className="w-full">
           {languages.map((language) => (
@@ -115,7 +117,7 @@ export function CvAside({
                     })
                   }
                 >
-                   <X className="text-white" />
+                  <X className="text-white" />
                 </Button>
               )}
             </li>
@@ -141,8 +143,8 @@ export function CvAside({
         </ul>
       </section>
       <section className="w-full">
-        <h2 className="text-xl font-bold text-brand-orange">
-          {isEnglish ? "Social" : "Social"}
+        <h2 className="text-xl font-bold">
+          {headerLanguage === "english" ? "Social" : "Social"}
         </h2>
         <ul className="w-full">
           {links.map((link) => (
@@ -162,7 +164,7 @@ export function CvAside({
                     })
                   }
                 >
-                   <X className="text-white" />
+                  <X className="text-white" />
                 </Button>
               )}
             </li>

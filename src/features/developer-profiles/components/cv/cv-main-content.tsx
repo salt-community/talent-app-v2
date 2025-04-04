@@ -8,7 +8,7 @@ type Props = {
   jobs: Experience[];
   educations: Experience[];
   onChange: (data: { jobs: Experience[]; educations: Experience[] }) => void;
-  isEnglish: boolean;
+  headerLanguage: string | null;
 };
 
 export type Experience = {
@@ -24,7 +24,7 @@ export function CvMainContent({
   jobs,
   educations,
   onChange,
-  isEnglish,
+  headerLanguage,
 }: Props) {
   const createEmptyExperience = () => ({
     id: v4(),
@@ -37,8 +37,10 @@ export function CvMainContent({
   return (
     <div className="pb-8">
       <div className="flex items-center justify-between px-2">
-        <H2 textColor="px-1 py-1 border border-transparent text-nowrap text-brand-orange">
-          {isEnglish ? "Education and training" : "Utbildning och träning"}
+        <H2 textColor="text-paragraph px-1 py-1 border border-transparent text-nowrap">
+          {headerLanguage === "english"
+            ? "Education and training"
+            : "Utbildning och träning"}
         </H2>
         {isEditable && (
           <Button
@@ -64,8 +66,10 @@ export function CvMainContent({
         />
       </div>
       <div className="flex justify-between items-center px-2">
-        <H2 textColor="text-brand-orange px-1 py-1 border border-transparent text-nowrap">
-          {isEnglish ? "Work experience" : "Arbetslivserfarenhet"}
+        <H2 textColor="text-paragraph px-1 py-1 border border-transparent text-nowrap">
+          {headerLanguage === "english"
+            ? "Work experience"
+            : "Arbetslivserfarenhet"}
         </H2>
         {isEditable && (
           <Button

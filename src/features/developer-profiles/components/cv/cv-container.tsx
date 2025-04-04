@@ -22,7 +22,9 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   const [isEditable, setIsEditable] = useState(false);
   const [cvInfo, setCvInfo] = useState(defaultCvInfo);
   const [isLoading, setIsLoading] = useState(false);
-  const [isEnglish, setIsEnglish] = useState(true);
+  // const [headerLanguage, setHeaderLanguage] = useState(
+  //   defaultCvInfo.headerLanguage
+  // );
   const printRef = useRef<HTMLDivElement>(null);
 
   const handleOnChange = (data: Partial<CvInfo>) => {
@@ -97,24 +99,31 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
       }
     }
   };
-
+  function handleLanguageChange(headerLanguage: string) {
+    if (headerLanguage) {
+      handleOnChange({ headerLanguage });
+    }
+  }
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex items-center justify-end mt-4 w-full md:w-[750]">
-        <div className="flex-grow">
-          <select
-            className="w-fit text-sm"
-            onChange={() => {
-              setIsEnglish(() => !isEnglish);
-            }}
-          >
-            <option value="eng" className="text-sm">
-              English
-            </option>
-            <option value="sve" className="text-sm">
-              Svenska
-            </option>
-          </select>
+    <>
+      <div className="flex items-center justify-end py-2 my-2 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100">
+        <div className="flex-grow pl-2">
+          {isEditable && (
+            <select
+              className="w-fit text-sm"
+              value={cvInfo.headerLanguage!}
+              onChange={(event) => {
+                handleLanguageChange(event.target.value);
+              }}
+            >
+              <option value="english" className="text-sm">
+                English
+              </option>
+              <option value="swedish" className="text-sm">
+                Svenska
+              </option>
+            </select>
+          )}
         </div>
         {isEditable ? (
           <>
@@ -181,7 +190,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
             avatarUrl={cvInfo.avatarUrl}
             onChange={handleOnChange}
             isEditable={isEditable && !isLoading}
-            isEnglish={isEnglish}
+            headerLanguage={cvInfo.headerLanguage}
           />
           <section className="py-2 flex flex-col gap-2">
             <CvHeader
@@ -198,7 +207,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
               jobs={cvInfo.jobs}
               educations={cvInfo.educations}
               onChange={handleOnChange}
-              isEnglish={isEnglish}
+              headerLanguage={cvInfo.headerLanguage}
             />
           </section>
         </article>
