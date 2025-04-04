@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
 import { CvInfo } from "../../types";
-import { CheckCircle, Pencil } from "lucide-react";
+import { CheckCircle, Pencil, Printer } from "lucide-react";
 import { updateCvAction } from "../../actions";
 import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
@@ -84,8 +84,8 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   };
 
   return (
-    <section className="py-6 my-4 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md">
-      <div className="flex items-center justify-end py-2 px-2 bg-100 bg-zinc-100 min-h-14">
+    <>
+      <div className="flex items-center justify-end py-2 my-2 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100">
         <div className="flex-grow">
           <select
             className="w-fit"
@@ -143,42 +143,45 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           size="sm"
           className="flex"
         >
+          <Printer />
           Print
         </Button>
       </div>
-
-      <article
-        ref={printRef}
-        className="md:grid md:grid-cols-[15rem_2fr] bg-white"
-      >
-        <CvAside
-          skills={cvInfo.skills}
-          languages={cvInfo.languages}
-          links={cvInfo.links}
-          avatarUrl={cvInfo.avatarUrl}
-          onChange={handleOnChange}
-          isEditable={isEditable && !isLoading}
-          isEnglish={isEnglish}
-        />
-        <section className="py-2 flex flex-col gap-2">
-          <CvHeader
-            name={cvInfo.name}
-            bio={cvInfo.bio}
-            hasProfileAccess={hasProfileAccess}
-            id={cvInfo.id}
-            identityId={cvInfo.identityId}
-            isEditable={isEditable && !isLoading}
+      <section className="bg-white py-6 my-2 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md">
+        <div className="py-2 px-2 bg-100 bg-zinc-100 min-h-14"></div>
+        <article
+          className="md:grid md:grid-cols-[15rem_2fr] bg-white"
+          ref={printRef}
+        >
+          <CvAside
+            skills={cvInfo.skills}
+            languages={cvInfo.languages}
+            links={cvInfo.links}
+            avatarUrl={cvInfo.avatarUrl}
             onChange={handleOnChange}
-          />
-          <CvMainContent
             isEditable={isEditable && !isLoading}
-            jobs={cvInfo.jobs}
-            educations={cvInfo.educations}
-            onChange={handleOnChange}
             isEnglish={isEnglish}
           />
-        </section>
-      </article>
-    </section>
+          <section className="py-2 flex flex-col gap-2">
+            <CvHeader
+              name={cvInfo.name}
+              bio={cvInfo.bio}
+              hasProfileAccess={hasProfileAccess}
+              id={cvInfo.id}
+              identityId={cvInfo.identityId}
+              isEditable={isEditable && !isLoading}
+              onChange={handleOnChange}
+            />
+            <CvMainContent
+              isEditable={isEditable && !isLoading}
+              jobs={cvInfo.jobs}
+              educations={cvInfo.educations}
+              onChange={handleOnChange}
+              isEnglish={isEnglish}
+            />
+          </section>
+        </article>
+      </section>
+    </>
   );
 }
