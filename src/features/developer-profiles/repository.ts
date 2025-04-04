@@ -484,7 +484,7 @@ export function createDevelopersRepository(db: Db) {
           name: developerProfile.name,
           slug: developerProfile.slug || "",
           email: developerProfile.email || "",
-          status: developerProfile.status || "",
+          status: "unpublished",
           avatarUrl: developerProfile.avatarUrl || "",
           title: developerProfile.title || "",
           bio: developerProfile.bio || "",
