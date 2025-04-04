@@ -6,7 +6,7 @@ export const developerProfileSkills = pgTable("developer_profiles_skills", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   developerProfileId: uuid("developerProfile_id").references(
     () => developerProfiles.id,
-    { onDelete: "cascade" },
+    { onDelete: "cascade" }
   ),
   name: varchar().notNull(),
   level: integer().notNull().default(5),
@@ -19,10 +19,10 @@ export const developerProfileEducations = pgTable(
       () => developerProfiles.id,
       {
         onDelete: "cascade",
-      },
+      }
     ),
     name: varchar().notNull(),
-  },
+  }
 );
 export const developerProfileLanguages = pgTable(
   "developer_profiles_languages",
@@ -32,11 +32,11 @@ export const developerProfileLanguages = pgTable(
       () => developerProfiles.id,
       {
         onDelete: "cascade",
-      },
+      }
     ),
     name: varchar().notNull(),
     level: integer().notNull().default(5),
-  },
+  }
 );
 export const searchOutbox = pgTable("meili_search_outbox", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -55,7 +55,6 @@ export const developerProfiles = pgTable("developer_profiles", {
   status: varchar("status").notNull().default("unpublished"),
   avatarUrl: varchar("avatar_url").notNull().default(""),
   title: varchar().notNull(),
-  headline: varchar(),
   links: jsonb().$type<SocialLink[]>().notNull(),
   bio: varchar(),
 });
@@ -70,13 +69,13 @@ export const newDeveloperProfileEducations = pgTable(
       () => developerProfiles.id,
       {
         onDelete: "cascade",
-      },
+      }
     ),
     organization: varchar().notNull(),
     date: varchar().notNull(),
     role: varchar().notNull(),
     description: varchar().notNull(),
-  },
+  }
 );
 
 export const developerProfileJobs = pgTable("developer_profiles_jobs", {
@@ -87,7 +86,7 @@ export const developerProfileJobs = pgTable("developer_profiles_jobs", {
     () => developerProfiles.id,
     {
       onDelete: "cascade",
-    },
+    }
   ),
   organization: varchar().notNull(),
   date: varchar().notNull(),

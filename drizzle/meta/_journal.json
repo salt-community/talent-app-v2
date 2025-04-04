@@ -134,6 +134,13 @@
       "when": 1742312631495,
       "tag": "0018_clever_earthquake",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1743758658725,
+      "tag": "0019_lame_shaman",
+      "breakpoints": true
     }
   ]
 }
