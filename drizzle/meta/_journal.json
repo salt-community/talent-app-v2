@@ -141,6 +141,13 @@
       "when": 1743758658725,
       "tag": "0019_lame_shaman",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1743771945632,
+      "tag": "0020_normal_psynapse",
+      "breakpoints": true
     }
   ]
 }

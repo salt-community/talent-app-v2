@@ -57,6 +57,7 @@ export const developerProfiles = pgTable("developer_profiles", {
   title: varchar().notNull(),
   links: jsonb().$type<SocialLink[]>().notNull(),
   bio: varchar(),
+  headerLanguage: varchar().default("english"),
 });
 
 export const newDeveloperProfileEducations = pgTable(

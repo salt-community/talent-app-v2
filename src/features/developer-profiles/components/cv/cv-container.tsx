@@ -103,13 +103,17 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
       <div className="flex items-center justify-end mt-4 w-full md:w-[750]">
         <div className="flex-grow">
           <select
-            className="w-fit"
+            className="w-fit text-sm"
             onChange={() => {
               setIsEnglish(() => !isEnglish);
             }}
           >
-            <option value="eng">English</option>
-            <option value="sve">Svenska</option>
+            <option value="eng" className="text-sm">
+              English
+            </option>
+            <option value="sve" className="text-sm">
+              Svenska
+            </option>
           </select>
         </div>
         {isEditable ? (
