@@ -13,6 +13,7 @@ import {
   copyDeveloperProfileAction,
   deleteDeveloperProfileAction,
 } from "../actions";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   developerProfileId: string;
@@ -22,6 +23,20 @@ export default function DeveloperProfileCardDropdown({
   developerProfileId,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const { toast } = useToast();
+
+  async function handleCopy() {
+    await copyDeveloperProfileAction(developerProfileId);
+    setIsOpen(false);
+  }
+  async function handleDelete() {
+    await deleteDeveloperProfileAction(developerProfileId);
+    toast({
+      title: "Profile deleted",
+      description: "The developer profile has been successfully deleted",
+    });
+    setIsOpen(false);
+  }
 
   return (
     <div className="relative">
@@ -43,19 +58,17 @@ export default function DeveloperProfileCardDropdown({
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-40">
           <DropdownMenuItem
-            onClick={(event) => {
+            onClick={async (event) => {
               event.preventDefault();
-              copyDeveloperProfileAction(developerProfileId);
-              setIsOpen(false);
+              await handleCopy();
             }}
           >
             Copy
-          </DropdownMenuItem>
+          </DropdownMenuItem>{" "}
           <DropdownMenuItem
-            onClick={(event) => {
+            onClick={async (event) => {
               event.preventDefault();
-              deleteDeveloperProfileAction(developerProfileId);
-              setIsOpen(false);
+              await handleDelete();
             }}
           >
             Delete
