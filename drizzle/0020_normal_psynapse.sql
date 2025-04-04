@@ -1,0 +1,1 @@
+ALTER TABLE "developer_profiles" ADD COLUMN "headerLanguage" varchar DEFAULT 'english';
