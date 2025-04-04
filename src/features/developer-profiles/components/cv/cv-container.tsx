@@ -167,6 +167,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
       </div>
 
       <article
+        id="cv-article"
         ref={printRef}
         className="md:grid md:grid-cols-[15rem_2fr] bg-white"
       >
