@@ -8,7 +8,7 @@ import {
   Button,
 } from "@/components/";
 import { Ellipsis } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
   copyDeveloperProfileAction,
   deleteDeveloperProfileAction,
@@ -17,16 +17,22 @@ import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   developerProfileId: string;
+  setIsTitleEditable: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function DeveloperProfileCardDropdown({
   developerProfileId,
+  setIsTitleEditable,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
 
   async function handleCopy() {
     await copyDeveloperProfileAction(developerProfileId);
+    toast({
+      title: "Profile copied",
+      description: "The developer profile has been successfully copied",
+    });
     setIsOpen(false);
   }
   async function handleDelete() {
@@ -35,6 +41,10 @@ export default function DeveloperProfileCardDropdown({
       title: "Profile deleted",
       description: "The developer profile has been successfully deleted",
     });
+    setIsOpen(false);
+  }
+  function handleEdit() {
+    setIsTitleEditable(true);
     setIsOpen(false);
   }
 
@@ -57,6 +67,14 @@ export default function DeveloperProfileCardDropdown({
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-40">
+          <DropdownMenuItem
+            onClick={(event) => {
+              event.preventDefault();
+              handleEdit();
+            }}
+          >
+            Edit Title
+          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={async (event) => {
               event.preventDefault();
