@@ -1,5 +1,5 @@
 import MeiliSearch, { Embedders, Index, Settings } from "meilisearch";
-import { DeveloperProfileDetailsUpdate } from "../types";
+import { CvInfo, DeveloperProfileDetailsUpdate } from "../types";
 
 type InitializeMeiliSearchIndexArgs = {
   indexUid: string;
@@ -62,7 +62,7 @@ export function createSearchApi({
       const documents: Record<string, unknown>[] = isSearchEmpty
         ? (await index.search("", searchParams)).hits
         : (await index.search(query, searchParams)).hits;
-      return documents.map((doc) => doc.id as string);
+      return documents.map((doc) => doc as CvInfo);
     },
 
     async searchDeveloperProfiles(query: string | undefined) {

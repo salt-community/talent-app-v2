@@ -1,14 +1,11 @@
 import { Row } from "./row";
 import { BackgroundBasicInfo } from "./basic-info";
 import { SkillsBadges } from "./skills-badges";
-import { developerProfilesService } from "../../instance";
+import { CvInfo } from "../../types";
 
-type Props = { developerProfileId: string };
+type Props = { developerProfile: CvInfo };
 
-export async function Background({ developerProfileId }: Props) {
-  const developerProfile =
-    await developerProfilesService.getDeveloperProfileById(developerProfileId);
-
+export function Background({ developerProfile }: Props) {
   return (
     <div className="space-y-2 max-w-96">
       <div className="flex justify-between items-start">
@@ -18,17 +15,11 @@ export async function Background({ developerProfileId }: Props) {
       <div>
         <Row
           title="Languages"
-          content={developerProfile.languages.map((language) => ({
-            id: language.id,
-            name: language.name,
-          }))}
+          content={developerProfile.languages.map((language, index) => ({ id: index, name: language.name }))}
         />
         <Row
           title="Education"
-          content={developerProfile.educations.map((education, index) => ({
-            id: index,
-            name: education.role,
-          }))}
+          content={developerProfile.educations.map((education, index) => ({ id: index, name: education.role }))}
         />
         <SkillsBadges skills={developerProfile.skills} />
       </div>

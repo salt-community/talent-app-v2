@@ -1,5 +1,6 @@
 import { Settings } from "meilisearch";
 import { SearchApi } from "./search-api";
+import { CvInfo } from "../types";
 
 export function createSearchService(searchApi: SearchApi) {
   return {
@@ -19,11 +20,11 @@ export function createSearchService(searchApi: SearchApi) {
       await searchApi.resetSettings();
     },
 
-    async searchDeveloperProfileIds(search: string | undefined) {
+    async searchDeveloperProfiles(search: string | undefined) {
       return searchApi.searchDeveloperProfileIds(search);
     },
 
-    async searchDeveloperProfileIdsWithLLM(search: string | undefined) {
+    async searchDeveloperProfilesWithLLM(search: string | undefined) {
       return (await searchApi.searchDeveloperProfiles(search)).map((doc) => {
         const rawRankingScore = doc._rankingScore as number | undefined;
         const rankingScore =
@@ -31,9 +32,9 @@ export function createSearchService(searchApi: SearchApi) {
             ? Math.round((rawRankingScore as number) * 100)
             : undefined;
         return {
-          id: doc.id as string,
+          ...doc,
           ranking: rankingScore,
-        };
+        } as CvInfo & { ranking: number | undefined };
       });
     },
 

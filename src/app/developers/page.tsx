@@ -1,6 +1,7 @@
 import { Search } from "./search";
 import { errorHandler } from "@/lib";
 import {
+  CvInfo,
   developerProfilesService,
   Developers,
 } from "@/features/developer-profiles";
@@ -11,10 +12,10 @@ type Props = { searchParams: Promise<{ search: string | undefined }> };
 
 export default async function Page({ searchParams }: Props) {
   const search = (await searchParams).search;
-  let developerProfileIds: string[] = [];
+  let developerProfiles: CvInfo[] = [];
   try {
-    developerProfileIds =
-      await developerProfilesService.searchDeveloperProfileIds(search);
+    developerProfiles =
+      await developerProfilesService.searchDeveloperProfiles(search);
   } catch (error) {
     errorHandler(error);
   }
@@ -23,7 +24,7 @@ export default async function Page({ searchParams }: Props) {
     <main className="px-4 pb-6">
       <Search />
       <Suspense fallback={<Loading />}>
-        <Developers developerProfileIds={developerProfileIds} />
+        <Developers developerProfiles={developerProfiles} />
       </Suspense>
     </main>
   );

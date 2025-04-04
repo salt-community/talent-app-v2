@@ -1,18 +1,11 @@
 import Link from "next/link";
-import { developerProfilesService } from "../instance";
+import { ReactNode } from "react";
 
 type Props = {
-  developerProfileId: string;
-  children: React.ReactNode;
+  developerSlug: string;
+  children: ReactNode;
 };
 
-export async function DeveloperProfileLink({
-  developerProfileId,
-  children,
-}: Props) {
-  const developer =
-    await developerProfilesService.getDeveloperById(developerProfileId);
-  if (developer) {
-    return <Link href={`/developers/${developer.slug}`}>{children}</Link>;
-  }
+export function DeveloperProfileLink({ developerSlug, children }: Props) {
+  return <Link href={`/developers/${developerSlug}`}>{children}</Link>;
 }
