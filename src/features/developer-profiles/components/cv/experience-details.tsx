@@ -11,7 +11,7 @@ export function ExperienceDetails({ experience, isEditable, onChange }: Props) {
   return (
     <div className="flex items-start justify-start w-full">
       <div className="flex flex-col gap-1 flex-grow">
-        <div className="flex items-center text-paragraph-light font-semibold">
+        <div className="flex items-start text-paragraph-light font-semibold">
           <EditableField
             placeholder="Role"
             value={experience.role}

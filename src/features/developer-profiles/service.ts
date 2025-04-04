@@ -29,7 +29,7 @@ export function createDeveloperProfilesService(
   getCohortIdByIdentityId: GetCohortIdByIdentityId,
   getScoredAssignmentsByCohortIdAndIdentityId: GetScoredAssignmentsByCohortIdAndIdentityId,
   getAssignmentBySlug: GetAssignmentBySlug,
-  getAverageScoresByIdentityId: GetAverageScoresByIdentityId,
+  getAverageScoresByIdentityId: GetAverageScoresByIdentityId
 ) {
   const repository = createDevelopersRepository(db);
   const searchApi = createSearchApi({
@@ -70,13 +70,13 @@ export function createDeveloperProfilesService(
   const searchService = createSearchService(searchApi);
 
   async function syncSearchWithOutboxMessage(
-    outboxMessage: OutboxMessageSelect,
+    outboxMessage: OutboxMessageSelect
   ) {
     let succeeded = false;
     switch (outboxMessage.operation) {
       case "upsert":
         const developerProfile = await repository.getDeveloperProfile(
-          outboxMessage.developerProfileId,
+          outboxMessage.developerProfileId
         );
         if (!developerProfile) {
           succeeded = true;
@@ -89,7 +89,7 @@ export function createDeveloperProfilesService(
         break;
       case "delete":
         const deleteStatus = await searchApi.deleteDocument(
-          outboxMessage.developerProfileId,
+          outboxMessage.developerProfileId
         );
         succeeded = OK_STATUSES.includes(deleteStatus);
         break;
@@ -127,7 +127,7 @@ export function createDeveloperProfilesService(
       }
 
       const developerProfile = await this.getDeveloperProfileByIdentityId(
-        currentUser.id,
+        currentUser.id
       );
       const user = {
         ...currentUser,
@@ -145,6 +145,8 @@ export function createDeveloperProfilesService(
           id: "",
           avatarUrl: "",
           name: "<New Profile>",
+          email: "",
+          slug: "",
           identityId: "",
           title: "",
           bio: "",
@@ -162,19 +164,19 @@ export function createDeveloperProfilesService(
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
-          array.findIndex((s) => s.name === skill.name) === index,
+          array.findIndex((s) => s.name === skill.name) === index
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
-          array.findIndex((l) => l.name === language.name) === index,
+          array.findIndex((l) => l.name === language.name) === index
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index,
+          array.findIndex((e) => e.name === education.name) === index
       );
     },
     async delete(id: string) {
@@ -199,10 +201,10 @@ export function createDeveloperProfilesService(
       }
     },
     async updateDeveloperProfile(
-      developerProfileUpdates: DeveloperProfileUpdate,
+      developerProfileUpdates: DeveloperProfileUpdate
     ) {
       const outboxMessage = await repository.updateDeveloperProfileDetails(
-        developerProfileUpdates,
+        developerProfileUpdates
       );
       syncSearchWithOutboxMessage(outboxMessage);
     },
@@ -255,7 +257,7 @@ export function createDeveloperProfilesService(
       syncSearchWithOutboxMessage(outboxMessage);
     },
     async addDeveloperProfileDetails(
-      developerProfileDetails: developerProfileDetails,
+      developerProfileDetails: developerProfileDetails
     ) {
       await repository.addDeveloperProfileDetails(developerProfileDetails);
     },
@@ -299,6 +301,15 @@ export function createDeveloperProfilesService(
 
     async getAverageScoresByIdentityId(identityId: string) {
       return await getAverageScoresByIdentityId(identityId);
+    },
+
+    async copyDeveloperProfile(developerProfileId: string) {
+      const [developerProfileToCopy] =
+        await repository.getDeveloperProfile(developerProfileId);
+      developerProfileToCopy.slug = await this.generateUniqueSlug(
+        developerProfileToCopy.name
+      );
+      await repository.copyDeveloperProfile(developerProfileToCopy);
     },
   };
 }

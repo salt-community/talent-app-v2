@@ -145,3 +145,8 @@ export type DeveloperProfileDetailsUpdate = DeveloperProfileUpdate & {
   educations?: EducationUpdate[];
   jobs?: JobsInsert[];
 };
+
+export type CopyDeveloperProfile = CvInfo & {
+  slug: string | null;
+  email: string | null;
+};

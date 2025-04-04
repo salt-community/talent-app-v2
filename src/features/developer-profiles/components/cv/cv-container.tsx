@@ -23,6 +23,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   const [cvInfo, setCvInfo] = useState(defaultCvInfo);
   const [isLoading, setIsLoading] = useState(false);
   const [isEnglish, setIsEnglish] = useState(true);
+  const printRef = useRef<HTMLDivElement>(null);
 
   const handleOnChange = (data: Partial<CvInfo>) => {
     setCvInfo((prev) => ({ ...prev, ...data }));
@@ -60,8 +61,27 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     setCvInfo(defaultCvInfo);
     setIsEditable(false);
   };
+  const handlePrint = async (
+    userName: string,
+    printRef: React.RefObject<HTMLDivElement>
+  ) => {
+    const element = printRef.current;
+    if (element) {
+      try {
+        const dataUrl = await DomToImage.toPng(element);
 
-  const printRef = useRef<HTMLDivElement>(null);
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `${userName}.png`;
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (error) {
+        console.error("Error generating image: ", error);
+      }
+    }
+  };
 
   return (
     <section className="py-6 my-4 md:py-0 md:mx-8 lg:mx-32 xl:mx-64 2xl:mx-100 shadow-md">
@@ -118,7 +138,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           )
         )}
         <Button
-          onClick={() => handlePrint("true", printRef)}
+          onClick={() => handlePrint(cvInfo.name + " CV", printRef)}
           variant="ghost"
           size="sm"
           className="flex"
@@ -162,25 +182,3 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     </section>
   );
 }
-
-const handlePrint = async (
-  userName: string,
-  printRef: React.RefObject<HTMLDivElement>
-) => {
-  const element = printRef.current;
-  if (element) {
-    try {
-      const dataUrl = await DomToImage.toPng(element);
-
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = `${userName}.png`;
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error generating image: ", error);
-    }
-  }
-};
