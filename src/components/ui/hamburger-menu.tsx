@@ -75,7 +75,9 @@ export function HamburgerMenu({ user, permissions }: Props) {
           {permissions.hasInstructorsDashboardAccess && (
             <li
               className={`border-b ${
-                isActive("/cohorts") ? "border-primary" : "border-white"
+                isActive("/instructor-dashboard")
+                  ? "border-primary"
+                  : "border-white"
               } hover:border-primary`}
             >
               <Link href="/instructor-dashboard" onClick={closeMenu}>
