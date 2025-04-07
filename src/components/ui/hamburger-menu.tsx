@@ -58,12 +58,15 @@ export function HamburgerMenu({ user, permissions }: Props) {
           {permissions.hasDeveloperAccess && (
             <li
               className={`border-b ${
-                isActive(`/profile/${user?.id}`)
+                isActive(`/developer-dashboard/assignments`)
                   ? "border-primary"
                   : "border-white"
               } hover:border-primary`}
             >
-              <Link href={`/developer-dashboard/assignments`}>
+              <Link
+                href={`/developer-dashboard/assignments`}
+                onClick={closeMenu}
+              >
                 Developer Dashboard
               </Link>
             </li>
