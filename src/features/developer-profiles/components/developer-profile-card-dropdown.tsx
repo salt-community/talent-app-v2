@@ -82,7 +82,7 @@ export default function DeveloperProfileCardDropdown({
             }}
           >
             Copy
-          </DropdownMenuItem>{" "}
+          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={async (event) => {
               event.preventDefault();
