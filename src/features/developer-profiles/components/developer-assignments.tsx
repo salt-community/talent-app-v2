@@ -14,11 +14,11 @@ export async function DeveloperAssignments({ identityId }: Props) {
 
   const getScoreColorClass = (score: number) => {
     if (score <= 50) {
-      return "text-red-600 font-extrabold"; // Red for score <= 50
+      return "text-red-600 font-extrabold";
     } else if (score >= 51 && score <= 94) {
-      return "text-orange-500"; // Orange for score 51-94
+      return "text-orange-500";
     } else {
-      return "text-green-500"; // Green for score >= 95
+      return "text-green-500";
     }
   };
 
