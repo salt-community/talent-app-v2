@@ -104,7 +104,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   }
   return (
     <div className="flex flex-col items-center">
-      <div className="flex items-center justify-end mt-4 w-full md:w-[750] mb-2">
+      <section className="flex items-center justify-end mt-4 w-full md:w-[750] mb-2">
         <div className="flex-grow">
           {isEditable && (
             <select
@@ -172,7 +172,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           <Printer />
           Print
         </Button>
-      </div>
+      </section>
       <section id="cv" className="bg-white shadow-md md:w-[750]" ref={printRef}>
         <div className="py-2 px-2 bg-100 bg-cv-darkgray min-h-14 flex items-center justify-end">
           <p className="text-white text-3xl font-light mr-5">{"</salt>"}</p>
