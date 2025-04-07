@@ -190,7 +190,9 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
             avatarUrl={cvInfo.avatarUrl}
             onChange={handleOnChange}
             isEditable={isEditable && !isLoading}
-            headerLanguage={cvInfo.headerLanguage}
+            headerLanguage={
+              cvInfo.headerLanguage ? cvInfo.headerLanguage : "english"
+            }
           />
           <section className="py-2 flex flex-col gap-2">
             <CvHeader
@@ -207,7 +209,9 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
               jobs={cvInfo.jobs}
               educations={cvInfo.educations}
               onChange={handleOnChange}
-              headerLanguage={cvInfo.headerLanguage}
+              headerLanguage={
+                cvInfo.headerLanguage ? cvInfo.headerLanguage : "english"
+              }
             />
           </section>
         </article>

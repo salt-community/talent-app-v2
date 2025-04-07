@@ -8,7 +8,7 @@ type Props = {
   jobs: Experience[];
   educations: Experience[];
   onChange: (data: { jobs: Experience[]; educations: Experience[] }) => void;
-  headerLanguage: string | null;
+  headerLanguage: string;
 };
 
 export type Experience = {

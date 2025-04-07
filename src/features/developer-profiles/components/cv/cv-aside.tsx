@@ -10,6 +10,7 @@ import { CvPopover } from "./cv-popover";
 import { Camera, Check, Plus, X } from "lucide-react";
 import { BackgroundAvatar } from "../backgrounds/avatar";
 import { CvAvatar } from "./cv-avatar";
+import { CvTechnicalSkills } from "./cv-technical-skills";
 
 type Props = {
   skills: SkillInsert[];
@@ -23,7 +24,7 @@ type Props = {
     links: SocialLinkType[];
   }) => void;
   isEditable: boolean;
-  headerLanguage: string | null;
+  headerLanguage: string;
 };
 
 export function CvAside({
@@ -45,44 +46,15 @@ export function CvAside({
         onChange={onChange}
         isEditable={isEditable}
       />
-      <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold text-brand-orange">
-          {headerLanguage === "english"
-            ? "Technical Skills"
-            : "Tekniska färdigheter"}
-        </h2>
-        <SkillsBadges
-          variant="cv"
-          skills={skills}
-          isEditable={isEditable}
-          onDelete={(skill) => {
-            onChange({
-              skills: skills.filter((s) => s.name !== skill.name),
-              languages,
-              links,
-              avatarUrl,
-            });
-          }}
-        />
-        {isEditable && (
-          <CvPopover
-            placeholder={"Write your skill"}
-            icon={Plus}
-            onAdd={(skill) => {
-              onChange({
-                skills: [...skills, { name: skill }],
-                languages,
-                links,
-                avatarUrl,
-              });
-            }}
-          >
-            <Button variant="outline" size="sm" className="w-full h-7 mt-2">
-              <Plus size={24} className="cursor-pointer" /> Add
-            </Button>
-          </CvPopover>
-        )}
-      </section>
+      <CvTechnicalSkills
+        skills={skills}
+        languages={languages}
+        links={links}
+        avatarUrl={avatarUrl}
+        onChange={onChange}
+        isEditable={isEditable}
+        headerLanguage={headerLanguage}
+      />
       <section className="flex flex-col items-start w-full">
         <h2 className="text-xl font-bold pb-1 text-brand-orange">
           {headerLanguage === "english" ? "Languages" : "Språk"}
