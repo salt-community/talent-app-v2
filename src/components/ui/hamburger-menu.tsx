@@ -58,7 +58,8 @@ export function HamburgerMenu({ user, permissions }: Props) {
           {permissions.hasDeveloperAccess && (
             <li
               className={`border-b ${
-                isActive(`/developer-dashboard/assignments`)
+                isActive(`/developer-dashboard/assignments`) ||
+                isActive("/developer-dashboard/profiles")
                   ? "border-primary"
                   : "border-white"
               } hover:border-primary`}
