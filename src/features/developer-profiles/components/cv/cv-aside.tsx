@@ -53,7 +53,7 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold">
+        <h2 className="text-xl font-bold text-brand-orange">
           {headerLanguage === "english"
             ? "Technical Skills"
             : "Tekniska färdigheter"}
@@ -91,7 +91,7 @@ export function CvAside({
         )}
       </section>
       <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold pb-1">
+        <h2 className="text-xl font-bold pb-1 text-brand-orange">
           {headerLanguage === "english" ? "Languages" : "Språk"}
         </h2>
         <ul className="w-full">
@@ -143,7 +143,7 @@ export function CvAside({
         </ul>
       </section>
       <section className="w-full">
-        <h2 className="text-xl font-bold">
+        <h2 className="text-xl font-bold text-brand-orange">
           {headerLanguage === "english" ? "Social" : "Social"}
         </h2>
         <ul className="w-full">

@@ -22,20 +22,25 @@ export function CvPopover({ placeholder, children, icon: Icon, onAdd }: Props) {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent
-        className="w-54 p-1 flex items-center justify-center"
+        className="w-52 p-1 flex items-center justify-center"
         align="end"
       >
-        <div className="flex items-center justify-center w-full gap-1">
+        <div className="flex items-center justify-center">
           <input
             placeholder={placeholder}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="p-1 rounded h-7 flex-grow text-sm focus:ring-slate-500"
+            className="p-1 rounded text-sm focus:ring-slate-500 ml-4"
             onKeyDown={(event) => {
               if (event.key === "Enter") handleOnAdd();
             }}
           />
-          <Button variant="link" size="sm" onClick={handleOnAdd}>
+          <Button
+            variant="link"
+            size="sm"
+            onClick={handleOnAdd}
+            className="pl-1"
+          >
             <Icon size={16} />
           </Button>
         </div>
