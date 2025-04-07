@@ -22,9 +22,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   const [isEditable, setIsEditable] = useState(false);
   const [cvInfo, setCvInfo] = useState(defaultCvInfo);
   const [isLoading, setIsLoading] = useState(false);
-  // const [headerLanguage, setHeaderLanguage] = useState(
-  //   defaultCvInfo.headerLanguage
-  // );
+
   const printRef = useRef<HTMLDivElement>(null);
 
   const handleOnChange = (data: Partial<CvInfo>) => {
@@ -111,7 +109,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           {isEditable && (
             <select
               className="w-fit text-sm"
-              value={cvInfo.headerLanguage!}
+              value={cvInfo.headerLanguage ? cvInfo.headerLanguage : "english"}
               onChange={(event) => {
                 handleLanguageChange(event.target.value);
               }}

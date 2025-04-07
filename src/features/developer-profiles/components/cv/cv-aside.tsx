@@ -1,13 +1,8 @@
-import { Button } from "@/components";
 import {
   LanguageInsert,
   SkillInsert,
   SocialLink as SocialLinkType,
 } from "../../types";
-import { SocialLink } from "../backgrounds/social-link";
-import { CvPopover } from "./cv-popover";
-import { Camera, Check, Plus, X } from "lucide-react";
-import { BackgroundAvatar } from "../backgrounds/avatar";
 import { CvAvatar } from "./cv-avatar";
 import { CvTechnicalSkills } from "./cv-technical-skills";
 import { CvLanguages } from "./cv-languages";
