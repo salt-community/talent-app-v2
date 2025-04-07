@@ -11,6 +11,7 @@ import { Camera, Check, Plus, X } from "lucide-react";
 import { BackgroundAvatar } from "../backgrounds/avatar";
 import { CvAvatar } from "./cv-avatar";
 import { CvTechnicalSkills } from "./cv-technical-skills";
+import { CvLanguages } from "./cv-languages";
 
 type Props = {
   skills: SkillInsert[];
@@ -55,58 +56,15 @@ export function CvAside({
         isEditable={isEditable}
         headerLanguage={headerLanguage}
       />
-      <section className="flex flex-col items-start w-full">
-        <h2 className="text-xl font-bold pb-1 text-brand-orange">
-          {headerLanguage === "english" ? "Languages" : "Språk"}
-        </h2>
-        <ul className="w-full">
-          {languages.map((language) => (
-            <li
-              key={language.name}
-              className="text-paragraph text-sm flex items-center text-white"
-            >
-              {language.name}
-              {isEditable && (
-                <Button
-                  variant="link"
-                  size="icon"
-                  className="h-4 w-4 ml-1"
-                  onClick={() =>
-                    onChange({
-                      skills,
-                      languages: languages.filter(
-                        (l) => l.name !== language.name
-                      ),
-                      links,
-                      avatarUrl,
-                    })
-                  }
-                >
-                  <X className="text-white" />
-                </Button>
-              )}
-            </li>
-          ))}
-          {isEditable && (
-            <CvPopover
-              placeholder={"Write your language"}
-              icon={Plus}
-              onAdd={(language) => {
-                onChange({
-                  skills,
-                  languages: [...languages, { name: language }],
-                  links,
-                  avatarUrl,
-                });
-              }}
-            >
-              <Button variant="outline" size="sm" className="w-full h-7 mt-2">
-                <Plus size={24} className="cursor-pointer" /> Add
-              </Button>
-            </CvPopover>
-          )}
-        </ul>
-      </section>
+      <CvLanguages
+        skills={skills}
+        languages={languages}
+        links={links}
+        avatarUrl={avatarUrl}
+        onChange={onChange}
+        isEditable={isEditable}
+        headerLanguage={headerLanguage}
+      />
       <section className="w-full">
         <h2 className="text-xl font-bold text-brand-orange">
           {headerLanguage === "english" ? "Social" : "Social"}
