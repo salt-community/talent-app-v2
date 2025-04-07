@@ -26,9 +26,9 @@ export const developerProfiles: PermissionsSchema<
   isSearchHealthOk: "developerProfiles.isSearchHealthOk",
   repopulateSearch: "developerProfiles.repopulateSearch",
   resetSearchSettings: "developerProfiles.resetSearchSettings",
-  searchDeveloperProfileIds: "developerProfiles.searchDeveloperProfileIds",
-  searchDeveloperProfileIdsWithLLM:
-    "developerProfiles.searchDeveloperProfileIdsWithLLM",
+  searchDeveloperProfiles: "developerProfiles.searchDeveloperProfiles",
+  searchDeveloperProfilesWithLLM:
+    "developerProfiles.searchDeveloperProfilesWithLLM",
   syncSearch: "developerProfiles.syncSearch",
   updateDeveloperProfile: "developerProfiles.updateDeveloperProfile",
   updateSearchSettings: "developerProfiles.updateSearchSettings",
@@ -44,4 +44,6 @@ export const developerProfiles: PermissionsSchema<
   getAverageScoresByIdentityId:
     "developerProfiles.getAverageScoresByIdentityId",
   copyDeveloperProfile: "developerProfiles.copyDeveloperProfile",
+  getHighlightedDevelopersProfiles: "developerProfiles.getHighlightedDevelopersProfiles",
+  getDevelopersProfilesByIds: "developerProfiles.getDevelopersProfilesByIds",
 };

@@ -35,7 +35,7 @@ export function createDeveloperProfilesService(
   const searchApi = createSearchApi({
     indexUid: "backgrounds",
     primaryKey: "id",
-    displayedAttributes: ["id"],
+    displayedAttributes: ["id", "title", "skills", "educations", "languages", "slug"],
     // Meilisearch uses an ordered list to determine which attributes are searchable.
     // The order in which attributes appear in this list also determines their impact
     //  on relevancy, from most impactful to least.
@@ -52,16 +52,16 @@ export function createDeveloperProfilesService(
     embedders:
       process.env.FF_SEMANTIC_SEARCH_ENABLED === "ON"
         ? {
-            openAiSearch: {
-              source: "openAi",
-              model: "text-embedding-3-large",
-              apiKey: process.env.OPENAI_API_KEY,
-              dimensions: 3072,
-              documentTemplate: `
+          openAiSearch: {
+            source: "openAi",
+            model: "text-embedding-3-large",
+            apiKey: process.env.OPENAI_API_KEY,
+            dimensions: 3072,
+            documentTemplate: `
               {{doc.title}}, bio: {{doc.bio}} with skills: {{doc.skills}}, jobs: {{doc.jobs}},
               education: {{doc.educations}}, who speaks languages: {{doc.languages}}`,
-            },
-          }
+          },
+        }
         : undefined,
     filterableAttributes: ["status"],
   });
@@ -74,16 +74,14 @@ export function createDeveloperProfilesService(
     let succeeded = false;
     switch (outboxMessage.operation) {
       case "upsert":
-        const developerProfile = await repository.getDeveloperProfile(
-          outboxMessage.developerProfileId
+        const developerProfiles = await repository.getDeveloperProfiles(
+          [outboxMessage.developerProfileId]
         );
-        if (!developerProfile) {
+        if (!developerProfiles) {
           succeeded = true;
           break;
         }
-        const upsertStatus = await searchApi.upsertDocuments([
-          developerProfile[0],
-        ]);
+        const upsertStatus = await searchApi.upsertDocuments(developerProfiles);
         succeeded = OK_STATUSES.includes(upsertStatus);
         break;
       case "delete":
@@ -134,9 +132,12 @@ export function createDeveloperProfilesService(
       };
       return user;
     },
+    async getDevelopersProfilesByIds(developerProfileIds: string[]) {
+      return await repository.getDeveloperProfiles(developerProfileIds);
+    },
     async getDeveloperProfileById(developerProfileId: string) {
       const [developerProfile] =
-        await repository.getDeveloperProfile(developerProfileId);
+        await repository.getDeveloperProfiles([developerProfileId]);
       type T = typeof developerProfile;
 
       if (!developerProfile) {
@@ -159,6 +160,10 @@ export function createDeveloperProfilesService(
         } as T;
       }
       return developerProfile;
+    },
+    async getHighlightedDevelopersProfiles() {
+      const highlighted = await repository.getDeveloperProfiles();
+      return highlighted.filter((dev) => dev.status === "highlighted");
     },
     async getAllSkills() {
       return (await repository.getAllSkills()).filter(
@@ -228,7 +233,7 @@ export function createDeveloperProfilesService(
     async repopulateSearch() {
       await searchApi.deleteIndex();
       await searchApi.ensureIndex();
-      const developerProfiles = await repository.getAllDeveloperProfiles();
+      const developerProfiles = await repository.getDeveloperProfiles();
       await searchApi.upsertDocuments(developerProfiles);
     },
     async isSearchSyncRequired() {
@@ -270,9 +275,9 @@ export function createDeveloperProfilesService(
 
       const assignments = cohortId
         ? await getScoredAssignmentsByCohortIdAndIdentityId({
-            cohortId,
-            identityId,
-          })
+          cohortId,
+          identityId,
+        })
         : [];
 
       // Group scores by assignment ID
@@ -304,7 +309,7 @@ export function createDeveloperProfilesService(
 
     async copyDeveloperProfile(developerProfileId: string) {
       const [developerProfileToCopy] =
-        await repository.getDeveloperProfile(developerProfileId);
+        await repository.getDeveloperProfiles([developerProfileId]);
       developerProfileToCopy.slug = await this.generateUniqueSlug(
         developerProfileToCopy.name
       );

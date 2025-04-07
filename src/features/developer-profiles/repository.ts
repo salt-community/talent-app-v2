@@ -1,5 +1,5 @@
 import { Db } from "@/db";
-import { eq, sql } from "drizzle-orm";
+import { eq, inArray, sql } from "drizzle-orm";
 import {
   developerProfileEducations,
   developerProfileJobs,
@@ -69,129 +69,7 @@ export function createDevelopersRepository(db: Db) {
         .where(eq(developerProfiles.id, id));
       return developerId[0];
     },
-    async getAllDeveloperProfiles() {
-      return await db
-        .select({
-          id: developerProfiles.id,
-          identityId: developerProfiles.identityId,
-          name: developerProfiles.name,
-          avatarUrl: developerProfiles.avatarUrl,
-          title: developerProfiles.title,
-          bio: developerProfiles.bio,
-          links: developerProfiles.links,
-          status: developerProfiles.status,
-          skills: sql<
-            SkillSelect[]
-          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
-                'id', ${developerProfileSkills.id},
-                'name', ${developerProfileSkills.name},
-                'level', ${developerProfileSkills.level}
-              )) FILTER (WHERE ${developerProfileSkills.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "skills"
-          ),
-          languages: sql<
-            LanguageSelect[]
-          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
-                'id', ${developerProfileLanguages.id},
-                'name', ${developerProfileLanguages.name},
-                'level', ${developerProfileLanguages.level}
-              )) FILTER (WHERE ${developerProfileLanguages.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "languages"
-          ),
-          educations: sql<
-            Experience[]
-          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
-                'id', ${newDeveloperProfileEducations.id},
-                'organization', ${newDeveloperProfileEducations.organization},
-                'date', ${newDeveloperProfileEducations.date},
-                'role', ${newDeveloperProfileEducations.role},
-                'description', ${newDeveloperProfileEducations.description}
-              )) FILTER (WHERE ${newDeveloperProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "educations"
-          ),
-          jobs: sql<
-            Experience[]
-          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
-                'id', ${developerProfileJobs.id},
-                'organization', ${developerProfileJobs.organization},
-                'date', ${developerProfileJobs.date},
-                'role', ${developerProfileJobs.role},
-                'description', ${developerProfileJobs.description}
-              )) FILTER (WHERE ${developerProfileJobs.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "jobs"
-          ),
-        })
-        .from(developerProfiles)
-        .leftJoin(
-          developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
-        )
-        .leftJoin(
-          developerProfileLanguages,
-          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
-        )
-        .leftJoin(
-          newDeveloperProfileEducations,
-          eq(
-            newDeveloperProfileEducations.developerProfileId,
-            developerProfiles.id
-          )
-        )
-        .leftJoin(
-          developerProfileJobs,
-          eq(developerProfileJobs.developerProfileId, developerProfiles.id)
-        )
-        .groupBy(developerProfiles.id);
-    },
-    async getDeveloperProfileById(developerProfileId: string) {
-      return await db
-        .select({
-          id: developerProfiles.id,
-          identityId: developerProfiles.identityId,
-          name: developerProfiles.name,
-          email: developerProfiles.email,
-          slug: developerProfiles.slug,
-          avatarUrl: developerProfiles.avatarUrl,
-          title: developerProfiles.title,
-          bio: developerProfiles.bio,
-          links: developerProfiles.links,
-          status: developerProfiles.status,
-          skills: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "skills"
-          ),
-          languages: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "languages"
-          ),
-          educations: sql<
-            string[]
-          >`ARRAY_AGG(DISTINCT ${developerProfiles.name})::VARCHAR[]`.as(
-            "educations"
-          ),
-        })
-        .from(developerProfiles)
-        .leftJoin(
-          developerProfileSkills,
-          eq(developerProfileSkills.developerProfileId, developerProfiles.id)
-        )
-        .leftJoin(
-          developerProfileLanguages,
-          eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
-        )
-        .leftJoin(
-          developerProfileEducations,
-          eq(
-            developerProfileEducations.developerProfileId,
-            developerProfiles.id
-          )
-        )
-        .where(eq(developerProfiles.id, developerProfileId))
-        .groupBy(developerProfiles.id);
-    },
-    async getDeveloperProfile(developerProfileId: string) {
+    async getDeveloperProfiles(developerProfileIds?: string[]) {
       const result = await db
         .select({
           id: developerProfiles.id,
@@ -266,7 +144,7 @@ export function createDevelopersRepository(db: Db) {
           developerProfileJobs,
           eq(developerProfileJobs.developerProfileId, developerProfiles.id)
         )
-        .where(eq(developerProfiles.id, developerProfileId))
+        .where(developerProfileIds ? inArray(developerProfiles.id, developerProfileIds) : undefined)
         .groupBy(developerProfiles.id);
 
       return result;

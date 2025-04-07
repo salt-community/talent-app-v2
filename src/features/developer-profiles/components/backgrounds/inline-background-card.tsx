@@ -1,13 +1,11 @@
-import { developerProfilesService } from "../../instance";
+import { CvInfo } from "../../types";
 import { InlineEditableCard } from "./inline-editable-card";
 import { Row } from "./row";
 import { SkillsBadges } from "./skills-badges";
 
-type Props = { developerProfileId: string };
+type Props = { developerProfile: CvInfo };
 
-export async function InlineBackgroundCard({ developerProfileId }: Props) {
-  const developerProfile =
-    await developerProfilesService.getDeveloperProfileById(developerProfileId);
+export async function InlineBackgroundCard({ developerProfile }: Props) {
   return (
     <div className="space-y-2 w-full">
       <div className="flex justify-between items-start w-full">
@@ -17,8 +15,8 @@ export async function InlineBackgroundCard({ developerProfileId }: Props) {
       <div>
         <Row
           title="Languages"
-          content={developerProfile.languages.map((language) => ({
-            id: language.id,
+          content={developerProfile.languages.map((language, index) => ({
+            id: index,
             name: language.name,
           }))}
         />
