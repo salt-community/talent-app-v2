@@ -5,11 +5,7 @@ import { iamService } from "@/features/iam";
 import { developerProfilesService } from "@/features/developer-profiles";
 
 export async function Header() {
-  const userIdentity = await iamService.controlUser();
-
-  const users = await developerProfilesService.getDeveloperProfileByIdentityId(
-    userIdentity.id
-  );
+  await iamService.controlUser();
 
   const hasMenuAccess =
     await iamService.hasCurrentUserAccess("menu.hamburgerMenu");
