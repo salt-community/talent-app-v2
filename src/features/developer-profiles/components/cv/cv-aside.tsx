@@ -9,6 +9,7 @@ import { SocialLink } from "../backgrounds/social-link";
 import { CvPopover } from "./cv-popover";
 import { Camera, Check, Plus, X } from "lucide-react";
 import { BackgroundAvatar } from "../backgrounds/avatar";
+import { CvAvatar } from "./cv-avatar";
 
 type Props = {
   skills: SkillInsert[];
@@ -36,22 +37,14 @@ export function CvAside({
 }: Props) {
   return (
     <aside className="md:col-start-1 md:col-end-2 px-4 h-full items-center bg-cv-darkgray relative flex flex-col gap-6 py-2">
-      <section className="h-fit bg-zin-100 relative">
-        <BackgroundAvatar url={avatarUrl} size="lg" />
-        {isEditable && (
-          <CvPopover
-            placeholder={"Set your avatar URL"}
-            icon={Check}
-            onAdd={(avatarUrl) => {
-              onChange({ avatarUrl, skills, languages, links });
-            }}
-          >
-            <Button className="absolute bottom-4 right-4 z-20 rounded-full p-0 h-8 w-8">
-              <Camera />
-            </Button>
-          </CvPopover>
-        )}
-      </section>
+      <CvAvatar
+        skills={skills}
+        languages={languages}
+        links={links}
+        avatarUrl={avatarUrl}
+        onChange={onChange}
+        isEditable={isEditable}
+      />
       <section className="flex flex-col items-start w-full">
         <h2 className="text-xl font-bold text-brand-orange">
           {headerLanguage === "english"
