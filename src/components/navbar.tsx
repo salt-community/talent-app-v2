@@ -27,12 +27,6 @@ export async function Header() {
     hasInstructorsDashboardAccess,
   };
 
-  const userWithRole = {
-    slug: users.map((user) => user.slug)[0]!,
-    role: userIdentity.role,
-    id: userIdentity.id,
-  };
-
   return (
     <nav className="w-full h-12 px-3 shadow-xs sticky top-0 z-20 flex bg-background justify-between items-center md:px-10">
       <Link href="/">
@@ -53,9 +47,7 @@ export async function Header() {
         </SignedOut>
         <SignedIn>
           <UserButton />
-          {hasMenuAccess && (
-            <HamburgerMenu user={userWithRole} permissions={permissions} />
-          )}{" "}
+          {hasMenuAccess && <HamburgerMenu permissions={permissions} />}{" "}
         </SignedIn>
       </div>
     </nav>

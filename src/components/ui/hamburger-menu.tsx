@@ -13,7 +13,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
-  user: { slug: string; id: string; role: string } | undefined;
   permissions: {
     hasAdminDashboardAccess: boolean;
     hasDeveloperAccess: boolean;
@@ -21,7 +20,7 @@ type Props = {
   };
 };
 
-export function HamburgerMenu({ user, permissions }: Props) {
+export function HamburgerMenu({ permissions }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
