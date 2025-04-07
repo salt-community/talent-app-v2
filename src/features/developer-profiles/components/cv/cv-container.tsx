@@ -104,7 +104,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   }
   return (
     <div className="flex flex-col items-center">
-      <div className="flex items-center justify-end mt-4 w-full md:w-[750]">
+      <div className="flex items-center justify-end mt-4 w-full md:w-[750] my-2">
         <div className="flex-grow">
           {isEditable && (
             <select
