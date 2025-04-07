@@ -1,7 +1,6 @@
 import { EditableField } from "./editable-field";
 import { H2 } from "@/components";
 
-
 type Props = {
   name: string;
   bio: string | null;

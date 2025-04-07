@@ -37,7 +37,7 @@ export function CvMainContent({
   return (
     <div className="pb-8">
       <div className="flex items-center justify-between px-2">
-        <H2 textColor="text-paragraph px-1 py-1 border border-transparent text-nowrap">
+        <H2 textColor="px-1 py-1 border border-transparent text-nowrap text-brand-orange">
           {headerLanguage === "english"
             ? "Education and training"
             : "Utbildning och träning"}
@@ -66,7 +66,7 @@ export function CvMainContent({
         />
       </div>
       <div className="flex justify-between items-center px-2">
-        <H2 textColor="text-paragraph px-1 py-1 border border-transparent text-nowrap">
+        <H2 textColor="text-brand-orange px-1 py-1 border border-transparent text-nowrap">
           {headerLanguage === "english"
             ? "Work experience"
             : "Arbetslivserfarenhet"}
