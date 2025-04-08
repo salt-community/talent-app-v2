@@ -70,7 +70,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     if (element) {
       try {
         const cvElement = document.getElementById("cv");
-        if (cvElement) cvElement.style.width = "750px";
+        if (cvElement) cvElement.style.width = "900px";
         const cvArticleElement = document.getElementById("cv-article");
         if (cvArticleElement) {
           cvArticleElement.style.display = "grid";
@@ -78,7 +78,6 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
         }
 
         const dataUrl = await DomToImage.toPng(element);
-
         if (cvElement) cvElement.style.width = "";
         if (cvArticleElement) {
           cvArticleElement.style.display = "";
@@ -104,7 +103,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   }
   return (
     <div className="flex flex-col items-center">
-      <section className="flex items-center justify-end mt-4 w-full md:w-[750] mb-2">
+      <section className="flex items-center justify-end mt-4 w-full md:w-[900] mb-2">
         <div className="flex-grow">
           {isEditable && (
             <select
@@ -173,9 +172,11 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           Print
         </Button>
       </section>
-      <section id="cv" className="bg-white shadow-md md:w-[750]" ref={printRef}>
+      <section id="cv" className="bg-white shadow-md md:w-[900]" ref={printRef}>
         <div className="py-2 px-2 bg-100 bg-cv-darkgray min-h-14 flex items-center justify-end">
-          <p className="text-white text-3xl font-light mr-5">{"</salt>"}</p>
+          <p className="text-white text-3xl font-light mr-5 pr-10">
+            {"</salt>"}
+          </p>
         </div>
         <article
           id="cv-article"
