@@ -101,28 +101,42 @@ export function createDevelopersRepository(db: Db) {
             )) FILTER (WHERE ${developerProfileLanguages.id} IS NOT NULL), '[]'::jsonb)`.as(
             "languages"
           ),
-          educations: sql<
-            Experience[]
-          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
-              'id', ${newDeveloperProfileEducations.id},
-              'organization', ${newDeveloperProfileEducations.organization},
-              'date', ${newDeveloperProfileEducations.date},
-              'role', ${newDeveloperProfileEducations.role},
-              'description', ${newDeveloperProfileEducations.description}
-            )) FILTER (WHERE ${newDeveloperProfileEducations.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "educations"
-          ),
-          jobs: sql<
-            Experience[]
-          >`COALESCE(jsonb_agg(DISTINCT jsonb_build_object(
-              'id', ${developerProfileJobs.id},
-              'organization', ${developerProfileJobs.organization},
-              'date', ${developerProfileJobs.date},
-              'role', ${developerProfileJobs.role},
-              'description', ${developerProfileJobs.description}
-            )) FILTER (WHERE ${developerProfileJobs.id} IS NOT NULL), '[]'::jsonb)`.as(
-            "jobs"
-          ),
+          educations: sql<Experience[]>`
+          COALESCE(
+            (
+              SELECT jsonb_agg(e ORDER BY e->>'date' DESC)
+              FROM (
+                SELECT DISTINCT jsonb_build_object(
+                  'id', ${newDeveloperProfileEducations.id},
+                  'organization', ${newDeveloperProfileEducations.organization},
+                  'date', ${newDeveloperProfileEducations.date},
+                  'role', ${newDeveloperProfileEducations.role},
+                  'description', ${newDeveloperProfileEducations.description}
+                ) AS e
+                FROM ${newDeveloperProfileEducations}
+                WHERE ${newDeveloperProfileEducations.developerProfileId} = ${developerProfiles.id}
+              ) sub
+            ),
+            '[]'::jsonb
+          )`.as("educations"),
+          jobs: sql<Experience[]>`
+          COALESCE(
+            (
+              SELECT jsonb_agg(j ORDER BY j->>'date' DESC)
+              FROM (
+                SELECT DISTINCT jsonb_build_object(
+                  'id', ${developerProfileJobs.id},
+                  'organization', ${developerProfileJobs.organization},
+                  'date', ${developerProfileJobs.date},
+                  'role', ${developerProfileJobs.role},
+                  'description', ${developerProfileJobs.description}
+                ) AS j
+                FROM ${developerProfileJobs}
+                WHERE ${developerProfileJobs.developerProfileId} = ${developerProfiles.id}
+              ) sub
+            ),
+            '[]'::jsonb
+          )`.as("jobs"),
         })
         .from(developerProfiles)
         .leftJoin(

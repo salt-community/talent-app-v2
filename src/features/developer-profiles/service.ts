@@ -210,6 +210,7 @@ export function createDeveloperProfilesService(
       );
       syncSearchWithOutboxMessage(outboxMessage);
     },
+
     async generateUniqueSlug(name: string) {
       const slug = generateSlug(name);
       let uniqueSlug = slug;
