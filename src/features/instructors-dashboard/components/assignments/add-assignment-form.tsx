@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { addAssignmentAction } from "../../action";
-import { Assignment } from "@/features/assignments";
 import { DialogTitle } from "@/components/ui/dialog";
+import { Assignment } from "../../types";
 
 const DEFAULT_CATEGORIES = [
   { id: "frontend", name: "Frontend" },
@@ -41,7 +41,6 @@ export function AddAssignmentForm({
 
   const [searchTerm, setSearchTerm] = useState("");
   const [title, setTitle] = useState(assignment?.title || "");
-  const [description, setDescription] = useState(assignment?.description || "");
 
   const handleSelectCategory = (category: { id: string; name: string }) => {
     if (!selectedCategories.find((c) => c.id === category.id)) {
@@ -93,7 +92,7 @@ export function AddAssignmentForm({
       const categories = selectedCategories.map((cat) => cat.id);
       if (assignment) {
       } else
-        await addAssignmentAction(cohortId, title, description, categories);
+        await addAssignmentAction(cohortId, title, categories);
       onSuccess();
     } catch (error) {
       console.error("Failed to create assignment:", error);
@@ -225,17 +224,6 @@ export function AddAssignmentForm({
           </div>
         </div>
       )}
-
-      <div>
-        <Label htmlFor="comment">Description</Label>
-        <Textarea
-          id="comment"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Add any additional comments or instructions"
-          className="min-h-[100px]"
-        />
-      </div>
 
       <Button
         onClick={handleSubmit}
