@@ -95,6 +95,21 @@ export function createAssignmentsService(db: Db) {
     async getAssignmentBySlug(slug: string) {
       return await repo.getAssignmentsBySlug(slug);
     },
+    async addCategory(category: string) {
+      //can be removed after merge
+      return await repo.addCategory(category);
+    },
+    async getAllCategories() {
+      //can be removed after merge
+      return await repo.getAllCategories();
+    },
+    async addAssignmentCategory(args: {
+      assignmentId: string;
+      categoryId: string;
+    }) {
+      //can be removed after merge
+      return await repo.addAssignmentCategory(args);
+    },
   };
 }
 function generateSlug(title: string) {
