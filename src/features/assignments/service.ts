@@ -6,7 +6,6 @@ import {
   AssignmentScore,
   AssignmentScoreFormData,
   AssignmentWithCategory,
-  NewAssignment,
 } from "./types";
 import { ScoreStatus } from "../instructors-dashboard/types";
 
