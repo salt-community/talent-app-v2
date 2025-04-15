@@ -11,11 +11,7 @@ type Props = {
   cohortId: string;
 };
 
-export async function AssignmentListItem({
-  assignment,
-  foundCohort,
-  cohortId,
-}: Props) {
+export async function AssignmentListItem({ assignment, foundCohort }: Props) {
   return (
     <div className="flex justify-between items-center border-b pb-4">
       <div className="flex items-center gap-4">
@@ -31,7 +27,7 @@ export async function AssignmentListItem({
         <CopyAssignmentButton
           link={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.slug}`}
         />
-        <EditAssignmentButton cohortId={cohortId} assignment={assignment} />
+        <EditAssignmentButton />
         <DeleteAssignmentButton
           assignmentId={assignment.id}
           name={assignment.title}

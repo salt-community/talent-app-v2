@@ -38,7 +38,7 @@ export const developerProfileLanguages = pgTable(
     level: integer().notNull().default(5),
   }
 );
-export const meiliSearchOutbox = pgTable("meili_search_outbox", {
+export const searchOutbox = pgTable("meili_search_outbox", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   developerProfileId: uuid("developer_profile_id").notNull(),
   operation: varchar().notNull(),
@@ -55,18 +55,17 @@ export const developerProfiles = pgTable("developer_profiles", {
   status: varchar("status").notNull().default("unpublished"),
   avatarUrl: varchar("avatar_url").notNull().default(""),
   title: varchar().notNull(),
-  headline: varchar(),
   links: jsonb().$type<SocialLink[]>().notNull(),
   bio: varchar(),
+  headerLanguage: varchar().default("english"),
 });
-
 
 export const newDeveloperProfileEducations = pgTable(
   "new_developer_profiles_educations",
   {
     id: uuid()
-    .primaryKey()
-    .default(sql`gen_random_uuid()`),
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
     developerProfileId: uuid("developerProfile_id").references(
       () => developerProfiles.id,
       {
@@ -80,21 +79,18 @@ export const newDeveloperProfileEducations = pgTable(
   }
 );
 
-export const developerProfileJobs = pgTable(
-  "developer_profiles_jobs",
-  {
-    id: uuid()
+export const developerProfileJobs = pgTable("developer_profiles_jobs", {
+  id: uuid()
     .primaryKey()
     .default(sql`gen_random_uuid()`),
-    developerProfileId: uuid("developerProfile_id").references(
-      () => developerProfiles.id,
-      {
-        onDelete: "cascade",
-      }
-    ),
-    organization: varchar().notNull(),
-    date: varchar().notNull(),
-    role: varchar().notNull(),
-    description: varchar().notNull(),
-  }
-);
+  developerProfileId: uuid("developerProfile_id").references(
+    () => developerProfiles.id,
+    {
+      onDelete: "cascade",
+    }
+  ),
+  organization: varchar().notNull(),
+  date: varchar().notNull(),
+  role: varchar().notNull(),
+  description: varchar().notNull(),
+});

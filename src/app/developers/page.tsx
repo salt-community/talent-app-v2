@@ -4,6 +4,8 @@ import {
   developerProfilesService,
   Developers,
 } from "@/features/developer-profiles";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 
@@ -20,7 +22,9 @@ export default async function Page({ searchParams }: Props) {
   return (
     <main className="px-4 pb-6">
       <Search />
-      <Developers developerProfileIds={developerProfileIds} />
+      <Suspense fallback={<Loading />}>
+        <Developers developerProfileIds={developerProfileIds} />
+      </Suspense>
     </main>
   );
 }

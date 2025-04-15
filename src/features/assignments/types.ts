@@ -19,6 +19,23 @@ export type GetScoredAssignmentsByCohortIdAndIdentityId =
   AssignmentsService["getScoredAssignmentsByCohortIdAndIdentityId"];
 export type GetAverageScoresByIdentityId =
   AssignmentsService["getAverageScoresByIdentityId"];
+export type GetScoresWithFeedbackByAssignmentId =
+  AssignmentsService["getScoresWithFeedbackByAssignmentId"];
+export type GetAssignmentWithCategoriesBySlug =
+  AssignmentsService["getAssignmentWithCategoriesBySlug"];
+export type GetFixListByAssignmentScoreId =
+  AssignmentsService["getFixListByAssignmentScoreId"];
+
+export type AddFixToAssignmentScore =
+  AssignmentsService["addFixToAssignmentScore"];
+
+export type AddPrivateNoteToAssignmentScore =
+  AssignmentsService["addPrivateNoteToAssignmentScore"];
+export type getPrivateNotesByAssignmentScoreId =
+  AssignmentsService["getPrivateNotesByAssignmentScoreId"];
+
+export type GetCategoryByAssignmentId =
+  AssignmentsService["getCategoryByAssignmentId"];
 
 export type Assignment = typeof assignments.$inferSelect;
 export type NewAssignment = typeof assignments.$inferInsert;
@@ -34,6 +51,7 @@ export type AssignmentScore = {
 export type AssignmentFeedback = {
   assignmentScoreId: string;
   comment?: string;
+  score?: number;
   categoryId?: string;
 };
 
@@ -62,6 +80,22 @@ export type CategoryScore = {
 export type CategoryAverage = {
   category: string;
   score: number;
+};
+
+export type ScoreStatus = {
+  assignmentId: string;
+  identityId: string;
+  status: string;
+};
+
+export type FixItem = {
+  id: string;
+  assignmentScoreId: string;
+  description: string;
+  isCompleted: boolean;
+  dueDate: Date | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
 };
 
 export type AssignmentsService = ReturnType<typeof createAssignmentsService>;

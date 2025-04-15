@@ -12,7 +12,7 @@ type Props = {
 
 export function DeveloperDashboard({ developers }: Props) {
   const [filterStatus, setFilterStatus] = useState({
-    highlighted: false,
+    highlighted: true,
     published: true,
     unpublished: true,
   });

@@ -1,12 +1,18 @@
 import { GetAllIdentities } from "../iam";
 import {
+  AddFixToAssignmentScore,
+  AddPrivateNoteToAssignmentScore,
   Assignment,
   AssignmentScore,
   CreateAssignment,
   DeleteAssignmentById,
   GetAssignmentBySlug,
   GetAssignmentsByCohortId,
+  GetAssignmentWithCategoriesBySlug,
+  GetFixListByAssignmentScoreId,
+  getPrivateNotesByAssignmentScoreId,
   GetScoresByAssignmentId,
+  GetScoresWithFeedbackByAssignmentId,
   NewAssignment,
   UpdateScoreStatuses,
   UpsertAssignmentScore,
@@ -37,6 +43,12 @@ export function createInstructorService(
   upsertAssignmentScore: UpsertAssignmentScore,
   getScoresByAssignmentId: GetScoresByAssignmentId,
   updateScoreStatuses: UpdateScoreStatuses,
+  getAssignmentWithCategoriesBySlug: GetAssignmentWithCategoriesBySlug,
+  getScoresWithFeedbackByAssignmentId: GetScoresWithFeedbackByAssignmentId,
+  getFixListByAssignmentScoreId: GetFixListByAssignmentScoreId,
+  addFixToAssignmentScore: AddFixToAssignmentScore,
+  addPrivateNoteToAssignmentScore: AddPrivateNoteToAssignmentScore,
+  getPrivateNotesByAssignmentScoreId: getPrivateNotesByAssignmentScoreId,
   getAllIdentities: GetAllIdentities
 ) {
   return {
@@ -79,8 +91,12 @@ export function createInstructorService(
       return await deleteAssignmentById(assignmentId);
     },
 
-    async addScoreToAssignment(assignment: AssignmentScore) {
-      return await upsertAssignmentScore(assignment);
+    async addScoreToAssignment(
+      assignment: AssignmentScore,
+      feedbackData: { comment: string; score: number; categoryId: string }
+    ) {
+      const args = { scoreData: assignment, feedbackData };
+      return await upsertAssignmentScore(args);
     },
 
     async updateScoreStatuses(scoreStatuses: ScoreStatus[]) {
@@ -88,38 +104,95 @@ export function createInstructorService(
     },
 
     async getAssignmentDataBySlug(slug: string) {
-      const assignment = await getAssignmentBySlug(slug);
+      const assignment = await getAssignmentWithCategoriesBySlug(slug);
       if (!assignment) return null;
 
       const developers = await getCohortStudentsByCohortId(assignment.cohortId);
       if (!developers) return null;
 
-      const assignmentScores = await getScoresByAssignmentId(assignment.id);
+      const assignmentScores = await getScoresWithFeedbackByAssignmentId(
+        assignment.id
+      );
+
+      const fixLists = await Promise.all(
+        assignmentScores.map(async (score) => {
+          try {
+            const items = await getFixListByAssignmentScoreId(score.id);
+
+            return items.map((item) => ({
+              ...item,
+              developerId: score.identityId,
+              assignmentScoreId: score.id,
+            }));
+          } catch (error) {
+            console.error(
+              `Error fetching fix list for score id ${score.id}:`,
+              error
+            );
+            return [];
+          }
+        })
+      ).then((results) => {
+        const allFixLists = results.flat();
+        return Array.from(
+          new Map(allFixLists.map((item) => [item.id, item])).values()
+        );
+      });
+
+      const privateNotes = await Promise.all(
+        assignmentScores.map(async (score) => {
+          try {
+            const notes = await getPrivateNotesByAssignmentScoreId(score.id);
+
+            return notes.map((note) => ({
+              ...note,
+              assignmentScoreId: score.id,
+            }));
+          } catch (error) {
+            console.error(
+              `Error fetching private notes for score id ${score.id}:`,
+              error
+            );
+            return [];
+          }
+        })
+      ).then((results) => {
+        const allPrivateNotes = results.flat();
+
+        return Array.from(
+          new Map(allPrivateNotes.map((item) => [item.id, item])).values()
+        );
+      });
+
+      const assignmentCategories = assignment.categories || [];
 
       const developersWithScores = developers.map((developer) => {
-        const scores =
-          assignment.categories?.map((category) => {
-            const score = assignmentScores.find(
-              (score) =>
-                score.identityId === developer.id && score.category === category
-            );
-            return {
-              id: score?.id,
-              assignmentId: assignment.id,
-              identityId: developer.id,
-              category,
-              comment: score?.comment || "",
-              score: score?.score || 0,
-              createdAt: score?.createdAt || null,
-            };
-          }) || [];
+        const developerScores = assignmentScores.filter(
+          (score) => score.identityId === developer.id
+        );
 
-        const scored = assignmentScores.some(
-          (s) => s.identityId === developer.id
+        const scored = developerScores.length > 0;
+
+        const published = developerScores.some(
+          (score) => score.status === "published"
         );
-        const published = assignmentScores.some(
-          (s) => s.identityId === developer.id && s.status === "published"
-        );
+
+        const scores = assignmentCategories.map((category) => {
+          const matchingScore = developerScores.find(
+            (score) => score.categoryId === category.id
+          );
+
+          return {
+            id: matchingScore?.id || null,
+            assignmentId: assignment.id,
+            identityId: developer.id,
+            categoryId: category.id,
+            categoryName: category.name,
+            comment: matchingScore?.comment || "",
+            score: matchingScore?.score || 0,
+            createdAt: matchingScore?.createdAt || null,
+          };
+        });
 
         return {
           developer,
@@ -129,7 +202,7 @@ export function createInstructorService(
         };
       });
 
-      return { assignment, developersWithScores };
+      return { assignment, developersWithScores, fixLists, privateNotes };
     },
 
     async getCohortDevelopersDataByName(cohortName: string) {
@@ -158,6 +231,21 @@ export function createInstructorService(
         developers,
         unsignedDevelopers,
       };
+    },
+
+    async addFixToAssignmentScore(args: {
+      assignmentScoreId: string;
+      description: string;
+      dueDate?: Date;
+    }) {
+      return await addFixToAssignmentScore(args);
+    },
+
+    async addPrivateNoteToAssignmentScore(args: {
+      assignmentScoreId: string;
+      note: string;
+    }) {
+      return await addPrivateNoteToAssignmentScore(args);
     },
   };
 }

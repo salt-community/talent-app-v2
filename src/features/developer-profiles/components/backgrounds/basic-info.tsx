@@ -12,10 +12,7 @@ export function BackgroundBasicInfo({ developerProfile }: Props) {
           <p className="uppercase text-sm font-semibold">
             {developerProfile.title}
           </p>
-
           <H2>{developerProfile.name}</H2>
-
-          <p className="font-light text-slate-600">{developerProfile.bio}</p>
         </div>
       </div>
     </section>

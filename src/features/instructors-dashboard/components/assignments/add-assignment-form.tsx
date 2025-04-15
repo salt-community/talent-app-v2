@@ -6,7 +6,7 @@ import { ChevronDown, X, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { addAssignmentAction, updateAssignmentAction } from "../../action";
+import { addAssignmentAction } from "../../action";
 import { Assignment } from "@/features/assignments";
 import { DialogTitle } from "@/components/ui/dialog";
 
@@ -32,15 +32,18 @@ export function AddAssignmentForm({
 }: Props) {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState(
-    assignment?.categories?.map((category) => ({
-      id: category,
-      name: category,
-    })) || []
-  );
+  // const [selectedCategories, setSelectedCategories] = useState(
+  //   assignment?.categories?.map((category) => ({
+  //     id: category,
+  //     name: category,
+  //   })) || []
+  // );
+
+  const [selectedCategories, setSelectedCategories] = useState<Array<{id: string, name: string}>>([]);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [title, setTitle] = useState(assignment?.title || "");
-  const [comment, setComment] = useState(assignment?.comment || "");
+  const [description, setDescription] = useState(assignment?.description || "");
 
   const handleSelectCategory = (category: { id: string; name: string }) => {
     if (!selectedCategories.find((c) => c.id === category.id)) {
@@ -91,13 +94,8 @@ export function AddAssignmentForm({
     try {
       const categories = selectedCategories.map((cat) => cat.id);
       if (assignment) {
-        await updateAssignmentAction({
-          ...assignment,
-          title,
-          comment,
-          categories,
-        });
-      } else await addAssignmentAction(cohortId, title, comment, categories);
+      } else
+        await addAssignmentAction(cohortId, title, description, categories);
       onSuccess();
     } catch (error) {
       console.error("Failed to create assignment:", error);
@@ -234,8 +232,8 @@ export function AddAssignmentForm({
         <Label htmlFor="comment">Comment</Label>
         <Textarea
           id="comment"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           placeholder="Add any additional comments or instructions"
           className="min-h-[100px]"
         />

@@ -13,7 +13,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
-  user: { slug: string; id: string; role: string } | undefined;
   permissions: {
     hasAdminDashboardAccess: boolean;
     hasDeveloperAccess: boolean;
@@ -21,7 +20,7 @@ type Props = {
   };
 };
 
-export function HamburgerMenu({ user, permissions }: Props) {
+export function HamburgerMenu({ permissions }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
@@ -58,12 +57,16 @@ export function HamburgerMenu({ user, permissions }: Props) {
           {permissions.hasDeveloperAccess && (
             <li
               className={`border-b ${
-                isActive(`/profile/${user?.id}`)
+                isActive(`/developer-dashboard/assignments`) ||
+                isActive("/developer-dashboard/profiles")
                   ? "border-primary"
                   : "border-white"
               } hover:border-primary`}
             >
-              <Link href={`/developer-dashboard/assignments`}>
+              <Link
+                href={`/developer-dashboard/assignments`}
+                onClick={closeMenu}
+              >
                 Developer Dashboard
               </Link>
             </li>
@@ -71,7 +74,9 @@ export function HamburgerMenu({ user, permissions }: Props) {
           {permissions.hasInstructorsDashboardAccess && (
             <li
               className={`border-b ${
-                isActive("/cohorts") ? "border-primary" : "border-white"
+                isActive("/instructor-dashboard")
+                  ? "border-primary"
+                  : "border-white"
               } hover:border-primary`}
             >
               <Link href="/instructor-dashboard" onClick={closeMenu}>

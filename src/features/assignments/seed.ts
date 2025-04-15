@@ -1,5 +1,5 @@
-import { categoryTags } from "./categories";
 import { assignmentsSeedingService } from "./instance";
+import { categoryTags } from "./categories";
 
 const getRandomTags = (allTags: string[], maxTags: number): string[] => {
   const shuffled = [...allTags].sort(() => 0.5 - Math.random());
@@ -35,26 +35,47 @@ export const seedAssignments = async (cohortIds: string[]) => {
     "Create a Custom Animation Library",
     "Design an Accessibility-First Web App",
   ];
-
+  await assignmentsSeedingService.ensureCategoriesExist(
+    getRandomTags(categoryTags, 10)
+  );
   await assignmentsSeedingService.deleteAllAssignments();
+
+  const usedSlugs = new Set();
 
   for (let i = 0; i < 5; i++) {
     try {
-      await assignmentsSeedingService.createAssignment({
-        cohortId: cohortIds[0],
-        title:
-          assignmentTitles[
-            Math.floor(Math.random() * assignmentTitles.length)
-          ] + i,
-        comment: `This is a comment for assignment ${i + 1}`,
-        categories: getRandomTags(categoryTags, 3),
-        slug: generateSlug(assignmentTitles[i]),
-      });
+      const baseTitle =
+        assignmentTitles[Math.floor(Math.random() * assignmentTitles.length)];
+      const title = `${baseTitle} ${i}`;
+
+      let slug = generateSlug(title);
+      let counter = 1;
+
+      while (usedSlugs.has(slug)) {
+        slug = generateSlug(`${title}-${counter}`);
+        counter++;
+      }
+
+      usedSlugs.add(slug);
+
+      const createdAssignment =
+        await assignmentsSeedingService.createAssignment({
+          cohortId: cohortIds[0],
+          title,
+          description: `This is a description for assignment ${i + 1}`,
+          slug,
+        });
+
+      const categoryIds =
+        await assignmentsSeedingService.getRandomCategoryIds(3);
+
+      const args = { assignmentId: createdAssignment.id, categoryIds };
+
+      await assignmentsSeedingService.attachCategoriesToAssignment(args);
     } catch (error) {
-      console.error("Error while seeding assignments and scores:", error);
+      console.error("Error while seeding assignments:", error);
     }
   }
-
   console.log("Done seeding assignments!");
 };
 

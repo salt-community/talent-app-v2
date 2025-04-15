@@ -25,6 +25,8 @@ export function EditableField({
       : fontSize === "md"
         ? "text-xl font-bold text-paragraph-light"
         : "text-4xl font-extrabold";
+  const width =
+    placeholder === "Role" || (placeholder === "Organization" && " truncate");
 
   return (
     <>
@@ -32,7 +34,7 @@ export function EditableField({
         <div
           className={cn(
             "w-full p-0 border rounded-md border-gray-500",
-            focus && "ring",
+            focus && "ring"
           )}
         >
           <AutosizeTextarea
@@ -43,7 +45,7 @@ export function EditableField({
             onBlur={() => setFocus(false)}
             className={cn(
               "border border-transparent py-0 px-1 resize-none leading-none overflow-hidden",
-              textClass,
+              textClass
             )}
             minHeight={textSize + 10}
           />
@@ -55,6 +57,7 @@ export function EditableField({
             className={cn(
               "flex outline-none text-sm border border-transparent p-0 resize-none leading-none w-full",
               textClass,
+              width
             )}
           >
             {value}

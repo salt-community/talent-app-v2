@@ -6,21 +6,21 @@ import { projectsService } from "../projects";
 export const adminService = createAdminService(
   {
     delete: developerProfilesService.delete,
-    updateStatus: developerProfilesService.updateStatus,
+    updateDeveloperProfile: developerProfilesService.updateDeveloperProfile,
     deleteDeveloperProfileByIdentityId:
       developerProfilesService.deleteByIdentityId,
     getDeveloperProfileIdById: developerProfilesService.getAllById,
-    deleteMeiliSearchDocument:
-      developerProfilesService.deleteMeiliSearchDocument,
+    deleteDeveloperProfileFromSearch:
+      developerProfilesService.deleteDeveloperProfileFromSearch,
   },
   {
     isHealthOk: developerProfilesService.isSearchHealthOk,
-    repopulate: developerProfilesService.repopulateMeiliSearch,
-    sync: developerProfilesService.syncMeilisearch,
-    doesNeedSync: developerProfilesService.doesMeilisearchNeedSync,
-    getSettings: developerProfilesService.getMeilisearchSettings,
-    updateSettings: developerProfilesService.updateMeilisearchSettings,
-    resetSettings: developerProfilesService.resetMeilisearchSettings,
+    repopulate: developerProfilesService.repopulateSearch,
+    sync: developerProfilesService.syncSearch,
+    doesNeedSync: developerProfilesService.isSearchSyncRequired,
+    getSettings: developerProfilesService.geSearchSettings,
+    updateSettings: developerProfilesService.updateSearchSettings,
+    resetSettings: developerProfilesService.resetSearchSettings,
     ensureSearchIndex: developerProfilesService.ensureSearchIndex,
   },
   {
@@ -28,5 +28,5 @@ export const adminService = createAdminService(
     getAllIdentities: iamService.getAllIdentities,
     deleteIdentity: iamService.deleteIdentity,
   },
-  projectsService.deleteProjectsByDeveloperProfileId
+  projectsService.deleteProjectsByDeveloperProfileId,
 );

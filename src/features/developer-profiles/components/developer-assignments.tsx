@@ -1,12 +1,17 @@
+"use server";
+
 import Link from "next/link";
 import { developerProfilesService } from "../instance";
 import { Separator } from "@/components";
+import { notFound } from "next/navigation";
 
-type Props = {
-  identityId: string;
-};
+export async function DeveloperAssignments() {
+  const profiles = await developerProfilesService.getCurrentUsers();
+  const identityId = profiles?.id;
 
-export async function DeveloperAssignments({ identityId }: Props) {
+  if (!identityId) {
+    return notFound();
+  }
   const assignments =
     await developerProfilesService.getScoredAssignmentsByIdentityId(identityId);
   const averageScore =
@@ -14,11 +19,11 @@ export async function DeveloperAssignments({ identityId }: Props) {
 
   const getScoreColorClass = (score: number) => {
     if (score <= 50) {
-      return "text-red-600 font-extrabold"; // Red for score <= 50
+      return "text-red-600 font-extrabold";
     } else if (score >= 51 && score <= 94) {
-      return "text-orange-500"; // Orange for score 51-94
+      return "text-orange-500";
     } else {
-      return "text-green-500"; // Green for score >= 95
+      return "text-green-500";
     }
   };
 

@@ -1,10 +1,11 @@
 import { Experience } from "./components/cv/cv-main-content";
 import {
-  developerProfileEducations,
+  developerProfileJobs,
   developerProfileLanguages,
   developerProfiles,
   developerProfileSkills,
-  meiliSearchOutbox,
+  searchOutbox,
+  newDeveloperProfileEducations,
 } from "./db-schema";
 import { createDeveloperProfilesService } from "./service";
 import { JwtPayload } from "jsonwebtoken";
@@ -49,20 +50,6 @@ export type AddDeveloperProfile = {
   skills?: string[];
   educations?: string[];
   languages?: string[];
-  headline?: string;
-};
-
-export type BackgroundInfo = {
-  id: string;
-  identityId: string;
-  name: string;
-  avatarUrl: string;
-  title: string;
-  bio: string | null;
-  links: SocialLink[];
-  skills: SkillSelect[];
-  languages: LanguageSelect[];
-  educations: EducationSelect[];
 };
 
 export type CvInfo = {
@@ -77,6 +64,8 @@ export type CvInfo = {
   languages: LanguageInsert[];
   educations: Experience[];
   jobs: Experience[];
+  status: string;
+  headerLanguage: string | null;
 };
 
 export type developerProfileUpdate = Partial<DeveloperProfileInsert> &
@@ -124,13 +113,77 @@ export type SocialLink = {
   name: string;
 };
 
+export type Category = {
+  id: string;
+  name: string;
+  description: string;
+  assignmentId: string;
+  categoryId: string;
+};
+
+export type Assignment_Feedback = {
+  id: string;
+  assignmentScoreId: string;
+  comment: string | null;
+  categoryName: string | null;
+  score: number | null;
+  categoryId: string | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+};
+
+export type Scores = {
+  id: string;
+  assignmentId: string;
+  createdAt: Date;
+  identityId: string;
+  status: string;
+  updatedAt: Date;
+};
+
+export type Fix_Item = {
+  id: string;
+  assignmentScoreId: string;
+  description: string;
+  isCompleted: boolean;
+  dueDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type TabType = "feedback" | "fixList";
+
 export type DeveloperProfileInsert = typeof developerProfiles.$inferInsert;
-export type OutboxMessageInsert = typeof meiliSearchOutbox.$inferInsert;
-export type OutboxMessageSelect = typeof meiliSearchOutbox.$inferSelect;
+export type DeveloperProfileUpdate = Partial<DeveloperProfileInsert> & {
+  id: string;
+};
+export type OutboxMessageInsert = typeof searchOutbox.$inferInsert;
+export type OutboxMessageSelect = typeof searchOutbox.$inferSelect;
 
 export type SkillInsert = typeof developerProfileSkills.$inferInsert;
 export type SkillSelect = typeof developerProfileSkills.$inferSelect;
+export type SkillUpdate = Partial<SkillInsert> & { name: string };
+
 export type LanguageInsert = typeof developerProfileLanguages.$inferInsert;
 export type LanguageSelect = typeof developerProfileLanguages.$inferSelect;
-export type EducationInsert = typeof developerProfileEducations.$inferInsert;
-export type EducationSelect = typeof developerProfileEducations.$inferSelect;
+export type LanguageUpdate = Partial<LanguageInsert> & { name: string };
+
+export type EducationInsert = typeof newDeveloperProfileEducations.$inferInsert;
+export type EducationSelect = typeof newDeveloperProfileEducations.$inferSelect;
+export type EducationUpdate = EducationInsert;
+
+export type JobsInsert = typeof developerProfileJobs.$inferInsert;
+export type JobsSelect = typeof developerProfileJobs.$inferSelect;
+export type JobsUpdate = JobsInsert;
+
+export type DeveloperProfileDetailsUpdate = DeveloperProfileUpdate & {
+  skills?: SkillUpdate[];
+  languages?: LanguageUpdate[];
+  educations?: EducationUpdate[];
+  jobs?: JobsInsert[];
+};
+
+export type CopyDeveloperProfile = CvInfo & {
+  slug: string | null;
+  email: string | null;
+};

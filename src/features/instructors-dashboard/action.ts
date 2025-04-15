@@ -4,8 +4,8 @@ import { z } from "zod";
 import { instructorService } from "./instance";
 import { assignmentSchema, newAssignmentSchema } from "./validation";
 import { CohortFormData } from "../cohorts";
-import { Assignment, AssignmentScore } from "../assignments";
-import { ScoreStatus } from "./types";
+import { AssignmentScore } from "../assignments";
+import { Assignment, ScoreStatus } from "./types";
 
 export async function addCohortAction(cohort: CohortFormData) {
   try {
@@ -47,9 +47,9 @@ export async function addAssignmentAction(
   }
 }
 
-export async function updateAssignmentAction(assigment: Assignment) {
+export async function updateAssignmentAction(rawAssignment: Assignment) {
   try {
-    const assignment = assignmentSchema.parse({ ...assigment, score: 0 });
+    const assignment = assignmentSchema.parse({ ...rawAssignment, score: 0 });
     console.log("Parsed assignment:", assignment);
     await instructorService.updateAssignment(assignment);
     revalidatePath("/instructor-dashboard", "layout");
@@ -135,25 +135,50 @@ export async function deleteAssignmentByIdAction(assignmentId: string) {
   }
 }
 
-export async function addScoreToAssignment(score: AssignmentScore) {
-  try {
-    await instructorService.addScoreToAssignment(score);
-    revalidatePath("/instructor-dashboard", "layout");
-    return { success: true };
-  } catch (error) {
-    console.error(error);
-    return {
-      success: false,
-      error: "Failed to add score to assignment",
-    };
-  }
-}
-
 export async function updateScoreStatusesAction(scoreStatuses: ScoreStatus[]) {
   try {
     await instructorService.updateScoreStatuses(scoreStatuses);
     revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function updateScoreAction(
+  score: AssignmentScore,
+  feedbackData: { comment: string; score: number; categoryId: string }
+) {
+  try {
+    await instructorService.addScoreToAssignment(score, feedbackData);
+    revalidatePath("/instructor-dashboard", "layout");
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to update score:", error);
+    return { success: false };
+  }
+}
+
+export async function addFixToAssignmentScoreAction(args: {
+  assignmentScoreId: string;
+  description: string;
+  dueDate?: Date;
+}) {
+  try {
+    await instructorService.addFixToAssignmentScore(args);
+    revalidatePath("/instructor-dashboard", "layout");
+  } catch (error) {
+    console.error("Failed to add fix:", error);
+  }
+}
+
+export async function addPrivateNoteToAssignmentScoreAction(args: {
+  assignmentScoreId: string;
+  note: string;
+}) {
+  try {
+    await instructorService.addPrivateNoteToAssignmentScore(args);
+    revalidatePath("/instructor-dashboard", "layout");
+  } catch (error) {
+    console.error("Failed to add private note:", error);
   }
 }

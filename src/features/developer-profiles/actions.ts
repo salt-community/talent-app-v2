@@ -14,20 +14,43 @@ export async function addDeveloperProfileAction(identityId: string) {
   revalidatePath("/profile");
 }
 
+export async function copyDeveloperProfileAction(developerProfileId: string) {
+  try {
+    await developerProfilesService.copyDeveloperProfile(developerProfileId);
+  } catch (error) {
+    errorHandler(error);
+  }
+  revalidatePath("/developer-dashboard/profiles");
+}
+export async function deleteDeveloperProfileAction(developerProfileId: string) {
+  try {
+    await developerProfilesService.delete(developerProfileId);
+  } catch (error) {
+    errorHandler(error);
+  }
+  revalidatePath("/developer-dashboard/profiles");
+}
 
-export async function updateCvAction(backgrounds: CvInfo) {
-  const background = {
-    id: backgrounds.id,
-    name: backgrounds.name,
-    bio: backgrounds.bio,
-    avatarUrl: backgrounds.avatarUrl,
-    skills: backgrounds.skills.map((skill) => skill.name),
-    languages: backgrounds.languages.map((language) => language.name),
-    links: backgrounds.links,
-    jobs: backgrounds.jobs,
-    educations: backgrounds.educations,
+export async function updateCvAction(background: CvInfo) {
+  await developerProfilesService.updateDeveloperProfile(background);
+  revalidatePath("/developers");
+}
+
+export async function updateProfileCard({
+  id,
+  title,
+  name,
+}: {
+  id: string;
+  title: string;
+  name: string;
+}) {
+  const developerProfileData = {
+    id,
+    title,
+    name,
   };
 
-  await developerProfilesService.updateDeveloperProfile(background);
+  await developerProfilesService.updateDeveloperProfile(developerProfileData);
   revalidatePath("/developers");
 }

@@ -1,17 +1,28 @@
 "use client";
 
-import { FaGithub } from "react-icons/fa6";
+import { cn } from "@/lib/utils";
 import type { SocialLink } from "../../types";
 import Link from "next/link";
 
-type Props = SocialLink & { size?: number };
+type Props = SocialLink & {
+  size?: number;
+  variant?: "default" | "cv";
+};
 
-export function SocialLink({ url, name, size = 20 }: Props) {
+export function SocialLink({ url, name, variant = "default" }: Props) {
   return (
     <>
       {name === "Github" && (
-        <Link href={url} target="_blank" rel="noopener noreferrer">
-          <FaGithub size={size} />
+        <Link
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            "text-sm truncate overflow-hidden whitespace-nowrap",
+            variant === "cv" && "text-white"
+          )}
+        >
+          <span className="truncate">{url}</span>
         </Link>
       )}
       {name === "Resume" && (
@@ -19,9 +30,12 @@ export function SocialLink({ url, name, size = 20 }: Props) {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-bold text-[16px] leading-none"
+          className={cn(
+            "text-sm truncate overflow-hidden whitespace-nowrap",
+            variant === "cv" && "text-white"
+          )}
         >
-          CV{" "}
+          <span className="truncate">{url}</span>
         </Link>
       )}
     </>

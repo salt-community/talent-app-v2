@@ -13,17 +13,12 @@ export async function DeveloperProfileList() {
   }
 
   return (
-    <div className="mx-auto md:px-4 py-8 max-w-6xl">
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold mb-4">Developer Profiles</h1>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="mx-auto md:px-0 py-8 flex flex-col gap-6">
+      <h1 className="text-2xl font-bold text-center">Developer Profiles</h1>
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {Array.isArray(profiles.developerProfile) &&
           profiles.developerProfile.map((profile) => (
-            <div key={profile.id}>
-              <DeveloperProfileCard developerProfileId={profile.id} />
-            </div>
+            <DeveloperProfileCard developerProfileId={profile.id} key={profile.id}/>
           ))}
       </div>
       <div className="mb-6">

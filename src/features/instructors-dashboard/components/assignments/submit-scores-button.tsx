@@ -21,7 +21,6 @@ export function SubmitScoresButton({ scoreStatuses }: Props) {
 
   const publishScores = async () => {
     await updateScoreStatusesAction(scoreStatuses);
-
     setOpen(false);
   };
 

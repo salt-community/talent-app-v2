@@ -5,13 +5,13 @@ import {
   timestamp,
   integer,
   boolean,
-  text,
+  unique,
 } from "drizzle-orm/pg-core";
 
 export const categories = pgTable("categories", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: varchar("name").notNull().unique(),
-  description: text("description"),
+  description: varchar("description"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -20,7 +20,9 @@ export const assignments = pgTable("assignments", {
   cohortId: uuid("cohort_id").notNull(),
   title: varchar("title").notNull(),
   slug: varchar("slug").unique(),
-  description: text("description"),
+  comment: varchar("comment").default(""),
+  categories: varchar("categories").array().default([]),
+  description: varchar("description"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -34,38 +36,57 @@ export const assignmentCategories = pgTable("assignment_categories", {
     .references(() => categories.id)
     .notNull(),
   createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const assignmentScores = pgTable("assignment_scores", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  assignmentId: uuid("assignment_id")
-    .references(() => assignments.id)
-    .notNull(),
-  identityId: uuid("identity_id").notNull(),
-  score: integer("score").default(0),
-  status: varchar("status").default("unpublished"),
-  createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
+
+export const assignmentScores = pgTable(
+  "assignment_scores",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    assignmentId: uuid("assignment_id").notNull(),
+    identityId: uuid("identity_id").notNull(),
+    status: varchar("status").default("unpublished"),
+    score: integer("score").default(0),
+    comment: varchar("comment").default(""),
+    category: varchar("category").default(""),
+    createdAt: timestamp("created_at").defaultNow(),
+    updatedAt: timestamp("updated_at").defaultNow(),
+  },
+  (table) => ({
+    unique: unique().on(table.assignmentId, table.identityId),
+  })
+);
 
 export const assignmentFeedback = pgTable("assignment_feedback", {
   id: uuid("id").primaryKey().defaultRandom(),
   assignmentScoreId: uuid("assignment_score_id")
     .references(() => assignmentScores.id)
     .notNull(),
-  comment: text("comment").default(""),
+  comment: varchar("comment").default(""),
+  score: integer("score").default(0),
   categoryId: uuid("category_id").references(() => categories.id),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const fixList = pgTable("fix_items", {
+export const fixList = pgTable("assignment_fix_items", {
   id: uuid("id").primaryKey().defaultRandom(),
-  feedbackId: uuid("feedback_id")
-    .references(() => assignmentFeedback.id)
+  assignmentScoreId: uuid("assignment_score_id")
+    .references(() => assignmentScores.id)
     .notNull(),
   description: varchar("description").notNull(),
   isCompleted: boolean("is_completed").default(false),
+  dueDate: timestamp("due_date"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const assignmentPrivateNotes = pgTable("assignment_private_notes", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  assignmentScoreId: uuid("assignment_score_id")
+    .references(() => assignmentScores.id)
+    .notNull(),
+  note: varchar("content").default(""),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });

@@ -1,14 +1,18 @@
 import { Db } from "@/db";
 import { and, eq } from "drizzle-orm";
 import {
+  assignmentCategories,
   assignmentFeedback,
+  assignmentPrivateNotes,
   assignments,
   assignmentScores,
   categories,
+  fixList,
 } from "./schema";
 import {
   AssignmentScore,
   AssignmentScoreFormData,
+  FixItem,
   NewAssignment,
 } from "./types";
 import { ScoreStatus } from "../instructors-dashboard/types";
@@ -31,7 +35,7 @@ export function createAssignmentsRepository(db: Db) {
       cohortId: string,
       identityId: string
     ) {
-      return await db
+      const assignmentsWithScores = await db
         .select()
         .from(assignments)
         .leftJoin(
@@ -41,12 +45,57 @@ export function createAssignmentsRepository(db: Db) {
             eq(assignmentScores.identityId, identityId)
           )
         )
+        .leftJoin(
+          assignmentFeedback,
+          eq(assignmentFeedback.assignmentScoreId, assignmentScores.id)
+        )
+        .leftJoin(categories, eq(assignmentFeedback.categoryId, categories.id))
         .where(
           and(
             eq(assignments.cohortId, cohortId),
             eq(assignmentScores.status, "published")
           )
         );
+
+      const enhancedAssignments = await Promise.all(
+        assignmentsWithScores.map(async (assignment) => {
+          let fixItemsArray: {
+            id: string;
+            assignmentScoreId: string;
+            description: string;
+            isCompleted: boolean | null;
+            dueDate: Date | null;
+            createdAt: Date | null;
+            updatedAt: Date | null;
+          }[] = [];
+
+          if (assignment.assignment_scores?.id) {
+            const dbFixItems = await db
+              .select()
+              .from(fixList)
+              .where(
+                eq(fixList.assignmentScoreId, assignment.assignment_scores.id)
+              );
+
+            fixItemsArray = dbFixItems.map((item) => ({
+              id: item.id,
+              assignmentScoreId: item.assignmentScoreId,
+              description: item.description,
+              isCompleted: item.isCompleted,
+              dueDate: item.dueDate,
+              createdAt: item.createdAt,
+              updatedAt: item.updatedAt,
+            }));
+          }
+
+          return {
+            ...assignment,
+            assignment_fix_items: fixItemsArray as FixItem[],
+          };
+        })
+      );
+
+      return enhancedAssignments;
     },
 
     async getAssignmentById(id: string) {
@@ -73,11 +122,11 @@ export function createAssignmentsRepository(db: Db) {
         .select({
           scoreId: assignmentScores.id,
           assignmentId: assignmentScores.assignmentId,
-          score: assignmentScores.score,
           status: assignmentScores.status,
           comment: assignmentFeedback.comment,
           categoryId: assignmentFeedback.categoryId,
           categoryName: categories.name,
+          score: assignmentFeedback.score,
         })
         .from(assignmentScores)
         .leftJoin(
@@ -113,56 +162,68 @@ export function createAssignmentsRepository(db: Db) {
         .where(eq(assignmentScores.assignmentId, assignmentId));
     },
 
-    async upsertAssignmentScore(
-      scoreData: AssignmentScore,
-      feedbackData?: { comment?: string; categoryId?: string }
-    ) {
+    async upsertAssignmentScore(args: {
+      scoreData: AssignmentScore;
+      feedbackData?: { comment?: string; score: number; categoryId?: string };
+    }) {
       return await db.transaction(async (tx) => {
         const [insertedScore] = await tx
           .insert(assignmentScores)
           .values({
-            id: scoreData.id,
-            assignmentId: scoreData.assignmentId,
-            identityId: scoreData.identityId,
-            score: scoreData.score,
-            status: scoreData.status || "unpublished",
+            assignmentId: args.scoreData.assignmentId,
+            identityId: args.scoreData.identityId,
+            status: args.scoreData.status || "unpublished",
             updatedAt: new Date(),
           })
           .onConflictDoUpdate({
-            target: assignmentScores.id,
+            target: [
+              assignmentScores.assignmentId,
+              assignmentScores.identityId,
+            ],
             set: {
-              score: scoreData.score,
-              status: scoreData.status || "unpublished",
+              status: args.scoreData.status || "unpublished",
               updatedAt: new Date(),
             },
           })
           .returning();
 
+        const feedback = args.feedbackData;
+
         if (
-          feedbackData &&
-          (feedbackData.comment !== undefined ||
-            feedbackData.categoryId !== undefined)
+          feedback &&
+          (feedback.comment !== undefined || feedback.categoryId !== undefined)
         ) {
+          const whereClauses = [
+            eq(assignmentFeedback.assignmentScoreId, insertedScore.id),
+          ];
+
+          if (feedback.categoryId !== undefined) {
+            whereClauses.push(
+              eq(assignmentFeedback.categoryId, feedback.categoryId)
+            );
+          }
+
           const existingFeedback = await tx
             .select({ id: assignmentFeedback.id })
             .from(assignmentFeedback)
-            .where(eq(assignmentFeedback.assignmentScoreId, insertedScore.id))
+            .where(and(...whereClauses))
             .limit(1);
 
           if (existingFeedback.length > 0) {
             await tx
               .update(assignmentFeedback)
               .set({
-                comment: feedbackData.comment,
-                categoryId: feedbackData.categoryId,
+                comment: feedback.comment,
+                score: feedback.score,
                 updatedAt: new Date(),
               })
               .where(eq(assignmentFeedback.id, existingFeedback[0].id));
           } else {
             await tx.insert(assignmentFeedback).values({
               assignmentScoreId: insertedScore.id,
-              comment: feedbackData.comment || "",
-              categoryId: feedbackData.categoryId,
+              comment: feedback.comment || "",
+              score: feedback.score,
+              categoryId: feedback.categoryId,
               updatedAt: new Date(),
             });
           }
@@ -210,6 +271,160 @@ export function createAssignmentsRepository(db: Db) {
         .where(eq(assignments.slug, slug));
 
       return result;
+    },
+    async getAssignmentWithCategoriesBySlug(slug: string) {
+      const result = await db
+        .select({
+          id: assignments.id,
+          cohortId: assignments.cohortId,
+          title: assignments.title,
+          slug: assignments.slug,
+          description: assignments.description,
+          createdAt: assignments.createdAt,
+        })
+        .from(assignments)
+        .where(eq(assignments.slug, slug))
+        .limit(1);
+
+      if (result.length === 0) {
+        return null;
+      }
+
+      const assignment = result[0];
+
+      const categoryResults = await db
+        .select({
+          id: categories.id,
+          name: categories.name,
+          description: categories.description,
+        })
+        .from(assignmentCategories)
+        .innerJoin(
+          categories,
+          eq(assignmentCategories.categoryId, categories.id)
+        )
+        .where(eq(assignmentCategories.assignmentId, assignment.id));
+
+      return {
+        ...assignment,
+        categories: categoryResults,
+      };
+    },
+
+    async getScoresWithFeedbackByAssignmentId(assignmentId: string) {
+      return await db
+        .select({
+          id: assignmentScores.id,
+          assignmentId: assignmentScores.assignmentId,
+          identityId: assignmentScores.identityId,
+          status: assignmentScores.status,
+          createdAt: assignmentScores.createdAt,
+          categoryId: assignmentFeedback.categoryId,
+          categories: categories.name,
+          comment: assignmentFeedback.comment,
+          score: assignmentFeedback.score,
+        })
+        .from(assignmentScores)
+        .leftJoin(
+          assignmentFeedback,
+          eq(assignmentFeedback.assignmentScoreId, assignmentScores.id)
+        )
+        .leftJoin(categories, eq(assignmentFeedback.categoryId, categories.id))
+        .where(eq(assignmentScores.assignmentId, assignmentId));
+    },
+
+    async getAssignmentFeedbackByAssignmentScoreId(assignmentScoreId: string) {
+      return await db
+        .select()
+        .from(assignmentFeedback)
+        .where(eq(assignmentFeedback.assignmentScoreId, assignmentScoreId));
+    },
+
+    async getCategoryByAssignmentId(assignmentId: string) {
+      return await db
+        .select()
+        .from(assignmentCategories)
+        .leftJoin(
+          categories,
+          eq(assignmentCategories.categoryId, categories.id)
+        )
+        .where(eq(assignmentCategories.assignmentId, assignmentId));
+    },
+
+    async getFixListByAssignmentScoreId(assignmentScoreId: string) {
+      return await db
+        .select()
+        .from(fixList)
+        .where(eq(fixList.assignmentScoreId, assignmentScoreId));
+    },
+
+    async addFixToAssignmentScore(args: {
+      assignmentScoreId: string;
+      description: string;
+      dueDate?: Date;
+    }) {
+      await db.insert(fixList).values({
+        assignmentScoreId: args.assignmentScoreId,
+        description: args.description,
+        dueDate: args.dueDate,
+      });
+    },
+
+    async getPrivateNotesByAssignmentScoreId(assignmentScoreId: string) {
+      return await db
+        .select()
+        .from(assignmentPrivateNotes)
+        .where(eq(assignmentPrivateNotes.assignmentScoreId, assignmentScoreId));
+    },
+
+    async addPrivateNoteToAssignmentScore(args: {
+      assignmentScoreId: string;
+      note: string;
+    }) {
+      await db.insert(assignmentPrivateNotes).values({
+        assignmentScoreId: args.assignmentScoreId,
+        note: args.note,
+      });
+    },
+
+    async attachCategoriesToAssignment(
+      assignmentId: string,
+      categoryIds: string[]
+    ): Promise<void> {
+      for (const categoryId of categoryIds) {
+        await db.insert(assignmentCategories).values({
+          assignmentId: assignmentId,
+          categoryId: categoryId,
+        });
+      }
+    },
+
+    async getRandomCategoryIds(maxCategories: number): Promise<string[]> {
+      const allCategories = await db
+        .select({ id: categories.id })
+        .from(categories);
+
+      const shuffled = [...allCategories].sort(() => 0.5 - Math.random());
+
+      const numCategories = Math.floor(Math.random() * maxCategories) + 1;
+
+      return shuffled.slice(0, numCategories).map((cat) => cat.id);
+    },
+    async ensureCategoriesExist(categoryNames: string[]): Promise<void> {
+      for (const categoryName of categoryNames) {
+        const existingCategory = await db
+          .select({ id: categories.id })
+          .from(categories)
+          .where(eq(categories.name, categoryName))
+          .limit(1);
+
+        if (existingCategory.length === 0) {
+          await db.insert(categories).values({
+            name: categoryName,
+            description: `Category for ${categoryName} related assignments`,
+          });
+        }
+      }
     },
   };
 }

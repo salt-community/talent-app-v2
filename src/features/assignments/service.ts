@@ -1,5 +1,5 @@
 import { Db } from "@/db";
-import { averageScore, averageScoresByCategory } from "./logic";
+import { averageScore } from "./logic";
 import { createAssignmentsRepository } from "./repository";
 import {
   Assignment,
@@ -54,8 +54,11 @@ export function createAssignmentsService(db: Db) {
     async updateScoreStatuses(scoresStatuses: ScoreStatus[]) {
       await repo.updateScoreStatuses(scoresStatuses);
     },
-    async upsertAssignmentScore(score: AssignmentScore) {
-      return await repo.upsertAssignmentScore(score);
+    async upsertAssignmentScore(args: {
+      scoreData: AssignmentScore;
+      feedbackData?: { comment?: string; score: number; categoryId?: string };
+    }) {
+      return await repo.upsertAssignmentScore(args);
     },
 
     async getScoresByAssignmentId(assignmentId: string) {
@@ -69,13 +72,6 @@ export function createAssignmentsService(db: Db) {
         .filter((score): score is number => score !== null || score !== 0);
 
       return averageScore(validScores);
-    },
-    async getAllAverageScoresByIdentityId(identityId: string) {
-      const assignmentScores = await repo.getScoresByIdentityId(identityId);
-      const validScores = assignmentScores.filter(
-        (assignment) => assignment.score !== null
-      );
-      return averageScoresByCategory(validScores);
     },
 
     async deleteAllAssignments() {
@@ -92,8 +88,71 @@ export function createAssignmentsService(db: Db) {
     async getAssignmentsByCohort(cohortId: string) {
       return await repo.getAssignmentsByCohort(cohortId);
     },
+
     async getAssignmentBySlug(slug: string) {
       return await repo.getAssignmentsBySlug(slug);
+    },
+
+    async getAssignmentWithCategoriesBySlug(slug: string) {
+      return await repo.getAssignmentWithCategoriesBySlug(slug);
+    },
+
+    async getFixListByAssignmentScoreId(assignmentId: string) {
+      return await repo.getFixListByAssignmentScoreId(assignmentId);
+    },
+
+    async addFixToAssignmentScore(args: {
+      assignmentScoreId: string;
+      description: string;
+      dueDate?: Date;
+    }) {
+      return await repo.addFixToAssignmentScore(args);
+    },
+
+    async getPrivateNotesByAssignmentScoreId(assignmentId: string) {
+      return await repo.getPrivateNotesByAssignmentScoreId(assignmentId);
+    },
+
+    async addPrivateNoteToAssignmentScore(args: {
+      assignmentScoreId: string;
+      note: string;
+    }) {
+      return await repo.addPrivateNoteToAssignmentScore(args);
+    },
+
+    async getScoresWithFeedbackByAssignmentId(assignmentId: string) {
+      return await repo.getScoresWithFeedbackByAssignmentId(assignmentId);
+    },
+
+    async getAssignmentFeedbackByAssignmentScoreId(assignmentScoreId: string) {
+      return await repo.getAssignmentFeedbackByAssignmentScoreId(
+        assignmentScoreId
+      );
+    },
+
+    async getCategoryByAssignmentId(assignmentId: string) {
+      return await repo.getCategoryByAssignmentId(assignmentId);
+    },
+
+    //this function is used in the seed file
+    async attachCategoriesToAssignment(args: {
+      assignmentId: string;
+      categoryIds: string[];
+    }) {
+      return await repo.attachCategoriesToAssignment(
+        args.assignmentId,
+        args.categoryIds
+      );
+    },
+
+    //this function is used in the seed file
+    async getRandomCategoryIds(maxCategories: number) {
+      return await repo.getRandomCategoryIds(maxCategories);
+    },
+
+    //this function is used in the seed file
+    async ensureCategoriesExist(categoryNames: string[]) {
+      return await repo.ensureCategoriesExist(categoryNames);
     },
   };
 }

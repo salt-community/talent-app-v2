@@ -9,20 +9,9 @@ import {
   ScrollArea,
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Scoring } from "./scoring";
-import { AssignmentScore } from "@/features/assignments";
 
-type Props = {
-  scores: AssignmentScore[];
-};
-
-export default function OpenScoreFormButton({ scores }: Props) {
+export default function OpenScoreFormButton() {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleLoading = (loading: boolean) => {
-    setIsLoading(loading);
-  };
 
   return (
     <>
@@ -32,7 +21,7 @@ export default function OpenScoreFormButton({ scores }: Props) {
             onClick={() => setOpen(true)}
             className="px-3 py-1.5 border border-gray-300 rounded text-sm"
             variant={"ghost"}
-            disabled={isLoading}
+            disabled={false}
           >
             Score
           </Button>
@@ -41,13 +30,7 @@ export default function OpenScoreFormButton({ scores }: Props) {
           <DialogTitle>Score</DialogTitle>
         </VisuallyHidden>
         <DialogContent className="max-h-screen">
-          <ScrollArea className="h-[80vh]">
-            <Scoring
-              assignmentScores={scores}
-              onSuccess={() => setOpen(false)}
-              onLoading={handleLoading}
-            />
-          </ScrollArea>
+          <ScrollArea className="h-[80vh]"></ScrollArea>
         </DialogContent>
       </Dialog>
     </>

@@ -11,7 +11,8 @@ const insecureDeveloperProfilesService = createDeveloperProfilesService(
   cohortsService.getCohortIdByIdentityId,
   assignmentsService.getScoredAssignmentsByCohortIdAndIdentityId,
   assignmentsService.getAssignmentBySlug,
-  assignmentsService.getAverageScoresByIdentityId
+  assignmentsService.getAverageScoresByIdentityId,
+  assignmentsService.getCategoryByAssignmentId
 );
 
 export const developerProfilesService = secureService(
@@ -33,23 +34,30 @@ export const developerProfilesSeedingService = createDeveloperProfilesService(
   (): Promise<{
     id: string;
     createdAt: Date | null;
+    updatedAt: Date | null;
     title: string;
+    comment: string;
+    categories: string[];
     cohortId: string;
-    comment: string | null;
-    categories: string[] | null;
     slug: string | null;
+    description: string | null;
   }> => {
     return Promise.resolve({
       id: "",
       createdAt: null,
+      updatedAt: null,
       title: "",
-      cohortId: "",
       comment: "",
-      categories: [""],
+      categories: [],
+      cohortId: "",
       slug: "",
+      description: null,
     });
   },
   () => {
     return Promise.resolve(0);
+  },
+  () => {
+    return Promise.resolve([]);
   }
 );

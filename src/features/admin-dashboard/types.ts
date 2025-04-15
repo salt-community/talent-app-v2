@@ -7,12 +7,12 @@ import { createAdminService } from "./service";
 
 export type SearchConfigurationClient = {
   isHealthOk: DeveloperProfilesService["isSearchHealthOk"];
-  repopulate: DeveloperProfilesService["repopulateMeiliSearch"];
-  sync: DeveloperProfilesService["syncMeilisearch"];
-  doesNeedSync: DevelopersService["doesMeilisearchNeedSync"];
-  getSettings: DeveloperProfilesService["getMeilisearchSettings"];
-  updateSettings: DeveloperProfilesService["updateMeilisearchSettings"];
-  resetSettings: DeveloperProfilesService["resetMeilisearchSettings"];
+  repopulate: DeveloperProfilesService["repopulateSearch"];
+  sync: DeveloperProfilesService["syncSearch"];
+  doesNeedSync: DevelopersService["isSearchSyncRequired"];
+  getSettings: DeveloperProfilesService["geSearchSettings"];
+  updateSettings: DeveloperProfilesService["updateSearchSettings"];
+  resetSettings: DeveloperProfilesService["resetSearchSettings"];
   ensureSearchIndex: DeveloperProfilesService["ensureSearchIndex"];
 };
 type iamService = ReturnType<typeof createService>;
@@ -24,10 +24,10 @@ export type IamService = {
 
 export type DeveloperProfileService = {
   delete: DevelopersService["delete"];
-  updateStatus: DevelopersService["updateStatus"];
+  updateDeveloperProfile: DevelopersService["updateDeveloperProfile"];
   deleteDeveloperProfileByIdentityId: DevelopersService["deleteByIdentityId"];
   getDeveloperProfileIdById: DevelopersService["getAllById"];
-  deleteMeiliSearchDocument: DevelopersService["deleteMeiliSearchDocument"];
+  deleteDeveloperProfileFromSearch: DevelopersService["deleteDeveloperProfileFromSearch"];
 };
 
 export type Synonym = [string, string[]];
@@ -46,6 +46,17 @@ export type Developer = {
   identityId: string | null;
   email: string;
   status: string;
+};
+
+export type FilterStatusDevelopers = {
+  highlighted: boolean;
+  published: boolean;
+  unpublished: boolean;
+};
+export type FilterStatusRole = {
+  developer: boolean;
+  core: boolean;
+  admin: boolean;
 };
 
 export type AdminsService = ReturnType<typeof createAdminService>;

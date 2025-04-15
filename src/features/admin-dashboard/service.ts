@@ -9,7 +9,7 @@ export function createAdminService(
   developerProfileService: DeveloperProfileService,
   searchConfigurationClient: SearchConfigurationClient,
   iamService: IamService,
-  deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>
+  deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>,
 ) {
   return {
     async getAllIdentities() {
@@ -19,10 +19,7 @@ export function createAdminService(
       await developerProfileService.delete(id);
     },
     async updateStatus(args: { id: string; status: string }) {
-      await developerProfileService.updateStatus({
-        id: args.id,
-        status: args.status,
-      });
+      await developerProfileService.updateDeveloperProfile({ ...args });
     },
     //unused right now
     // async isSearchHealthOk() {
@@ -54,12 +51,12 @@ export function createAdminService(
         await developerProfileService.getDeveloperProfileIdById(identityId);
       for (const developerProfile of developerProfiles) {
         await deleteProjectsByDeveloperProfileId(developerProfile.id);
-        await developerProfileService.deleteMeiliSearchDocument(
-          developerProfile.id
+        await developerProfileService.deleteDeveloperProfileFromSearch(
+          developerProfile.id,
         );
       }
       await developerProfileService.deleteDeveloperProfileByIdentityId(
-        identityId
+        identityId,
       );
       await iamService.deleteIdentity(identityId);
     },

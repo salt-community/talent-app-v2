@@ -2,14 +2,9 @@ import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { HamburgerMenu } from "./ui/hamburger-menu";
 import { iamService } from "@/features/iam";
-import { developerProfilesService } from "@/features/developer-profiles";
 
 export async function Header() {
-  const userIdentity = await iamService.controlUser();
-
-  const users = await developerProfilesService.getDeveloperProfileByIdentityId(
-    userIdentity.id
-  );
+  await iamService.controlUser();
 
   const hasMenuAccess =
     await iamService.hasCurrentUserAccess("menu.hamburgerMenu");
@@ -25,12 +20,6 @@ export async function Header() {
     hasAdminDashboardAccess,
     hasDeveloperAccess,
     hasInstructorsDashboardAccess,
-  };
-
-  const userWithRole = {
-    slug: users.map((user) => user.slug)[0]!,
-    role: userIdentity.role,
-    id: userIdentity.id,
   };
 
   return (
@@ -53,9 +42,7 @@ export async function Header() {
         </SignedOut>
         <SignedIn>
           <UserButton />
-          {hasMenuAccess && (
-            <HamburgerMenu user={userWithRole} permissions={permissions} />
-          )}{" "}
+          {hasMenuAccess && <HamburgerMenu permissions={permissions} />}{" "}
         </SignedIn>
       </div>
     </nav>

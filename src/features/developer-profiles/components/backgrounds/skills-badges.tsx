@@ -2,22 +2,33 @@
 import { Badge, Button } from "@/components/";
 import { SkillInsert } from "../../types";
 import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Props = {
   skills: SkillInsert[];
+  variant?: "default" | "secondary" | "cv";
   isEditable?: boolean;
   onDelete?: (skill: SkillInsert) => void;
 };
 
 export function SkillsBadges({
   skills,
+  variant = "default",
   isEditable = false,
   onDelete = () => {},
 }: Props) {
   return (
     <article className="flex flex-wrap gap-1 mt-3">
       {skills.map((skill, index) => (
-        <Badge className="cursor-default" variant={"secondary"} key={index}>
+        <Badge
+          className={cn(
+            "cursor-default",
+            variant === "secondary" && "text-sm truncate",
+            variant === "cv" && "text-white bg-zinc-600"
+          )}
+          variant={"secondary"}
+          key={index}
+        >
           {skill.name}{" "}
           {isEditable && (
             <Button
@@ -26,7 +37,7 @@ export function SkillsBadges({
               className="h-4 w-4 ml-1"
               onClick={() => onDelete(skill)}
             >
-              <X size={12} />
+              <X size={12} className={cn(variant === "cv" && "text-white")} />
             </Button>
           )}
         </Badge>

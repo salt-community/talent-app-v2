@@ -18,5 +18,11 @@ export const instructorService = createInstructorService(
   assignmentsService.upsertAssignmentScore,
   assignmentsService.getScoresByAssignmentId,
   assignmentsService.updateScoreStatuses,
+  assignmentsService.getAssignmentWithCategoriesBySlug,
+  assignmentsService.getScoresWithFeedbackByAssignmentId,
+  assignmentsService.getFixListByAssignmentScoreId,
+  assignmentsService.addFixToAssignmentScore,
+  assignmentsService.addPrivateNoteToAssignmentScore,
+  assignmentsService.getPrivateNotesByAssignmentScoreId,
   iamService.getAllIdentities
 );
