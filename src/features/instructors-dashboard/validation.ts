@@ -23,6 +23,7 @@ export const assignmentSchema = z.object({
   comment: z.string(),
   cohortId: z.string().nonempty("Cohort ID is required"),
   createdAt: z.date(),
+  updatedAt: z.date(),
   slug: z.string(),
   categories: z
     .array(z.string().nonempty("Each category should be a non-empty string"))

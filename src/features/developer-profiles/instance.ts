@@ -33,6 +33,7 @@ export const developerProfilesSeedingService = createDeveloperProfilesService(
   (): Promise<{
     id: string;
     createdAt: Date | null;
+    updatedAt: Date | null;
     title: string;
     cohortId: string;
     comment: string | null;
@@ -42,6 +43,7 @@ export const developerProfilesSeedingService = createDeveloperProfilesService(
     return Promise.resolve({
       id: "",
       createdAt: null,
+      updatedAt: null,
       title: "",
       cohortId: "",
       comment: "",

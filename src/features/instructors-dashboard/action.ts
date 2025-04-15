@@ -47,9 +47,9 @@ export async function addAssignmentAction(
   }
 }
 
-export async function updateAssignmentAction(assigment: Assignment) {
+export async function updateAssignmentAction(rawAssignment: Assignment) {
   try {
-    const assignment = assignmentSchema.parse({ ...assigment, score: 0 });
+    const assignment = assignmentSchema.parse({ ...rawAssignment, score: 0 });
     console.log("Parsed assignment:", assignment);
     await instructorService.updateAssignment(assignment);
     revalidatePath("/instructor-dashboard", "layout");
