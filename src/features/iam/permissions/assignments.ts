@@ -23,6 +23,11 @@ export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
     updateScoreStatuses: "assignments.updateScoreStatuses",
     getScoredAssignmentsByCohortIdAndIdentityId:
       "assignments.getScoredAssignmentsByCohortIdAndIdentityId",
+    addAssignmentCategory: "assignments.addAssignmentCategory",
+    addAssignmentFeedback: "assignments.addAssignmentFeedback",
+    addCategory: "assignments.addCategory",
+    getAllAssignmentScores: "assignments.getAllAssignmentScores",
+    getAllCategories: "assignments.getAllCategories",
   };
 
 type AssignmentViewPermission = "score";
