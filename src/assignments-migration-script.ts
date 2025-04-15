@@ -1,6 +1,6 @@
 import { assignmentsSeedingService } from "./features/assignments";
 
-async function assignmentsMigrationScript() {
+export async function assignmentsMigrationScript() {
   //get all assignments
   console.log("starting data migration");
   const assignments = await assignmentsSeedingService.getAllAssignments();
