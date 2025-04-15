@@ -1,5 +1,4 @@
 import { assignmentsSeedingService } from "./features/assignments";
-import { categories } from "./features/assignments/schema";
 
 async function assignmentsMigrationScript() {
   //get all assignments
