@@ -64,6 +64,11 @@ export const seedAssignments = async (cohortIds: string[]) => {
           title,
           description: `This is a description for assignment ${i + 1}`,
           slug,
+          id: "",
+          comment: "",
+          categories: null,
+          createdAt: null,
+          updatedAt: null,
         });
 
       const categoryIds =
