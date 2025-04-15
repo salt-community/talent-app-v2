@@ -15,6 +15,7 @@ export async function assignmentsMigrationScript() {
   );
   for (const category of categories) {
     if (category) {
+      console.log("Category name: ", category);
       await assignmentsSeedingService.addCategory(category);
     }
   }
@@ -48,4 +49,3 @@ export async function assignmentsMigrationScript() {
   }
   console.log("data migration done!");
 }
-assignmentsMigrationScript();
