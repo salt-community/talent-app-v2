@@ -28,9 +28,6 @@ export async function addAssignmentAction(
       categories,
       createdAt: new Date(),
       score: 0,
-      slug: null,
-      comment: null,
-      updatedAt: null,
     });
 
     await instructorService.addAssignment(assignment);
