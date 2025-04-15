@@ -2,6 +2,7 @@ import { Db } from "@/db";
 import { and, eq } from "drizzle-orm";
 import {
   assignmentCategories,
+  assignmentFeedback,
   assignments,
   assignmentScores,
   categories,
@@ -160,11 +161,22 @@ export function createAssignmentsRepository(db: Db) {
     async getAllCategories() {
       return await db.select().from(categories);
     },
+    async getAllAssignmentScores() {
+      return await db.select().from(assignmentScores);
+    },
     async addAssignmentCategory(args: {
       assignmentId: string;
       categoryId: string;
     }) {
       return await db.insert(assignmentCategories).values(args);
+    },
+    async addAssignmentFeedback(args: {
+      assignmentScoreId: string;
+      categoryId: string;
+      comment: string | null;
+      score: number | null;
+    }) {
+      return await db.insert(assignmentFeedback).values(args);
     },
   };
 }

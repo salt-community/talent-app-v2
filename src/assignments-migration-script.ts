@@ -19,25 +19,32 @@ async function assignmentsMigrationScript() {
   //   }
   // }
   const newCategory = await assignmentsSeedingService.getAllCategories();
-  console.log("categories", newCategory);
-  for (const assignment of assignments) {
-    if (assignment.categories) {
-      for (const category of assignment.categories) {
-        const categoryId = newCategory.filter(
-          (categoryName) => categoryName.name === category
-        );
-        await assignmentsSeedingService.addAssignmentCategory({
-          assignmentId: assignment.id,
-          categoryId: categoryId[0].id,
-        });
-      }
-    }
-  }
-  //create new categories based on unique categories found
-
-  //populate categories table
-  //assignment.categories = categories.name
-  //
+  // for (const assignment of assignments) {
+  //   if (assignment.categories) {
+  //     for (const category of assignment.categories) {
+  //       const categoryId = newCategory.filter(
+  //         (categoryName) => categoryName.name === category
+  //       );
+  //       await assignmentsSeedingService.addAssignmentCategory({
+  //         assignmentId: assignment.id,
+  //         categoryId: categoryId[0].id,
+  //       });
+  //     }
+  //   }
+  // }
   //assignment feedback
+  const assignmentScores =
+    await assignmentsSeedingService.getAllAssignmentScores();
+  for (const assignmentScore of assignmentScores) {
+    const categoryId = newCategory.filter(
+      (categoryName) => categoryName.name === assignmentScore.category
+    );
+    await assignmentsSeedingService.addAssignmentFeedback({
+      assignmentScoreId: assignmentScore.id,
+      categoryId: categoryId[0].id,
+      comment: assignmentScore.comment,
+      score: assignmentScore.score,
+    });
+  }
 }
 assignmentsMigrationScript();

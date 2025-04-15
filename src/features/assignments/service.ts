@@ -103,12 +103,25 @@ export function createAssignmentsService(db: Db) {
       //can be removed after merge
       return await repo.getAllCategories();
     },
+    async getAllAssignmentScores() {
+      //can be removed after merge
+      return await repo.getAllAssignmentScores();
+    },
     async addAssignmentCategory(args: {
       assignmentId: string;
       categoryId: string;
     }) {
       //can be removed after merge
       return await repo.addAssignmentCategory(args);
+    },
+    async addAssignmentFeedback(args: {
+      assignmentScoreId: string;
+      categoryId: string;
+      comment: string | null;
+      score: number | null;
+    }) {
+      //can be removed after merge
+      return await repo.addAssignmentFeedback(args);
     },
   };
 }
