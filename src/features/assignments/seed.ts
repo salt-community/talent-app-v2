@@ -62,9 +62,7 @@ export const seedAssignments = async (cohortIds: string[]) => {
         await assignmentsSeedingService.createAssignment({
           cohortId: cohortIds[0],
           title,
-          description: `This is a description for assignment ${i + 1}`,
           categories: null,
-          createdAt: null,
         });
 
       const categoryIds =
