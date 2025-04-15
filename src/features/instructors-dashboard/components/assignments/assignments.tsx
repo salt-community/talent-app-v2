@@ -28,7 +28,11 @@ export async function AssignmentsDashboard({ name }: Props) {
       <div className="space-y-4">
         {assignments.map((assignment) => (
           <AssignmentListItem
-            assignment={assignment}
+            assignment={{
+              ...assignment,
+              comment: null,
+              categories: []
+            }}
             foundCohort={foundCohort}
             cohortId={cohortId}
             key={assignment.id}
