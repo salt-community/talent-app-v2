@@ -42,6 +42,7 @@
     "@types/dom-to-image": "^2.6.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "react-day-picker": "^8.10.1",
     "cmdk": "^1.0.0",
     "dom-to-image": "^2.6.0",
     "dotenv": "^16.4.5",
