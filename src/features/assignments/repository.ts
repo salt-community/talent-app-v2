@@ -12,6 +12,7 @@ import {
 import {
   AssignmentScore,
   AssignmentScoreFormData,
+  AssignmentWithCategory,
   FixItem,
   NewAssignment,
 } from "./types";
@@ -19,7 +20,7 @@ import { ScoreStatus } from "../instructors-dashboard/types";
 
 export function createAssignmentsRepository(db: Db) {
   return {
-    async createAssignment(assignment: NewAssignment) {
+    async createAssignment(assignment: AssignmentWithCategory) {
       return await db.transaction(async (tx) => {
         const { categories: categoryNames, ...assignmentData } = assignment;
 
