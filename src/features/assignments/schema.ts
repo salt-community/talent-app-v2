@@ -30,7 +30,7 @@ export const assignmentScores = pgTable("assignment_scores", {
 
 export const categories = pgTable("categories", {
   id: uuid("id").primaryKey().defaultRandom(),
-  name: varchar("name").notNull().unique(),
+  name: varchar("name").notNull().unique(), //categories from assignments
   description: varchar("description"),
   createdAt: timestamp("created_at").defaultNow(),
 });
