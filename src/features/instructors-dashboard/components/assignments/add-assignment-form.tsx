@@ -32,14 +32,12 @@ export function AddAssignmentForm({
 }: Props) {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  // const [selectedCategories, setSelectedCategories] = useState(
-  //   assignment?.categories?.map((category) => ({
-  //     id: category,
-  //     name: category,
-  //   })) || []
-  // );
-
-  const [selectedCategories, setSelectedCategories] = useState<Array<{id: string, name: string}>>([]);
+  const [selectedCategories, setSelectedCategories] = useState(
+    assignment?.categories?.map((category) => ({
+      id: category,
+      name: category,
+    })) || []
+  );
 
   const [searchTerm, setSearchTerm] = useState("");
   const [title, setTitle] = useState(assignment?.title || "");
@@ -229,7 +227,7 @@ export function AddAssignmentForm({
       )}
 
       <div>
-        <Label htmlFor="comment">Comment</Label>
+        <Label htmlFor="comment">Description</Label>
         <Textarea
           id="comment"
           value={description}

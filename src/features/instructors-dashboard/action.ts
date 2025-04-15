@@ -19,13 +19,13 @@ export async function addCohortAction(cohort: CohortFormData) {
 export async function addAssignmentAction(
   cohortId: string,
   title: string,
-  comment: string,
+  description: string,
   categories: string[]
 ) {
   try {
     const assignment = newAssignmentSchema.parse({
       title,
-      comment,
+      description,
       cohortId,
       categories,
       createdAt: new Date(),

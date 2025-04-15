@@ -8,7 +8,7 @@ export const addCohortFormSchema = z.object({
 
 export const newAssignmentSchema = z.object({
   title: z.string().nonempty("Title is required"),
-  comment: z.string(),
+  description: z.string(),
   cohortId: z.string().nonempty("Cohort ID is required"),
   createdAt: z.date(),
   categories: z

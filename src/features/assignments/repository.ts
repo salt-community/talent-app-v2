@@ -1,5 +1,5 @@
 import { Db } from "@/db";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import {
   assignmentCategories,
   assignmentFeedback,
@@ -20,11 +20,48 @@ import { ScoreStatus } from "../instructors-dashboard/types";
 export function createAssignmentsRepository(db: Db) {
   return {
     async createAssignment(assignment: NewAssignment) {
-      const [insertedAssignment] = await db
-        .insert(assignments)
-        .values(assignment)
-        .returning();
-      return insertedAssignment;
+      return await db.transaction(async (tx) => {
+        const { categories: categoryNames, ...assignmentData } = assignment;
+
+        const [insertedAssignment] = await tx
+          .insert(assignments)
+          .values(assignmentData)
+          .returning();
+
+        if (categoryNames && categoryNames.length > 0) {
+          const categoryIds = await Promise.all(
+            categoryNames.map(async (name: string) => {
+              const existingCategory = await tx
+                .select()
+                .from(categories)
+                .where(eq(categories.name, name))
+                .limit(1);
+
+              if (existingCategory.length > 0) {
+                return existingCategory[0].id;
+              }
+
+              const [newCategory] = await tx
+                .insert(categories)
+                .values({ name })
+                .returning();
+
+              return newCategory.id;
+            })
+          );
+
+          if (categoryIds.length > 0) {
+            await tx.insert(assignmentCategories).values(
+              categoryIds.map((categoryId: string) => ({
+                assignmentId: insertedAssignment.id,
+                categoryId,
+              }))
+            );
+          }
+        }
+
+        return insertedAssignment;
+      });
     },
 
     async getAllAssignments() {

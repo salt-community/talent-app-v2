@@ -55,7 +55,10 @@ export function AssignmentTable({
           />
         </div>
 
-        <div className="border border-gray-200 rounded-lg p-4 flex-grow">
+        <div
+          className="border border-gray-200 rounded-lg p-4 flex-grow overflow-y-auto"
+          style={{ height: "calc(100vh - 300px)" }}
+        >
           {selectedDeveloper && activeTab === "scoring" && (
             <div className="p-6">
               <div className="mb-4">
