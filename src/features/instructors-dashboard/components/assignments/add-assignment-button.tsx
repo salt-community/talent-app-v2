@@ -20,7 +20,7 @@ export default function AddAssignmentButton({ cohortId }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="my-2" onClick={() => setOpen(true)}>
+        <Button className="my-2 cursor-pointer" onClick={() => setOpen(true)}>
           <span>+</span> New assignment
         </Button>
       </DialogTrigger>

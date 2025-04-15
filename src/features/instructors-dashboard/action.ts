@@ -26,7 +26,6 @@ export async function addAssignmentAction(
       title,
       cohortId,
       categories,
-      createdAt: new Date(),
       score: 0,
     });
 

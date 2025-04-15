@@ -10,7 +10,6 @@ export const newAssignmentSchema = z.object({
   title: z.string().nonempty("Title is required"),
   description: z.string(),
   cohortId: z.string().nonempty("Cohort ID is required"),
-  createdAt: z.date(),
   categories: z
     .array(z.string().nonempty("Each category should be a non-empty string"))
     .nonempty("At least one category is required"),

@@ -53,7 +53,6 @@ export type AssignmentWithCategory = {
   title: string;
   categories: string[] | null;
   description: string | null;
-  createdAt: Date | null;
   slug?: string;
 };
 
