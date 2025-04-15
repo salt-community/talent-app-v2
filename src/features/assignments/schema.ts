@@ -15,6 +15,7 @@ export const assignments = pgTable("assignments", {
   comment: varchar("comment").default(""),
   categories: varchar("categories").array().default([]),
   createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const assignmentScores = pgTable("assignment_scores", {
@@ -25,6 +26,7 @@ export const assignmentScores = pgTable("assignment_scores", {
   comment: varchar("comment").default(""),
   category: varchar("category").default(""),
   createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
   status: varchar("status").default("unpublished"),
 });
 
