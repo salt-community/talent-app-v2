@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, X, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { addAssignmentAction } from "../../action";
 import { DialogTitle } from "@/components/ui/dialog";
@@ -91,8 +90,7 @@ export function AddAssignmentForm({
     try {
       const categories = selectedCategories.map((cat) => cat.id);
       if (assignment) {
-      } else
-        await addAssignmentAction(cohortId, title, categories);
+      } else await addAssignmentAction(cohortId, title, categories);
       onSuccess();
     } catch (error) {
       console.error("Failed to create assignment:", error);

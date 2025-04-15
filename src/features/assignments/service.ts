@@ -5,6 +5,7 @@ import {
   Assignment,
   AssignmentScore,
   AssignmentScoreFormData,
+  AssignmentWithCategory,
   NewAssignment,
 } from "./types";
 import { ScoreStatus } from "../instructors-dashboard/types";
@@ -27,7 +28,7 @@ export function createAssignmentsService(db: Db) {
       );
     },
 
-    async createAssignment(assignment: NewAssignment) {
+    async createAssignment(assignment: AssignmentWithCategory) {
       const slug = generateSlug(assignment.title);
       return await repo.createAssignment({ ...assignment, slug });
     },
