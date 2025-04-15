@@ -8,7 +8,6 @@ export const addCohortFormSchema = z.object({
 
 export const newAssignmentSchema = z.object({
   title: z.string().nonempty("Title is required"),
-  description: z.string(),
   cohortId: z.string().nonempty("Cohort ID is required"),
   categories: z
     .array(z.string().nonempty("Each category should be a non-empty string"))

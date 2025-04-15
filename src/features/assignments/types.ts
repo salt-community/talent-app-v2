@@ -52,7 +52,6 @@ export type AssignmentWithCategory = {
   cohortId: string;
   title: string;
   categories: string[] | null;
-  description: string | null;
   slug?: string;
 };
 
