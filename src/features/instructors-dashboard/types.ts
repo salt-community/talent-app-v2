@@ -21,6 +21,7 @@ export type Assignment = {
   comment: string | null;
   categories: string[] | null;
   createdAt: Date | null;
+  updatedAt: Date | null;
 };
 
 export type AssignmentInsert = {
