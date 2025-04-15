@@ -2,7 +2,6 @@ import { Db } from "@/db";
 import { averageScore } from "./logic";
 import { createAssignmentsRepository } from "./repository";
 import {
-  Assignment,
   AssignmentScore,
   AssignmentScoreFormData,
   AssignmentWithCategory,
@@ -32,9 +31,9 @@ export function createAssignmentsService(db: Db) {
       return await repo.createAssignment({ ...assignment, slug });
     },
 
-    async updateAssignment(assignment: Assignment) {
+    async updateAssignment(assignment: AssignmentWithCategory) {
       const slug = generateSlug(assignment.title);
-      return await repo.updateAssignment(assignment.id, {
+      return await repo.updateAssignment(assignment.id!, {
         ...assignment,
         slug,
       });
