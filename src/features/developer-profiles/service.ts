@@ -7,12 +7,15 @@ import {
   Assignment_Feedback,
   developerProfileDetails,
   DeveloperProfileUpdate,
+  DeveloperProfileUpdate,
   OutboxMessageSelect,
   SessionClaims,
 } from "./types";
 import { GetCurrentUser } from "../iam";
 import { createSearchApi } from "./search";
+import { createSearchApi } from "./search";
 import { TaskStatus } from "meilisearch";
+import { createSearchService } from "./search/search-service";
 import { createSearchService } from "./search/search-service";
 import { generateSlug } from "./logic";
 import { GetCohortIdByIdentityId } from "../cohorts";
@@ -36,15 +39,19 @@ export function createDeveloperProfilesService(
 ) {
   const repository = createDevelopersRepository(db);
   const searchApi = createSearchApi({
+  const searchApi = createSearchApi({
     indexUid: "backgrounds",
     primaryKey: "id",
     displayedAttributes: ["id"],
 
     searchableAttributes: [
       "title",
+      "title",
       "skills",
       "jobs",
+      "jobs",
       "educations",
+      "bio",
       "bio",
       "languages",
       "name",
@@ -60,6 +67,9 @@ export function createDeveloperProfilesService(
               documentTemplate: `
               {{doc.title}}, bio: {{doc.bio}} with skills: {{doc.skills}}, jobs: {{doc.jobs}},
               education: {{doc.educations}}, who speaks languages: {{doc.languages}}`,
+              documentTemplate: `
+              {{doc.title}}, bio: {{doc.bio}} with skills: {{doc.skills}}, jobs: {{doc.jobs}},
+              education: {{doc.educations}}, who speaks languages: {{doc.languages}}`,
             },
           }
         : undefined,
@@ -67,7 +77,11 @@ export function createDeveloperProfilesService(
   });
 
   const searchService = createSearchService(searchApi);
+  const searchService = createSearchService(searchApi);
 
+  async function syncSearchWithOutboxMessage(
+    outboxMessage: OutboxMessageSelect
+  ) {
   async function syncSearchWithOutboxMessage(
     outboxMessage: OutboxMessageSelect
   ) {
@@ -76,17 +90,22 @@ export function createDeveloperProfilesService(
       case "upsert":
         const developerProfile = await repository.getDeveloperProfile(
           outboxMessage.developerProfileId
+        const developerProfile = await repository.getDeveloperProfile(
+          outboxMessage.developerProfileId
         );
         if (!developerProfile) {
           succeeded = true;
           break;
         }
         const upsertStatus = await searchApi.upsertDocuments([
+        const upsertStatus = await searchApi.upsertDocuments([
           developerProfile[0],
         ]);
         succeeded = OK_STATUSES.includes(upsertStatus);
         break;
       case "delete":
+        const deleteStatus = await searchApi.deleteDocument(
+          outboxMessage.developerProfileId
         const deleteStatus = await searchApi.deleteDocument(
           outboxMessage.developerProfileId
         );
@@ -100,6 +119,7 @@ export function createDeveloperProfilesService(
 
   return {
     ...searchService,
+    ...searchService,
     async getAll() {
       return await repository.getAll();
     },
@@ -110,7 +130,11 @@ export function createDeveloperProfilesService(
     async getDeveloperBySlug(slug: string) {
       return await repository.getDeveloperBySlug(slug);
     },
+    async getDeveloperBySlug(slug: string) {
+      return await repository.getDeveloperBySlug(slug);
+    },
     async getAllById(identityId: string) {
+      return await repository.getAllDeveloperProfileIdsByIdentityId(identityId);
       return await repository.getAllDeveloperProfileIdsByIdentityId(identityId);
     },
     async getHighlightedDeveloperProfileIds() {
@@ -131,6 +155,7 @@ export function createDeveloperProfilesService(
 
       const developerProfile = await this.getDeveloperProfileByIdentityId(
         currentUser.id
+        currentUser.id
       );
       const user = {
         ...currentUser,
@@ -150,6 +175,8 @@ export function createDeveloperProfilesService(
           name: "<New Profile>",
           email: "",
           slug: "",
+          email: "",
+          slug: "",
           identityId: "",
           title: "",
           bio: "",
@@ -160,6 +187,8 @@ export function createDeveloperProfilesService(
           jobs: [],
           status: "unpublished",
           headerLanguage: "english",
+          status: "unpublished",
+          headerLanguage: "english",
         } as T;
       }
       return developerProfile;
@@ -168,17 +197,20 @@ export function createDeveloperProfilesService(
       return (await repository.getAllSkills()).filter(
         (skill, index, array) =>
           array.findIndex((s) => s.name === skill.name) === index
+          array.findIndex((s) => s.name === skill.name) === index
       );
     },
     async getAllLanguages() {
       return (await repository.getAllLanguages()).filter(
         (language, index, array) =>
           array.findIndex((l) => l.name === language.name) === index
+          array.findIndex((l) => l.name === language.name) === index
       );
     },
     async getAllEducations() {
       return (await repository.getAllEducations()).filter(
         (education, index, array) =>
+          array.findIndex((e) => e.name === education.name) === index
           array.findIndex((e) => e.name === education.name) === index
       );
     },
@@ -190,12 +222,15 @@ export function createDeveloperProfilesService(
     },
     async deleteDeveloperProfileFromSearch(developerProfileId: string) {
       await searchApi.deleteDocument(developerProfileId);
+    async deleteDeveloperProfileFromSearch(developerProfileId: string) {
+      await searchApi.deleteDocument(developerProfileId);
     },
     async updateMissingSlugs() {
       const developers = await repository.getAll();
       for (const developer of developers) {
         if (!developer.slug) {
           const newSlug = generateSlug(developer.name);
+          await repository.updateDeveloperProfileDetails({
           await repository.updateDeveloperProfileDetails({
             id: developer.id,
             slug: newSlug,
@@ -205,12 +240,17 @@ export function createDeveloperProfilesService(
     },
     async updateDeveloperProfile(
       developerProfileUpdates: DeveloperProfileUpdate
+      developerProfileUpdates: DeveloperProfileUpdate
     ) {
+      const outboxMessage = await repository.updateDeveloperProfileDetails(
+        developerProfileUpdates
       const outboxMessage = await repository.updateDeveloperProfileDetails(
         developerProfileUpdates
       );
       syncSearchWithOutboxMessage(outboxMessage);
+      syncSearchWithOutboxMessage(outboxMessage);
     },
+
 
     async generateUniqueSlug(name: string) {
       const slug = generateSlug(name);
@@ -225,17 +265,24 @@ export function createDeveloperProfilesService(
       return uniqueSlug;
     },
     async syncSearch() {
+    async syncSearch() {
       const outboxMessages = await repository.getAllOutboxMessage();
       for (const outboxMessage of outboxMessages) {
+        await syncSearchWithOutboxMessage(outboxMessage);
         await syncSearchWithOutboxMessage(outboxMessage);
       }
     },
     async repopulateSearch() {
       await searchApi.deleteIndex();
       await searchApi.ensureIndex();
+    async repopulateSearch() {
+      await searchApi.deleteIndex();
+      await searchApi.ensureIndex();
       const developerProfiles = await repository.getAllDeveloperProfiles();
       await searchApi.upsertDocuments(developerProfiles);
+      await searchApi.upsertDocuments(developerProfiles);
     },
+    async isSearchSyncRequired() {
     async isSearchSyncRequired() {
       return (await repository.getAllOutboxMessage()).length > 0;
     },
@@ -259,14 +306,21 @@ export function createDeveloperProfilesService(
       const outboxMessage =
         await repository.addDeveloperProfile(developerProfile);
       syncSearchWithOutboxMessage(outboxMessage);
+      const outboxMessage =
+        await repository.addDeveloperProfile(developerProfile);
+      syncSearchWithOutboxMessage(outboxMessage);
     },
     async addDeveloperProfileDetails(
+      developerProfileDetails: developerProfileDetails
       developerProfileDetails: developerProfileDetails
     ) {
       await repository.addDeveloperProfileDetails(developerProfileDetails);
     },
 
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
+      const outboxMessage =
+        await repository.addDeveloperProfile(developerProfile);
+      syncSearchWithOutboxMessage(outboxMessage);
       const outboxMessage =
         await repository.addDeveloperProfile(developerProfile);
       syncSearchWithOutboxMessage(outboxMessage);
@@ -343,6 +397,15 @@ export function createDeveloperProfilesService(
 
     async getAverageScoresByIdentityId(identityId: string) {
       return await getAverageScoresByIdentityId(identityId);
+    },
+
+    async copyDeveloperProfile(developerProfileId: string) {
+      const [developerProfileToCopy] =
+        await repository.getDeveloperProfile(developerProfileId);
+      developerProfileToCopy.slug = await this.generateUniqueSlug(
+        developerProfileToCopy.name
+      );
+      await repository.copyDeveloperProfile(developerProfileToCopy);
     },
 
     async copyDeveloperProfile(developerProfileId: string) {

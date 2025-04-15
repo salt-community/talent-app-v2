@@ -33,6 +33,7 @@ export function IdentityDashboard({ identities }: Props) {
     return search;
   }
   const filteredDevelopers = filterDevelopers(identities);
+  console.log(searchFilter);
 
   return (
     <div>
