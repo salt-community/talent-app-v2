@@ -2,8 +2,8 @@ import { GetAllIdentities } from "../iam";
 import {
   AddFixToAssignmentScore,
   AddPrivateNoteToAssignmentScore,
-  Assignment,
   AssignmentScore,
+  AssignmentWithCategory,
   CreateAssignment,
   DeleteAssignmentById,
   GetAssignmentBySlug,
@@ -13,7 +13,6 @@ import {
   getPrivateNotesByAssignmentScoreId,
   GetScoresByAssignmentId,
   GetScoresWithFeedbackByAssignmentId,
-  NewAssignment,
   UpdateScoreStatuses,
   UpsertAssignmentScore,
 } from "../assignments";
@@ -64,11 +63,11 @@ export function createInstructorService(
       return await getAssignmentsByCohortId(cohortId);
     },
 
-    async addAssignment(assignment: NewAssignment) {
+    async addAssignment(assignment: AssignmentWithCategory) {
       return await addAssignment(assignment);
     },
 
-    async updateAssignment(assignment: Assignment) {
+    async updateAssignment(assignment: AssignmentWithCategory) {
       return await updateAssignment(assignment);
     },
 

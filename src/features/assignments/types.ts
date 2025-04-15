@@ -48,15 +48,11 @@ export type AssignmentScore = {
   status?: string;
 };
 export type AssignmentWithCategory = {
-  id: string;
   cohortId: string;
   title: string;
-  slug: string | null;
-  comment: string | null;
   categories: string[] | null;
   description: string | null;
   createdAt: Date | null;
-  updatedAt: Date | null;
 };
 
 export type AssignmentFeedback = {
