@@ -3,6 +3,7 @@ import { categories } from "./features/assignments/schema";
 
 async function assignmentsMigrationScript() {
   //get all assignments
+  console.log("starting data migration");
   const assignments = await assignmentsSeedingService.getAllAssignments();
   //categories
 
@@ -10,28 +11,28 @@ async function assignmentsMigrationScript() {
   const categoriesWithDuplicates = assignments.flatMap(
     (assignment) => assignment.categories
   );
-  // const categories = categoriesWithDuplicates.filter(
-  //   (category, index) => categoriesWithDuplicates.indexOf(category) === index
-  // );
-  // for (const category of categories) {
-  //   if (category) {
-  //     await assignmentsSeedingService.addCategory(category);
-  //   }
-  // }
+  const categories = categoriesWithDuplicates.filter(
+    (category, index) => categoriesWithDuplicates.indexOf(category) === index
+  );
+  for (const category of categories) {
+    if (category) {
+      await assignmentsSeedingService.addCategory(category);
+    }
+  }
   const newCategory = await assignmentsSeedingService.getAllCategories();
-  // for (const assignment of assignments) {
-  //   if (assignment.categories) {
-  //     for (const category of assignment.categories) {
-  //       const categoryId = newCategory.filter(
-  //         (categoryName) => categoryName.name === category
-  //       );
-  //       await assignmentsSeedingService.addAssignmentCategory({
-  //         assignmentId: assignment.id,
-  //         categoryId: categoryId[0].id,
-  //       });
-  //     }
-  //   }
-  // }
+  for (const assignment of assignments) {
+    if (assignment.categories) {
+      for (const category of assignment.categories) {
+        const categoryId = newCategory.filter(
+          (categoryName) => categoryName.name === category
+        );
+        await assignmentsSeedingService.addAssignmentCategory({
+          assignmentId: assignment.id,
+          categoryId: categoryId[0].id,
+        });
+      }
+    }
+  }
   //assignment feedback
   const assignmentScores =
     await assignmentsSeedingService.getAllAssignmentScores();
@@ -46,5 +47,6 @@ async function assignmentsMigrationScript() {
       score: assignmentScore.score,
     });
   }
+  console.log("data migration done!");
 }
 assignmentsMigrationScript();
