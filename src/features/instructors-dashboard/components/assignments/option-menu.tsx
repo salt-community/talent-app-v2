@@ -27,11 +27,7 @@ export default function OptionMenu() {
           </div>
 
           <DropdownMenuRadioGroup className="space-y-1">
-            <FixItemChangeStatus
-              key={status}
-              onConfirm={() => {}}
-              status={status}
-            />
+            <FixItemChangeStatus onConfirm={() => {}} status={"status"} />
           </DropdownMenuRadioGroup>
 
           <DropdownMenuSeparator className="my-1 border-gray-200" />
