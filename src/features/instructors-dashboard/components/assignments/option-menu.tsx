@@ -10,6 +10,12 @@ import { DeleteFixItem } from "./delete-fix-item";
 import { FixItemChangeStatus } from "./fix-status-change";
 
 export default function OptionMenu() {
+  const handleStatusChange = () => {
+    console.log("status changed");
+  };
+  const handleDeleteFixItem = () => {
+    console.log("delete fix item");
+  };
   return (
     <div className="flex items-center gap-4">
       <DropdownMenu>
@@ -27,12 +33,15 @@ export default function OptionMenu() {
           </div>
 
           <DropdownMenuRadioGroup className="space-y-1">
-            <FixItemChangeStatus onConfirm={() => {}} status={"status"} />
+            <FixItemChangeStatus
+              onConfirm={handleStatusChange}
+              status={"status"}
+            />
           </DropdownMenuRadioGroup>
 
           <DropdownMenuSeparator className="my-1 border-gray-200" />
 
-          <DeleteFixItem onConfirm={() => {}} />
+          <DeleteFixItem onConfirm={handleDeleteFixItem} />
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
