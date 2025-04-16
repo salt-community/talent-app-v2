@@ -37,6 +37,8 @@ export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
     getAssignmentFeedbackByAssignmentScoreId:
       "assignments.getAssignmentFeedbackByAssignmentScoreId",
     getCategoryByAssignmentId: "assignments.getCategoryByAssignmentId",
+    deleteFixItemById: "assignments.deleteFixItemById",
+    updateFixStatusById: "assignments.updateFixStatusById",
   };
 
 type AssignmentViewPermission = "score";
