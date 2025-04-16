@@ -252,5 +252,13 @@ export function createInstructorService(
     }) {
       return await addPrivateNoteToAssignmentScore(args);
     },
+
+    async updateFixStatusById(args: { id: string; newStatus: boolean }) {
+      return await updateFixStatusById(args);
+    },
+
+    async deleteFixItemById(id: string) {
+      return await deleteFixItemById(id);
+    },
   };
 }
