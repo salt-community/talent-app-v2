@@ -1,11 +1,11 @@
 import {
+  boolean,
+  integer,
   pgTable,
+  timestamp,
+  unique,
   uuid,
   varchar,
-  timestamp,
-  integer,
-  boolean,
-  unique,
 } from "drizzle-orm/pg-core";
 
 export const categories = pgTable("categories", {

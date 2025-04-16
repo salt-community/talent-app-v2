@@ -22,6 +22,7 @@ type Props = {
 
 export function OptionMenu({ id, status }: Props) {
   const { toast } = useToast();
+
   const handleStatusChange = useCallback(async () => {
     const result = await updateFixStatusByIdAction(id, !status);
     if (!result.success) {
@@ -37,7 +38,7 @@ export function OptionMenu({ id, status }: Props) {
         variant: "default",
       });
     }
-  }, [id, status]);
+  }, [id, status, toast]);
 
   const handleDeleteFixItem = useCallback(async () => {
     const result = await deleteFixItemByIdAction(id);
@@ -54,7 +55,7 @@ export function OptionMenu({ id, status }: Props) {
         variant: "default",
       });
     }
-  }, [id]);
+  }, [id, toast]);
 
   return (
     <div className="flex items-center gap-4">
