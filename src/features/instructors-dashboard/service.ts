@@ -89,12 +89,18 @@ export function createInstructorService(
     async deleteAssignmentById(assignmentId: string) {
       return await deleteAssignmentById(assignmentId);
     },
-
     async addScoreToAssignment(
       assignment: AssignmentScore,
-      feedbackData: { comment: string; score: number; categoryId: string }
+      feedbackDataArray: Array<{
+        comment?: string;
+        score?: number;
+        categoryId: string;
+      }>
     ) {
-      const args = { scoreData: assignment, feedbackData };
+      const args = {
+        scoreData: assignment,
+        feedbackDataArray,
+      };
       return await upsertAssignmentScore(args);
     },
 

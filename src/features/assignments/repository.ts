@@ -202,7 +202,11 @@ export function createAssignmentsRepository(db: Db) {
 
     async upsertAssignmentScore(args: {
       scoreData: AssignmentScore;
-      feedbackData?: { comment?: string; score: number; categoryId?: string };
+      feedbackDataArray: Array<{
+        comment?: string;
+        score?: number;
+        categoryId?: string;
+      }>;
     }) {
       return await db.transaction(async (tx) => {
         const [insertedScore] = await tx
@@ -225,45 +229,46 @@ export function createAssignmentsRepository(db: Db) {
           })
           .returning();
 
-        const feedback = args.feedbackData;
+        for (const feedback of args.feedbackDataArray) {
+          if (
+            feedback &&
+            (feedback.comment !== undefined ||
+              feedback.categoryId !== undefined)
+          ) {
+            const whereClauses = [
+              eq(assignmentFeedback.assignmentScoreId, insertedScore.id),
+            ];
 
-        if (
-          feedback &&
-          (feedback.comment !== undefined || feedback.categoryId !== undefined)
-        ) {
-          const whereClauses = [
-            eq(assignmentFeedback.assignmentScoreId, insertedScore.id),
-          ];
+            if (feedback.categoryId !== undefined) {
+              whereClauses.push(
+                eq(assignmentFeedback.categoryId, feedback.categoryId)
+              );
+            }
 
-          if (feedback.categoryId !== undefined) {
-            whereClauses.push(
-              eq(assignmentFeedback.categoryId, feedback.categoryId)
-            );
-          }
+            const existingFeedback = await tx
+              .select({ id: assignmentFeedback.id })
+              .from(assignmentFeedback)
+              .where(and(...whereClauses))
+              .limit(1);
 
-          const existingFeedback = await tx
-            .select({ id: assignmentFeedback.id })
-            .from(assignmentFeedback)
-            .where(and(...whereClauses))
-            .limit(1);
-
-          if (existingFeedback.length > 0) {
-            await tx
-              .update(assignmentFeedback)
-              .set({
-                comment: feedback.comment,
+            if (existingFeedback.length > 0) {
+              await tx
+                .update(assignmentFeedback)
+                .set({
+                  comment: feedback.comment,
+                  score: feedback.score,
+                  updatedAt: new Date(),
+                })
+                .where(eq(assignmentFeedback.id, existingFeedback[0].id));
+            } else {
+              await tx.insert(assignmentFeedback).values({
+                assignmentScoreId: insertedScore.id,
+                comment: feedback.comment || "",
                 score: feedback.score,
+                categoryId: feedback.categoryId,
                 updatedAt: new Date(),
-              })
-              .where(eq(assignmentFeedback.id, existingFeedback[0].id));
-          } else {
-            await tx.insert(assignmentFeedback).values({
-              assignmentScoreId: insertedScore.id,
-              comment: feedback.comment || "",
-              score: feedback.score,
-              categoryId: feedback.categoryId,
-              updatedAt: new Date(),
-            });
+              });
+            }
           }
         }
 

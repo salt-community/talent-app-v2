@@ -53,9 +53,14 @@ export function createAssignmentsService(db: Db) {
     async updateScoreStatuses(scoresStatuses: ScoreStatus[]) {
       await repo.updateScoreStatuses(scoresStatuses);
     },
+
     async upsertAssignmentScore(args: {
       scoreData: AssignmentScore;
-      feedbackData?: { comment?: string; score: number; categoryId?: string };
+      feedbackDataArray: Array<{
+        comment?: string;
+        score?: number;
+        categoryId?: string;
+      }>;
     }) {
       return await repo.upsertAssignmentScore(args);
     },

@@ -142,15 +142,19 @@ export async function updateScoreStatusesAction(scoreStatuses: ScoreStatus[]) {
 }
 
 export async function updateScoreAction(
-  score: AssignmentScore,
-  feedbackData: { comment: string; score: number; categoryId: string }
+  scoreData: AssignmentScore,
+  feedbackDataArray: Array<{
+    comment?: string;
+    score?: number;
+    categoryId: string;
+  }>
 ) {
   try {
-    await instructorService.addScoreToAssignment(score, feedbackData);
+    await instructorService.addScoreToAssignment(scoreData, feedbackDataArray);
     revalidatePath("/instructor-dashboard", "layout");
     return { success: true };
   } catch (error) {
-    console.error("Failed to update score:", error);
+    console.error("Failed to update score with multiple feedback:", error);
     return { success: false };
   }
 }

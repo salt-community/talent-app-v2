@@ -40,38 +40,44 @@ export function Score({ scores, developer }: ScoreProps) {
   const handleSaveScores = async () => {
     setIsSaving(true);
     setSaveStatus(null);
-
     const updatedScores = [...scoreValues];
 
-    const results = await Promise.all(
-      updatedScores.map((score) =>
-        updateScoreAction(
-          {
-            ...score,
-            id: score.id || "",
-          },
-          {
-            comment: score.comment || "",
-            score: score.score,
-            categoryId: score.categoryId,
-          }
-        )
-      )
-    );
+    try {
+      const baseScoreData = {
+        assignmentId: updatedScores[0].assignmentId,
+        identityId: updatedScores[0].identityId,
+        score: updatedScores[0].score,
+        status: updatedScores[0].status || "unpublished",
+        id: updatedScores[0].id || "",
+      };
 
-    const anyFailed = results.some((result) => !result.success);
-    if (anyFailed) {
+      const feedbackDataArray = updatedScores.map((score) => ({
+        comment: score.comment || "",
+        score: score.score,
+        categoryId: score.categoryId,
+      }));
+
+      const result = await updateScoreAction(baseScoreData, feedbackDataArray);
+
+      if (result.success) {
+        setSaveStatus({
+          success: true,
+          message: "All feedback saved successfully!",
+        });
+      } else {
+        setSaveStatus({
+          success: false,
+          message: "Failed to save feedback.",
+        });
+      }
+    } catch (error) {
       setSaveStatus({
         success: false,
-        message: "Failed to save some scores.",
+        message: `An error occurred while saving feedback. ${error}`,
       });
-    } else {
-      setSaveStatus({
-        success: true,
-        message: "All scores saved successfully!",
-      });
+    } finally {
+      setIsSaving(false);
     }
-    setIsSaving(false);
   };
 
   return (
