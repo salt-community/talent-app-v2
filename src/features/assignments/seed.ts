@@ -72,7 +72,10 @@ export const seedAssignments = async (cohortIds: string[]) => {
 
       await assignmentsSeedingService.attachCategoriesToAssignment(args);
     } catch (error) {
-      console.error("Error while seeding assignments:", error);
+      console.error(
+        "Error while seeding assignments, check out the error below",
+        error
+      );
     }
   }
   console.log("Done seeding assignments!");
