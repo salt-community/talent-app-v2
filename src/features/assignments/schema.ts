@@ -36,20 +36,14 @@ export const assignmentCategories = pgTable("assignment_categories", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const assignmentScores = pgTable(
-  "assignment_scores",
-  {
-    id: uuid("id").primaryKey().defaultRandom(),
-    assignmentId: uuid("assignment_id").notNull(),
-    identityId: uuid("identity_id").notNull(),
-    status: varchar("status").default("unpublished"),
-    createdAt: timestamp("created_at").defaultNow(),
-    updatedAt: timestamp("updated_at").defaultNow(),
-  },
-  (table) => ({
-    unique: unique().on(table.assignmentId, table.identityId),
-  })
-);
+export const assignmentScores = pgTable("assignment_scores", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  assignmentId: uuid("assignment_id").notNull(),
+  identityId: uuid("identity_id").notNull(),
+  status: varchar("status").default("unpublished"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
 
 export const assignmentFeedback = pgTable("assignment_feedback", {
   id: uuid("id").primaryKey().defaultRandom(),
