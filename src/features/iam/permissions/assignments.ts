@@ -19,18 +19,24 @@ export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
     getAssignmentBySlug: "assignments.getAssignmentBySlug",
     upsertAssignmentScore: "assignments.upsertAssignmentScore",
     updateScoreStatuses: "assignments.updateScoreStatuses",
-    getScoredAssignmentsByCohortIdAndIdentityId: "assignments.getScoredAssignmentsByCohortIdAndIdentityId",
+    getScoredAssignmentsByCohortIdAndIdentityId:
+      "assignments.getScoredAssignmentsByCohortIdAndIdentityId",
     attachCategoriesToAssignment: "assignments.attachCategoriesToAssignment",
     getRandomCategoryIds: "assignments.getRandomCategoryIds",
     ensureCategoriesExist: "assignments.ensureCategoriesExist",
-    getAssignmentWithCategoriesBySlug: "assignments.getAssignmentWithCategoriesBySlug",
-    getScoresWithFeedbackByAssignmentId: "assignments.getScoresWithFeedbackByAssignmentId",
+    getAssignmentWithCategoriesBySlug:
+      "assignments.getAssignmentWithCategoriesBySlug",
+    getScoresWithFeedbackByAssignmentId:
+      "assignments.getScoresWithFeedbackByAssignmentId",
     getFixListByAssignmentScoreId: "assignments.getFixListByAssignmentScoreId",
     addFixToAssignmentScore: "assignments.addFixToAssignmentScore",
-    getPrivateNotesByAssignmentScoreId: "assignments.getPrivateNotesByAssignmentScoreId",
-    addPrivateNoteToAssignmentScore: "assignments.addPrivateNoteToAssignmentScore",
-    getAssignmentFeedbackByAssignmentScoreId: "assignments.getAssignmentFeedbackByAssignmentScoreId",
-    getCategoryByAssignmentId: "assignments.getCategoryByAssignmentId"
+    getPrivateNotesByAssignmentScoreId:
+      "assignments.getPrivateNotesByAssignmentScoreId",
+    addPrivateNoteToAssignmentScore:
+      "assignments.addPrivateNoteToAssignmentScore",
+    getAssignmentFeedbackByAssignmentScoreId:
+      "assignments.getAssignmentFeedbackByAssignmentScoreId",
+    getCategoryByAssignmentId: "assignments.getCategoryByAssignmentId",
   };
 
 type AssignmentViewPermission = "score";

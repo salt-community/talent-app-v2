@@ -103,7 +103,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
               ></div>
               <div className="flex justify-end">
                 <button className="text-gray-400 hover:text-gray-600 cursor-pointer">
-                  <OptionMenu />
+                  <OptionMenu id={fixes[0].id} status={fixes[0].isCompleted} />
                 </button>
               </div>
               <p className="text-gray-600 mb-4">{item.description}</p>

@@ -9,7 +9,12 @@ import { MoreVertical } from "lucide-react";
 import { DeleteFixItem } from "./delete-fix-item";
 import { FixItemChangeStatus } from "./fix-status-change";
 
-export default function OptionMenu() {
+type Props = {
+  id: string;
+  status: boolean | null;
+};
+
+export default function OptionMenu({ id, status }: Props) {
   const handleStatusChange = () => {
     console.log("status changed");
   };
@@ -35,7 +40,7 @@ export default function OptionMenu() {
           <DropdownMenuRadioGroup className="space-y-1">
             <FixItemChangeStatus
               onConfirm={handleStatusChange}
-              status={"status"}
+              status={status}
             />
           </DropdownMenuRadioGroup>
 
