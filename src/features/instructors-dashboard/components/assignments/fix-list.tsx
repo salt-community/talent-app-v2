@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { MoreVertical, Plus, Calendar1 } from "lucide-react";
 import { Button, Textarea } from "@/components";
-import { FixLists } from "../../types";
 import { CalendarForm } from "@/components/ui/calendar-form";
+import { Calendar1, MoreVertical, Plus } from "lucide-react";
+import { useState } from "react";
 import { addFixToAssignmentScoreAction } from "../../action";
+import { FixLists } from "../../types";
 
 type FixesProps = {
   fixes: FixLists[];
@@ -32,7 +32,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
 
     setIsSubmitting(true);
 
-    // Skapa ett datum endast om det valts
     let dueDate = undefined;
     if (datetime.date) {
       dueDate = new Date(datetime.date);
