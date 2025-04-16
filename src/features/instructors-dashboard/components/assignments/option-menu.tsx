@@ -21,19 +21,11 @@ type Props = {
 
 export function OptionMenu({ id, status }: Props) {
   const handleStatusChange = useCallback(async () => {
-    try {
-      await updateFixStatusByIdAction(id, !status);
-    } catch (error) {
-      console.error("Failed to update status:", error);
-    }
+    await updateFixStatusByIdAction(id, !status);
   }, [id, status]);
 
   const handleDeleteFixItem = useCallback(async () => {
-    try {
-      await deleteFixItemByIdAction(id);
-    } catch (error) {
-      console.error("Failed to delete item:", error);
-    }
+    await deleteFixItemByIdAction(id);
   }, [id]);
 
   return (
