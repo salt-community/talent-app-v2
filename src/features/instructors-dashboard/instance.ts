@@ -1,7 +1,7 @@
-import { createInstructorService } from "./service";
-import { iamService } from "../iam";
 import { assignmentsService } from "../assignments";
 import { cohortsService } from "../cohorts";
+import { iamService } from "../iam";
+import { createInstructorService } from "./service";
 
 export const instructorService = createInstructorService(
   cohortsService.getAll,
@@ -14,9 +14,7 @@ export const instructorService = createInstructorService(
   assignmentsService.createAssignment,
   assignmentsService.updateAssignment,
   assignmentsService.deleteAssignment,
-  assignmentsService.getAssignmentBySlug,
   assignmentsService.upsertAssignmentScore,
-  assignmentsService.getScoresByAssignmentId,
   assignmentsService.updateScoreStatuses,
   assignmentsService.getAssignmentWithCategoriesBySlug,
   assignmentsService.getScoresWithFeedbackByAssignmentId,
@@ -24,5 +22,7 @@ export const instructorService = createInstructorService(
   assignmentsService.addFixToAssignmentScore,
   assignmentsService.addPrivateNoteToAssignmentScore,
   assignmentsService.getPrivateNotesByAssignmentScoreId,
+  assignmentsService.updateFixStatusById,
+  assignmentsService.deleteFixItemById,
   iamService.getAllIdentities
 );

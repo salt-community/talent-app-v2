@@ -37,6 +37,9 @@ export type getPrivateNotesByAssignmentScoreId =
 export type GetCategoryByAssignmentId =
   AssignmentsService["getCategoryByAssignmentId"];
 
+export type DeleteFixItemById = AssignmentsService["deleteFixItemById"];
+export type UpdateFixStatusById = AssignmentsService["updateFixStatusById"];
+
 export type Assignment = typeof assignments.$inferSelect;
 export type NewAssignment = typeof assignments.$inferInsert;
 

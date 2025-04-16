@@ -1,4 +1,3 @@
-import { GetAllIdentities } from "../iam";
 import {
   AddFixToAssignmentScore,
   AddPrivateNoteToAssignmentScore,
@@ -6,13 +5,13 @@ import {
   AssignmentWithCategory,
   CreateAssignment,
   DeleteAssignmentById,
-  GetAssignmentBySlug,
+  DeleteFixItemById,
   GetAssignmentsByCohortId,
   GetAssignmentWithCategoriesBySlug,
   GetFixListByAssignmentScoreId,
   getPrivateNotesByAssignmentScoreId,
-  GetScoresByAssignmentId,
   GetScoresWithFeedbackByAssignmentId,
+  UpdateFixStatusById,
   UpdateScoreStatuses,
   UpsertAssignmentScore,
 } from "../assignments";
@@ -21,10 +20,11 @@ import {
   AddDevelopersToCohort,
   CohortFormData,
   DeleteCohortAndCohortIdentity,
+  DeleteIdentityFromCohort,
   GetAllCohorts,
   GetCohortStudents,
-  DeleteIdentityFromCohort,
 } from "../cohorts";
+import { GetAllIdentities } from "../iam";
 import { ScoreStatus } from "./types";
 
 export function createInstructorService(
@@ -38,9 +38,7 @@ export function createInstructorService(
   addAssignment: CreateAssignment,
   updateAssignment: CreateAssignment,
   deleteAssignmentById: DeleteAssignmentById,
-  getAssignmentBySlug: GetAssignmentBySlug,
   upsertAssignmentScore: UpsertAssignmentScore,
-  getScoresByAssignmentId: GetScoresByAssignmentId,
   updateScoreStatuses: UpdateScoreStatuses,
   getAssignmentWithCategoriesBySlug: GetAssignmentWithCategoriesBySlug,
   getScoresWithFeedbackByAssignmentId: GetScoresWithFeedbackByAssignmentId,
@@ -48,6 +46,8 @@ export function createInstructorService(
   addFixToAssignmentScore: AddFixToAssignmentScore,
   addPrivateNoteToAssignmentScore: AddPrivateNoteToAssignmentScore,
   getPrivateNotesByAssignmentScoreId: getPrivateNotesByAssignmentScoreId,
+  updateFixStatusById: UpdateFixStatusById,
+  deleteFixItemById: DeleteFixItemById,
   getAllIdentities: GetAllIdentities
 ) {
   return {
