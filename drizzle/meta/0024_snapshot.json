@@ -1,6 +1,6 @@
 {
-  "id": "aa164f67-f7d8-49b4-b0a4-f6af5e368b5f",
-  "prevId": "e2192181-fc74-4c52-879f-c393a42375a3",
+  "id": "9d873e4c-eec0-4813-ab85-77544930648c",
+  "prevId": "aa164f67-f7d8-49b4-b0a4-f6af5e368b5f",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -273,7 +273,16 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "assignment_scores_assignment_id_identity_id_unique": {
+          "name": "assignment_scores_assignment_id_identity_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "assignment_id",
+            "identity_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

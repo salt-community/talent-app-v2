@@ -169,6 +169,13 @@
       "when": 1744789311214,
       "tag": "0023_remove",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1744794591479,
+      "tag": "0024_add",
+      "breakpoints": true
     }
   ]
 }
