@@ -6,6 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components";
 import { MoreVertical } from "lucide-react";
+import { useCallback } from "react";
 import {
   deleteFixItemByIdAction,
   updateFixStatusByIdAction,
@@ -19,22 +20,32 @@ type Props = {
 };
 
 export function OptionMenu({ id, status }: Props) {
-  const handleStatusChange = async () => {
-    await updateFixStatusByIdAction(id, !status);
-  };
-  const handleDeleteFixItem = async () => {
-    await deleteFixItemByIdAction(id);
-  };
+  const handleStatusChange = useCallback(async () => {
+    try {
+      await updateFixStatusByIdAction(id, !status);
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+  }, [id, status]);
+
+  const handleDeleteFixItem = useCallback(async () => {
+    try {
+      await deleteFixItemByIdAction(id);
+    } catch (error) {
+      console.error("Failed to delete item:", error);
+    }
+  }, [id]);
+
   return (
     <div className="flex items-center gap-4">
       <DropdownMenu>
-        <DropdownMenuTrigger>
-          <div className="p-1.5 rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
+        <DropdownMenuTrigger aria-label="Options Menu">
+          <button className="p-1.5 rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
             <MoreVertical
               className="text-gray-500 hover:text-primary transition-colors"
               size={18}
             />
-          </div>
+          </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 p-1.5 rounded-lg shadow-lg border border-gray-200">
           <div className="px-3 py-1.5 text-xs font-medium text-gray-500 uppercase">
