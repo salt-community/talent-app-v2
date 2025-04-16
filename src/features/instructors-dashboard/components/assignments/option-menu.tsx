@@ -5,6 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components";
+import { useToast } from "@/hooks/use-toast";
 import { MoreVertical } from "lucide-react";
 import { useCallback } from "react";
 import {
@@ -20,12 +21,39 @@ type Props = {
 };
 
 export function OptionMenu({ id, status }: Props) {
+  const { toast } = useToast();
   const handleStatusChange = useCallback(async () => {
-    await updateFixStatusByIdAction(id, !status);
+    const result = await updateFixStatusByIdAction(id, !status);
+    if (!result.success) {
+      return toast({
+        title: "Error",
+        description: String(result.error),
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: `Fix item status changed to ${!status ? "completed" : "pending"}`,
+        variant: "default",
+      });
+    }
   }, [id, status]);
 
   const handleDeleteFixItem = useCallback(async () => {
-    await deleteFixItemByIdAction(id);
+    const result = await deleteFixItemByIdAction(id);
+    if (!result.success) {
+      return toast({
+        title: "Error",
+        description: String(result.error),
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: "Fix item deleted successfully",
+        variant: "default",
+      });
+    }
   }, [id]);
 
   return (
