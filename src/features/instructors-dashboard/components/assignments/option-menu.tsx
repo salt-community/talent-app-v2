@@ -6,7 +6,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components";
 import { MoreVertical } from "lucide-react";
-import { deleteFixItemByIdAction } from "../../action";
+import {
+  deleteFixItemByIdAction,
+  updateFixStatusByIdAction,
+} from "../../action";
 import { DeleteFixItem } from "./delete-fix-item";
 import { FixItemChangeStatus } from "./fix-status-change";
 
@@ -17,7 +20,7 @@ type Props = {
 
 export function OptionMenu({ id, status }: Props) {
   const handleStatusChange = async () => {
-    console.log("status changed");
+    await updateFixStatusByIdAction(id, !status);
   };
   const handleDeleteFixItem = async () => {
     await deleteFixItemByIdAction(id);
