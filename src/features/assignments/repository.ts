@@ -317,7 +317,6 @@ export function createAssignmentsRepository(db: Db) {
           cohortId: assignments.cohortId,
           title: assignments.title,
           slug: assignments.slug,
-          description: assignments.description,
           createdAt: assignments.createdAt,
         })
         .from(assignments)

@@ -20,7 +20,6 @@ export const assignments = pgTable("assignments", {
   cohortId: uuid("cohort_id").notNull(),
   title: varchar("title").notNull(),
   slug: varchar("slug").unique(),
-  description: varchar("description"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });

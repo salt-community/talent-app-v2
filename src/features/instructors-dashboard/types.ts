@@ -20,7 +20,6 @@ export type Assignment = {
   slug: string | null;
   comment: string | null;
   categories: string[] | null;
-  description: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };

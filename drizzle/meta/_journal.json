@@ -162,6 +162,13 @@
       "when": 1744707840173,
       "tag": "0022_remarkable_scarlet_witch",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1744789311214,
+      "tag": "0023_remove",
+      "breakpoints": true
     }
   ]
 }
