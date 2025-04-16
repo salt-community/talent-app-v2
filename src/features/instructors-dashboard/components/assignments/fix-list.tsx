@@ -1,9 +1,10 @@
 import { Button, Textarea } from "@/components";
 import { CalendarForm } from "@/components/ui/calendar-form";
-import { Calendar1, MoreVertical, Plus } from "lucide-react";
+import { Calendar1, Plus } from "lucide-react";
 import { useState } from "react";
 import { addFixToAssignmentScoreAction } from "../../action";
 import { FixLists } from "../../types";
+import OptionMenu from "./option-menu";
 
 type FixesProps = {
   fixes: FixLists[];
@@ -102,7 +103,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
               ></div>
               <div className="flex justify-end">
                 <button className="text-gray-400 hover:text-gray-600 cursor-pointer">
-                  <MoreVertical size={20} />
+                  <OptionMenu />
                 </button>
               </div>
               <p className="text-gray-600 mb-4">{item.description}</p>

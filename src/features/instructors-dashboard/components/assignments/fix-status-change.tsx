@@ -1,13 +1,15 @@
-import { Button } from "@/components";
+type Props = {
+  onConfirm: () => void;
+  status: string;
+};
 
-export function FixItemChangeStatus() {
-  const handleChangeStatus = async () => {
-    console.log("status changed");
-  };
-
+export function FixItemChangeStatus({ onConfirm, status }: Props) {
   return (
-    <div>
-      <Button onClick={handleChangeStatus}></Button>
+    <div
+      onClick={onConfirm}
+      className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
+    >
+      <span className="capitalize">Set status to: {status}</span>
     </div>
   );
 }
