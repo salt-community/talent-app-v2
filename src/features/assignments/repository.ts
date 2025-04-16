@@ -1,5 +1,6 @@
 import { Db } from "@/db";
 import { and, eq } from "drizzle-orm";
+import { ScoreStatus } from "../instructors-dashboard/types";
 import {
   assignmentCategories,
   assignmentFeedback,
@@ -16,7 +17,6 @@ import {
   FixItem,
   NewAssignment,
 } from "./types";
-import { ScoreStatus } from "../instructors-dashboard/types";
 
 export function createAssignmentsRepository(db: Db) {
   return {
@@ -427,6 +427,22 @@ export function createAssignmentsRepository(db: Db) {
         assignmentScoreId: args.assignmentScoreId,
         note: args.note,
       });
+    },
+
+    async deleteFixItemById(id: string) {
+      await db.delete(fixList).where(eq(fixList.id, id));
+    },
+
+    async updateFixStatusById(args: { id: string; newStatus: boolean }) {
+      await db
+        .update(fixList)
+        .set({
+          isCompleted: args.newStatus,
+          updatedAt: new Date(),
+        })
+        .where(eq(fixList.id, args.id));
+
+      return args.newStatus;
     },
 
     async attachCategoriesToAssignment(

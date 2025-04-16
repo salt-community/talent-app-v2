@@ -1,4 +1,5 @@
 import { Db } from "@/db";
+import { ScoreStatus } from "../instructors-dashboard/types";
 import { averageScore } from "./logic";
 import { createAssignmentsRepository } from "./repository";
 import {
@@ -6,7 +7,6 @@ import {
   AssignmentScoreFormData,
   AssignmentWithCategory,
 } from "./types";
-import { ScoreStatus } from "../instructors-dashboard/types";
 
 export function createAssignmentsService(db: Db) {
   const repo = createAssignmentsRepository(db);
@@ -136,6 +136,16 @@ export function createAssignmentsService(db: Db) {
 
     async getCategoryByAssignmentId(assignmentId: string) {
       return await repo.getCategoryByAssignmentId(assignmentId);
+    },
+
+    async deleteFixItemById(id: string) {
+      return await repo.deleteFixItemById(id);
+    },
+
+    async updateFixStatusById(args:{id: string, newStatus: boolean}) {
+      return await repo.updateFixStatusById(args)
+
+     
     },
 
     //this function is used in the seed file
