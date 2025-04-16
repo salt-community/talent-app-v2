@@ -1,11 +1,11 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { instructorService } from "./instance";
-import { assignmentSchema, newAssignmentSchema } from "./validation";
-import { CohortFormData } from "../cohorts";
 import { AssignmentScore } from "../assignments";
+import { CohortFormData } from "../cohorts";
+import { instructorService } from "./instance";
 import { Assignment, ScoreStatus } from "./types";
+import { assignmentSchema, newAssignmentSchema } from "./validation";
 
 export async function addCohortAction(cohort: CohortFormData) {
   try {
@@ -181,5 +181,27 @@ export async function addPrivateNoteToAssignmentScoreAction(args: {
     revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     console.error("Failed to add private note:", error);
+  }
+}
+
+export async function updateFixStatusByIdAction(
+  id: string,
+  newStatus: boolean
+) {
+  const args = { id, newStatus };
+  try {
+    await instructorService.updateFixStatusById(args);
+    revalidatePath("/instructor-dashboard", "layout");
+  } catch (error) {
+    console.error("Failed to update fix status:", error);
+  }
+}
+
+export async function deleteFixItemByIdAction(id: string) {
+  try {
+    await instructorService.deleteFixItemById(id);
+    revalidatePath("/instructor-dashboard", "layout");
+  } catch (error) {
+    console.error("Failed to delete fix item:", error);
   }
 }

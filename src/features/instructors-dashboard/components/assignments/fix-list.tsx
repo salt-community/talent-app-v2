@@ -4,7 +4,7 @@ import { Calendar1, Plus } from "lucide-react";
 import { useState } from "react";
 import { addFixToAssignmentScoreAction } from "../../action";
 import { FixLists } from "../../types";
-import OptionMenu from "./option-menu";
+import { OptionMenu } from "./option-menu";
 
 type FixesProps = {
   fixes: FixLists[];

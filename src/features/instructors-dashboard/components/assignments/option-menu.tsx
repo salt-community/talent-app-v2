@@ -6,6 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components";
 import { MoreVertical } from "lucide-react";
+import { deleteFixItemByIdAction } from "../../action";
 import { DeleteFixItem } from "./delete-fix-item";
 import { FixItemChangeStatus } from "./fix-status-change";
 
@@ -14,12 +15,12 @@ type Props = {
   status: boolean | null;
 };
 
-export default function OptionMenu({ id, status }: Props) {
-  const handleStatusChange = () => {
+export function OptionMenu({ id, status }: Props) {
+  const handleStatusChange = async () => {
     console.log("status changed");
   };
-  const handleDeleteFixItem = () => {
-    console.log("delete fix item");
+  const handleDeleteFixItem = async () => {
+    await deleteFixItemByIdAction(id);
   };
   return (
     <div className="flex items-center gap-4">
