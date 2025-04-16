@@ -192,16 +192,19 @@ export async function updateFixStatusByIdAction(
   try {
     await instructorService.updateFixStatusById(args);
     revalidatePath("/instructor-dashboard", "layout");
+    return { success: true };
   } catch (error) {
     console.error("Failed to update fix status:", error);
+    return { success: false, error };
   }
 }
-
 export async function deleteFixItemByIdAction(id: string) {
   try {
     await instructorService.deleteFixItemById(id);
     revalidatePath("/instructor-dashboard", "layout");
+    return { success: true };
   } catch (error) {
     console.error("Failed to delete fix item:", error);
+    return { success: false, error };
   }
 }
