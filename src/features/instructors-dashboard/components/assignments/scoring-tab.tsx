@@ -1,5 +1,5 @@
 import React from "react";
-import { Star, List, Lock } from "lucide-react";
+import { Star, List, LockIcon } from "lucide-react";
 import { TabType } from "../../types";
 
 interface ScoringTabProps {
@@ -9,31 +9,27 @@ interface ScoringTabProps {
 }
 
 export function ScoringTab({
-  activeTab = "scoring",
+  activeTab,
   fixListCount,
   onTabChange = () => {},
 }: ScoringTabProps) {
   return (
-    <div className="flex items-center justify-between w-full rounded-lg  px-4 py-2 border border-gray-200 ">
+    <div className="flex items-center justify-between w-full rounded-lg px-4 py-2 border border-gray-200">
       <button
         className={`flex items-center gap-2 px-4 py-2 cursor-pointer rounded-md transition-colors ${
           activeTab === "scoring"
-            ? "font-semibold"
+            ? "bg-gray-200 text-gray-700 font-medium"
             : "text-gray-600 hover:bg-gray-50"
         }`}
         onClick={() => onTabChange("scoring")}
       >
-        <Star
-          className="w-5 h-5"
-          fill={activeTab === "scoring" ? "currentColor" : "none"}
-        />
+        <Star className="w-5 h-5" />
         <span>Scoring</span>
       </button>
-
       <button
         className={`flex items-center gap-2 px-4 py-2 cursor-pointer rounded-md transition-colors ${
           activeTab === "fixList"
-            ? "font-semibold"
+            ? "bg-gray-200 text-gray-700 font-medium"
             : "text-gray-600 hover:bg-gray-50"
         }`}
         onClick={() => onTabChange("fixList")}
@@ -44,16 +40,15 @@ export function ScoringTab({
           {fixListCount}
         </span>
       </button>
-
       <button
         className={`flex items-center gap-2 px-4 py-2 cursor-pointer rounded-md transition-colors ${
           activeTab === "privateNotes"
-            ? "font-semibold"
+            ? "bg-gray-200 text-gray-700 font-medium"
             : "text-gray-600 hover:bg-gray-50"
         }`}
         onClick={() => onTabChange("privateNotes")}
       >
-        <Lock className="w-5 h-5" />
+        <LockIcon className="w-5 h-5" />
         <span>Private Notes</span>
       </button>
     </div>
