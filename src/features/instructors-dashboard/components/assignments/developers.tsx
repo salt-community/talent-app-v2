@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from "react";
 import { AssignmentScore, Developer, ScoreStatus } from "../../types";
 import { Switch } from "@/components/ui/switch";
 import { updateScoreStatusesAction } from "../../action";
@@ -10,6 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import AssignmentStatus from "./assignment-status";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   developer: Developer;
@@ -24,15 +26,36 @@ export function Developers({
   scored = false,
   published = false,
 }: Props) {
+  const [isPublished, setIsPublished] = useState(published);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { toast } = useToast();
+
   const togglePublishStatus = async () => {
-    if (!scored) return;
-    const newStatus = published ? "unpublished" : "published";
+    if (!scored || isLoading) return;
+    const newStatus = isPublished ? "unpublished" : "published";
     const scoreStatuses: ScoreStatus[] = scores.map((score) => ({
       assignmentId: score.assignmentId,
       identityId: score.identityId,
       status: newStatus,
     }));
-    await updateScoreStatusesAction(scoreStatuses);
+
+    setIsPublished((prev) => !prev);
+    setIsLoading(true);
+
+    try {
+      await updateScoreStatusesAction(scoreStatuses);
+    } catch (error) {
+      setIsPublished((prev) => !prev);
+      toast({
+        title: "Error",
+        description: "Failed to update publish status",
+        variant: "destructive",
+      });
+      console.error("Failed to update publish status", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -49,8 +72,8 @@ export function Developers({
                 <Switch
                   id={`publish-mode-${developer.id}`}
                   onCheckedChange={togglePublishStatus}
-                  checked={published}
-                  disabled={!scored}
+                  checked={isPublished}
+                  disabled={!scored || isLoading}
                   className="scale-75"
                 />
               </div>
@@ -65,7 +88,7 @@ export function Developers({
       </div>
 
       <div className="flex items-center">
-        <AssignmentStatus published={published} scored={scored} />
+        <AssignmentStatus published={isPublished} scored={scored} />
       </div>
     </div>
   );
