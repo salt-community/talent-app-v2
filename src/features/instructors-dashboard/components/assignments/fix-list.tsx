@@ -17,7 +17,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
     time: "",
   });
   const [description, setDescription] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [optimisticFix, addOptimisticFix] = useOptimistic(
     fixes,
@@ -39,8 +38,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
       alert("Please provide a description");
       return;
     }
-
-    setIsSubmitting(true);
 
     let dueDate: Date | null = null;
     if (datetime.date) {
@@ -90,7 +87,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
 
     setDescription("");
     setDatetime({ date: undefined, time: "" });
-    setIsSubmitting(false);
   };
 
   return (
@@ -102,7 +98,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           <Button
             className="bg-gray-900 text-white ml-4 cursor-pointer"
             onClick={handleAddFix}
-            disabled={isSubmitting || !description}
+            disabled={isPending || !description}
           >
             <Plus size={18} />
             Add New Fix
