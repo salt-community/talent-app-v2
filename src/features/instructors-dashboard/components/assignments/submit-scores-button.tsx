@@ -11,6 +11,7 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ScoreStatus } from "../../types";
 import { updateScoreStatusesAction } from "../../action";
+import { useRouter } from "next/navigation";
 
 type Props = {
   scoreStatuses: ScoreStatus[];
@@ -18,10 +19,12 @@ type Props = {
 
 export function SubmitScoresButton({ scoreStatuses }: Props) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const publishScores = async () => {
     await updateScoreStatusesAction(scoreStatuses);
     setOpen(false);
+    router.refresh();
   };
 
   return (

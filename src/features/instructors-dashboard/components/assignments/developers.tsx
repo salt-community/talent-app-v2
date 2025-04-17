@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AssignmentScore, Developer, ScoreStatus } from "../../types";
 import { Switch } from "@/components/ui/switch";
 import { updateScoreStatusesAction } from "../../action";
@@ -30,6 +30,10 @@ export function Developers({
   const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
+
+  useEffect(() => {
+    setIsPublished(published);
+  }, [published]);
 
   const togglePublishStatus = async () => {
     if (!scored || isLoading) return;
