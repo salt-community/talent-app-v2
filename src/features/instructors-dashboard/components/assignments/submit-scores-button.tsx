@@ -28,10 +28,7 @@ export function SubmitScoresButton({ scoreStatuses }: Props) {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button
-            className="bg-zinc-900 text-white rounded-md h-10 hover:bg-zinc-800 my-2"
-            onClick={() => setOpen(true)}
-          >
+          <Button className="cursor-pointer" onClick={() => setOpen(true)}>
             Publish Scores
           </Button>
         </DialogTrigger>
@@ -42,16 +39,10 @@ export function SubmitScoresButton({ scoreStatuses }: Props) {
           <div className="flex flex-col space-y-4">
             <p>Are you sure you want to publish the scores?</p>
             <div className="flex justify-end space-x-4">
-              <Button
-                className="bg-zinc-900 text-white rounded-md h-10 hover:bg-zinc-800"
-                onClick={() => setOpen(false)}
-              >
+              <Button className="cursor-pointer" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
-              <Button
-                className="bg-zinc-900 text-white rounded-md h-10 hover:bg-zinc-800"
-                onClick={publishScores}
-              >
+              <Button className="cursor-pointer" onClick={publishScores}>
                 Publish
               </Button>
             </div>
