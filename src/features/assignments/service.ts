@@ -108,7 +108,7 @@ export function createAssignmentsService(db: Db) {
     async addFixToAssignmentScore(args: {
       assignmentScoreId: string;
       description: string;
-      dueDate?: Date;
+      dueDate?: Date | null;
     }) {
       return await repo.addFixToAssignmentScore(args);
     },
@@ -142,10 +142,8 @@ export function createAssignmentsService(db: Db) {
       return await repo.deleteFixItemById(id);
     },
 
-    async updateFixStatusById(args:{id: string, newStatus: boolean}) {
-      return await repo.updateFixStatusById(args)
-
-     
+    async updateFixStatusById(args: { id: string; newStatus: boolean }) {
+      return await repo.updateFixStatusById(args);
     },
 
     //this function is used in the seed file

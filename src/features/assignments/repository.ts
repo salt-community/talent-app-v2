@@ -403,7 +403,7 @@ export function createAssignmentsRepository(db: Db) {
     async addFixToAssignmentScore(args: {
       assignmentScoreId: string;
       description: string;
-      dueDate?: Date;
+      dueDate?: Date | null;
     }) {
       await db.insert(fixList).values({
         assignmentScoreId: args.assignmentScoreId,

@@ -241,7 +241,7 @@ export function createInstructorService(
     async addFixToAssignmentScore(args: {
       assignmentScoreId: string;
       description: string;
-      dueDate?: Date;
+      dueDate?: Date | null;
     }) {
       return await addFixToAssignmentScore(args);
     },

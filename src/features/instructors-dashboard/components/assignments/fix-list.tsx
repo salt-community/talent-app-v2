@@ -1,7 +1,7 @@
 import { Button, Textarea } from "@/components";
 import { CalendarForm } from "@/components/ui/calendar-form";
 import { Calendar1, Plus } from "lucide-react";
-import { useState } from "react";
+import { useOptimistic, useState, useTransition } from "react";
 import { addFixToAssignmentScoreAction } from "../../action";
 import { FixLists } from "../../types";
 import { OptionMenu } from "./option-menu";
@@ -19,6 +19,15 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [optimisticFix, addOptimisticFix] = useOptimistic(
+    fixes,
+    (state, newFix: FixLists) => {
+      return [...state, newFix];
+    }
+  );
+
+  const [isPending, startTransition] = useTransition();
+
   // need to refactor for better error handling later, maybe anton can help?
   const handleAddFix = async () => {
     if (!assignmentScoreId) {
@@ -33,7 +42,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
 
     setIsSubmitting(true);
 
-    let dueDate = undefined;
+    let dueDate: Date | null = null;
     if (datetime.date) {
       dueDate = new Date(datetime.date);
       if (datetime.time) {
@@ -43,10 +52,40 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
       }
     }
 
-    await addFixToAssignmentScoreAction({
+    type FixLists = {
+      id: string;
+      assignmentScoreId: string;
+      description: string;
+      isCompleted: boolean | null;
+      dueDate: Date | null;
+      createdAt: Date | null;
+      updatedAt: Date | null;
+      developerId?: string;
+    };
+
+    const args = {
+      id: "",
       assignmentScoreId,
       description,
+      isCompleted: false,
       dueDate,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      developerId: "1",
+    };
+
+    startTransition(async () => {
+      try {
+        addOptimisticFix(args);
+
+        await addFixToAssignmentScoreAction({
+          assignmentScoreId,
+          description,
+          dueDate,
+        });
+      } catch (error) {
+        alert("Something went wrong while adding the fix request");
+      }
     });
 
     setDescription("");
@@ -90,8 +129,8 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
         </div>
       )}
       <div className="space-y-4">
-        {fixes.length > 0 ? (
-          fixes.map((item) => (
+        {optimisticFix.length > 0 ? (
+          optimisticFix.map((item) => (
             <div
               key={item.id}
               className="border border-gray-200 rounded-lg p-4 relative"

@@ -162,7 +162,7 @@ export async function updateScoreAction(
 export async function addFixToAssignmentScoreAction(args: {
   assignmentScoreId: string;
   description: string;
-  dueDate?: Date;
+  dueDate?: Date | null;
 }) {
   try {
     await instructorService.addFixToAssignmentScore(args);
