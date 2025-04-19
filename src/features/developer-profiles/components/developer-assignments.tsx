@@ -48,7 +48,8 @@ export async function DeveloperAssignments() {
                   {assignment.title}
                 </Link>
               </div>
-              <div className="flex items-center gap-2 mr-2">
+              <div className="flex flex-row items-center space-x-2 ">
+                <p className="inline font-sans">Average Score:</p>
                 <div
                   className={`text-sm font-bold ${getScoreColorClass(averageScore)}`}
                 >

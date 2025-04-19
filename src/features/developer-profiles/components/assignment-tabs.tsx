@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { TabType } from "../types";
 
-interface TabItem {
+type TabItem = {
   id: TabType;
   label: string;
   icon: React.ReactNode;
   count?: number;
-}
+};
 
 interface ScoringTabProps {
   tabs: TabItem[];
