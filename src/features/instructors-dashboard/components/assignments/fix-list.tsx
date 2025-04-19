@@ -22,7 +22,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
     fixes,
     (state, newFix: FixLists) => {
       return [...state, newFix];
-    }
+    },
   );
 
   const [isPending, startTransition] = useTransition();
@@ -49,17 +49,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
       }
     }
 
-    type FixLists = {
-      id: string;
-      assignmentScoreId: string;
-      description: string;
-      isCompleted: boolean | null;
-      dueDate: Date | null;
-      createdAt: Date | null;
-      updatedAt: Date | null;
-      developerId?: string;
-    };
-
     const args = {
       id: "",
       assignmentScoreId,
@@ -81,6 +70,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           dueDate,
         });
       } catch (error) {
+        console.log(error);
         alert("Something went wrong while adding the fix request");
       }
     });
