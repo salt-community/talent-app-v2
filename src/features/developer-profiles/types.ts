@@ -124,14 +124,7 @@ export type Assignment = {
   id: string;
   assignmentScoreId: string;
   title: string;
-  comment: string | null;
-  status: string;
-  categoryName: string | null;
-  score: number | null;
-  averageScore: number | null;
-  categoryId: string | null;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  feedback: Assignment_Feedback[];
 };
 
 export type Assignment_Feedback = {

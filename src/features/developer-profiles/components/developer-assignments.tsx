@@ -1,9 +1,6 @@
 "use server";
-import Link from "next/link";
 import { developerProfilesService } from "../instance";
-import { Separator } from "@/components";
 import { notFound } from "next/navigation";
-import { ScoreDetails } from "./score-details";
 import { AssignmentCard } from "./assignment-card";
 
 export async function DeveloperAssignments() {
@@ -19,15 +16,7 @@ export async function DeveloperAssignments() {
   const averageScores =
     await developerProfilesService.getAverageScoresByIdentityId(identityId);
 
-  const getScoreColorClass = (score: number) => {
-    if (score <= 50) {
-      return "text-red-600 font-extrabold";
-    } else if (score >= 51 && score <= 94) {
-      return "text-orange-500";
-    } else {
-      return "text-green-500";
-    }
-  };
+  console.log(assignments);
 
   return (
     <div className="max-w-6xl mx-auto p-4">

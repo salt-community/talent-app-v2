@@ -38,6 +38,11 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
         <div className="space-y-4">
           {assignment.map((assignment) => {
             const score = averageScore.get(assignment.id) || 0;
+            const scoreItems = assignment.feedback.map((feedback) => ({
+              category: feedback.categoryName || "Unknown",
+              score: feedback.score || 0,
+              maxScore: 100,
+            }));
             return (
               <Card key={assignment.id} className="cursor-pointer">
                 <div
@@ -68,9 +73,7 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
 
                 {expandedAssignment === assignment.id && (
                   <div className="border-t border-gray-200 px-6 py-4">
-                    <p className="text-gray-700">
-                      <ScoreDetails scoreItems={[]} />
-                    </p>
+                    <ScoreDetails scoreItems={scoreItems} />
                   </div>
                 )}
               </Card>
