@@ -78,13 +78,24 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           cvArticleElement.style.gridTemplateColumns = "15rem 2fr";
         }
 
-        const dataUrl = await DomToImage.toPng(element);
+        const scale = 2;
+        const dataUrl = await DomToImage.toPng(element, {
+          width: element.offsetWidth * scale,
+          height: element.offsetHeight * scale,
+          style: {
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+            width: `${element.offsetWidth}px`,
+            height: `${element.offsetHeight}px`,
+          },
+        });
+
         const pdf = new jsPDF({
           orientation: "portrait",
           unit: "px",
-          format: [880, element.offsetHeight],
+          format: [870, element.offsetHeight],
         });
-        pdf.addImage(dataUrl, "PNG", 0, 0, 880, element.offsetHeight);
+        pdf.addImage(dataUrl, "PNG", 0, 0, 870, element.offsetHeight);
 
         if (cvElement) cvElement.style.width = "";
         if (cvArticleElement) {
