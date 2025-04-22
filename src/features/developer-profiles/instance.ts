@@ -49,7 +49,7 @@ export const developerProfilesSeedingService = createDeveloperProfilesService(
       description: null,
     });
   },
-  () => {
-    return Promise.resolve(0);
+  (identityId: string) => {
+    return Promise.resolve([{ assignmentId: identityId, averageScore: 0 }]);
   }
 );

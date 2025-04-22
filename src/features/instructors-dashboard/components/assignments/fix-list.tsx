@@ -22,7 +22,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
     fixes,
     (state, newFix: FixLists) => {
       return [...state, newFix];
-    },
+    }
   );
 
   const [isPending, startTransition] = useTransition();
@@ -70,7 +70,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           dueDate,
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
         alert("Something went wrong while adding the fix request");
       }
     });

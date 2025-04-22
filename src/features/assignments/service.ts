@@ -67,11 +67,25 @@ export function createAssignmentsService(db: Db) {
 
     async getAverageScoresByIdentityId(identityId: string) {
       const assignmentScores = await repo.getScoresByIdentityId(identityId);
-      const validScores = assignmentScores
-        .map((assignmentScore) => assignmentScore.score)
-        .filter((score): score is number => score !== null || score !== 0);
 
-      return averageScore(validScores);
+      const scoresByAssignment = new Map();
+
+      assignmentScores.forEach((item) => {
+        if (item.assignmentId && item.score !== null && item.score !== 0) {
+          if (!scoresByAssignment.has(item.assignmentId)) {
+            scoresByAssignment.set(item.assignmentId, []);
+          }
+          scoresByAssignment.get(item.assignmentId).push(item.score);
+        }
+      });
+
+      const averageScores = Array.from(scoresByAssignment.entries()).map(
+        ([assignmentId, scores]) => ({
+          assignmentId,
+          averageScore: averageScore(scores),
+        })
+      );
+      return averageScores;
     },
 
     async deleteAllAssignments() {
@@ -142,7 +156,6 @@ export function createAssignmentsService(db: Db) {
       return await repo.updateFixStatusById(args);
     },
 
-    //this function is used in the seed file
     async attachCategoriesToAssignment(args: {
       assignmentId: string;
       categoryIds: string[];
@@ -153,12 +166,10 @@ export function createAssignmentsService(db: Db) {
       );
     },
 
-    //this function is used in the seed file
     async getRandomCategoryIds(maxCategories: number) {
       return await repo.getRandomCategoryIds(maxCategories);
     },
 
-    //this function is used in the seed file
     async ensureCategoriesExist(categoryNames: string[]) {
       return await repo.ensureCategoriesExist(categoryNames);
     },

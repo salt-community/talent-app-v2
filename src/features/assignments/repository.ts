@@ -155,7 +155,6 @@ export function createAssignmentsRepository(db: Db) {
 
       const result = Array.from(assignmentMap.values());
 
-      console.log({ result: result });
       return result;
     },
 
@@ -183,10 +182,7 @@ export function createAssignmentsRepository(db: Db) {
         .select({
           scoreId: assignmentScores.id,
           assignmentId: assignmentScores.assignmentId,
-          status: assignmentScores.status,
-          comment: assignmentFeedback.comment,
           categoryId: assignmentFeedback.categoryId,
-          categoryName: categories.name,
           score: assignmentFeedback.score,
         })
         .from(assignmentScores)

@@ -1,5 +1,4 @@
 "use server";
-
 import Link from "next/link";
 import { developerProfilesService } from "../instance";
 import { Separator } from "@/components";
@@ -12,10 +11,16 @@ export async function DeveloperAssignments() {
   if (!identityId) {
     return notFound();
   }
+
   const assignments =
     await developerProfilesService.getScoredAssignmentsByIdentityId(identityId);
-  const averageScore =
+  const averageScores =
     await developerProfilesService.getAverageScoresByIdentityId(identityId);
+
+  const scoreMap = new Map();
+  averageScores.forEach((item) => {
+    scoreMap.set(item.assignmentId, item.averageScore);
+  });
 
   const getScoreColorClass = (score: number) => {
     if (score <= 50) {
@@ -35,6 +40,8 @@ export async function DeveloperAssignments() {
       <Separator className="mb-4" />
       <div className="space-y-4">
         {assignments.map((assignment) => {
+          const score = scoreMap.get(assignment.id) || 0;
+
           return (
             <div
               key={assignment.id}
@@ -51,9 +58,9 @@ export async function DeveloperAssignments() {
               <div className="flex flex-row items-center space-x-2 ">
                 <p className="inline font-sans">Average Score:</p>
                 <div
-                  className={`text-sm font-bold ${getScoreColorClass(averageScore)}`}
+                  className={`text-sm font-bold ${getScoreColorClass(score)}`}
                 >
-                  {averageScore}
+                  {score}
                 </div>
               </div>
             </div>
