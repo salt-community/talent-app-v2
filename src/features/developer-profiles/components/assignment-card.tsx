@@ -81,7 +81,7 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
                     <div className="border-t border-gray-200 px-6 py-4">
                       <ScoreDetails scoreItems={feedback} />
                     </div>
-                    <div className="border-t border-gray-200 px-6 py-4">
+                    <div className="px-6 py-4">
                       <CategoryFeedback feedbacks={feedback} />
                     </div>
                   </>
