@@ -120,6 +120,19 @@ export type Category = {
   assignmentId: string;
   categoryId: string;
 };
+export type Assignment = {
+  id: string;
+  assignmentScoreId: string;
+  title: string;
+  comment: string | null;
+  status: string;
+  categoryName: string | null;
+  score: number | null;
+  averageScore: number | null;
+  categoryId: string | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+};
 
 export type Assignment_Feedback = {
   id: string;
