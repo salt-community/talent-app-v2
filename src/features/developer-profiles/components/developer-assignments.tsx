@@ -3,6 +3,7 @@ import Link from "next/link";
 import { developerProfilesService } from "../instance";
 import { Separator } from "@/components";
 import { notFound } from "next/navigation";
+import { ScoreDetails } from "./score-details";
 
 export async function DeveloperAssignments() {
   const profiles = await developerProfilesService.getCurrentUsers();

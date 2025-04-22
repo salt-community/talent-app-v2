@@ -1,15 +1,15 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
 
-interface ScoreItem {
+type ScoreItem = {
   category: string;
   score: number;
   maxScore: number;
-}
+};
 
-interface ScoreBreakdownProps {
+type ScoreBreakdownProps = {
   scoreItems: ScoreItem[];
-}
+};
 
 export function ScoreDetails({ scoreItems }: ScoreBreakdownProps) {
   const totalScore = scoreItems.reduce((acc, item) => acc + item.score, 0);
