@@ -16,35 +16,50 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
   );
   const toggleExpand = (id: string) => {
     setExpandedAssignment(expandedAssignment === id ? null : id);
+    if (expandedAssignment !== id) {
+      setTimeout(() => {
+        const assignments = assignment.find((a) => a.id === id);
+        if (assignment) {
+        }
+      }, 100);
+    }
   };
   return (
-    <div className="space-y-4">
-      {assignment.map((assignment) => {
-        const score = averageScore.get(assignment.id) || 0;
-        return (
-          <Card key={assignment.id} className="cursor-pointer">
-            <div
-              className="px-6 py-4 flex justify-between items-center"
-              onClick={() => toggleExpand(assignment.id)}
-            >
-              <div className="flex items-center space-x-4">
-                <i
-                  className={`fas ${expandedAssignment === assignment.id ? "fa-chevron-down" : "fa-chevron-right"} text-gray-400`}
-                ></i>
-                <h3 className="font-medium text-lg text-gray-900">
-                  {assignment.title}
-                </h3>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-xl font-semibold text-blue-600">
-                  {score}
-                </span>
-              </div>
-              <ScoreDetails scoreItems={[]} />
-            </div>
-          </Card>
-        );
-      })}
+    <div className="min-h-screen  py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
+        <header className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Assignments</h1>
+          <p className="text-gray-600">Some Random Text I Guess?</p>
+        </header>
+        <div className="space-y-4">
+          {assignment.map((assignment) => {
+            const score = averageScore.get(assignment.id) || 0;
+            return (
+              <Card key={assignment.id} className="cursor-pointer">
+                <div
+                  className="px-6 py-4 flex justify-between items-center"
+                  onClick={() => toggleExpand(assignment.id)}
+                >
+                  <div className="flex items-center space-x-4">
+                    <i
+                      className={`fas ${expandedAssignment === assignment.id ? "fa-chevron-down" : "fa-chevron-right"} text-gray-400`}
+                    ></i>
+                    <h3 className="font-medium text-lg text-gray-900">
+                      {assignment.title}
+                    </h3>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xl font-semibold text-blue-600">
+                      {score}
+                    </span>
+                  </div>
+                  {/* <ScoreDetails scoreItems={[]} /> */}
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
