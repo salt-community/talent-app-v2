@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Assignment } from "../types";
 import { Card } from "@/components";
+import { ScoreDetails } from "./score-details";
 type AverageScoresMap = Map<string, number>;
 type Props = {
   assignment: Assignment[];
@@ -21,14 +22,7 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
       {assignment.map((assignment) => {
         const score = averageScore.get(assignment.id) || 0;
         return (
-          <Card
-            key={assignment.id}
-            className={`transition-all duration-300 ease-in-out overflow-hidden cursor-pointer ${
-              expandedAssignment === assignment.id
-                ? "shadow-md"
-                : "shadow-sm hover:shadow"
-            }`}
-          >
+          <Card key={assignment.id} className="cursor-pointer">
             <div
               className="px-6 py-4 flex justify-between items-center"
               onClick={() => toggleExpand(assignment.id)}
@@ -46,6 +40,7 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
                   {score}
                 </span>
               </div>
+              <ScoreDetails scoreItems={[]} />
             </div>
           </Card>
         );
