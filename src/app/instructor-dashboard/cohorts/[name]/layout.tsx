@@ -1,8 +1,9 @@
 "use client";
+
 import React, { Suspense } from "react";
 import { Star, LineChart } from "lucide-react";
 import TabLink from "@/features/admin-dashboard/components/tab-link";
-import Loading from "@/app/admin-dashboard/loading";
+import Loading from "./loading";
 
 type LayoutProps = {
   children: React.ReactNode;
