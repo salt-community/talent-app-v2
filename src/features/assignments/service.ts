@@ -16,10 +16,8 @@ export function createAssignmentsService(db: Db) {
       return await repo.getAllAssignments();
     },
 
-    async getScoredAssignmentsByCohortIdAndIdentityId(args: {
-      identityId: string;
-    }) {
-      return await repo.getAssignmentsByCohortIdAndIdentityId(args.identityId);
+    async getScoredAssignmentsByCohortIdAndIdentityId(identityId: string) {
+      return await repo.getAssignmentsByCohortIdAndIdentityId(identityId);
     },
 
     async createAssignment(assignment: AssignmentWithCategory) {

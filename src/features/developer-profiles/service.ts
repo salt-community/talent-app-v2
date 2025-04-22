@@ -278,9 +278,8 @@ export function createDeveloperProfilesService(
     },
 
     async getScoredAssignmentsByIdentityId(identityId: string) {
-      const assignments = await getScoredAssignmentsByCohortIdAndIdentityId({
-        identityId,
-      });
+      const assignments =
+        await getScoredAssignmentsByCohortIdAndIdentityId(identityId);
 
       return assignments;
     },
