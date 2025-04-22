@@ -298,7 +298,6 @@ export function createDeveloperProfilesService(
       return scoreMap;
     },
 
-
     async copyDeveloperProfile(developerProfileId: string) {
       const [developerProfileToCopy] =
         await repository.getDeveloperProfile(developerProfileId);
