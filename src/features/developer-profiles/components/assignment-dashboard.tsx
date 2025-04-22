@@ -17,14 +17,10 @@ export async function AssignmentDashboard() {
   const assignments =
     await developerProfilesService.getScoredAssignmentsByIdentityId(identityId);
 
-  let fixListItems = [];
-  if (assignments && assignments.length > 0 && assignments[0].fixList) {
-    if (Array.isArray(assignments[0].fixList)) {
-      fixListItems = assignments[0].fixList;
-    } else {
-      fixListItems = [assignments[0].fixList];
-    }
-  }
+  const fixListItems = assignments.flatMap(
+    (assignment) => assignment.fixList || []
+  );
+
   const fixCount = fixListItems.filter(
     (item: Fix_Item) => item.isCompleted === false
   );

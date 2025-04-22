@@ -17,11 +17,11 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
   const [expandedAssignment, setExpandedAssignment] = useState<string | null>(
     null
   );
-  const [activeTab, setActiveTab] = useState("details");
+  // const [activeTab, setActiveTab] = useState("details");
 
   const toggleExpand = (id: string) => {
     setExpandedAssignment(expandedAssignment === id ? null : id);
-    setActiveTab("details");
+    // setActiveTab("details");
     if (expandedAssignment !== id) {
       setTimeout(() => {
         assignment.find((a) => a.id === id);
