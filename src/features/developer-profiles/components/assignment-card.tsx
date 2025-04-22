@@ -1,10 +1,11 @@
 "use client";
-
 import { useState } from "react";
 import { Assignment } from "../types";
 import { Card } from "@/components";
-import { ScoreDetails } from "./score-details";
+import { ChevronRight } from "lucide-react";
+
 type AverageScoresMap = Map<string, number>;
+
 type Props = {
   assignment: Assignment[];
   averageScore: AverageScoresMap;
@@ -14,6 +15,7 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
   const [expandedAssignment, setExpandedAssignment] = useState<string | null>(
     null
   );
+
   const toggleExpand = (id: string) => {
     setExpandedAssignment(expandedAssignment === id ? null : id);
     if (expandedAssignment !== id) {
@@ -24,8 +26,9 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
       }, 100);
     }
   };
+
   return (
-    <div className="min-h-screen  py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Assignments</h1>
@@ -41,9 +44,16 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
                   onClick={() => toggleExpand(assignment.id)}
                 >
                   <div className="flex items-center space-x-4">
-                    <i
-                      className={`fas ${expandedAssignment === assignment.id ? "fa-chevron-down" : "fa-chevron-right"} text-gray-400`}
-                    ></i>
+                    <div className="w-6 h-6 flex items-center justify-center">
+                      <ChevronRight
+                        className={`text-gray-400 transition-transform duration-300 ease-in-out ${
+                          expandedAssignment === assignment.id
+                            ? "rotate-90"
+                            : "rotate-0"
+                        }`}
+                        size={18}
+                      />
+                    </div>
                     <h3 className="font-medium text-lg text-gray-900">
                       {assignment.title}
                     </h3>
@@ -53,8 +63,16 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
                       {score}
                     </span>
                   </div>
-                  {/* <ScoreDetails scoreItems={[]} /> */}
+                  {/* <ScoreDetails scoreItems={} /> */}
                 </div>
+
+                {expandedAssignment === assignment.id && (
+                  <div className="border-t border-gray-200 px-6 py-4">
+                    <p className="text-gray-700">
+                      Expanded content goes here...
+                    </p>
+                  </div>
+                )}
               </Card>
             );
           })}
