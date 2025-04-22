@@ -67,6 +67,7 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
                     </h3>
                   </div>
                   <div className="flex items-center space-x-2">
+                    <span className="text-gray-500">Average Score:</span>
                     <span className="text-xl font-semibold text-blue-600">
                       {score}
                     </span>
