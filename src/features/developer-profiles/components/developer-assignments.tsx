@@ -17,11 +17,6 @@ export async function DeveloperAssignments() {
   const averageScores =
     await developerProfilesService.getAverageScoresByIdentityId(identityId);
 
-  const scoreMap = new Map();
-  averageScores.forEach((item) => {
-    scoreMap.set(item.assignmentId, item.averageScore);
-  });
-
   const getScoreColorClass = (score: number) => {
     if (score <= 50) {
       return "text-red-600 font-extrabold";
@@ -40,7 +35,7 @@ export async function DeveloperAssignments() {
       <Separator className="mb-4" />
       <div className="space-y-4">
         {assignments.map((assignment) => {
-          const score = scoreMap.get(assignment.id) || 0;
+          const score = averageScores.get(assignment.id) || 0;
 
           return (
             <div

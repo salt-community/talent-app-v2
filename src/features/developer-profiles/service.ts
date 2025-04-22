@@ -290,8 +290,14 @@ export function createDeveloperProfilesService(
     },
 
     async getAverageScoresByIdentityId(identityId: string) {
-      return await getAverageScoresByIdentityId(identityId);
+      const averageScores = await getAverageScoresByIdentityId(identityId);
+      const scoreMap = new Map();
+      averageScores.forEach((item) => {
+        scoreMap.set(item.assignmentId, item.averageScore);
+      });
+      return scoreMap;
     },
+
 
     async copyDeveloperProfile(developerProfileId: string) {
       const [developerProfileToCopy] =
