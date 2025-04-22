@@ -59,6 +59,7 @@ export type AssignmentWithCategory = {
 };
 
 export type AssignmentFeedback = {
+  id: string;
   assignmentScoreId: string;
   comment?: string;
   score?: number;

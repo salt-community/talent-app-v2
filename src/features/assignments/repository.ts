@@ -1,5 +1,5 @@
 import { Db } from "@/db";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { ScoreStatus } from "../instructors-dashboard/types";
 import {
   assignmentCategories,
@@ -11,12 +11,14 @@ import {
   fixList,
 } from "./schema";
 import {
+  AssignmentFeedback,
   AssignmentScore,
   AssignmentScoreFormData,
   AssignmentWithCategory,
   FixItem,
   NewAssignment,
 } from "./types";
+import { cohortIdentities } from "../cohorts";
 
 export function createAssignmentsRepository(db: Db) {
   return {
@@ -69,18 +71,33 @@ export function createAssignmentsRepository(db: Db) {
       return await db.select().from(assignments);
     },
 
-    async getAssignmentsByCohortIdAndIdentityId(
-      cohortId: string,
-      identityId: string
-    ) {
-      const assignmentsWithScores = await db
+    async getAssignmentsByCohortIdAndIdentityId(identityId: string) {
+      const userCohorts = await db
         .select()
+        .from(cohortIdentities)
+        .where(eq(cohortIdentities.identityId, identityId));
+
+      const cohortIds = userCohorts.map((cm) => cm.cohortId);
+
+      if (cohortIds.length === 0) {
+        return [];
+      }
+
+      const allAssignments = await db
+        .select({
+          assignments: assignments,
+          assignment_scores: assignmentScores,
+          assignment_feedback: assignmentFeedback,
+          categories: categories,
+          assignment_fix_items: fixList,
+        })
         .from(assignments)
-        .leftJoin(
+        .innerJoin(
           assignmentScores,
           and(
             eq(assignments.id, assignmentScores.assignmentId),
-            eq(assignmentScores.identityId, identityId)
+            eq(assignmentScores.identityId, identityId),
+            eq(assignmentScores.status, "published")
           )
         )
         .leftJoin(
@@ -88,52 +105,58 @@ export function createAssignmentsRepository(db: Db) {
           eq(assignmentFeedback.assignmentScoreId, assignmentScores.id)
         )
         .leftJoin(categories, eq(assignmentFeedback.categoryId, categories.id))
-        .where(
-          and(
-            eq(assignments.cohortId, cohortId),
-            eq(assignmentScores.status, "published")
-          )
-        );
+        .leftJoin(fixList, eq(fixList.assignmentScoreId, assignmentScores.id))
+        .where(inArray(assignments.cohortId, cohortIds));
 
-      const enhancedAssignments = await Promise.all(
-        assignmentsWithScores.map(async (assignment) => {
-          let fixItemsArray: {
-            id: string;
-            assignmentScoreId: string;
-            description: string;
-            isCompleted: boolean | null;
-            dueDate: Date | null;
-            createdAt: Date | null;
-            updatedAt: Date | null;
-          }[] = [];
+      const assignmentMap = new Map();
 
-          if (assignment.assignment_scores?.id) {
-            const dbFixItems = await db
-              .select()
-              .from(fixList)
-              .where(
-                eq(fixList.assignmentScoreId, assignment.assignment_scores.id)
-              );
+      for (const row of allAssignments) {
+        const assignmentId = row.assignments.id;
 
-            fixItemsArray = dbFixItems.map((item) => ({
-              id: item.id,
-              assignmentScoreId: item.assignmentScoreId,
-              description: item.description,
-              isCompleted: item.isCompleted,
-              dueDate: item.dueDate,
-              createdAt: item.createdAt,
-              updatedAt: item.updatedAt,
-            }));
+        if (!assignmentMap.has(assignmentId)) {
+          assignmentMap.set(assignmentId, {
+            ...row.assignments,
+            feedback: [],
+            fixList: [],
+            categories: [],
+          });
+        }
+
+        const assignment = assignmentMap.get(assignmentId);
+
+        if (row.assignment_feedback && row.assignment_feedback.id) {
+          const feedbackExists = assignment.feedback.some(
+            (f: AssignmentFeedback) => f.id === row.assignment_feedback?.id
+          );
+
+          if (!feedbackExists) {
+            let categoryName = "Unknown Category";
+            if (row.categories && row.categories.id) {
+              categoryName = row.categories.name;
+            }
+
+            assignment.feedback.push({
+              ...row.assignment_feedback,
+              categoryName,
+            });
           }
+        }
 
-          return {
-            ...assignment,
-            assignment_fix_items: fixItemsArray as FixItem[],
-          };
-        })
-      );
+        if (row.assignment_fix_items && row.assignment_fix_items.id) {
+          const fixItemExists = assignment.fixList.some(
+            (f: FixItem) => f.id === row.assignment_fix_items?.id
+          );
 
-      return enhancedAssignments;
+          if (!fixItemExists) {
+            assignment.fixList.push(row.assignment_fix_items);
+          }
+        }
+      }
+
+      const result = Array.from(assignmentMap.values());
+
+      console.log({ result: result });
+      return result;
     },
 
     async getAssignmentById(id: string) {

@@ -4,7 +4,6 @@ import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import {
   AddDeveloperProfile,
-  Assignment_Feedback,
   developerProfileDetails,
   DeveloperProfileUpdate,
   OutboxMessageSelect,
@@ -15,11 +14,9 @@ import { createSearchApi } from "./search";
 import { TaskStatus } from "meilisearch";
 import { createSearchService } from "./search/search-service";
 import { generateSlug } from "./logic";
-import { GetCohortIdByIdentityId } from "../cohorts";
 import {
   GetAssignmentBySlug,
   GetAverageScoresByIdentityId,
-  GetCategoryByAssignmentId,
   GetScoredAssignmentsByCohortIdAndIdentityId,
 } from "../assignments";
 
@@ -28,11 +25,9 @@ const OK_STATUSES: TaskStatus[] = ["succeeded", "enqueued", "processing"];
 export function createDeveloperProfilesService(
   db: Db,
   getCurrentUser: GetCurrentUser,
-  getCohortIdByIdentityId: GetCohortIdByIdentityId,
   getScoredAssignmentsByCohortIdAndIdentityId: GetScoredAssignmentsByCohortIdAndIdentityId,
   getAssignmentBySlug: GetAssignmentBySlug,
-  getAverageScoresByIdentityId: GetAverageScoresByIdentityId,
-  getCategoryByAssignmentId: GetCategoryByAssignmentId
+  getAverageScoresByIdentityId: GetAverageScoresByIdentityId
 ) {
   const repository = createDevelopersRepository(db);
   const searchApi = createSearchApi({
@@ -283,68 +278,11 @@ export function createDeveloperProfilesService(
     },
 
     async getScoredAssignmentsByIdentityId(identityId: string) {
-      const cohortId = await getCohortIdByIdentityId(identityId);
-      const assignments = cohortId
-        ? await getScoredAssignmentsByCohortIdAndIdentityId({
-            cohortId,
-            identityId,
-          })
-        : [];
-
-      const allCategories = await Promise.all(
-        [...new Set(assignments.map((a) => a.assignments.id))].map(
-          (assignmentId) => getCategoryByAssignmentId(assignmentId)
-        )
-      );
-
-      const categoryMap = new Map();
-      allCategories.flat().forEach((cat) => {
-        if (cat.categories && cat.assignment_categories) {
-          categoryMap.set(
-            cat.assignment_categories.categoryId,
-            cat.categories.name
-          );
-        }
+      const assignments = await getScoredAssignmentsByCohortIdAndIdentityId({
+        identityId,
       });
 
-      const assignmentMap = new Map();
-
-      assignments.forEach(
-        ({
-          assignments,
-          assignment_feedback,
-          categories,
-          assignment_fix_items,
-        }) => {
-          if (!assignmentMap.has(assignments.id)) {
-            assignmentMap.set(assignments.id, {
-              ...assignments,
-              feedback: [],
-              categories: categories,
-              fixList: assignment_fix_items,
-            });
-          }
-
-          if (assignment_feedback) {
-            const currentAssignment = assignmentMap.get(assignments.id);
-            const feedbackExists = currentAssignment.feedback.some(
-              (f: Assignment_Feedback) => f.id === assignment_feedback.id
-            );
-
-            if (!feedbackExists && assignment_feedback.id) {
-              currentAssignment.feedback.push({
-                ...assignment_feedback,
-                categoryName:
-                  categoryMap.get(assignment_feedback.categoryId) ||
-                  "Unknown Category",
-              });
-            }
-          }
-        }
-      );
-
-      const result = Array.from(assignmentMap.values());
-      return result;
+      return assignments;
     },
 
     async getAssignmentBySlug(slug: string) {
