@@ -4,6 +4,7 @@ import { developerProfilesService } from "../instance";
 import { Separator } from "@/components";
 import { notFound } from "next/navigation";
 import { ScoreDetails } from "./score-details";
+import { AssignmentCard } from "./assignment-card";
 
 export async function DeveloperAssignments() {
   const profiles = await developerProfilesService.getCurrentUsers();
@@ -30,39 +31,7 @@ export async function DeveloperAssignments() {
 
   return (
     <div className="max-w-6xl mx-auto p-4">
-      <div className="flex justify-between items-center py-2">
-        <h2 className="text-2xl font-semibold">Assignments</h2>
-      </div>
-      <Separator className="mb-4" />
-      <div className="space-y-4">
-        {assignments.map((assignment) => {
-          const score = averageScores.get(assignment.id) || 0;
-
-          return (
-            <div
-              key={assignment.id}
-              className="flex justify-between items-center border-b pb-4"
-            >
-              <div className="flex items-center gap-4">
-                <Link
-                  href={`/developer-dashboard/assignments/${assignment.slug}`}
-                  className="text-header font-medium hover:underline hover:underline-offset-4"
-                >
-                  {assignment.title}
-                </Link>
-              </div>
-              <div className="flex flex-row items-center space-x-2 ">
-                <p className="inline font-sans">Average Score:</p>
-                <div
-                  className={`text-sm font-bold ${getScoreColorClass(score)}`}
-                >
-                  {score}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <AssignmentCard assignment={assignments} averageScore={averageScores} />
     </div>
   );
 }
