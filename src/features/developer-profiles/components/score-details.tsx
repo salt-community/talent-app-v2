@@ -20,8 +20,8 @@ export function ScoreDetails({ scoreItems }: ScoreBreakdownProps) {
   const totalPercentage = (totalScore / totalMaxScore) * 100;
 
   return (
-    <Card className="shadow-sm overflow-hidden">
-      <div className="p-4 border-b border-gray-200">
+    <>
+      <div className="p-4">
         <h2 className="text-xl font-bold text-gray-900">Score Breakdown</h2>
       </div>
       <div className="overflow-x-auto">
@@ -88,6 +88,6 @@ export function ScoreDetails({ scoreItems }: ScoreBreakdownProps) {
           </tbody>
         </table>
       </div>
-    </Card>
+    </>
   );
 }

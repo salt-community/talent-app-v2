@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Assignment } from "../types";
 import { Card } from "@/components";
 import { ChevronRight } from "lucide-react";
+import { ScoreDetails } from "./score-details";
 
 type AverageScoresMap = Map<string, number>;
 
@@ -63,13 +64,12 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
                       {score}
                     </span>
                   </div>
-                  {/* <ScoreDetails scoreItems={} /> */}
                 </div>
 
                 {expandedAssignment === assignment.id && (
                   <div className="border-t border-gray-200 px-6 py-4">
                     <p className="text-gray-700">
-                      Expanded content goes here...
+                      <ScoreDetails scoreItems={[]} />
                     </p>
                   </div>
                 )}
