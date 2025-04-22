@@ -127,9 +127,9 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
                 }`}
               ></div>
               <div className="flex justify-end">
-                <button className="text-gray-400 hover:text-gray-600 cursor-pointer">
+                <div className="text-gray-400 hover:text-gray-600 cursor-pointer">
                   <OptionMenu id={item.id} status={item.isCompleted} />
-                </button>
+                </div>
               </div>
               <p className="text-gray-600 mb-4">{item.description}</p>
               <div className="flex items-center text-gray-500 gap-2">
