@@ -33,7 +33,9 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
       <div className="max-w-5xl mx-auto">
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Assignments</h1>
-          <p className="text-gray-600">Some Random Text I Guess?</p>
+          <p className="text-gray-600">
+            Here you can view the results for all of your assignments
+          </p>
         </header>
         <div className="space-y-4">
           {assignment.map((assignment) => {
