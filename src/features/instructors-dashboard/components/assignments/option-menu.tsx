@@ -61,12 +61,12 @@ export function OptionMenu({ id, status }: Props) {
     <div className="flex items-center gap-4">
       <DropdownMenu>
         <DropdownMenuTrigger aria-label="Options Menu">
-          <button className="p-1.5 rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
+          <div className="p-1.5 rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
             <MoreVertical
               className="text-gray-500 hover:text-primary transition-colors"
               size={18}
             />
-          </button>
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 p-1.5 rounded-lg shadow-lg border border-gray-200">
           <div className="px-3 py-1.5 text-xs font-medium text-gray-500 uppercase">
