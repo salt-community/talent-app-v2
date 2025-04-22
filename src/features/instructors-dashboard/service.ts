@@ -48,7 +48,7 @@ export function createInstructorService(
   getPrivateNotesByAssignmentScoreId: getPrivateNotesByAssignmentScoreId,
   updateFixStatusById: UpdateFixStatusById,
   deleteFixItemById: DeleteFixItemById,
-  getAllIdentities: GetAllIdentities
+  getAllIdentities: GetAllIdentities,
 ) {
   return {
     async getAllCohorts() {
@@ -95,7 +95,7 @@ export function createInstructorService(
         comment?: string;
         score?: number;
         categoryId: string;
-      }>
+      }>,
     ) {
       const args = {
         scoreData: assignment,
@@ -110,13 +110,17 @@ export function createInstructorService(
 
     async getAssignmentDataBySlug(slug: string) {
       const assignment = await getAssignmentWithCategoriesBySlug(slug);
+
       if (!assignment) return null;
 
-      const developers = await getCohortStudentsByCohortId(assignment.cohortId);
+      const developers = (
+        await getCohortStudentsByCohortId(assignment.cohortId)
+      ).sort((a, b) => a.name.trim().localeCompare(b.name.trim(), "sv"));
+
       if (!developers) return null;
 
       const assignmentScores = await getScoresWithFeedbackByAssignmentId(
-        assignment.id
+        assignment.id,
       );
 
       const fixLists = await Promise.all(
@@ -132,15 +136,15 @@ export function createInstructorService(
           } catch (error) {
             console.error(
               `Error fetching fix list for score id ${score.id}:`,
-              error
+              error,
             );
             return [];
           }
-        })
+        }),
       ).then((results) => {
         const allFixLists = results.flat();
         return Array.from(
-          new Map(allFixLists.map((item) => [item.id, item])).values()
+          new Map(allFixLists.map((item) => [item.id, item])).values(),
         );
       });
 
@@ -156,16 +160,16 @@ export function createInstructorService(
           } catch (error) {
             console.error(
               `Error fetching private notes for score id ${score.id}:`,
-              error
+              error,
             );
             return [];
           }
-        })
+        }),
       ).then((results) => {
         const allPrivateNotes = results.flat();
 
         return Array.from(
-          new Map(allPrivateNotes.map((item) => [item.id, item])).values()
+          new Map(allPrivateNotes.map((item) => [item.id, item])).values(),
         );
       });
 
@@ -173,18 +177,18 @@ export function createInstructorService(
 
       const developersWithScores = developers.map((developer) => {
         const developerScores = assignmentScores.filter(
-          (score) => score.identityId === developer.id
+          (score) => score.identityId === developer.id,
         );
 
         const scored = developerScores.length > 0;
 
         const published = developerScores.some(
-          (score) => score.status === "published"
+          (score) => score.status === "published",
         );
 
         const scores = assignmentCategories.map((category) => {
           const matchingScore = developerScores.find(
-            (score) => score.categoryId === category.id
+            (score) => score.categoryId === category.id,
           );
 
           return {
@@ -228,7 +232,7 @@ export function createInstructorService(
       const allDeveloperProfiles = await getAllIdentities();
       const unsignedDevelopers = allDeveloperProfiles.filter(
         (profile) =>
-          !developers.find((developer) => developer.id === profile.id)
+          !developers.find((developer) => developer.id === profile.id),
       );
 
       return {
