@@ -9,10 +9,10 @@ type AverageScoresMap = Map<string, number>;
 
 type Props = {
   assignment: Assignment[];
-  averageScore: AverageScoresMap;
+  averageScores: AverageScoresMap;
 };
 
-export function AssignmentCard({ assignment, averageScore }: Props) {
+export function AssignmentCard({ assignment, averageScores }: Props) {
   const [expandedAssignment, setExpandedAssignment] = useState<string | null>(
     null
   );
@@ -39,7 +39,7 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
         </header>
         <div className="space-y-4">
           {assignment.map((assignment) => {
-            const score = averageScore.get(assignment.id) || 0;
+            const averageScore = averageScores.get(assignment.id) || 0;
             const scoreItems = assignment.feedback.map((feedback) => ({
               category: feedback.categoryName || "Unknown",
               score: feedback.score || 0,
@@ -69,7 +69,7 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
                   <div className="flex items-center space-x-2">
                     <span className="text-gray-500">Average Score:</span>
                     <span className="text-xl font-semibold text-blue-600">
-                      {score}
+                      {averageScore}
                     </span>
                   </div>
                 </div>
