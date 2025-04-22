@@ -16,14 +16,14 @@ export function AssignmentCard({ assignment, averageScore }: Props) {
   const [expandedAssignment, setExpandedAssignment] = useState<string | null>(
     null
   );
+  const [activeTab, setActiveTab] = useState("details");
 
   const toggleExpand = (id: string) => {
     setExpandedAssignment(expandedAssignment === id ? null : id);
+    setActiveTab("details");
     if (expandedAssignment !== id) {
       setTimeout(() => {
-        const assignments = assignment.find((a) => a.id === id);
-        if (assignment) {
-        }
+        assignment.find((a) => a.id === id);
       }, 100);
     }
   };
