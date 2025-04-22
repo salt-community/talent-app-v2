@@ -1,5 +1,5 @@
 import { Db } from "@/db";
-import { and, eq, inArray } from "drizzle-orm";
+import { and, asc, eq, inArray } from "drizzle-orm";
 import { ScoreStatus } from "../instructors-dashboard/types";
 import {
   assignmentCategories,
@@ -106,7 +106,8 @@ export function createAssignmentsRepository(db: Db) {
         )
         .leftJoin(categories, eq(assignmentFeedback.categoryId, categories.id))
         .leftJoin(fixList, eq(fixList.assignmentScoreId, assignmentScores.id))
-        .where(inArray(assignments.cohortId, cohortIds));
+        .where(inArray(assignments.cohortId, cohortIds))
+        .orderBy(asc(assignments.updatedAt));
 
       const assignmentMap = new Map();
 
