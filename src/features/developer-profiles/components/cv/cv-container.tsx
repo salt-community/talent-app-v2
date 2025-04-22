@@ -10,6 +10,7 @@ import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import DomToImage from "dom-to-image";
+import jsPDF from "jspdf";
 
 type Props = {
   defaultCvInfo: CvInfo;
@@ -77,20 +78,32 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           cvArticleElement.style.gridTemplateColumns = "15rem 2fr";
         }
 
-        const dataUrl = await DomToImage.toPng(element);
+        const scale = 2;
+        const dataUrl = await DomToImage.toPng(element, {
+          width: element.offsetWidth * scale,
+          height: element.offsetHeight * scale,
+          style: {
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+            width: `${element.offsetWidth}px`,
+            height: `${element.offsetHeight}px`,
+          },
+        });
+
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "px",
+          format: [870, element.offsetHeight],
+        });
+        pdf.addImage(dataUrl, "PNG", 0, 0, 870, element.offsetHeight);
+
         if (cvElement) cvElement.style.width = "";
         if (cvArticleElement) {
           cvArticleElement.style.display = "";
           cvArticleElement.style.gridTemplateColumns = "";
         }
 
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = `${userName}.png`;
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        pdf.save(`${userName}.pdf`);
       } catch (error) {
         console.error("Error generating image: ", error);
       }
