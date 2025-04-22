@@ -10,6 +10,7 @@ import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import DomToImage from "dom-to-image";
+import jsPDF from "jspdf";
 
 type Props = {
   defaultCvInfo: CvInfo;
@@ -78,19 +79,20 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
         }
 
         const dataUrl = await DomToImage.toPng(element);
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "px",
+          format: [880, element.offsetHeight],
+        });
+        pdf.addImage(dataUrl, "PNG", 0, 0, 880, element.offsetHeight);
+
         if (cvElement) cvElement.style.width = "";
         if (cvArticleElement) {
           cvArticleElement.style.display = "";
           cvArticleElement.style.gridTemplateColumns = "";
         }
 
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = `${userName}.png`;
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        pdf.save(`${userName}.pdf`);
       } catch (error) {
         console.error("Error generating image: ", error);
       }
