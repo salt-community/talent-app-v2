@@ -4,6 +4,7 @@ import { Assignment } from "../types";
 import { Card } from "@/components";
 import { ChevronRight } from "lucide-react";
 import { ScoreDetails } from "./score-details";
+import CategoryFeedback from "./category-feedback";
 
 type AverageScoresMap = Map<string, number>;
 
@@ -40,9 +41,10 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
         <div className="space-y-4">
           {assignment.map((assignment) => {
             const averageScore = averageScores.get(assignment.id) || 0;
-            const scoreItems = assignment.feedback.map((feedback) => ({
+            const feedback = assignment.feedback.map((feedback) => ({
               category: feedback.categoryName || "Unknown",
               score: feedback.score || 0,
+              comment: feedback.comment || "",
               maxScore: 100,
             }));
             return (
@@ -75,9 +77,14 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
                 </div>
 
                 {expandedAssignment === assignment.id && (
-                  <div className="border-t border-gray-200 px-6 py-4">
-                    <ScoreDetails scoreItems={scoreItems} />
-                  </div>
+                  <>
+                    <div className="border-t border-gray-200 px-6 py-4">
+                      <ScoreDetails scoreItems={feedback} />
+                    </div>
+                    <div className="border-t border-gray-200 px-6 py-4">
+                      <CategoryFeedback feedbacks={feedback} />
+                    </div>
+                  </>
                 )}
               </Card>
             );
