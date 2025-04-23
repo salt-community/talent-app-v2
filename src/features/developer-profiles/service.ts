@@ -113,7 +113,6 @@ export function createDeveloperProfilesService(
 
     async getAllById(identityId: string) {
       return await repository.getAllDeveloperProfileIdsByIdentityId(identityId);
-      return await repository.getAllDeveloperProfileIdsByIdentityId(identityId);
     },
     async getHighlightedDeveloperProfileIds() {
       const highlighted = await repository.getAll();
