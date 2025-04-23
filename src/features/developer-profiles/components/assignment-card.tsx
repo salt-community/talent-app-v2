@@ -53,6 +53,9 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
                 (item) =>
                   item.assignmentScoreId === assignment.assignmentScoreId
               ) || [];
+            const fixCount = fixItems.filter(
+              (item: fixList) => item.isCompleted === false
+            ).length;
 
             return (
               <Card key={assignment.id} className="cursor-pointer">
@@ -93,6 +96,7 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
                         </>
                       }
                       fixListContent={<FixList items={fixItems} />}
+                      fixCount={fixCount}
                     />
                   </div>
                 )}

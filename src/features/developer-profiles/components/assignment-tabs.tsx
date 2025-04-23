@@ -6,7 +6,7 @@ import { List, MessageCircle } from "lucide-react";
 interface FixedTabsProps {
   feedbackContent: ReactNode;
   fixListContent: ReactNode;
-  fixCount?: number;
+  fixCount: number;
   defaultTab?: "feedback" | "fixlist";
 }
 
