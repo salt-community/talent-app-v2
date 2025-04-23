@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, ReactNode } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Clipboard, MessageSquare } from "lucide-react";
+import { List, MessageCircle } from "lucide-react";
 
 interface FixedTabsProps {
   feedbackContent: ReactNode;
@@ -27,17 +27,18 @@ export default function AssignmentTabs({
       <TabsList className="mb-4 bg-muted/50 p-1">
         <TabsTrigger
           value="feedback"
-          className="!rounded-button whitespace-nowrap data-[state=active]:bg-background data-[state=active]:shadow-sm"
+          className="!rounded-button whitespace-nowrap data-[state=active]:bg-background"
         >
-          <MessageSquare className="mr-2" size={16} />
-          Feedback
+          <MessageCircle className="mr-2 cursor-pointer" size={16} />
+          <span className="cursor-pointer">Feedback</span>
         </TabsTrigger>
         <TabsTrigger
           value="fixlist"
-          className="!rounded-button whitespace-nowrap data-[state=active]:bg-background data-[state=active]:shadow-sm"
+          className="!rounded-button whitespace-nowrap data-[state=active]:bg-background "
         >
-          <Clipboard className="mr-2" size={16} />
-          Fix List
+          <List className="mr-2 cursor-pointer" size={16} />
+
+          <span className="cursor-pointer">Fix List</span>
         </TabsTrigger>
       </TabsList>
       <TabsContent value="feedback">{feedbackContent}</TabsContent>

@@ -79,19 +79,17 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
                 </div>
 
                 {expandedAssignment === assignment.id && (
-                  <AssignmentTabs
-                    feedbackContent={
-                      <>
-                        <div className="border-t border-gray-200 px-6 py-4">
+                  <div className="border-t border-gray-200 px-6 py-4">
+                    <AssignmentTabs
+                      feedbackContent={
+                        <>
                           <ScoreDetails scoreItems={feedback} />
-                        </div>
-                        <div className="px-6 py-4">
                           <CategoryFeedback feedbacks={feedback} />
-                        </div>
-                      </>
-                    }
-                    fixListContent={<FixList items={[]} />}
-                  />
+                        </>
+                      }
+                      fixListContent={<FixList items={[]} />}
+                    />
+                  </div>
                 )}
               </Card>
             );
