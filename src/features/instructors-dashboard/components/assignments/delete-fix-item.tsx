@@ -4,9 +4,10 @@ import { useCallback } from "react";
 
 type Props = {
   onConfirm: () => void;
+  isPending: boolean;
 };
 
-export function DeleteFixItem({ onConfirm }: Props) {
+export function DeleteFixItem({ onConfirm, isPending }: Props) {
   const handleConfirm = useCallback(() => {
     onConfirm();
   }, [onConfirm]);
@@ -20,6 +21,7 @@ export function DeleteFixItem({ onConfirm }: Props) {
       <button
         type="button"
         className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors cursor-pointer"
+        disabled={isPending}
       >
         <Trash2 size={16} className="text-red-500" />
         <span>Delete this fix</span>

@@ -1,13 +1,15 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import { MoreVertical } from "lucide-react";
-import { useCallback } from "react";
+import { useOptimistic, useTransition } from "react";
 import {
   deleteFixItemByIdAction,
   updateFixStatusByIdAction,
@@ -23,9 +25,24 @@ type Props = {
 export function OptionMenu({ id, status }: Props) {
   const { toast } = useToast();
 
-  const handleStatusChange = useCallback(async () => {
+  const [optimisticStatus, setOptimisticStatus] = useOptimistic(
+    status,
+    (state, newStatus: boolean | null) =>
+      newStatus === null ? state : newStatus
+  );
+
+  const [isPending, startTransition] = useTransition();
+
+  async function handleStatusChange() {
+    startTransition(() => {
+      setOptimisticStatus(!status);
+    });
+
     const result = await updateFixStatusByIdAction(id, !status);
+
     if (!result.success) {
+      setOptimisticStatus(status);
+
       return toast({
         title: "Error",
         description: String(result.error),
@@ -38,10 +55,11 @@ export function OptionMenu({ id, status }: Props) {
         variant: "default",
       });
     }
-  }, [id, status, toast]);
+  }
 
-  const handleDeleteFixItem = useCallback(async () => {
+  async function handleDeleteFixItem() {
     const result = await deleteFixItemByIdAction(id);
+
     if (!result.success) {
       return toast({
         title: "Error",
@@ -55,12 +73,12 @@ export function OptionMenu({ id, status }: Props) {
         variant: "default",
       });
     }
-  }, [id, toast]);
+  }
 
   return (
     <div className="flex items-center gap-4">
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Options Menu">
+        <DropdownMenuTrigger aria-label="Options Menu" asChild>
           <div className="p-1.5 rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
             <MoreVertical
               className="text-gray-500 hover:text-primary transition-colors"
@@ -72,17 +90,20 @@ export function OptionMenu({ id, status }: Props) {
           <div className="px-3 py-1.5 text-xs font-medium text-gray-500 uppercase">
             Status Options
           </div>
-
-          <DropdownMenuRadioGroup className="space-y-1">
+          <DropdownMenuItem>
             <FixItemChangeStatus
               onConfirm={handleStatusChange}
-              status={status}
+              status={optimisticStatus}
+              isPending={isPending}
             />
-          </DropdownMenuRadioGroup>
-
+          </DropdownMenuItem>
           <DropdownMenuSeparator className="my-1 border-gray-200" />
-
-          <DeleteFixItem onConfirm={handleDeleteFixItem} />
+          <DropdownMenuItem>
+            <DeleteFixItem
+              onConfirm={handleDeleteFixItem}
+              isPending={isPending}
+            />
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
