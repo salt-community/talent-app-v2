@@ -2,79 +2,28 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components";
-import { useToast } from "@/hooks/use-toast";
 import { MoreVertical } from "lucide-react";
-import { useOptimistic, useTransition } from "react";
-import {
-  deleteFixItemByIdAction,
-  updateFixStatusByIdAction,
-} from "../../action";
 import { DeleteFixItem } from "./delete-fix-item";
 import { FixItemChangeStatus } from "./fix-status-change";
 
 type Props = {
   id: string;
   status: boolean | null;
+  onStatusChange: (id: string, status: boolean) => void;
+  onDelete: (id: string) => void;
+  isPending: boolean;
 };
 
-export function OptionMenu({ id, status }: Props) {
-  const { toast } = useToast();
-
-  const [optimisticStatus, setOptimisticStatus] = useOptimistic(
-    status,
-    (state, newStatus: boolean | null) =>
-      newStatus === null ? state : newStatus
-  );
-
-  const [isPending, startTransition] = useTransition();
-
-  async function handleStatusChange() {
-    startTransition(() => {
-      setOptimisticStatus(!status);
-    });
-
-    const result = await updateFixStatusByIdAction(id, !status);
-
-    if (!result.success) {
-      setOptimisticStatus(status);
-
-      return toast({
-        title: "Error",
-        description: String(result.error),
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: `Fix item status changed to ${!status ? "completed" : "pending"}`,
-        variant: "default",
-      });
-    }
-  }
-
-  async function handleDeleteFixItem() {
-    const result = await deleteFixItemByIdAction(id);
-
-    if (!result.success) {
-      return toast({
-        title: "Error",
-        description: String(result.error),
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: "Fix item deleted successfully",
-        variant: "default",
-      });
-    }
-  }
-
+export function OptionMenu({
+  id,
+  status,
+  onStatusChange,
+  onDelete,
+  isPending,
+}: Props) {
   return (
     <div className="flex items-center gap-4">
       <DropdownMenu>
@@ -92,15 +41,15 @@ export function OptionMenu({ id, status }: Props) {
           </div>
           <DropdownMenuItem>
             <FixItemChangeStatus
-              onConfirm={handleStatusChange}
-              status={optimisticStatus}
+              onConfirm={() => onStatusChange(id, status!)}
+              status={status}
               isPending={isPending}
             />
           </DropdownMenuItem>
           <DropdownMenuSeparator className="my-1 border-gray-200" />
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             <DeleteFixItem
-              onConfirm={handleDeleteFixItem}
+              onConfirm={() => onDelete(id)}
               isPending={isPending}
             />
           </DropdownMenuItem>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 type Props = {
   url: string;
   size: "sm" | "md" | "lg";
@@ -21,11 +22,23 @@ export function BackgroundAvatar({ url, size, imgProps }: Props) {
     <div
       className={`rounded-full overflow-hidden ${sizeClasses[size]} mx-auto`}
     >
-      <img
+      <Image
         src={enhancedUrl || "/placeholder-avatar.png" || DEFAULT_AVATAR}
         alt="Avatar"
+        width={1000}
+        height={1000}
         className="w-full h-full object-cover"
-        {...imgProps}
+        {...(imgProps && {
+          ...imgProps,
+          width:
+            typeof imgProps.width === "string"
+              ? parseInt(imgProps.width)
+              : imgProps.width,
+          height:
+            typeof imgProps.height === "string"
+              ? parseInt(imgProps.height)
+              : imgProps.height,
+        })}
       />
     </div>
   );

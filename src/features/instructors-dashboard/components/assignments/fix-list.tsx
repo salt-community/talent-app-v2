@@ -2,7 +2,12 @@ import { Button, Textarea } from "@/components";
 import { CalendarForm } from "@/components/ui/calendar-form";
 import { Calendar1, Plus } from "lucide-react";
 import { useOptimistic, useState, useTransition } from "react";
-import { addFixToAssignmentScoreAction } from "../../action";
+import { useToast } from "@/hooks/use-toast";
+import {
+  addFixToAssignmentScoreAction,
+  deleteFixItemByIdAction,
+  updateFixStatusByIdAction,
+} from "../../action";
 import { FixLists } from "../../types";
 import { OptionMenu } from "./option-menu";
 
@@ -12,30 +17,58 @@ type FixesProps = {
 };
 
 export function FixList({ fixes, assignmentScoreId }: FixesProps) {
+  const { toast } = useToast();
   const [datetime, setDatetime] = useState<{ date?: Date; time: string }>({
     date: undefined,
     time: "",
   });
   const [description, setDescription] = useState("");
+  const [isPending, startTransition] = useTransition();
 
-  const [optimisticFix, addOptimisticFix] = useOptimistic(
+  const [optimisticFixes, setOptimisticFixes] = useOptimistic(
     fixes,
-    (state, newFix: FixLists) => {
-      return [...state, newFix];
+    (
+      state,
+      action: {
+        type: string;
+        id?: string;
+        newFix?: FixLists;
+        newStatus?: boolean;
+      }
+    ) => {
+      switch (action.type) {
+        case "add":
+          return [...state, action.newFix!];
+        case "update":
+          return state.map((item) =>
+            item.id === action.id
+              ? { ...item, isCompleted: action.newStatus! }
+              : item
+          );
+        case "delete":
+          return state.filter((item) => item.id !== action.id);
+        default:
+          return state;
+      }
     }
   );
 
-  const [isPending, startTransition] = useTransition();
-
-  // need to refactor for better error handling later, maybe anton can help?
   const handleAddFix = async () => {
     if (!assignmentScoreId) {
-      alert("Cannot add fix: No assignment score selected");
+      toast({
+        title: "Error",
+        description: "Cannot add fix: No assignment score selected",
+        variant: "destructive",
+      });
       return;
     }
 
     if (!description) {
-      alert("Please provide a description");
+      toast({
+        title: "Error",
+        description: "Please provide a description",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -49,8 +82,8 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
       }
     }
 
-    const args = {
-      id: "",
+    const newFix = {
+      id: `temp-${Date.now()}`,
       assignmentScoreId,
       description,
       isCompleted: false,
@@ -62,21 +95,106 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
 
     startTransition(async () => {
       try {
-        addOptimisticFix(args);
+        setOptimisticFixes({ type: "add", newFix });
 
         await addFixToAssignmentScoreAction({
           assignmentScoreId,
           description,
           dueDate,
         });
+
+        toast({
+          title: "Success",
+          description: "Fix request added successfully",
+          variant: "default",
+        });
       } catch (error) {
         console.error(error);
-        alert("Something went wrong while adding the fix request");
+        toast({
+          title: "Error",
+          description: "Something went wrong while adding the fix request",
+          variant: "destructive",
+        });
       }
     });
 
     setDescription("");
     setDatetime({ date: undefined, time: "" });
+  };
+
+  const handleStatusChange = (id: string, currentStatus: boolean) => {
+    startTransition(async () => {
+      try {
+        setOptimisticFixes({
+          type: "update",
+          id,
+          newStatus: !currentStatus,
+        });
+
+        const result = await updateFixStatusByIdAction(id, !currentStatus);
+
+        if (!result.success) {
+          setOptimisticFixes({
+            type: "update",
+            id,
+            newStatus: currentStatus,
+          });
+
+          toast({
+            title: "Error",
+            description: String(result.error),
+          });
+        } else {
+          toast({
+            title: "Success",
+            description: `Fix item status changed to ${!currentStatus ? "completed" : "pending"}`,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        setOptimisticFixes({
+          type: "update",
+          id,
+          newStatus: currentStatus,
+        });
+
+        toast({
+          title: "Error",
+          description: "An unexpected error occurred",
+        });
+      }
+    });
+  };
+
+  const handleDeleteFixItem = (id: string) => {
+    startTransition(async () => {
+      try {
+        setOptimisticFixes({
+          type: "delete",
+          id,
+        });
+
+        const result = await deleteFixItemByIdAction(id);
+
+        if (!result.success) {
+          toast({
+            title: "Error",
+            description: String(result.error),
+          });
+        } else {
+          toast({
+            title: "Success",
+            description: "Fix item deleted successfully",
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        toast({
+          title: "Error",
+          description: "An unexpected error occurred",
+        });
+      }
+    });
   };
 
   return (
@@ -115,8 +233,8 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
         </div>
       )}
       <div className="space-y-4">
-        {optimisticFix.length > 0 ? (
-          optimisticFix.map((item) => (
+        {optimisticFixes.length > 0 ? (
+          optimisticFixes.map((item) => (
             <div
               key={item.id}
               className="border border-gray-200 rounded-lg p-4 relative"
@@ -128,7 +246,13 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
               ></div>
               <div className="flex justify-end">
                 <div className="text-gray-400 hover:text-gray-600 cursor-pointer">
-                  <OptionMenu id={item.id} status={item.isCompleted} />
+                  <OptionMenu
+                    id={item.id}
+                    status={item.isCompleted}
+                    onStatusChange={handleStatusChange}
+                    onDelete={handleDeleteFixItem}
+                    isPending={isPending}
+                  />
                 </div>
               </div>
               <p className="text-gray-600 mb-4">{item.description}</p>
