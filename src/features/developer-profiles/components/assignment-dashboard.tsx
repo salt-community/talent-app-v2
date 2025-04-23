@@ -1,5 +1,4 @@
 import { Star, List } from "lucide-react";
-import { AssignmentTabs } from "./assignment-tabs";
 import { Fix_Item, TabType } from "../types";
 import { DeveloperAssignments } from "./developer-assignments";
 import { FixList } from "./fix-list";
@@ -39,8 +38,6 @@ export async function AssignmentDashboard() {
     },
   ];
 
-  const feedbackContent = <DeveloperAssignments />;
-
   const fixListContent = (
     <div className="p-6">
       <FixList items={fixListItems} />
@@ -49,12 +46,7 @@ export async function AssignmentDashboard() {
 
   return (
     <div>
-      <AssignmentTabs
-        tabs={tabs}
-        defaultTab="feedback"
-        feedbackContent={feedbackContent}
-        fixListContent={fixListContent}
-      />
+      <DeveloperAssignments />
     </div>
   );
 }
