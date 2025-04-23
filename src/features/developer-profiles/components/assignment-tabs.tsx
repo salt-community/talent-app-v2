@@ -4,17 +4,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Clipboard, MessageSquare } from "lucide-react";
 
 interface FixedTabsProps {
-  fixListContent: ReactNode;
   feedbackContent: ReactNode;
-  defaultTab?: "fixlist" | "feedback";
+
+  fixListContent: ReactNode;
+  defaultTab?: "feedback" | "fixlist";
 }
 
-export default function FixedTabs({
-  fixListContent,
+export default function AssignmentTabs({
   feedbackContent,
+  fixListContent,
   defaultTab = "fixlist",
 }: FixedTabsProps) {
-  const [activeTab, setActiveTab] = useState<"fixlist" | "feedback">(
+  const [activeTab, setActiveTab] = useState<"feedback" | "fixlist">(
     defaultTab
   );
 
@@ -25,24 +26,23 @@ export default function FixedTabs({
     >
       <TabsList className="mb-4 bg-muted/50 p-1">
         <TabsTrigger
-          value="fixlist"
-          className="!rounded-button whitespace-nowrap data-[state=active]:bg-background data-[state=active]:shadow-sm"
-        >
-          <Clipboard className="mr-2" size={16} />
-          Fix List
-        </TabsTrigger>
-        <TabsTrigger
           value="feedback"
           className="!rounded-button whitespace-nowrap data-[state=active]:bg-background data-[state=active]:shadow-sm"
         >
           <MessageSquare className="mr-2" size={16} />
           Feedback
         </TabsTrigger>
+        <TabsTrigger
+          value="fixlist"
+          className="!rounded-button whitespace-nowrap data-[state=active]:bg-background data-[state=active]:shadow-sm"
+        >
+          <Clipboard className="mr-2" size={16} />
+          Fix List
+        </TabsTrigger>
       </TabsList>
+      <TabsContent value="feedback">{feedbackContent}</TabsContent>
 
       <TabsContent value="fixlist">{fixListContent}</TabsContent>
-
-      <TabsContent value="feedback">{feedbackContent}</TabsContent>
     </Tabs>
   );
 }

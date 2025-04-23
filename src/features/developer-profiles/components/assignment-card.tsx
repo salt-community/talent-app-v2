@@ -5,6 +5,8 @@ import { Card } from "@/components";
 import { ChevronRight } from "lucide-react";
 import { ScoreDetails } from "./score-details";
 import CategoryFeedback from "./category-feedback";
+import AssignmentTabs from "./assignment-tabs";
+import { FixList } from "./fix-list";
 
 type AverageScoresMap = Map<string, number>;
 
@@ -77,14 +79,19 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
                 </div>
 
                 {expandedAssignment === assignment.id && (
-                  <>
-                    <div className="border-t border-gray-200 px-6 py-4">
-                      <ScoreDetails scoreItems={feedback} />
-                    </div>
-                    <div className="px-6 py-4">
-                      <CategoryFeedback feedbacks={feedback} />
-                    </div>
-                  </>
+                  <AssignmentTabs
+                    feedbackContent={
+                      <>
+                        <div className="border-t border-gray-200 px-6 py-4">
+                          <ScoreDetails scoreItems={feedback} />
+                        </div>
+                        <div className="px-6 py-4">
+                          <CategoryFeedback feedbacks={feedback} />
+                        </div>
+                      </>
+                    }
+                    fixListContent={<FixList items={[]} />}
+                  />
                 )}
               </Card>
             );
