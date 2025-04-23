@@ -1,73 +1,48 @@
 "use client";
-import React, { useState } from "react";
-import { TabType } from "../types";
+import React, { useState, ReactNode } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Clipboard, MessageSquare } from "lucide-react";
 
-type TabItem = {
-  id: TabType;
-  label: string;
-  icon: React.ReactNode;
-  count?: number;
-};
-
-interface ScoringTabProps {
-  tabs: TabItem[];
-  defaultTab?: TabType;
-  feedbackContent?: React.ReactNode;
-  fixListContent?: React.ReactNode;
+interface FixedTabsProps {
+  fixListContent: ReactNode;
+  feedbackContent: ReactNode;
+  defaultTab?: "fixlist" | "feedback";
 }
 
-export function AssignmentTabs({
-  tabs,
-  defaultTab = "feedback",
-  feedbackContent,
+export default function FixedTabs({
   fixListContent,
-}: ScoringTabProps) {
-  const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
-
-  const handleTabChange = (tab: TabType) => {
-    setActiveTab(tab);
-  };
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case "feedback":
-        return feedbackContent;
-      case "fixList":
-        return fixListContent;
-      default:
-        return null;
-    }
-  };
+  feedbackContent,
+  defaultTab = "fixlist",
+}: FixedTabsProps) {
+  const [activeTab, setActiveTab] = useState<"fixlist" | "feedback">(
+    defaultTab
+  );
 
   return (
-    <>
-      <div className="flex justify-center w-full">
-        <div className="flex items-center justify-center rounded-lg px-2 py-1 border border-gray-200 max-w-md">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              className={`flex items-center  px-3 py-1 text-sm cursor-pointer rounded-md transition-colors ${
-                activeTab === tab.id
-                  ? "font-semibold"
-                  : "text-gray-600 hover:bg-gray-50"
-              }`}
-              onClick={() => handleTabChange(tab.id)}
-            >
-              {React.cloneElement(tab.icon as React.ReactElement, {
-                fill: activeTab === tab.id ? "currentColor" : "none",
-                className: "w-8 h-4",
-              })}
-              <span>{tab.label}</span>
-              {tab.count !== undefined && (
-                <span className="ml-1 bg-gray-200 text-gray-700 text-xs font-medium px-1.5 py-0.5 rounded-full">
-                  {tab.count}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="mt-4">{renderContent()}</div>
-    </>
+    <Tabs
+      value={activeTab}
+      onValueChange={(value) => setActiveTab(value as "fixlist" | "feedback")}
+    >
+      <TabsList className="mb-4 bg-muted/50 p-1">
+        <TabsTrigger
+          value="fixlist"
+          className="!rounded-button whitespace-nowrap data-[state=active]:bg-background data-[state=active]:shadow-sm"
+        >
+          <Clipboard className="mr-2" size={16} />
+          Fix List
+        </TabsTrigger>
+        <TabsTrigger
+          value="feedback"
+          className="!rounded-button whitespace-nowrap data-[state=active]:bg-background data-[state=active]:shadow-sm"
+        >
+          <MessageSquare className="mr-2" size={16} />
+          Feedback
+        </TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="fixlist">{fixListContent}</TabsContent>
+
+      <TabsContent value="feedback">{feedbackContent}</TabsContent>
+    </Tabs>
   );
 }
