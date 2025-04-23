@@ -7,6 +7,7 @@ import { ScoreDetails } from "./score-details";
 import CategoryFeedback from "./category-feedback";
 import AssignmentTabs from "./assignment-tabs";
 import { FixList } from "./fix-list";
+import { fixList } from "@/features/assignments/schema";
 
 type AverageScoresMap = Map<string, number>;
 
@@ -47,6 +48,14 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
               comment: feedback.comment || "",
               maxScore: 100,
             }));
+            const fixItems =
+              assignment.fixList?.filter(
+                (item) =>
+                  item.assignmentScoreId === assignment.assignmentScoreId
+              ) || [];
+
+            console.log(fixItems);
+
             return (
               <Card key={assignment.id} className="cursor-pointer">
                 <div
@@ -85,7 +94,7 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
                           <CategoryFeedback feedbacks={feedback} />
                         </>
                       }
-                      fixListContent={<FixList items={[]} />}
+                      fixListContent={<FixList items={fixItems} />}
                     />
                   </div>
                 )}

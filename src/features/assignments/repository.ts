@@ -86,6 +86,7 @@ export function createAssignmentsRepository(db: Db) {
       const allAssignments = await db
         .select({
           assignments: assignments,
+          assignmentScores: assignmentScores.id,
           assignment_scores: assignmentScores,
           assignment_feedback: assignmentFeedback,
           categories: categories,
@@ -117,9 +118,9 @@ export function createAssignmentsRepository(db: Db) {
         if (!assignmentMap.has(assignmentId)) {
           assignmentMap.set(assignmentId, {
             ...row.assignments,
+            assignmentScoreId: row.assignment_scores.id,
             feedback: [],
             fixList: [],
-            categories: [],
           });
         }
 

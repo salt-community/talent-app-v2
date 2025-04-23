@@ -16,6 +16,8 @@ export async function DeveloperAssignments() {
   const averageScores =
     await developerProfilesService.getAverageScoresByIdentityId(identityId);
 
+  console.log(assignments);
+
   return (
     <div className="max-w-6xl mx-auto p-4">
       <AssignmentCard assignment={assignments} averageScores={averageScores} />
