@@ -5,14 +5,15 @@ import { List, MessageCircle } from "lucide-react";
 
 interface FixedTabsProps {
   feedbackContent: ReactNode;
-
   fixListContent: ReactNode;
+  fixCount?: number;
   defaultTab?: "feedback" | "fixlist";
 }
 
 export default function AssignmentTabs({
   feedbackContent,
   fixListContent,
+  fixCount = 0,
   defaultTab = "feedback",
 }: FixedTabsProps) {
   const [activeTab, setActiveTab] = useState<"feedback" | "fixlist">(
@@ -38,7 +39,7 @@ export default function AssignmentTabs({
         >
           <List className="mr-2 cursor-pointer" size={16} />
 
-          <span className="cursor-pointer">Fix List</span>
+          <span className="cursor-pointer">Fix List {fixCount | 0}</span>
         </TabsTrigger>
       </TabsList>
       <TabsContent value="feedback">{feedbackContent}</TabsContent>

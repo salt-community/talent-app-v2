@@ -54,8 +54,6 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
                   item.assignmentScoreId === assignment.assignmentScoreId
               ) || [];
 
-            console.log(fixItems);
-
             return (
               <Card key={assignment.id} className="cursor-pointer">
                 <div
