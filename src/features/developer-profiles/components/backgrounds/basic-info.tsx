@@ -7,7 +7,7 @@ export function BackgroundBasicInfo({ developerProfile }: Props) {
   return (
     <section className="flex justify-between w-full">
       <div className="flex gap-6 items-center justify-between">
-        <BackgroundAvatar url={developerProfile.avatarUrl} />
+        <BackgroundAvatar url={developerProfile.avatarUrl} size={"lg"} />
         <div>
           <p className="uppercase text-sm font-semibold">
             {developerProfile.title}
