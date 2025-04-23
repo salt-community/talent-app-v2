@@ -30,7 +30,7 @@ export function InlineEditableCard({ developerProfile }: Props) {
   return (
     <section className="flex justify-between w-full gap-2">
       <div className="flex gap-5 items-center justify-between w-full">
-        <BackgroundAvatar url={developerProfile.avatarUrl} size={"lg"} />
+        <BackgroundAvatar url={developerProfile.avatarUrl} size={"md"} />
         <div className="flex flex-col gap-0 w-full">
           <CardEditableField
             value={draftDeveloperProfile.title}
