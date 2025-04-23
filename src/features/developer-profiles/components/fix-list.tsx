@@ -8,7 +8,7 @@ type Items = {
 
 export function FixList({ items }: Items) {
   return (
-    <div className="overflow-y-auto max-h-[calc(100vh-200px)]">
+    <div className="overflow-y-auto overflow-x-hidden max-h-[calc(70vh-200px)]">
       <FixItems items={items} />
     </div>
   );

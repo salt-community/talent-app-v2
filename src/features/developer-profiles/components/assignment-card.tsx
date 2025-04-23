@@ -7,7 +7,6 @@ import { ScoreDetails } from "./score-details";
 import CategoryFeedback from "./category-feedback";
 import AssignmentTabs from "./assignment-tabs";
 import { FixList } from "./fix-list";
-import { fixList } from "@/features/assignments/schema";
 
 type AverageScoresMap = Map<string, number>;
 
@@ -54,7 +53,7 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
                   item.assignmentScoreId === assignment.assignmentScoreId
               ) || [];
             const fixCount = fixItems.filter(
-              (item: fixList) => item.isCompleted === false
+              (item) => item.isCompleted === false
             ).length;
 
             return (
