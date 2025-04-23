@@ -16,7 +16,7 @@ export async function BackgroundBasicInfoCard({ developerProfile }: Props) {
     <>
       <section className="flex justify-between w-full">
         <div className="flex gap-6 items-center justify-between">
-          <BackgroundAvatar url={developerProfile.avatarUrl} size={"lg"} />
+          <BackgroundAvatar url={developerProfile.avatarUrl} />
           <div>
             <p className="uppercase text-sm font-semibold">
               {developerProfile.title}
