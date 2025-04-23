@@ -125,6 +125,7 @@ export type Assignment = {
   assignmentScoreId: string;
   title: string;
   feedback: Assignment_Feedback[];
+  fixList: Fix_Item[];
 };
 
 export type Assignment_Feedback = {
