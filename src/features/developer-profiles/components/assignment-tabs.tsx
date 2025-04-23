@@ -13,7 +13,7 @@ interface FixedTabsProps {
 export default function AssignmentTabs({
   feedbackContent,
   fixListContent,
-  defaultTab = "fixlist",
+  defaultTab = "feedback",
 }: FixedTabsProps) {
   const [activeTab, setActiveTab] = useState<"feedback" | "fixlist">(
     defaultTab
@@ -22,7 +22,7 @@ export default function AssignmentTabs({
   return (
     <Tabs
       value={activeTab}
-      onValueChange={(value) => setActiveTab(value as "fixlist" | "feedback")}
+      onValueChange={(value) => setActiveTab(value as "feedback" | "fixlist")}
     >
       <TabsList className="mb-4 bg-muted/50 p-1">
         <TabsTrigger
