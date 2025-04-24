@@ -1,0 +1,1 @@
+ALTER TABLE "cohorts" DROP COLUMN "status";

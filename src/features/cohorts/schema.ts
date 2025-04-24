@@ -6,7 +6,6 @@ export const cohorts = pgTable("cohorts", {
     .primaryKey()
     .default(sql`gen_random_uuid()`),
   name: varchar().notNull().unique(),
-  status: varchar().notNull().default("planned"),
   description: varchar("description").notNull().default("assignment"),
   createdAt: timestamp("created_at").defaultNow(),
 });

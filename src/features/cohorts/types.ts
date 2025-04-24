@@ -25,7 +25,6 @@ export type CohortIdentity = {
 };
 export type CohortFormData = {
   name: string;
-  status: string;
   description?: string;
   identityId?: string;
 };
