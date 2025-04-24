@@ -38,7 +38,6 @@ export const seedAssignments = async (cohortIds: string[]) => {
   await assignmentsSeedingService.ensureCategoriesExist(
     getRandomTags(categoryTags, 10)
   );
-  await assignmentsSeedingService.deleteAllAssignments();
 
   const usedSlugs = new Set();
 
