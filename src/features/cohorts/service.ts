@@ -1,11 +1,10 @@
 import { Db } from "@/db";
 import { createCohortsRepository } from "./repository";
-import { CohortFormData, Identity, UnassignedDevelopers } from "./types";
+import { CohortFormData, Identity } from "./types";
 
 export function createCohortsService(
   db: Db,
   getIdentityById: (id: string) => Promise<Identity>,
-  getAllUnassignedDevelopers: () => Promise<UnassignedDevelopers[]>
 ) {
   const repository = createCohortsRepository(db);
 

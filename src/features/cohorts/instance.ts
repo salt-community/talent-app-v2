@@ -1,11 +1,10 @@
 import { db } from "@/db";
-import { createCohortsService } from "./service";
 import { iamService, secureService } from "../iam";
+import { createCohortsService } from "./service";
 
 const insecureCohortService = createCohortsService(
   db,
   iamService.getIdentityById,
-  iamService.getAllUnassignedDevelopers
 );
 
 export const cohortsService = secureService("cohorts", insecureCohortService);
@@ -21,12 +20,5 @@ export const cohortsSeedingService = createCohortsService(
       role: "",
     });
   },
-  (): Promise<
-    {
-      id: string;
-      name: string;
-    }[]
-  > => {
-    return Promise.resolve([]);
-  }
+ 
 );

@@ -30,7 +30,6 @@ export const rolesPermissions = {
     ...Object.values(cohorts),
   ]),
   developer: new Set([
-    cohorts.getCohortIdByIdentityId,
     developerProfiles.getAllEducations,
     developerProfiles.getAllLanguages,
     developerProfiles.getAllSkills,
@@ -83,15 +82,10 @@ export const rolesPermissions = {
     developerProfiles.getDeveloperById,
     developerProfiles.getAll,
     developerProfiles.deleteByIdentityId,
-    assignments.getAssignmentsByCohort,
     assignments.getScoredAssignmentsByCohortIdAndIdentityId,
-    assignments.getAssignmentById,
     assignments.createAssignment,
-    assignments.deleteAssignmentScoreById,
     assignments.getAverageScoresByIdentityId,
     assignments.getAssignmentBySlug,
-    cohorts.getAllUnassignedDevelopers,
-    cohorts.addDeveloperToCohort,
     cohorts.deleteIdentityFromCohort,
   ]),
 } as const;
