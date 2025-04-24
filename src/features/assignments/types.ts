@@ -3,17 +3,11 @@ import { createAssignmentsService } from "./service";
 
 export type CreateAssignment = AssignmentsService["createAssignment"];
 export type UpdateAssignment = AssignmentsService["updateAssignment"];
-export type GetAllAssignments = AssignmentsService["getAllAssignments"];
 export type GetAssignmentsByCohortId =
   AssignmentsService["getAssignmentsByCohortId"];
-export type DeleteAssignmentScoreById =
-  AssignmentsService["deleteAssignmentScoreById"];
 export type DeleteAssignmentById = AssignmentsService["deleteAssignment"];
 export type GetAssignmentBySlug = AssignmentsService["getAssignmentBySlug"];
-export type CreateAssignmentScore = AssignmentsService["createAssignmentScore"];
 export type UpsertAssignmentScore = AssignmentsService["upsertAssignmentScore"];
-export type GetScoresByAssignmentId =
-  AssignmentsService["getScoresByAssignmentId"];
 export type UpdateScoreStatuses = AssignmentsService["updateScoreStatuses"];
 export type GetScoredAssignmentsByCohortIdAndIdentityId =
   AssignmentsService["getScoredAssignmentsByCohortIdAndIdentityId"];

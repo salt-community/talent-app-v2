@@ -1,5 +1,6 @@
 import { Db } from "@/db";
 import { and, asc, eq, inArray } from "drizzle-orm";
+import { cohortIdentities } from "../cohorts";
 import { ScoreStatus } from "../instructors-dashboard/types";
 import {
   assignmentCategories,
@@ -18,7 +19,6 @@ import {
   FixItem,
   NewAssignment,
 } from "./types";
-import { cohortIdentities } from "../cohorts";
 
 export function createAssignmentsRepository(db: Db) {
   return {
@@ -66,11 +66,7 @@ export function createAssignmentsRepository(db: Db) {
         return insertedAssignment;
       });
     },
-
-    async getAllAssignments() {
-      return await db.select().from(assignments);
-    },
-
+    
     async getAssignmentsByCohortIdAndIdentityId(identityId: string) {
       const userCohorts = await db
         .select()
@@ -158,14 +154,6 @@ export function createAssignmentsRepository(db: Db) {
       const result = Array.from(assignmentMap.values());
 
       return result;
-    },
-
-    async getAssignmentById(id: string) {
-      const [assignment] = await db
-        .select()
-        .from(assignments)
-        .where(eq(assignments.id, id));
-      return assignment;
     },
 
     async getAssignmentsByCohortId(cohortId: string) {

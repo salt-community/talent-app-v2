@@ -4,17 +4,13 @@ import { averageScore } from "./logic";
 import { createAssignmentsRepository } from "./repository";
 import {
   AssignmentScore,
-  AssignmentScoreFormData,
-  AssignmentWithCategory,
+  AssignmentWithCategory
 } from "./types";
 
 export function createAssignmentsService(db: Db) {
   const repo = createAssignmentsRepository(db);
 
   return {
-    async getAllAssignments() {
-      return await repo.getAllAssignments();
-    },
 
     async getScoredAssignmentsByCohortIdAndIdentityId(identityId: string) {
       return await repo.getAssignmentsByCohortIdAndIdentityId(identityId);
@@ -33,17 +29,10 @@ export function createAssignmentsService(db: Db) {
       });
     },
 
-    async getAssignmentById(assignmentId: string) {
-      return await repo.getAssignmentById(assignmentId);
-    },
-
     async getAssignmentsByCohortId(cohortId: string) {
       return await repo.getAssignmentsByCohortId(cohortId);
     },
 
-    async createAssignmentScore(data: AssignmentScoreFormData) {
-      return await repo.createAssignmentScore(data);
-    },
     async updateScoreStatuses(scoresStatuses: ScoreStatus[]) {
       await repo.updateScoreStatuses(scoresStatuses);
     },
@@ -57,10 +46,6 @@ export function createAssignmentsService(db: Db) {
       }>;
     }) {
       return await repo.upsertAssignmentScore(args);
-    },
-
-    async getScoresByAssignmentId(assignmentId: string) {
-      return await repo.getScoresByAssignmentId(assignmentId);
     },
 
     async getAverageScoresByIdentityId(identityId: string) {
@@ -86,19 +71,8 @@ export function createAssignmentsService(db: Db) {
       return averageScores;
     },
 
-    async deleteAllAssignments() {
-      return await repo.deleteAllAssignments();
-    },
-
     async deleteAssignment(assignmentId: string) {
       return await repo.deleteAssignment(assignmentId);
-    },
-    async deleteAssignmentScoreById(identityId: string) {
-      await repo.deleteAssignmentScoreById(identityId);
-    },
-
-    async getAssignmentsByCohort(cohortId: string) {
-      return await repo.getAssignmentsByCohort(cohortId);
     },
 
     async getAssignmentBySlug(slug: string) {
