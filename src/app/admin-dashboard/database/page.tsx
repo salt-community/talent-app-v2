@@ -44,8 +44,9 @@ export default function AdminDevelopersPage() {
 
       {migrationResult && (
         <div className={`mt-4 p-3 rounded ${migrationResult.status === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-          {migrationResult.message}
-          {migrationResult.timestamp}
+          Result: <strong>{migrationResult.message}</strong>
+          <br />
+          Timestamp: <strong>{migrationResult.timestamp}</strong>
         </div>
       )}
 
