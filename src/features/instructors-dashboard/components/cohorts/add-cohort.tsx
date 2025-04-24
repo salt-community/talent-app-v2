@@ -1,40 +1,31 @@
 "use client";
 
-import { addCohortAction } from "../../action";
 import {
   Button,
-  DialogContent,
   Dialog,
-  DialogTrigger,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
+  DialogTrigger,
   Form,
-  FormItem,
-  FormLabel,
-  Input,
   FormControl,
   FormDescription,
+  FormItem,
+  FormLabel,
   FormMessage,
-  DialogFooter,
-  FormField,
+  Input,
+  Textarea
 } from "@/components";
-import { useState } from "react";
-import { Loader2, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, Plus } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { addCohortAction } from "../../action";
 import { addCohortFormSchema } from "../../validation";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 export function AddCohortForm() {
   const [open, setOpen] = useState(false);
@@ -51,7 +42,6 @@ export function AddCohortForm() {
       await addCohortAction({
         name: values.name,
         description: values.description ? values.description : "",
-        status: values.status,
       });
       toast({
         title: "Cohort added",
@@ -75,6 +65,7 @@ export function AddCohortForm() {
         <Button
           type="submit"
           variant="outline"
+          className="cursor-pointer"
         >
           <Plus color="black" size={18} />
           <p className="font-semibold">Add cohort</p>
@@ -110,9 +101,8 @@ export function AddCohortForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input
+                <Textarea
                   id="description"
-                  type="text"
                   placeholder="Fullstack Java class for 2025"
                   {...form.register("description")}
                 />
@@ -124,44 +114,11 @@ export function AddCohortForm() {
                 {form.formState.errors.description?.message}
               </FormMessage>
             </FormItem>
-            <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Status</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select a status" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Statuses</SelectLabel>
-                        <SelectItem value="planned">Planned</SelectItem>
-                        <SelectItem value="ongoing">Ongoing</SelectItem>
-                        <SelectItem value="finished">Finished</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>
-                    This is the status of the cohort.
-                  </FormDescription>
-                  <FormMessage>
-                    {form.formState.errors.status?.message}
-                  </FormMessage>
-                </FormItem>
-              )}
-            />
             <DialogFooter>
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-2"
+                className="w-full mt-2 cursor-pointer"
               >
                 {loading ? <Loader2 className="animate-spin" /> : undefined}
                 {loading ? "Submitting, please wait..." : "Submit"}

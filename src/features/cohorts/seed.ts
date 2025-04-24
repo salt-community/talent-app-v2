@@ -10,17 +10,14 @@ export async function seedCohorts(identities: IdentitySelect[]) {
     {
       name: "csfs-sthlm-2025-01-31",
       description: "Fullstack C#",
-      status: "ongoing",
     },
     {
       name: "jfs-sthlm-2025-01-31",
       description: "Fullstack Java",
-      status: "ongoing",
     },
     {
       name: "jsfs-sthlm-2025-01-31",
       description: "Fullstack JS",
-      status: "ongoing",
     },
   ];
 

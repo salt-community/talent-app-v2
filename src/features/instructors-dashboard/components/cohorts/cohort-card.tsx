@@ -1,8 +1,7 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import { DeleteCohortButton } from "./delete-cohort-button";
 import { Cohort } from "../../types";
+import { DeleteCohortButton } from "./delete-cohort-button";
 
 type Props = {
   cohorts: Cohort[];
@@ -31,13 +30,6 @@ export function CohortCard({ cohorts }: Props) {
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="pt-0 px-4 pb-4">
-                  <div className="flex items-center">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-800">
-                      {cohort.status}
-                    </span>
-                  </div>
-                </CardContent>
               </Card>
             </Link>
             <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">

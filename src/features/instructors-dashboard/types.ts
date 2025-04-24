@@ -9,7 +9,6 @@ export type Developer = {
 export type Cohort = {
   id?: string;
   name: string;
-  status: string;
   description: string;
   createdAt: Date | null;
 };
