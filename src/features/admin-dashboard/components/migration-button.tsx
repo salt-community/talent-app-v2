@@ -1,23 +1,17 @@
-"use client";
-
 import { Button } from "@/components";
-import { useFormStatus } from "react-dom";
-import { Loader2 } from "lucide-react";
+type Props = {
+  onClick: () => void;
+  isLoading?: boolean;
+};
 
-type Props = { text: string; loadingText: string };
-export function MigrationButton({ text, loadingText }: Props) {
-  const { pending } = useFormStatus();
-
+export function MigrationButton({ onClick, isLoading }: Props) {
   return (
-    <Button type="submit" disabled={pending}>
-      {pending ? (
-        <>
-          <Loader2 className="animate-spin" />
-          {loadingText}
-        </>
-      ) : (
-        text
-      )}
+    <Button
+      type="button"
+      onClick={onClick}
+      disabled={isLoading}
+    >
+      {isLoading ? "Running Migration..." : "Run Migration"}
     </Button>
   );
 }

@@ -1,10 +1,10 @@
 "use server";
-import { resolve } from "node:path";
+import { assignmentsMigrationScript } from "@/assignments-migration-script";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { revalidatePath } from "next/cache";
+import { resolve } from "node:path";
 import { adminService } from "./instance";
-import { assignmentsMigrationScript } from "@/assignments-migration-script";
 
 export async function deleteDeveloperProfileAction(id: string) {
   await adminService.deleteDeveloperProfile(id);
@@ -51,9 +51,25 @@ export async function deleteUserAction(id: string) {
 
 export async function runMigration() {
   const rootDir = process.cwd();
+  const migrationsFolder = resolve(rootDir, "./drizzle");
   const db = drizzle(process.env.DATABASE_URL!);
-  await migrate(db, { migrationsFolder: resolve(rootDir, "./drizzle") });
+  
+  try {
+    await migrate(db, { migrationsFolder });
+    return {
+      status: 'success',
+      message: 'Migration completed successfully',
+      timestamp: new Date().toISOString()
+    };
+  } catch (error) {
+    return {
+      status: 'error',
+      message: error instanceof Error ? error.message : String(error),
+      timestamp: new Date().toISOString()
+    };
+  }
 }
+
 export async function runDataMigration() {
   assignmentsMigrationScript();
 }
