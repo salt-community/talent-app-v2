@@ -18,21 +18,12 @@ export function createCohortsService(
       return await repository.createCohort(data);
     },
 
-    async getCohortById(cohortId: string) {
-      return await repository.getCohortById(cohortId);
-    },
-    async getCohortIdByIdentityId(identityId: string) {
-      return await repository.getCohortIdByIdentityId(identityId);
-    },
     async deleteIdentityFromCohort(identityId: string) {
       return await repository.deleteIdentityFromCohort(identityId);
     },
+
     async deleteCohortAndCohortIdentity(cohortId: string) {
       await repository.deleteCohortAndCohortIdentity(cohortId);
-    },
-
-    async updateCohortStatus(args: { cohortId: string; status: string }) {
-      return await repository.updateCohortStatus(args);
     },
 
     async getCohortStudents(cohortId: string) {
@@ -42,12 +33,7 @@ export function createCohortsService(
       );
       return students;
     },
-    async getAllUnassignedDevelopers() {
-      return await getAllUnassignedDevelopers();
-    },
-    async addDeveloperToCohort(args: { cohortId: string; identityId: string }) {
-      await repository.addDeveloperToCohort(args);
-    },
+
     async addDevelopersToCohort(args: {
       cohortId: string;
       identityIds: string[];
