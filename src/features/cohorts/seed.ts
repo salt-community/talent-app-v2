@@ -1,7 +1,7 @@
 "use server";
 import { IdentitySelect } from "../iam";
-import { CohortFormData } from "./types";
 import { cohortsSeedingService } from "./instance";
+import { CohortFormData } from "./types";
 
 export async function seedCohorts(identities: IdentitySelect[]) {
   console.log("Seeding cohorts...");
@@ -40,9 +40,9 @@ export async function seedCohorts(identities: IdentitySelect[]) {
       const identity = identities[j];
 
       if (j % modulusLimit === i) {
-        await cohortsSeedingService.addDeveloperToCohort({
+        await cohortsSeedingService.addDevelopersToCohort({
           cohortId,
-          identityId: identity.id,
+          identityIds: [identity.id],
         });
       }
     }

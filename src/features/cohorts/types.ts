@@ -3,11 +3,8 @@ import { createCohortsService } from "./service";
 export type CohortsService = ReturnType<typeof createCohortsService>;
 
 export type GetAllCohorts = CohortsService["getAll"];
-export type GetCohortById = CohortsService["getCohortById"];
-export type GetCohortIdByIdentityId = CohortsService["getCohortIdByIdentityId"];
 export type DeleteIdentityFromCohort =
   CohortsService["deleteIdentityFromCohort"];
-export type UpdateCohortStatus = CohortsService["updateCohortStatus"];
 export type AddCohort = CohortsService["addCohort"];
 export type GetCohortStudents = CohortsService["getCohortStudents"];
 export type AddDevelopersToCohort = CohortsService["addDevelopersToCohort"];
