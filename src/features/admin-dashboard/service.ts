@@ -21,10 +21,7 @@ export function createAdminService(
     async updateStatus(args: { id: string; status: string }) {
       await developerProfileService.updateDeveloperProfile({ ...args });
     },
-    //unused right now
-    // async isSearchHealthOk() {
-    //   return await searchConfigurationClient.isHealthOk();
-    // },
+
     async repopulateSearch() {
       await searchConfigurationClient.repopulate();
     },
