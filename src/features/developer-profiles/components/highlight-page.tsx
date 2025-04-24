@@ -2,10 +2,9 @@ import { developerProfilesService } from "../instance";
 import { HighlightedDevelopers } from "./highlighted-developers";
 
 export async function HighlightPage() {
-  const highlightedDeveloperProfileIds =
-    await developerProfilesService.getHighlightedDevelopers();
+  const highlightedDeveloperProfiles =
+    await developerProfilesService.getHighlightedDeveloperProfiles();
 
-  console.log(highlightedDeveloperProfileIds);
   return (
     <div>
       <h2 className="text-center text-5xl font-extrabold pt-16 text-header px-1">
@@ -17,7 +16,7 @@ export async function HighlightPage() {
       </h3>
       <div className="md:px-4 pb-12">
         <HighlightedDevelopers
-          developerProfileIds={highlightedDeveloperProfileIds}
+          developerProfiles={highlightedDeveloperProfiles}
         />
       </div>
     </div>

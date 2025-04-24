@@ -2,7 +2,7 @@ import { DeveloperProfilesService } from "@/features/developer-profiles";
 import { PermissionsSchema } from "../secure-service";
 
 export const developerProfiles: PermissionsSchema<
-  "developerProfiles",
+  string,
   DeveloperProfilesService
 > = {
   delete: "developerProfiles.delete",
@@ -35,8 +35,8 @@ export const developerProfiles: PermissionsSchema<
   deleteDeveloperProfileFromSearch:
     "developerProfiles.deleteDeveloperProfileFromSearch",
   addDeveloperProfile: "developerProfiles.addDeveloperProfile",
-  getHighlightedDevelopers:
-    "developerProfiles.getHighlightedDeveloperProfileIds",
+  getHighlightedDeveloperProfiles:
+    "developerProfiles.getHighlightedDeveloperProfiles",
   addDeveloperProfileDetails: "developerProfiles.addDeveloperProfileDetails",
   getScoredAssignmentsByIdentityId:
     "developerProfiles.getScoredAssignmentsByIdentityId",

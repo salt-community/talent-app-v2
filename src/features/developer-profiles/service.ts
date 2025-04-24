@@ -114,9 +114,11 @@ export function createDeveloperProfilesService(
     async getAllById(identityId: string) {
       return await repository.getAllDeveloperProfileIdsByIdentityId(identityId);
     },
-    async getHighlightedDevelopers() {
+    async getHighlightedDeveloperProfiles() {
       const highlighted = await repository.getAll();
-      return highlighted.filter((dev) => dev.status === "highlighted");
+      return highlighted
+        .filter((dev) => dev.status === "highlighted")
+        .map((dev) => ({ id: dev.id, slug: dev.slug }));
     },
     async getDeveloperProfileByIdentityId(identityId: string) {
       return await repository.getDeveloperProfileByIdentityId(identityId);

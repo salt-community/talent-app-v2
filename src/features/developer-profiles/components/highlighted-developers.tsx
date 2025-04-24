@@ -3,8 +3,8 @@ import { Background } from "./backgrounds";
 import Link from "next/link";
 
 type DeveloperProfiles = {
-  developerProfileId: string;
-  slug: string;
+  id: string;
+  slug: string | null;
 };
 
 type Props = {
@@ -16,16 +16,13 @@ export async function HighlightedDevelopers({ developerProfiles }: Props) {
     <>
       <ul className="px-4 pt-10 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:px-8">
         {developerProfiles.map((profiles) => (
-          <Link
-            href={`/developers/${profiles.slug}`}
-            key={profiles.developerProfileId}
-          >
+          <Link href={`/developers/${profiles.slug}`} key={profiles.id}>
             <Card
-              key={profiles.developerProfileId}
+              key={profiles.id}
               className="p-2 h-full flex justify-center min-w-[20rem]"
             >
               <CardContent>
-                <Background developerProfileId={profiles.developerProfileId} />
+                <Background developerProfileId={profiles.id} />
               </CardContent>
             </Card>
           </Link>
