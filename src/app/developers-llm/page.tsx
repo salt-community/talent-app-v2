@@ -1,7 +1,7 @@
-import { errorHandler } from "@/lib";
 import { developerProfilesService } from "@/features/developer-profiles";
-import { Search } from "../developers/search";
 import { DeveloperCard } from "@/features/developer-profiles/components/developer-card";
+import { errorHandler } from "@/lib";
+import Search from "../developers/search";
 
 import {
   Tooltip,

@@ -3,8 +3,6 @@ import {
   assignments,
   cohorts,
   developerProfiles,
-  projectPermissions,
-  projects,
 } from "./permissions";
 import { MenuPermissions } from "./permissions/menu";
 
@@ -14,7 +12,6 @@ export const rolesPermissions = {
     developerProfiles.getAllSkills,
     developerProfiles.getAllLanguages,
     developerProfiles.getAllEducations,
-    projects.getAll,
     developerProfiles.getAll,
     developerProfiles.getDeveloperProfileByIdentityId,
     developerProfiles.getDeveloperById,
@@ -24,7 +21,6 @@ export const rolesPermissions = {
     assignments.getAssignmentBySlug,
   ]),
   admin: new Set([
-    ...Object.values(projects),
     ...Object.values(developerProfiles),
     ...Object.values(assignments),
     ...Object.values(cohorts),
@@ -39,12 +35,6 @@ export const rolesPermissions = {
     developerProfiles.searchDeveloperProfileIdsWithLLM,
     developerProfiles.addDeveloperProfile,
     developerProfiles.getDeveloperBySlug,
-    projects.add,
-    projects.hasCurrentUserAccess,
-    projects.delete,
-    projects.getAll,
-    projects.updateDescription,
-    projects.updateProjectData,
     developerProfiles.createDeveloperProfile,
     developerProfiles.delete,
     developerProfiles.getAllById,
@@ -71,11 +61,6 @@ export const rolesPermissions = {
     developerProfiles.addDeveloperProfile,
     developerProfiles.getHighlightedDeveloperProfiles,
     developerProfiles.getDeveloperBySlug,
-    projects.updateDescription,
-    projects.updateProjectData,
-    projects.hasCurrentUserAccess,
-    projects.getAll,
-    projects.deleteProjectsByDeveloperProfileId,
     developerProfiles.createDeveloperProfile,
     developerProfiles.delete,
     developerProfiles.getAllById,
@@ -92,7 +77,6 @@ export const rolesPermissions = {
 
 export const rolesViewPermissions = {
   admin: new Set([
-    projectPermissions.edit,
     MenuPermissions.instructorsDashboard,
     MenuPermissions.admin,
     MenuPermissions.hamburgerMenu,
@@ -106,7 +90,6 @@ export const rolesViewPermissions = {
     assignmentPermissions.score,
   ]),
   developer: new Set([
-    projectPermissions.edit,
     MenuPermissions.profile,
     MenuPermissions.hamburgerMenu,
   ]),

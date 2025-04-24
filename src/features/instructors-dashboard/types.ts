@@ -35,16 +35,6 @@ export type AssignmentScore = {
   status?: string;
 };
 
-export type AssignmentInsert = {
-  assignment: {
-    assignmentId: string;
-    identityId: string;
-    category: string;
-    comment: string | null;
-    score: number;
-  };
-};
-
 export type ScoreStatus = {
   assignmentId: string;
   identityId: string;

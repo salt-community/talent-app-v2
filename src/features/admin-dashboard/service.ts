@@ -9,7 +9,6 @@ export function createAdminService(
   developerProfileService: DeveloperProfileService,
   searchConfigurationClient: SearchConfigurationClient,
   iamService: IamService,
-  deleteProjectsByDeveloperProfileId: (id: string) => Promise<void>,
 ) {
   return {
     async getAllIdentities() {
@@ -47,7 +46,6 @@ export function createAdminService(
       const developerProfiles =
         await developerProfileService.getDeveloperProfileIdById(identityId);
       for (const developerProfile of developerProfiles) {
-        await deleteProjectsByDeveloperProfileId(developerProfile.id);
         await developerProfileService.deleteDeveloperProfileFromSearch(
           developerProfile.id,
         );

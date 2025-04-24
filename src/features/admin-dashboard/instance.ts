@@ -1,6 +1,5 @@
 import { developerProfilesService } from "../developer-profiles";
 import { iamService } from "../iam";
-import { projectsService } from "../projects";
 import { createAdminService } from "./service";
 
 export const adminService = createAdminService(
@@ -28,5 +27,4 @@ export const adminService = createAdminService(
     getAllIdentities: iamService.getAllIdentities,
     deleteIdentity: iamService.deleteIdentity,
   },
-  projectsService.deleteProjectsByDeveloperProfileId,
 );

@@ -1,18 +1,18 @@
 "use client";
-import React, { useState } from "react";
-import { Score } from "./score";
-import { Developers } from "./developers";
+import { useState } from "react";
 import {
-  TabType,
   DeveloperWithScores,
   FixLists,
   PrivateNote,
+  TabType,
 } from "../../types";
-import { ScoringTab } from "./scoring-tab";
+import { Developers } from "./developers";
 import { FixList } from "./fix-list";
 import { PrivateNotes } from "./private-notes";
+import { Score } from "./score";
+import { ScoringTab } from "./scoring-tab";
 
-export type ClientAssignmentTableProps = {
+type ClientAssignmentTableProps = {
   assignmentTitle: string;
   developersWithScores: DeveloperWithScores[];
   fixLists: FixLists[];
@@ -111,11 +111,10 @@ export function AssignmentTable({
           <div
             key={item.developer.id}
             onClick={() => setSelectedDeveloperIndex(index)}
-            className={`cursor-pointer hover:bg-gray-50 transition-colors ${
-              index === selectedDeveloperIndex
+            className={`cursor-pointer hover:bg-gray-50 transition-colors ${index === selectedDeveloperIndex
                 ? "bg-gray-100 border-l-4 border-gray-400"
                 : ""
-            }`}
+              }`}
           >
             <Developers
               developer={item.developer}

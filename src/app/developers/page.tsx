@@ -1,11 +1,11 @@
-import { Search } from "./search";
-import { errorHandler } from "@/lib";
 import {
   developerProfilesService,
   Developers,
 } from "@/features/developer-profiles";
+import { errorHandler } from "@/lib";
 import { Suspense } from "react";
 import Loading from "./loading";
+import Search from "./search";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 

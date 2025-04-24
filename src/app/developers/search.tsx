@@ -5,7 +5,7 @@ import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { ChangeEvent } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
-export function Search() {
+export default function Search() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const search = searchParams.get("search") || "";

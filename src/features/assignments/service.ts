@@ -159,4 +159,3 @@ function generateSlug(title: string) {
     .replace(/-+/g, "-")
     .trim();
 }
-export type AssignmentsService = ReturnType<typeof createAssignmentsService>;
