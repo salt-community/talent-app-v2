@@ -83,16 +83,6 @@ export type AssignmentScoreFormData = {
   comment: string | null;
 };
 
-export type CategoryScore = {
-  score: number | null;
-  category: string | null;
-};
-
-export type CategoryAverage = {
-  category: string;
-  score: number;
-};
-
 export type ScoreStatus = {
   assignmentId: string;
   identityId: string;
