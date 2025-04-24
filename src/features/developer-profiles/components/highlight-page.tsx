@@ -3,8 +3,9 @@ import { HighlightedDevelopers } from "./highlighted-developers";
 
 export async function HighlightPage() {
   const highlightedDeveloperProfileIds =
-    await developerProfilesService.getHighlightedDeveloperProfileIds();
+    await developerProfilesService.getHighlightedDevelopers();
 
+  console.log(highlightedDeveloperProfileIds);
   return (
     <div>
       <h2 className="text-center text-5xl font-extrabold pt-16 text-header px-1">

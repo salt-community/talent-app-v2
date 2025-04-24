@@ -1,23 +1,34 @@
 import { Card, CardContent } from "@/components";
 import { Background } from "./backgrounds";
+import Link from "next/link";
 
-type Props = {
-  developerProfileIds: string[];
+type DeveloperProfiles = {
+  developerProfileId: string;
+  slug: string;
 };
 
-export async function HighlightedDevelopers({ developerProfileIds }: Props) {
+type Props = {
+  developerProfiles: DeveloperProfiles[];
+};
+
+export async function HighlightedDevelopers({ developerProfiles }: Props) {
   return (
     <>
       <ul className="px-4 pt-10 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:px-8">
-        {developerProfileIds.map((developerProfileId, index) => (
-          <Card
-            key={index}
-            className="p-2 h-full flex justify-center min-w-[20rem]"
+        {developerProfiles.map((profiles) => (
+          <Link
+            href={`/developers/${profiles.slug}`}
+            key={profiles.developerProfileId}
           >
-            <CardContent>
-              <Background developerProfileId={developerProfileId} />
-            </CardContent>
-          </Card>
+            <Card
+              key={profiles.developerProfileId}
+              className="p-2 h-full flex justify-center min-w-[20rem]"
+            >
+              <CardContent>
+                <Background developerProfileId={profiles.developerProfileId} />
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </ul>
     </>

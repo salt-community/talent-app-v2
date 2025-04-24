@@ -35,7 +35,7 @@ export const developerProfiles: PermissionsSchema<
   deleteDeveloperProfileFromSearch:
     "developerProfiles.deleteDeveloperProfileFromSearch",
   addDeveloperProfile: "developerProfiles.addDeveloperProfile",
-  getHighlightedDeveloperProfileIds:
+  getHighlightedDevelopers:
     "developerProfiles.getHighlightedDeveloperProfileIds",
   addDeveloperProfileDetails: "developerProfiles.addDeveloperProfileDetails",
   getScoredAssignmentsByIdentityId:
