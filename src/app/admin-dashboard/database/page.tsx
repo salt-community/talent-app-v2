@@ -8,8 +8,14 @@ import { MigrationButton } from "@/features/admin-dashboard/components/migration
 import Form from "next/form";
 import { useState } from "react";
 
+type Message = {
+  status: string,
+  message: string
+  timestamp: string,
+}
+
 export default function AdminDevelopersPage() {
-  const [migrationResult, setMigrationResult] = useState<any>(null);
+  const [migrationResult, setMigrationResult] = useState<Message | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   async function onClick() {
