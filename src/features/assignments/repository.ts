@@ -223,7 +223,6 @@ export function createAssignmentsRepository(db: Db) {
           .values({
             assignmentId: args.scoreData.assignmentId,
             identityId: args.scoreData.identityId,
-            status: args.scoreData.status || "unpublished",
             updatedAt: new Date(),
           })
           .onConflictDoUpdate({
@@ -232,7 +231,6 @@ export function createAssignmentsRepository(db: Db) {
               assignmentScores.identityId,
             ],
             set: {
-              status: args.scoreData.status || "unpublished",
               updatedAt: new Date(),
             },
           })

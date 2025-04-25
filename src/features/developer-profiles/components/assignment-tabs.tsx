@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, ReactNode } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { List, MessageCircle } from "lucide-react";
+import { ReactNode, useState } from "react";
 
 interface FixedTabsProps {
   feedbackContent: ReactNode;

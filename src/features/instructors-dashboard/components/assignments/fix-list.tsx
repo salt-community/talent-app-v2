@@ -1,8 +1,8 @@
 import { Button, Textarea } from "@/components";
 import { CalendarForm } from "@/components/ui/calendar-form";
+import { useToast } from "@/hooks/use-toast";
 import { Calendar1, Plus } from "lucide-react";
 import { useOptimistic, useState, useTransition } from "react";
-import { useToast } from "@/hooks/use-toast";
 import {
   addFixToAssignmentScoreAction,
   deleteFixItemByIdAction,
@@ -53,6 +53,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
     }
   );
 
+
   const handleAddFix = async () => {
     if (!assignmentScoreId) {
       toast({
@@ -81,39 +82,19 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
         dueDate.setMinutes(parseInt(minutes || "0", 10));
       }
     }
-
-    const newFix = {
-      id: `temp-${Date.now()}`,
-      assignmentScoreId,
-      description,
-      isCompleted: false,
-      dueDate,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      developerId: "1",
-    };
-
     startTransition(async () => {
       try {
-        setOptimisticFixes({ type: "add", newFix });
-
         await addFixToAssignmentScoreAction({
           assignmentScoreId,
           description,
           dueDate,
         });
 
-        toast({
-          title: "Success",
-          description: "Fix request added successfully",
-          variant: "default",
-        });
       } catch (error) {
         console.error(error);
         toast({
           title: "Error",
           description: "Something went wrong while adding the fix request",
-          variant: "destructive",
         });
       }
     });
@@ -232,41 +213,41 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           {datetime.time && <span className="ml-1">at {datetime.time}</span>}
         </div>
       )}
-      <div className="space-y-4">
+      <div className="space-y-4 flex flex-col">
         {optimisticFixes.length > 0 ? (
-          optimisticFixes.map((item) => (
-            <div
-              key={item.id}
-              className="border border-gray-200 rounded-lg p-4 relative"
-            >
+          optimisticFixes.sort((a, b) => Number(a.createdAt) - Number(b.createdAt))
+            .map((item) => (
               <div
-                className={`absolute top-0 left-0 h-full w-2 rounded-l-lg ${
-                  item.isCompleted ? "bg-green-500" : "bg-red-500"
-                }`}
-              ></div>
-              <div className="flex justify-end">
-                <div className="text-gray-400 hover:text-gray-600 cursor-pointer">
-                  <OptionMenu
-                    id={item.id}
-                    status={item.isCompleted}
-                    onStatusChange={handleStatusChange}
-                    onDelete={handleDeleteFixItem}
-                    isPending={isPending}
-                  />
+                key={item.id}
+                className="border border-gray-200 rounded-lg p-4 relative motion-preset-slide-down "
+              >
+                <div
+                  className={`absolute top-0 left-0 h-full w-2 rounded-l-lg transition-colors duration-300 ease-in-out ${item.isCompleted ? "bg-green-500" : "bg-red-500"
+                    }`}
+                ></div>
+                <div className="flex justify-end">
+                  <div className="text-gray-400 hover:text-gray-600 cursor-pointer">
+                    <OptionMenu
+                      id={item.id}
+                      status={item.isCompleted}
+                      onStatusChange={handleStatusChange}
+                      onDelete={handleDeleteFixItem}
+                      isPending={isPending}
+                    />
+                  </div>
+                </div>
+                <p className="text-gray-600 mb-4">{item.description}</p>
+                <div className="flex items-center text-gray-500 gap-2">
+                  <Calendar1 size={16} />
+                  <span>
+                    Due{" "}
+                    {item.dueDate
+                      ? item.dueDate.toLocaleDateString()
+                      : "No due date"}
+                  </span>
                 </div>
               </div>
-              <p className="text-gray-600 mb-4">{item.description}</p>
-              <div className="flex items-center text-gray-500 gap-2">
-                <Calendar1 size={16} />
-                <span>
-                  Due{" "}
-                  {item.dueDate
-                    ? item.dueDate.toLocaleDateString()
-                    : "No due date"}
-                </span>
-              </div>
-            </div>
-          ))
+            ))
         ) : (
           <div className="flex items-center justify-center h-40">
             <p className="text-gray-600 text-lg text-center italic">
