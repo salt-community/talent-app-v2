@@ -54,6 +54,9 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
   );
 
 
+  const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
+
+
   const handleAddFix = async () => {
     if (!assignmentScoreId) {
       toast({
@@ -148,34 +151,47 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
   };
 
   const handleDeleteFixItem = (id: string) => {
-    startTransition(async () => {
-      try {
-        setOptimisticFixes({
-          type: "delete",
-          id,
-        });
 
-        const result = await deleteFixItemByIdAction(id);
+    setDeletingIds(prev => {
+      const newSet = new Set(prev);
+      newSet.add(id);
+      return newSet;
+    });
 
-        if (!result.success) {
+    setTimeout(() => {
+      startTransition(async () => {
+        try {
+          setOptimisticFixes({
+            type: "delete",
+            id,
+          });
+          const result = await deleteFixItemByIdAction(id);
+          if (!result.success) {
+            toast({
+              title: "Error",
+              description: String(result.error),
+            });
+          }
+        } catch (error) {
+          console.error(error);
           toast({
             title: "Error",
-            description: String(result.error),
+            description: "An unexpected error occurred",
           });
-        } else {
-          toast({
-            title: "Success",
-            description: "Fix item deleted successfully",
+        } finally {
+          setDeletingIds(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(id);
+            return newSet;
           });
         }
-      } catch (error) {
-        console.error(error);
         toast({
-          title: "Error",
-          description: "An unexpected error occurred",
+          title: "Success",
+          description: "Fix item deleted successfully",
         });
-      }
-    });
+      });
+    }, 500);
+
   };
 
   return (
@@ -213,13 +229,16 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           {datetime.time && <span className="ml-1">at {datetime.time}</span>}
         </div>
       )}
-      <div className="space-y-4 flex flex-col">
+      <div className="space-y-4 flex flex-col overflow-x-hidden">
         {optimisticFixes.length > 0 ? (
           optimisticFixes.sort((a, b) => Number(a.createdAt) - Number(b.createdAt))
             .map((item) => (
               <div
                 key={item.id}
-                className="border border-gray-200 rounded-lg p-4 relative motion-preset-slide-down "
+                className={`border border-gray-200 rounded-lg p-4 relative 
+                  ${deletingIds.has(item.id)
+                    ? "motion-translate-x-out-100 motion-duration-[1s] motion-ease-spring-smooth "
+                    : "motion-translate-y-in-100 motion-duration-[1s] motion-ease-spring-smooth"}`}
               >
                 <div
                   className={`absolute top-0 left-0 h-full w-2 rounded-l-lg transition-colors duration-300 ease-in-out ${item.isCompleted ? "bg-green-500" : "bg-red-500"
