@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { AssignmentScore, Developer } from "../../types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 import { updateScoreAction } from "../../action";
+import { AssignmentScore, Developer } from "../../types";
 
 type ScoreProps = {
   scores: AssignmentScore[];
@@ -88,11 +88,10 @@ export function Score({ scores, developer }: ScoreProps) {
 
       {saveStatus && (
         <div
-          className={`mb-3 p-2 rounded text-xs ${
-            saveStatus.success
+          className={`mb-3 p-2 rounded text-xs ${saveStatus.success
               ? "bg-green-100 text-green-800"
               : "bg-red-100 text-red-800"
-          }`}
+            }`}
         >
           {saveStatus.message}
         </div>
@@ -167,7 +166,7 @@ export function Score({ scores, developer }: ScoreProps) {
           </div>
         ))}
         <div className="flex justify-end mt-4">
-          <Button onClick={handleSaveScores} disabled={isSaving} size="sm">
+          <Button onClick={handleSaveScores} disabled={isSaving} size="sm" className="cursor-pointer">
             {isSaving ? "Saving..." : "Save Changes"}
           </Button>
         </div>

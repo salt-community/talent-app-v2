@@ -112,7 +112,7 @@ export function AssignmentTable({
             key={item.developer.id}
             onClick={() => setSelectedDeveloperIndex(index)}
             className={`cursor-pointer hover:bg-gray-50 transition-colors ${index === selectedDeveloperIndex
-              ? "bg-gray-100 border-l-4 border-gray-400"
+              ? "bg-gray-100 border-l-4 border-gray-400 motion-preset-slide-left motion-duration-1000 "
               : ""
               }`}
           >
