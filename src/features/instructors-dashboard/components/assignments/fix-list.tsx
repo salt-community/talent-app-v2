@@ -95,7 +95,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
 
     startTransition(async () => {
       try {
-        setOptimisticFixes({ type: "add", newFix });
 
         await addFixToAssignmentScoreAction({
           assignmentScoreId,
@@ -232,7 +231,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           optimisticFixes.map((item) => (
             <div
               key={item.id}
-              className="border border-gray-200 rounded-lg p-4 relative motion-translate-y-in-100  "
+              className="border border-gray-200 rounded-lg p-4 relative motion-preset-rebound-up "
             >
               <div
                 className={`absolute top-0 left-0 h-full w-2 rounded-l-lg ${item.isCompleted ? "bg-green-500" : "bg-red-500"
