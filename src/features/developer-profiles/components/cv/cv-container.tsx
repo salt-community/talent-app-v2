@@ -1,16 +1,16 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { CvAside } from "./cv-aside";
-import { CvHeader } from "./cv-header";
-import { CvInfo } from "../../types";
-import { CheckCircle, Pencil, Printer } from "lucide-react";
-import { updateCvAction } from "../../actions";
-import { CvMainContent } from "./cv-main-content";
 import { Button } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import DomToImage from "dom-to-image";
 import jsPDF from "jspdf";
+import { CheckCircle, Pencil, Printer } from "lucide-react";
+import { useRef, useState } from "react";
+import { updateCvAction } from "../../actions";
+import { CvInfo } from "../../types";
+import { CvAside } from "./cv-aside";
+import { CvHeader } from "./cv-header";
+import { CvMainContent } from "./cv-main-content";
 
 type Props = {
   defaultCvInfo: CvInfo;
@@ -146,7 +146,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
                 disabled={isLoading}
                 variant="ghost"
                 size="sm"
-                className="flex hover:bg-destructive/30 "
+                className="flex hover:bg-destructive/30 cursor-pointer "
               >
                 Discard changes
               </Button>
@@ -155,9 +155,9 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
                 disabled={isLoading}
                 variant="default"
                 size="sm"
-                className="flex"
+                className="flex cursor-pointer"
               >
-                <CheckCircle size={20} />
+                <CheckCircle size={18} />
                 Save
               </Button>
             </div>
@@ -168,18 +168,19 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
               onClick={() => setIsEditable(true)}
               variant="ghost"
               size="sm"
-              className="flex"
+              className="flex cursor-pointer"
+
             >
-              <Pencil size={20} />
+              <Pencil size={20} className="cursor-pointer" />
               Edit
-            </Button>
+            </Button >
           )
         )}
         <Button
           onClick={() => handlePrint(cvInfo.name + " CV", printRef)}
           variant="ghost"
           size="sm"
-          className="flex"
+          className="flex cursor-pointer"
         >
           <Printer />
           Print
