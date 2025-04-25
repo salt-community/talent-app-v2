@@ -24,6 +24,7 @@ export const developerProfileEducations = pgTable(
     name: varchar().notNull(),
   }
 );
+
 export const developerProfileLanguages = pgTable(
   "developer_profiles_languages",
   {

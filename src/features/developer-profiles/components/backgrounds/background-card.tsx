@@ -19,7 +19,7 @@ export async function BackgroundCard({
           developerProfile={developerProfile}
           hasProfileAccess={hasProfileAccess}
         />
-      </div>   
+      </div>
 
       <div>
         <Row
@@ -31,10 +31,13 @@ export async function BackgroundCard({
         />
         <Row
           title="Education"
-          content={developerProfile.educations.map((education, index) => ({
-            id: index,
-            name: education.role,
-          }))}
+          content={developerProfile.educations
+            .map((education, index) => ({
+              id: index,
+              name: education.role,
+              date: education.date,
+            }))
+            .sort((a, b) => a.date.localeCompare(b.date))} //remove when add new order column in database
         />
         <SkillsBadges skills={developerProfile.skills} />
       </div>
