@@ -61,7 +61,7 @@ export function CvAvatar({
           icon={Check}
           onAdd={handleAddUrl}
         >
-          <Button className="absolute bottom-4 right-4 z-20 rounded-full p-0 h-8 w-8">
+          <Button className="absolute bottom-4 right-4 z-20 rounded-full p-0 h-8 w-8 cursor-pointer hover:motion-preset-seesaw">
             <Camera />
           </Button>
         </CvPopover>
