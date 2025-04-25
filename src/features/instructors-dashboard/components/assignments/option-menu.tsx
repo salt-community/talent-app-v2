@@ -6,7 +6,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components";
 import { MoreVertical } from "lucide-react";
-import { useState } from "react";
 import { DeleteFixItem } from "./delete-fix-item";
 import { FixItemChangeStatus } from "./fix-status-change";
 
@@ -25,12 +24,9 @@ export function OptionMenu({
   onDelete,
   isPending,
 }: Props) {
-  const [isOpen, setIsOpen] = useState(false)
-
   const handleDelete = () => {
-    setIsOpen(false)
-    onDelete(id)
-  }
+    onDelete(id);
+  };
   return (
     <div className="flex items-center gap-4">
       <DropdownMenu>
@@ -55,10 +51,7 @@ export function OptionMenu({
           </DropdownMenuItem>
           <DropdownMenuSeparator className="my-1 border-gray-200" />
           <DropdownMenuItem>
-            <DeleteFixItem
-              onConfirm={handleDelete}
-              isPending={isPending}
-            />
+            <DeleteFixItem onConfirm={handleDelete} isPending={isPending} />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
