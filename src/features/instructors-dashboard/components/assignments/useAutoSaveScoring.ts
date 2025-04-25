@@ -37,7 +37,7 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
  );
 
  
- const debouncedScoreValues = useDebounce(scoreValues, 1000);
+ const debouncedScoreValues = useDebounce(scoreValues, 10000);
 
  const handleScoreChange = (categoryId: string, value: string) => {
   setScoreValues((prev) =>
@@ -139,7 +139,6 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
      assignmentId: updatedScores[0].assignmentId,
      identityId: updatedScores[0].identityId,
      score: updatedScores[0].score,
-     status: updatedScores[0].status || "unpublished",
      id: updatedScores[0].id || "",
     };
 

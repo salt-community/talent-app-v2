@@ -82,18 +82,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
         dueDate.setMinutes(parseInt(minutes || "0", 10));
       }
     }
-
-    const newFix = {
-      id: `temp-${Date.now()}`,
-      assignmentScoreId,
-      description,
-      isCompleted: false,
-      dueDate,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      developerId: "1",
-    };
-
     startTransition(async () => {
       try {
         await addFixToAssignmentScoreAction({
@@ -107,7 +95,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
         toast({
           title: "Error",
           description: "Something went wrong while adding the fix request",
-          variant: "destructive",
         });
       }
     });
