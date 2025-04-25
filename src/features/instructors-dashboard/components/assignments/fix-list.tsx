@@ -231,7 +231,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           optimisticFixes.map((item) => (
             <div
               key={item.id}
-              className="border border-gray-200 rounded-lg p-4 relative motion-preset-rebound-up "
+              className="border border-gray-200 rounded-lg p-4 relative motion-preset-slide-down "
             >
               <div
                 className={`absolute top-0 left-0 h-full w-2 rounded-l-lg ${item.isCompleted ? "bg-green-500" : "bg-red-500"
