@@ -28,13 +28,15 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
   success: boolean;
   message: string;
  } | null>(null);
+ const [isManualSave, setIsManualSave] = useState(false);
 
 
+ 
  const [lastSavedScores, setLastSavedScores] = useState(
   structuredClone(initialScores)
  );
 
-
+ 
  const debouncedScoreValues = useDebounce(scoreValues, 1500);
 
  const handleScoreChange = (categoryId: string, value: string) => {
@@ -53,12 +55,13 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
   );
  };
 
-
+ 
  const saveScores = async () => {
   if (isSaving) return;
 
   setIsSaving(true);
   setSaveStatus(null);
+  setIsManualSave(true); 
 
   try {
    const updatedScores = [...scoreValues];
@@ -115,12 +118,12 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
   }
  };
 
-
+ 
  useEffect(() => {
   const autoSave = async () => {
    if (isSaving) return;
 
-
+   
    const hasUnsavedChanges = JSON.stringify(debouncedScoreValues) !==
     JSON.stringify(lastSavedScores);
 
@@ -129,6 +132,7 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
    try {
     setIsSaving(true);
     setSaveStatus(null);
+    setIsManualSave(false); 
 
     const updatedScores = [...debouncedScoreValues];
 
@@ -155,14 +159,9 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
       message: "All feedback saved automatically",
      });
 
-
-     if (saveStatus === null || !saveStatus.success) {
-      toast({
-       title: "Changes saved",
-       description: "Your feedback has been automatically saved",
-      });
-     }
-    } else {
+     
+     
+   } else {
      setSaveStatus({
       success: false,
       message: "Failed to save feedback automatically",
@@ -178,15 +177,20 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
      success: false,
      message: `Auto-save failed. ${error}`,
     });
+    toast({
+     variant: "destructive", 
+     title: "Error",
+     description: "Auto-save failed. Try saving manually.",
+    });
    } finally {
     setIsSaving(false);
    }
   };
 
   autoSave();
- }, [debouncedScoreValues, lastSavedScores, isSaving, saveStatus, toast]);
+ }, [debouncedScoreValues, lastSavedScores, isSaving, toast]);
 
-
+ 
  const hasUnsavedChanges = JSON.stringify(scoreValues) !==
   JSON.stringify(lastSavedScores);
 
@@ -197,6 +201,7 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
   saveScores,
   isSaving,
   saveStatus,
-  hasUnsavedChanges
+  hasUnsavedChanges,
+  isManualSave  
  };
 }

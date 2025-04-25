@@ -20,32 +20,25 @@ export function Score({ scores, developer }: ScoreProps) {
     saveScores,
     isSaving,
     saveStatus,
-    hasUnsavedChanges
+    hasUnsavedChanges,
+    isManualSave
   } = useAutoSaveScores(scores);
 
   return (
     <div className="p-3 h-full overflow-y-auto">
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-lg">Scores for {developer.name}</h3>
-        {hasUnsavedChanges && !isSaving && (
-          <span className="text-xs text-amber-600">
-            Unsaved changes
-          </span>
-        )}
-        {isSaving && (
-          <span className="text-xs text-blue-600">
-            Saving...
-          </span>
-        )}
+
       </div>
 
-      {saveStatus && (
-        <div
-          className={`mb-3 p-2 rounded text-xs ${saveStatus.success
-            ? "bg-green-100 text-green-800"
-            : "bg-red-100 text-red-800"
-            }`}
-        >
+      {saveStatus && saveStatus.success && isManualSave && (
+        <div className="mb-3 p-2 rounded text-xs bg-green-100 text-green-800">
+          {saveStatus.message}
+        </div>
+      )}
+
+      {saveStatus && !saveStatus.success && (
+        <div className="mb-3 p-2 rounded text-xs bg-red-100 text-red-800">
           {saveStatus.message}
         </div>
       )}
@@ -118,14 +111,26 @@ export function Score({ scores, developer }: ScoreProps) {
             />
           </div>
         ))}
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-between items-center mt-4">
+          <div className="flex flex-row">
+            {hasUnsavedChanges && !isSaving && (
+              <span className="text-xs text-amber-600 flex items-center">
+                Unsaved changes
+              </span>
+            )}
+            {isSaving && (
+              <span className="text-xs text-blue-600 flex items-center">
+                Saving...
+              </span>
+            )}
+          </div>
           <Button
             onClick={saveScores}
-            disabled={isSaving || !hasUnsavedChanges}
+            disabled={isSaving && isManualSave}
             size="sm"
-            className="cursor-pointer"
+            className="cursor-pointer ml-2"
           >
-            {isSaving ? "Saving..." : "Save Changes"}
+            {isSaving && isManualSave ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       </div>
