@@ -72,7 +72,7 @@ export function AssignmentCard({ assignment, averageScores }: Props) {
                         size={18}
                       />
                     </div>
-                    <h3 className="font-medium text-md text-gray-900">
+                    <h3 className="font-medium text-md text-gray-900 ">
                       {assignment.title}
                     </h3>
                     {fixCount > 0 && (
