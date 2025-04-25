@@ -65,7 +65,11 @@ export function CvTechnicalSkills({
             });
           }}
         >
-          <Button variant="outline" size="sm" className="w-full h-7 mt-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full h-7 mt-2 cursor-pointer"
+          >
             <Plus size={24} className="cursor-pointer" /> Add
           </Button>
         </CvPopover>

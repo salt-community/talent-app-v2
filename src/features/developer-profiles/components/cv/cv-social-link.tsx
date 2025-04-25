@@ -98,7 +98,7 @@ export function CvSocialLink({
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full h-7 mt-2"
+                className="w-full h-7 mt-2 cursor-pointer"
                 disabled={links.some((link) => link.name === "Resume")}
               >
                 <Plus size={24} className="cursor-pointer" /> Add Portfolio
