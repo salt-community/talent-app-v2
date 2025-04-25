@@ -1,8 +1,8 @@
 import { Button, Textarea } from "@/components";
 import { CalendarForm } from "@/components/ui/calendar-form";
+import { useToast } from "@/hooks/use-toast";
 import { Calendar1, Plus } from "lucide-react";
 import { useOptimistic, useState, useTransition } from "react";
-import { useToast } from "@/hooks/use-toast";
 import {
   addFixToAssignmentScoreAction,
   deleteFixItemByIdAction,
@@ -237,12 +237,11 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           optimisticFixes.map((item) => (
             <div
               key={item.id}
-              className="border border-gray-200 rounded-lg p-4 relative"
+              className="border border-gray-200 rounded-lg p-4 relative motion-translate-y-in-100 "
             >
               <div
-                className={`absolute top-0 left-0 h-full w-2 rounded-l-lg ${
-                  item.isCompleted ? "bg-green-500" : "bg-red-500"
-                }`}
+                className={`absolute top-0 left-0 h-full w-2 rounded-l-lg ${item.isCompleted ? "bg-green-500" : "bg-red-500"
+                  }`}
               ></div>
               <div className="flex justify-end">
                 <div className="text-gray-400 hover:text-gray-600 cursor-pointer">
