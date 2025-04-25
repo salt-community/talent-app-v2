@@ -53,6 +53,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
     }
   );
 
+
   const handleAddFix = async () => {
     if (!assignmentScoreId) {
       toast({
@@ -95,7 +96,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
 
     startTransition(async () => {
       try {
-
         await addFixToAssignmentScoreAction({
           assignmentScoreId,
           description,
@@ -226,40 +226,41 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           {datetime.time && <span className="ml-1">at {datetime.time}</span>}
         </div>
       )}
-      <div className="space-y-4">
+      <div className="space-y-4 flex flex-col">
         {optimisticFixes.length > 0 ? (
-          optimisticFixes.map((item) => (
-            <div
-              key={item.id}
-              className="border border-gray-200 rounded-lg p-4 relative motion-preset-slide-down "
-            >
+          optimisticFixes.sort((a, b) => Number(a.createdAt) - Number(b.createdAt))
+            .map((item) => (
               <div
-                className={`absolute top-0 left-0 h-full w-2 rounded-l-lg ${item.isCompleted ? "bg-green-500" : "bg-red-500"
-                  }`}
-              ></div>
-              <div className="flex justify-end">
-                <div className="text-gray-400 hover:text-gray-600 cursor-pointer">
-                  <OptionMenu
-                    id={item.id}
-                    status={item.isCompleted}
-                    onStatusChange={handleStatusChange}
-                    onDelete={handleDeleteFixItem}
-                    isPending={isPending}
-                  />
+                key={item.id}
+                className="border border-gray-200 rounded-lg p-4 relative motion-preset-slide-down "
+              >
+                <div
+                  className={`absolute top-0 left-0 h-full w-2 rounded-l-lg transition-colors duration-300 ease-in-out ${item.isCompleted ? "bg-green-500" : "bg-red-500"
+                    }`}
+                ></div>
+                <div className="flex justify-end">
+                  <div className="text-gray-400 hover:text-gray-600 cursor-pointer">
+                    <OptionMenu
+                      id={item.id}
+                      status={item.isCompleted}
+                      onStatusChange={handleStatusChange}
+                      onDelete={handleDeleteFixItem}
+                      isPending={isPending}
+                    />
+                  </div>
+                </div>
+                <p className="text-gray-600 mb-4">{item.description}</p>
+                <div className="flex items-center text-gray-500 gap-2">
+                  <Calendar1 size={16} />
+                  <span>
+                    Due{" "}
+                    {item.dueDate
+                      ? item.dueDate.toLocaleDateString()
+                      : "No due date"}
+                  </span>
                 </div>
               </div>
-              <p className="text-gray-600 mb-4">{item.description}</p>
-              <div className="flex items-center text-gray-500 gap-2">
-                <Calendar1 size={16} />
-                <span>
-                  Due{" "}
-                  {item.dueDate
-                    ? item.dueDate.toLocaleDateString()
-                    : "No due date"}
-                </span>
-              </div>
-            </div>
-          ))
+            ))
         ) : (
           <div className="flex items-center justify-center h-40">
             <p className="text-gray-600 text-lg text-center italic">
