@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AssignmentScore, Developer } from "../../types";
-import useAutoSaveScores from "./use-auto-save";
+import useAutoSaveScores from "./useAutoSaveScoring";
 
 type ScoreProps = {
   scores: AssignmentScore[];
