@@ -46,7 +46,7 @@ export function CvMainContent({
           <Button
             variant="default"
             size="icon"
-            className="h-5 w-5 rounded-full"
+            className="h-5 w-5 rounded-full cursor-pointer"
             onClick={() =>
               onChange({
                 educations: [...educations, createEmptyExperience()],
@@ -75,7 +75,7 @@ export function CvMainContent({
           <Button
             variant="default"
             size="icon"
-            className="h-5 w-5 rounded-full"
+            className="h-5 w-5 rounded-full cursor-pointer"
             onClick={() =>
               onChange({ jobs: [...jobs, createEmptyExperience()], educations })
             }

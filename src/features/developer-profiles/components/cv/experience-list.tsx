@@ -41,7 +41,7 @@ export function ExperienceList({ isEditable, experiences, onChange }: Props) {
                 variant="link"
                 size="icon"
                 onClick={() => handleDelete(index)}
-                className="h-5 w-5"
+                className="h-5 w-5 cursor-pointer"
               >
                 <X size={56} className="cursor-pointer" />
               </Button>
@@ -50,7 +50,7 @@ export function ExperienceList({ isEditable, experiences, onChange }: Props) {
                   variant="link"
                   size="icon"
                   onClick={() => handleMoveUp(index)}
-                  className="h-5 w-5"
+                  className="h-5 w-5 cursor-pointer"
                 >
                   <ChevronUp size={56} className="cursor-pointer" />
                 </Button>
@@ -60,7 +60,7 @@ export function ExperienceList({ isEditable, experiences, onChange }: Props) {
                   variant="link"
                   size="icon"
                   onClick={() => handleMoveDown(index)}
-                  className="h-5 w-5"
+                  className="h-5 w-5 cursor-pointer"
                 >
                   <ChevronDown size={56} className="cursor-pointer" />
                 </Button>
