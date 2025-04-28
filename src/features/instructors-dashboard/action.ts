@@ -148,8 +148,10 @@ export async function addFixToAssignmentScoreAction(args: {
   try {
     await instructorService.addFixToAssignmentScore(args);
     revalidatePath("/instructor-dashboard", "layout");
+    return {success: true}
   } catch (error) {
     console.error("Failed to add fix:", error);
+    return {success: false}
   }
 }
 

@@ -10,6 +10,7 @@ import {
 import { FixLists } from "../../types";
 import { OptionMenu } from "./option-menu";
 import toast from "react-hot-toast";
+import { set } from "react-hook-form";
 
 type FixesProps = {
   fixes: FixLists[];
@@ -70,23 +71,46 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
     if (!assignmentScoreId) {
       return;
     }
+    const tempId = crypto.randomUUID();
+    startTransition(() => {
+      setOptimisticFixes({
+        type: "add",
+        newFix: {
+          id: tempId,
+          description,
+          isCompleted: false,
+          dueDate: dueDate,
+          createdAt: new Date(),
+          assignmentScoreId: "",
+          updatedAt: null
+        },
+      });
+    });
 
-    return toast.promise(
+
+    toast.promise(
       new Promise(async (resolve) => {
-        startTransition(async () => {
-          await addFixToAssignmentScoreAction({ assignmentScoreId, description, dueDate });
+        const result = await addFixToAssignmentScoreAction({ assignmentScoreId, description, dueDate });
+        console.log({ result: result })
+        if (result.success) {
           resolve(true);
-        });
+        } else {
+          throw new Error("Failed to add fix");
+        }
       }),
       {
         loading: "Adding...",
         success: "New fix added",
         error: "Could not add the new fix",
       }
-    ).then(() => {
-      setDescription("");
-      setDatetime({ date: undefined, time: "" });
+    )
+    startTransition(() => {
+      setOptimisticFixes({
+        type: "delete",
+        id: tempId,
+      });
     });
+
   };
 
   const handleStatusChange = (id: string, currentStatus: boolean) => {
