@@ -1,8 +1,7 @@
-import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import { updateScoreAction } from "../../action";
 import { AssignmentScore } from "../../types";
-
+import toast from 'react-hot-toast';
 
 function useDebounce<T>(value: T, delay: number): T {
  const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -21,21 +20,13 @@ function useDebounce<T>(value: T, delay: number): T {
 }
 
 export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
- const { toast } = useToast();
  const [scoreValues, setScoreValues] = useState<AssignmentScore[]>(initialScores);
  const [isSaving, setIsSaving] = useState(false);
- const [saveStatus, setSaveStatus] = useState<{
-  success: boolean;
-  message: string;
- } | null>(null);
  const [isManualSave, setIsManualSave] = useState(false);
-
-
  
  const [lastSavedScores, setLastSavedScores] = useState(
   structuredClone(initialScores)
  );
-
  
  const debouncedScoreValues = useDebounce(scoreValues, 10000);
 
@@ -54,74 +45,52 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
    )
   );
  };
-
  
  const saveScores = async () => {
   if (isSaving) return;
 
   setIsSaving(true);
-  setSaveStatus(null);
   setIsManualSave(true); 
 
-  try {
-   const updatedScores = [...scoreValues];
+  const updatedScores = [...scoreValues];
 
-   const baseScoreData = {
+  const baseScoreData = {
     assignmentId: updatedScores[0].assignmentId,
     identityId: updatedScores[0].identityId,
     score: updatedScores[0].score,
     id: updatedScores[0].id || "",
-   };
+  };
 
-   const feedbackDataArray = updatedScores.map((score) => ({
+  const feedbackDataArray = updatedScores.map((score) => ({
     comment: score.comment || "",
     score: score.score,
     categoryId: score.categoryId,
-   }));
+  }));
 
-   const result = await updateScoreAction(baseScoreData, feedbackDataArray);
-
-   if (result.success) {
-    setLastSavedScores(structuredClone(scoreValues));
-    setSaveStatus({
-     success: true,
-     message: "All feedback saved successfully!",
-    });
-    toast({
-     title: "Success",
-     description: "Feedback saved successfully",
-    });
-   } else {
-    setSaveStatus({
-     success: false,
-     message: "Failed to save feedback.",
-    });
-    toast({
-     variant: "destructive",
-     title: "Save failed",
-     description: "Couldn't save changes",
-    });
-   }
+  try {
+    const result = await toast.promise(
+      updateScoreAction(baseScoreData, feedbackDataArray),
+      {
+        loading: "Saving...",
+        success: "Feedback saved successfully!",
+        error: "Failed to save feedback."
+      }
+    );
+    
+    if (result.success) {
+      setLastSavedScores(structuredClone(scoreValues));
+    }
   } catch (error) {
-   setSaveStatus({
-    success: false,
-    message: `An error occurred while saving feedback. ${error}`,
-   });
-   toast({
-    variant: "destructive",
-    title: "Error",
-    description: `An error occurred: ${error}`,
-   });
+    console.error("Save error:", error);
   } finally {
-   setIsSaving(false);
+    setIsSaving(false);
+    setIsManualSave(false);
   }
- };
+};
 
- 
  useEffect(() => {
   const autoSave = async () => {
    if (isSaving) return;
-
    
    const hasUnsavedChanges = JSON.stringify(debouncedScoreValues) !==
     JSON.stringify(lastSavedScores);
@@ -130,7 +99,6 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
 
    try {
     setIsSaving(true);
-    setSaveStatus(null);
     setIsManualSave(false); 
 
     const updatedScores = [...debouncedScoreValues];
@@ -152,43 +120,17 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
 
     if (result.success) {
      setLastSavedScores(structuredClone(debouncedScoreValues));
-     setSaveStatus({
-      success: true,
-      message: "All feedback saved automatically",
-     });
-
-     
-     
-   } else {
-     setSaveStatus({
-      success: false,
-      message: "Failed to save feedback automatically",
-     });
-     toast({
-      variant: "destructive",
-      title: "Save failed",
-      description: "Couldn't save changes automatically. Try manual save.",
-     });
-    }
+    } 
    } catch (error) {
-    setSaveStatus({
-     success: false,
-     message: `Auto-save failed. ${error}`,
-    });
-    toast({
-     variant: "destructive", 
-     title: "Error",
-     description: "Auto-save failed. Try saving manually.",
-    });
+    console.error("Auto-save error:", error);
    } finally {
     setIsSaving(false);
    }
   };
 
   autoSave();
- }, [debouncedScoreValues, lastSavedScores, isSaving, toast]);
+ }, [debouncedScoreValues, lastSavedScores, isSaving]);
 
- 
  const hasUnsavedChanges = JSON.stringify(scoreValues) !==
   JSON.stringify(lastSavedScores);
 
@@ -198,7 +140,6 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
   handleCommentChange,
   saveScores,
   isSaving,
-  saveStatus,
   hasUnsavedChanges,
   isManualSave  
  };

@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AssignmentScore, Developer } from "../../types";
 import useAutoSaveScores from "./useAutoSaveScoring";
+import { Toaster } from "react-hot-toast";
 
 type ScoreProps = {
   scores: AssignmentScore[];
@@ -19,29 +20,19 @@ export function Score({ scores, developer }: ScoreProps) {
     handleCommentChange,
     saveScores,
     isSaving,
-    saveStatus,
     hasUnsavedChanges,
     isManualSave
   } = useAutoSaveScores(scores);
 
+  console.log(hasUnsavedChanges)
+
   return (
     <div className="p-3 h-full overflow-y-auto">
+      <Toaster position="top-right" />
+
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-lg">Scores for {developer.name}</h3>
-
       </div>
-
-      {saveStatus && saveStatus.success && isManualSave && (
-        <div className="mb-3 p-2 rounded text-xs bg-green-100 text-green-800">
-          {saveStatus.message}
-        </div>
-      )}
-
-      {saveStatus && !saveStatus.success && (
-        <div className="mb-3 p-2 rounded text-xs bg-red-100 text-red-800">
-          {saveStatus.message}
-        </div>
-      )}
 
       <div className="space-y-4">
         {scoreValues.map((score: AssignmentScore) => (
@@ -126,14 +117,14 @@ export function Score({ scores, developer }: ScoreProps) {
           </div>
           <Button
             onClick={saveScores}
-            disabled={isSaving && isManualSave}
+            disabled={!hasUnsavedChanges || isSaving}
             size="sm"
             className="cursor-pointer ml-2"
           >
-            {isSaving && isManualSave ? "Saving..." : "Save Changes"}
+            Save Scores
           </Button>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
