@@ -11,6 +11,7 @@ import {
 import { FixLists } from "../../types";
 import { OptionMenu } from "./option-menu";
 import toast from "react-hot-toast";
+import { resolve } from "path";
 
 type FixesProps = {
   fixes: FixLists[];
@@ -91,36 +92,47 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
   };
 
   const handleStatusChange = (id: string, currentStatus: boolean) => {
-    startTransition(async () => {
-      setOptimisticFixes({
-        type: "update",
-        id,
-        newStatus: !currentStatus,
-      });
-
-      const result = await updateFixStatusByIdAction(id, !currentStatus);
-
-
-    });
+    return toast.promise(
+      new Promise(async (resolve) => {
+        startTransition(async () => {
+          setOptimisticFixes({
+            type: "update",
+            id,
+            newStatus: !currentStatus,
+          });
+          await updateFixStatusByIdAction(id, !currentStatus);
+        });
+        resolve(true);
+      }),
+      {
+        loading: "Updating status...",
+        success: "Status updated successfully!",
+        error: "Failed to update status.",
+      }
+    );
   };
 
   const handleDeleteFixItem = (id: string) => {
-
     setDeletingIds(prev => {
       const newSet = new Set(prev);
       newSet.add(id);
       return newSet;
     });
-
+    return toast.promise(new Promise((resolve) => {
       startTransition(async () => {
         setOptimisticFixes({
           type: "delete",
           id,
         });
-        const result = await deleteFixItemByIdAction(id);
-
-
+        await deleteFixItemByIdAction(id);
       });
+      resolve(true)
+    }),
+      {
+        loading: "Deleting fix...",
+        success: "Fix deleted successfully!",
+        error: "Failed to delete the items."
+      })
   };
 
   return (
