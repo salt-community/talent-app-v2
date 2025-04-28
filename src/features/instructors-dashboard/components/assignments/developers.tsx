@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { AssignmentScore, Developer, ScoreStatus } from "../../types";
 import { Switch } from "@/components/ui/switch";
+import toast from "react-hot-toast";
 import { updateScoreStatusesAction } from "../../action";
 import {
   Tooltip,
@@ -11,7 +12,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import AssignmentStatus from "./assignment-status";
-import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   developer: Developer;
@@ -29,7 +29,6 @@ export function Developers({
   const [isPublished, setIsPublished] = useState(published);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { toast } = useToast();
 
   useEffect(() => {
     setIsPublished(published);
@@ -38,6 +37,7 @@ export function Developers({
   const togglePublishStatus = async () => {
     if (!scored || isLoading) return;
     const newStatus = isPublished ? "unpublished" : "published";
+
     const scoreStatuses: ScoreStatus[] = scores.map((score) => ({
       assignmentId: score.assignmentId,
       identityId: score.identityId,
@@ -46,20 +46,19 @@ export function Developers({
 
     setIsPublished((prev) => !prev);
     setIsLoading(true);
+    toast.promise(
+      new Promise(async (resolve) => {
+        await updateScoreStatusesAction(scoreStatuses);
+        resolve(true);
+      }),
+      {
+        loading: "Updating publish status...",
+        success: "Publish status updated successfully!",
+        error: "Failed to update publish status.",
+      }
+    );
 
-    try {
-      await updateScoreStatusesAction(scoreStatuses);
-    } catch (error) {
-      setIsPublished((prev) => !prev);
-      toast({
-        title: "Error",
-        description: "Failed to update publish status",
-        variant: "destructive",
-      });
-      console.error("Failed to update publish status", error);
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(false);
   };
 
   return (

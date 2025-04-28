@@ -42,7 +42,7 @@ export function DeleteAssignmentButton({ assignmentId, name }: Props) {
       >
         <Button
           variant="ghost"
-          className="hover:text-destructive"
+          className="hover:text-destructive curosor-pointer"
           aria-label="Delete"
         >
           <TrashIcon size={18} />
