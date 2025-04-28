@@ -3,7 +3,7 @@ import "./globals.css";
 import { Roboto } from "next/font/google";
 import { Header } from "@/components/navbar";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 import { Footer } from "@/components/footer";
 import { Suspense } from "react";
 import Loading from "./loading";
@@ -30,7 +30,11 @@ export default function RootLayout({
               {" "}
               <Suspense fallback={<Loading />}>{children}</Suspense>
             </main>
-            <Toaster />
+            <Toaster
+              position="bottom-right"
+              reverseOrder={false}
+            />
+
             <Footer />
           </div>
         </body>
