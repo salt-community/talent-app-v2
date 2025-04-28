@@ -56,7 +56,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
   const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
 
 
-  const handleAddFix = async () => {
+  const handleAddFix = () => {
 
     let dueDate: Date | null = null;
     if (datetime.date) {
@@ -70,12 +70,11 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
     if (!assignmentScoreId) {
       return;
     }
-    const tempId = crypto.randomUUID();
-    startTransition(() => {
+    startTransition(async () => {
       setOptimisticFixes({
         type: "add",
         newFix: {
-          id: tempId,
+          id: "",
           description,
           isCompleted: false,
           dueDate: dueDate,
@@ -86,8 +85,9 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
       });
     });
 
+    setDescription("");
 
-    toast.promise(
+    return toast.promise(
       new Promise(async (resolve) => {
         await addFixToAssignmentScoreAction({ assignmentScoreId, description, dueDate });
         resolve(true);
@@ -98,13 +98,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
         error: "Could not add the new fix",
       }
     )
-    startTransition(() => {
-      setOptimisticFixes({
-        type: "delete",
-        id: tempId,
-      });
-    });
-    setDescription("");
   };
 
   const handleStatusChange = (id: string, currentStatus: boolean) => {
@@ -117,7 +110,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
     });
     return toast.promise(
       new Promise(async (resolve) => {
-
         await updateFixStatusByIdAction(id, !currentStatus);
         resolve(true);
       }),
