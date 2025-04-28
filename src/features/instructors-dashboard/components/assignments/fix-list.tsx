@@ -112,7 +112,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
       return newSet;
     });
 
-    setTimeout(() => {
       startTransition(async () => {
         setOptimisticFixes({
           type: "delete",
@@ -122,7 +121,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
 
 
       });
-    }, 1000);
   };
 
   return (
