@@ -13,26 +13,18 @@ export function PrivateNotes({
 }: PrivateNotesProps) {
   const [content, setContent] = useState(initialContent);
   const [isSaving, setIsSaving] = useState(false);
-  const [saveStatus, setSaveStatus] = useState<{
-    success: boolean;
-    message: string;
-  } | null>(null);
+
 
   const handleSave = async () => {
     if (!assignmentScoreId) return;
 
     setIsSaving(true);
-    setSaveStatus(null);
 
     await addPrivateNoteToAssignmentScoreAction({
       assignmentScoreId,
       note: content,
     });
 
-    setSaveStatus({
-      success: true,
-      message: "Private note saved successfully!",
-    });
 
     setIsSaving(false);
   };
@@ -44,21 +36,9 @@ export function PrivateNotes({
         <p className="text-gray-500">Your private notes for this assignment</p>
       </div>
 
-      {saveStatus && (
-        <div
-          className={`mb-4 p-2 rounded text-xs ${
-            saveStatus.success
-              ? "bg-green-100 text-green-800"
-              : "bg-red-100 text-red-800"
-          }`}
-        >
-          {saveStatus.message}
-        </div>
-      )}
-
       <div className="mb-6">
         <Textarea
-          className="w-full min-h-[300px] p-4 border border-gray-200 rounded-lg"
+          className="w-full min-h-[200px] p-4 border border-gray-200 rounded-lg"
           placeholder="Write your private notes here..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
