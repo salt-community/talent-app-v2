@@ -10,6 +10,7 @@ import {
 } from "../../action";
 import { FixLists } from "../../types";
 import { OptionMenu } from "./option-menu";
+import toast from "react-hot-toast";
 
 type FixesProps = {
   fixes: FixLists[];
@@ -17,7 +18,6 @@ type FixesProps = {
 };
 
 export function FixList({ fixes, assignmentScoreId }: FixesProps) {
-  const { toast } = useToast();
   const [datetime, setDatetime] = useState<{ date?: Date; time: string }>({
     date: undefined,
     time: "",
@@ -58,23 +58,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
 
 
   const handleAddFix = async () => {
-    if (!assignmentScoreId) {
-      toast({
-        title: "Error",
-        description: "Cannot add fix: No assignment score selected",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!description) {
-      toast({
-        title: "Error",
-        description: "Please provide a description",
-        variant: "destructive",
-      });
-      return;
-    }
 
     let dueDate: Date | null = null;
     if (datetime.date) {
@@ -85,68 +68,39 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
         dueDate.setMinutes(parseInt(minutes || "0", 10));
       }
     }
-    startTransition(async () => {
-      try {
-        await addFixToAssignmentScoreAction({
-          assignmentScoreId,
-          description,
-          dueDate,
-        });
+    if (!assignmentScoreId) {
+      return;
+    }
 
-      } catch (error) {
-        console.error(error);
-        toast({
-          title: "Error",
-          description: "Something went wrong while adding the fix request",
+    return toast.promise(
+      new Promise(async (resolve) => {
+        startTransition(async () => {
+          await addFixToAssignmentScoreAction({ assignmentScoreId, description, dueDate });
+          resolve(true);
         });
+      }),
+      {
+        loading: "Adding...",
+        success: "New fix added",
+        error: "Could not add the new fix",
       }
+    ).then(() => {
+      setDescription("");
+      setDatetime({ date: undefined, time: "" });
     });
-
-    setDescription("");
-    setDatetime({ date: undefined, time: "" });
   };
 
   const handleStatusChange = (id: string, currentStatus: boolean) => {
     startTransition(async () => {
-      try {
-        setOptimisticFixes({
-          type: "update",
-          id,
-          newStatus: !currentStatus,
-        });
+      setOptimisticFixes({
+        type: "update",
+        id,
+        newStatus: !currentStatus,
+      });
 
-        const result = await updateFixStatusByIdAction(id, !currentStatus);
+      const result = await updateFixStatusByIdAction(id, !currentStatus);
 
-        if (!result.success) {
-          setOptimisticFixes({
-            type: "update",
-            id,
-            newStatus: currentStatus,
-          });
 
-          toast({
-            title: "Error",
-            description: String(result.error),
-          });
-        } else {
-          toast({
-            title: "Success",
-            description: `Fix item status changed to ${!currentStatus ? "completed" : "pending"}`,
-          });
-        }
-      } catch (error) {
-        console.error(error);
-        setOptimisticFixes({
-          type: "update",
-          id,
-          newStatus: currentStatus,
-        });
-
-        toast({
-          title: "Error",
-          description: "An unexpected error occurred",
-        });
-      }
     });
   };
 
@@ -160,38 +114,15 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
 
     setTimeout(() => {
       startTransition(async () => {
-        try {
-          setOptimisticFixes({
-            type: "delete",
-            id,
-          });
-          const result = await deleteFixItemByIdAction(id);
-          if (!result.success) {
-            toast({
-              title: "Error",
-              description: String(result.error),
-            });
-          }
-        } catch (error) {
-          console.error(error);
-          toast({
-            title: "Error",
-            description: "An unexpected error occurred",
-          });
-        } finally {
-          setDeletingIds(prev => {
-            const newSet = new Set(prev);
-            newSet.delete(id);
-            return newSet;
-          });
-        }
-        toast({
-          title: "Success",
-          description: "Fix item deleted successfully",
+        setOptimisticFixes({
+          type: "delete",
+          id,
         });
-      });
-    }, 500);
+        const result = await deleteFixItemByIdAction(id);
 
+
+      });
+    }, 1000);
   };
 
   return (
