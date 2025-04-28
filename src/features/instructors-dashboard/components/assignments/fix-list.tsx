@@ -90,16 +90,17 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
   };
 
   const handleStatusChange = (id: string, currentStatus: boolean) => {
+    startTransition(async () => {
+      setOptimisticFixes({
+        type: "update",
+        id,
+        newStatus: !currentStatus,
+      });
+    });
     return toast.promise(
       new Promise(async (resolve) => {
-        startTransition(async () => {
-          setOptimisticFixes({
-            type: "update",
-            id,
-            newStatus: !currentStatus,
-          });
-          await updateFixStatusByIdAction(id, !currentStatus);
-        });
+
+        await updateFixStatusByIdAction(id, !currentStatus);
         resolve(true);
       }),
       {
