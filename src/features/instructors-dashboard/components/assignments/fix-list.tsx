@@ -10,7 +10,6 @@ import {
 import { FixLists } from "../../types";
 import { OptionMenu } from "./option-menu";
 import toast from "react-hot-toast";
-import { set } from "react-hook-form";
 
 type FixesProps = {
   fixes: FixLists[];
@@ -141,14 +140,16 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
       newSet.add(id);
       return newSet;
     });
-    return toast.promise(new Promise((resolve) => {
-      startTransition(async () => {
-        setOptimisticFixes({
-          type: "delete",
-          id,
-        });
-        await deleteFixItemByIdAction(id);
+
+    startTransition(async () => {
+      setOptimisticFixes({
+        type: "delete",
+        id,
       });
+    });
+
+    return toast.promise(new Promise(async (resolve) => {
+      await deleteFixItemByIdAction(id);
       resolve(true)
     }),
       {
