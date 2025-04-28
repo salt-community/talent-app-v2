@@ -89,13 +89,8 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
 
     toast.promise(
       new Promise(async (resolve) => {
-        const result = await addFixToAssignmentScoreAction({ assignmentScoreId, description, dueDate });
-        console.log({ result: result })
-        if (result.success) {
-          resolve(true);
-        } else {
-          throw new Error("Failed to add fix");
-        }
+        await addFixToAssignmentScoreAction({ assignmentScoreId, description, dueDate });
+        resolve(true);
       }),
       {
         loading: "Adding...",
@@ -109,7 +104,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
         id: tempId,
       });
     });
-
+    setDescription("");
   };
 
   const handleStatusChange = (id: string, currentStatus: boolean) => {
@@ -160,9 +155,9 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
   };
 
   return (
-    <div className="container mx-auto p-6 ">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Fix List</h1>
+    <div className="container mx-auto p-6">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold" > Fix List</h1 >
         <div className="flex items-center">
           <CalendarForm value={datetime} onChange={setDatetime} />
           <Button
@@ -174,7 +169,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
             Add New Fix
           </Button>
         </div>
-      </div>
+      </div >
       <div className="mb-2">
         <Textarea
           placeholder="Describe the fix request..."
@@ -182,25 +177,27 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-      {datetime.date && (
-        <div className="mb-8 text-sm text-gray-600 italic ml-1">
-          Due:{" "}
-          {datetime.date?.toLocaleDateString("en-SE", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-          {datetime.time && <span className="ml-1">at {datetime.time}</span>}
-        </div>
-      )}
-      <div className="space-y-4 flex flex-col overflow-hidden ">
+      {
+        datetime.date && (
+          <div className="mb-8 text-sm text-gray-600 italic ml-1">
+            Due:{" "}
+            {datetime.date?.toLocaleDateString("en-SE", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+            {datetime.time && <span className="ml-1">at {datetime.time}</span>}
+          </div>
+        )
+      }
+      <div className="space-y-4 flex flex-col overflow-hidden">
         {optimisticFixes.length > 0 ? (
           optimisticFixes.sort((a, b) => Number(a.createdAt) - Number(b.createdAt))
             .map((item) => (
               <div
                 key={item.id}
-                className={`border border-gray-200 rounded-lg p-4 relative 
+                className={`border border-gray-200 rounded-lg p-4 relative m-1
                   ${deletingIds.has(item.id)
                     ? "motion-translate-x-out-100 motion-duration-[1s] motion-ease-spring-smooth "
                     : "motion-translate-y-in-100 motion-duration-[1s] motion-ease-spring-smooth"}`}
@@ -240,6 +237,6 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 }

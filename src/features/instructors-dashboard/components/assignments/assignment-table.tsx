@@ -44,9 +44,8 @@ export function AssignmentTable({
   return (
     <div
       className="flex flex-row gap-2"
-      style={{ height: "calc(100vh - 200px)" }}
     >
-      <div className="w-4/5 flex flex-col">
+      <div className="w-4/5 flex flex-col ">
         <div className="mb-2">
           <ScoringTab
             activeTab={activeTab}
@@ -56,8 +55,7 @@ export function AssignmentTable({
         </div>
 
         <div
-          className="border border-gray-200 rounded-lg p-4 flex-grow overflow-y-auto"
-          style={{ height: "calc(100vh - 300px)" }}
+          className="border border-gray-200 rounded-lg p-4 flex-grow overflow-hidden"
         >
           {selectedDeveloper && activeTab === "scoring" && (
             <div className="p-6">
