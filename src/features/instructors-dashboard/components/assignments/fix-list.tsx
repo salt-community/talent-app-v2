@@ -195,7 +195,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 ">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Fix List</h1>
         <div className="flex items-center">
@@ -229,7 +229,7 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           {datetime.time && <span className="ml-1">at {datetime.time}</span>}
         </div>
       )}
-      <div className="space-y-4 flex flex-col overflow-x-hidden">
+      <div className="space-y-4 flex flex-col overflow-hidden ">
         {optimisticFixes.length > 0 ? (
           optimisticFixes.sort((a, b) => Number(a.createdAt) - Number(b.createdAt))
             .map((item) => (
