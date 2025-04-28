@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { updateScoreAction } from "../../action";
 import { AssignmentScore } from "../../types";
 import toast from 'react-hot-toast';
@@ -24,11 +24,14 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
  const [isSaving, setIsSaving] = useState(false);
  const [isManualSave, setIsManualSave] = useState(false);
  
+ 
+ const lastSaveTimestampRef = useRef<number>(Date.now());
+ 
  const [lastSavedScores, setLastSavedScores] = useState(
   structuredClone(initialScores)
  );
  
- const debouncedScoreValues = useDebounce(scoreValues, 10000);
+ const debouncedScoreValues = useDebounce(scoreValues, 5000);
 
  const handleScoreChange = (categoryId: string, value: string) => {
   setScoreValues((prev) =>
@@ -79,6 +82,8 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
     
     if (result.success) {
       setLastSavedScores(structuredClone(scoreValues));
+      
+      lastSaveTimestampRef.current = Date.now();
     }
   } catch (error) {
     console.error("Save error:", error);
@@ -96,6 +101,14 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
     JSON.stringify(lastSavedScores);
 
    if (!hasUnsavedChanges) return;
+   
+   
+   
+   const now = Date.now();
+   const timeSinceLastSave = now - lastSaveTimestampRef.current;
+   if (timeSinceLastSave < 6000) {
+     return; 
+   }
 
    try {
     setIsSaving(true);
@@ -120,6 +133,8 @@ export default function useAutoSaveScores(initialScores: AssignmentScore[]) {
 
     if (result.success) {
      setLastSavedScores(structuredClone(debouncedScoreValues));
+     
+     lastSaveTimestampRef.current = Date.now();
     } 
    } catch (error) {
     console.error("Auto-save error:", error);

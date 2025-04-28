@@ -104,12 +104,12 @@ export function Score({ scores, developer }: ScoreProps) {
         ))}
         <div className="flex justify-between items-center mt-4">
           <div className="flex flex-row">
-            {hasUnsavedChanges && !isSaving && (
+            {hasUnsavedChanges && !isSaving && !isManualSave && (
               <span className="text-xs text-amber-600 flex items-center">
                 Unsaved changes
               </span>
             )}
-            {isSaving && (
+            {isSaving && !isManualSave && (
               <span className="text-xs text-blue-600 flex items-center">
                 Saving...
               </span>
