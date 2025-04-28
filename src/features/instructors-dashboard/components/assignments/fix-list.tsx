@@ -1,6 +1,5 @@
 import { Button, Textarea } from "@/components";
 import { CalendarForm } from "@/components/ui/calendar-form";
-import { useToast } from "@/hooks/use-toast";
 import { Calendar1, Plus } from "lucide-react";
 import { useOptimistic, useState, useTransition } from "react";
 import {
@@ -11,7 +10,6 @@ import {
 import { FixLists } from "../../types";
 import { OptionMenu } from "./option-menu";
 import toast from "react-hot-toast";
-import { resolve } from "path";
 
 type FixesProps = {
   fixes: FixLists[];

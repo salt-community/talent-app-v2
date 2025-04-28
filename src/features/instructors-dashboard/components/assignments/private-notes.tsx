@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button, Textarea } from "@/components";
 import { addPrivateNoteToAssignmentScoreAction } from "../../action";
+import toast from "react-hot-toast";
+import { resolve } from "path";
 
 type PrivateNotesProps = {
   assignmentScoreId?: string | null;
@@ -20,13 +22,17 @@ export function PrivateNotes({
 
     setIsSaving(true);
 
-    await addPrivateNoteToAssignmentScoreAction({
-      assignmentScoreId,
-      note: content,
-    });
-
-
-    setIsSaving(false);
+    return toast.promise(new Promise(async (resolve) => {
+      await addPrivateNoteToAssignmentScoreAction({
+        assignmentScoreId,
+        note: content,
+      })
+      resolve(true)
+    }), {
+      loading: "Saving...",
+      success: "Notes Saved.",
+      error: "Failed to save private notes."
+    })
   };
 
   return (
