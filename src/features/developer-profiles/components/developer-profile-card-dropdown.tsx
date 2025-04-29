@@ -9,11 +9,11 @@ import {
 } from "@/components/";
 import { Ellipsis } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
+import toast from "react-hot-toast";
 import {
   copyDeveloperProfileAction,
   deleteDeveloperProfileAction,
 } from "../actions";
-import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   developerProfileId: string;
@@ -25,22 +25,34 @@ export default function DeveloperProfileCardDropdown({
   setIsTitleEditable,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const { toast } = useToast();
 
   async function handleCopy() {
-    await copyDeveloperProfileAction(developerProfileId);
-    toast({
-      title: "Profile copied",
-      description: "The developer profile has been successfully copied",
-    });
+    toast.promise(
+      new Promise(async (resolve) => {
+        await copyDeveloperProfileAction(developerProfileId);
+        resolve(true);
+      }),
+      {
+        loading: "Copying profile...",
+        success: "Profile copied successfully!",
+        error: "Profile could not be copied! Please try again.",
+      }
+    );
+
     setIsOpen(false);
   }
   async function handleDelete() {
-    await deleteDeveloperProfileAction(developerProfileId);
-    toast({
-      title: "Profile deleted",
-      description: "The developer profile has been successfully deleted",
-    });
+    toast.promise(
+      new Promise(async (resolve) => {
+        await deleteDeveloperProfileAction(developerProfileId);
+        resolve(true);
+      }),
+      {
+        loading: "Deleting profile...",
+        success: "Profile deleted successfully!",
+        error: "Profile could not be deleted! Please try again.",
+      }
+    );
     setIsOpen(false);
   }
   function handleEdit() {
@@ -54,10 +66,12 @@ export default function DeveloperProfileCardDropdown({
         <DropdownMenuTrigger asChild>
           <div className="flex">
             <Button
+
               variant="ghost"
               size="icon"
-              className="h-8 w-9 rounded-full"
+              className="h-8 w-9 rounded-full cursor-pointer"
               title="Options"
+
               onClick={(event) => {
                 event.preventDefault();
               }}
@@ -72,6 +86,7 @@ export default function DeveloperProfileCardDropdown({
               event.preventDefault();
               handleEdit();
             }}
+            className="cursor-pointer"
           >
             Edit Title
           </DropdownMenuItem>
@@ -80,6 +95,7 @@ export default function DeveloperProfileCardDropdown({
               event.preventDefault();
               await handleCopy();
             }}
+            className="cursor-pointer"
           >
             Copy
           </DropdownMenuItem>
@@ -88,6 +104,7 @@ export default function DeveloperProfileCardDropdown({
               event.preventDefault();
               await handleDelete();
             }}
+            className="cursor-pointer"
           >
             Delete
           </DropdownMenuItem>
