@@ -1,8 +1,10 @@
 "use client";
 import { Button, H2 } from "@/components";
+
 import { BackgroundAvatar } from "./avatar";
 import { DeveloperProfile } from "../../types";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { CardEditableField } from "./card-editable-field";
 import { Check } from "lucide-react";
 import { updateProfileCard } from "../../actions";
@@ -17,12 +19,24 @@ export function InlineEditableCard({ developerProfile }: Props) {
     title: developerProfile.title || "",
   });
 
+  //remove name from this object, it is not needed
   const handleOnSave = async () => {
-    await updateProfileCard({
-      id: draftDeveloperProfile.id,
-      title: draftDeveloperProfile.title,
-      name: draftDeveloperProfile.name,
-    });
+    toast.promise(
+      new Promise(async (resolve) => {
+        await updateProfileCard({
+          id: draftDeveloperProfile.id,
+          title: draftDeveloperProfile.title,
+          name: draftDeveloperProfile.name,
+        });
+        resolve(true);
+      }),
+      {
+        loading: "Saving profile...",
+        success: "Profile saved successfully!",
+        error: "Failed to save profile. Please try again.",
+      }
+    )
+
     setDraftDeveloperProfile(draftDeveloperProfile);
     setIsEditable(false);
   };
@@ -59,7 +73,7 @@ export function InlineEditableCard({ developerProfile }: Props) {
         <Button
           variant="ghost"
           size="icon"
-          className="h-8 w-9 rounded-full"
+          className="h-8 w-9 rounded-full cursor-pointer"
           title="Save"
           onClick={(event) => {
             event.preventDefault();
