@@ -29,9 +29,10 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
 
   const printRef = useRef<HTMLDivElement>(null);
 
+
   const handleValidation = (cvInfo: unknown) => {
     const result = CvInfoSchema.safeParse(cvInfo);
-    
+
     if (!result.success) {
       console.error("Validation failed", result.error.format());
       return;
@@ -44,6 +45,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     setCvInfo((prev) => ({ ...prev, ...data }));
   };
 
+  // Zod validation needed here, remove roast and replace with zod validation, remove all toast also plz
   const handleOnSave = async (cvInfo: CvInfo) => {
     setIsLoading(true);
     const hasEmptyFields = [...cvInfo.jobs, ...cvInfo.educations].some(
@@ -63,7 +65,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
       setIsLoading(false);
       return;
     }
-    
+
     const validCvInfo = handleValidation(cvInfo);
     if(!validCvInfo) {
       setIsLoading(false);
