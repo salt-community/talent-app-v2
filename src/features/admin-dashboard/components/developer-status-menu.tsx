@@ -7,12 +7,12 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/";
-import { useToast } from "@/hooks/use-toast";
 import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
 import { deleteDeveloperProfileAction, updateStatusAction } from "../action";
 import { DeleteDialog } from "./delete-button";
 import { DeveloperStatus } from "./developer-status";
+import toast from "react-hot-toast";
 
 type Props = {
   id: string;
@@ -21,22 +21,29 @@ type Props = {
 
 export function DeveloperStatusMenu({ id, developerStatus }: Props) {
   const [status, setStatus] = useState<string>(developerStatus);
-  const { toast } = useToast();
 
   async function onDelete() {
-    await deleteDeveloperProfileAction(id);
-    toast({
-      title: "Profile deleted",
-      description: "The developer profile has been successfully deleted",
+    toast.promise(new Promise(async (resolve) => {
+      await deleteDeveloperProfileAction(id);
+      resolve(true);
+    }
+    ), {
+      loading: "Deleting profile...",
+      success: "Profile deleted successfully!",
+      error: "Failed to delete profile. Please try again.",
     });
   }
   async function onStatusChange(newStatus: string) {
-    await updateStatusAction(id, newStatus);
-    setStatus(newStatus);
-    toast({
-      title: "Status updated",
-      description: "The developer profile status has been successfully updated",
+    toast.promise(new Promise(async (resolve) => {
+      await updateStatusAction(id, newStatus);
+      resolve(true);
+    }
+    ), {
+      loading: "Updating status...",
+      success: "Status updated successfully!",
+      error: "Failed to update status. Please try again.",
     });
+    setStatus(newStatus);
   }
 
   return (
@@ -55,13 +62,13 @@ export function DeveloperStatusMenu({ id, developerStatus }: Props) {
             value={status}
             onValueChange={(value) => onStatusChange(value as string)}
           >
-            <DropdownMenuRadioItem value="highlighted">
+            <DropdownMenuRadioItem value="highlighted" className="cursor-pointer">
               Highlighted
             </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="published">
+            <DropdownMenuRadioItem value="published" className="cursor-pointer">
               Published
             </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="unpublished">
+            <DropdownMenuRadioItem value="unpublished" className="cursor-pointer">
               Unpublished
             </DropdownMenuRadioItem>
             <DeleteDialog onConfirm={onDelete} />
