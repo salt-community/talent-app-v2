@@ -3,7 +3,7 @@ import { TrashIcon } from "lucide-react";
 import React from "react";
 import { deleteCohortAndCohortIdentityAction } from "../../action";
 import { AlertDialogDemo, Button } from "@/components";
-import { useToast } from "@/hooks/use-toast";
+import toast from "react-hot-toast";
 
 type Props = {
   cohortId: string;
@@ -11,16 +11,16 @@ type Props = {
 };
 
 export function DeleteCohortButton({ cohortId, name }: Props) {
-  const { toast } = useToast();
+
+
   async function handleDelete() {
-    await deleteCohortAndCohortIdentityAction(cohortId);
-    toast({
-      title: "Cohort deleted",
-      description: (
-        <>
-          Cohort <strong>{name}</strong> has been deleted
-        </>
-      ),
+    toast.promise(new Promise(async (resolve) => {
+      await deleteCohortAndCohortIdentityAction(cohortId);
+      resolve(true);
+    }), {
+      loading: "Deleting cohort...",
+      success: `Cohort ${name} deleted successfully!`,
+      error: <b>Could not delete cohort. Please try again.</b>,
     });
   }
 
