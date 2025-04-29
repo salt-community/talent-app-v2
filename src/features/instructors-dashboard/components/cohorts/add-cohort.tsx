@@ -19,9 +19,9 @@ import {
   Textarea
 } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { addCohortAction } from "../../action";
 import toast from "react-hot-toast";
