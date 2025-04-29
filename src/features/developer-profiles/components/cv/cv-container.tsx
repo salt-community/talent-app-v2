@@ -11,6 +11,7 @@ import { CvInfo } from "../../types";
 import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
 import { CvMainContent } from "./cv-main-content";
+import { CvInfoSchema, CVInfoValidation } from "../../validation";
 
 type Props = {
   defaultCvInfo: CvInfo;
@@ -27,6 +28,17 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const printRef = useRef<HTMLDivElement>(null);
+
+  const handleValidation = (cvInfo: unknown) => {
+    const result = CvInfoSchema.safeParse(cvInfo);
+    
+    if (!result.success) {
+      console.error("Validation failed", result.error.format());
+      return;
+    }
+    const validCV: CVInfoValidation = result.data;
+    return validCV;
+  }
 
   const handleOnChange = (data: Partial<CvInfo>) => {
     setCvInfo((prev) => ({ ...prev, ...data }));
@@ -51,7 +63,16 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
       setIsLoading(false);
       return;
     }
-    await updateCvAction(cvInfo);
+    console.log(cvInfo);
+    const validCvInfo = handleValidation(cvInfo);
+    console.log("___________");
+    console.log(validCvInfo);
+    if(!validCvInfo) {
+      setIsLoading(false);
+      return;
+    }
+
+    await updateCvAction(validCvInfo);
     toast({
       title: "Success",
       description: "CV updated successfully",
