@@ -18,45 +18,39 @@ import {
   Input,
   Textarea
 } from "@/components";
-import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Plus } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import * as z from "zod";
 import { addCohortAction } from "../../action";
+import toast from "react-hot-toast";
 import { addCohortFormSchema } from "../../validation";
 
 export function AddCohortForm() {
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof addCohortFormSchema>>({
     resolver: zodResolver(addCohortFormSchema),
   });
 
   const onSubmit = async (values: z.infer<typeof addCohortFormSchema>) => {
-    try {
-      setLoading(true);
-      await addCohortAction({
-        name: values.name,
-        description: values.description ? values.description : "",
-      });
-      toast({
-        title: "Cohort added",
-        description: "Cohort added successfully",
-      });
-      form.reset();
-      setOpen(false);
-    } catch (error) {
-      toast({
-        title: "Something went wrong",
-        description: error instanceof Error ? error.message : String(error),
-      });
-    } finally {
-      setLoading(false);
-    }
+    toast.promise(
+      new Promise(async (resolve) => {
+        await addCohortAction({
+          name: values.name,
+          description: values.description ? values.description : "",
+        });
+        resolve(true);
+      }),
+      {
+        loading: "Creating cohort...",
+        success: <b>Cohort created successfully!</b>,
+        error: <b>Could not create cohort. Please try again.</b>,
+      }
+    );
+    setOpen(false);
+    form.reset();
   };
 
   return (
@@ -117,11 +111,9 @@ export function AddCohortForm() {
             <DialogFooter>
               <Button
                 type="submit"
-                disabled={loading}
                 className="w-full mt-2 cursor-pointer"
               >
-                {loading ? <Loader2 className="animate-spin" /> : undefined}
-                {loading ? "Submitting, please wait..." : "Submit"}
+                Add cohort
               </Button>
             </DialogFooter>
           </form>
