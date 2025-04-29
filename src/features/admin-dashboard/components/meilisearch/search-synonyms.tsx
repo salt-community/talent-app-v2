@@ -5,13 +5,11 @@ import { SynonymDialog } from "./synonym-dialog";
 import { Button } from "@/components";
 import { Synonym } from "../../types";
 import { Pencil, Trash } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-
+import toast from "react-hot-toast";
 type Props = { synonyms: [string, string[]][] };
 
 export function SearchSynonyms({ synonyms }: Props) {
   const [currentSynonyms, setCurrentSynonyms] = useState(synonyms);
-  const { toast } = useToast();
 
   return (
     <div className="pb-6">
@@ -45,10 +43,7 @@ export function SearchSynonyms({ synonyms }: Props) {
           <SynonymDialog
             onSynonymChange={(synonym) => {
               if (currentSynonyms.some((s) => s[0] === synonym[0])) {
-                toast({
-                  title: "Synonym already exists",
-                  description: "The synonym already exists",
-                });
+                toast.error("Synonym already exists");
               } else setCurrentSynonyms((prev) => [...prev, synonym]);
             }}
             title={"Add synonym"}
@@ -60,8 +55,8 @@ export function SearchSynonyms({ synonyms }: Props) {
         </div>
         {JSON.stringify(synonyms.toSorted()) !==
           JSON.stringify(currentSynonyms.toSorted()) && (
-          <span>Please, update the synonyms</span>
-        )}
+            <span>Please, update the synonyms</span>
+          )}
       </div>
     </div>
   );
