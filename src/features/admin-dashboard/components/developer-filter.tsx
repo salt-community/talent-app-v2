@@ -22,7 +22,7 @@ export default function DevelopersFilter({
     <div className="flex items-center gap-4">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="flex">
+          <div className="flex cursor-pointer">
             <ListFilter />
             <p className="pl-2 text-gray-500 text-sm pt-1">Filter</p>
           </div>
