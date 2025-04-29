@@ -18,6 +18,8 @@ type Props = {
 };
 
 export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
+
+  //Zod validation needed here, remove roast and replace with zod validation
   const { toast } = useToast();
 
   const [isEditable, setIsEditable] = useState(false);

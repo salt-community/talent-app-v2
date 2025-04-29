@@ -40,7 +40,7 @@ export function CvLanguages({
         {languages.map((language) => (
           <li
             key={language.name}
-            className="text-paragraph text-sm flex items-center text-white"
+            className="text-paragraph text-sm flex items-center "
           >
             {language.name}
             {isEditable && (
