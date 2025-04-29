@@ -27,11 +27,12 @@ export default function DevelopersFilter({
             <p className="pl-2 text-gray-500 text-sm pt-1">Filter</p>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-40 ">
+        <DropdownMenuContent className="w-40 cursor-pointer">
           <FilterCheckbox
             value="highlighted"
             filterStatus={filterStatus}
             setFilterStatus={setFilterStatus}
+
           />
           <FilterCheckbox
             value="published"
