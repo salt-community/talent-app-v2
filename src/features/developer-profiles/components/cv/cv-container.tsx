@@ -63,10 +63,8 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
       setIsLoading(false);
       return;
     }
-    console.log(cvInfo);
+    
     const validCvInfo = handleValidation(cvInfo);
-    console.log("___________");
-    console.log(validCvInfo);
     if(!validCvInfo) {
       setIsLoading(false);
       return;
