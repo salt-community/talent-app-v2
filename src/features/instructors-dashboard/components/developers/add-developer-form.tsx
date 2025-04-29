@@ -34,7 +34,7 @@ export const AddDeveloperForm = ({ cohortId, developer, onSuccess }: Props) => {
       !selectedDevs.find((d) => d.id === dev.id)
   );
 
-  async function handleSubmit() {
+  async function handleAddIdentity() {
     try {
       setLoading(true);
       await addIdentitiesToCohortAction(
@@ -116,7 +116,7 @@ export const AddDeveloperForm = ({ cohortId, developer, onSuccess }: Props) => {
 
       <div className="mt-10">
         <Button
-          onClick={handleSubmit}
+          onClick={handleAddIdentity}
           className="w-full"
           disabled={selectedDevs.length === 0 && loading}
         >

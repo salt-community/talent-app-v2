@@ -2,33 +2,28 @@ import { TrashIcon } from "lucide-react";
 import React from "react";
 import { deleteIdentityFromCohortAction } from "../../action";
 import { AlertDialogDemo, Button } from "@/components";
-import { useToast } from "@/hooks/use-toast";
-
+import toast from "react-hot-toast"
 type Props = {
   identityId: string;
   name: string;
 };
 
 export function DeleteDeveloperButton({ identityId, name }: Props) {
-  const { toast } = useToast();
 
   async function handleDelete() {
-    const result = await deleteIdentityFromCohortAction(identityId);
-    if (result.success) {
-      toast({
-        title: "Developer deleted",
-        description: (
-          <>
-            <strong>{name}</strong> has been removed from the cohort
-          </>
-        ),
-      });
-    } else {
-      toast({
-        title: "Error",
-        description: ` ${result.error || "Unknown error"}`,
-      });
+    toast.promise(new Promise(async (resolve, reject) => {
+      const result = await deleteIdentityFromCohortAction(identityId);
+      if (result.success) {
+        resolve(true);
+      } else {
+        reject(new Error(result.error));
+      }
     }
+    ), {
+      loading: "Deleting developer...",
+      success: `${name} has been deleted successfully!`,
+      error: `${name} could not be deleted! Please try again.`,
+    });
   }
 
   return (
