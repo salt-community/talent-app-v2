@@ -7,9 +7,9 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/";
-import { useToast } from "@/hooks/use-toast";
 import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 import { deleteUserAction, updateRoleAction } from "../action";
 import { DeleteDialog } from "./delete-button";
@@ -23,23 +23,29 @@ type Props = {
 
 export function IdentityStatusMenu({ id, role }: Props) {
   const [IdentityRole, setRole] = useState<string>(role);
-  const { toast } = useToast();
 
   async function onDelete() {
-    await deleteUserAction(id);
-    toast({
-      title: "Profile deleted",
-      description: "The user profile has been successfully deleted",
+    toast.promise(new Promise(async (resolve) => {
+      await deleteUserAction(id);
+      resolve(true);
+    }), {
+      loading: "Deleting user...",
+      success: "User deleted successfully",
+      error: "Error deleting user",
     });
   }
 
   async function onStatusChange(newRole: string) {
-    await updateRoleAction(id, newRole);
+    toast.promise(new Promise(async (resolve) => {
+      await updateRoleAction(id, newRole);
+      resolve(true);
+    }),
+      {
+        loading: "Updating user role...",
+        success: "User role updated successfully",
+        error: "Error updating user role",
+      });
     setRole(newRole);
-    toast({
-      title: "Role updated",
-      description: "The role has been successfully updated",
-    });
   }
 
   return (
@@ -57,11 +63,11 @@ export function IdentityStatusMenu({ id, role }: Props) {
             value={IdentityRole}
             onValueChange={(value) => onStatusChange(value as string)}
           >
-            <DropdownMenuRadioItem value="admin">Admin</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="developer">
+            <DropdownMenuRadioItem value="admin" className="cursor-pointer">Admin</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="developer" className="cursor-pointer">
               Developer
             </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="core">Core</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="core" className="cursor-pointer">Core</DropdownMenuRadioItem>
             <DeleteDialog onConfirm={onDelete} />
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
