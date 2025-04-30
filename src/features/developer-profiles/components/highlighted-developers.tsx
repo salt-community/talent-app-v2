@@ -14,7 +14,7 @@ export async function HighlightedDevelopers() {
 
   return (
     <>
-      <ul className="px-4 pt-10 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:px-8">
+      <ul className="px-4 pt-10 mb-2 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:px-8">
         {highlightedDeveloperProfiles.map((profiles: DeveloperProfiles) => (
           <Link href={`/developers/${profiles.slug}`} key={profiles.id}>
             <Card
