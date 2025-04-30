@@ -1,11 +1,15 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Cohort } from "../../types";
-import { DeleteCohortButton } from "./delete-cohort-button";
+import dynamic from "next/dynamic";
 
 type Props = {
   cohorts: Cohort[];
 };
+
+const DeleteCohortButton = dynamic(() =>
+  import("./delete-cohort-button").then((mod) => mod.DeleteCohortButton)
+);
 
 export function CohortCard({ cohorts }: Props) {
   return (
