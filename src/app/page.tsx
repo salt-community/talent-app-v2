@@ -1,8 +1,6 @@
 import { HighlightedDevelopers } from "@/features/developer-profiles";
 import { Suspense } from "react";
 import SkeletonCard from "./loading";
-import DevelopersSkeleton from "./developers/loading";
-import CVSkeleton from "./developers/[slug]/loading";
 
 export default function Page() {
   return (
