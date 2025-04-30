@@ -6,6 +6,8 @@ export default function SkeletonHighlightedDevelopers() {
       <SkeletonCard />
       <SkeletonCard />
       <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
     </div>
   );
 }
