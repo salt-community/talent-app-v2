@@ -1,18 +1,21 @@
-import React from "react";
-import StudentCard from "./developer-card";
 import { AddDeveloperButton } from "./open-developer-form-button";
 import { instructorService } from "../../instance";
 import { Separator } from "@/components";
+import dynamic from "next/dynamic";
 
 type Props = {
   name: string;
 };
 
+const DeveloperCard = dynamic(() => import("./developer-card"), {
+  ssr: true,
+});
+
 export async function Developers({ name }: Props) {
   const cohortData =
     await instructorService.getCohortDevelopersDataByName(name);
 
-  if (!cohortData) return;
+  if (!cohortData) return <div>No data found</div>;
 
   const { cohort, developers, unsignedDevelopers } = cohortData;
 
@@ -26,7 +29,7 @@ export async function Developers({ name }: Props) {
         />
       </div>
       <Separator />
-      <StudentCard developer={developers} />
+      <DeveloperCard developer={developers} />
     </div>
   );
 }
