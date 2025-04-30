@@ -1,5 +1,4 @@
 import { HighlightedDevelopers } from "@/features/developer-profiles";
-import { SUSE } from "next/font/google";
 import { Suspense } from "react";
 import Loading from "./loading";
 
@@ -13,8 +12,10 @@ export default function Page() {
         Each developer has a unique story, skill set, and impact on the tech
         world. Meet a standout talent and explore their journey.
       </h3>
-      <Suspense fallback={<Loading />}></Suspense>
+      <Suspense fallback={<Loading />}>
       <HighlightedDevelopers />
+      </Suspense>
     </div>
+
   );
 }

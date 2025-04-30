@@ -28,7 +28,7 @@ export default function RootLayout({
             <Header />
             <main className="grow">
               {" "}
-              <Suspense fallback={<Loading />}>{children}</Suspense>
+             {children}
             </main>
             <Toaster
               position="bottom-right"
