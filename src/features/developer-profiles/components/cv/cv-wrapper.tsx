@@ -12,7 +12,7 @@ const CvContainer = dynamic(
       (mod) => ({ default: mod.CvContainer })
     ),
   {
-    loading: () => <div className="cv-skeleton">Loading CV...</div>,
+    loading: () => <div>Loading CV...</div>,
   }
 );
 
