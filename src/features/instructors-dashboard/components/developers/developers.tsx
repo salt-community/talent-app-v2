@@ -1,6 +1,6 @@
 import React from "react";
 import StudentCard from "./developer-card";
-import AddDeveloperButton from "./open-developer-form-button";
+import { AddDeveloperButton } from "./open-developer-form-button";
 import { instructorService } from "../../instance";
 import { Separator } from "@/components";
 
