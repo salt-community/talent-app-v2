@@ -4,4 +4,4 @@ export * from "./developer-profile-list";
 export * from "./developers";
 export * from "./backgrounds";
 export * from "./cv";
-export * from "./assignment-dashboard";
+export * from "./developer-assignments";

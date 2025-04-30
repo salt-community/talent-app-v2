@@ -30,7 +30,7 @@ export async function Header() {
       <div className="flex items-center gap-4 md:gap-6">
         <SignedOut>
           <div className="flex items-center">
-            <div className="border-b border-white hover:border-primary text-sm cursor-pointer">
+            <div className="border-b border-white hover:boarder-primary text-sm cursor-pointer">
               <SignInButton>
                 <span>Sign in</span>
               </SignInButton>
