@@ -10,7 +10,7 @@ type Props = {
   developers: Developer[];
 };
 
-export function DeveloperDashboard({ developers }: Props) {
+export function DeveloperNav({ developers }: Props) {
   const [filterStatus, setFilterStatus] = useState({
     highlighted: true,
     published: true,
