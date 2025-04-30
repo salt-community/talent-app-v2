@@ -9,7 +9,6 @@ import {
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Developer } from "../../types";
-import dynamic from "next/dynamic";
 import { AddDeveloperForm } from "./add-developer-form";
 
 type Props = {

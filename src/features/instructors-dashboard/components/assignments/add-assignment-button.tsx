@@ -8,7 +8,6 @@ import {
   Button,
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import dynamic from "next/dynamic";
 import { AddAssignmentForm } from "./add-assignment-form";
 
 type Props = {
