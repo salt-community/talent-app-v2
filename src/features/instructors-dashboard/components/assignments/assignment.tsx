@@ -1,7 +1,19 @@
 import React from "react";
 import { instructorService } from "../../instance";
 import { SubmitScoresButton } from "./submit-scores-button";
-import { AssignmentTable } from "./assignment-table";
+import dynamic from "next/dynamic";
+
+const AssignmentTable = dynamic(
+  () =>
+    import("./assignment-table").then((mod) => ({
+      default: mod.AssignmentTable,
+    })),
+  {
+    loading: () => (
+      <div className="assignment-skeleton p-4">Loading assignment data...</div>
+    ),
+  }
+);
 
 export async function AssignmentComponent({ slug }: { slug: string }) {
   const data = await instructorService.getAssignmentDataBySlug(slug);
