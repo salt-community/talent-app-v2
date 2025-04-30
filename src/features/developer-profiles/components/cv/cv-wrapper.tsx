@@ -1,10 +1,20 @@
 import { iamService } from "@/features/iam";
 import { developerProfilesService } from "../../instance";
-import { CvContainer } from "./cv-container";
+import dynamic from "next/dynamic";
 
 type CvWrapperProps = {
   slug: string;
 };
+
+const CvContainer = dynamic(
+  () =>
+    import("@/features/developer-profiles/components/cv/cv-container").then(
+      (mod) => ({ default: mod.CvContainer })
+    ),
+  {
+    loading: () => <div className="cv-skeleton">Loading CV...</div>,
+  }
+);
 
 export default async function CvWrapper({ slug }: CvWrapperProps) {
   const developerProfile =
