@@ -1,15 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import { CopyAssignmentButton } from "./copy-assignment-url-button";
-import { DeleteAssignmentButton } from "./delete-assignment-button";
 import EditAssignmentButton from "./edit-assignment-button";
 import { Assignment, Cohort } from "../../types";
+import dynamic from "next/dynamic";
 
 type Props = {
   assignment: Assignment;
   foundCohort: Cohort;
   cohortId: string;
 };
+
+const DeleteAssignmentButton = dynamic(() =>
+  import("./delete-assignment-button").then((mod) => mod.DeleteAssignmentButton)
+);
 
 export async function AssignmentListItem({ assignment, foundCohort }: Props) {
   return (

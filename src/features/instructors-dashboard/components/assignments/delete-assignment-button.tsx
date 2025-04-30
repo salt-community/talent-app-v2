@@ -2,8 +2,8 @@
 import { TrashIcon } from "lucide-react";
 import React from "react";
 import { AlertDialogDemo, Button } from "@/components";
-import { useToast } from "@/hooks/use-toast";
 import { deleteAssignmentByIdAction } from "../../action";
+import toast from "react-hot-toast";
 
 type Props = {
   assignmentId: string;
@@ -11,26 +11,25 @@ type Props = {
 };
 
 export function DeleteAssignmentButton({ assignmentId, name }: Props) {
-  const { toast } = useToast();
-
-  async function handleDelete() {
-    const result = await deleteAssignmentByIdAction(assignmentId);
-
-    if (result.success) {
-      toast({
-        title: "Assignment deleted",
-        description: (
-          <>
-            The assignment <strong>{name}</strong> has been deleted
-          </>
-        ),
-      });
-    } else {
-      toast({
-        title: "Error",
-        description: ` ${result.error || "Unknown error"}`,
-      });
-    }
+  function handleDelete() {
+    toast.promise(
+      (async () => {
+        const result = await deleteAssignmentByIdAction(assignmentId);
+        if (!result.success) {
+          throw new Error(result.error);
+        }
+        return true;
+      })(),
+      {
+        loading: "Deleting assignment...",
+        success: () => {
+          return `Assignment ${name} deleted successfully`;
+        },
+        error: (error) => {
+          return `${error.message}`;
+        },
+      }
+    );
   }
 
   return (

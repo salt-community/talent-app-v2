@@ -9,9 +9,7 @@ const AssignmentTable = dynamic(
       default: mod.AssignmentTable,
     })),
   {
-    loading: () => (
-      <div className="assignment-skeleton p-4">Loading assignment data...</div>
-    ),
+    loading: () => <div>Loading assignment data...</div>,
   }
 );
 

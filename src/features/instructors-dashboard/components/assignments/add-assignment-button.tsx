@@ -9,18 +9,11 @@ import {
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import dynamic from "next/dynamic";
+import { AddAssignmentForm } from "./add-assignment-form";
 
 type Props = {
   cohortId: string;
 };
-
-const AddAssignmentForm = dynamic(
-  () => import("./add-assignment-form").then((mod) => mod.AddAssignmentForm),
-  {
-    loading: () => <div className="p-4">Loading form...</div>,
-    ssr: false,
-  }
-);
 
 export default function AddAssignmentButton({ cohortId }: Props) {
   const [open, setOpen] = useState(false);

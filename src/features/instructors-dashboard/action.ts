@@ -95,20 +95,32 @@ export async function deleteAssignmentByIdAction(assignmentId: string) {
   } catch (error) {
     console.error("Error in deleteAssignmentByIdAction:", error);
 
-    if (
-      error instanceof Error &&
-      error.message.includes("violates foreign key constraint") &&
-      error.message.includes("assignment_scores")
-    ) {
-      return {
-        success: false,
-        error: "All scores must be deleted before removing this assignment.",
-      };
-    }
+    if (error instanceof Error) {
+      const errorMessage = error.message.toLowerCase();
 
+      if (errorMessage.includes("assignment_categories_assignment_id")) {
+        return {
+          success: false,
+          error:
+            "This assignment has categories attached to it. Please remove the categories first before deleting the assignment.",
+        };
+      }
+
+      if (
+        errorMessage.includes("violates foreign key constraint") &&
+        errorMessage.includes("assignment_scores")
+      ) {
+        return {
+          success: false,
+          error:
+            "This assignment has scores attached to it. Please remove all scores before deleting the assignment.",
+        };
+      }
+    }
     return {
       success: false,
-      error: "Failed to remove assignment",
+      error:
+        "Could not delete the assignment. Please ensure all related data is removed first.",
     };
   }
 }
@@ -148,10 +160,10 @@ export async function addFixToAssignmentScoreAction(args: {
   try {
     await instructorService.addFixToAssignmentScore(args);
     revalidatePath("/instructor-dashboard", "layout");
-    return {success: true}
+    return { success: true };
   } catch (error) {
     console.error("Failed to add fix:", error);
-    return {success: false}
+    return { success: false };
   }
 }
 

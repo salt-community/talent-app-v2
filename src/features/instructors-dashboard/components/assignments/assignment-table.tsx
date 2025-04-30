@@ -12,7 +12,7 @@ import { PrivateNotes } from "./private-notes";
 import { Score } from "./score";
 import { ScoringTab } from "./scoring-tab";
 
-type ClientAssignmentTableProps = {
+type Props = {
   assignmentTitle: string;
   developersWithScores: DeveloperWithScores[];
   fixLists: FixLists[];
@@ -23,7 +23,7 @@ export function AssignmentTable({
   developersWithScores,
   fixLists,
   privateNotes,
-}: ClientAssignmentTableProps) {
+}: Props) {
   const [selectedDeveloperIndex, setSelectedDeveloperIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<TabType>("scoring");
 
@@ -42,9 +42,7 @@ export function AssignmentTable({
   );
 
   return (
-    <div
-      className="flex flex-row gap-2"
-    >
+    <div className="flex flex-row gap-2">
       <div className="w-4/5 flex flex-col ">
         <div className="mb-2">
           <ScoringTab
@@ -54,9 +52,7 @@ export function AssignmentTable({
           />
         </div>
 
-        <div
-          className="border border-gray-200 rounded-lg p-4 flex-grow overflow-hidden"
-        >
+        <div className="border border-gray-200 rounded-lg p-4 flex-grow overflow-hidden">
           {selectedDeveloper && activeTab === "scoring" && (
             <div className="p-6">
               <div className="mb-4">
@@ -109,10 +105,11 @@ export function AssignmentTable({
           <div
             key={item.developer.id}
             onClick={() => setSelectedDeveloperIndex(index)}
-            className={`cursor-pointer hover:bg-gray-50 transition-colors ${index === selectedDeveloperIndex
-              ? "bg-gray-100 border-l-4 border-gray-400 motion-preset-slide-left motion-duration-1000 "
-              : ""
-              }`}
+            className={`cursor-pointer hover:bg-gray-50 transition-colors ${
+              index === selectedDeveloperIndex
+                ? "bg-gray-100 border-l-4 border-gray-400 motion-preset-slide-left motion-duration-1000 "
+                : ""
+            }`}
           >
             <Developers
               developer={item.developer}
