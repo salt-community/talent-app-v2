@@ -1,11 +1,18 @@
 import { Separator } from "@/components";
 import { instructorService } from "../../instance";
-import AddAssignmentButton from "./add-assignment-button";
 import { AssignmentListItem } from "./assignment-list-item";
+import dynamic from "next/dynamic";
 
 type Props = {
   name: string;
 };
+
+const AddAssignmentButton = dynamic(
+  () => import("./add-assignment-button").then((mod) => mod.default),
+  {
+    loading: () => <div className="p-4">Loading form...</div>,
+  }
+);
 
 export async function AssignmentsDashboard({ name }: Props) {
   const cohort = await instructorService.getAllCohorts();

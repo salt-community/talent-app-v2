@@ -10,18 +10,12 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Developer } from "../../types";
 import dynamic from "next/dynamic";
+import { AddDeveloperForm } from "./add-developer-form";
 
 type Props = {
   cohortId: string;
   developer: Developer[];
 };
-
-const AddDeveloperForm = dynamic(
-  import("./add-developer-form").then((mod) => mod.AddDeveloperForm),
-  {
-    ssr: false,
-  }
-);
 
 export function AddDeveloperButton({ cohortId, developer }: Props) {
   const [open, setOpen] = useState(false);
@@ -29,7 +23,7 @@ export function AddDeveloperButton({ cohortId, developer }: Props) {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+        <DialogTrigger asChild className="cursor-pointer">
           <Button onClick={() => setOpen(true)}>
             <span>+</span> New developer
           </Button>
