@@ -1,5 +1,4 @@
 import { Separator } from "@/components";
-import { notFound } from "next/navigation";
 import { instructorService } from "../../instance";
 import AddAssignmentButton from "./add-assignment-button";
 import { AssignmentListItem } from "./assignment-list-item";
@@ -11,7 +10,9 @@ type Props = {
 export async function AssignmentsDashboard({ name }: Props) {
   const cohort = await instructorService.getAllCohorts();
   const foundCohort = cohort.find((cohort) => cohort.name === name);
-  if (!foundCohort) notFound();
+  if (!foundCohort) {
+    return <div className="text-center">Cohort not found</div>;
+  }
 
   const cohortId = foundCohort.id;
   const assignments =
@@ -30,7 +31,7 @@ export async function AssignmentsDashboard({ name }: Props) {
             assignment={{
               ...assignment,
               comment: null,
-              categories: []
+              categories: [],
             }}
             foundCohort={foundCohort}
             cohortId={cohortId}

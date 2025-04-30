@@ -3,7 +3,6 @@
 import { errorHandler } from "@/lib";
 import { CreateProfileButton } from "./create-profile-button";
 import { DeveloperProfileCard } from "./developer-profile-card";
-import { notFound } from "next/navigation";
 import { developerProfilesService } from "../instance";
 
 type Props = {
@@ -19,7 +18,7 @@ export async function CreateDeveloperProfileCard({ slug }: Props) {
   )?.id;
 
   if (!developerProfileId) {
-    return notFound();
+    return;
   }
 
   let developerProfileIds: {

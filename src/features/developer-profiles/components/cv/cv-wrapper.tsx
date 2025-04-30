@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import { iamService } from "@/features/iam";
 import { developerProfilesService } from "../../instance";
 import { CvContainer } from "./cv-container";
@@ -11,7 +10,7 @@ export default async function CvWrapper({ slug }: CvWrapperProps) {
   const developerProfile =
     await developerProfilesService.getDeveloperBySlug(slug);
 
-  if (!developerProfile) return notFound();
+  if (!developerProfile) return;
 
   const hasProfileAccess = await iamService.hasProfileAccess(
     developerProfile.identityId

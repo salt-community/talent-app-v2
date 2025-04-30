@@ -1,17 +1,10 @@
 "use server";
 import { developerProfilesService } from "../instance";
-import { Assignment } from "../types";
 import dynamic from "next/dynamic";
 
-type AverageScoresMap = Map<string, number>;
-type Props = {
-  assignment: Assignment[];
-  averageScores: AverageScoresMap;
-};
 const AssignmentCard = dynamic(
   () => import("./assignment-card").then((mode) => mode.AssignmentCard),
   {
-    ssr: false,
     loading: () => <div className="w-full h-96 animate-pulse" />,
   }
 );

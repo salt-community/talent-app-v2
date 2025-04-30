@@ -2,7 +2,6 @@ import React from "react";
 import StudentCard from "./developer-card";
 import AddDeveloperButton from "./open-developer-form-button";
 import { instructorService } from "../../instance";
-import { notFound } from "next/navigation";
 import { Separator } from "@/components";
 
 type Props = {
@@ -13,7 +12,7 @@ export async function Developers({ name }: Props) {
   const cohortData =
     await instructorService.getCohortDevelopersDataByName(name);
 
-  if (!cohortData) notFound();
+  if (!cohortData) return;
 
   const { cohort, developers, unsignedDevelopers } = cohortData;
 
