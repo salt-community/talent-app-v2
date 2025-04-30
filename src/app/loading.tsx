@@ -1,4 +1,5 @@
 import SkeletonCard from "@/components/skeleton/skeleton-card";
+import DevelopersSkeleton from "./developers/loading";
 
 export default function SkeletonHighlightedDevelopers() {
   return (

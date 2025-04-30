@@ -1,4 +1,6 @@
 import CvWrapper from "@/features/developer-profiles/components/cv/cv-wrapper";
+import { Suspense } from "react";
+import CVSkeleton from "./loading";
 
 type Params = {
   params: Promise<{ slug: string }>;
@@ -6,6 +8,9 @@ type Params = {
 
 export default async function Page({ params }: Params) {
   const { slug } = await params;
-
-  return <CvWrapper slug={slug} />;
+  return (
+    <Suspense fallback={<CVSkeleton />}>
+      <CvWrapper slug={slug} />
+    </Suspense>
+  );
 }
