@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Suspense } from "react";
-import { Star, LineChart } from "lucide-react";
+import { Star } from "lucide-react";
 import TabLink from "@/features/admin-dashboard/components/tab-link";
 import Loading from "./loading";
 
@@ -35,12 +35,6 @@ export default function InstructorDashboardLayout({
           href={`/instructor-dashboard/cohorts/${name}/developers`}
         >
           <Star className="w-5 h-5" />
-        </TabLink>
-        <TabLink
-          name="Overview"
-          href={`/instructor-dashboard/cohorts/${name}/overview`}
-        >
-          <LineChart className="w-5 h-5" />
         </TabLink>
       </div>
 

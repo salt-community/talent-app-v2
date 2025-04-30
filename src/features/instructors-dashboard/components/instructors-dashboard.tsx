@@ -1,6 +1,12 @@
+import dynamic from "next/dynamic";
 import { instructorService } from "../instance";
-import { AddCohortForm } from "./cohorts/add-cohort";
 import { CohortCard } from "./cohorts/cohort-card";
+import { Suspense } from "react";
+import { CohortCardSkeleton } from "./loading";
+
+const AddCohortForm = dynamic(() =>
+  import("./cohorts/add-cohort").then((mod) => mod.AddCohortForm)
+);
 
 export async function InstructorsDashboard() {
   const cohorts = await instructorService.getAllCohorts();
