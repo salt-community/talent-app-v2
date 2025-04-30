@@ -1,5 +1,4 @@
-import { HighlightPage } from "@/features/developer-profiles";
-import { Suspense } from "react";
+import { HighlightedDevelopers } from "@/features/developer-profiles";
 
 export default function Page() {
   return (
@@ -11,7 +10,7 @@ export default function Page() {
         Each developer has a unique story, skill set, and impact on the tech
         world. Meet a standout talent and explore their journey.
       </h3>
-      <HighlightPage />
+      <HighlightedDevelopers />
     </div>
   );
 }

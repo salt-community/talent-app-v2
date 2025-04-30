@@ -1,21 +1,21 @@
 import { Card, CardContent } from "@/components";
 import { Background } from "./backgrounds";
 import Link from "next/link";
+import { developerProfilesService } from "../instance";
 
 type DeveloperProfiles = {
   id: string;
   slug: string | null;
 };
 
-type Props = {
-  developerProfiles: DeveloperProfiles[];
-};
+export async function HighlightedDevelopers() {
+  const highlightedDeveloperProfiles =
+    await developerProfilesService.getHighlightedDeveloperProfiles();
 
-export async function HighlightedDevelopers({ developerProfiles }: Props) {
   return (
     <>
       <ul className="px-4 pt-10 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:px-8">
-        {developerProfiles.map((profiles) => (
+        {highlightedDeveloperProfiles.map((profiles: DeveloperProfiles) => (
           <Link href={`/developers/${profiles.slug}`} key={profiles.id}>
             <Card
               key={profiles.id}
