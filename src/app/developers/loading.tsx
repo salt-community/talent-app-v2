@@ -1,12 +1,17 @@
-import React from "react";
+import SkeletonCard from "@/components/skeleton/skeleton-card";
 
-export default function Loading() {
+export default function DevelopersSkeleton() {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="flex flex-col items-center">
-        <div className="w-10 h-10 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-2 text-gray-600">Loading...</p>
-      </div>
+    <div className="px-4 pt-10 mb-6 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:px-8">
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
     </div>
   );
 }
