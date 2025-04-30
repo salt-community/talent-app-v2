@@ -1,1 +1,1 @@
-export * from "./cv-container";
+export * from "./cv-wrapper";

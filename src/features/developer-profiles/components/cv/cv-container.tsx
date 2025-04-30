@@ -19,7 +19,6 @@ type Props = {
 };
 
 export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
-
   //Zod validation needed here, remove roast and replace with zod validation
   const { toast } = useToast();
 
@@ -28,7 +27,6 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const printRef = useRef<HTMLDivElement>(null);
-
 
   const handleValidation = (cvInfo: unknown) => {
     const result = CvInfoSchema.safeParse(cvInfo);
@@ -39,7 +37,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     }
     const validCV: CVInfoValidation = result.data;
     return validCV;
-  }
+  };
 
   const handleOnChange = (data: Partial<CvInfo>) => {
     setCvInfo((prev) => ({ ...prev, ...data }));
@@ -67,7 +65,7 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
     }
 
     const validCvInfo = handleValidation(cvInfo);
-    if(!validCvInfo) {
+    if (!validCvInfo) {
       setIsLoading(false);
       return;
     }
@@ -192,11 +190,10 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
               variant="ghost"
               size="sm"
               className="flex cursor-pointer"
-
             >
               <Pencil size={20} className="cursor-pointer" />
               Edit
-            </Button >
+            </Button>
           )
         )}
         <Button
