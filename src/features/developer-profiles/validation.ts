@@ -54,7 +54,7 @@ export const CvInfoSchema = z.object({
       name: z.string(),
     })
   ),
-  skills: z.array(  
+  skills: z.array(
     z.object({
       name: z.string(),
     })
@@ -83,7 +83,7 @@ export const CvInfoSchema = z.object({
     })
   ),
   status: z.string(),
-  headerLanguage: z.string().nullable(),
+  headerLanguage: z.string().min(2, "Atleast 2 word is required").nullable(),
 });
 
 

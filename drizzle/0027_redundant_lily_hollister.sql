@@ -1,0 +1,1 @@
+DROP TABLE "developer_profiles_educations" CASCADE;

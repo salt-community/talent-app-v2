@@ -18,7 +18,6 @@ export const developerProfiles: PermissionsSchema<
   getCurrentUsers: "developerProfiles.getCurrentUsers",
   isSearchSyncRequired: "developerProfiles.isSearchSyncRequired",
   ensureSearchIndex: "developerProfiles.ensureSearchIndex",
-  getAllEducations: "developerProfiles.getAllEducations",
   getAllLanguages: "developerProfiles.getAllLanguages",
   getAllSkills: "developerProfiles.getAllSkills",
   getDeveloperProfileById: "developerProfiles.getDeveloperProfileById",
@@ -37,7 +36,6 @@ export const developerProfiles: PermissionsSchema<
   addDeveloperProfile: "developerProfiles.addDeveloperProfile",
   getHighlightedDeveloperProfiles:
     "developerProfiles.getHighlightedDeveloperProfiles",
-  addDeveloperProfileDetails: "developerProfiles.addDeveloperProfileDetails",
   getScoredAssignmentsByIdentityId:
     "developerProfiles.getScoredAssignmentsByIdentityId",
   getAssignmentBySlug: "developerProfiles.getAssignmentBySlug",

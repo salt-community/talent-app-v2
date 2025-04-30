@@ -4,7 +4,6 @@ import { createDevelopersRepository } from "./repository";
 import { claim } from "./session";
 import {
   AddDeveloperProfile,
-  developerProfileDetails,
   DeveloperProfileUpdate,
   OutboxMessageSelect,
   SessionClaims,
@@ -178,12 +177,7 @@ export function createDeveloperProfilesService(
           array.findIndex((l) => l.name === language.name) === index
       );
     },
-    async getAllEducations() {
-      return (await repository.getAllEducations()).filter(
-        (education, index, array) =>
-          array.findIndex((e) => e.name === education.name) === index
-      );
-    },
+
     async delete(id: string) {
       await repository.deleteDeveloperProfile(id);
     },
@@ -264,11 +258,7 @@ export function createDeveloperProfilesService(
         await repository.addDeveloperProfile(developerProfile);
       syncSearchWithOutboxMessage(outboxMessage);
     },
-    async addDeveloperProfileDetails(
-      developerProfileDetails: developerProfileDetails
-    ) {
-      await repository.addDeveloperProfileDetails(developerProfileDetails);
-    },
+
 
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
       const outboxMessage =

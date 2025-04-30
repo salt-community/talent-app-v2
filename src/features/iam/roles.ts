@@ -11,7 +11,6 @@ export const rolesPermissions = {
     developerProfiles.getDeveloperProfileById,
     developerProfiles.getAllSkills,
     developerProfiles.getAllLanguages,
-    developerProfiles.getAllEducations,
     developerProfiles.getAll,
     developerProfiles.getDeveloperProfileByIdentityId,
     developerProfiles.getDeveloperById,
@@ -26,7 +25,6 @@ export const rolesPermissions = {
     ...Object.values(cohorts),
   ]),
   developer: new Set([
-    developerProfiles.getAllEducations,
     developerProfiles.getAllLanguages,
     developerProfiles.getAllSkills,
     developerProfiles.getDeveloperProfileById,
@@ -51,7 +49,6 @@ export const rolesPermissions = {
     assignments.getAssignmentBySlug,
   ]),
   core: new Set([
-    developerProfiles.getAllEducations,
     developerProfiles.getAllLanguages,
     developerProfiles.getAllSkills,
     developerProfiles.getDeveloperProfileById,

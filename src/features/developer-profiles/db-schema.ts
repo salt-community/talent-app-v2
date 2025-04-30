@@ -11,19 +11,6 @@ export const developerProfileSkills = pgTable("developer_profiles_skills", {
   name: varchar().notNull(),
   level: integer().notNull().default(5),
 });
-export const developerProfileEducations = pgTable(
-  "developer_profiles_educations",
-  {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    developerProfileId: uuid("developerProfile_id").references(
-      () => developerProfiles.id,
-      {
-        onDelete: "cascade",
-      }
-    ),
-    name: varchar().notNull(),
-  }
-);
 
 export const developerProfileLanguages = pgTable(
   "developer_profiles_languages",

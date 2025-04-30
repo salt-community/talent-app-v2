@@ -1,7 +1,6 @@
 import { Db } from "@/db";
 import { eq, sql } from "drizzle-orm";
 import {
-  developerProfileEducations,
   developerProfileJobs,
   developerProfileLanguages,
   developerProfiles,
@@ -12,7 +11,6 @@ import {
 import {
   AddDeveloperProfile,
   CopyDeveloperProfile,
-  developerProfileDetails,
   DeveloperProfileDetailsUpdate,
   LanguageSelect,
   SkillSelect,
@@ -275,9 +273,9 @@ export function createDevelopersRepository(db: Db) {
           eq(developerProfileLanguages.developerProfileId, developerProfiles.id)
         )
         .leftJoin(
-          developerProfileEducations,
+          newDeveloperProfileEducations,
           eq(
-            developerProfileEducations.developerProfileId,
+            newDeveloperProfileEducations.developerProfileId,
             developerProfiles.id
           )
         )
@@ -371,7 +369,7 @@ export function createDevelopersRepository(db: Db) {
       return await db.select().from(developerProfileLanguages);
     },
     async getAllEducations() {
-      return await db.select().from(developerProfileEducations);
+      return await db.select().from(newDeveloperProfileEducations);
     },
     async getAllOutboxMessage() {
       return await db.select().from(searchOutbox);
@@ -395,30 +393,7 @@ export function createDevelopersRepository(db: Db) {
     async removeOutboxMessage(id: number) {
       await db.delete(searchOutbox).where(eq(searchOutbox.id, id));
     },
-    async addDeveloperProfileDetails(
-      developerProfileDetails: developerProfileDetails
-    ) {
-      await db.transaction(async (tx) => {
-        for (const skill of developerProfileDetails.skills) {
-          await tx.insert(developerProfileSkills).values({
-            developerProfileId: developerProfileDetails.id,
-            name: skill,
-          });
-        }
-        for (const language of developerProfileDetails.languages) {
-          await tx.insert(developerProfileLanguages).values({
-            developerProfileId: developerProfileDetails.id,
-            name: language,
-          });
-        }
-        for (const education of developerProfileDetails.educations) {
-          await tx.insert(developerProfileEducations).values({
-            developerProfileId: developerProfileDetails.id,
-            name: education,
-          });
-        }
-      });
-    },
+
     async addDeveloperProfile(developerProfile: AddDeveloperProfile) {
       const outboxMessage = await db.transaction(async (tx) => {
         const developerProfileId = (

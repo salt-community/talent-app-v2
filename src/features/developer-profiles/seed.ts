@@ -101,9 +101,7 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
       ...developers[i],
       slug,
     });
-    await developerProfilesSeedingService.addDeveloperProfileDetails(
-      backgrounds[i]
-    );
+
   }
   await developerProfilesSeedingService.repopulateSearch();
   console.log("Done seeding developer profiles!");
