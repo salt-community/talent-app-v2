@@ -3,7 +3,15 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Developer } from "../../types";
-import { DeleteDeveloperButton } from "./delete-developer-button";
+import dynamic from "next/dynamic";
+
+const DeleteDeveloperButton = dynamic(
+  () =>
+    import("./delete-developer-button").then(
+      (mod) => mod.DeleteDeveloperButton
+    ),
+  { ssr: false }
+);
 
 export default function StudentCard({ developer }: { developer: Developer[] }) {
   return (
