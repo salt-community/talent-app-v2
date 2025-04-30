@@ -64,6 +64,8 @@ export async function seedDeveloperProfiles(identities: IdentitySelect[]) {
           )
           .sort((a, b) => a.name.localeCompare(b.name)),
       };
+
+      console.log(background);
       
       await developerProfilesSeedingService.addDeveloperProfile(developerProfile);
       
