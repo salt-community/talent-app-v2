@@ -1,10 +1,12 @@
-// CVSkeleton.tsx
-import React from 'react';
+import React from "react";
 
-export default function CVSkeleton() {
+export default function CvSkeleton() {
   return (
-    <div className="relative text-white max-w-4xl mx-auto animate-pulse">
-      <h1>Loading your CV...</h1>
+    <div className="flex justify-center items-center h-screen">
+      <div className="flex flex-col items-center">
+        <div className="w-10 h-10 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-2 text-gray-600">Loading...</p>
+      </div>
     </div>
   );
 }

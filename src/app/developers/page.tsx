@@ -6,7 +6,6 @@ import { errorHandler } from "@/lib";
 import { Suspense } from "react";
 import Loading from "./loading";
 import Search from "./search";
-import { BlurFade } from "@/components/magicui/blur-fade";
 
 type Props = { searchParams: Promise<{ search: string | undefined }> };
 
@@ -23,11 +22,9 @@ export default async function Page({ searchParams }: Props) {
   return (
     <main className="px-4 pb-6">
       <Search />
-      <BlurFade delay={0.25} inView>
-        <Suspense fallback={<Loading />}>
-          <Developers developerProfileIds={developerProfileIds} />
-        </Suspense>
-      </BlurFade>
+      <Suspense fallback={<Loading />}>
+        <Developers developerProfileIds={developerProfileIds} />
+      </Suspense>
     </main>
   );
 }
