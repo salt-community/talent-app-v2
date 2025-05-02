@@ -40,14 +40,14 @@ export function CvLanguages({
         {languages.map((language) => (
           <li
             key={language.name}
-            className="text-paragraph text-sm flex items-center "
+            className="text-paragraph text-sm flex items-center  "
           >
-            {language.name}
+            <p className="text-white">{language.name}</p>
             {isEditable && (
               <Button
                 variant="link"
                 size="icon"
-                className="h-4 w-4 ml-1"
+                className="h-4 w-4 ml-1 cursor-pointer"
                 onClick={() =>
                   onChange({
                     skills,
