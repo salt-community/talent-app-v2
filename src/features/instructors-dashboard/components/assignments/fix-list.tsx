@@ -10,7 +10,7 @@ import {
 import { FixLists } from "../../types";
 import { OptionMenu } from "./option-menu";
 import toast from "react-hot-toast";
-
+import { v4 as uuid } from "uuid";
 type FixesProps = {
   fixes: FixLists[];
   assignmentScoreId?: string | null;
@@ -70,11 +70,12 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
     if (!assignmentScoreId) {
       return;
     }
+    const tempId = uuid();
     startTransition(async () => {
       setOptimisticFixes({
         type: "add",
         newFix: {
-          id: "",
+          id: tempId,
           description,
           isCompleted: false,
           dueDate: dueDate,
@@ -83,21 +84,29 @@ export function FixList({ fixes, assignmentScoreId }: FixesProps) {
           updatedAt: null
         },
       });
+      return toast.promise(
+        new Promise(async (resolve) => {
+          const result = await addFixToAssignmentScoreAction({ assignmentScoreId, description, dueDate });
+          if (result.success) {
+            resolve();
+          }
+        }),
+        {
+          loading: "Adding...",
+          success: "New fix added",
+          error: "Could not add the new fix",
+        }
+      )
+
+    });
+    setDescription("");
+    startTransition(() => {
+      setOptimisticFixes({
+        type: "delete",
+        id: tempId,
+      });
     });
 
-    setDescription("");
-
-    return toast.promise(
-      new Promise(async (resolve) => {
-        await addFixToAssignmentScoreAction({ assignmentScoreId, description, dueDate });
-        resolve(true);
-      }),
-      {
-        loading: "Adding...",
-        success: "New fix added",
-        error: "Could not add the new fix",
-      }
-    )
   };
 
   const handleStatusChange = (id: string, currentStatus: boolean) => {

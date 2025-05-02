@@ -72,7 +72,7 @@ export function AssignmentTable({
           {activeTab === "fixList" && (
             <div
               className="overflow-y-auto"
-              style={{ height: "calc(100vh - 300px)" }}
+              style={{ height: "calc(100vh - 10px)" }}
             >
               <FixList
                 fixes={fixLists.filter(
