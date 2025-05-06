@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/";
+import { Avatar, AvatarImage } from "@/components/";
 
 type Props = {
   url: string;
@@ -11,8 +11,7 @@ export function BackgroundAvatar({ url, size }: Props) {
 
   return (
     <Avatar className={size ? `${width} h-auto` : ""}>
-      <AvatarImage src={url === "" ? DEFAULT_AVATAR : url} />
-      <AvatarFallback className="text-xs">Wrong URL</AvatarFallback>
+      <AvatarImage src={url || DEFAULT_AVATAR} />
     </Avatar>
   );
 }
