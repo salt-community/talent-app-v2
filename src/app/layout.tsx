@@ -5,6 +5,8 @@ import { Header } from "@/components/navbar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 import { Footer } from "@/components/footer";
+import { Suspense } from "react";
+import Loading from "./load";
 
 export const metadata: Metadata = {
   title: "Talent app",
@@ -26,12 +28,9 @@ export default function RootLayout({
             <Header />
             <main className="grow">
               {" "}
-             {children}
+              <Suspense fallback={<Loading />}>{children}</Suspense>
             </main>
-            <Toaster
-              position="bottom-right"
-              reverseOrder={false}
-            />
+            <Toaster position="bottom-right" reverseOrder={false} />
 
             <Footer />
           </div>
