@@ -1,0 +1,2 @@
+ALTER TABLE "developer_profiles_jobs" ADD COLUMN "order" integer DEFAULT 0 NOT NULL;--> statement-breakpoint
+ALTER TABLE "new_developer_profiles_educations" ADD COLUMN "order" integer DEFAULT 0 NOT NULL;

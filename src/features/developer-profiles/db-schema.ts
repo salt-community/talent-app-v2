@@ -64,6 +64,7 @@ export const newDeveloperProfileEducations = pgTable(
     date: varchar().notNull(),
     role: varchar().notNull(),
     description: varchar().notNull(),
+    order: integer().notNull().default(0),
   }
 );
 
@@ -81,4 +82,5 @@ export const developerProfileJobs = pgTable("developer_profiles_jobs", {
   date: varchar().notNull(),
   role: varchar().notNull(),
   description: varchar().notNull(),
+  order: integer().notNull().default(0),
 });
