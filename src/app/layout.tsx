@@ -6,7 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 import { Footer } from "@/components/footer";
 import { Suspense } from "react";
-import Loading from "./load";
+import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: "Talent app",
