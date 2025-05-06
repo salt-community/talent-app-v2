@@ -6,7 +6,6 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 import { Footer } from "@/components/footer";
 import { Suspense } from "react";
-import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: "Talent app",
@@ -28,7 +27,7 @@ export default function RootLayout({
             <Header />
             <main className="grow">
               {" "}
-              <Suspense fallback={<Loading />}>{children}</Suspense>
+              <Suspense>{children}</Suspense>
             </main>
             <Toaster position="bottom-right" reverseOrder={false} />
 

@@ -13,9 +13,8 @@ export default function Page() {
         world. Meet a standout talent and explore their journey.
       </h3>
       <Suspense fallback={<SkeletonCard />}>
-      <HighlightedDevelopers />
+        <HighlightedDevelopers />
       </Suspense>
     </div>
-
   );
 }
