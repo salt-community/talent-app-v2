@@ -26,7 +26,6 @@ export default function RootLayout({
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="grow">
-              {" "}
               <Suspense>{children}</Suspense>
             </main>
             <Toaster position="bottom-right" reverseOrder={false} />
