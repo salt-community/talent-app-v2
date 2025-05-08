@@ -4,7 +4,7 @@ import { Button } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import DomToImage from "dom-to-image";
 import jsPDF from "jspdf";
-import { Cctv, CheckCircle, Pencil, Printer } from "lucide-react";
+import { CheckCircle, Pencil, Printer } from "lucide-react";
 import { useRef, useState } from "react";
 import { updateCvAction } from "../../actions";
 import { CvInfo } from "../../types";
