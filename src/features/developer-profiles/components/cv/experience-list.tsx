@@ -25,7 +25,10 @@ export function ExperienceList({ isEditable, experiences, onChange }: Props) {
   const switchPositions = (fromIndex: number, toIndex: number) => {
     const exps = [...experiences];
     [exps[fromIndex], exps[toIndex]] = [exps[toIndex], exps[fromIndex]];
-    onChange(validateEducationOrder(exps));
+    exps.forEach((exp, index) => {
+      exp.order = index + 1;
+    });
+    onChange(exps);
   };
 
   const handleMoveUp = (index: number) => switchPositions(index, index - 1);
