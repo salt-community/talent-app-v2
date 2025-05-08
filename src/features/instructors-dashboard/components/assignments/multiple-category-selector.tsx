@@ -24,7 +24,9 @@ export const MultipleCategorySelector = ({
     <MultipleSelector
       value={value}
       onChange={onChange}
+      creatable
       defaultOptions={OPTIONS}
+      badgeClassName="bg-primary"
       placeholder="Select frameworks..."
       emptyIndicator={
         <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">

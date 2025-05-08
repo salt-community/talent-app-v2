@@ -20,15 +20,15 @@ export async function addAssignmentAction(
   id: string,
   cohortId: string,
   title: string,
-  categories: string[]
+  AssignmentCategories: Category[]
 ) {
   try {
-    const assignment = newAssignmentSchema.parse({
+    const assignment = {
       id,
       title,
       cohortId,
-      categories,
-    });
+      AssignmentCategories,
+    };
 
     await instructorService.addAssignment(assignment);
     revalidatePath("/instructor-dashboard", "layout");

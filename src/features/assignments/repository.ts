@@ -24,7 +24,9 @@ export function createAssignmentsRepository(db: Db) {
   return {
     async createAssignment(assignment: AssignmentWithCategory) {
       return await db.transaction(async (tx) => {
-        const { AssignmentCategories, ...assignmentData } = assignment;
+        const { AssignmentCategories = [], ...assignmentData } = assignment;
+
+        console.log({ categories: assignmentCategories });
 
         const [insertedAssignment] = await tx
           .insert(assignments)
@@ -36,12 +38,14 @@ export function createAssignmentsRepository(db: Db) {
             },
           })
           .returning();
-        await tx.insert(categories).values(
-          AssignmentCategories.map((category) => ({
-            name: category.name,
-            id: category.id,
-          }))
-        );
+
+        if (AssignmentCategories && AssignmentCategories.length > 0) {
+          await tx.insert(categories).values(
+            AssignmentCategories.map((category) => ({
+              name: category.name,
+            }))
+          );
+        }
 
         return insertedAssignment;
       });

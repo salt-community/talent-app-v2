@@ -44,10 +44,7 @@ export type AssignmentScore = {
   status?: string;
 };
 export type Category = {
-  id: string;
   name: string;
-  assignmentCategoryId: string;
-  assignmentFeedbackId: string;
 };
 export type AssignmentWithCategory = {
   id: string;

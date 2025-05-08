@@ -9,12 +9,14 @@ import {
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AddAssignmentForm } from "./add-assignment-form";
+import { Assignment } from "../../types";
 
 type Props = {
   cohortId: string;
+  assignment: Assignment;
 };
 
-export default function AddAssignmentButton({ cohortId }: Props) {
+export default function AddAssignmentButton({ cohortId, assignment }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -31,6 +33,7 @@ export default function AddAssignmentButton({ cohortId }: Props) {
         <AddAssignmentForm
           cohortId={cohortId}
           onSuccess={() => setOpen(false)}
+          assignment={assignment}
         />
       </DialogContent>
     </Dialog>

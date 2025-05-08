@@ -9,6 +9,7 @@ import { DialogTitle } from "@/components/ui/dialog";
 import { Assignment } from "../../types";
 import { MultipleCategorySelector } from "./multiple-category-selector";
 import { Option } from "@/components/ui/multiple-selector";
+import { Category } from "@/features/assignments";
 
 type Props = {
   cohortId: string;
@@ -20,7 +21,7 @@ export function AddAssignmentForm({ cohortId, assignment, onSuccess }: Props) {
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState(assignment?.title || "");
 
-  const [selectedCategories, setSelectedCategories] = useState<Option[]>(
+  const [selectedOptions, setSelectedOptions] = useState<Option[]>(
     assignment?.categories?.map((category) => ({
       label: category,
       value: category,
@@ -30,7 +31,10 @@ export function AddAssignmentForm({ cohortId, assignment, onSuccess }: Props) {
   const handleSubmit = async () => {
     setLoading(true);
 
-    const categories = selectedCategories.map((cat) => cat.value);
+    const categories = selectedOptions.map((option) => ({
+      name: option.value,
+    }));
+
     await addAssignmentAction(assignment?.id, cohortId, title, categories);
     onSuccess();
     setLoading(false);
@@ -53,15 +57,15 @@ export function AddAssignmentForm({ cohortId, assignment, onSuccess }: Props) {
       <div className="flex flex-col space-y-2">
         <Label htmlFor="categories">Categories</Label>
         <MultipleCategorySelector
-          value={selectedCategories}
-          onChange={setSelectedCategories}
+          value={selectedOptions}
+          onChange={setSelectedOptions}
         />
       </div>
 
       <Button
         onClick={handleSubmit}
         className="w-full"
-        disabled={!title || selectedCategories.length === 0 || loading}
+        disabled={!title || selectedOptions.length === 0 || loading}
       >
         {loading ? "Submitting..." : "Submit"}
       </Button>

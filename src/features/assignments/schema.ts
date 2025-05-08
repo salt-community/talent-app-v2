@@ -8,11 +8,9 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-//remove description
 export const categories = pgTable("categories", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: varchar("name").notNull().unique(),
-  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const assignments = pgTable("assignments", {

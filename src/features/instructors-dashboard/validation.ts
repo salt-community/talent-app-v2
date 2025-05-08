@@ -7,8 +7,6 @@ export const addCohortFormSchema = z.object({
 export const categorySchema = z.object({
   id: z.string(),
   name: z.string(),
-  assignmentCategoryId: z.string(),
-  assignmentFeedbackId: z.string(),
 });
 
 export const newAssignmentSchema = z.object({

@@ -444,10 +444,7 @@ const MultipleSelector = React.forwardRef<
           handleKeyDown(e);
           commandProps?.onKeyDown?.(e);
         }}
-        className={cn(
-          "h-auto overflow-visible bg-transparent",
-          commandProps?.className
-        )}
+        className={cn("h-auto overflow-visible ", commandProps?.className)}
         shouldFilter={
           commandProps?.shouldFilter !== undefined
             ? commandProps.shouldFilter

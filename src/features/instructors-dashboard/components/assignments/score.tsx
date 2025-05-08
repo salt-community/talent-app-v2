@@ -20,13 +20,11 @@ export function Score({ scores, developer }: ScoreProps) {
     saveScores,
     isSaving,
     hasUnsavedChanges,
-    isManualSave
+    isManualSave,
   } = useAutoSaveScores(scores);
-
 
   return (
     <div className="p-3 h-full overflow-y-auto">
-
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-lg">Scores for {developer.name}</h3>
       </div>
@@ -122,6 +120,6 @@ export function Score({ scores, developer }: ScoreProps) {
           </Button>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
