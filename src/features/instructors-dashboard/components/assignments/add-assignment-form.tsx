@@ -20,15 +20,11 @@ const DEFAULT_CATEGORIES = [
 
 type Props = {
   cohortId: string;
-  assignment?: Assignment;
+  assignment: Assignment;
   onSuccess: () => void;
 };
 
-export function AddAssignmentForm({
-  cohortId,
-  assignment = undefined,
-  onSuccess,
-}: Props) {
+export function AddAssignmentForm({ cohortId, assignment, onSuccess }: Props) {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState(
@@ -86,16 +82,10 @@ export function AddAssignmentForm({
 
   const handleSubmit = async () => {
     setLoading(true);
-
-    try {
-      const categories = selectedCategories.map((cat) => cat.id);
-      await addAssignmentAction(cohortId, title, categories);
-      onSuccess();
-    } catch (error) {
-      console.error("Failed to create assignment:", error);
-    } finally {
-      setLoading(false);
-    }
+    const categories = selectedCategories.map((cat) => cat.id);
+    await addAssignmentAction(assignment?.id, cohortId, title, categories);
+    onSuccess();
+    setLoading(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

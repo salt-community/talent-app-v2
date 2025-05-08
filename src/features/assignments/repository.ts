@@ -29,44 +29,18 @@ export function createAssignmentsRepository(db: Db) {
         const [insertedAssignment] = await tx
           .insert(assignments)
           .values(assignmentData)
+          .onConflictDoUpdate({
+            target: [assignments.id],
+            set: {
+              ...assignmentData,
+            },
+          })
           .returning();
-
-        if (categoryNames && categoryNames.length > 0) {
-          const categoryIds = await Promise.all(
-            categoryNames.map(async (name: string) => {
-              const existingCategory = await tx
-                .select()
-                .from(categories)
-                .where(eq(categories.name, name))
-                .limit(1);
-
-              if (existingCategory.length > 0) {
-                return existingCategory[0].id;
-              }
-
-              const [newCategory] = await tx
-                .insert(categories)
-                .values({ name })
-                .returning();
-
-              return newCategory.id;
-            })
-          );
-
-          if (categoryIds.length > 0) {
-            await tx.insert(assignmentCategories).values(
-              categoryIds.map((categoryId: string) => ({
-                assignmentId: insertedAssignment.id,
-                categoryId,
-              }))
-            );
-          }
-        }
 
         return insertedAssignment;
       });
     },
-    
+
     async getAssignmentsByCohortIdAndIdentityId(identityId: string) {
       const userCohorts = await db
         .select()

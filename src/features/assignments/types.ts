@@ -45,7 +45,7 @@ export type AssignmentScore = {
   status?: string;
 };
 export type AssignmentWithCategory = {
-  id?: string;
+  id: string;
   cohortId: string;
   title: string;
   categories: string[] | null;
