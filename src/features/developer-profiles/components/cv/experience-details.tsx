@@ -1,5 +1,5 @@
+import { Experience } from "../../types";
 import { EditableField } from "./editable-field";
-import { Experience } from "./cv-main-content";
 
 type Props = {
   experience: Experience;
