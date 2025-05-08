@@ -2,6 +2,7 @@ import { Button, H2 } from "@/components";
 import { Plus } from "lucide-react";
 import { v4 } from "uuid";
 import { ExperienceList } from "./experience-list";
+import { Experience } from "../../types";
 
 type Props = {
   isEditable: boolean;
@@ -9,14 +10,6 @@ type Props = {
   educations: Experience[];
   onChange: (data: { jobs: Experience[]; educations: Experience[] }) => void;
   headerLanguage: string;
-};
-
-export type Experience = {
-  id: string;
-  organization: string;
-  date: string;
-  role: string;
-  description: string;
 };
 
 export function CvMainContent({
@@ -32,6 +25,7 @@ export function CvMainContent({
     date: "",
     role: "",
     description: "",
+    order: 0,
   });
 
   return (

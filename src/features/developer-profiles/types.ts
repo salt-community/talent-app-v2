@@ -1,4 +1,3 @@
-import { Experience } from "./components/cv/cv-main-content";
 import {
   developerProfileJobs,
   developerProfileLanguages,
@@ -193,4 +192,12 @@ export type DeveloperProfileDetailsUpdate = DeveloperProfileUpdate & {
 export type CopyDeveloperProfile = CvInfo & {
   slug: string | null;
   email: string | null;
+};
+export type Experience = {
+  id: string;
+  organization: string;
+  date: string;
+  role: string;
+  description: string;
+  order: number;
 };

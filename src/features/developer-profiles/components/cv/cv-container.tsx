@@ -4,14 +4,13 @@ import { Button } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import DomToImage from "dom-to-image";
 import jsPDF from "jspdf";
-import { CheckCircle, Pencil, Printer } from "lucide-react";
+import { Cctv, CheckCircle, Pencil, Printer } from "lucide-react";
 import { useRef, useState } from "react";
 import { updateCvAction } from "../../actions";
 import { CvInfo } from "../../types";
 import { CvAside } from "./cv-aside";
 import { CvHeader } from "./cv-header";
 import { CvMainContent } from "./cv-main-content";
-import { CvInfoSchema, CVInfoValidation } from "../../validation";
 
 type Props = {
   defaultCvInfo: CvInfo;
@@ -27,17 +26,6 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const printRef = useRef<HTMLDivElement>(null);
-
-  const handleValidation = (cvInfo: unknown) => {
-    const result = CvInfoSchema.safeParse(cvInfo);
-
-    if (!result.success) {
-      console.error("Validation failed", result.error.format());
-      return;
-    }
-    const validCV: CVInfoValidation = result.data;
-    return validCV;
-  };
 
   const handleOnChange = (data: Partial<CvInfo>) => {
     setCvInfo((prev) => ({ ...prev, ...data }));
@@ -64,13 +52,12 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
       return;
     }
 
-    const validCvInfo = handleValidation(cvInfo);
-    if (!validCvInfo) {
+    if (!cvInfo) {
       setIsLoading(false);
       return;
     }
 
-    await updateCvAction(validCvInfo);
+    await updateCvAction(cvInfo);
     toast({
       title: "Success",
       description: "CV updated successfully",

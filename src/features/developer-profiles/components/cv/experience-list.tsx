@@ -1,7 +1,8 @@
 import { Button } from "@/components";
 import { ExperienceDetails } from "./experience-details";
-import { Experience } from "./cv-main-content";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { Experience } from "../../types";
+import { validateEducationOrder } from "../../logic";
 
 type Props = {
   isEditable: boolean;
@@ -10,8 +11,13 @@ type Props = {
 };
 
 export function ExperienceList({ isEditable, experiences, onChange }: Props) {
-  const handleOnChange = (index: number, experience: Experience) =>
-    onChange(experiences.map((e, i) => (i === index ? experience : e)));
+  const handleOnChange = (index: number, experience: Experience) => {
+    const updatedExperiences = experiences.map((e, i) =>
+      i === index ? experience : e
+    );
+
+    onChange(validateEducationOrder(updatedExperiences));
+  };
 
   const handleDelete = (index: number) =>
     onChange(experiences.filter((_, i) => i !== index));
@@ -19,7 +25,7 @@ export function ExperienceList({ isEditable, experiences, onChange }: Props) {
   const switchPositions = (fromIndex: number, toIndex: number) => {
     const exps = [...experiences];
     [exps[fromIndex], exps[toIndex]] = [exps[toIndex], exps[fromIndex]];
-    onChange(exps);
+    onChange(validateEducationOrder(exps));
   };
 
   const handleMoveUp = (index: number) => switchPositions(index, index - 1);

@@ -12,10 +12,10 @@ import {
   AddDeveloperProfile,
   CopyDeveloperProfile,
   DeveloperProfileDetailsUpdate,
+  Experience,
   LanguageSelect,
   SkillSelect,
 } from "./types";
-import { Experience } from "./components/cv/cv-main-content";
 import { v4 as uuidv4 } from "uuid";
 
 export function createDevelopersRepository(db: Db) {
@@ -509,6 +509,7 @@ export function createDevelopersRepository(db: Db) {
               date: education.date,
               role: education.role,
               description: education.description,
+              order: education.order,
             });
           }
         }
