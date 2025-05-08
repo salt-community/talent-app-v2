@@ -24,18 +24,24 @@ export function createAssignmentsRepository(db: Db) {
   return {
     async createAssignment(assignment: AssignmentWithCategory) {
       return await db.transaction(async (tx) => {
-        const { categories: categoryNames, ...assignmentData } = assignment;
+        const { AssignmentCategories, ...assignmentData } = assignment;
 
         const [insertedAssignment] = await tx
           .insert(assignments)
           .values(assignmentData)
           .onConflictDoUpdate({
-            target: [assignments.id],
+            target: assignments.id,
             set: {
               ...assignmentData,
             },
           })
           .returning();
+        await tx.insert(categories).values(
+          AssignmentCategories.map((category) => ({
+            name: category.name,
+            id: category.id,
+          }))
+        );
 
         return insertedAssignment;
       });
@@ -267,19 +273,11 @@ export function createAssignmentsRepository(db: Db) {
         .where(eq(assignments.id, assignmentId))
         .returning();
     },
+
     async deleteAssignmentScoreById(identityId: string) {
       await db
         .delete(assignmentScores)
         .where(eq(assignmentScores.identityId, identityId));
-    },
-
-    async updateAssignment(id: string, data: Partial<NewAssignment>) {
-      const [updatedAssignment] = await db
-        .update(assignments)
-        .set(data)
-        .where(eq(assignments.id, id))
-        .returning();
-      return updatedAssignment;
     },
 
     async getAssignmentsByCohort(cohortId: string) {
@@ -288,6 +286,7 @@ export function createAssignmentsRepository(db: Db) {
         .from(assignments)
         .where(eq(assignments.cohortId, cohortId));
     },
+
     async getAssignmentsBySlug(slug: string) {
       const [result] = await db
         .select()
@@ -296,6 +295,7 @@ export function createAssignmentsRepository(db: Db) {
 
       return result;
     },
+
     async getAssignmentWithCategoriesBySlug(slug: string) {
       const result = await db
         .select({
@@ -319,7 +319,6 @@ export function createAssignmentsRepository(db: Db) {
         .select({
           id: categories.id,
           name: categories.name,
-          description: categories.description,
         })
         .from(assignmentCategories)
         .innerJoin(
@@ -449,6 +448,7 @@ export function createAssignmentsRepository(db: Db) {
 
       return shuffled.slice(0, numCategories).map((cat) => cat.id);
     },
+
     async ensureCategoriesExist(categoryNames: string[]): Promise<void> {
       for (const categoryName of categoryNames) {
         const existingCategory = await db
@@ -460,7 +460,6 @@ export function createAssignmentsRepository(db: Db) {
         if (existingCategory.length === 0) {
           await db.insert(categories).values({
             name: categoryName,
-            description: `Category for ${categoryName} related assignments`,
           });
         }
       }

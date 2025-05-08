@@ -12,7 +12,6 @@ export const instructorService = createInstructorService(
   cohortsService.getCohortStudents,
   assignmentsService.getAssignmentsByCohortId,
   assignmentsService.createAssignment,
-  assignmentsService.updateAssignment,
   assignmentsService.deleteAssignment,
   assignmentsService.upsertAssignmentScore,
   assignmentsService.updateScoreStatuses,

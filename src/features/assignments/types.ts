@@ -2,7 +2,6 @@ import { assignments } from "./schema";
 import { createAssignmentsService } from "./service";
 
 export type CreateAssignment = AssignmentsService["createAssignment"];
-export type UpdateAssignment = AssignmentsService["updateAssignment"];
 export type GetAssignmentsByCohortId =
   AssignmentsService["getAssignmentsByCohortId"];
 export type DeleteAssignmentById = AssignmentsService["deleteAssignment"];
@@ -44,11 +43,17 @@ export type AssignmentScore = {
   score: number;
   status?: string;
 };
+export type Category = {
+  id: string;
+  name: string;
+  assignmentCategoryId: string;
+  assignmentFeedbackId: string;
+};
 export type AssignmentWithCategory = {
   id: string;
-  cohortId: string;
   title: string;
-  categories: string[] | null;
+  cohortId: string;
+  AssignmentCategories: Category[];
   slug?: string;
 };
 

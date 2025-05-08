@@ -8,7 +8,6 @@ export const assignments: PermissionsSchema<"assignments", AssignmentsService> =
     deleteAssignment: "assignments.deleteAssignment",
     getAssignmentsByCohortId: "assignments.getAssignmentsByCohortId",
     getAverageScoresByIdentityId: "assignments.getAverageScoresByIdentityId",
-    updateAssignment: "assignments.updateAssignment",
     getAssignmentBySlug: "assignments.getAssignmentBySlug",
     upsertAssignmentScore: "assignments.upsertAssignmentScore",
     updateScoreStatuses: "assignments.updateScoreStatuses",

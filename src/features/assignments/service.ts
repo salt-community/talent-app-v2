@@ -2,16 +2,12 @@ import { Db } from "@/db";
 import { ScoreStatus } from "../instructors-dashboard/types";
 import { averageScore } from "./logic";
 import { createAssignmentsRepository } from "./repository";
-import {
-  AssignmentScore,
-  AssignmentWithCategory
-} from "./types";
+import { AssignmentScore, AssignmentWithCategory } from "./types";
 
 export function createAssignmentsService(db: Db) {
   const repo = createAssignmentsRepository(db);
 
   return {
-
     async getScoredAssignmentsByCohortIdAndIdentityId(identityId: string) {
       return await repo.getAssignmentsByCohortIdAndIdentityId(identityId);
     },
@@ -19,14 +15,6 @@ export function createAssignmentsService(db: Db) {
     async createAssignment(assignment: AssignmentWithCategory) {
       const slug = generateSlug(assignment.title);
       return await repo.createAssignment({ ...assignment, slug });
-    },
-
-    async updateAssignment(assignment: AssignmentWithCategory) {
-      const slug = generateSlug(assignment.title);
-      return await repo.updateAssignment(assignment.id!, {
-        ...assignment,
-        slug,
-      });
     },
 
     async getAssignmentsByCohortId(cohortId: string) {

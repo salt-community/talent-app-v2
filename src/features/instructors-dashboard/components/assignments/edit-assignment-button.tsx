@@ -35,7 +35,6 @@ export default function EditAssignmentButton({ cohortId, assignment }: Props) {
           <DialogTitle>Edit Assignment</DialogTitle>
         </VisuallyHidden>
         <DialogContent>
-          <h1>Edit Assignment</h1>
           <AddAssignmentForm
             cohortId={cohortId}
             assignment={assignment}
