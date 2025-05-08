@@ -41,7 +41,10 @@ export function CvContainer({ defaultCvInfo, hasProfileAccess }: Props) {
           experience.organization,
           experience.date,
           experience.description,
-        ].some((value) => value.trim() === "")
+          experience.order,
+        ].some((value) =>
+          typeof value === "string" ? value.trim() === "" : false
+        )
     );
     if (hasEmptyFields) {
       toast({

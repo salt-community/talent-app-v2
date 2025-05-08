@@ -109,7 +109,8 @@ export function createDevelopersRepository(db: Db) {
                   'organization', ${newDeveloperProfileEducations.organization},
                   'date', ${newDeveloperProfileEducations.date},
                   'role', ${newDeveloperProfileEducations.role},
-                  'description', ${newDeveloperProfileEducations.description}
+                  'description', ${newDeveloperProfileEducations.description},
+                  'order', ${newDeveloperProfileEducations.order}
                 ) AS e
                 FROM ${newDeveloperProfileEducations}
                 WHERE ${newDeveloperProfileEducations.developerProfileId} = ${developerProfiles.id}
@@ -127,7 +128,8 @@ export function createDevelopersRepository(db: Db) {
                   'organization', ${developerProfileJobs.organization},
                   'date', ${developerProfileJobs.date},
                   'role', ${developerProfileJobs.role},
-                  'description', ${developerProfileJobs.description}
+                  'description', ${developerProfileJobs.description},
+                  'order', ${developerProfileJobs.order}
                 ) AS j
                 FROM ${developerProfileJobs}
                 WHERE ${developerProfileJobs.developerProfileId} = ${developerProfiles.id}

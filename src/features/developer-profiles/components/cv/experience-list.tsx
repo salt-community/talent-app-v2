@@ -11,6 +11,9 @@ type Props = {
 };
 
 export function ExperienceList({ isEditable, experiences, onChange }: Props) {
+  const sortedExperinces = experiences.sort((a, b) => a.order - b.order);
+
+  console.log({ sorted: sortedExperinces });
   const handleOnChange = (index: number, experience: Experience) => {
     const updatedExperiences = experiences.map((e, i) =>
       i === index ? experience : e
@@ -36,7 +39,7 @@ export function ExperienceList({ isEditable, experiences, onChange }: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      {experiences.map((experience, index) => (
+      {sortedExperinces.map((experience, index) => (
         <div key={experience.id} className="flex items-start justify-between">
           <ExperienceDetails
             key={experience.id}
