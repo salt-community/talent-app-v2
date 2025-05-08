@@ -89,8 +89,7 @@ export function AddAssignmentForm({
 
     try {
       const categories = selectedCategories.map((cat) => cat.id);
-      if (assignment) {
-      } else await addAssignmentAction(cohortId, title, categories);
+      await addAssignmentAction(cohortId, title, categories);
       onSuccess();
     } catch (error) {
       console.error("Failed to create assignment:", error);

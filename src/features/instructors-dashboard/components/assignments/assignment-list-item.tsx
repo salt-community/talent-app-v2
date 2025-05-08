@@ -31,7 +31,10 @@ export async function AssignmentListItem({ assignment, foundCohort }: Props) {
         <CopyAssignmentButton
           link={`/instructor-dashboard/cohorts/${foundCohort.name}/assignments/${assignment.slug}`}
         />
-        <EditAssignmentButton />
+        <EditAssignmentButton
+          cohortId={assignment.cohortId}
+          assignment={assignment}
+        />
         <DeleteAssignmentButton
           assignmentId={assignment.id}
           name={assignment.title}
