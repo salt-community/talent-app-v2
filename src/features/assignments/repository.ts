@@ -23,6 +23,7 @@ import {
 export function createAssignmentsRepository(db: Db) {
   return {
     async createAssignment(assignment: AssignmentWithCategory) {
+      console.log("assignment", assignment);
       return await db.transaction(async (tx) => {
         const { categories: categoryNames, id, ...assignmentData } = assignment;
 
@@ -37,22 +38,34 @@ export function createAssignmentsRepository(db: Db) {
           })
           .returning();
 
+        if (id) {
+          await tx
+            .delete(assignmentCategories)
+            .where(
+              eq(assignmentCategories.assignmentId, insertedAssignment.id)
+            );
+        }
+
         const categoryIds = await Promise.all(
           categoryNames.map(async (name: string) => {
-            const [newCategory] = await tx
-              .insert(categories)
-              .values({ name })
-              .onConflictDoUpdate({
-                target: categories.id,
-                set: {
-                  name,
-                },
-              })
-              .returning();
+            const existingCategory = await tx
+              .select()
+              .from(categories)
+              .where(eq(categories.name, name))
+              .limit(1);
 
-            return newCategory.id;
+            if (existingCategory.length > 0) {
+              return existingCategory[0].id;
+            } else {
+              const [newCategory] = await tx
+                .insert(categories)
+                .values({ name })
+                .returning();
+              return newCategory.id;
+            }
           })
         );
+
         if (categoryIds.length > 0) {
           await tx.insert(assignmentCategories).values(
             categoryIds.map((categoryId: string) => ({
