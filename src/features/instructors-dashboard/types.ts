@@ -12,17 +12,39 @@ export type Cohort = {
   description: string;
   createdAt: Date | null;
 };
+
+export type Category = {
+  id: string;
+  name: string;
+};
+
 export type Assignment = {
   id: string;
   cohortId: string;
   title: string;
   slug: string | null;
-  comment: string | null;
-  categories: string[] | null;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  createdAt: string | Date | null;
+  updatedAt: string | Date | null;
 };
 
+export type AssignmentCategory = {
+  id: string;
+  assignmentId: string;
+  categoryId: string;
+  createdAt: string | Date | null;
+  updatedAt: string | Date | null;
+};
+
+export type AssignmentWithCategoryRelation = {
+  assignments: Assignment;
+  assignment_categories: AssignmentCategory;
+  categories: Category;
+};
+
+export type AssignmentWithCategories = {
+  assignments: Assignment;
+  categories: Category[] | null;
+};
 export type AssignmentScore = {
   id: string | null;
   assignmentId: string;

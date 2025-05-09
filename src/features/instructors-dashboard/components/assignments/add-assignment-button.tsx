@@ -9,11 +9,11 @@ import {
 } from "@/components";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AddAssignmentForm } from "./add-assignment-form";
-import { Assignment } from "../../types";
+import { Assignment, AssignmentWithCategories } from "../../types";
 
 type Props = {
   cohortId: string;
-  assignment: Assignment;
+  assignment: AssignmentWithCategories;
 };
 
 export default function AddAssignmentButton({ cohortId, assignment }: Props) {

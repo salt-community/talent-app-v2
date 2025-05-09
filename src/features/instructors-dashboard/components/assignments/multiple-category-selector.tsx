@@ -25,6 +25,7 @@ export const MultipleCategorySelector = ({
       value={value}
       onChange={onChange}
       creatable
+      hidePlaceholderWhenSelected
       defaultOptions={OPTIONS}
       badgeClassName="bg-primary"
       placeholder="Select frameworks..."

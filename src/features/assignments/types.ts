@@ -43,14 +43,12 @@ export type AssignmentScore = {
   score: number;
   status?: string;
 };
-export type Category = {
-  name: string;
-};
+
 export type AssignmentWithCategory = {
   id: string;
   title: string;
   cohortId: string;
-  AssignmentCategories: Category[];
+  categories: string[];
   slug?: string;
 };
 

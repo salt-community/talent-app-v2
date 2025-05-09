@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { AssignmentScore, Category } from "../assignments";
+import { AssignmentScore } from "../assignments";
 import { CohortFormData } from "../cohorts";
 import { instructorService } from "./instance";
 import { ScoreStatus } from "./types";
@@ -20,14 +20,14 @@ export async function addAssignmentAction(
   id: string,
   cohortId: string,
   title: string,
-  AssignmentCategories: Category[]
+  categories: string[]
 ) {
   try {
     const assignment = {
       id,
       title,
       cohortId,
-      AssignmentCategories,
+      categories,
     };
 
     await instructorService.addAssignment(assignment);

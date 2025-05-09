@@ -10,10 +10,10 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Edit } from "lucide-react";
 import { AddAssignmentForm } from "./add-assignment-form";
-import { Assignment } from "../../types";
+import { AssignmentWithCategories } from "../../types";
 type Props = {
   cohortId: string;
-  assignment: Assignment;
+  assignment: AssignmentWithCategories;
 };
 
 export default function EditAssignmentButton({ cohortId, assignment }: Props) {

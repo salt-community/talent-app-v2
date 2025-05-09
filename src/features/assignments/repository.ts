@@ -24,9 +24,7 @@ export function createAssignmentsRepository(db: Db) {
   return {
     async createAssignment(assignment: AssignmentWithCategory) {
       return await db.transaction(async (tx) => {
-        const { AssignmentCategories = [], ...assignmentData } = assignment;
-
-        console.log({ categories: assignmentCategories });
+        const { categories: categoryNames, id, ...assignmentData } = assignment;
 
         const [insertedAssignment] = await tx
           .insert(assignments)
@@ -39,10 +37,27 @@ export function createAssignmentsRepository(db: Db) {
           })
           .returning();
 
-        if (AssignmentCategories && AssignmentCategories.length > 0) {
-          await tx.insert(categories).values(
-            AssignmentCategories.map((category) => ({
-              name: category.name,
+        const categoryIds = await Promise.all(
+          categoryNames.map(async (name: string) => {
+            const [newCategory] = await tx
+              .insert(categories)
+              .values({ name })
+              .onConflictDoUpdate({
+                target: categories.id,
+                set: {
+                  name,
+                },
+              })
+              .returning();
+
+            return newCategory.id;
+          })
+        );
+        if (categoryIds.length > 0) {
+          await tx.insert(assignmentCategories).values(
+            categoryIds.map((categoryId: string) => ({
+              assignmentId: insertedAssignment.id,
+              categoryId,
             }))
           );
         }
@@ -144,7 +159,15 @@ export function createAssignmentsRepository(db: Db) {
       return await db
         .select()
         .from(assignments)
-        .where(eq(assignments.cohortId, cohortId));
+        .where(eq(assignments.cohortId, cohortId))
+        .leftJoin(
+          assignmentCategories,
+          eq(assignments.id, assignmentCategories.assignmentId)
+        )
+        .leftJoin(
+          categories,
+          eq(assignmentCategories.categoryId, categories.id)
+        );
     },
 
     async createAssignmentScore(data: AssignmentScoreFormData) {
