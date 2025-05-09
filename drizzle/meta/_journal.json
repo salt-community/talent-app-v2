@@ -218,6 +218,13 @@
       "when": 1746732497844,
       "tag": "0030_shallow_tattoo",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1746781211986,
+      "tag": "0031_boring_mantis",
+      "breakpoints": true
     }
   ]
 }

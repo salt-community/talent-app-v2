@@ -295,10 +295,15 @@ export function createAssignmentsRepository(db: Db) {
     },
 
     async deleteAssignment(assignmentId: string) {
-      return await db
-        .delete(assignments)
-        .where(eq(assignments.id, assignmentId))
-        .returning();
+      return await db.transaction(async (tx) => {
+        await tx.delete(assignments).where(eq(assignments.id, assignmentId));
+        await tx
+          .delete(assignmentCategories)
+          .where(eq(assignmentCategories.assignmentId, assignmentId));
+        await tx
+          .delete(assignmentScores)
+          .where(eq(assignmentScores.assignmentId, assignmentId));
+      });
     },
 
     async deleteAssignmentScoreById(identityId: string) {

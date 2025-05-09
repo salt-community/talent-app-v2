@@ -25,10 +25,10 @@ export const assignments = pgTable("assignments", {
 export const assignmentCategories = pgTable("assignment_categories", {
   id: uuid("id").primaryKey().defaultRandom(),
   assignmentId: uuid("assignment_id")
-    .references(() => assignments.id)
+    .references(() => assignments.id, { onDelete: "cascade" })
     .notNull(),
   categoryId: uuid("category_id")
-    .references(() => categories.id)
+    .references(() => categories.id, { onDelete: "set null" })
     .notNull(),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -52,11 +52,13 @@ export const assignmentScores = pgTable(
 export const assignmentFeedback = pgTable("assignment_feedback", {
   id: uuid("id").primaryKey().defaultRandom(),
   assignmentScoreId: uuid("assignment_score_id")
-    .references(() => assignmentScores.id)
+    .references(() => assignmentScores.id, { onDelete: "cascade" })
     .notNull(),
   comment: varchar("comment").default(""),
   score: integer("score").default(0),
-  categoryId: uuid("category_id").references(() => categories.id),
+  categoryId: uuid("category_id").references(() => categories.id, {
+    onDelete: "cascade",
+  }),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });

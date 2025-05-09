@@ -35,7 +35,15 @@ export async function AssignmentsDashboard({ name }: Props) {
         <h2 className="text-2xl font-semibold">Assignments</h2>
         <AddAssignmentButton
           cohortId={cohortId}
-          assignment={groupedAssignments[0]}
+          assignment={{
+            id: "",
+            cohortId,
+            title: "",
+            slug: null,
+            createdAt: null,
+            updatedAt: null,
+            categories: [],
+          }}
         />
       </div>
       <Separator className="mb-4" />

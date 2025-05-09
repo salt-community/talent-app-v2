@@ -24,7 +24,7 @@ export function AddAssignmentForm({
   isNewAssignment,
 }: Props) {
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState(assignment.title || "");
+  const [title, setTitle] = useState(assignment?.title || "");
 
   const [selectedOptions, setSelectedOptions] = useState<Option[]>(
     assignment.categories &&
@@ -32,7 +32,7 @@ export function AddAssignmentForm({
       assignment.categories.length > 0
       ? assignment.categories.map((category: Category) => ({
           label: category.name,
-          value: category.id,
+          value: category.name,
         }))
       : []
   );
@@ -48,7 +48,7 @@ export function AddAssignmentForm({
         setSelectedOptions(
           assignment.categories.map((category: Category) => ({
             label: category.name,
-            value: category.id,
+            value: category.name,
           }))
         );
       } else {
