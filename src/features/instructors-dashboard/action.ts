@@ -5,7 +5,6 @@ import { AssignmentScore } from "../assignments";
 import { CohortFormData } from "../cohorts";
 import { instructorService } from "./instance";
 import { ScoreStatus } from "./types";
-import { newAssignmentSchema } from "./validation";
 
 export async function addCohortAction(cohort: CohortFormData) {
   try {
@@ -86,19 +85,12 @@ export async function deleteCohortAndCohortIdentityAction(cohortId: string) {
 
 export async function deleteAssignmentByIdAction(assignmentId: string) {
   try {
-    const result = await instructorService.deleteAssignmentById(assignmentId);
-    if (!result || result.length === 0) {
-      return { success: false, error: "Failed to remove assignment" };
-    } else {
-      revalidatePath("/instructor-dashboard", "layout");
-      return { success: true };
-    }
+    await instructorService.deleteAssignmentById(assignmentId);
+    revalidatePath("/instructor-dashboard", "layout");
   } catch (error) {
     console.error("Error in deleteAssignmentByIdAction:", error);
-
     if (error instanceof Error) {
       const errorMessage = error.message.toLowerCase();
-
       if (errorMessage.includes("assignment_categories_assignment_id")) {
         return {
           success: false,

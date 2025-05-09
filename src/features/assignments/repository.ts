@@ -17,7 +17,6 @@ import {
   AssignmentScoreFormData,
   AssignmentWithCategory,
   FixItem,
-  NewAssignment,
 } from "./types";
 
 export function createAssignmentsRepository(db: Db) {

@@ -14,10 +14,7 @@ export function DeleteAssignmentButton({ assignmentId, name }: Props) {
   function handleDelete() {
     toast.promise(
       (async () => {
-        const result = await deleteAssignmentByIdAction(assignmentId);
-        if (!result.success) {
-          throw new Error(result.error);
-        }
+        await deleteAssignmentByIdAction(assignmentId);
         return true;
       })(),
       {
