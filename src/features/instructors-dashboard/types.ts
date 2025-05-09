@@ -17,7 +17,6 @@ export type Category = {
   id: string;
   name: string;
 };
-
 export type Assignment = {
   id: string;
   cohortId: string;
@@ -25,26 +24,9 @@ export type Assignment = {
   slug: string | null;
   createdAt: string | Date | null;
   updatedAt: string | Date | null;
+  categories: Category[];
 };
 
-export type AssignmentCategory = {
-  id: string;
-  assignmentId: string;
-  categoryId: string;
-  createdAt: string | Date | null;
-  updatedAt: string | Date | null;
-};
-
-export type AssignmentWithCategoryRelation = {
-  assignments: Assignment;
-  assignment_categories: AssignmentCategory;
-  categories: Category;
-};
-
-export type AssignmentWithCategories = {
-  assignments: Assignment;
-  categories: Category[] | null;
-};
 export type AssignmentScore = {
   id: string | null;
   assignmentId: string;

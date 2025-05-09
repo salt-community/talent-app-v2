@@ -25,7 +25,7 @@ import {
   GetCohortStudents,
 } from "../cohorts";
 import { GetAllIdentities } from "../iam";
-import { ScoreStatus } from "./types";
+import { Assignment, Category, ScoreStatus } from "./types";
 
 export function createInstructorService(
   getAllCohorts: GetAllCohorts,
@@ -59,7 +59,60 @@ export function createInstructorService(
     },
 
     async getAssignmentsByCohortId(cohortId: string) {
-      return await getAssignmentsByCohortId(cohortId);
+      const rawAssignments = await getAssignmentsByCohortId(cohortId);
+
+      const formattedAssignments = rawAssignments.map((item) => {
+        return {
+          assignment: {
+            id: item.assignments.id,
+            cohortId: item.assignments.cohortId,
+            title: item.assignments.title,
+            slug: item.assignments.slug,
+            createdAt: item.assignments.createdAt,
+            updatedAt: item.assignments.updatedAt,
+          },
+
+          category: item.categories
+            ? {
+                id: item.categories.id,
+                name: item.categories.name,
+              }
+            : null,
+        };
+      });
+
+      const groupedAssignments: Assignment[] = [];
+      const assignmentMap = new Map();
+
+      for (const item of formattedAssignments) {
+        const assignmentId = item.assignment.id;
+
+        if (!assignmentMap.has(assignmentId)) {
+          assignmentMap.set(assignmentId, {
+            id: item.assignment.id,
+            cohortId: item.assignment.cohortId,
+            title: item.assignment.title,
+            slug: item.assignment.slug,
+            createdAt: item.assignment.createdAt,
+            updatedAt: item.assignment.updatedAt,
+            categories: [],
+          });
+          groupedAssignments.push(assignmentMap.get(assignmentId));
+        }
+
+        if (item.category) {
+          const existingAssignment = assignmentMap.get(assignmentId);
+          const categoryExists = existingAssignment.categories.some(
+            (c: Category) => c.id === item.category?.id
+          );
+
+          if (!categoryExists) {
+            existingAssignment.categories.push(item.category);
+          }
+        }
+      }
+
+      return { groupedAssignments };
     },
 
     async addAssignment(assignment: AssignmentWithCategory) {

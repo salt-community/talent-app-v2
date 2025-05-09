@@ -1,47 +1,65 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { addAssignmentAction } from "../../action";
 import { DialogTitle } from "@/components/ui/dialog";
-import { AssignmentWithCategories, Category } from "../../types";
+import { Assignment, Category } from "../../types";
 import { MultipleCategorySelector } from "./multiple-category-selector";
 import { Option } from "@/components/ui/multiple-selector";
 
 type Props = {
   cohortId: string;
-  assignment: AssignmentWithCategories;
+  assignment: Assignment;
   onSuccess: () => void;
+  isNewAssignment: boolean;
 };
 
-export function AddAssignmentForm({ cohortId, assignment, onSuccess }: Props) {
+export function AddAssignmentForm({
+  cohortId,
+  assignment,
+  onSuccess,
+  isNewAssignment,
+}: Props) {
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState(assignment.assignments?.title || "");
+  const [title, setTitle] = useState(assignment.title || "");
 
   const [selectedOptions, setSelectedOptions] = useState<Option[]>(
-    assignment && assignment.categories && assignment.categories.length > 0
+    assignment.categories &&
+      assignment.categories &&
+      assignment.categories.length > 0
       ? assignment.categories.map((category: Category) => ({
           label: category.name,
           value: category.id,
-          fixed: true,
         }))
       : []
   );
 
+  useEffect(() => {
+    if (isNewAssignment) {
+      setTitle("");
+      setSelectedOptions([]);
+    } else if (assignment) {
+      setTitle(assignment.title || "");
+
+      if (assignment.categories && assignment.categories.length > 0) {
+        setSelectedOptions(
+          assignment.categories.map((category: Category) => ({
+            label: category.name,
+            value: category.id,
+          }))
+        );
+      } else {
+        setSelectedOptions([]);
+      }
+    }
+  }, [assignment, isNewAssignment]);
   const handleSubmit = async () => {
     setLoading(true);
-
     const categories = selectedOptions.map((option) => option.value);
-
-    await addAssignmentAction(
-      assignment?.assignments.id || "",
-      cohortId,
-      title,
-      categories
-    );
-
+    await addAssignmentAction(assignment.id || "", cohortId, title, categories);
     onSuccess();
     setLoading(false);
   };
@@ -49,7 +67,7 @@ export function AddAssignmentForm({ cohortId, assignment, onSuccess }: Props) {
   return (
     <div className="space-y-6 p-4">
       <DialogTitle>
-        {assignment.assignments?.id ? "Edit assignment" : "Add assignment"}
+        {assignment.id ? "Edit assignment" : "Add assignment"}
       </DialogTitle>
       <div>
         <Label htmlFor="title">Title</Label>
