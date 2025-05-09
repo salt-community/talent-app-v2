@@ -27,23 +27,33 @@ export function createAssignmentsRepository(db: Db) {
       return await db.transaction(async (tx) => {
         const { categories: categoryNames, id, ...assignmentData } = assignment;
 
-        const [insertedAssignment] = await tx
-          .insert(assignments)
-          .values(assignmentData)
-          .onConflictDoUpdate({
-            target: assignments.id,
-            set: {
-              ...assignmentData,
-            },
-          })
-          .returning();
-
+        let insertedAssignment;
         if (id) {
+          const [updatedAssignment] = await tx
+            .update(assignments)
+            .set({
+              ...assignmentData,
+              updatedAt: new Date(),
+            })
+            .where(eq(assignments.id, id))
+            .returning();
+
+          if (!updatedAssignment) {
+            throw new Error(`Failed to update assignment with ID: ${id}`);
+          }
+
+          insertedAssignment = updatedAssignment;
+
           await tx
             .delete(assignmentCategories)
-            .where(
-              eq(assignmentCategories.assignmentId, insertedAssignment.id)
-            );
+            .where(eq(assignmentCategories.assignmentId, id));
+        } else {
+          const [newAssignment] = await tx
+            .insert(assignments)
+            .values(assignmentData)
+            .returning();
+
+          insertedAssignment = newAssignment;
         }
 
         const categoryIds = await Promise.all(
