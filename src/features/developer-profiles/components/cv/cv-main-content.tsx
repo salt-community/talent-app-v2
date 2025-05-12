@@ -19,14 +19,15 @@ export function CvMainContent({
   onChange,
   headerLanguage,
 }: Props) {
-  const createEmptyExperience = () => ({
-    id: v4(),
-    organization: "",
-    date: "",
-    role: "",
-    description: "",
-    order: 0,
-  });
+  const createEmptyExperience = () =>
+    ({
+      id: v4(),
+      organization: "",
+      date: "",
+      role: "",
+      description: "",
+      order: 0,
+    }) as Experience;
 
   return (
     <div className="pb-8">

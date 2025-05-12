@@ -118,10 +118,9 @@ export function createDevelopersRepository(db: Db) {
             ),
             '[]'::jsonb
           )`.as("educations"),
-          jobs: sql<Experience[]>`
-          COALESCE(
+          jobs: sql<Experience[]>`COALESCE(
             (
-              SELECT jsonb_agg(j ORDER BY j->>'date' DESC)
+              SELECT jsonb_agg(j ORDER BY (j->>'order')::int ASC)
               FROM (
                 SELECT DISTINCT jsonb_build_object(
                   'id', ${developerProfileJobs.id},
@@ -528,6 +527,7 @@ export function createDevelopersRepository(db: Db) {
               date: job.date,
               role: job.role,
               description: job.description,
+              order: job.order,
             });
           }
         }
