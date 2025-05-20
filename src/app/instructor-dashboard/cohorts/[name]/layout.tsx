@@ -1,9 +1,10 @@
 "use client";
 
 import React, { Suspense } from "react";
-import { Star } from "lucide-react";
+import { ArrowLeft, Star } from "lucide-react";
 import TabLink from "@/features/admin-dashboard/components/tab-link";
 import Loading from "./loading";
+import Link from "next/link";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -22,22 +23,29 @@ export default function InstructorDashboardLayout({
       <h1 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">
         {name.toUpperCase()}
       </h1>
-
-      <div className="flex overflow-x-auto border-b mb-4 pb-1">
-        <TabLink
-          name="Assignments"
-          href={`/instructor-dashboard/cohorts/${name}`}
+      <div className="flex justify-between items-center border-b mb-4 pb-1">
+        <div className="flex overflow-x-auto">
+          <TabLink
+            name="Assignments"
+            href={`/instructor-dashboard/cohorts/${name}`}
+          >
+            <Star className="w-5 h-5" />
+          </TabLink>
+          <TabLink
+            name="Developers"
+            href={`/instructor-dashboard/cohorts/${name}/developers`}
+          >
+            <Star className="w-5 h-5" />
+          </TabLink>
+        </div>
+        <Link
+          href="/instructor-dashboard"
+          className="flex items-center gap-1 text-sm mx-4 p-2 md:text-base whitespace-nowrap cursor-pointer hover:bg-gray-50"
         >
-          <Star className="w-5 h-5" />
-        </TabLink>
-        <TabLink
-          name="Developers"
-          href={`/instructor-dashboard/cohorts/${name}/developers`}
-        >
-          <Star className="w-5 h-5" />
-        </TabLink>
+          <ArrowLeft className="w-5 h-5" />
+          <span>Go back</span>
+        </Link>
       </div>
-
       <Suspense fallback={<Loading />}>{children}</Suspense>
     </div>
   );
